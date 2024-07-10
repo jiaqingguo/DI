@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ECharts Example</title>
+        <!-- 引入ECharts文件 -->
+        <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+    </head>
+    <body>
+        <div id="main" style="width: 400px;height:300px;"></div>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            
+            var myChart = echarts.init(document.getElementById('main'));
+
+            function setData(json_data) {
+
+                var data = json_data["data"];
+                var titleName = json_data["titleName"];
+                var type = json_data["type"];
+
+                var xAxisData = [];
+                var itemNames = [];//["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"];
+                var itemValues = [];//[5, 20, 36, 10, 10, 20];
+                for (var i = 0; i < data.length; i++) 
+				{
+                    if (
+                        type == "line"
+                        || type == "bar"
+                        || type == "scatter") 
+					{
+                        
+                        xAxisData[i] = data[i]["itemName"];
+                    }
+                    
+                    itemValues[i] = { value: data[i]["itemValue"], name: data[i]["itemName"] };
+                }
+                
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: titleName
+                    },
+                    tooltip: {},
+                    legend: {
+                        data: ['销量']
+                    },
+                    xAxis: {
+			
+                       data: xAxisData//["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '销量',
+                        type: type,
+                        data: itemValues//[5, 20, 36, 10, 10, 20]
+                    }]
+                };
+
+                myChart.setOption(option);
+            }
+
+            setData(json_data);
+            // 使用刚指定的配置项和数据显示图表。
+           
+        </script>
+    </body>
+</html>

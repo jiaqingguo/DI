@@ -1,0 +1,2098 @@
+QWidget {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+/*
+ * 主背景
+ */
+BaseFrame[transBackground="false"] QWidget#wdgBackgroud {
+	border-image: url(:/image/main_background.png);
+}
+
+/*
+ * 登录背景
+ */
+QWidget#wdgLoginBg {
+	border-image: url(:/image/login_background.png);
+}
+
+/*
+ * 登录框背景
+ */
+LoginWidget QWidget#wgdBorder {
+	border-image: url(:/image/login_border.png);
+}
+
+/*
+ * 菜单背景
+ */
+QMenu{
+	color: rgba(0, 255, 255, 153);
+	background-color: rgba(11, 161, 248,0.2);
+}
+QMenu::item{
+	cololr:rgba(51,51,51,1);
+}
+QMenu::item:hover{
+	background-color:#409CE1;
+	
+}
+QMenu::item:selected{
+	background-color:#409CE1;
+}
+
+/*
+ * 提示框背景
+ */
+BaseFrame#UserDialogBase QWidget#wdgBackgroud {
+	border-image: url(:/image/user_add_bg.png);
+}
+
+QToolTip {
+	color: rgba(0, 255, 255, 153);
+	background-color: rgba(0, 0, 0, 0);
+	border-image: url(:/image/tooltip.png);
+}
+
+/*
+ * 添加预案软件背景
+ */
+BaseFrame#CaseSoftAddDialogBase QWidget#wdgBackgroud {
+	border-image: url(:/image/wdg_CaseHostSoft_Bg.png);
+}
+
+/*
+ * 弹出文字输入框
+ */
+BaseFrame#MyFileDialogBase QWidget#wdgBackgroud,
+BaseFrame#MyInputDialogBase QWidget#wdgBackgroud {
+	margin-top: 10px;
+	
+	border-image: url(:/image/inputDialog_bg.png);
+}
+
+BaseFrame#MyFileDialogBase QPushButton,
+BaseFrame#MyInputDialogBase QPushButton {
+	width: 120px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 40px;
+	margin-right: 50px;
+	margin-bottom: 50px;
+	border-image: url(:/image/msg_btn.png);
+}
+
+BaseFrame#MyFileDialogBase QPushButton:hover,
+BaseFrame#MyInputDialogBase QPushButton:hover {
+	border-image: url(:/image/msg_btn_hover.png);
+}
+
+BaseFrame#MyFileDialogBase QPushButton:pressed,
+BaseFrame#MyInputDialogBase QPushButton:pressed {
+	border-image: url(:/image/msg_btn_pressed.png);
+}
+
+BaseFrame#MyFileDialogBase QLabel,
+BaseFrame#MyInputDialogBase QLabel {
+	margin-top: 0px;
+	margin-left: 70px;
+	margin-right: 70px;
+	margin-bottom: 10px;
+	color: #0ba1f8;
+}
+
+BaseFrame#MyFileDialogBase QLineEdit,
+BaseFrame#MyInputDialogBase QLineEdit {
+	margin-top: 10px;
+	margin-left: 70px;
+	margin-right: 70px;
+	margin-bottom: 10px;
+	padding-left: 5px;
+	color: #0ba1f8;
+}
+
+/*
+ * 添加预案背景
+ */
+BaseFrame#CaseAddDialogBase QWidget#wdgBackgroud {
+	border-image: url(:/image/user_add_bg.png);
+}
+
+/*
+ * 添加预案软件背景
+ */
+BaseFrame#CaseSoftAddDialogBase QWidget#wdgBackgroud {
+	border-image: url(:/image/wdg_CaseHostSoft_Bg.png);
+}
+
+/*
+ * 打印提示信息样式
+ */
+QWidget#wdgMsg{
+	width: 284px;
+	height: 323px;
+	color: rgba(16, 255, 230, 127);
+	border-image:url(:/image/teInfo.png);
+}
+
+QTextEdit#teInfo{
+	padding-top:15px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+/*
+ * 消息框边框
+ */
+QWidget#wdgMsgBorder {
+	width: 439px;
+	height: 249px;
+	border-image: url(:/image/msg_border.png);
+}
+
+/*
+ * 软件部署平台添加框bg
+ */
+QWidget#wdgOSType {
+  margin-top: 32px;
+	width: 284px;
+	height: 829px;
+	border-image: url(:/image/ListWidget_Bg.png);
+}
+
+/*
+ * 软件部署平台添加框bg
+ */
+QLabel#lbCpuType,#lbProjectName,#lbSoftType,#lbSoftPlatFrom  {
+	width: 284px;
+	height: 70px;
+	font-size: 26px;
+	color: rgba(11, 223, 248, 0.98);
+	border-image: url(:/image/lable_Bg.png);
+}
+
+/*
+ * 处理器类别添加框bg
+ */
+QWidget#wdgCPUType {
+  margin-top: 32px;
+	width: 284px;
+	height: 829px;
+	border-image: url(:/image/ListWidget_Bg.png);
+}
+
+/*
+ * 项目名称
+ */
+ QWidget#wdgProjectType{
+  margin-top: 32px;
+	width: 284px;
+	height: 829px;
+	border-image: url(:/image/ListWidget_Bg.png);
+}
+ 
+ /*
+ * 软件类型
+ */
+ QWidget#wdgSoftWareType {
+  margin-top: 32px;
+	width: 284px;
+	height: 829px;
+	border-image: url(:/image/ListWidget_Bg.png);
+}
+
+/*
+ * QLabel统一样式
+ */
+QLabel {
+	font: 20px;
+	color: white;
+}
+
+QProgressBar {
+	 background-color: rgba(0,255,255,0.03);
+     border-radius: 5px;
+}
+
+QProgressBar::chunk {
+     background-color: #00ffff;
+    
+}
+
+/*
+ * 主页面标题
+ */
+BaseFrame[transBackground="false"] QLabel#leWindowTitle {
+	color: #0dbff8;
+	font: 32px;
+	margin-top: 22px;
+	margin-left: 10px;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btHelp, QPushButton#btMinWindow, QPushButton#btMaxWindow {
+	margin-top: 22px;
+	margin-right: 20px;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btCloseWindow{
+	margin-top: 22px;
+	margin-right: 66px;
+}
+
+
+
+
+/*
+ * 程序名
+ */
+LoginWidget QLabel#lblAppName {
+	font: 40px;
+	color: #0ac1f2;
+}
+
+/*
+ * 登录页面标题
+ */
+LoginWidget QLabel#lblTitle {
+	font: 32px;
+	color: white;
+}
+
+/*
+ * 登录页面图标-用户名
+ */
+LoginWidget QLabel#lblUser {
+	width: 34px;
+	height: 35px;
+	border-image: url(:/image/user.png);
+}
+
+/*
+ * 登录页面图标-密码
+ */
+LoginWidget QLabel#lblPwd {
+	width: 34px;
+	height: 35px;
+	border-image: url(:/image/pwd.png);
+}
+
+/*
+ * 消息框提示信息
+ */
+QLabel#lblMsgInfo {
+	font: 22px;
+	color: white;
+}
+
+/*
+ * 消息框图标
+ */
+QLabel#lblMsgIcon {
+	width: 48px;
+	height: 48px;
+}
+
+/*
+ * 标题
+ */
+QLabel#lbTitle {
+	width: 13px;
+	height: 22px;
+	font:26px;
+	color: #0bdff8;
+	background-color: transparent;
+}
+
+QLabel#lbUser {
+	width: 28px;
+	height: 30px;
+	font:15px;
+	color: #0bdff8;
+	background-color: transparent;
+}
+
+/*
+ * 页数标签
+ */
+QLabel#lbSelect, #lbSelectPage {
+	width: 13px;
+	height: 22px;
+	color: rgba(255, 255, 255, 127);
+	background-color: transparent;
+}
+
+ 
+ 
+/*
+ * 按钮统一样式
+ */
+QPushButton {
+	border-image: url(:/image/button.png);
+	border: 0px solid green;
+	font: 28px;
+	color: white;
+}
+
+QPushButton:hover {
+	border-image: url(:/image/button_hover.png);
+}
+
+QPushButton:pressed {
+	border-image: url(:/image/button_pressed.png);
+}
+
+/*
+ * 登陆页按钮
+ */
+LoginWidget QPushButton#btnLogin, #btnExit {
+	height: 56px;
+} 
+
+/*
+ * 消息框按钮
+ */
+QPushButton#btnClose {
+	width: 18px;
+	height: 18px;
+	border-image: url(:/image/close.png);
+} 
+
+QPushButton#btnAccept, #btnReject {
+	width: 148px;
+	height: 38px;
+	border-image: url(:/image/msg_btn.png);
+} 
+
+QPushButton#btnAccept:hover, #btnReject:hover {
+	border-image: url(:/image/msg_btn_hover.png);
+} 
+
+QPushButton#btnAccept:pressed, #btnReject:pressed {
+	border-image: url(:/image/msg_btn_pressed.png);
+} 
+
+/*
+ * 编辑框统一样式
+ */
+QLineEdit {
+	border-image: url(:/image/lineedit.png);
+	font: 24px;
+	color: white;
+	padding-left:5px;
+}
+
+QLineEdit:hover {
+	border-image: url(:/image/lineedit_hover.png);
+}
+
+QLineEdit:focus {
+	border-image: url(:/image/lineedit_focusin.png);
+}
+
+
+UserDialog QLineEdit#leUserCode, UserDialog QLineEdit#leUserName, UserDialog QLineEdit#lePassword, UserDialog QLineEdit#lePasswordConfirm{
+	font: 24px;
+	color:#0ba1f8;
+	border-image: url(:/image/User_in_background.png);
+}
+
+
+/*
+ * 输入页数样式
+ */
+QLineEdit#lePageCount{
+	width: 125px;
+	height: 44px;
+	border-image:url(:/image/pageCount.png);
+}
+
+QLineEdit#lePageCount:hover{
+	border-image:url(:/image/pageCount_hover.png);
+}
+
+QLineEdit#lePageCount:focus{
+	border-image:url(:/image/pageCount_checked.png);
+}
+
+/*
+ * 登陆页编辑框
+ */
+LoginWidget QLineEdit#leUser, LoginWidget QLineEdit#lePassword {	
+	height: 57px;
+}
+
+/*
+ * 单选框统一样式
+ */
+QRadioButton {
+	font: 20px;
+	color: rgba(255, 255, 255, 255);
+}
+
+QRadioButton:checked {
+	color: rgba(255, 255, 255, 255);
+}
+
+QRadioButton:unchecked {
+	color: rgba(255, 255, 255, 127);
+}
+
+QRadioButton::indicator {
+	width: 20px;
+	height: 20px;
+}
+
+QRadioButton::indicator::unchecked {
+	image: url(:/image/check_uncheck.png);
+}
+
+QRadioButton::indicator::unchecked:hover {
+	image: url(:/image/check_hover.png);
+}
+
+QRadioButton::indicator::unchecked:pressed {
+	image: url(:/image/check_checked.png);
+}
+
+QRadioButton::indicator::checked {
+	image: url(:/image/check_checked.png);
+}
+
+QRadioButton::indicator::checked:hover {
+	image: url(:/image/check_checked.png);
+}
+
+QRadioButton::indicator::checked:pressed {
+	image: url(:/image/check_checked.png);
+}
+
+/****************************/
+/*
+ * 信息综合展示---主机Item
+ */
+
+ 
+CPushButton[state="0"]
+{
+	font:14px;
+	color:rgb(128, 128, 128);
+	border-image:url(:/image/hostIcon_checked.png);
+}
+
+CPushButton[state="1"]
+{
+	font:14px;
+	color:rgb(0, 128, 128);
+	border-image:url(:/image/hostIcon.png);
+}
+
+CPushButton[state="2"]
+{
+	font:14px;
+	color:rgb(0, 255, 255);
+	border-image:url(:/image/hostIcon_Select.png);
+}
+
+CPushButton[state="3"]
+{
+	font:14px;
+	color:rgb(0, 128, 128);
+	border-image:url(:/image/hostIcon_Select.png);
+}
+ 
+/****************************/
+/*
+ * 增加用户----单选框统一样式
+ */
+UserDialog QRadioButton#rbAdmin, UserDialog QRadioButton#rbGeneral{
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#0ba1f8;
+}
+
+UserDialog QRadioButton#rbAdmin:hover, UserDialog QRadioButton#rbGeneral:hover{
+	color:#0bdff8;
+}
+
+UserDialog QRadioButton#rbAdmin:checked, UserDialog QRadioButton#rbGeneral:checked{
+	color:#0bdff8;
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::unchecked, UserDialog QRadioButton#rbGeneral::indicator::unchecked {
+	image: url(:/image/QCheckBox.png);
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::unchecked:hover, UserDialog QRadioButton#rbGeneral::indicator::unchecked:hover {
+	image: url(:/image/QCheckBox_hover.png);
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::unchecked:pressed, UserDialog QRadioButton#rbGeneral::indicator::unchecked:pressed {
+	image: url(:/image/QCheckBox_checked.png);
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::checked, UserDialog QRadioButton#rbGeneral::indicator::checked{
+	image: url(:/image/QCheckBox_checked.png);
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::checked:hover, UserDialog QRadioButton#rbGeneral::indicator::checked:hover {
+	image: url(:/image/QCheckBox_checked.png);
+}
+
+UserDialog QRadioButton#rbAdmin::indicator::checked:pressed, UserDialog QRadioButton#rbGeneral::indicator::checked:pressed {
+	image: url(:/image/QCheckBox_checked.png);
+}
+
+
+
+/*
+ * 身份样式
+ */
+QToolButton#tbAdministrator_User{
+	width: 43px;
+	height: 45px;
+	min-width:43px;
+	min-height:45px;
+	max-width:43px;
+	max-height:45px;
+}
+
+/*
+ * 退出按钮
+ */
+QToolButton#tbExit{
+	width: 28px;
+	height: 30px;
+	min-width:28px;
+	min-height:30px;
+	max-width:28px;
+	max-height:30px;
+	border-image:url(:/image/exit.png);
+}
+
+QToolButton#tbExit:hover{
+	border-image: url(:/image/exit_pressed.png);
+}
+
+QToolButton#tbExit:pressed{
+	border-image: url(:/image/exit_pressed.png);
+}
+
+/*
+ * 左侧菜单按钮样式
+ */
+QToolButton#tbUserManager, #tbSoftOsManager, #tbMonitor, #tbSoftWareManager, #tbCaseManager, #tbExecCaseManager {
+	width: 339px;
+	height: 69px;
+	font: 22px;
+	color: #0bdff8;
+	padding-left:25px;
+	background-color: transparent;
+}
+
+QToolButton#tbUserManager:checked, #tbSoftOsManager:checked, #tbMonitor:checked, #tbSoftWareManager:checked, #tbCaseManager:checked, #tbExecCaseManager:checked,
+#tbUserManager:hover, #tbSoftOsManager:hover, #tbMonitor:hover, #tbSoftWareManager:hover, #tbCaseManager:hover, #tbExecCaseManager:hover {
+	border-image:url(:/image/tbLeftManager.png);
+	color: #ffffff;
+}
+
+QToolButton#tbUserManager{
+	qproperty-icon: url(:/image/tbUserManager.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbUserManager:hover{
+	qproperty-icon: url(:/image/tbUserManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbUserManager:pressed{
+	qproperty-icon:url(:/image/tbUserManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftOsManager{
+	qproperty-icon:url(:/image/tbSoftOsManager.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftOsManager:hover{
+	qproperty-icon:url(:/image/tbSoftOsManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftOsManager:pressed{
+	qproperty-icon:url(:/image/tbSoftOsManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbMonitor{
+	qproperty-icon:url(:/image/tbMonitor.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbMonitor:hover{
+	qproperty-icon:url(:/image/tbMonitor_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbMonitor:pressed{
+	qproperty-icon:url(:/image/tbMonitor_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftWareManager{
+	qproperty-icon:url(:/image/tbSoftWareManager.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftWareManager:hover{
+	qproperty-icon:url(:/image/tbSoftWareManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbSoftWareManager:pressed{
+	qproperty-icon:url(:/image/tbSoftWareManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbCaseManager{
+	qproperty-icon:url(:/image/tbCaseManager.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbCaseManager:hover{
+	qproperty-icon:url(:/image/tbCaseManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbCaseManager:pressed{
+	qproperty-icon:url(:/image/tbCaseManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbExecCaseManager{
+	qproperty-icon:url(:/image/tbExecCaseManager.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbExecCaseManager:hover{
+	qproperty-icon:url(:/image/tbExecCaseManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+QToolButton#tbExecCaseManager:pressed{
+	qproperty-icon:url(:/image/tbExecCaseManager_checked.png);
+	qproperty-iconSize: 28px 30px;
+}
+
+
+
+/**********************************用户管理*************************************/
+
+/*
+ * 增加、修改用户页面标题
+ */
+BaseFrame#UserDialogBase QLabel#leWindowTitle{
+	color: #0dbff8;
+	font: 28px;
+	font-weight:bold;
+	margin-top: 3px;
+	margin-left: 10px;
+}
+
+UserDialog QLabel#lblUserCode, #lblUserName, #lblUserPassword, #lblUsePsaawordConfirm, #lblUserflag{
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#0ba1f8;
+}
+
+UserDialog QLabel#lblError{
+	font:20px;
+	font-family:"Microsoft YaHei";
+	font-weight:bold;
+	color:#ff6666;
+}
+
+/*
+ * 增加用户/修改/删除
+ */
+QToolButton#btnAddUser, #btnStartup, #btnShutdown, #btnAddHost, #btnDelHost, #btnModUser, #btnDelUser{
+	font-weight:bold;
+	font-size:18px;
+	color:#ffffff;
+	width: 145px;
+	height: 51px;
+	border-image:url(:/image/tbAddUser.png);
+}
+
+
+QToolButton#btnAddUser:hover, #btnStartup:hover, #btnShutdown:hover, #btnAddHost:hover, #btnDelHost:hover, #btnModUser:hover, #btnDelUser:hover{
+	color:#99daff;
+	border-image:url(:/image/tbAddUser_pressed.png);
+}
+
+
+QToolButton#btnAddUser:pressed, #btnStartup:pressed, #btnShutdown:pressed, #btnAddHost:pressed, #btnDelHost:pressed, #btnModUser:pressed, #btnDelUser:pressed{
+	color:#ffffff;
+	border-image:url(:/image/tbAddUser_checked.png);
+}
+
+QToolButton#tbUp, #tbDown{
+	width: 45px;
+	height: 44px;
+	font: 16px;
+	color: rgba(255, 255, 255, 127);
+	background-color: transparent;
+}
+
+QToolButton#tbUp:checked{
+	qproperty-icon: url(:/image/pageRetreat_checked.png);
+	qproperty-iconSize: 13px 22px;
+}
+
+QToolButton#tbDown:checked{
+	qproperty-icon: url(:/image/pageAdvance_checked.png);
+	qproperty-iconSize: 13px 22px;
+}
+
+QToolButton#tbPage1, #tbPage2, #tbPage3, #tbPage4, #tbPage5{
+	width: 44px;
+	height: 44px;
+	font: 16px;
+	color: rgba(255, 255, 255, 127);
+	background-color: transparent;
+}
+
+QToolButton#tbPage1:hover, #tbPage2:hover, #tbPage3:hover, #tbPage4:hover, #tbPage5:hover{
+	border-image:url(:/image/page_hover.png);
+}
+
+QToolButton#tbPage1:checked, #tbPage2:checked, #tbPage3:checked, #tbPage4:checked, #tbPage5:checked{
+	border-image:url(:/image/page_checked.png);
+}
+
+QToolButton#tbSure{
+	width: 62px;
+	height: 44px;
+	font: 16px;
+	color: rgba(255, 255, 255, 127);
+	background-color: transparent;
+}
+
+QToolButton#tbSure:hover{
+	border-image:url(:/image/pageSure_hover.png);
+}
+
+QToolButton#tbSure:pressed{
+	border-image:url(:/image/pageSure_checked.png);
+}
+
+/**********************************软件平台管理页面按钮*************************************/
+
+QInputDialog QLabel{
+	font-family:"Microsoft YaHei";
+	color:#0ba1f8;
+}
+
+QInputDialog QLineEdit{
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#0ba1f8;
+}
+
+QInputDialog QPushButton{
+	font-family:"Microsoft YaHei";
+	font-size:19px;
+	color:#00ffff;
+	width:147px;
+	height:39px;
+	border-image:url(:/image/btn_default.png);
+}
+
+QInputDialog QPushButton:hover{
+	color:#ffffff;
+	border-image:url(:/image/btn_hover.png);
+}
+
+QInputDialog QPushButton:pressed{
+	border-image:url(:/image/btn_clicked.png);
+}
+
+/*
+ * 软件平台管理页面按钮
+ */
+QToolButton#btnAddOS, #btnAddCPU,#btnAddProject,#btnAddSoftWareType{
+	font-family:"Microsoft YaHei";
+	font-size:22px;
+	color:rgba(0, 255, 255, 127);
+	width: 70px;
+	height: 25px;
+	background-color: transparent;
+	border-image:url(:/image/btn_SlftManage_Add.png);
+}
+
+QToolButton#btnAddOS:hover, #btnAddCPU:hover,#btnAddProject:hover,#btnAddSoftWareType:hover{
+	color:rgba(0, 255, 255);
+	border-image:url(:/image/btn_SlftManage_Add_Hover.png);
+}
+
+QToolButton#btnAddOS:pressed, #btnAddCPU:pressed,btnAddProject:pressed,#btnAddSoftWareType:pressed{
+	border-image:url(:/image/btn_SlftManage_Add_Clicke.png);
+}
+
+QToolButton#btnDelOS, #btnDelCPU,#btnDelProject,#btnDelSoftWareType{
+	font-family:"Microsoft YaHei";
+	font-size:22px;
+	color:rgba(255, 102, 102, 127);
+	width: 70px;
+	height: 25px;
+	background-color: transparent;
+	border-image:url(:/image/btn_SlftManage_Delete.png);
+}
+
+QToolButton#btnDelOS:hover, #btnDelCPU:hover,#btnDelProject:hover,#btnDelSoftWareType:hover{
+	color:rgba(255, 102, 102);
+	border-image:url(:/image/btn_SlftManage_Delete_Hover.png);
+}
+
+QToolButton#btnDelOS:pressed, #btnDelCPU:pressed,#btnDelProject:pressed,#btnDelSoftWareType:pressed{
+	border-image:url(:/image/btn_SlftManage_Delete_Clicke.png);
+}
+
+QToolButton#btnAddOS, #btnAddCPU, #btnAddProject,#btnAddSoftWareType{
+	margin-bottom:10px;
+	margin-left: 20px;
+	margin-right:1px;
+}
+
+QToolButton#btnDelOS, #btnDelCPU, #btnDelProject, #btnDelSoftWareType{
+	margin-bottom:10px;
+	margin-left: 1px;
+	margin-right:18px;
+}
+
+
+QToolButton#btnUploadSoft,#btnDowloadSoft,#btnModSoft,#btnDelSoft,#btnSoftLog,#btnAddHost,#btnDelHost,#btnShutdown,#btnStartup,#btnModHost{
+	width: 145px;
+	height: 51px;
+	font: 20px;
+	color: rgba(153, 218, 255, 127);
+	background-color: transparent;
+	border-image:url(:/image/tbAddUser.png);
+	font-family:"Microsoft YaHei";
+	
+}
+
+QComboBox#cbProjectNameFilt{
+	height: 45px;
+	font: 18px;
+	color: rgba(153, 218, 255, 127);
+	background-color: transparent;
+	font-family:"Microsoft YaHei";
+}
+
+QToolButton#btnUploadSoft:hover,#btnModSoft:hover,#btnDelSoft:hover,#btnSoftLog:hover,#btnAddHost:hover,#btnDelHost:hover,#btnShutdown:hover,#btnStartup:hover,#btnModHost:hover{
+	border-image:url(:/image/tbAddUser_pressed.png);
+	color:#99daff;
+}
+
+QToolButton#btnUploadSoft:pressed,#btnModSoft:pressed,#btnDelSoft:pressed,#btnSoftLog:pressed,#btnAddHost:pressed,#btnDelHost:pressed,#btnShutdown:pressed,#btnStartup:pressed,#btnModHost:pressed{
+	border-image:url(:/image/tbAddUser_checked.png);
+	color:#d4d4d4;
+}
+
+HostResourceDialog QToolButton#btnModHost,#tbStartup, #tbShutdown{
+	font-family:"Microsoft YaHei";
+	font: 12px;
+	color: rgba(255, 255, 255, 127);
+	background-color: transparent;
+	border-image:url(:/image/tbAddUser.png);
+}
+
+QToolButton#btnModHost:hover,#tbStartup:hover,#tbShutdown:hover{
+	color:#99daff;
+	border-image:url(:/image/tbAddUser_pressed.png);
+}
+
+QToolButton#btnModHost:pressed,#tbStartup:pressed,#tbShutdown:pressed{
+	color:#d4d4d4;
+	border-image:url(:/image/tbAddUser_checked.png);
+}
+
+/*
+ * 预案管理界面----------增加按钮,修改按钮
+ */
+QToolButton#btnAddCase, #btnAddCaseSoft, #btnModCase, #btnModCaseSoft{
+	font-family:"Microsoft YaHei";
+	font:22px;
+	color:rgba(0, 255, 255, 127);
+	width:127px;
+	height:26px;
+	border-image:url(:/image/btn_exec_add.png);
+}
+
+QToolButton#btnAddCase:hover, #btnAddCaseSoft:hover, #btnModCase:hover, #btnModCaseSoft:hover{
+	color:rgb(0, 255, 255);
+	border-image:url(:/image/btn_exec_add_hover.png);
+}
+
+QToolButton#btnAddCase:pressed, #btnAddCaseSoft:pressed, #btnModCase:pressed, #btnModCaseSoft:pressed{
+	border-image:url(:/image/btn_exec_add_checked.png);
+}
+
+QToolButton#btnAddCase, #btnAddCaseSoft{
+	margin-left:48px;
+	margin-right:2px;
+}
+
+QToolButton#btnExecCase, #btnExecCaseSoft{
+	margin-left:1px;
+	margin-right:48px;
+}
+
+
+/*
+ * 预案管理界面----------执行按钮,删除按钮
+ */
+QToolButton#btnExecCase, #btnDelCase,#btnDelCaseSoft,#btnExecCaseSoft{
+	font-family:"Microsoft YaHei";
+	font:22px;
+	color:rgba(255, 102, 102, 127);
+	width:127px;
+	height:26px;
+	border-image:url(:/image/btn_mov_del.png);
+}
+
+QToolButton#btnExecCase:hover, #btnDelCase:hover, #btnDelCaseSoft,#btnExecCaseSoft:hover{
+	color:rgba(255, 102, 102);
+	border-image:url(:/image/btn_mov_del_hover.png);
+}
+
+QToolButton#btnExecCase:pressed, #btnDelCase:pressed, #btnDelCaseSoft,#btnExecCaseSoft:pressed{
+	border-image:url(:/image/btn_mov_del_checked.png);
+}
+QLabel#lbltb{
+	width:147px;
+	height:33px;
+}
+
+/*
+ * 状态样式
+ */
+BaseFrame[transBackground="false"] QPushButton#btHelp{
+	width: 36px;
+	height: 36px;
+	border-image: url(:/image/help.png);
+	background-color: transparent;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btHelp:hover{
+	border-image: url(:/image/help_hover.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btHelp:pressed{
+	border-image: url(:/image/help_checked.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMinWindow{
+	width: 36px;
+	height: 36px;
+	border-image: url(:/image/MinWindow.png);
+	background-color: transparent;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMinWindow:hover{
+	border-image: url(:/image/MinWindow_hover.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMinWindow:pressed{
+	border-image: url(:/image/MinWindow_checked.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMaxWindow{
+	width: 36px;
+	height: 36px;
+	border-image: url(:/image/MaxWindow.png);
+	background-color: transparent;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMaxWindow:hover{
+	border-image: url(:/image/MaxWindow_hover.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btMaxWindow:pressed{
+	border-image: url(:/image/MaxWindow_checked.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btCloseWindow{
+	width: 36px;
+	height: 36px;
+	border-image: url(:/image/CloseWindow.png);
+	background-color: transparent;
+}
+
+BaseFrame[transBackground="false"] QPushButton#btCloseWindow:hover{
+	border-image: url(:/image/CloseWindow_hover.png);
+}
+
+BaseFrame[transBackground="false"] QPushButton#btCloseWindow:pressed{
+	border-image: url(:/image/CloseWindow_checked.png);
+}
+
+BaseFrame[transBackground="true"] QPushButton#btCloseWindow{
+	width: 36px;
+	height: 36px;
+	border-image: url(:/image/CloseWindow.png);
+	background-color: transparent;
+}
+
+BaseFrame[transBackground="true"] QPushButton#btCloseWindow:hover{
+	border-image: url(:/image/CloseWindow_hover.png);
+}
+
+BaseFrame[transBackground="true"] QPushButton#btCloseWindow:pressed{
+	border-image: url(:/image/CloseWindow_checked.png);
+}
+
+
+QPushButton#tbSure:hover{
+	border-image:url(:/image/pageSure_hover.png);
+}
+
+QPushButton#tbSure:pressed{
+	border-image:url(:/image/pageSure_checked.png);
+}
+
+/*
+ * 页面按钮统一样式
+ */
+QTextEdit {
+	background-color: transparent;
+	border: 0px;
+	color: rgba(16, 255, 255, 127);
+	font:13px;
+	color:#0bdff8;
+}
+
+/*
+ * 表格样式
+ */
+QTableWidget{
+	border: 1px;
+	font:18px;
+	color:#0bdff8;
+	gridline-color:transparent;
+	background-color:rgb(11, 161, 248, 25.6);
+	/*
+	alternate-background:rgba(11, 161, 248, 25.6);
+	*/
+}
+
+QTableWidget::item:focus, QTableView::item:focus, QListWidget::item:focus, QListView::item:focus, QTreeWidget::item:focus, QTreeView::item:focus {
+	padding: -1px;
+}
+
+QListWidget{
+	border: 0px;
+	background-color: transparent;
+	font:18px;
+	color:#0bdff8;
+	gridline-color:transparent;
+	margin-top:100px;
+	margin-left:40px;
+	margin-right:40px;
+}
+
+QLine{
+	background-color:blue;
+	color:blue;
+}
+	
+/*
+ * 表格头样式
+ */
+ 
+CReTableWidget#twUser QHeaderView, #twSoft QHeaderView, #twExceCase QHeaderView{
+	font:22px;
+	color:#ffffff;
+	border-image:url(:/image/twUser_header_color.png);
+}
+
+CReTableWidget#twUser QHeaderView::section, #twSoft QHeaderView::section, #twExceCase QHeaderView::section{
+	border:0px;
+	background-color:rgb(11, 161, 248, 25.6);
+	height:70px;
+}
+
+CReTableWidget{
+	width:270px;
+	height:1px;
+	color:rgba(255, 255, 255, 153.6);
+	border-bottom:1px;
+	alternate-background-color:rgb(11, 161, 248, 51.2);
+}
+
+CReTableWidget::item{
+	height:150px;
+}
+
+CReTableWidget::item:hover, QTableWidget::item:hover{
+	border-image:url(:/image/twUser_hover_color.png);
+}
+
+CReTableWidget::item:selected, QTableWidget::item:selected{
+	color:#ffffff;
+	background-color:#0ba1f8;
+}
+/********************************************登录界面********************************************/
+
+QWidget#LoginWidget
+QLineEdit{
+	padding:0 8px;
+}
+
+QWidget#wdgMonitorBg{
+	border-image:url(:/image/MonitorWidget.png);
+}
+
+QLabel#leWindowIcon{
+	margin-top: 10px;
+	margin-left: 36px;
+	margin-bottom: 10px;
+	min-width: 40px;
+	min-height: 40px;
+	border-image:url(:/image/exeIcon.png);
+	
+}
+
+/********************************************增加用户Dialog********************************************/
+BaseFrame#UserDialogBase
+QWidget#wdgBackgroud{
+	border-image:url(:/image/user_add_bg.png);
+}
+
+BaseFrame#UserDialogBase
+QLabel#leWindowTitle{
+	color:#0dbff8;
+	font:30px;
+	margin-top:5px;
+}
+
+
+/********************************************信息综合展示---主机资源Dialog********************************************/
+BaseFrame#HostResourceDialogBase
+QWidget#wdgBackgroud{
+	border-image:url(:/image/wdg_CaseHostSoft_Bg.png);
+	min-width:699px;
+	min-height:620px;
+	
+	
+}
+
+BaseFrame#HostResourceDialogBase
+QWidget#wigTitleBar{
+	margin-right:120px;
+	padding-right:20px;
+}
+
+BaseFrame#HostResourceDialogBase
+QWidget#wigTitleBar
+QPushButton{
+	height:27px;
+	width:27px;
+	margin-right:40px;
+}
+
+BaseFrame#HostResourceDialogBase
+QGroupBox{
+	border:0px;
+	font:15px;
+	color:rgba(0,255,255,0.9);
+	margin-top:10px;
+}
+
+BaseFrame#HostResourceDialogBase
+QGroupBox#gbHost{
+	width:254px;
+	height:199px;
+}
+
+BaseFrame#HostResourceDialogBase
+QGroupBox#gbHost{
+	width:254px;
+	height:199px;
+}
+
+
+BaseFrame#HostResourceDialogBase QLabel#leWindowTitle{
+	font-family:"Microsoft YaHei";
+	color: #99daff;
+	font: 23px;
+	margin-top: 29px;
+	margin-left: 70px;
+}
+
+BaseFrame#HostResourceDialogBase
+QGroupBox
+QLabel{
+	border:0px;
+	font:15px;
+	color:rgba(0,255,255,0.6);
+	margin-left:0px;
+	text-align:left;
+}
+
+QTableWidget#twSoftState
+QHeaderView{
+	border-image:url(:/image/HostResourceHeaderView.png);
+	font-family:"Microsoft YaHei";
+	font:12px;
+	color:rgba(0,255,255,0.6);
+}
+
+QTableWidget#twSoftState
+QHeaderView::section{
+	border:0px;
+	background-color:rgb(11, 161, 248, 25.6);
+	height:26px;
+}
+
+QTableWidget#twSoftState{
+	width:270px;
+	height:1px;
+	font:12px;
+	color:rgba(255, 255, 255, 153.6);
+	border-bottom:1px;
+	margin-top:10px;
+	margin-bottom:27px;
+}
+
+/********************************************信息综合展示---新增主机Dialog********************************************/
+
+BaseFrame#HostDialogBase QWidget#wdgBackgroud {
+	border-image: url(:/image/user_add_bg.png);
+}
+
+BaseFrame#HostDialogBase
+QLabel#leWindowTitle{
+	color:#0dbff8;
+	font:32px;
+	margin-top:12px;
+	margin-left:36px;
+}
+
+
+QDialog#HostDialog
+QPushButton{
+	border-image:url(:/image/btn_default.png);
+}
+
+QDialog#HostDialog
+QPushButton:hover{
+	border-image:url(:/image/btn_hover.png);
+}
+
+QDialog#HostDialog
+QPushButton:checked{
+	border-image:url(:/image/btn_clicked.png);
+}
+
+/*
+ * QLable
+ */
+QDialog#HostDialog
+QLabel{
+	color:#0ba1f8;
+	font:16px;
+}
+
+HostDialog QLabel#lblIp, HostDialog QLabel#lblHost{
+	max-width:26px;
+	max-height: 25px;
+	min-width: 26px;
+	min-height: 25px;
+	margin-left:25px;
+	image: url(:/image/in_flags.png);
+}
+
+HostDialog QLabel#lblCPUType, HostDialog QLabel#lblHostType, HostDialog QLabel#lblOSType{
+	max-width:26px;
+	max-height: 25px;
+	min-width: 26px;
+	min-height: 25px;
+	image: url(:/image/in_flags.png);
+}
+
+QDialog#HostDialog
+QComboBox{
+	color:#0ba1f8;
+	font:16px;
+	
+}
+
+QComboBox::drop-down{
+	color:#0ba1f8;
+	margin-top:5px;
+	margin-right:10px;
+	image:url(:/image/QComboBox_btn.png);
+	width:10px;
+	height:15px;
+}
+
+QDialog#HostDialog
+QComboBox QAbstractItemView{
+	border-image:url(:/image/QComboBox_item.png) ;
+}
+
+QDialog#HostDialog
+QComboBox QAbstractItemView::item{
+	background-color:red;	
+	border-image:url(:/image/QComboBox_item.png);
+}
+
+QDialog#HostDialog
+QComboBox QAbstractItemView::item:hover{
+background-color:red;
+}
+
+QDialog#HostDialog
+QComboBox QAbstractItemView::item:selected{
+background-color:red;
+
+}
+
+QDialog#HostDialog
+QLineEdit{
+	color:#0ba1f8;
+	font:16px  ;
+}
+QDialog#HostDialog
+QLabel#lblError{
+	font-family:"Microsoft YaHei";
+	color:#ff6666;
+	font:20px;
+	font:bold;
+}
+
+QDialog#HostResourceDialog{
+	height:618px;
+	width:599px;
+}
+
+
+BaseFrame#HostResourceDialogBase QLabel#lblIp, 
+BaseFrame#HostResourceDialogBase QLabel#lblHost, 
+BaseFrame#HostResourceDialogBase QLabel#lblNetState, 
+BaseFrame#HostResourceDialogBase QLabel#lblCPURate, 
+BaseFrame#HostResourceDialogBase QLabel#lblMemUseRate, 
+BaseFrame#HostResourceDialogBase QLabel#lblMemUse, 
+BaseFrame#HostResourceDialogBase QLabel#lblLeftDisk,
+BaseFrame#HostResourceDialogBase QLabel#lblOSType, 
+BaseFrame#HostResourceDialogBase QLabel#lblHostType, 
+BaseFrame#HostResourceDialogBase QLabel#lblCPUType, 
+BaseFrame#HostResourceDialogBase QLabel#lblMac{
+	margin-left:0px;
+	text-align:left;
+	padding-left:0px;
+	color:rgba(0,255,255,0.9);
+}
+
+/************************************软件仓库管理************************************/
+/*
+CReTableWidget#twSoft{
+	width:270px;
+	height:1px;
+	color:rgba(255, 255, 255, 153.6);
+	border-bottom:1px;
+	alternate-background-color:rgb(11, 161, 248, 51.2);
+}
+
+CReTableWidget#twSoft::item{
+	height:150px;
+}
+
+CReTableWidget#twSoft::item:hover{
+	border-image:url(:/image/twUser_hover_color.png);
+}
+
+CReTableWidget#twSoft::item:selected{
+	color:#ffffff;
+	background-color:#0ba1f8;
+}
+*/
+
+QListWidget::item{
+	height: 36px;
+	border-image:url(:/image/SoftOsManager_list_def.png);
+}
+
+QListWidget::item:hover{
+	border-image:url(:/image/SoftOsManager_list_hover.png);
+}
+
+QListWidget::item:selected{
+	color:rgb(0, 255, 255);
+	border-image:url(:/image/SoftOsManager_list_checked.png);
+}
+
+QComboBox#cbProjectNameFilt{
+	font:16px;
+	color:#0ba1f8;
+	border-image:url(:/image/Combox.png);
+}
+
+QComboBox#cbProjectNameFilt:checked{
+	border-image:url(:/image/Combox_checked.png);
+}
+
+QComboBox#cbProjectNameFilt:on{
+	border-image:url(:/image/Combox.png);
+}
+
+/************************************软件仓库管理---上传软件************************************/
+
+BaseFrame#SoftDialogBase
+QWidget#wdgBackgroud{
+	border-image:url(:/image/user_add_bg.png);
+}
+
+BaseFrame#SoftDialogBase
+QLabel#leWindowTitle{
+	color:rgb(11,223,248);
+	font:35px;
+	margin-top:15px;
+	margin-left:36px;
+}
+
+QDialog#SoftDialog
+QLabel{
+	font:16px  ;
+	color:rgb(11,161,248);
+}
+
+QDialog#SoftDialog
+QLabel#lblError{
+	font:20px;
+	color:#ff6666;
+}
+
+QDialog#SoftDialog
+QLabel#lblFilePath,QDialog#SoftDialog #lblFileName,QDialog#SoftDialog #lblOSType,QDialog#SoftDialog #lblCPUType,QDialog#SoftDialog #lblVersion{
+	border-image:url(:/image/in_flags.png);
+}
+
+
+QDialog#SoftDialog
+QLineEdit{
+	font:16px;
+	color:rgb(11,161,248);
+}
+
+QDialog#SoftDialog
+QGroupBox{
+	border:1px;
+    font:16px;
+	color:rgb(11,161,248);
+}
+
+QDialog#SoftDialog
+QTextEdit{
+	
+	border-image:url(:/image/textEditBG.png);
+    font:14px;
+	color:#0884cc;
+}
+
+QDialog#SoftDialog
+QProgressBar{
+    border: 0px;
+    border-radius: 5px;
+	background-color: rgba(0,255,255,0.03);
+}
+ 
+QDialog#SoftDialog
+QProgressBar::chunk{
+    background-color: #00ffff;
+    width: 20px;
+}
+ 
+QDialog#SoftDialog
+QPushButton{
+	font:20px;
+	border-image:url(:/image/msg_btn.png);
+}
+QDialog#SoftDialog
+QPushButton:hover{	
+	border-image:url(:/image/msg_btn_hover.png);
+}
+QDialog#SoftDialog
+QPushButton:pressed{	
+	border-image:url(:/image/msg_btn_pressed.png);
+}
+ 
+/************************************软件仓库管理---日志查看************************************/
+BaseFrame#SoftLogBaseFrame
+QWidget#wdgBackgroud{
+	border-image:url(:/image/user_add_bg.png);
+}
+
+BaseFrame#SoftLogBaseFrame
+QLabel#leWindowTitle{
+	color:rgb(11,223,248);
+	font:35px;
+	margin-top:15px;
+	margin-left:32px;
+}
+
+
+QDialog#SoftLogDialog
+QTableWidget
+QHeaderView{
+	color:#00ffff;		
+	color:#00ffff;		
+	font:16px  ;
+}
+
+QDialog#SoftLogDialog
+QTableWidget
+QHeaderView::section{
+	border:0px;
+	height:30px;
+	border-image:url(:/image/HostResourceHeaderView.png);
+}
+
+QDialog#SoftLogDialog
+QTableWidget{
+	width:270px;
+	color:rgba(255, 255, 255, 153.6);
+}
+
+QDialog#SoftLogDialog
+QTableWidget::item{
+	border-image:url(:/image/HostResourceTableItemDefault.png);
+	height:25px;
+	color:#00ffff;
+}
+
+QDialog#SoftLogDialog
+QTableWidget::item:hover{
+	border-image:url(:/image/twUser_hover_color.png);
+}
+
+QDialog#SoftLogDialog
+QTableWidget::item:selected{
+	border-image:url(:/image/HostResourceTableItemSelect.png);
+}
+
+QDialog#SoftLogDialog
+QPushButton{
+	font:20px;
+	border-image:url(:/image/msg_btn.png);
+}
+QDialog#SoftLogDialog
+QPushButton:hover{	
+	border-image:url(:/image/msg_btn_hover.png);
+}
+QDialog#SoftLogDialog
+QPushButton:pressed{	
+	border-image:url(:/image/msg_btn_pressed.png);
+}
+
+
+
+/*
+ * 滚动条样式
+ */
+QScrollBar:vertical{
+
+}
+
+QScrollBar::handle:vertical{
+	width: 22px;
+	height: 38px;
+	border-image:url(:/image/SoftOsManager_list.png);
+}
+
+
+QScrollBar:horizontal{
+
+}
+
+QScrollBar::handle:vertical{
+	width: 38px;
+	height: 22px;
+	border-image:url(:/image/Monitor_down_checked.png);
+}
+
+QScrollBar::handle:horizontal{
+	width: 38px;
+	height: 22px;
+	border-image:url(:/image/Monitor_down.png);
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{
+	background-color: transparent;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal{
+	background-color: transparent;
+}
+
+QScrollBar::handle:horizontal:checked{
+	border-image:url(:/image/Monitor_down_checked.png);
+}
+
+QScrollBar::add-line:vertical, QScrollBar::add-line:horizontal{
+	background-color: transparent;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::sub-line:horizontal{
+	background-color: transparent;
+}
+
+
+QGraphicsView{
+	border: 0px;
+	background-color: transparent;
+	font:15px;
+	color:#0bdff8;
+}
+
+/*
+ * 显控台、主机服务器、虚拟机服务器选择按钮
+ */
+QCheckBox#cbSeat, #cbServer, #cbVServer,#label_4,#label_8,#label_9{
+	spacing:10px;
+	font: 16px;
+	color: #0ba1f8;
+}
+
+/*
+ * 显控台、主机服务器、虚拟机服务器选择按钮
+ */
+QCheckBox#cbSeat, #cbServer, #cbVServer, #cbModPassword{
+	spacing:10px;
+	font: 16px;
+	color: #0ba1f8;
+}
+
+QCheckBox#cbSeat:hover, #cbServer:hover, #cbVServer:hover, #cbModPassword:hover,#label_4,#label_8,#label_9{
+	color: #0bdff8;
+}
+
+QCheckBox#cbSeat:hover, #cbServer:hover, #cbVServer:hover, #cbModPassword:indicator{
+	color: #0bdff8;
+}
+
+QCheckBox#cbSeat:checked, #cbServer:checked, #cbVServer:checked, #cbModPassword:checked{
+	color: #0bdff8;
+}
+
+QCheckBox#cbSeat::indicator, #cbServer::indicator, #cbVServer::indicator{
+	width:23px;
+	height:22px;
+	border-image:url(:/image/QCheckBox.png);
+}
+
+/*
+ * 按钮未选中时状态
+ */
+QCheckBox#cbSeat::indicator:unchecked, #cbServer::indicator:unchecked, #cbVServer::indicator:unchecked{
+	border-image:url(:/image/QCheckBox.png);
+}
+
+QCheckBox#cbSeat::indicator:unchecked:hover, #cbServer::indicator:unchecked:hover, #cbVServer::indicator:unchecked:hover{
+	border-image:url(:/image/QCheckBox_hover.png);
+}
+
+QCheckBox#cbSeat::indicator:unchecked:pressed, #cbServer::indicator:unchecked:pressed, #cbVServer::indicator:unchecked:pressed{
+
+}
+
+/*
+ * 按钮选中时状态
+ */
+QCheckBox#cbSeat::indicator:checked, #cbServer::indicator:checked, #cbVServer::indicator:checked{
+	border-image:url(:/image/QCheckBox_checked.png);
+}
+
+QCheckBox#cbSeat::indicator:checked:hover, #cbServer::indicator:checked:hover, #cbVServer::indicator:checked:hover{
+
+}
+
+QCheckBox#cbSeat::indicator:checked:pressed, #cbServer::indicator:checked:pressed, #cbVServer::indicator:checked:pressed{
+
+}
+
+/*
+ * 新增主机
+ */
+QComboBox#cbHostType, #cbOSType, #cbCPUType,#cbProject,#cbSoftwareType,#cbNeedInstall{
+	font:16px;
+	color:#0ba1f8;
+	border-image:url(:/image/Combox.png);
+}
+
+QComboBox#cbHostType:checked, #cbOSType:checked, #cbCPUType:checked,#cbProject:checked,#cbSoftwareType:checked,#cbNeedInstall:checked{
+	border-image:url(:/image/Combox_checked.png);
+}
+
+QComboBox#cbHostType:on, #cbOSType:on, #cbCPUType:on,#cbProject:on,#cbSoftwareType:on,#cbNeedInstall:on{
+	border-image:url(:/image/Combox.png);
+}
+
+/*
+QComboBox#cbHostType:drown-arrow, #cbOSType:drown-arrow, #cbCPUType:drown-arrow{
+	border-image:url(:/image/Combox_button.png);
+}
+*/
+
+QCheckBox#cbSeat:checked, #cbServer:checked, #cbVServer:checked, #cbModPassword:checked{
+	color: #0bdff8;
+}
+
+QCheckBox#cbSeat::indicator, #cbServer::indicator, #cbVServer::indicator, #cbModPassword:indicator{
+	width:23px;
+	height:22px;
+	border-image:url(:/image/QCheckBox.png);
+}
+
+/*
+ * 按钮未选中时状态
+ */
+QCheckBox#cbSeat::indicator:unchecked, #cbServer::indicator:unchecked, #cbVServer::indicator:unchecked, #cbModPassword:indicator:unchecked{
+	border-image:url(:/image/QCheckBox.png);
+}
+
+QCheckBox#cbSeat::indicator:unchecked:hover, #cbServer::indicator:unchecked:hover, #cbVServer::indicator:unchecked:hover, #cbModPassword::indicator:unchecked:hover{
+	border-image:url(:/image/QCheckBox_hover.png);
+}
+
+QCheckBox#cbSeat::indicator:unchecked:pressed, #cbServer::indicator:unchecked:pressed, #cbVServer::indicator:unchecked:pressed{
+	
+}
+
+/*
+ * 按钮选中时状态
+ */
+QCheckBox#cbSeat::indicator:checked, #cbServer::indicator:checked, #cbVServer::indicator:checked, #cbModPassword:indicator:checked{
+	border-image:url(:/image/QCheckBox_checked.png);
+}
+
+QCheckBox#cbSeat::indicator:checked:hover, #cbServer::indicator:checked:hover, #cbVServer::indicator:checked:hover{
+
+}
+
+QCheckBox#cbSeat::indicator:checked:pressed, #cbServer::indicator:checked:pressed, #cbVServer::indicator:checked:pressed{
+
+}
+
+/*
+ * 新增主机
+ */
+QComboBox#cbHostType, #cbOSType, #cbCPUType,#cbProject,#cbSoftwareType,#cbNeedInstall{
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#0ba1f8;
+	margin:0px;
+	padding-left:25px;
+	border-image:url(:/image/Combox.png);
+}
+
+
+QComboBox#cbHostType:checked, #cbOSType:checked, #cbCPUType:checked,#cbProject:checked,#cbSoftwareType:checked,#cbNeedInstall:checked{
+	border-image:url(:/image/Combox_checked.png);
+}
+
+QComboBox:on{
+	color:#0bdff8;
+	background-color:transparent;
+}
+
+/*
+QComboBox#cbHostType:on, #cbOSType:on, #cbCPUType:on{
+	color:#0ba1f8;
+	background-color:transparent;
+}
+*/
+
+/*
+QComboBox#cbHostType:drown-arrow, #cbOSType:drown-arrow, #cbCPUType:drown-arrow{
+	border-image:url(:/image/Combox_button.png);
+}
+*/
+
+/*
+ * QComboBox下拉框样式
+ */
+QComboBox QAbstractItemView{
+	font:12px;
+	color:#0bdff8;
+	border-image:url(:/image/Combox_checked.png);
+}
+
+/************************************预案管理界面************************************/
+/*
+ * 部署预案框bg
+ */
+QWidget#wdgCase {
+	width: 671px;
+	height: 829px;
+	border-image: url(:/image/wdg_ExecCase_BG.png);
+}
+
+/*
+ * 预案主机框bg
+ */
+QWidget#wdgCaseHost {
+	width: 671px;
+	height: 829px;
+	border-image: url(:/image/wdg_CaseHost_BG.png);
+}
+
+/*
+ * 增加、修改预案页面标题
+ */
+BaseFrame#CaseAddDialogBase QLabel#leWindowTitle{
+	color: #0dbff8;
+	font: 28px;
+	font-weight:bold;
+	margin-top: 3px;
+	margin-left: 10px;
+}
+
+/*
+ * 增加、修改预案主机页面标题
+ */
+BaseFrame#CaseSoftAddDialogBase QLabel#leWindowTitle{
+	color: #0dbff8;
+	font: 28px;
+	font-weight:bold;
+	margin-top: 25px;
+	margin-left: 0px;
+}
+
+/*
+ * 增加预案备注框
+ */
+QWidget#wdgRemark {
+	border-image: url(:/image/wdg_edit_bg.png);
+}
+
+QTableWidget#twCase, #twCaseSoft{
+	margin-top:150px;
+	margin-bottom:20px;
+	margin-left:70px;
+	margin-right:70px;
+}
+
+QTableWidget#twCase QHeaderView, #twCaseSoft QHeaderView, #twSelectedSoft QHeaderView, #twOptionalSoft QHeaderView{
+	font:16px;
+	color:#ffffff;
+	border-image:url(:/image/twUser_header_color.png);
+}
+
+/*
+ * 表头
+ */
+QTableWidget#twCase QHeaderView::section, #twCaseSoft QHeaderView::section, #twSelectedSoft QHeaderView::section, #twOptionalSoft QHeaderView::section{
+	border:0px;
+	height:35px;
+	background-color:rgb(11, 161, 248, 25.6);
+}
+
+QTableWidget#twCase, #twCaseSoft{
+	font-size:16px;
+}
+
+QToolButton#btnDelAll{
+	border-image: url(:/image/arrow_mark_big_delAll.png);
+}
+
+QToolButton#btnDelAll:hover{
+	border-image: url(:/image/arrow_mark_big_delAll_hover.png);
+}
+
+QToolButton#btnDelAll:checked{
+	border-image: url(:/image/arrow_mark_big_delAll_checked.png);
+}
+
+QToolButton#btnDelAll:unchecked{
+	border-image: url(:/image/arrow_mark_big.png);
+}
+
+QToolButton#btnDel{
+	border-image: url(:/image/arrow_mark_little_del.png);
+}
+
+QToolButton#btnDel:hover{
+	border-image: url(:/image/arrow_mark_little_del__hover.png);
+}
+
+QToolButton#btnDel:checked{
+	border-image: url(:/image/arrow_mark_little_del_checked.png);
+}
+
+QToolButton#btnAdd{
+	border-image: url(:/image/arrow_mark_little_add.png);
+}
+
+QToolButton#btnAdd:hover{
+	border-image: url(:/image/arrow_mark_little_add_hover.png);
+}
+
+QToolButton#btnAdd:checked{
+	border-image: url(:/image/arrow_mark_little_add_checked.png);
+}
+
+QToolButton#btnAddAll{
+	border-image: url(:/image/arrow_mark_big_addAll.png);
+}
+
+QToolButton#btnAddAll:hover{
+	border-image: url(:/image/arrow_mark_big_addAll_hover.png);
+}
+
+QToolButton#btnAddAll:checked{
+	border-image: url(:/image/arrow_mark_big_addAll_checked.png);
+}
+
+QToolButton#btnConfirm, QToolButton#btnCancel, QPushButton#btnConfirm, QPushButton#btnCancel{
+	width: 146px;
+	height: 33px;
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#00ffff;
+	border-image: url(:/image/msg_btn.png);
+}
+
+QToolButton#btnConfirm:hover, QToolButton#btnCancel:hover, QPushButton#btnConfirm:hover, QPushButton#btnCancel:hover{
+	color:#ffffff;
+	border-image: url(:/image/msg_btn_hover.png);
+}
+
+QToolButton#btnConfirm:checked, QToolButton#btnCancel:checked, QPushButton#btnConfirm:checked, QPushButton#btnCancel:checked{
+	border-image: url(:/image/msg_btn_pressed.png);
+}
+
+QToolButton#tbNoChecked{
+	width: 127px;
+	height: 30px;
+	border-image: url(:/image/btn_mov_del.png);
+}
+
+
+CaseDialog QLabel#lblCaseId, #lblCaseName{
+	width: 26px;
+	height: 25px;
+	border-image: url(:/image/in_flags.png);
+}
+
+CaseDialog QLabel#lblCaseIdTitle, #lblCaseNameTitle, #lblRemarkTitle{
+	color:#0ba1f8;
+}
+
+CaseDialog QLabel#lblError{
+	font:20px;
+	font-family:"Microsoft YaHei";
+	color:#ff6666;
+}
+
+CaseDialog QLineEdit#leCaseId, #leCaseName{
+	font:16px;
+	color:#0ba1f8;
+	border-image: url(:/image/wdg_edit_bg.png);
+}
+
+CaseDialog QTextEdit#teRemark{
+	font:14px;
+	font-family:"Microsoft YaHei";
+	color:#0884cc;
+	padding-left:10px;
+	padding-top:17px;
+	
+}
+/************************************预案管理界面------预案主机管理************************************/
+CaseSoftDialog QLabel{
+	font-family:"Microsoft YaHei";
+	font:14px;
+	color:#00ffff;
+}
+
+CaseSoftDialog QLabel#lblCaseId, QLabel#lblHostType, QLabel#lblOSType, QLabel#lblCPUType, QLabel#lblIP{
+	font:16px;
+	color:#0ba1f8;
+	padding-left:0px;
+	margin-left:0px;
+}
+
+QTableWidget#twOptionalSoft{
+	font-family:"Microsoft YaHei";
+	font-size:12px;
+	color:rgba(0, 255, 255, 180);
+}
+
+QTableWidget#twSelectedSoft{
+	font-family:"Microsoft YaHei";
+	font-size:12px;
+	color:#00ffff;
+}
+
+/*
+ * 选择处理器
+ */
+ 
+CaseSoftDialog QComboBox#cbIP,QComboBox#cbHost{
+	font-family:"Microsoft YaHei";
+	font-size:16px;
+	color:#0ba1f8;
+	margin:0px;
+	padding-left:25px;
+	border-image:url(:/image/Combox.png);
+	border-image:url(:/image/Combox_checked.png);
+	width:200px;
+}
+
+CaseSoftDialog QComboBox#cbHost:checked{
+	border-image:url(:/image/Combox_checked.png);
+	border-image:url(:/image/Combox.png);
+}
+
+/*
+CaseSoftDialog QComboBox#cbHost:on{
+	color:#0ba1f8;
+	background-color:transparent;
+}
+*/
+
+/*
+CaseSoftDialog QComboBox#cbHost:drown-arrow{
+	border-image:url(:/image/Combox_button.png);
+}
+*/
+
+/*
+ * QComboBox下拉框样式
+ */
+CaseSoftDialog QComboBox QAbstractItemView{
+	font:12px;
+	color:#0bdff8;
+	border-image:url(:/image/Combox_checked.png);
+}
+
+CaseSoftDialog #lblCPUType, #lblIP,#lblHost_2{
+	padding-left:25px;
+	color:#0ba1f8;
+}
+
+/************************************执行预案界面************************************/
+
+QWidget #widget_5{
+	margin-top:50px;
+}
+
+
+
+
+
+

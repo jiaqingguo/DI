@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/acrobat-reader.png</file>
+        <file>image/add.png</file>
+        <file>image/adobe_after_effects.png</file>
+        <file>image/adobe_illustrator.png</file>
+        <file>image/adobe_indesign.png</file>
+        <file>image/adobe_lightroom.png</file>
+        <file>image/adobe_photoshop.png</file>
+        <file>image/adobe_xd.png</file>
+        <file>image/ApprovalProgress--.png</file>
+        <file>image/ApprovalProgress.png</file>
+        <file>image/ApprovalProgress_select.png</file>
+        <file>image/combo.png</file>
+        <file>image/DataManage.png</file>
+        <file>image/DataManage_select.png</file>
+        <file>image/error-50.png</file>
+        <file>image/error.png</file>
+        <file>image/exclamation Point.png</file>
+        <file>image/fingerprint.png</file>
+        <file>image/InformationConfihuration.png</file>
+        <file>image/InformationConfihuration_select.png</file>
+        <file>image/load-gray.png</file>
+        <file>image/load.png</file>
+        <file>image/password.png</file>
+        <file>image/Register.png</file>
+        <file>image/RegisterNo.png</file>
+        <file>image/ResourceManage.png</file>
+        <file>image/ResourceManage_select.png</file>
+        <file>image/save-gray.png</file>
+        <file>image/save.png</file>
+        <file>image/shadow.png</file>
+        <file>image/user.png</file>
+        <file>image/user_error.png</file>
+        <file>image/user_focusin--.png</file>
+        <file>image/user_focusin.png</file>
+        <file>image/yes.PNG</file>
+        <file>image/tubiao.png</file>
+    </qresource>
+</RCC>
