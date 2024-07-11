@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDialog>
@@ -72,8 +73,9 @@ public:
     QLabel *labelUserPage;
     QPushButton *btnUserNext;
     QLabel *label_3;
-    CLineEdit *lineEditUserPage;
+    QLineEdit *lineEditUserPage;
     QLabel *label_4;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *ApprovalProgressDialog)
     {
@@ -91,11 +93,15 @@ public:
         horizontalLayout->addItem(horizontalSpacer);
 
         btnData = new QPushButton(ApprovalProgressDialog);
+        buttonGroup = new QButtonGroup(ApprovalProgressDialog);
+        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
+        buttonGroup->addButton(btnData);
         btnData->setObjectName(QString::fromUtf8("btnData"));
 
         horizontalLayout->addWidget(btnData);
 
         btnUser = new QPushButton(ApprovalProgressDialog);
+        buttonGroup->addButton(btnUser);
         btnUser->setObjectName(QString::fromUtf8("btnUser"));
 
         horizontalLayout->addWidget(btnUser);
@@ -207,6 +213,11 @@ public:
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         comboBoxUserField = new QComboBox(page_2);
         comboBoxUserField->setObjectName(QString::fromUtf8("comboBoxUserField"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(comboBoxUserField->sizePolicy().hasHeightForWidth());
+        comboBoxUserField->setSizePolicy(sizePolicy1);
 
         horizontalLayout_5->addWidget(comboBoxUserField);
 
@@ -268,7 +279,7 @@ public:
 
         horizontalLayout_4->addWidget(label_3);
 
-        lineEditUserPage = new CLineEdit(page_2);
+        lineEditUserPage = new QLineEdit(page_2);
         lineEditUserPage->setObjectName(QString::fromUtf8("lineEditUserPage"));
         sizePolicy.setHeightForWidth(lineEditUserPage->sizePolicy().hasHeightForWidth());
         lineEditUserPage->setSizePolicy(sizePolicy);
@@ -301,7 +312,7 @@ public:
         ApprovalProgressDialog->setWindowTitle(QCoreApplication::translate("ApprovalProgressDialog", "\347\224\263\350\257\267\345\256\241\346\211\271", nullptr));
         btnData->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\225\260\346\215\256\345\256\241\346\211\271", nullptr));
         btnUser->setText(QCoreApplication::translate("ApprovalProgressDialog", "\347\224\250\346\210\267\345\256\241\346\211\271", nullptr));
-        lineEditDataQueryValue->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\220\234\347\264\242\345\205\263\351\224\256\345\255\227", nullptr));
+        lineEditDataQueryValue->setText(QString());
         label->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237\357\274\232", nullptr));
         btnDataQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
         btnDataApprovalLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
@@ -309,7 +320,7 @@ public:
         btnDataApprovalNext->setText(QCoreApplication::translate("ApprovalProgressDialog", ">", nullptr));
         label_5->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
         label_6->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
-        lineEditUserQueryValue->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\220\234\347\264\242\345\205\263\351\224\256\345\255\227", nullptr));
+        lineEditUserQueryValue->setText(QString());
         label_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237\357\274\232", nullptr));
         btnUserQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
         btnUserLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));

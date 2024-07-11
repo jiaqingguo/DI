@@ -50,6 +50,11 @@ int LoginDialog::GetLoginState()
 	return m_iState;
 }
 
+int LoginDialog::GetPop()
+{
+	return m_pop;
+}
+
 QString LoginDialog::GetUser()
 {
 	return m_sUser;
@@ -106,6 +111,7 @@ void LoginDialog::slot_btnLoginClicked()
 	else if (stData.approval == 2)
 	{
 		//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("管理员审核驳回));
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请输入正确的用户名密码!"));
 		return;
 	}
 
@@ -113,10 +119,12 @@ void LoginDialog::slot_btnLoginClicked()
 	db::databaseDI::Instance().get_pop(pop, m_sUser.toStdString(), sPassword.toStdString());*/
 	if (stData.Pop == 0)
 	{
+		m_pop = 0;
 		ui->stackedWidget->setCurrentIndex(1);
 	}
 	else
 	{
+		m_pop = 1;
 		this->accept();
 	//	this->hide();
 		/*g_pMainWindow->setUserNameText(m_sUser);

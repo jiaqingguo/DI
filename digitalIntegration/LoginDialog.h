@@ -45,7 +45,7 @@ public:
 
 
 	int GetLoginState();
-
+	int GetPop();
 	
 	QString GetUser();
 
@@ -89,7 +89,7 @@ private:
 
 	// 登录定时器
 	//QTimer m_Timer;
-
+	int m_pop = 1; // 用户权限;
 	// 当前登录用户
 	QString m_sUser;
 private:

@@ -6,6 +6,7 @@
 struct table_user;
 struct table_dataApproval;
 class QStandardItemModel;
+class QSpinBox;
 
 namespace Ui {
 class ApprovalProgressDialog;
@@ -23,7 +24,15 @@ public:
 private:
     void flushUserTableShow(std::list<table_user> &listUser);
     void flushDataTableShow(std::list<table_dataApproval>& listData,const int &offsetRows);
+  /*  std::list<table_user> processList(const std::list<table_user>& listUser, const int& num, const int& offsetRows);
+    std::list<table_dataApproval> processList(const std::list<table_dataApproval>& listUser, const int& num, const int& offsetRows);*/
+    template<typename T>
+    std::list<T> processList(const std::list<T>& listData, const int& num, const int& offsetRows);
 private slots:
+
+    void slot_btnDataShow();
+    void slot_btnUserShow();
+
 
     void slot_DataItemBtnClicked();
     void slot_ItemBtnClicked();
@@ -40,6 +49,7 @@ private slots:
     void slot_combocUserCurrentIndexChanged(int index);
     void slot_userQuery();
 
+    void slot_spinBoxEnter();
 private:
    // void hideTableRows(Q)
 private:
@@ -53,6 +63,11 @@ private:
 
     int m_UserTotalpage = 0;
     int m_UserTotalRows = 0;
+
+    std::list<table_user> m_listUser;
+    std::list<table_dataApproval> m_listDataApproval;
+    QSpinBox* spinBox;
 };
 
 #endif // APPROVALPROGRESSDIALOG_H
+

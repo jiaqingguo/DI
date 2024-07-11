@@ -331,6 +331,11 @@ void MainWindow::initInitface()
     //ui->layoutM1ToolIcon->addWidget(pBtn);
     if (m_LoginDialog->exec() == QDialog::Accepted)
     {
+        ui->labelUserName->setText(m_LoginDialog->GetUser());
+        if (m_LoginDialog->GetPop())
+        {
+            ui->btnApprovalProgress->hide();
+        }
         this->showMaximized();
     }
     else
@@ -385,8 +390,7 @@ void MainWindow::slot_btnAddToolTab()
         addToooDialog.getToolData(tabName,toolName, mode);
         QWidget* pWidget = new QWidget;
         if (moduleNumber == 1)
-        {
-            
+        { 
             WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
             if (winId != 0)
             {
