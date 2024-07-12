@@ -17,6 +17,12 @@ DataManageDialog::DataManageDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowIcon(QIcon(":/image/DataManage.png"));
     ui->stackedWidget->setCurrentIndex(0);
+
+    ui->btn1->setStyleSheet(strQssBlue);
+    ui->btn2->setStyleSheet(strQssGray);
+    ui->btn3->setStyleSheet(strQssGray);
+    ui->btn4->setStyleSheet(strQssGray);
+   
     init();
 }
 
@@ -27,10 +33,6 @@ DataManageDialog::~DataManageDialog()
 
 void DataManageDialog::init()
 {
-    ui->btn1->setCheckable(true);
-    ui->btn2->setCheckable(true);
-    ui->btn3->setCheckable(true);
-    ui->btn4->setCheckable(true);
 
     m_CPagedTableModel = new CPagedTableModel(this);
 
@@ -95,8 +97,8 @@ void DataManageDialog::init()
 void DataManageDialog::slot_ItemBtnClicked()
 {
     QPushButton* pButton = (QPushButton*)sender();
-   int row= pButton->property("row").toInt();
-     pButton->property("name").toString() ;
+    int row= pButton->property("row").toInt();
+    pButton->property("name").toString() ;
     int col= pButton->property("column").toInt();
 
     table_dataApproval stDataApproval;

@@ -21,6 +21,12 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     //ui->stackedWidget->setFocusPolicy(Qt::NoFocus);
 
     ui->lineEditDataQueryValue->setPlaceholderText(QString::fromLocal8Bit("请输入搜索值"));
+    ui->lineEditUserQueryValue->setPlaceholderText(QString::fromLocal8Bit("请输入搜索值"));
+
+    QRegExp regex("[0-9]+");
+    QRegExpValidator* validator = new QRegExpValidator(regex, this);
+    ui->lineEditDataApprovalPage->setValidator(validator);
+    ui->lineEditUserPage->setValidator(validator);
 
     m_modelDataApproval = new QStandardItemModel();
     m_modelDataApproval->setColumnCount(12);
@@ -37,6 +43,7 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     m_modelDataApproval->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("操作"));
     m_modelDataApproval->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
+   
     /* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
      model->setHorizontalHeaderLabels(labels);*/
     ui->tableView->setModel(m_modelDataApproval);
@@ -61,12 +68,14 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     m_modelUser->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("操作"));
     m_modelUser->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
+
+
     ui->tableViewUser->setModel(m_modelUser);
 
     common::setTableViewBasicConfiguration(ui->tableViewUser);
    // ui->tableViewUser->verticalHeader()->setDefaultSectionSize(28);
     ui->tableViewUser->verticalHeader()->setVisible(false);
-    //ui->tableViewUser->setFixedHeight(common::tableViewHeight);
+
    
   /*  connect(ui->btnData, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(0);
@@ -76,6 +85,12 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
         });*/
     ui->btnData->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
     ui->btnUser->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
+
+    ui->btnDataQuery->setFocusPolicy(Qt::NoFocus);
+    ui->btnUserQuery->setFocusPolicy(Qt::NoFocus);
+
+    ui->btnData->setStyleSheet(qssBlue);
+    ui->btnUser->setStyleSheet(qssGray);
     connect(ui->btnData, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnDataShow);
     connect(ui->btnUser, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnUserShow);
    
@@ -83,15 +98,24 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     connect(ui->btnUserLast, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnLast);
     connect(ui->btnUserNext, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnNext);
     connect(ui->lineEditUserPage, &QLineEdit::editingFinished, this, &ApprovalProgressDialog::slot_pageTo);
-   // connect(spinBox, &QSpinBox::editingFinished, this, &ApprovalProgressDialog::slot_spinBoxEnter);
 
     connect(ui->btnDataApprovalLast, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_DataApprovalBtnLast);
     connect(ui->btnDataApprovalNext, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_DataApprovalBtnNext);
     connect(ui->lineEditDataApprovalPage, &QLineEdit::editingFinished, this, &ApprovalProgressDialog::slot_DataApprovalPageTo);
 
     ui->lineEditUserPage->setText(QString::number(1));
-    QScrollBar* scrollBar = (QScrollBar*)ui->tableViewUser->verticalScrollBar();
-    connect(scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollMove(int)));
+    //QScrollBar* scrollBar = (QScrollBar*)ui->tableViewUser->verticalScrollBar();
+  //  connect(scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollMove(int)));
+
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("申请人"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("所在部门"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("申请时间"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("主机"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("生成时间"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("工具名"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("文件名"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("文件类型"));
+    ui->comboBoxDataField->addItem(QString::fromLocal8Bit("状态"));
 
     ui->comboBoxUserField->addItem(QString::fromLocal8Bit("申请人"));
     ui->comboBoxUserField->addItem(QString::fromLocal8Bit("所在部门"));
@@ -103,7 +127,8 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     ui->comboBoxUserField->addItem(QString::fromLocal8Bit("权限"));
     ui->comboBoxUserField->addItem(QString::fromLocal8Bit("状态"));
     connect(ui->comboBoxUserField, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_combocUserCurrentIndexChanged(int)));
-    connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // 查询
+    connect(ui->btnDataQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_dataApprovalQuery); // 数据审批查询
+    connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // 用户审批查询
 
     init();
 }
@@ -116,25 +141,51 @@ ApprovalProgressDialog::~ApprovalProgressDialog()
 void ApprovalProgressDialog::init()
 {
     
-    if (db::databaseDI::Instance().get_data_approval_count(m_DataApprovalTotalRows))
+    db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+    m_DataApprovalTotalRows = m_listDataApproval.size();
+    if (m_DataApprovalTotalRows <= common::tableViewPageRows)
+    {
+        m_DataApprovalTatalPage = 1;
+    }
+    else
     {
         m_DataApprovalTatalPage = m_DataApprovalTotalRows / common::tableViewPageRows;
         if (m_DataApprovalTatalPage % common::tableViewPageRows != 0)
         {
             m_DataApprovalTatalPage++;
         }
-        ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(1).arg(m_DataApprovalTatalPage));
-        ui->lineEditDataApprovalPage->setText("1");
-        std::list<table_dataApproval> listData;
-        db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, 0);
-        flushDataTableShow(listData, 0);
-        
-       // m_DataApprovalTatalPage
     }
-   
+        
+    ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(1).arg(m_DataApprovalTatalPage));
+    ui->lineEditDataApprovalPage->setText("1");
+     
+    auto listDataApproval = processList(m_listDataApproval, common::onePageRows, 0);
+    flushDataTableShow(listDataApproval, 0);
+        
 
+    db::databaseDI::Instance().get_user_list(m_listUser);
+    m_UserTotalRows = m_listUser.size();
 
-    if (db::databaseDI::Instance().get_user_count(m_UserTotalRows))
+    if (m_UserTotalRows <= common::tableViewPageRows)
+    {
+        m_UserTotalpage = 1;
+    }
+    else
+    {
+        m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
+        if (m_UserTotalpage % common::tableViewPageRows != 0)
+        {
+            m_UserTotalpage++;
+        }
+    }
+
+    ui->labelUserPage->setText(QString("%1/%2").arg(1).arg(m_UserTotalpage));
+    ui->lineEditUserPage->setText("1");
+
+    auto listData = processList(m_listUser, common::onePageRows, 0);
+    flushUserTableShow(listData);
+
+  /*  if (db::databaseDI::Instance().get_user_count(m_UserTotalRows))
     {
         m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
         if (m_UserTotalpage % common::tableViewPageRows != 0)
@@ -147,11 +198,8 @@ void ApprovalProgressDialog::init()
         db::databaseDI::Instance().get_user_list(m_listUser);
         auto listData = processList(m_listUser, common::onePageRows, 0);
         flushUserTableShow(listData);
-    }
+    }*/
 
-    /*std::list<table_user> listUser;
-    db::databaseDI::Instance().get_user_list(listUser);
-    flushUserTableShow(listUser);*/
 }
 
 void ApprovalProgressDialog::flushDataTableShow(std::list<table_dataApproval> &listData, const int& offsetRows)
@@ -253,23 +301,11 @@ void ApprovalProgressDialog::flushDataTableShow(std::list<table_dataApproval> &l
   
 }
 
-//std::list<table_user> ApprovalProgressDialog::processList(const std::list<table_user>& listUser, const int& num, const int& offsetRows)
-//{
-//    std::list<table_user> listTemp;
-//    auto it = listUser.begin();
-//    std::advance(it, offsetRows); // 跳过前 offsetRows 个数据
-//
-//    for (int i = 0; i < num && it != listUser.end(); ++i, ++it) 
-//    {
-//        listTemp.push_back(*it) ; // 处理数据，
-//    }
-//    return listTemp;
-//}
 
 template<typename T>
 std::list<T> ApprovalProgressDialog::processList(const std::list<T>& listData, const int& num, const int& offsetRows)
 {
-    std::list<table_user> listTemp;
+    std::list<T> listTemp;
     auto it = listData.begin();
     std::advance(it, offsetRows); // 跳过前 offsetRows 个数据
 
@@ -380,10 +416,14 @@ void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 
 void  ApprovalProgressDialog::slot_btnDataShow()
 {
+    ui->btnData->setStyleSheet(strQssBlue);
+    ui->btnUser->setStyleSheet(strQssGray);
     ui->stackedWidget->setCurrentIndex(0);
 }
 void  ApprovalProgressDialog::slot_btnUserShow()
 {
+    ui->btnData->setStyleSheet(strQssGray);
+    ui->btnUser->setStyleSheet(strQssBlue);
     ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -398,9 +438,8 @@ void ApprovalProgressDialog::slot_DataApprovalBtnLast()
     curPage--;
     int offsetRows = (curPage - 1) * common::onePageRows;
 
-    std::list<table_dataApproval> listData;
-    db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, offsetRows);
-    flushDataTableShow(listData, offsetRows);
+    auto listDataApproval = processList(m_listDataApproval, common::onePageRows, offsetRows);
+    flushDataTableShow(listDataApproval, offsetRows);
    
     ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(curPage).arg(m_DataApprovalTatalPage));
     ui->lineEditDataApprovalPage->setText(QString::number(curPage));
@@ -415,9 +454,8 @@ void ApprovalProgressDialog::slot_DataApprovalBtnNext()
 
     int offsetRows = curPage * common::onePageRows;
 
-    std::list<table_dataApproval> listData;
-    db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, offsetRows);
-    flushDataTableShow(listData, offsetRows);
+    auto listDataApproval = processList(m_listDataApproval, common::onePageRows, offsetRows);
+    flushDataTableShow(listDataApproval, offsetRows);
     curPage++;
     ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(curPage).arg(m_DataApprovalTatalPage));
     ui->lineEditDataApprovalPage->setText(QString::number(curPage));
@@ -436,9 +474,11 @@ void ApprovalProgressDialog::slot_DataApprovalPageTo()
         ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(1).arg(m_DataApprovalTatalPage));
         ui->lineEditDataApprovalPage->setText(QString::number(curPage));
 
-        std::list<table_dataApproval> listData;
-        db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, 0);
-        flushDataTableShow(listData, 0);
+
+       auto listDataApproval = processList(m_listDataApproval, common::onePageRows, 0);
+        flushDataTableShow(listDataApproval, 0);
+
+       
     }
     else if (curPage > m_DataApprovalTatalPage)
     {
@@ -448,10 +488,10 @@ void ApprovalProgressDialog::slot_DataApprovalPageTo()
 
         int offsetRows = (curPage - 1) * common::onePageRows;
 
-        std::list<table_dataApproval> listData;
-        db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, offsetRows);
-        flushDataTableShow(listData, offsetRows);
 
+      auto listDataApproval = processList(m_listDataApproval, common::onePageRows, offsetRows);
+        flushDataTableShow(listDataApproval, offsetRows);
+   
     }
     else
     {
@@ -459,13 +499,11 @@ void ApprovalProgressDialog::slot_DataApprovalPageTo()
         ui->lineEditDataApprovalPage->setText(QString::number(curPage));
 
         int offsetRows = (curPage - 1) * common::onePageRows;
-        std::list<table_dataApproval> listData;
-        db::databaseDI::Instance().get_data_approval_list_by_condition(listData, common::onePageRows, offsetRows);
-        flushDataTableShow(listData, offsetRows);
-    }
 
-   
-  
+        auto listDataApproval = processList(m_listDataApproval, common::onePageRows, offsetRows);
+        flushDataTableShow(listDataApproval, offsetRows);
+    }
+ 
 }
 
 // 上一页;
@@ -476,11 +514,7 @@ void ApprovalProgressDialog::slot_btnLast()
     
     curPage--;
     int offsetRows = (curPage-1) * common::onePageRows;
-   /* std::list<table_user> listUser;
-    db::databaseDI::Instance().get_user_list_by_condition(listUser, common::onePageRows, offsetRows);
-    flushUserTableShow(listUser);*/
-
-  //  db::databaseDI::Instance().get_user_list(m_listUser);
+ 
     auto listData = processList(m_listUser, common::onePageRows, offsetRows);
     flushUserTableShow(listData);
 
@@ -495,10 +529,7 @@ void ApprovalProgressDialog::slot_btnNext()
 
 
     int offsetRows = curPage * common::onePageRows;
-   /* std::list<table_user> listUser;
-    db::databaseDI::Instance().get_user_list_by_condition(listUser, common::onePageRows, offsetRows);
-    flushUserTableShow(listUser);*/
-    //db::databaseDI::Instance().get_user_list(m_listUser);
+
     auto listData = processList(m_listUser, common::onePageRows, offsetRows);
     flushUserTableShow(listData);
 
@@ -520,9 +551,6 @@ void ApprovalProgressDialog::slot_pageTo()
         ui->labelUserPage->setText(QString("%1/%2").arg(1).arg(m_UserTotalpage));
         ui->lineEditUserPage->setText(QString::number(curPage));
 
-       /* std::list<table_user> listUser;
-        db::databaseDI::Instance().get_user_list_by_condition(listUser, common::onePageRows, 0);
-        flushUserTableShow(listUser);*/
         db::databaseDI::Instance().get_user_list(m_listUser);
         auto listData = processList(m_listUser, common::onePageRows, 0);
         flushUserTableShow(listData);
@@ -534,9 +562,7 @@ void ApprovalProgressDialog::slot_pageTo()
         ui->lineEditUserPage->setText(QString::number(curPage));
 
         int offsetRows = (curPage - 1) * common::onePageRows;
-        /*std::list<table_user> listUser;
-        db::databaseDI::Instance().get_user_list_by_condition(listUser, common::onePageRows, offsetRows);
-        flushUserTableShow(listUser);*/
+
         db::databaseDI::Instance().get_user_list(m_listUser);
         auto listData = processList(m_listUser, common::onePageRows, offsetRows);
         flushUserTableShow(listData);
@@ -548,9 +574,7 @@ void ApprovalProgressDialog::slot_pageTo()
         ui->lineEditUserPage->setText(QString::number(curPage));
 
         int offsetRows = (curPage - 1) * common::onePageRows;
-     /*   std::list<table_user> listUser;
-        db::databaseDI::Instance().get_user_list_by_condition(listUser, common::onePageRows, offsetRows);
-        flushUserTableShow(listUser);*/
+     
         db::databaseDI::Instance().get_user_list(m_listUser);
         auto listData = processList(m_listUser, common::onePageRows, offsetRows);
         flushUserTableShow(listData);
@@ -581,6 +605,204 @@ void ApprovalProgressDialog::slot_combocUserCurrentIndexChanged(int index)
     //        ui->tableViewUser->hideRow(row);
     //    }
     //}
+}
+
+void ApprovalProgressDialog::slot_dataApprovalQuery()
+{
+    //数据审批 查询;
+    int index = ui->comboBoxDataField->currentIndex();
+  //  std::string strFields = userTable_to_string((EUserTable)index);
+    QString strQueryValue = ui->lineEditDataQueryValue->text();
+
+
+    if (strQueryValue.size() <= 0)
+    {
+        db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+    }
+    else
+    {
+        db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+        if (index == 0)
+        {
+            std::string strValue = strQueryValue.toStdString();
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+
+                if ((*it).proposer != strValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 1)
+        {
+            std::string strValue = strQueryValue.toStdString();
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if ((*it).department != strValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 2)
+        {
+
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 3)
+        {
+            std::string strValue = strQueryValue.toStdString();
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if ((*it).host != strValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 4)
+        {
+           
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if (QDateTime::fromTime_t((*it).createTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 5)
+        {
+            std::string strValue = strQueryValue.toStdString();
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if ((*it).tool != strValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 6)
+        {
+            std::string strValue = strQueryValue.toStdString();
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if ((*it).fileName != strValue)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else if (index == 7)
+        {
+        std::string strValue = strQueryValue.toStdString();
+        auto it = m_listDataApproval.begin();
+        while (it != m_listDataApproval.end())
+        {
+            if ((*it).fileType != strValue)
+            {
+                it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+            }
+            else
+            {
+                ++it;
+            }
+        }
+        }
+        else if (index == 8)
+        {
+            int state = -1;
+            if (strQueryValue == QString::fromLocal8Bit("已通过"))
+            {
+                state = 1;
+            }
+            else if (strQueryValue == QString::fromLocal8Bit("已驳回"))
+            {
+                state = 2;
+            }
+            else if (strQueryValue == QString::fromLocal8Bit("待审核"))
+            {
+                state = 0;
+            }
+            auto it = m_listDataApproval.begin();
+            while (it != m_listDataApproval.end())
+            {
+                if ((*it).state != state)
+                {
+                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+    }
+
+    m_DataApprovalTotalRows = m_listDataApproval.size();
+    if (m_DataApprovalTotalRows <= common::tableViewPageRows)
+    {
+        m_DataApprovalTatalPage = 1;
+    }
+    else
+    {
+        m_DataApprovalTatalPage = m_DataApprovalTotalRows / common::tableViewPageRows;
+        if (m_DataApprovalTatalPage % common::tableViewPageRows != 0)
+        {
+            m_DataApprovalTatalPage++;
+        }
+    }
+
+    ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(1).arg(m_DataApprovalTatalPage));
+    ui->lineEditDataApprovalPage->setText("1");
+
+    auto listDataApproval = processList(m_listDataApproval, common::onePageRows, 0);
+    flushDataTableShow(listDataApproval, 0);
+
+
+
 }
 
 void ApprovalProgressDialog::slot_userQuery()

@@ -189,6 +189,17 @@ QWidget#widgetFunctionBtns QPushButton#btnApprovalProgress:checked {
 }
 
 
+
+/* ------------------------ 申请审批----------------------start*/
+
+
+
+/* ------------------------ 申请审批----------------------end*/
+
+/* ------------------------ DataManageDialog----------------------start*/
+
+/* ------------------------ DataManageDialog----------------------end*/
+
 /* 一键加载 按钮样式 */
 QWidget#widgetM1 QPushButton#btnM1Load {
     background-image: url(:/image/load-gray.png);
@@ -203,6 +214,7 @@ QWidget#widgetM1 QPushButton#btnM1Load {
    
 	border: none;
 }
+
 QWidget#widgetM1 QPushButton#btnM1Load:checked {
     background-image: url(:/image/load.png);
 }

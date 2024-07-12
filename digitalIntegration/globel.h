@@ -1,6 +1,8 @@
 #ifndef GLOBEL_H
 #define GLOBEL_H
 
+#include <QString>
+
 #define GBK_STRING(str) QString::fromLocal8Bit(str)
 
 
@@ -98,5 +100,22 @@ inline const char* userTable_to_string(const EUserTable& value)
 	return u8"пео╒";
 }
 
+const QString strQssBlue = R"(
+        QPushButton {
+            background-color: lightblue;
+            border: 2px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    )";
+
+const QString strQssGray = R"(
+        QPushButton {
+            background-color: lightgray;
+            border: 2px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    )";
 
 #endif // GLOBEL_H

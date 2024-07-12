@@ -47,6 +47,7 @@ private slots:
     void slot_pageTo();
     void slot_scrollMove(int value);
     void slot_combocUserCurrentIndexChanged(int index);
+    void slot_dataApprovalQuery();
     void slot_userQuery();
 
     void slot_spinBoxEnter();
@@ -66,7 +67,23 @@ private:
 
     std::list<table_user> m_listUser;
     std::list<table_dataApproval> m_listDataApproval;
-    QSpinBox* spinBox;
+    QString qssBlue = R"(
+        QPushButton {
+            background-color: lightblue;
+            border: 2px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    )";
+    QString qssGray = R"(
+        QPushButton {
+            background-color: lightgray;
+            border: 2px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    )";
+   
 };
 
 #endif // APPROVALPROGRESSDIALOG_H

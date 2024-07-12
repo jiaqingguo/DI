@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDialog>
@@ -75,7 +74,6 @@ public:
     QLabel *label_3;
     QLineEdit *lineEditUserPage;
     QLabel *label_4;
-    QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *ApprovalProgressDialog)
     {
@@ -93,15 +91,11 @@ public:
         horizontalLayout->addItem(horizontalSpacer);
 
         btnData = new QPushButton(ApprovalProgressDialog);
-        buttonGroup = new QButtonGroup(ApprovalProgressDialog);
-        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
-        buttonGroup->addButton(btnData);
         btnData->setObjectName(QString::fromUtf8("btnData"));
 
         horizontalLayout->addWidget(btnData);
 
         btnUser = new QPushButton(ApprovalProgressDialog);
-        buttonGroup->addButton(btnUser);
         btnUser->setObjectName(QString::fromUtf8("btnUser"));
 
         horizontalLayout->addWidget(btnUser);

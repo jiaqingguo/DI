@@ -62,7 +62,7 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *pushButton_10;
-    QSpinBox *spinBox_3;
+    QLineEdit *lineEdit_2;
     QPushButton *pushButton_11;
     QWidget *page_3;
     QVBoxLayout *verticalLayout_3;
@@ -223,10 +223,15 @@ public:
 
         horizontalLayout_5->addWidget(pushButton_10);
 
-        spinBox_3 = new QSpinBox(page_2);
-        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
+        lineEdit_2 = new QLineEdit(page_2);
+        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy);
 
-        horizontalLayout_5->addWidget(spinBox_3);
+        horizontalLayout_5->addWidget(lineEdit_2);
 
         pushButton_11 = new QPushButton(page_2);
         pushButton_11->setObjectName(QString::fromUtf8("pushButton_11"));
