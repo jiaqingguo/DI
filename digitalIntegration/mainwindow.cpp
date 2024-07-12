@@ -56,115 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     strQssPath.replace("/", "\\\\");
     m_pQssAutoLoader->setAutoloadQss(strQssPath);
     
-    //ui->btnFunction->setStyleSheet(
-    //    "QPushButton {color: red; }"
-    //    "QPushButton:hover {"
-    //    "background-color: #87CEFA; /* 浅蓝色背景 */"
-    //    "color: black; /* 悬浮状态下的文字颜色 */"
-    //    "}"
-    //    "QPushButton:checked {"
-    //    "background-color: #17C1FF; /* 红色背景 */"
-    //    "color: white; /* 选中状态下的文字颜色 */"
-    //    "}"
-    //);
     initInitface();
-
-    
-
-    
-
-
-  //  hide();
-   
-    //WId winId = (WId)FindWindow(NULL, L"QQ");
-    //QWindow* window = QWindow::fromWinId(winId);
-    //QWidget* widget = QWidget::createWindowContainer(window);
-    //widget->show();
-
- 
- /*   QWebEngineView* view = new QWebEngineView();
-    
-    auto str = qApp->applicationDirPath() + "/eChartFile.html";
-    view->load(qApp->applicationDirPath() + "/eChartFile.html");
-    ui->gridLayout->addWidget(view);
-
-    using NameVec = std::vector<std::string>;
-    NameVec _names = { "衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子" ,"庆国" };
-
-    using ValueVec = std::vector<int>;
-    ValueVec __values = { 5, 20, 36, 10, 10, 20 ,100 };
-
-    QJsonArray  _data;
-    for (size_t i = 0; i < _names.size(); i++)
-    {
-        QJsonObject itemData;
-        itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
-        _data.append(itemData);
-    }*/
-    if (0)
-    {
-       // _view = new QWebEngineView();
-       // QString path = qApp->applicationDirPath() + "/eChartFile.html";
-       // _view->load(QUrl(path));
-       //ui->gridLayout->addWidget(_view);
-
-       // using NameVec = std::vector<std::string>;
-       // NameVec _names = { "衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子" ,"庆国" };
-
-       // using ValueVec = std::vector<int>;
-       // ValueVec __values = { 5, 20, 36, 10, 10, 20 ,100 };
-
-
-       // QJsonArray  _data;
-       // for (size_t i = 0; i < _names.size(); i++)
-       // {
-       //     QJsonObject itemData;
-       //     itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-       //     itemData.insert("itemValue", __values[i]);
-       //     _data.append(itemData);
-       // }
-       // _jsonData.insert("titleName", QString::fromLocal8Bit("测试titleName"));
-       // _jsonData.insert("data", _data);
-       // // 折线图（line）
-       // // 柱状图（Bar）
-       // // 饼图（pie）
-       // // 散点图（scatter）
-       // // 地图（map）
-       // // 雷达图（radar） 
-       // // 词云图（wordCloud）
-       // // 图片地图（imageMap）
-       // // 组合图（compose）
-       // // 漏斗图（funnel）
-       // // 仪表盘（gauge）
-       // // 列表图（list）
-       // _jsonData.insert("type", "line");
-
-       // //QTimer* _timer = new QTimer;
-       // //_timer->setInterval(2000);
-       // //QObject::connect(_timer, &QTimer::timeout, [&]() {
-       // //    QString optionStr = QJsonDocument(_jsonData).toJson();
-       // //    //用到js中init() 函数
-       // //    QString js = QString("setData(%1)").arg(optionStr);
-       // //    qDebug() << js;
-       // //    _view->page()->runJavaScript(js);
-       // //    _timer->stop();
-       // //   }
-       // // );
-       // //_timer->start();
-
-       // QObject::connect(_view, &QWebEngineView::loadFinished, [&]() {
-       //     QString optionStr = QJsonDocument(_jsonData).toJson();
-       //     //用到js中init() 函数
-       //     QString js = QString("setData(%1)").arg(optionStr);
-       //     qDebug() << js;
-       //     _view->page()->runJavaScript(js);
-       //     });
-    }
-   
-
-
-
 }
 
 
@@ -203,18 +95,9 @@ void MainWindow::initInitface()
 
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
-//    m_AddToolDialog = new AddToolDialog(this);
-
     m_OneClickLoadDialog = new OneClickLoadDialog(this);
 
     m_OneClickSaveDialog = new OneClickSaveDialog(this);
-   /* QButtonGroup* buttonGroup = new QButtonGroup(this);
-
-    buttonGroup->addButton(ui->btnFunction, 1);
-    buttonGroup->addButton(ui->btnModule1, 2);
-    buttonGroup->addButton(ui->btnModule2, 3);
-    buttonGroup->addButton(ui->btnModule3, 4);
-    buttonGroup->addButton(ui->btnModule4, 5);*/
 
     ui->btnFunction->setCheckable(true);
     ui->btnModule1->setCheckable(true);
@@ -240,7 +123,6 @@ void MainWindow::initInitface()
     connect(ui->btnModule4, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(4);
         });
-
 
     ui->btnResourceManage->setCheckable(true);
     ui->btnInformationConfihuration->setCheckable(true);
@@ -291,44 +173,11 @@ void MainWindow::initInitface()
     connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
     
 
-    //common::clearLayout(ui->layoutM1ToolIcon);
-    //std::list<table_tools> listTools;
-    //if (db::databaseDI::Instance().get_tools(listTools, 1))
-    //{
-    //    for (const auto& stTool : listTools)
-    //    {
-    //        QToolButton* pBtn = new QToolButton();
-    //        //QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-    //        pBtn->setIcon(QIcon(QString::fromStdString(stTool.icoPath)));
-    //        pBtn->setIconSize(QSize(52, 46));
-    //        pBtn->setText(QString::fromStdString(stTool.name));
-    //        pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    //        pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-    //        pBtn->setFocusPolicy(Qt::NoFocus);
-    //        pBtn->setFixedSize(55, 60);
-    //        pBtn->setEnabled(true);
-
-    //        ui->layoutM1ToolIcon->addWidget(pBtn);
-    //    }
-    //}
     updateModuleToolIcon(1);
     updateModuleToolIcon(2);
     updateModuleToolIcon(3);
     updateModuleToolIcon(4);
 
-    // 创建
-    //QToolButton* pBtn = new QToolButton();
-    ////QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-    //pBtn->setIcon(QIcon("D:\\1_project\\jqg\\demo\\qt\\digitalIntegration\\image\\adobe_xd.png"));
-    //pBtn->setIconSize(QSize(52, 46));
-    //pBtn->setText(QString::fromLocal8Bit("XD"));
-    //pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    //pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-    //pBtn->setFocusPolicy(Qt::NoFocus);
-    //pBtn->setFixedSize(55, 60);
-    //pBtn->setEnabled(true);
-  
-    //ui->layoutM1ToolIcon->addWidget(pBtn);
     if (m_LoginDialog->exec() == QDialog::Accepted)
     {
         ui->labelUserName->setText(m_LoginDialog->GetUser());
@@ -371,7 +220,6 @@ void MainWindow::slot_btnDataManageClicked()
 
 void MainWindow::slot_btnApprovalProgressClicked()
 {
-   
     m_ApprovalProgressDialog->init();
     m_ApprovalProgressDialog->exec();
     ui->btnApprovalProgress->setChecked(false);
@@ -387,7 +235,8 @@ void MainWindow::slot_btnAddToolTab()
         QString toolName;
         QString tabName;
         int mode = -1;
-        addToooDialog.getToolData(tabName,toolName, mode);
+        int displayMode = 0;
+        addToooDialog.getToolData(tabName,toolName, mode, displayMode);
         QWidget* pWidget = new QWidget;
         if (moduleNumber == 1)
         { 
@@ -396,15 +245,22 @@ void MainWindow::slot_btnAddToolTab()
             {
                 QWindow* window = QWindow::fromWinId(winId);
                 QWidget* widget = QWidget::createWindowContainer(window);
-                //  widget->show();
-
-                 // QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel1->addTab(widget, tabName);
+                
+                widget->setWindowTitle(tabName);
+                if (displayMode == 0)
+                {
+                   
+                    ui->tabWidgetModulel1->addTab(widget, tabName);
+                }
+                else
+                {
+                    widget->show();
+                }
             }
             else
             {
-                QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel1->addTab(pWidget, tabName);
+               /* QWidget* pWidget = new QWidget;
+                ui->tabWidgetModulel1->addTab(pWidget, tabName);*/
             }
            
         }
@@ -415,10 +271,17 @@ void MainWindow::slot_btnAddToolTab()
             {
                 QWindow* window = QWindow::fromWinId(winId);
                 QWidget* widget = QWidget::createWindowContainer(window);
-                //  widget->show();
-
-                 // QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel2->addTab(widget, tabName);
+                widget->setWindowTitle(tabName);
+                if (displayMode == 0)
+                {
+                  
+                    ui->tabWidgetModulel2->addTab(widget, tabName);
+                }
+                else
+                {
+                    widget->show();
+                }
+               
             }
         }
         else if (moduleNumber == 3)
@@ -428,16 +291,19 @@ void MainWindow::slot_btnAddToolTab()
             {
                 QWindow* window = QWindow::fromWinId(winId);
                 QWidget* widget = QWidget::createWindowContainer(window);
-                //  widget->show();
-
-                 // QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel3->addTab(widget, tabName);
+                widget->setWindowTitle(tabName);
+                if (displayMode == 0)
+                {
+                  
+                    ui->tabWidgetModulel3->addTab(widget, tabName);
+                }
+                else
+                {
+                    widget->show();
+                }
+             
             }
-            else
-            {
-                QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel3->addTab(pWidget, tabName);
-            }
+            
         }
         else if (moduleNumber == 4)
         {
@@ -446,17 +312,19 @@ void MainWindow::slot_btnAddToolTab()
             {
                 QWindow* window = QWindow::fromWinId(winId);
                 QWidget* widget = QWidget::createWindowContainer(window);
-                //  widget->show();
-
-                 // QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel4->addTab(widget, tabName);
+                widget->setWindowTitle(tabName);
+                if (displayMode == 0)
+                {
+                   
+                    ui->tabWidgetModulel4->addTab(widget, tabName);
+                }
+                else
+                {
+                    widget->show();
+                }
+               
             }
-            else
-            {
-                QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel4->addTab(pWidget, tabName);
-            }
-
+      
         }
 
     }

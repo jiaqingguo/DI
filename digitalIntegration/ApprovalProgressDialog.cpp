@@ -68,8 +68,6 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     m_modelUser->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
     m_modelUser->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
 
-
-
     ui->tableViewUser->setModel(m_modelUser);
 
     common::setTableViewBasicConfiguration(ui->tableViewUser);

@@ -117,11 +117,12 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
     }
 }
 
-void AddToolDialog::getToolData(QString& tabName, QString& toolName, int& model)
+void AddToolDialog::getToolData(QString& tabName, QString& toolName, int& model, int& iDisplayMode)
 {
     tabName = ui->lineEditTabName->text();
     toolName = ui->comboBoxToolNames->currentText();
     model = ui->comboBoxDisplayMode->currentIndex();
+    iDisplayMode = ui->comboBoxDisplayMode->currentIndex();
 }
 
 void AddToolDialog::slot_btnAddClicked()
