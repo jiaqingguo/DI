@@ -87,8 +87,8 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     ui->btnDataQuery->setFocusPolicy(Qt::NoFocus);
     ui->btnUserQuery->setFocusPolicy(Qt::NoFocus);
 
-    ui->btnData->setStyleSheet(qssBlue);
-    ui->btnUser->setStyleSheet(qssGray);
+    ui->btnData->setStyleSheet(strQssBlue);
+    ui->btnUser->setStyleSheet(strQssGray);
     connect(ui->btnData, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnDataShow);
     connect(ui->btnUser, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnUserShow);
    
