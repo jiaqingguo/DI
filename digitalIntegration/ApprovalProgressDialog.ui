@@ -99,14 +99,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QCheckBox" name="checkBox_1">
            <property name="text">
-            <string>日期：</string>
+            <string>日期</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit1_start"/>
+         </item>
+         <item>
+          <widget class="QDateTimeEdit" name="dateTimeEdit2_end"/>
          </item>
          <item>
           <widget class="QPushButton" name="btnDataQuery">
@@ -231,14 +234,23 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QCheckBox" name="checkBox_2">
            <property name="text">
-            <string>日期：</string>
+            <string>日期</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="tristate">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit3_start"/>
+         </item>
+         <item>
+          <widget class="QDateTimeEdit" name="dateTimeEdit4_end"/>
          </item>
          <item>
           <widget class="QPushButton" name="btnUserQuery">

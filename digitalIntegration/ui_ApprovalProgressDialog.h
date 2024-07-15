@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDialog>
@@ -43,8 +44,9 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QComboBox *comboBoxDataField;
     QLineEdit *lineEditDataQueryValue;
-    QLabel *label;
-    QDateTimeEdit *dateTimeEdit;
+    QCheckBox *checkBox_1;
+    QDateTimeEdit *dateTimeEdit1_start;
+    QDateTimeEdit *dateTimeEdit2_end;
     QPushButton *btnDataQuery;
     QSpacerItem *horizontalSpacer_3;
     QTableView *tableView;
@@ -61,8 +63,9 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QComboBox *comboBoxUserField;
     CLineEdit *lineEditUserQueryValue;
-    QLabel *label_2;
-    QDateTimeEdit *dateTimeEdit_2;
+    QCheckBox *checkBox_2;
+    QDateTimeEdit *dateTimeEdit3_start;
+    QDateTimeEdit *dateTimeEdit4_end;
     QPushButton *btnUserQuery;
     QSpacerItem *horizontalSpacer_6;
     QTableView *tableViewUser;
@@ -126,15 +129,20 @@ public:
 
         horizontalLayout_2->addWidget(lineEditDataQueryValue);
 
-        label = new QLabel(page);
-        label->setObjectName(QString::fromUtf8("label"));
+        checkBox_1 = new QCheckBox(page);
+        checkBox_1->setObjectName(QString::fromUtf8("checkBox_1"));
 
-        horizontalLayout_2->addWidget(label);
+        horizontalLayout_2->addWidget(checkBox_1);
 
-        dateTimeEdit = new QDateTimeEdit(page);
-        dateTimeEdit->setObjectName(QString::fromUtf8("dateTimeEdit"));
+        dateTimeEdit1_start = new QDateTimeEdit(page);
+        dateTimeEdit1_start->setObjectName(QString::fromUtf8("dateTimeEdit1_start"));
 
-        horizontalLayout_2->addWidget(dateTimeEdit);
+        horizontalLayout_2->addWidget(dateTimeEdit1_start);
+
+        dateTimeEdit2_end = new QDateTimeEdit(page);
+        dateTimeEdit2_end->setObjectName(QString::fromUtf8("dateTimeEdit2_end"));
+
+        horizontalLayout_2->addWidget(dateTimeEdit2_end);
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
@@ -220,15 +228,22 @@ public:
 
         horizontalLayout_5->addWidget(lineEditUserQueryValue);
 
-        label_2 = new QLabel(page_2);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        checkBox_2 = new QCheckBox(page_2);
+        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+        checkBox_2->setChecked(false);
+        checkBox_2->setTristate(false);
 
-        horizontalLayout_5->addWidget(label_2);
+        horizontalLayout_5->addWidget(checkBox_2);
 
-        dateTimeEdit_2 = new QDateTimeEdit(page_2);
-        dateTimeEdit_2->setObjectName(QString::fromUtf8("dateTimeEdit_2"));
+        dateTimeEdit3_start = new QDateTimeEdit(page_2);
+        dateTimeEdit3_start->setObjectName(QString::fromUtf8("dateTimeEdit3_start"));
 
-        horizontalLayout_5->addWidget(dateTimeEdit_2);
+        horizontalLayout_5->addWidget(dateTimeEdit3_start);
+
+        dateTimeEdit4_end = new QDateTimeEdit(page_2);
+        dateTimeEdit4_end->setObjectName(QString::fromUtf8("dateTimeEdit4_end"));
+
+        horizontalLayout_5->addWidget(dateTimeEdit4_end);
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
@@ -307,7 +322,7 @@ public:
         btnData->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\225\260\346\215\256\345\256\241\346\211\271", nullptr));
         btnUser->setText(QCoreApplication::translate("ApprovalProgressDialog", "\347\224\250\346\210\267\345\256\241\346\211\271", nullptr));
         lineEditDataQueryValue->setText(QString());
-        label->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237\357\274\232", nullptr));
+        checkBox_1->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnDataQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
         btnDataApprovalLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
         labelDataApprovalPageShow->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
@@ -315,7 +330,7 @@ public:
         label_5->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
         label_6->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
         lineEditUserQueryValue->setText(QString());
-        label_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237\357\274\232", nullptr));
+        checkBox_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnUserQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
         btnUserLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
         labelUserPage->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));

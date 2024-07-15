@@ -1,9 +1,6 @@
 #define _SCL_SECURE_NO_WARNINGS
 #include <mysql.h>
-
-
 #include "databaseDI.h" 
-
 #include <QDebug>
 
 namespace db
