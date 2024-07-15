@@ -782,7 +782,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
             }
         }
     }
-else if (ui->checkBox_1->isChecked() == true) {
+    else if (ui->checkBox_1->isChecked() == true) {
     db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
     QDateTime origin_time = QDateTime::fromString("1970/01/01 08:00", "yyyy/MM/dd HH:mm");
     QDateTime startDatetime = ui->dateTimeEdit1_start->dateTime();
