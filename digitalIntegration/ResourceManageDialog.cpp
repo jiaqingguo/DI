@@ -127,65 +127,7 @@ void ResourceManageDialog::initTableWidgetCurve()
     initWebViewDisk(tab3Widget);
     initWebViewNet(tab4Widget);
    
- 
-   /* m_webEngineViewCpu = new QWebEngineView();
-    QString pathCpu = qApp->applicationDirPath() + "/area-basic.html";
-    m_webEngineViewCpu->load(QUrl(pathCpu));
 
-    tab1->layout()->addWidget(m_webEngineViewCpu);
-
-
-    using NameVec = std::vector<std::string>;
-    NameVec _names = { "³ÄÉÀ", "ÑòÃ«ÉÀ", "Ñ©·ÄÉÀ", "¿ã×Ó", "¸ß¸úÐ¬", "Íà×Ó" ,"Çì¹ú" };
-
-    using ValueVec = std::vector<int>;
-    ValueVec __values = { 5, 20, 36, 10, 10, 20 ,100 };
-
-
-    QJsonArray  _data;
-    for (size_t i = 0; i < _names.size(); i++)
-    {
-        QJsonObject itemData;
-        itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
-        _data.append(itemData);
-    }
-    m_jsonData.insert("titleName", QString::fromLocal8Bit("²âÊÔtitleName"));
-    m_jsonData.insert("data", _data);*/
-    // ÕÛÏßÍ¼£¨line£©
-    // Öù×´Í¼£¨Bar£©
-    // ±ýÍ¼£¨pie£©
-    // É¢µãÍ¼£¨scatter£©
-    // µØÍ¼£¨map£©
-    // À×´ïÍ¼£¨radar£© 
-    // ´ÊÔÆÍ¼£¨wordCloud£©
-    // Í¼Æ¬µØÍ¼£¨imageMap£©
-    // ×éºÏÍ¼£¨compose£©
-    // Â©¶·Í¼£¨funnel£©
-    // ÒÇ±íÅÌ£¨gauge£©
-    // ÁÐ±íÍ¼£¨list£©
-    //m_jsonData.insert("type", "line");
-
-    ////QTimer* _timer = new QTimer;
-    ////_timer->setInterval(2000);
-    ////QObject::connect(_timer, &QTimer::timeout, [&]() {
-    ////    QString optionStr = QJsonDocument(_jsonData).toJson();
-    ////    //ÓÃµ½jsÖÐinit() º¯Êý
-    ////    QString js = QString("setData(%1)").arg(optionStr);
-    ////    qDebug() << js;
-    ////    _view->page()->runJavaScript(js);
-    ////    _timer->stop();
-    ////   }
-    //// );
-    ////_timer->start();
-
-    //QObject::connect(m_webEngineViewCpu, &QWebEngineView::loadFinished, [&]() {
-    //    QString optionStr = QJsonDocument(m_jsonData).toJson();
-    //    //ÓÃµ½jsÖÐinit() º¯Êý
-    //    QString js = QString("setData(%1)").arg(optionStr);
-    //    qDebug() << js;
-    //    m_webEngineViewCpu->page()->runJavaScript(js);
-    //    });
 }
 
 void ResourceManageDialog::initWebViewNet(QWidget* widget)
@@ -200,7 +142,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
    //NameVec _names = { "10", "20", "30", "40", "50", "60" ,"70" };
 
     using ValueVec = std::vector<int>;
-    ValueVec  __values = { 5, 20, 36, 10, 10, 20 ,200 };
+    ValueVec  __values = { 0};
 
 
     QJsonArray  _data;
@@ -208,7 +150,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
     {
         QJsonObject itemData;
        // itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
+      //  itemData.insert("itemValue", __values[i]);
         _data.append(itemData);
     }
     m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("ÍøÂç"));
@@ -247,7 +189,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
     NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
 
     using ValueVec = std::vector<int>;
-    ValueVec  __values = { 5, 20, 36, 10, 10, 20 ,200 };
+    ValueVec  __values = { 0 };
 
 
     QJsonArray  _data;
@@ -256,7 +198,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
     {
         
         itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
+      //  itemData.insert("itemValue", __values[i]);
         _data.append(itemData);
     }
     m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU"));
@@ -287,7 +229,7 @@ void ResourceManageDialog::initWebViewMemory(QWidget* widget)
     NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
 
     using ValueVec = std::vector<int>;
-    ValueVec  __values = { 5, 20, 36, 10, 10, 20 ,200 };
+    ValueVec  __values = { 0 };
 
 
     QJsonArray  _data;
@@ -295,7 +237,7 @@ void ResourceManageDialog::initWebViewMemory(QWidget* widget)
     {
         QJsonObject itemData;
         itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
+    //    itemData.insert("itemValue", __values[i]);
         _data.append(itemData);
     }
     m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("ÄÚ´æ"));
@@ -324,7 +266,7 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
     NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
 
     using ValueVec = std::vector<int>;
-    ValueVec  __values = { 5, 20, 36, 10, 10, 20 ,200 };
+    ValueVec  __values = { 0 };
 
 
     QJsonArray  _data;
@@ -332,7 +274,7 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
     {
         QJsonObject itemData;
         itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-        itemData.insert("itemValue", __values[i]);
+     //   itemData.insert("itemValue", __values[i]);
         _data.append(itemData);
     }
     m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("´ÅÅÌ"));
