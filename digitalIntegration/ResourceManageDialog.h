@@ -46,6 +46,8 @@ private slots:
     void slot_hostComboxChanged(const QString& text);
 
     void slot_timerTimeout();
+
+    void slot_get_data(int index);
 private:
     Ui::ResourceManageDialog *ui;
 
@@ -65,6 +67,11 @@ private:
     QMap<QString, QVector<double>> m_mapNetData;
     QMap<QString, QVector<double>> m_mapMemoryData;
     QMap<QString, QVector<double>> m_mapDiskData;
+
+    bool CPU_init = false;
+    bool memory_init = false;
+    bool disk_init = false;
+    bool net_init = false;
 
 };
 
