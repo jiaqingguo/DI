@@ -103,7 +103,7 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 
     ui->lineEditUserPage->setText(QString::number(1));
     //QScrollBar* scrollBar = (QScrollBar*)ui->tableViewUser->verticalScrollBar();
-  //  connect(scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollMove(int)));
+    // connect(scrollBar, SIGNAL(valueChanged(int)), this, SLOT(scrollMove(int)));
 
     ui->comboBoxDataField->addItem(QString::fromLocal8Bit("申请人"));
     ui->comboBoxDataField->addItem(QString::fromLocal8Bit("所在部门"));
@@ -798,9 +798,6 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 
     auto listDataApproval = processList(m_listDataApproval, common::onePageRows, 0);
     flushDataTableShow(listDataApproval, 0);
-
-
-
 }
 
 void ApprovalProgressDialog::slot_userQuery()

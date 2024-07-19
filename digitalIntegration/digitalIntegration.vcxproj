@@ -27,7 +27,7 @@
     <PrimaryOutput>digitalIntegration</PrimaryOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <OutputDirectory>debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
