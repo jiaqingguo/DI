@@ -1,4 +1,3 @@
-
 #include <QStandardItemModel>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -24,7 +23,7 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
     m_model = new QStandardItemModel();
     m_model->setColumnCount(5);
     m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
-    m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));
+    m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
     m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
     m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
     m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
@@ -32,15 +31,12 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
     ui->tableView->setModel(m_model);
     common::setTableViewBasicConfiguration(ui->tableView);
 
-  
+
  //  int newRow3 = m_model->rowCount();
    //m_model->setItem(0, 0, new QStandardItem("SetItem 1"));
 
    initTableWidgetCurve();
-  
-  
-
- /*  m_model->appendRow(QList<QStandardItem*>()
+   /*m_model->appendRow(QList<QStandardItem*>()
        << new QStandardItem("1")
        << new QStandardItem("CPU")
        << new QStandardItem(" 3")
@@ -58,7 +54,6 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
        << new QStandardItem(" 3")
        << new QStandardItem(" 2")
        << new QStandardItem("net 2"));*/
-
    ui->comboBox->addItem(QString::fromLocal8Bit("主机1"));
    ui->comboBox->addItem(QString::fromLocal8Bit("主机2"));
    // 连接信号和槽
@@ -67,7 +62,7 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 
    QTimer* timer = new QTimer(this);
    QObject::connect(timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
-  // timer->start(1000); // 每秒触发一次
+   timer->start(1000); // 每秒触发一次
 
 }
 
@@ -114,18 +109,24 @@ void ResourceManageDialog::initTableWidgetCurve()
     ui->tabWidgetCurve->setTabEnabled(1, true);
     ui->tabWidgetCurve->setTabEnabled(2, true);
 
+
     //tabWidget->setTabIcon(0, QIcon()); // 如果不需要图标，可以移除此行
 
     // 创建自定义标签
-    ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));
+    ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//曲线中的显示
+  
     ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("内存")));
+   
     ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("磁盘")));
+   
     ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("网络")));
+   connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked,this,&ResourceManageDialog::slot_get_data );
+     //connect(ui->tabWidgetCurve, &QTabWidget::currentChanged,this,&ResourceManageDialog::slot_get_data);
     initWebViewCpu(tab1Widget);
     initWebViewMemory(tab2Widget);
     initWebViewDisk(tab3Widget);
-  
     initWebViewNet(tab4Widget);
+   
  
    /* m_webEngineViewCpu = new QWebEngineView();
     QString pathCpu = qApp->applicationDirPath() + "/area-basic.html";
@@ -185,9 +186,6 @@ void ResourceManageDialog::initTableWidgetCurve()
     //    qDebug() << js;
     //    m_webEngineViewCpu->page()->runJavaScript(js);
     //    });
-
-
-    
 }
 
 void ResourceManageDialog::initWebViewNet(QWidget* widget)
@@ -199,7 +197,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
     widget->layout()->addWidget(m_webEngineViewNet);
 
     using NameVec = std::vector<std::string>;
-   // NameVec _names = { "10", "20", "30", "40", "50", "60" ,"70" };
+   //NameVec _names = { "10", "20", "30", "40", "50", "60" ,"70" };
 
     using ValueVec = std::vector<int>;
     ValueVec  __values = { 5, 20, 36, 10, 10, 20 ,200 };
@@ -237,7 +235,6 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
         m_webEngineViewNet->page()->runJavaScript(js);
         });
 }
-
 void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 {
     m_webEngineViewCpu = new QWebEngineView();
@@ -254,9 +251,10 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 
 
     QJsonArray  _data;
+    QJsonObject itemData;
     for (size_t i = 0; i < _names.size(); i++)
     {
-        QJsonObject itemData;
+        
         itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
         itemData.insert("itemValue", __values[i]);
         _data.append(itemData);
@@ -266,13 +264,15 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
  
     m_jsonDataCpu.insert("type", "line");
 
-    QObject::connect(m_webEngineViewCpu, &QWebEngineView::loadFinished, [&]() {
+   QObject::connect(m_webEngineViewCpu, &QWebEngineView::loadFinished, [=]() {
         QString optionStr = QJsonDocument(m_jsonDataCpu).toJson();
         //用到js中init() 函数
         QString js = QString("setData(%1)").arg(optionStr);
         qDebug() << js;
         m_webEngineViewCpu->page()->runJavaScript(js);
         });
+    
+
 }
 
 void ResourceManageDialog::initWebViewMemory(QWidget* widget)
@@ -363,7 +363,7 @@ QWidget* ResourceManageDialog::createCustomTab(const QString& tabName)
 
 void ResourceManageDialog::addHostCpuElemnet(const QString& host, const double& value)
 {
- //
+ 
     if (m_mapCpuData[host].size() >= m_vectorMaxSize)
     {
         m_mapCpuData[host].remove(0);
@@ -411,7 +411,7 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 {
     for (int row = 0; row < m_model->rowCount();row++)
     {
-        //QModelIndex index = m_model->index(row, 0, QModelIndex()); // 获取第一列的索引
+        QModelIndex index = m_model->index(row, 0, QModelIndex()); // 获取第一列的索引
         //QStandardItem* item = m_model->itemFromIndex(index); // 获取该索引对应的 QStandardItem
         QStandardItem* item = m_model->item(row, 0);
         if (item->text()== host)
@@ -543,63 +543,110 @@ void ResourceManageDialog::slot_modelItemChanged(QStandardItem* item)
 
 void ResourceManageDialog::slot_hostComboxChanged(const QString& text)
 {
-  //  using NameVec = std::vector<std::string>;
-  ////NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
-
-  //  using ValueVec = std::vector<int>;
-  //  ValueVec  __values = { 200, 20, 36, 10, 10, 20 ,222 ,333};
-
-  //  QJsonArray  _data;
-  //  for (size_t i = 0; i < __values.size(); i++)
-  //  {
-  //      QJsonObject itemData;
-  //    //itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
-  //      itemData.insert("itemValue", __values[i]);
-  //      _data.append(itemData);
-  //  }
-  ////  m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("CPU"));
-  //  m_jsonDataNet.insert("data", _data);
-  // 
-  //  m_jsonDataNet.insert("type", "line");
-
-  //  QString optionStr = QJsonDocument(m_jsonDataNet).toJson();
-  //  //用到js中init() 函数
-  //  QString js = QString("setData(%1)").arg(optionStr);
-  //  qDebug() << js;
-  //  m_webEngineViewNet->page()->runJavaScript(js);
-
-
-
-
+//    using NameVec = std::vector<std::string>;
+//    //NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
+//
+//    using ValueVec = std::vector<int>;
+//    ValueVec  __values = { 200, 20, 36, 10, 10, 20 ,222 ,333};
+//
+//    QJsonArray  _data;
+//    for (size_t i = 0; i < __values.size(); i++)
+//  {
+//        QJsonObject itemData;
+//      //itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
+//        itemData.insert("itemValue", __values[i]);
+//        _data.append(itemData);
+//    }
+//  //  m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("CPU"));
+//    m_jsonDataNet.insert("data", _data);
+//   
+//    m_jsonDataNet.insert("type", "line");
+//
+//    QString optionStr = QJsonDocument(m_jsonDataNet).toJson();
+//   //用到js中init() 函数
+//    QString js = QString("setData(%1)").arg(optionStr);
+//    qDebug() << js;
+//    m_webEngineViewNet->page()->runJavaScript(js);
 }
 
 void ResourceManageDialog::slot_timerTimeout()
 {
-    double dCpuUse= common::getCpuUsage();
 
-    addHostCpuElemnet("1",dCpuUse);
+        double dCpuUse = common::getCpuUsage();
 
-    long allPhysicsMem;
-    long freePhysicsMem;
-    common::getPhysicsMem(allPhysicsMem, freePhysicsMem);
-  //  double dMemUse = allPhysicsMem - freePhysicsMem;
-    double dMemUseRate = (allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
-    addHostMemoryElemnet("1", dMemUseRate);
+        double lFreeAll;
+        double lToalAll;
+        common::getAllDisSpace(lFreeAll, lToalAll);
+        double dDiskUseRate = (lToalAll - lFreeAll) * 100.0 / lToalAll;
 
-    double lFreeAll;
-    double lToalAll;
-    common::getAllDisSpace(lFreeAll, lToalAll);
-    double dDiskUseRate = (lToalAll - lFreeAll) * 100.0 / lToalAll;
-    addHostDiskElemnet("1", dDiskUseRate);
+        long allPhysicsMem;
+        long freePhysicsMem;
+        common::getPhysicsMem(allPhysicsMem, freePhysicsMem);
 
-   /* common::getNetworkInterfaceStatistics();
-    common::PrintAdapterInfo();*/
+        double dMemUseRate = (allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
 
-   
+        common::getNetworkInterfaceStatistics();
+        common::PrintAdapterInfo();
 
-    unsigned long netThroughput = common::GetNetworkInterfacesThroughput();
-    
-    addHostNetElemnet("1", netThroughput);
+        unsigned long netThroughput = common::GetNetworkInterfacesThroughput();
 
-    updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
+        //加载列表页面的四个数据
+      
+        updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
+
+        if (CPU_init == true) {
+            addHostCpuElemnet("1", dCpuUse);
+           
+        }
+
+        else if (memory_init == true) {
+            addHostMemoryElemnet("1", dMemUseRate);
+            
+        }
+
+        else if (disk_init == true) {
+            addHostDiskElemnet("1", dDiskUseRate);
+            
+        }
+      
+        else if (net_init == true) {
+            addHostNetElemnet("1", netThroughput);
+           
+        }
+}
+
+void ResourceManageDialog::slot_get_data(int index)
+{
+    if (index == 0)
+    {
+        CPU_init = true;
+        memory_init = false;
+        disk_init = false;
+        net_init = false;
+
+    }
+    else if (index == 1)
+    {
+        CPU_init = false;
+        memory_init = true;
+        disk_init = false;
+        net_init = false;
+
+    }
+    else if (index == 2)
+    {
+        CPU_init = false;
+        memory_init = false;
+        disk_init = true;
+        net_init = false;
+
+    }
+    else if (index == 3)
+    {
+        CPU_init = false;
+        memory_init = false;
+        disk_init = false;
+        net_init = true;
+
+    }
 }

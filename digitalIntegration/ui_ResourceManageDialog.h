@@ -107,7 +107,7 @@ public:
         retranslateUi(ResourceManageDialog);
 
         tabWidget->setCurrentIndex(1);
-        tabWidgetCurve->setCurrentIndex(0);
+        tabWidgetCurve->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(ResourceManageDialog);

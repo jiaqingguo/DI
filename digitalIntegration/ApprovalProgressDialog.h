@@ -2,6 +2,7 @@
 #define APPROVALPROGRESSDIALOG_H
 
 #include <QDialog>
+#include <QMessageBox>
 
 struct table_user;
 struct table_dataApproval;
@@ -51,6 +52,7 @@ private slots:
     void slot_userQuery();
 
     void slot_spinBoxEnter();
+    //void slot_user_time_select();
 private:
    // void hideTableRows(Q)
 private:

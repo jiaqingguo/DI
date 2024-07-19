@@ -698,7 +698,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 710, 21));
+        menubar->setGeometry(QRect(0, 0, 710, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -706,7 +706,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(0);
         tabWidgetModulel1->setCurrentIndex(1);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);

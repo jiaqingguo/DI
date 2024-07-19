@@ -127,6 +127,7 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
     connect(ui->comboBoxUserField, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_combocUserCurrentIndexChanged(int)));
     connect(ui->btnDataQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_dataApprovalQuery); // 数据审批查询
     connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // 用户审批查询
+    //connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_user_time_select);//用户根据时间查询
 
     init();
 }
@@ -612,171 +613,201 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
   //  std::string strFields = userTable_to_string((EUserTable)index);
     QString strQueryValue = ui->lineEditDataQueryValue->text();
 
+    if (ui->checkBox_1->isChecked() == false) {
+        if (strQueryValue.size() <= 0)
+        {
+            db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+        }
+        else
+        {
+            db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+            if (index == 0)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
 
-    if (strQueryValue.size() <= 0)
-    {
-        db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+                    if ((*it).proposer != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 1)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).department != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 2)
+            {
+
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 3)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).host != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 4)
+            {
+
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if (QDateTime::fromTime_t((*it).createTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 5)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).tool != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 6)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).fileName != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 7)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).fileType != strValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 8)
+            {
+                int state = -1;
+                if (strQueryValue == QString::fromLocal8Bit("已通过"))
+                {
+                    state = 1;
+                }
+                else if (strQueryValue == QString::fromLocal8Bit("已驳回"))
+                {
+                    state = 2;
+                }
+                else if (strQueryValue == QString::fromLocal8Bit("待审核"))
+                {
+                    state = 0;
+                }
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if ((*it).state != state)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+        }
     }
-    else
+    else if (ui->checkBox_1->isChecked() == true) {
+    db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
+    QDateTime origin_time = QDateTime::fromString("1970/01/01 08:00", "yyyy/MM/dd HH:mm");
+    QDateTime startDatetime = ui->dateTimeEdit1_start->dateTime();
+    QDateTime endDatetime = ui->dateTimeEdit2_end->dateTime();
+    qint64 nStartSteps = origin_time.msecsTo(startDatetime);
+    qint64 nEndSteps = origin_time.msecsTo(endDatetime);
+    if (nStartSteps > nEndSteps)
     {
-        db::databaseDI::Instance().get_data_approval_list(m_listDataApproval);
-        if (index == 0)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
+        QMessageBox mesg;
+        mesg.warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("查询开始时间晚于结束时间!"));
+        return;
+    }
 
-                if ((*it).proposer != strValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 1)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if ((*it).department != strValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 2)
-        {
+    auto it = m_listDataApproval.begin();
+    while (it != m_listDataApproval.end())
+    {
 
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 3)
+        if ((QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss")) ||
+            (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
         {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if ((*it).host != strValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
+            it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
         }
-        else if (index == 4)
+        else
         {
-           
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if (QDateTime::fromTime_t((*it).createTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
+            ++it;
         }
-        else if (index == 5)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if ((*it).tool != strValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 6)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if ((*it).fileName != strValue)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 7)
-        {
-        std::string strValue = strQueryValue.toStdString();
-        auto it = m_listDataApproval.begin();
-        while (it != m_listDataApproval.end())
-        {
-            if ((*it).fileType != strValue)
-            {
-                it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-            }
-            else
-            {
-                ++it;
-            }
-        }
-        }
-        else if (index == 8)
-        {
-            int state = -1;
-            if (strQueryValue == QString::fromLocal8Bit("已通过"))
-            {
-                state = 1;
-            }
-            else if (strQueryValue == QString::fromLocal8Bit("已驳回"))
-            {
-                state = 2;
-            }
-            else if (strQueryValue == QString::fromLocal8Bit("待审核"))
-            {
-                state = 0;
-            }
-            auto it = m_listDataApproval.begin();
-            while (it != m_listDataApproval.end())
-            {
-                if ((*it).state != state)
-                {
-                    it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
+    }
     }
 
     m_DataApprovalTotalRows = m_listDataApproval.size();
@@ -797,6 +828,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
     ui->lineEditDataApprovalPage->setText("1");
 
     auto listDataApproval = processList(m_listDataApproval, common::onePageRows, 0);
+
     flushDataTableShow(listDataApproval, 0);
 }
 
@@ -805,203 +837,236 @@ void ApprovalProgressDialog::slot_userQuery()
     int index = ui->comboBoxUserField->currentIndex();
     std::string strFields = userTable_to_string((EUserTable)index);
     QString strQueryValue = ui->lineEditUserQueryValue->text();
-
-    if (strQueryValue.size() <=0)
-    {
-        db::databaseDI::Instance().get_user_list(m_listUser);
- /*       m_UserTotalRows = m_listUser.size();
-      
-        if (m_UserTotalRows < common::tableViewPageRows)
+    if (ui->checkBox_2->isChecked() == false) {
+        if (strQueryValue.size() <= 0)
         {
-            m_UserTotalpage = 1;
+            db::databaseDI::Instance().get_user_list(m_listUser);
+            /*       m_UserTotalRows = m_listUser.size();
+
+                   if (m_UserTotalRows < common::tableViewPageRows)
+                   {
+                       m_UserTotalpage = 1;
+                   }
+                   else
+                   {
+                       m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
+                       if (m_UserTotalpage % common::tableViewPageRows != 0)
+                       {
+                           m_UserTotalpage++;
+                       }
+                   }
+
+                   ui->labelUserPage->setText(QString("%1/%2").arg(1).arg(m_UserTotalpage));
+                   ui->lineEditUserPage->setText("1");
+
+                   auto listData = processList(m_listUser, common::onePageRows, 0);
+                   flushUserTableShow(listData);*/
+
         }
         else
         {
-            m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
-            if (m_UserTotalpage % common::tableViewPageRows != 0)
+            db::databaseDI::Instance().get_user_list(m_listUser);
+            if (index == 0)
             {
-                m_UserTotalpage++;
-            }
-        }
-      
-        ui->labelUserPage->setText(QString("%1/%2").arg(1).arg(m_UserTotalpage));
-        ui->lineEditUserPage->setText("1");
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
 
-        auto listData = processList(m_listUser, common::onePageRows, 0);
-        flushUserTableShow(listData);*/
-        
+                    if ((*it).name != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 1)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).department != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 2)
+            {
+
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if (QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm") != strQueryValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 3)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).UserName != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 4)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).Password != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 5)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).JobTitle != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 6)
+            {
+                std::string strValue = strQueryValue.toStdString();
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).PhoneNumber != strValue)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 7)
+            {
+                int  pop = -1;
+                if (strQueryValue == QString::fromLocal8Bit("管理员"))
+                {
+                    pop = 0;
+                }
+                else if (strQueryValue == QString::fromLocal8Bit("普通用户"))
+                {
+                    pop = 1;
+                }
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).Pop != pop)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+            else if (index == 8)
+            {
+                int state = -1;
+                if (strQueryValue == QString::fromLocal8Bit("已通过"))
+                {
+                    state = 1;
+                }
+                else if (strQueryValue == QString::fromLocal8Bit("已驳回"))
+                {
+                    state = 2;
+                }
+                else if (strQueryValue == QString::fromLocal8Bit("待审核"))
+                {
+                    state = 0;
+                }
+                auto it = m_listUser.begin();
+                while (it != m_listUser.end())
+                {
+                    if ((*it).approval != state)
+                    {
+                        it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+            }
+
+            /* db::databaseDI::Instance().get_user_list_by_condition(m_listUser, strFields,strValue.toStdString());
+           */
+        }
     }
-    else
+    else if(ui->checkBox_2->isChecked() == true)
     {
         db::databaseDI::Instance().get_user_list(m_listUser);
-        if (index == 0)
+        QDateTime origin_time = QDateTime::fromString("1970/01/01 08:00", "yyyy/MM/dd HH:mm");
+        QDateTime startDatetime = ui->dateTimeEdit3_start->dateTime();
+        QDateTime endDatetime = ui->dateTimeEdit4_end->dateTime();
+        qint64 nStartSteps = origin_time.msecsTo(startDatetime);
+        qint64 nEndSteps = origin_time.msecsTo(endDatetime);
+        if (nStartSteps > nEndSteps)
         {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
+            QMessageBox mesg;
+            mesg.warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("查询开始时间晚于结束时间!"));
+            return;
+        }
+       
+        auto it = m_listUser.begin();
+        while (it != m_listUser.end())
+        {
+           
+            if ((QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss"))||
+                (QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
             {
-                
-                if ((*it).name!= strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else 
-                {
-                    ++it;
-                }
+                it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+            }
+            else
+            {
+                ++it;
             }
         }
-        else if (index == 1)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).department != strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 2)
-        {
-          
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if (QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 3)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).UserName != strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 4)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).Password != strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 5)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).JobTitle != strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 6)
-        {
-            std::string strValue = strQueryValue.toStdString();
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).PhoneNumber != strValue)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 7)
-        {
-            int  pop = -1;
-            if (strQueryValue == QString::fromLocal8Bit("管理员"))
-            {
-                pop = 0;
-            }
-            else if (strQueryValue == QString::fromLocal8Bit("普通用户"))
-            {
-                pop = 1;
-            }
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).Pop != pop)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-        else if (index == 8)
-        {
-            int state = -1;
-            if (strQueryValue == QString::fromLocal8Bit("已通过"))
-            {
-                state = 1;
-            }
-            else if (strQueryValue == QString::fromLocal8Bit("已驳回"))
-            {
-                state = 2;
-            }
-            else if (strQueryValue == QString::fromLocal8Bit("待审核"))
-            {
-                state = 0;
-            }
-            auto it = m_listUser.begin();
-            while (it != m_listUser.end())
-            {
-                if ((*it).approval != state)
-                {
-                    it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
-       /* db::databaseDI::Instance().get_user_list_by_condition(m_listUser, strFields,strValue.toStdString());
-      */
     }
+
     m_UserTotalRows = m_listUser.size();
 
     if (m_UserTotalRows < common::tableViewPageRows)
