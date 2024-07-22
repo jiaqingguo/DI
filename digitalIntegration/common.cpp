@@ -42,10 +42,10 @@ namespace common
 {
     int tableViewRowHeight = 28; 
     int tableViewHeight = 344;
-    int tableViewPageRows = 15;
+    int tableViewPageRows = 12;
     unsigned long   dwLastIn = 0;           //上一秒钟的接收字节数
     unsigned long   dwLastOut = 0;          //上一秒钟的发送字节数
-     int onePageRows=15;                   // 每页显示的行数;
+     int onePageRows=12;                   // 每页显示的行数;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {

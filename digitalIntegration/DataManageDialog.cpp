@@ -33,7 +33,7 @@ DataManageDialog::~DataManageDialog()
 
 void DataManageDialog::init()
 {
-
+ 
     m_CPagedTableModel = new CPagedTableModel(this);
 
     QStandardItemModel* m_model = new QStandardItemModel();
@@ -61,9 +61,9 @@ void DataManageDialog::init()
     {
         m_model->setItem(i, 0, new QStandardItem(QString::number(i + 1)));
         m_model->setItem(i, 1, new QStandardItem(QString::fromLocal8Bit("µ¶Æ¬»ú/* %1*/")/*.arg(i)*/));
-        m_model->setItem(i, 2, new QStandardItem(QString::fromLocal8Bit("µ¶Æ¬»ú %1")));
-        m_model->setItem(i, 3, new QStandardItem("2024/06/15 18:01:25"));
-        m_model->setItem(i, 4, new QStandardItem("Mentor"));
+        m_model->setItem(i, 2, new QStandardItem(QString::fromLocal8Bit("2024 / 06 / 15 18:01 : 25")));
+        m_model->setItem(i, 3, new QStandardItem("Mentor"));
+        m_model->setItem(i, 4, new QStandardItem("111"));
         m_model->setItem(i, 5, new QStandardItem("txt"));
         m_model->setItem(i, 6, new QStandardItem("D:\\Project"));
        
@@ -91,7 +91,7 @@ void DataManageDialog::init()
         connect(button, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
         ui->tableView1->setIndexWidget(m_model->index(i, 9), button);
     }
-    
+    ui->tableView1->hideColumn(7);
 }
 
 void DataManageDialog::slot_ItemBtnClicked()

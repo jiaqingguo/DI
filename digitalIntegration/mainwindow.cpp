@@ -173,9 +173,9 @@ void MainWindow::initInitface()
     
 
     updateModuleToolIcon(1);
-    updateModuleToolIcon(2);
-    updateModuleToolIcon(3);
-    updateModuleToolIcon(4);
+    //updateModuleToolIcon(2);
+  //  updateModuleToolIcon(3);
+   // updateModuleToolIcon(4);
 
     if (m_LoginDialog->exec() == QDialog::Accepted)
     {
