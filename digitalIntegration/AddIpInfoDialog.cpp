@@ -7,6 +7,8 @@ AddIpInfoDialog::AddIpInfoDialog(QWidget *parent) :
     ui(new Ui::AddIpInfoDialog)
 {
     ui->setupUi(this);
+    ui->lineEditHost->setMaxLength(15);
+    ui->lineEditIp->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddIpInfoDialog::slot_btnOk);
 }
 
@@ -24,6 +26,7 @@ void AddIpInfoDialog::getIpData(table_ip& stIp)
 
 void AddIpInfoDialog::slot_btnOk()
 {
+
     this->accept();
 }
 
