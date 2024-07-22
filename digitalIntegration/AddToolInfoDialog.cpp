@@ -9,6 +9,10 @@ AddToolInfoDialog::AddToolInfoDialog(QWidget *parent) :
     ui(new Ui::AddToolInfoDialog)
 {
     ui->setupUi(this);
+    ui->lineEditHost->setMaxLength(15);
+    ui->lineEditToolName->setMaxLength(15);
+    ui->lineEditToolPath->setMaxLength(15);
+    ui->lineEditIconPath->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
 }
 
