@@ -83,7 +83,6 @@ void MainWindow::initInitface()
 {
     m_LoginDialog = new LoginDialog(this);
    
-
     m_RegisterDialog = new RegisterDialog(this);
 
     m_ResourceManageDialog = new ResourceManageDialog(this);
@@ -259,8 +258,9 @@ void MainWindow::slot_btnAddToolTab()
             }
             else
             {
-               /* QWidget* pWidget = new QWidget;
-                ui->tabWidgetModulel1->addTab(pWidget, tabName);*/
+                QWidget* pWidget = new QWidget;
+                pWidget->setWindowTitle(tabName);
+                ui->tabWidgetModulel1->addTab(pWidget, tabName);
             }
            
         }
@@ -416,12 +416,14 @@ void MainWindow::updateModuleToolIcon(int module)
             QToolButton* pBtn = new QToolButton();
             //QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
             pBtn->setIcon(QIcon(QString::fromStdString(stTool.icoPath)));
-            pBtn->setIconSize(QSize(52, 46));
+            pBtn->setIconSize(QSize(50, 46));
             pBtn->setText(QString::fromStdString(stTool.name));
             pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
             pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
             pBtn->setFocusPolicy(Qt::NoFocus);
-            pBtn->setFixedSize(55, 60);
+            pBtn->setFixedSize(55, 64);
+         //   pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+
             pBtn->setEnabled(true);
 
             pLayout->addWidget(pBtn);

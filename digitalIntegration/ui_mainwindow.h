@@ -246,6 +246,8 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         widgetFunctionBtns = new QWidget(page);
         widgetFunctionBtns->setObjectName(QString::fromUtf8("widgetFunctionBtns"));
+        widgetFunctionBtns->setMinimumSize(QSize(0, 65));
+        widgetFunctionBtns->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_2 = new QHBoxLayout(widgetFunctionBtns);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 2);
@@ -296,6 +298,8 @@ public:
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         widgetM1 = new QWidget(page2);
         widgetM1->setObjectName(QString::fromUtf8("widgetM1"));
+        widgetM1->setMinimumSize(QSize(0, 65));
+        widgetM1->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_4 = new QHBoxLayout(widgetM1);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -399,6 +403,8 @@ public:
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
         widgetM2 = new QWidget(page3);
         widgetM2->setObjectName(QString::fromUtf8("widgetM2"));
+        widgetM2->setMinimumSize(QSize(0, 62));
+        widgetM2->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_5 = new QHBoxLayout(widgetM2);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
@@ -499,6 +505,8 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         widgetM3 = new QWidget(page4);
         widgetM3->setObjectName(QString::fromUtf8("widgetM3"));
+        widgetM3->setMinimumSize(QSize(0, 65));
+        widgetM3->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_7 = new QHBoxLayout(widgetM3);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
@@ -698,7 +706,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 710, 26));
+        menubar->setGeometry(QRect(0, 0, 710, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -706,7 +714,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
         tabWidgetModulel1->setCurrentIndex(1);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);

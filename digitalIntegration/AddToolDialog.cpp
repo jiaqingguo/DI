@@ -25,6 +25,8 @@ AddToolDialog::~AddToolDialog()
 
 void AddToolDialog::init()
 {
+    ui->allocationAllocation->setChecked(true);
+   
     m_model = new QStandardItemModel();
     m_model->setColumnCount(4);
     m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
@@ -34,6 +36,8 @@ void AddToolDialog::init()
     ui->tableViewIpSet->setModel(m_model);
     common::setTableViewBasicConfiguration(ui->tableViewIpSet);
     
+
+   
     connect(ui->btnAdd, SIGNAL(clicked()), this, SLOT(slot_btnAddClicked()));
 
 
@@ -90,6 +94,7 @@ void AddToolDialog::init()
                 item = new QStandardItem(QString::fromLocal8Bit("未占用"));
                 item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
                 m_model->setItem(newRowIndex, 2, item);
+                connect(checkBox, &QCheckBox::clicked, this, &AddToolDialog::slot_ipCheckBoxClicked);
             }
             else 
             {
@@ -123,6 +128,11 @@ void AddToolDialog::getToolData(QString& tabName, QString& toolName, int& model,
     toolName = ui->comboBoxToolNames->currentText();
     model = ui->comboBoxDisplayMode->currentIndex();
     iDisplayMode = ui->comboBoxDisplayMode->currentIndex();
+}
+
+void AddToolDialog::slot_ipCheckBoxClicked()
+{
+    //int CurRow=
 }
 
 void AddToolDialog::slot_btnAddClicked()

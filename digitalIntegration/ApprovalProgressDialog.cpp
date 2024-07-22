@@ -841,27 +841,7 @@ void ApprovalProgressDialog::slot_userQuery()
         if (strQueryValue.size() <= 0)
         {
             db::databaseDI::Instance().get_user_list(m_listUser);
-            /*       m_UserTotalRows = m_listUser.size();
-
-                   if (m_UserTotalRows < common::tableViewPageRows)
-                   {
-                       m_UserTotalpage = 1;
-                   }
-                   else
-                   {
-                       m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
-                       if (m_UserTotalpage % common::tableViewPageRows != 0)
-                       {
-                           m_UserTotalpage++;
-                       }
-                   }
-
-                   ui->labelUserPage->setText(QString("%1/%2").arg(1).arg(m_UserTotalpage));
-                   ui->lineEditUserPage->setText("1");
-
-                   auto listData = processList(m_listUser, common::onePageRows, 0);
-                   flushUserTableShow(listData);*/
-
+          
         }
         else
         {

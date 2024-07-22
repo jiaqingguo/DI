@@ -68,7 +68,7 @@ private:
     QMap<QString, QVector<double>> m_mapMemoryData;
     QMap<QString, QVector<double>> m_mapDiskData;
 
-    bool CPU_init = false;
+    bool CPU_init = true;
     bool memory_init = false;
     bool disk_init = false;
     bool net_init = false;

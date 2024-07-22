@@ -21,12 +21,15 @@ public:
     void getToolData(QString &tabName,QString& toolName, int& model, int& iDisplayMode);
 private slots:
 
+    void slot_ipCheckBoxClicked();
     void slot_btnAddClicked();
 private:
     Ui::AddToolDialog *ui;
     QStandardItemModel* m_model;
     int m_iModule = 0;
     int m_iDisplayMode = 0;
+    int m_lastCheckBoxCol = -1;
+    int m_lastCheckBoxRow = -1;
 };
 
 #endif // ADDTOOLDIALOG_H

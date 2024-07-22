@@ -120,7 +120,7 @@ void ResourceManageDialog::initTableWidgetCurve()
     ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("´ÅÅÌ")));
    
     ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("ÍøÂç")));
-   connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked,this,&ResourceManageDialog::slot_get_data );
+    connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked,this,&ResourceManageDialog::slot_get_data );
      //connect(ui->tabWidgetCurve, &QTabWidget::currentChanged,this,&ResourceManageDialog::slot_get_data);
     initWebViewCpu(tab1Widget);
     initWebViewMemory(tab2Widget);
