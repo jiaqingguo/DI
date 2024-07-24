@@ -2,6 +2,7 @@
 #define ADDTOOLDIALOG_H
 
 #include <QDialog>
+#include <QCheckBox> 
 
 class QStandardItemModel;
 namespace Ui {
@@ -30,6 +31,9 @@ private:
     int m_iDisplayMode = 0;
     int m_lastCheckBoxCol = -1;
     int m_lastCheckBoxRow = -1;
+
+    QList<QCheckBox*> checkBoxList;
+
 };
 
 #endif // ADDTOOLDIALOG_H

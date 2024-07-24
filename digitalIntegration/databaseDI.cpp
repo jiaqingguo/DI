@@ -532,6 +532,59 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::update_ip_status(const uint32_t& id, int status)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, sizeof(sql), "update t_ip set used = (\'%d\') where id = (\'%d\')", status, id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
+	bool databaseDI::update_ip_all_status()
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		int used = 0;
+		sprintf_s(sql, sizeof(sql), "update t_ip set used = (\'%d\')", used);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
 	bool databaseDI::add_data_approval_info(table_dataApproval& stData)
 	{
 		// 启动事务;

@@ -10,6 +10,7 @@ AddToolDialog::AddToolDialog(int module, QWidget *parent) :m_iModule(module),
     ui(new Ui::AddToolDialog)
 {
     ui->setupUi(this);
+    ui->btnAdd->setEnabled(false);
     init();
 
   
@@ -84,11 +85,44 @@ void AddToolDialog::init()
             QCheckBox* checkBox = new QCheckBox(); // 创建CheckBox
             checkBox->setProperty("row", newRowIndex); // set custom property
             checkBox->setProperty("column", 3);
+
+            checkBoxList.append(checkBox); // 将checkBox添加到列表中
+
             QHBoxLayout* layout = new QHBoxLayout(widget); // 为容器Widget设置水平布局
             layout->addWidget(checkBox); // 将CheckBox添加到布局中
             layout->setAlignment(Qt::AlignCenter); // 设置布局中的控件居中对齐
             layout->setContentsMargins(0, 0, 0, 0); // 移除布局边距
             ui->tableViewIpSet->setIndexWidget(m_model->index(newRowIndex, 3), widget);
+            connect(checkBox, &QCheckBox::clicked, [=](bool checked) {
+                if (checked) {
+                    ui->btnAdd->setEnabled(true);
+                    for (QCheckBox* otherCheckBox : checkBoxList) {
+                        if (otherCheckBox != checkBox) {
+                            //otherCheckBox->setChecked(false);
+                            otherCheckBox->setDisabled(true);
+                        }
+                    }
+                    if (!db::databaseDI::Instance().update_ip_status(stData.id, !stData.used))
+                        return;
+                }
+                else {
+                    ui->btnAdd->setEnabled(false);
+                    for (QCheckBox* otherCheckBox : checkBoxList) {
+                        if (otherCheckBox != checkBox) {
+                            //otherCheckBox->setChecked(false);
+                            otherCheckBox->setDisabled(false);
+                        }
+                    }
+                    if (!db::databaseDI::Instance().update_ip_status(stData.id, stData.used))
+                        return;
+                    if (stData.used == 1)
+                    {
+                        //checkBox->setEnabled(false);
+                        checkBox->setChecked(true);
+                        checkBox->setDisabled(true);
+                    }
+                }
+                });
             if (stData.used == 0)
             {
                 item = new QStandardItem(QString::fromLocal8Bit("未占用"));

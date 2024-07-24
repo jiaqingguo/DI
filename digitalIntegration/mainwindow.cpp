@@ -63,6 +63,9 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
+    if (!db::databaseDI::Instance().update_ip_all_status())
+        return;
+
     if (m_LoginDialog != nullptr)
         delete m_LoginDialog;
     if (m_RegisterDialog != nullptr)

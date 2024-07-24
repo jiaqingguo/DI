@@ -66,6 +66,8 @@ namespace db
 		bool get_ip_data(std::list<table_ip>& listData, const int& module);
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);
+		bool update_ip_status(const uint32_t& id, int status);
+		bool update_ip_all_status();
 
 		// 数据审批表;
 		bool add_data_approval_info(table_dataApproval& stData);
