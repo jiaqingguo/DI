@@ -28,6 +28,9 @@ public:
     void initWebViewCpu(QWidget* widget);
     void initWebViewMemory(QWidget* widget);
     void initWebViewDisk(QWidget* widget);
+
+    void startWebFlushTimer();
+    void stopWebFlushTimer();
     QWidget* createCustomTab(const QString& tabName);
 
     void addHostCpuElemnet(const QString &host,const double &value);
@@ -72,6 +75,8 @@ private:
     bool memory_init = false;
     bool disk_init = false;
     bool net_init = false;
+
+    QTimer* m_timer = nullptr;
 
 };
 

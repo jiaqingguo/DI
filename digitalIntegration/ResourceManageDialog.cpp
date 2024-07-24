@@ -60,9 +60,9 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
    connect(m_model, &QStandardItemModel::itemChanged, this, &ResourceManageDialog::slot_modelItemChanged);
    connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
 
-   QTimer* timer = new QTimer(this);
-   QObject::connect(timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
-   timer->start(1000); // 每秒触发一次
+   m_timer = new QTimer(this);
+   QObject::connect(m_timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
+   //m_timer->start(1000); // 每秒触发一次
 
 }
 
@@ -77,7 +77,6 @@ void ResourceManageDialog::initTableWidgetCurve()
     ui->tabWidgetCurve->removeTab(1);
     ui->tabWidgetCurve->removeTab(0);
 
-
     // 创建一些示例标签页
     QWidget* tab1Widget = new QWidget;
     QWidget* tab2Widget = new QWidget;
@@ -85,19 +84,9 @@ void ResourceManageDialog::initTableWidgetCurve()
     QWidget* tab4Widget = new QWidget;
     // 添加一些内容到每个标签页
     tab1Widget->setLayout(new QVBoxLayout);
-    //tab1->layout()->addWidget(new QLabel("Content of Tab 1"));
-
     tab2Widget->setLayout(new QVBoxLayout);
-   // tab2->layout()->addWidget(new QLabel("Content of Tab 2"));
-
     tab3Widget->setLayout(new QVBoxLayout);
-   // tab3->layout()->addWidget(new QLabel("Content of Tab 3"));
-
     tab4Widget->setLayout(new QVBoxLayout);
-
-
-
-    //tab4Widget->setLayout()
 
     // 将自定义标签添加到 QTabWidget
     ui->tabWidgetCurve->addTab(tab1Widget, "");
@@ -109,25 +98,20 @@ void ResourceManageDialog::initTableWidgetCurve()
     ui->tabWidgetCurve->setTabEnabled(1, true);
     ui->tabWidgetCurve->setTabEnabled(2, true);
 
-
     //tabWidget->setTabIcon(0, QIcon()); // 如果不需要图标，可以移除此行
 
     // 创建自定义标签
     ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//曲线中的显示
-  
     ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("内存")));
-   
     ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("磁盘")));
-   
     ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("网络")));
-    connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked,this,&ResourceManageDialog::slot_get_data );
-     //connect(ui->tabWidgetCurve, &QTabWidget::currentChanged,this,&ResourceManageDialog::slot_get_data);
+    connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked, this, &ResourceManageDialog::slot_get_data);
+
     initWebViewCpu(tab1Widget);
     initWebViewMemory(tab2Widget);
     initWebViewDisk(tab3Widget);
     initWebViewNet(tab4Widget);
    
-
 }
 
 void ResourceManageDialog::initWebViewNet(QWidget* widget)
@@ -289,6 +273,16 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
         qDebug() << js;
         m_webEngineViewDisk->page()->runJavaScript(js);
         });
+}
+
+void ResourceManageDialog::startWebFlushTimer()
+{
+    m_timer->start(1000);
+}
+
+void ResourceManageDialog::stopWebFlushTimer()
+{
+    m_timer->stop();
 }
 
 QWidget* ResourceManageDialog::createCustomTab(const QString& tabName)

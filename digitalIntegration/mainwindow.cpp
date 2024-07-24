@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+
     if (m_LoginDialog != nullptr)
         delete m_LoginDialog;
     if (m_RegisterDialog != nullptr)
@@ -202,7 +203,9 @@ void MainWindow::setUserNameText(const QString& userName)
 }
 void MainWindow::slot_btnResourceManageClicked()
 {
+    m_ResourceManageDialog->startWebFlushTimer();
     m_ResourceManageDialog->exec();
+    m_ResourceManageDialog->stopWebFlushTimer();
     ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()

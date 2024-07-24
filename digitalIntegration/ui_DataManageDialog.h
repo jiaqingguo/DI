@@ -328,7 +328,7 @@ public:
 
     void retranslateUi(QDialog *DataManageDialog)
     {
-        DataManageDialog->setWindowTitle(QCoreApplication::translate("DataManageDialog", "\344\277\241\346\201\257\351\205\215\347\275\256", nullptr));
+        DataManageDialog->setWindowTitle(QCoreApplication::translate("DataManageDialog", "\346\225\260\346\215\256\347\256\241\347\220\206", nullptr));
         btn1->setText(QCoreApplication::translate("DataManageDialog", "\346\250\241\345\235\2271", nullptr));
         btn2->setText(QCoreApplication::translate("DataManageDialog", "\346\250\241\345\235\2272", nullptr));
         btn3->setText(QCoreApplication::translate("DataManageDialog", "\346\250\241\345\235\2273", nullptr));
