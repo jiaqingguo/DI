@@ -36,5 +36,6 @@
         <file>image/user_focusin.png</file>
         <file>image/yes.PNG</file>
         <file>image/tubiao.png</file>
+        <file>image/Dir.png</file>
     </qresource>
 </RCC>

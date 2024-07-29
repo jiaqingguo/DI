@@ -23,6 +23,8 @@ SOURCES += \
     CLineEdit.cpp \
     CTableView.cpp \
     DataManageDialog.cpp \
+    FilemangageDialog.cpp \
+    FtpClientClass.cpp \
     InformationConfihurationDialog.cpp \
     LoginDialog.cpp \
     OneClickLoadDialog.cpp \
@@ -45,6 +47,8 @@ HEADERS += \
     CPagedTableModel.h \
     CTableView.h \
     DataManageDialog.h \
+    FilemangageDialog.h \
+    FtpClientClass.h \
     InformationConfihurationDialog.h \
     LoginDialog.h \
     OneClickLoadDialog.h \
@@ -52,6 +56,7 @@ HEADERS += \
     RegisterDialog.h \
     ResourceManageDialog.h \
     SoftwareWindow.h \
+    Util/UtilTool.h \
     common.h \
     database.h \
     databaseDI.h \
@@ -64,6 +69,7 @@ FORMS += \
     AddToolInfoDialog.ui \
     ApprovalProgressDialog.ui \
     DataManageDialog.ui \
+    FilemangageDialog.ui \
     InformationConfihurationDialog.ui \
     LoginDialog.ui \
     OneClickLoadDialog.ui \

@@ -68,6 +68,12 @@
     <ClCompile Include="DataManageDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FilemangageDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FtpClientClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="InformationConfihurationDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +136,12 @@
     <CustomBuild Include="DataManageDialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="FilemangageDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <ClInclude Include="FtpClientClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <CustomBuild Include="InformationConfihurationDialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -151,6 +163,9 @@
     <CustomBuild Include="SoftwareWindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <ClInclude Include="Util\UtilTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -208,6 +223,12 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="release\moc_DataManageDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_FilemangageDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_FilemangageDialog.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="debug\moc_InformationConfihurationDialog.cpp">
@@ -285,6 +306,9 @@
     <ClInclude Include="ui_DataManageDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="ui_FilemangageDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
     <ClInclude Include="ui_InformationConfihurationDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -326,6 +350,9 @@
     <CustomBuild Include="DataManageDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="FilemangageDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
     <CustomBuild Include="InformationConfihurationDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
@@ -365,6 +392,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="image\DataManage_select.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="image\Dir.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="image\InformationConfihuration.png">

@@ -7,6 +7,7 @@
 #include "ResourceManageDialog.h"
 #include "InformationConfihurationDialog.h"
 #include "DataManageDialog.h"
+#include "FilemangageDialog.h"
 #include "ApprovalProgressDialog.h"
 #include "AddToolDialog.h"
 #include "OneClickSaveDialog.h"
@@ -78,8 +79,9 @@ MainWindow::~MainWindow()
     if (m_InforConfihurationDialog != nullptr)
         delete m_InforConfihurationDialog;
     if (m_ApprovalProgressDialog != nullptr)
-        delete m_ApprovalProgressDialog;
-
+        delete m_ApprovalProgressDialog; 
+    if (m_FilemangageDialog != nullptr)
+        delete m_FilemangageDialog;
     delete ui;
 }
 
@@ -95,6 +97,8 @@ void MainWindow::initInitface()
     connect(m_InforConfihurationDialog, &InformationConfihurationDialog::signal_updateToolIcon, this, &MainWindow::slot_updateModuleToolIcon);
 
     m_DataManageDialog = new DataManageDialog(this);
+
+    m_FilemangageDialog = new FilemangageDialog(this);
 
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
@@ -177,9 +181,9 @@ void MainWindow::initInitface()
     
 
     updateModuleToolIcon(1);
-    //updateModuleToolIcon(2);
-  //  updateModuleToolIcon(3);
-   // updateModuleToolIcon(4);
+    updateModuleToolIcon(2);
+    updateModuleToolIcon(3);
+    updateModuleToolIcon(4);
 
     if (m_LoginDialog->exec() == QDialog::Accepted)
     {
@@ -219,7 +223,8 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 
 void MainWindow::slot_btnDataManageClicked()
 {
-    m_DataManageDialog->exec();
+    //m_DataManageDialog->exec();
+    m_FilemangageDialog->exec();
     ui->btnDataManage->setChecked(false);
 }
 

@@ -706,7 +706,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 710, 21));
+        menubar->setGeometry(QRect(0, 0, 710, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -714,7 +714,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(0);
         tabWidgetModulel1->setCurrentIndex(1);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
@@ -735,7 +735,7 @@ public:
         labelUserName->setText(QCoreApplication::translate("MainWindow", "\347\224\250\346\210\2671", nullptr));
         btnResourceManage->setText(QCoreApplication::translate("MainWindow", "\350\265\204\346\272\220\347\256\241\347\220\206", nullptr));
         btnInformationConfihuration->setText(QCoreApplication::translate("MainWindow", "\344\277\241\346\201\257\351\205\215\347\275\256", nullptr));
-        btnDataManage->setText(QCoreApplication::translate("MainWindow", "\346\225\260\346\215\256\347\256\241\347\220\206", nullptr));
+        btnDataManage->setText(QCoreApplication::translate("MainWindow", " \346\226\207\344\273\266\347\256\241\347\220\206", nullptr));
         btnApprovalProgress->setText(QCoreApplication::translate("MainWindow", "\345\256\241\346\211\271\350\277\233\345\272\246", nullptr));
         pushButton_6->setText(QCoreApplication::translate("MainWindow", "AE", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "AI", nullptr));

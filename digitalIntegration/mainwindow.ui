@@ -281,7 +281,7 @@
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -380,7 +380,7 @@
               </size>
              </property>
              <property name="text">
-              <string>数据管理</string>
+              <string> 文件管理</string>
              </property>
             </widget>
            </item>
@@ -1465,7 +1465,7 @@
      <x>0</x>
      <y>0</y>
      <width>710</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

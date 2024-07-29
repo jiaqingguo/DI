@@ -21,6 +21,7 @@ class DataManageDialog;
 class AddToolDialog;
 class OneClickSaveDialog;
 class OneClickLoadDialog;
+class FilemangageDialog;
 
 /*!
 * \class	QssAutoLoader
@@ -127,6 +128,8 @@ private:
 
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
 
+	FilemangageDialog* m_FilemangageDialog = nullptr; // 文件管理界面;
+
 	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
 
 
@@ -136,8 +139,10 @@ private:
 	OneClickLoadDialog* m_OneClickLoadDialog = nullptr; // 一键加载界面;
 
 	QWindow* windowQQ = nullptr;
-		QWidget * widgetQQ = nullptr;
-		WId winIdQQ;
+	QWidget * widgetQQ = nullptr;
+	WId winIdQQ;
+
+	
 
 };
 
