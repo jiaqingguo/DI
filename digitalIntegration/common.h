@@ -61,6 +61,13 @@ namespace common
 
 	void clearLayout(QLayout* layout);
 
+
+	/*wchar_t* QString2wchar_t(QString str) {
+		std::wstring wstr = str.toStdWString();
+		wchar_t* lpcwstr = wstr.c_str();
+		return lpcwstr;
+	}*/
+
 	// C++
 	//LPCWSTR stringToLPCWSTR(std::string orig)
 	//{

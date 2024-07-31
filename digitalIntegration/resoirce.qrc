@@ -37,5 +37,6 @@
         <file>image/yes.PNG</file>
         <file>image/tubiao.png</file>
         <file>image/Dir.png</file>
+        <file>image/ftpDir.png</file>
     </qresource>
 </RCC>

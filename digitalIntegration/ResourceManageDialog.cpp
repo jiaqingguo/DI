@@ -318,7 +318,7 @@ void ResourceManageDialog::addHostNetElemnet(const QString& host, const unsigned
     }
     m_mapNetData[host].push_back(value);
 
-    updateNetWebViewShow(host);
+  //  updateNetWebViewShow(host);
 }
 
 void ResourceManageDialog::addHostMemoryElemnet(const QString& host, const double& value)
@@ -329,7 +329,7 @@ void ResourceManageDialog::addHostMemoryElemnet(const QString& host, const doubl
     }
     m_mapMemoryData[host].push_back(value);
 
-    updateMemoryWebViewShow(host);
+  //  updateMemoryWebViewShow(host);
 }
 
 void ResourceManageDialog::addHostDiskElemnet(const QString& host, const double& value)

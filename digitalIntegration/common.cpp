@@ -1,9 +1,5 @@
-#include "common.h"
-
 
 #include <iostream>
-
-
 
 #pragma comment(lib, "Kernel32.lib")
 #pragma comment(lib, "Psapi.lib")
@@ -20,8 +16,8 @@
 //#include <atlconv.h>
 #include <cmath>
 #include <string.h>
+//#include <wstring>
 #include <assert.h>
-
 
 #include <wininet.h>
 //#include <iphlpapi.h>
@@ -29,8 +25,6 @@
 #include <IPHlpApi.h>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib, "Ws2_32.lib")
-
-
 // Qt
 #include <QStandardItemModel>
 #include <QStandardItemModel>
@@ -38,6 +32,7 @@
 #include <QHeaderView>
 #include <QLayout>
 
+#include "common.h"
 namespace common
 {
     int tableViewRowHeight = 28; 
@@ -394,6 +389,8 @@ namespace common
         }
     }
 
+   
+
     void delAllModelRow(QStandardItemModel* model)
     {
         int rowCount = model->rowCount();
@@ -431,7 +428,12 @@ namespace common
             tableView->horizontalHeader()->setSectionsMovable(true);
         }
     }
-
+ /*   wchar_t* QString2wchar_t(QString str)
+    {
+        std::wstring wstr = str.toStdWString();
+         wchar_t* lpcwstr = wstr.c_str();
+        return lpcwstr;
+    }*/
     //std::string Wchar2string(WCHAR wChar[])
     //{
     //    // 获取需要的多字节字符缓冲区大小

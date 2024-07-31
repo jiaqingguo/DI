@@ -19,6 +19,9 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>4</number>
+     </property>
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
        <string>文件夹目录</string>

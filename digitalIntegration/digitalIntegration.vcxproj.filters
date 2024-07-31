@@ -457,6 +457,9 @@
     <None Include="image\fingerprint.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="image\ftpDir.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="image\load-gray.png">
       <Filter>Resource Files</Filter>
     </None>

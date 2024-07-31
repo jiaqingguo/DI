@@ -371,7 +371,6 @@ void FtpClientClass::execute_getFile(string rec_name)
 		//callServer();
 		fd1 = fopen(name, "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
 		if (fd1 == NULL)
-
 		{
 			cout << "打开或者新建 " << name << "文件失败" << endl;
 			//return 1;

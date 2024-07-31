@@ -31,6 +31,9 @@ private slots:
     void slot_itemBtnDel();
 
     void slot_btnUploading();
+
+    // Ê÷ÓÒ¼ü²Ëµ¥;
+    void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
 private:
     Ui::FilemangageDialog *ui;
 

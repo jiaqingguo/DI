@@ -1,5 +1,7 @@
 #include <QStandardItemModel>
 #include <QFileDialog>
+#include <QMenu>
+#include <QInputDialog>
 
 #include "FilemangageDialog.h"
 #include "ui_FilemangageDialog.h"
@@ -33,17 +35,25 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	common::setTableViewBasicConfiguration(ui->tableView);
 	ui->tableView->verticalHeader()->setVisible(false);
 	ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(0, 100); // 设置列的固定宽度
+	ui->tableView->setColumnWidth(0, 80); // 设置列的固定宽度
 	ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(2, 100); // 设置列的固定宽度
+	ui->tableView->setColumnWidth(2, 80); // 设置列的固定宽度
 	ui->tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(3, 100); // 设置列的固定宽度
+	ui->tableView->setColumnWidth(3, 80); // 设置列的固定宽度
+
+	 // 启用悬浮显示
+	//ui->tableView->setMouseTracking(true);
+	
 	getFtpFolderShow();
 
 	// 关联双击事件和槽函数
 	//connect(ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, &FilemangageDialog::slot_treeWidgetItemDoubleClicked);
 	connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &FilemangageDialog::slot_treeWidgetItemClicked);
 	connect(ui->pushButton, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUploading);
+	// 设置上下文菜单策略为CustomContextMenu
+	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &FilemangageDialog::slot_treeWidgteCustomContextMenuRequested);
+	
 }
 
 FilemangageDialog::~FilemangageDialog()
@@ -68,7 +78,8 @@ bool FilemangageDialog::getFtpFolderShow()
 		QString RootPath = QString::fromLocal8Bit(strRootPath.c_str());
 		pRootItem->setText(0, RootPath);
 		pRootItem->setData(0, Qt::UserRole, RootPath);
-		pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // 设置图标（请确保路径正确）
+		pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // 设置图标（请确保路径正确）:/image/ftpDir.png
+		pRootItem->setToolTip(0, RootPath);
 		ui->treeWidget->addTopLevelItem(pRootItem);
 		
 
@@ -86,7 +97,8 @@ bool FilemangageDialog::getFtpFolderShow()
 			QString strPath = RootPath + "\\"+strText;
 			pItem->setText(0, strText);
 			pItem->setData(0, Qt::UserRole, strPath);
-
+			pItem->setIcon(0, QIcon(":/image/Dir.png"));
+			pItem->setToolTip(0, strText);
 			createTreeChildNode(pItem, vecFolderNames[i]);
 			pRootItem->addChild(pItem);
 		}
@@ -112,7 +124,8 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 		QString strPath = pParentItem->data(0,Qt::UserRole).toString() + "\\" + strText;
 		pItem->setText(0, QString::fromLocal8Bit(vecFolders[j].c_str()));
 		pItem->setData(0, Qt::UserRole, strPath);
-		
+		pItem->setIcon(0, QIcon(":/image/Dir.png"));
+		pItem->setToolTip(0, strText);
 		createTreeChildNode(pItem, vecFolders[j]);
 		pParentItem->addChild(pItem);
 	}
@@ -218,8 +231,78 @@ void FilemangageDialog::slot_btnUploading()
 	if (strFilePath.isEmpty())
 		return;
 
+	QFileInfo fileInfo(strFilePath);
+	QString directoryPath = fileInfo.path();
+
+	
+	std::wstring wstr = directoryPath.toStdWString();
+	const wchar_t* lpcwstr = wstr.c_str();
+	SetCurrentDirectory(lpcwstr);//设置当前目录
+
+	strFilePath.replace("/", "\\\\");
 	m_FtpClientClass->newConnection();
 	m_FtpClientClass->execute_putFile(strFilePath.toLocal8Bit().toStdString());
+
+}
+
+void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& pos)
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->itemAt(pos);
+	if (pItem)
+	{
+		QString dirPath = pItem->data(0, Qt::UserRole).toString();
+		QMenu menu;
+		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
+		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
+		
+		connect(add, &QAction::triggered, [=]()
+			{
+				QString DirName = QInputDialog::getText(this, tr("新建"), tr("输入新建文件夹名称："));
+				if (!DirName.isEmpty())	// 用户输入了文件名称
+				{
+					if (m_FtpClientClass->newConnection())
+					{
+						m_FtpClientClass->execute_mkdirFolder(DirName.toLocal8Bit().toStdString());
+
+						QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
+						QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+						pItem->setText(0, DirName);
+						pItem->setData(0, Qt::UserRole, strPath);
+						pItem->setIcon(0, QIcon(":/image/Dir.png"));
+						pItem->setToolTip(0, DirName);
+
+						pItem->addChild(pNewItem);
+					}
+					
+					//qDebug() << "文件名称：" << DirName;
+				}
+			});
+
+		connect(del, &QAction::triggered, [=]()
+			{
+				QTreeWidgetItem* pParentItem = pItem->parent();
+				if (!pParentItem)
+					return;
+				QString parentDir = pParentItem->text(0);
+				
+
+				m_FtpClientClass->newConnection();
+				m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());
+
+				if (m_FtpClientClass->newConnection())
+				{
+
+					m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+
+					delete pItem;
+				}
+			});
+
+
+		menu.exec(QCursor::pos());
+
+
+	}
 
 }
 
