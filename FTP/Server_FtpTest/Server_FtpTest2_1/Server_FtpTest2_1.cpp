@@ -205,7 +205,7 @@ void delete_listFiles(string dir)
  
 	if (handle == -1) {
 		cout << "无文件" << endl;
-		system("pause");
+	//	system("pause");
 		return;
 	}
  
@@ -376,7 +376,7 @@ DWORD connectProcess() {
 				send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
 				mkdir(fileName);
 			}//mkdir
-			else if (strncmp(rbuff, "del", 3) == 0) {
+			else if (strncmp(rbuff, "del", 3) == 0) { // 删除空文件夹;
 				strcpy(fileName, rbuff + 4);//获得要删的文件名
 				strcpy(sbuff, rbuff);
 				send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
@@ -389,16 +389,59 @@ DWORD connectProcess() {
 				delFile1(fileName);
 			}//Fdel
 			else if (strncmp(rbuff, "fldel", 5) == 0) {//删除某个文件夹内所有文件
-				strcpy(fileName, rbuff + 6);//获得要删的文件名
+				char path[1000];
+				strcpy(path, rbuff + 6);//获得要删的文件名
 				strcpy(sbuff, rbuff);
 				send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
-				char path[1000];
-				GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
-				strcat(path, "\\");
-				strcat(path, fileName);
+				
+				//GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
+				//strcat(path, "\\");
+				//strcat(path, fileName);
 				cout<<path<<endl;
 				string str = path;
-				delete_listFiles(path);
+				delete_listFiles(path); // 删除文件夹下的文件;
+
+
+
+				
+				char* lastBackslash = strrchr(path, '\\');
+				if (lastBackslash != nullptr)
+				{
+					// 获取文件名长度
+					size_t fileNameLength = strlen(lastBackslash + 1);
+
+					// 创建新的char数组来存储文件名
+					char* dirName = new char[fileNameLength + 1];
+					strcpy(dirName, lastBackslash + 1);
+
+					// 创建新的char数组来存储路径
+					char* directory = new char[lastBackslash - path + 1];
+					strncpy(directory, path, lastBackslash - path);
+					directory[lastBackslash - path] = '\0';
+
+					std::cout << "文件名: " << dirName << std::endl;
+					std::cout << "路径: " << directory << std::endl;
+
+					
+					SetCurrentDirectory(directory);
+
+					bool flag = RemoveDirectory(path); // 删除文件夹本身;
+					if (!flag)
+					{
+						cout << "删除空文件夹：" << fileName << "失败" << endl;
+
+					}
+
+					// 释放动态分配的内存
+					delete[] dirName;
+					delete[] directory;
+
+				}
+
+			
+
+				
+
 			}//Fdel
 			else if (strncmp(rbuff, "user", 4) == 0) {
 				char tbuff[1024];

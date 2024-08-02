@@ -83,26 +83,29 @@ bool FilemangageDialog::getFtpFolderShow()
 		ui->treeWidget->addTopLevelItem(pRootItem);
 		
 
-		m_FtpClientClass->newConnection();
-		m_FtpClientClass->execute_ls();//执行ls 
+		if (m_FtpClientClass->newConnection())
+		{
+			m_FtpClientClass->execute_ls();//执行ls 
 
 		//在树分支显示当前路径文件夹名称
 
-		auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
-		for (int i = 0; i < vecFolderNames.size(); i++)
-		{
-			
-			QTreeWidgetItem* pItem = new QTreeWidgetItem();
-			QString strText = QString::fromLocal8Bit(vecFolderNames[i].c_str());
-			QString strPath = RootPath + "\\"+strText;
-			pItem->setText(0, strText);
-			pItem->setData(0, Qt::UserRole, strPath);
-			pItem->setIcon(0, QIcon(":/image/Dir.png"));
-			pItem->setToolTip(0, strText);
-			createTreeChildNode(pItem, vecFolderNames[i]);
-			pRootItem->addChild(pItem);
+			auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
+			for (int i = 0; i < vecFolderNames.size(); i++)
+			{
+
+				QTreeWidgetItem* pItem = new QTreeWidgetItem();
+				QString strText = QString::fromLocal8Bit(vecFolderNames[i].c_str());
+				QString strPath = RootPath + "\\" + strText;
+				pItem->setText(0, strText);
+				pItem->setData(0, Qt::UserRole, strPath);
+				pItem->setIcon(0, QIcon(":/image/Dir.png"));
+				pItem->setToolTip(0, strText);
+				createTreeChildNode(pItem, vecFolderNames[i]);
+				pRootItem->addChild(pItem);
+			}
 		}
-		//pTreeView->SetItemExpand(false,NULL);//让树形结构初始状态为不展开的
+		
+		
 
 		return 1;
 	}
@@ -110,10 +113,12 @@ bool FilemangageDialog::getFtpFolderShow()
 
 void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const std::string strFolder)
 {
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_cdFloder(strFolder);//进入子文件夹
 
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_ls();//执行ls 
 	
 	vector<string> vecFolders = m_FtpClientClass->Gets_FolderName();
@@ -130,7 +135,8 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 		pParentItem->addChild(pItem);
 	}
 	
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_cdGoback();//返回上一级目录
 }
 
@@ -138,10 +144,12 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 {
 	QString strDirPath = pTreeItem->data(column, Qt::UserRole).toString();
 
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
 
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_ls();//执行ls 
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
@@ -204,7 +212,8 @@ void FilemangageDialog::slot_itemBtnDownload()
 	const wchar_t* lpcwstr = wstr.c_str();
 	SetCurrentDirectory(lpcwstr);//设置当前目录
 
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_getFile(strFileName.toLocal8Bit().toStdString());
 
 }
@@ -217,7 +226,8 @@ void FilemangageDialog::slot_itemBtnDel()
 	int column = pButton->property("column").toInt();
 
 	auto strFileName = m_modelFiles->item(row, 1)->text();
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_Filedelete(strFileName.toLocal8Bit().toStdString());
 
 	m_modelFiles->removeRow(row);
@@ -240,7 +250,8 @@ void FilemangageDialog::slot_btnUploading()
 	SetCurrentDirectory(lpcwstr);//设置当前目录
 
 	strFilePath.replace("/", "\\\\");
-	m_FtpClientClass->newConnection();
+	if (!m_FtpClientClass->newConnection())
+		return;
 	m_FtpClientClass->execute_putFile(strFilePath.toLocal8Bit().toStdString());
 
 }
@@ -250,52 +261,66 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 	QTreeWidgetItem* pItem = ui->treeWidget->itemAt(pos);
 	if (pItem)
 	{
-		QString dirPath = pItem->data(0, Qt::UserRole).toString();
+		
 		QMenu menu;
 		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
 		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
 		
 		connect(add, &QAction::triggered, [=]()
 			{
-				QString DirName = QInputDialog::getText(this, tr("新建"), tr("输入新建文件夹名称："));
+				QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("新建"), QString::fromLocal8Bit("输入新建文件夹名称："));
 				if (!DirName.isEmpty())	// 用户输入了文件名称
 				{
+					QString dirPath = pItem->data(0, Qt::UserRole).toString();
 					if (m_FtpClientClass->newConnection())
 					{
-						m_FtpClientClass->execute_mkdirFolder(DirName.toLocal8Bit().toStdString());
+						m_FtpClientClass->execute_cdFloder(dirPath.toLocal8Bit().toStdString());
+						if (m_FtpClientClass->newConnection())
+						{
+							m_FtpClientClass->execute_mkdirFolder(DirName.toLocal8Bit().toStdString());
 
-						QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
-						QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
-						pItem->setText(0, DirName);
-						pItem->setData(0, Qt::UserRole, strPath);
-						pItem->setIcon(0, QIcon(":/image/Dir.png"));
-						pItem->setToolTip(0, DirName);
+							QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
+							QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+							pNewItem->setText(0, DirName);
+							pNewItem->setData(0, Qt::UserRole, strPath);
+							pNewItem->setIcon(0, QIcon(":/image/Dir.png"));
+							pNewItem->setToolTip(0, DirName);
 
-						pItem->addChild(pNewItem);
-					}
-					
+							pItem->addChild(pNewItem);
+						}
+					}	
 					//qDebug() << "文件名称：" << DirName;
 				}
 			});
 
 		connect(del, &QAction::triggered, [=]()
 			{
+				
 				QTreeWidgetItem* pParentItem = pItem->parent();
 				if (!pParentItem)
 					return;
-				QString parentDir = pParentItem->text(0);
-				
-
-				m_FtpClientClass->newConnection();
-				m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());
-
-				if (m_FtpClientClass->newConnection())
+				QString parentDir = pParentItem->data(0, Qt::UserRole).toString();
+				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
+				dirPath.replace("/", "\\\\");
+				parentDir.replace("/", "\\\\");
+				/*if (m_FtpClientClass->newConnection())
 				{
+					m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());*/
 
-					m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+					/*m_FtpClientClass->newConnection();
+					m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());*/
 
-					delete pItem;
-				}
+					if (m_FtpClientClass->newConnection())
+					{
+						//m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+						m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
+						delete pItem;
+					}
+				//}
+			
+				
+			
+			
 			});
 
 
