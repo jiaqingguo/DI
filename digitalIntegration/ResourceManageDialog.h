@@ -4,12 +4,21 @@
 #include <QDialog>
 #include <QJsonObject>
 #include <QMap>
+#include <QUdpSocket>
 class QStandardItemModel;
 class QWebEngineView;
 class QJsonObject;
 class QStandardItem;
 
-
+//用于UDP之间通信
+typedef struct _Message
+{
+    QString host_name = 0;
+    double CPU_Message = 0;
+    double Memory_Message = 0;
+    double Disk_Message = 0;
+    unsigned long Net_Message = 0;
+}Message_t;
 
 namespace Ui {
 class ResourceManageDialog;
@@ -44,6 +53,7 @@ public:
     void updateMemoryWebViewShow(const QString& host);
     void updateDiskWebViewShow(const QString& host);
     void updateNetWebViewShow(const QString& host);
+    void getUdpData(Message_t* infor);
 private slots:
     void slot_modelItemChanged(QStandardItem* item);
     void slot_hostComboxChanged(const QString& text);
@@ -77,6 +87,9 @@ private:
     bool net_init = false;
 
     QTimer* m_timer = nullptr;
+    QUdpSocket* UdpSocket = nullptr;
+    //QThread* thread = nullptr;
+    Message_t message;
 
 };
 

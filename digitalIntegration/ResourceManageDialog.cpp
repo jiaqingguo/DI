@@ -54,8 +54,12 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
        << new QStandardItem(" 3")
        << new QStandardItem(" 2")
        << new QStandardItem("net 2"));*/
-   ui->comboBox->addItem(QString::fromLocal8Bit("主机1"));
-   ui->comboBox->addItem(QString::fromLocal8Bit("主机2"));
+   //ui->comboBox->addItem(QString::fromLocal8Bit("主机1"));
+   //ui->comboBox->addItem(QString::fromLocal8Bit("主机2"));
+   //this->message = new Message_t();
+   getUdpData(&message);
+   //根据下拉列表中最长项的长度来调整控件的宽度
+   ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
    // 连接信号和槽
    connect(m_model, &QStandardItemModel::itemChanged, this, &ResourceManageDialog::slot_modelItemChanged);
    connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
@@ -68,6 +72,8 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 
 ResourceManageDialog::~ResourceManageDialog()
 {
+    this->UdpSocket->close();
+    delete this->UdpSocket;
     delete ui;
 }
 
@@ -306,7 +312,7 @@ void ResourceManageDialog::addHostCpuElemnet(const QString& host, const double& 
     }
     m_mapCpuData[host].push_back(value);
 
-    updateCpuWebViewShow(host);
+    //updateCpuWebViewShow(host);
   
 }
 
@@ -340,7 +346,7 @@ void ResourceManageDialog::addHostDiskElemnet(const QString& host, const double&
     }
     m_mapDiskData[host].push_back(value);
 
-    updateDiskWebViewShow(host);
+    //updateDiskWebViewShow(host);
 }
 
 void ResourceManageDialog::updateHostTableShow(const QString& host, const double& dCpu, const double& dMemory, const double& dDisk, const double& dNet)
@@ -508,47 +514,48 @@ void ResourceManageDialog::slot_hostComboxChanged(const QString& text)
 void ResourceManageDialog::slot_timerTimeout()
 {
 
-        double dCpuUse = common::getCpuUsage();
-
+       /* double dCpuUse = common::getCpuUsage();
         double lFreeAll;
         double lToalAll;
         common::getAllDisSpace(lFreeAll, lToalAll);
         double dDiskUseRate = (lToalAll - lFreeAll) * 100.0 / lToalAll;
-
         long allPhysicsMem;
         long freePhysicsMem;
         common::getPhysicsMem(allPhysicsMem, freePhysicsMem);
-
         double dMemUseRate = (allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
-
         common::getNetworkInterfaceStatistics();
         common::PrintAdapterInfo();
-
-        unsigned long netThroughput = common::GetNetworkInterfacesThroughput();
-
+        unsigned long netThroughput = common::GetNetworkInterfacesThroughput();*/
         //加载列表页面的四个数据
-      
-        updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
-
-        if (CPU_init == true) {
-            addHostCpuElemnet("1", dCpuUse);
-           
-        }
-
-        else if (memory_init == true) {
-            addHostMemoryElemnet("1", dMemUseRate);
-            
-        }
-
-        else if (disk_init == true) {
-            addHostDiskElemnet("1", dDiskUseRate);
-            
-        }
-      
-        else if (net_init == true) {
-            addHostNetElemnet("1", netThroughput);
-           
-        }
+       // updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
+    if (message.host_name != 0) {
+        updateHostTableShow(message.host_name, message.CPU_Message, message.Memory_Message, message.Disk_Message, message.Net_Message);
+    }
+    // 检查comboBox中是否已经存在该项
+    int index = ui->comboBox->findText(message.host_name);
+    if (index == -1 && !message.host_name.isEmpty())
+    { // 如果不存在，才添加
+        ui->comboBox->addItem(message.host_name);
+    }
+    if (CPU_init == true) {
+        addHostCpuElemnet(message.host_name, message.CPU_Message);
+    }
+    else if (memory_init == true) {
+        addHostMemoryElemnet(message.host_name, message.Memory_Message);
+    }
+    else if (disk_init == true) {
+        addHostDiskElemnet(message.host_name, message.Disk_Message);
+    }
+    else if (net_init == true) {
+        addHostNetElemnet(message.host_name, message.Net_Message);
+    }
+    if (message.host_name == ui->comboBox->currentText())
+    {
+        updateCpuWebViewShow(message.host_name);
+        updateMemoryWebViewShow(message.host_name);
+        updateDiskWebViewShow(message.host_name);
+        updateNetWebViewShow(message.host_name);
+    }
 }
 
 void ResourceManageDialog::slot_get_data(int index)
@@ -586,3 +593,30 @@ void ResourceManageDialog::slot_get_data(int index)
 
     }
 }
+
+    void  ResourceManageDialog::getUdpData(Message_t * infor)
+    {
+        // UDP的连接
+        this->UdpSocket = new QUdpSocket(this);
+        //this->thread = new QThread(this);
+        //this->UdpSocket->moveToThread(this->thread);
+        this->UdpSocket->bind(QHostAddress::Any, 12345);
+        connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
+            while (this->UdpSocket->hasPendingDatagrams())
+            {
+                QByteArray datagram;
+                datagram.resize(this->UdpSocket->pendingDatagramSize());
+                this->UdpSocket->readDatagram(datagram.data(), datagram.size());
+
+                QDataStream stream(&datagram, QIODevice::ReadOnly);
+
+                stream >> infor->host_name;
+                stream >> infor->CPU_Message;
+                stream >> infor->Memory_Message;
+                stream >> infor->Disk_Message;
+                quint32 temp;
+                stream >> temp;
+                infor->Net_Message = static_cast<unsigned long>(temp);
+            }
+            });
+    }
