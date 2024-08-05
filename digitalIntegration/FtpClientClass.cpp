@@ -378,7 +378,62 @@ void FtpClientClass::execute_getFile(string rec_name)
 		memset(rbuff, '\0', sizeof(rbuff));
 		while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) {
 			// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
-			fwrite(rbuff, sizeof(char), cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
+			fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
+		}
+		//string msg = " ---收到文件后---";
+		//TimeSave("E:\\jh\\Time_Client.txt", msg);
+
+		//closesocket(sockClient);
+		fclose(fd1);
+
+
+	}//get
+
+
+	closesocket(sockClient);	//关闭连接
+	WSACleanup();				//释放Winsock
+}
+void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
+{
+	char operation[10], name[1024];		//操作与文件名
+	char order[1024] = "\0";				//输入的命令
+	char buff[1024];						//用来存储经过字符串格式化的order
+	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+	int cnt;
+
+	//startSock();				//启动winsock并初始化
+	//if (callServer() == -1) 
+	//{	//发送连接请求失败
+	//	cout << "发送请求失败!!!" << endl;
+	//}
+
+	//发送连接请求成功，初始化数据
+
+	memset(buff, 0, sizeof(buff));
+	memset(rbuff, 0, sizeof(rbuff));
+	memset(sbuff, 0, sizeof(sbuff));
+
+	string str_name = filePath;
+	strcpy(name, filePath.c_str());
+	//将指令整合进order，并存放进buff
+	strcat(order, "get"), strcat(order, " "), strcat(order, name);
+	sprintf(buff, order);
+	sendTCP(buff);									//发送指令
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	cout << rbuff << endl;							//pwd功能在这里已经实现
+	if (strncmp(rbuff, "get", 3) == 0)
+	{			///下载功能
+		//callServer();
+		fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
+		if (fd1 == NULL)
+		{
+			cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
+			//return 1;
+		}
+		memset(rbuff, '\0', sizeof(rbuff));
+		while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) {
+			// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
+			fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
 		}
 		//string msg = " ---收到文件后---";
 		//TimeSave("E:\\jh\\Time_Client.txt", msg);

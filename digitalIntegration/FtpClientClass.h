@@ -44,6 +44,7 @@ public:
 	void execute_ls();//获取当前文件名称 执行ls
 	string Gets_CurrentPath();//获取当前路径
 	void execute_getFile(string rec_name);//执行 get name
+	void execute_getFile(string filePath,string NewFilePath);//执行 get name
 	void execute_putFile(string sendfileName);//执行 put 上传
 	void execute_cdFloder(string floderName);//执行 进入文件夹命令
 	void execute_cdGoback();//返回上一级目录

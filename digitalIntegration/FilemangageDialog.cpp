@@ -140,6 +140,11 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 	m_FtpClientClass->execute_cdGoback();//返回上一级目录
 }
 
+void FilemangageDialog::downloadFtpDir(QString strDirPath)
+{
+
+}
+
 void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, int column)
 {
 	QString strDirPath = pTreeItem->data(column, Qt::UserRole).toString();
@@ -214,13 +219,17 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 	if (!m_FtpClientClass->newConnection())
 		return;
-	m_FtpClientClass->execute_getFile(strFileName.toLocal8Bit().toStdString());
-
+	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
+	QString fileAllPath = dirPath + "\\" + strFileName;
+	fileAllPath.replace("/", "\\\\");
+	//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
+	QString newFilePath= directory + "\\" + strFileName;
+	newFilePath.replace("/", "\\\\");
+	m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
 }
 
 void FilemangageDialog::slot_itemBtnDel()
 {
-
 	QPushButton* pButton = (QPushButton*)sender();
 	int row = pButton->property("row").toInt();
 	int column = pButton->property("column").toInt();
@@ -252,6 +261,7 @@ void FilemangageDialog::slot_btnUploading()
 	strFilePath.replace("/", "\\\\");
 	if (!m_FtpClientClass->newConnection())
 		return;
+
 	m_FtpClientClass->execute_putFile(strFilePath.toLocal8Bit().toStdString());
 
 }
@@ -265,6 +275,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 		QMenu menu;
 		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
 		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
+		QAction* download = menu.addAction(QString::fromLocal8Bit("下载"));
 		
 		connect(add, &QAction::triggered, [=]()
 			{
@@ -324,6 +335,12 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 			});
 
 
+		connect(download, &QAction::triggered, [=]()
+			{
+				QTreeWidgetItem* pParentItem = pItem->parent();
+				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
+
+			});
 		menu.exec(QCursor::pos());
 
 

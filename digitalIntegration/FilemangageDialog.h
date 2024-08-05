@@ -23,6 +23,7 @@ private:
 
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
+    void downloadFtpDir(QString strDirPath);
 private slots:
 
     void slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column);

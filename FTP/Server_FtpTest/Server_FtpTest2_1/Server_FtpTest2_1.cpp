@@ -265,11 +265,12 @@ DWORD connectProcess() {
 			cout << endl << "获取并执行的命令：" << rbuff << endl;
 			if (strncmp(rbuff, "get", 3) == 0) 
 			{
+				char fileName[256];	//文件名
 				strcpy(fileName, rbuff + 4);
 				FILE* file;//定义一个文件访问指针
 				//处理下载文件请求
 				file = fopen(fileName, "rb");//二进制打开文件，只允许读
-				if (file) {
+				if (file!=NULL) {
 					sprintf(sbuff, "get %s", fileName);
 					if (!send(sockServer, sbuff, sizeof(sbuff), 0)) {
 						fclose(file);
