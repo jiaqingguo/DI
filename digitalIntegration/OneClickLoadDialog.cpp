@@ -42,7 +42,6 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
         layout->setContentsMargins(0, 0, 0, 0); // ÒÆ³ı²¼¾Ö±ß¾à
        
         ui->tableView->setIndexWidget(m_model->index(i, 3), widget);
-
     }
 }
 

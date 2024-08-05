@@ -140,8 +140,42 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 	m_FtpClientClass->execute_cdGoback();//返回上一级目录
 }
 
-void FilemangageDialog::downloadFtpDir(QString strDirPath)
+void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
 {
+	QDir dir;
+	if (!dir.mkdir(newDirPath)) 
+	{
+		//qDebug() << "文件夹创建失败！";
+		return;
+	}
+
+	if (!m_FtpClientClass->newConnection())
+		return;
+	m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
+	if (!m_FtpClientClass->newConnection())
+		return;
+	m_FtpClientClass->execute_ls();//执行ls 
+
+	auto vecFileData = m_FtpClientClass->Gets_FileName();
+	auto vecFtpDirData = m_FtpClientClass->Gets_FolderName();
+
+	for (int i = 0; i < vecFileData.size(); i++)
+	{
+		QString ftpFilePath = strDirPath + "\\\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
+		QString newFilePath = newDirPath + "\\\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
+		if (!m_FtpClientClass->newConnection())
+			return;
+		
+		m_FtpClientClass->execute_getFile(ftpFilePath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+	}
+
+	
+	for (int j = 0; j < vecFtpDirData.size(); j++)
+	{
+		QString ftpDirPath = strDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j].c_str());
+		QString newChildDirPath = newDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j].c_str());
+		downloadFtpDir(ftpDirPath, newChildDirPath);
+	}
 
 }
 
@@ -339,7 +373,12 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 			{
 				QTreeWidgetItem* pParentItem = pItem->parent();
 				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
-
+				dirPath.replace("/", "\\\\");
+				QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+				
+				QString newDirPath = directory + "\\" + pItem->text(0);
+				newDirPath.replace("/", "\\\\");
+				downloadFtpDir(dirPath, newDirPath);
 			});
 		menu.exec(QCursor::pos());
 
