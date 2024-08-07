@@ -22,6 +22,7 @@ class AddToolDialog;
 class OneClickSaveDialog;
 class OneClickLoadDialog;
 class FilemangageDialog;
+class GifDialog;
 
 /*!
 * \class	QssAutoLoader
@@ -94,6 +95,8 @@ public:
 	void showRegisterDialog();
 	void setUserNameText(const QString& userName);
 	
+	void showGif();
+	void closeGif();
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
@@ -108,6 +111,8 @@ private slots:
 
 	// 更新模块工具图标;
 	void slot_updateModuleToolIcon(int module);
+
+	void slot_downlaodFinsh();
 private:
 	void updateModuleToolIcon(int module);
 private:
@@ -142,7 +147,7 @@ private:
 	QWidget * widgetQQ = nullptr;
 	WId winIdQQ;
 
-	
+	GifDialog* m_GifDialog = nullptr;
 
 };
 

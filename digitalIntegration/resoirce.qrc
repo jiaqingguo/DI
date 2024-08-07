@@ -38,5 +38,8 @@
         <file>image/tubiao.png</file>
         <file>image/Dir.png</file>
         <file>image/ftpDir.png</file>
+        <file>image/loading.gif</file>
+        <file>image/loading2.gif</file>
+        <file>image/waiting.png</file>
     </qresource>
 </RCC>

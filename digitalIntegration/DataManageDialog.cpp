@@ -1,4 +1,8 @@
 #include <QDebug>
+#include <QMovie>
+#include <QLabel>
+#include <QDialog>
+#include <QVBoxLayout>
 
 #include "DataManageDialog.h"
 #include "ui_DataManageDialog.h"

@@ -15,6 +15,7 @@
 #include "databaseDI.h"
 #include "CustomButton.h"
 #include "common.h"
+#include "GifDialog.h"
 
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -87,6 +88,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initInitface()
 {
+    m_GifDialog = new GifDialog;
     m_LoginDialog = new LoginDialog(this);
    
     m_RegisterDialog = new RegisterDialog(this);
@@ -99,7 +101,7 @@ void MainWindow::initInitface()
     m_DataManageDialog = new DataManageDialog(this);
 
     m_FilemangageDialog = new FilemangageDialog(this);
-
+    connect(m_FilemangageDialog, &FilemangageDialog::signal_downloadFinsh, this, &MainWindow::slot_downlaodFinsh, Qt::BlockingQueuedConnection);
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
     m_OneClickLoadDialog = new OneClickLoadDialog(this);
@@ -207,6 +209,17 @@ void MainWindow::showRegisterDialog()
 void MainWindow::setUserNameText(const QString& userName)
 {
     ui->labelUserName->setText(userName);
+}
+void MainWindow::showGif()
+{
+   // m_FilemangageDialog->hide();
+    m_GifDialog->show();
+    //m_GifDialog->update();
+}
+void MainWindow::closeGif()
+{
+    m_GifDialog->close();
+   // m_FilemangageDialog->exec();
 }
 void MainWindow::slot_btnResourceManageClicked()
 {
@@ -395,6 +408,11 @@ void MainWindow::slot_updateModuleToolIcon(int module)
 
     updateModuleToolIcon(module);
 
+}
+
+void MainWindow::slot_downlaodFinsh()
+{
+    closeGif();
 }
 
 void MainWindow::updateModuleToolIcon(int module)

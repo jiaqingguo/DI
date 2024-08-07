@@ -10,7 +10,7 @@
 
 namespace db
 {
-	// 历史记录数据库接口;
+	// 数据库接口;
     class  databaseDI : public db::database
 	{
 	public:
@@ -26,22 +26,7 @@ namespace db
 
 		// 业务操作;
 	public:
-		////记录表;
-		//bool add_record_info(db_history::record& record_data);
-		//bool update_record(const db_history::record& record_data);
-		//bool get_record_by_scheme_id(const uint32_t& scheme_id, std::list<db_history::record>& record_list);
-		//bool get_record_by_id(const uint32_t& id, db_history::record& record);
-		//bool get_all_records(std::list<db_history::record>& record_list);
-		//bool delete_record_by_id(const uint32_t& record_id);
-
-
-			//开火事件表;
-		/*bool add_fire_info(db_history::fire& fire);
-		bool get_fire_by_record_id(const uint32_t& record_id, std::list<db_history::fire>& fire_list);
-		bool delete_fire_by_id(const uint32_t& fire_id);
-		bool is_exist_fire_by_id(const uint32_t& id);*/
-
-
+	
 		// 用户表
 		bool add_user_info(table_user& userInfo);
 		bool is_exist_user(const std::string& user);

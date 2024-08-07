@@ -6,6 +6,8 @@
 class QTreeWidgetItem;
 class FtpClientClass;
 class QStandardItemModel;
+class GifDialog;
+class QMessageBox;
 
 namespace Ui {
 class FilemangageDialog;
@@ -24,6 +26,8 @@ private:
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
     void downloadFtpDir(const QString &strDirPath,const QString &newDirPath);
+signals:
+    void  signal_downloadFinsh();
 private slots:
 
     void slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column);
@@ -40,6 +44,10 @@ private:
 
     FtpClientClass* m_FtpClientClass = nullptr;
     QStandardItemModel *m_modelFiles = nullptr;
+
+    GifDialog *m_GifDialog = nullptr;
+
+    QMessageBox *m_msgBox = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H

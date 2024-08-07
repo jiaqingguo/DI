@@ -1,13 +1,20 @@
 #include <QStandardItemModel>
 #include <QFileDialog>
+#include <QMovie>
 #include <QMenu>
 #include <QInputDialog>
+#include <QLabel>
+#include <QToolButton>
+#include <QMessageBox>
 
 #include "FilemangageDialog.h"
 #include "ui_FilemangageDialog.h"
 #include "FtpClientClass.h"
 #include "common.h"
 #include "Util/UtilTool.h"
+#include "GifDialog.h"
+#include "mainwindow.h"
+#include  <thread>
 
 FilemangageDialog::FilemangageDialog(QWidget *parent) :
     QDialog(parent),
@@ -15,6 +22,24 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 	setWindowTitle(QString::fromLocal8Bit("文件管理"));
+	m_GifDialog = new GifDialog;
+	m_msgBox = new QMessageBox;
+	// 设置消息框的标题
+	m_msgBox->setWindowTitle("Custom Message Box");
+
+	// 设置消息框的文本内容
+	m_msgBox->setText("This is a custom message box with a custom icon.");
+
+	// 设置自定义图标
+	QPixmap customIcon(":/image/load.png"); // 替换为你的图片路径
+	m_msgBox->setIconPixmap(customIcon);
+
+	// 设置消息框的大小
+	m_msgBox->resize(300, 200);
+
+	// 通过设置Qt::WindowFlags去掉右上角的关闭按钮
+	m_msgBox->setWindowFlags(m_msgBox->windowFlags() & ~Qt::WindowCloseButtonHint & Qt::CustomizeWindowHint & Qt::WindowTitleHint & Qt::WindowStaysOnTopHint);
+	//m_GifDialog->show();
 	//// 获取默认生成的根节点
 	//QTreeWidgetItem* rootItem = ui->treeWidget->invisibleRootItem();
 
@@ -142,13 +167,16 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 
 void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
 {
-	QDir dir;
-	if (!dir.mkdir(newDirPath)) 
+	QDir dir(newDirPath);
+	if (!dir.exists())
 	{
-		//qDebug() << "文件夹创建失败！";
-		return;
+		if (!dir.mkdir(newDirPath))
+		{
+			//qDebug() << "文件夹创建失败！";
+			return;
+		}
 	}
-
+	
 	if (!m_FtpClientClass->newConnection())
 		return;
 	m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
@@ -176,7 +204,8 @@ void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString&
 		QString newChildDirPath = newDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j].c_str());
 		downloadFtpDir(ftpDirPath, newChildDirPath);
 	}
-
+	
+	//emit signal_downloadFinsh();
 }
 
 void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, int column)
@@ -372,13 +401,60 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 		connect(download, &QAction::triggered, [=]()
 			{
 				QTreeWidgetItem* pParentItem = pItem->parent();
-				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
+				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
 				dirPath.replace("/", "\\\\");
 				QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
 				
-				QString newDirPath = directory + "\\" + pItem->text(0);
+				QString newDirPath = directory + "/" + pItem->text(0);
 				newDirPath.replace("/", "\\\\");
-				downloadFtpDir(dirPath, newDirPath);
+
+				//// 创建加载对话框
+			//	QDialog loadingDialog;
+			//	loadingDialog.setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
+			//	loadingDialog.setFixedSize(200, 200);
+
+			//	//QLabel label(&loadingDialog);
+			//	//// 设置样式表
+			//	////label.setStyleSheet("QLabel { background-color: red; }");
+			//	QVBoxLayout layout(&loadingDialog);
+			//	loadingDialog.setWindowTitle(QString::fromLocal8Bit("下载"));
+			//	//layout.addWidget(&label);
+			//	loadingDialog.setLayout(&layout);
+			//	//// 创建QMovie对象并加载GIF图像  :/image/loading.gif
+			//	//QMovie *movie= new QMovie(":/image/loading.gif");
+			//	//movie->setScaledSize(QSize(label.width(), label.height())); // 设置GIF图像的大小
+			//
+			//	//label.setMovie(movie);
+			//	//movie->start();
+			//	QToolButton* pBtn = new QToolButton();
+			//	//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
+			//	pBtn->setIcon(QIcon("D:\\waiting.png"));
+			////	pBtn->setIconSize(QSize(50, 46));
+			//	pBtn->setText(QString::fromLocal8Bit("等待中..."));
+			//	pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+			//	pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+			//	pBtn->setFocusPolicy(Qt::NoFocus);
+			//	pBtn->setFixedSize(55, 64);
+			//	 pBtn->show();
+			//	layout.addWidget(pBtn);
+				
+				 //显示加载对话框
+
+				/*m_GifDialog->show();*/
+				//std::thread myThread(&FilemangageDialog::downloadFtpDir,dirPath, newDirPath);
+				//std::thread myThread(/*std::bind(*/&FilemangageDialog::downloadFtpDir,this, dirPath, newDirPath);
+				/*std::thread myThread([dirPath, newDirPath]() {
+					&FilemangageDialog::downloadFtpDir(dirPath, newDirPath);
+					});*/
+				g_pMainWindow->showGif();
+				//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
+	 			// m_msgBox->show();
+				 QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+				 downloadFtpDir(dirPath, newDirPath);
+				// m_msgBox->close();
+				//g_pMainWindow->show();
+				g_pMainWindow->closeGif();
+				//loadingDialog.exec();
 			});
 		menu.exec(QCursor::pos());
 

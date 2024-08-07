@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets
+QT       += core gui webengine webenginewidgets multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 
@@ -25,6 +25,8 @@ SOURCES += \
     DataManageDialog.cpp \
     FilemangageDialog.cpp \
     FtpClientClass.cpp \
+    GifDialog.cpp \
+    GifThread.cpp \
     InformationConfihurationDialog.cpp \
     LoginDialog.cpp \
     OneClickLoadDialog.cpp \
@@ -49,6 +51,8 @@ HEADERS += \
     DataManageDialog.h \
     FilemangageDialog.h \
     FtpClientClass.h \
+    GifDialog.h \
+    GifThread.h \
     InformationConfihurationDialog.h \
     LoginDialog.h \
     OneClickLoadDialog.h \
@@ -70,6 +74,7 @@ FORMS += \
     ApprovalProgressDialog.ui \
     DataManageDialog.ui \
     FilemangageDialog.ui \
+    GifDialog.ui \
     InformationConfihurationDialog.ui \
     LoginDialog.ui \
     OneClickLoadDialog.ui \
