@@ -265,9 +265,10 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 
 void FilemangageDialog::slot_itemBtnDownload()
 {
-	QPushButton* pButton = (QPushButton*)sender();
-	int row = pButton->property("row").toInt();
-	int column = pButton->property("column").toInt();
+	int row = ui->tableView->currentIndex().row();
+	//QPushButton* pButton = (QPushButton*)sender();
+	//int row = pButton->property("row").toInt();
+	//int column = pButton->property("column").toInt();
 
 	//QModelIndex index = m_modelFiles->index(row, 0);
 	auto strFileName = m_modelFiles->item(row,1)->text();
@@ -293,16 +294,20 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 void FilemangageDialog::slot_itemBtnDel()
 {
-	QPushButton* pButton = (QPushButton*)sender();
-	int row = pButton->property("row").toInt();
-	int column = pButton->property("column").toInt();
+	int row = ui->tableView->currentIndex().row();
+	//QPushButton* pButton = (QPushButton*)sender();
+	//int row = pButton->property("row").toInt();
+	//int column = pButton->property("column").toInt();
+	if (m_modelFiles->item(row, 1) != nullptr)
+	{
+		auto strFileName = m_modelFiles->item(row, 1)->text();
+		//if (!m_FtpClientClass->newConnection())
+		//	return;
+		m_FtpClientClass->execute_Filedelete(strFileName.toLocal8Bit().toStdString());
 
-	auto strFileName = m_modelFiles->item(row, 1)->text();
-	//if (!m_FtpClientClass->newConnection())
-	//	return;
-	m_FtpClientClass->execute_Filedelete(strFileName.toLocal8Bit().toStdString());
-
-	m_modelFiles->removeRow(row);
+		m_modelFiles->removeRow(row);
+	}
+	
 }
 
 void FilemangageDialog::slot_btnUploading()
