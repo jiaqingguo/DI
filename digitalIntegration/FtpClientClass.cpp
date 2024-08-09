@@ -138,19 +138,21 @@ void FtpClientClass::list(SOCKET sockfd)
 		memset(recvBuf, 0, sizeof(recvBuf));
 		nRead = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
 		cout << "sizeof(rbuff):" << sizeof(rbuff) << endl;
-		memcpy(&m_FileInformation, recvBuf, sizeof(m_FileInformation));
-
+		
 		//recv通过sockClient套接口接受数据存入rbuff缓冲区，返回接收到的字节数
 		if (nRead == SOCKET_ERROR) {
 			cout << "读取时发生错误" << endl;
-			exit(1);
+			//exit(1);
 		}
-
-
-		if (nRead == 0) 
+        else if (nRead == 0) 
 		{ //数据读取结束
 			break;
 		}
+		if (strncmp(recvBuf, "ls-end", 6) == 0)
+		{
+			break;
+		}
+		memcpy(&m_FileInformation, recvBuf, sizeof(m_FileInformation));
 		//显示数据
 		rbuff[nRead] = '\0';
 		cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
@@ -162,7 +164,8 @@ void FtpClientClass::list(SOCKET sockfd)
 		if(name == "." || name == "..")
 		{
 			cout << "不要.和.."<< endl;
-		}else
+		}
+		else
 		{
 			if(fileDir == "<DIR>")
 			{
@@ -240,16 +243,17 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 	memset(sbuff, '\0', sizeof(sbuff));
 	while (1) { //从文件中循环读取数据并发送
 		int len = fread(sbuff, 1, sizeof(sbuff), file); //fread从file文件读取sizeof(sbuff)长度的数据到sbuff，返回成功读取的数据个数
-		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR) {
+		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR) 
+		{
 			cout << "与客户端的连接中断" << endl;
-			closesocket(datatcps);
+		//	closesocket(datatcps);
 			return 0;
 		}
 		if (len < sizeof(sbuff)) {
 			break;
 		}
 	}
-	closesocket(datatcps);
+//	closesocket(datatcps);
 	cout << "传输完成" << endl;
 	return true;
 }
@@ -300,8 +304,8 @@ void FtpClientClass::execute_ls()
 	//	ret_vec.push_back(vecName[i]);
 	//}
 	//vecName.push_back();
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 
 
 }
@@ -331,8 +335,8 @@ string FtpClientClass::Gets_CurrentPath()
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	str_path = rbuff;
 
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+//	closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 
 	return str_path;
 
@@ -390,8 +394,8 @@ void FtpClientClass::execute_getFile(string rec_name)
 	}//get
 
 
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+//	closesocket(sockClient);	//关闭连接
+//	WSACleanup();				//释放Winsock
 }
 void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
@@ -401,6 +405,7 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
 	int cnt;
 
+	char buff_test[100];
 	//startSock();				//启动winsock并初始化
 	//if (callServer() == -1) 
 	//{	//发送连接请求失败
@@ -419,34 +424,47 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	strcat(order, "get"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 	sendTCP(buff);									//发送指令
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	cout << rbuff << endl;							//pwd功能在这里已经实现
-	if (strncmp(rbuff, "get", 3) == 0)
-	{			///下载功能
-		//callServer();
-		fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
-		if (fd1 == NULL)
-		{
-			cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
-			//return 1;
-		}
-		memset(rbuff, '\0', sizeof(rbuff));
-		while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) {
-			// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
-			fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
-		}
-		//string msg = " ---收到文件后---";
-		//TimeSave("E:\\jh\\Time_Client.txt", msg);
+	while (1)
+	{
+		int num=recv(sockClient, rbuff, 1024, 0);		//接收信息 
+		cout << rbuff << endl;							//pwd功能在这里已经实现
 
-		//closesocket(sockClient);
-		fclose(fd1);
+		if (strncmp(rbuff, "get", 3) == 0)
+		{			///下载功能
+			//callServer();
+			fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
+			if (fd1 == NULL)
+			{
+				cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
+				//return 1;
+			}
+			memset(rbuff, '\0', sizeof(rbuff));
+			while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) 
+			{
+				
+				// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
+				fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
+				memset(rbuff, '\0', sizeof(rbuff));
+				if (cnt < 1024)
+				{
+					break;
+				}
+			}
+			//string msg = " ---收到文件后---";
+			//TimeSave("E:\\jh\\Time_Client.txt", msg);
+
+			//closesocket(sockClient);
+			fclose(fd1);
+
+			return;
+		}//get
+	}
+	
 
 
-	}//get
 
-
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+//	closesocket(sockClient);	//关闭连接
+//	WSACleanup();				//释放Winsock
 }
 //执行 put 上传
 void FtpClientClass::execute_putFile(string sendfileName)
@@ -494,8 +512,8 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	}//put
 	cout << "上传成功!!!" << endl;
 
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+//	closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 
 }
 //执行 进入文件夹命令
@@ -528,8 +546,8 @@ void FtpClientClass::execute_cdFloder(string floderName)
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 }
 //返回上一级目录
 void FtpClientClass::execute_cdGoback()
@@ -561,8 +579,8 @@ void FtpClientClass::execute_cdGoback()
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 }
 ;//新建文件夹
 void FtpClientClass::execute_mkdirFolder(string folder)
@@ -594,8 +612,8 @@ void FtpClientClass::execute_mkdirFolder(string folder)
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 
 }
 //删除空文件夹
@@ -628,8 +646,8 @@ void FtpClientClass::execute_delFolder(string folder)
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+	//WSACleanup();				//释放Winsock
 
 }
 
@@ -663,8 +681,8 @@ void FtpClientClass::execute_Filedelete(string folder)
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+	//closesocket(sockClient);	//关闭连接
+//	WSACleanup();				//释放Winsock
 
 }
 //删除某个文件
@@ -697,8 +715,8 @@ void FtpClientClass::execute_deleteFileList(string folder)
 	sendTCP(buff);	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
-	closesocket(sockClient);	//关闭连接
-	WSACleanup();				//释放Winsock
+//	closesocket(sockClient);	//关闭连接
+//	WSACleanup();				//释放Winsock
 
 }
 //获取文件夹名称
