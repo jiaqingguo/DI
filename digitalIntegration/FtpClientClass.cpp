@@ -142,6 +142,7 @@ void FtpClientClass::list(SOCKET sockfd)
 		//recv通过sockClient套接口接受数据存入rbuff缓冲区，返回接收到的字节数
 		if (nRead == SOCKET_ERROR) {
 			cout << "读取时发生错误" << endl;
+			return;
 			//exit(1);
 		}
         else if (nRead == 0) 
@@ -241,7 +242,8 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 	//put 传送给远方一个文件
 	cout << "正在传输文件…" << endl;
 	memset(sbuff, '\0', sizeof(sbuff));
-	while (1) { //从文件中循环读取数据并发送
+	while (1) 
+	{ //从文件中循环读取数据并发送
 		int len = fread(sbuff, 1, sizeof(sbuff), file); //fread从file文件读取sizeof(sbuff)长度的数据到sbuff，返回成功读取的数据个数
 		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR) 
 		{
@@ -249,9 +251,18 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 		//	closesocket(datatcps);
 			return 0;
 		}
-		if (len < sizeof(sbuff)) {
+		
+		if (len == 0)
+		{
+			sprintf(sbuff, "put-end", sbuff);
+			sendTCP(sbuff);									//发送指令
 			break;
 		}
+		else if (len < sizeof(sbuff)) 
+		{
+			break;
+		}
+		
 	}
 //	closesocket(datatcps);
 	cout << "传输完成" << endl;
@@ -297,7 +308,6 @@ void FtpClientClass::execute_ls()
 	cout << rbuff << endl;	//pwd的
 	list(sockClient);
 
-
 	//for (int i = 0; i < vecName.size(); i++)
 	//{
 	//	cout << "vecName[i]: " << vecName[i] << endl;//打印容器的内容
@@ -306,8 +316,6 @@ void FtpClientClass::execute_ls()
 	//vecName.push_back();
 	//closesocket(sockClient);	//关闭连接
 	//WSACleanup();				//释放Winsock
-
-
 }
 
 //获取当前路径
@@ -381,8 +389,12 @@ void FtpClientClass::execute_getFile(string rec_name)
 		}
 		memset(rbuff, '\0', sizeof(rbuff));
 		while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) {
-			// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
 			fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
+			memset(rbuff, '\0', sizeof(rbuff));
+			if (cnt < 1024)
+			{
+				break;
+			} //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
 		}
 		//string msg = " ---收到文件后---";
 		//TimeSave("E:\\jh\\Time_Client.txt", msg);
@@ -441,7 +453,10 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 			memset(rbuff, '\0', sizeof(rbuff));
 			while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) 
 			{
-				
+				if (strncmp(rbuff, "get-end", 7) == 0)
+				{
+					break;
+				}
 				// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
 				fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
 				memset(rbuff, '\0', sizeof(rbuff));
@@ -492,15 +507,14 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	{ ///上传功能
 		strcpy(fileName, rbuff + 4);
 		fd2 = fopen(fileName, "rb");				//打开一个二进制文件，文件必须存在，只允许读
-		if (fd2) { //成功打开
-			if (!sendFile(sockClient, fd2)) {
+		if (fd2)
+		{ //成功打开
+			if (!sendFile(sockClient, fd2)) 
+			{
 				cout << "发送失败" << endl;
 				
 			}
-			else
-			{
-
-			}
+		
 			fclose(fd2);
 		}
 		else {

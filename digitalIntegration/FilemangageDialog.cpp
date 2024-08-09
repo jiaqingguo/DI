@@ -404,7 +404,8 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
 				dirPath.replace("/", "\\\\");
 				QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
-				
+				if (directory.isEmpty())
+					return;
 				QString newDirPath = directory + "/" + pItem->text(0);
 				newDirPath.replace("/", "\\\\");
 

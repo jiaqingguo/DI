@@ -245,7 +245,13 @@ int Server::sendFile(SOCKET datatcps, FILE* file) {
 			//closesocket(datatcps);
 			return 0;
 		}
-		if (len < sizeof(sbuff)) {//文件传送结束
+		if (len == 0)
+		{
+			sprintf(sbuff, "get-end", sbuff);
+			send(datatcps, sbuff, strlen(sbuff), 0);					//发送指令
+			break;
+		}
+		else if (len < sizeof(sbuff)) {//文件传送结束
 			break;
 		}
 	}
@@ -500,12 +506,21 @@ void Server::running()
 			}
 
 			memset(sbuff, '\0', sizeof(rbuff));
-
+			cout << "careate file start save" << endl;
 			while ((cnt = recv(sockServer, rbuff, sizeof(rbuff), 0)) > 0)
 			{
+				if (strncmp(rbuff, "put-end", 7) == 0)
+				{
+					break;
+				}
 				fwrite(rbuff, sizeof(char), cnt, fd);//把cnt个数据长度为char的数据从rbuff输入到fd指向的文件
-
+				memset(rbuff, '\0', sizeof(rbuff));
+				if (cnt < 1024)
+				{
+					break;
+				}
 			}
+			cout << " file  save finsh" << endl;
 			//string msg = " ---成功收到客户端上传文件请求---";
 			//TimeSave("E:\\Time_Server_Put.txt", msg);
 			//cout << "成功获得文件" << fileName << endl;
