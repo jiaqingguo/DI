@@ -283,12 +283,45 @@ bool FtpClientClass::newConnection()
 	}
 	return true;
 }
-//获取当前文件名称
-void FtpClientClass::execute_ls()
+////获取当前文件名称
+//void FtpClientClass::execute_ls()
+//{
+//	
+//	char operation[10], name[20];		//操作与文件名
+//	char order[30] = "\0";				//输入的命令
+//	char buff[80];						//用来存储经过字符串格式化的order
+//
+//	//startSock();				//启动winsock并初始化
+//	//if (callServer() == -1) 
+//	//{	//发送连接请求失败
+//	//	cout << "发送连接请求失败!!!";
+//	//}
+//	memset(buff, 0, sizeof(buff));
+//	memset(rbuff, 0, sizeof(rbuff));
+//	memset(sbuff, 0, sizeof(sbuff));
+//	memset(order, 0, sizeof(order));
+//
+//	strcat(order, "ls");
+//	sprintf(buff, order);
+//	sendTCP(buff);									//发送指令
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+//	cout << rbuff << endl;	//pwd的
+//	list(sockClient);
+//
+//	//for (int i = 0; i < vecName.size(); i++)
+//	//{
+//	//	cout << "vecName[i]: " << vecName[i] << endl;//打印容器的内容
+//	//	ret_vec.push_back(vecName[i]);
+//	//}
+//	//vecName.push_back();
+//	//closesocket(sockClient);	//关闭连接
+//	//WSACleanup();				//释放Winsock
+//}
+
+void FtpClientClass::execute_ls(const std::string strDirPath)
 {
-	
 	char operation[10], name[20];		//操作与文件名
-	char order[30] = "\0";				//输入的命令
+	char order[260] = "\0";				//输入的命令
 	char buff[80];						//用来存储经过字符串格式化的order
 
 	//startSock();				//启动winsock并初始化
@@ -301,21 +334,13 @@ void FtpClientClass::execute_ls()
 	memset(sbuff, 0, sizeof(sbuff));
 	memset(order, 0, sizeof(order));
 
-	strcat(order, "ls");
+	//strcat(order, "ls");
+	sprintf(order, "ls %s", strDirPath.c_str());
 	sprintf(buff, order);
 	sendTCP(buff);									//发送指令
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	list(sockClient);
-
-	//for (int i = 0; i < vecName.size(); i++)
-	//{
-	//	cout << "vecName[i]: " << vecName[i] << endl;//打印容器的内容
-	//	ret_vec.push_back(vecName[i]);
-	//}
-	//vecName.push_back();
-	//closesocket(sockClient);	//关闭连接
-	//WSACleanup();				//释放Winsock
 }
 
 //获取当前路径
@@ -531,38 +556,38 @@ void FtpClientClass::execute_putFile(string sendfileName)
 
 }
 //执行 进入文件夹命令
-void FtpClientClass::execute_cdFloder(string floderName)
-{
-	char operation[1024], name[1024];		//操作与文件名
-	char order[1024] = "\0";				//输入的命令
-	char buff[1024];						//用来存储经过字符串格式化的order
-	FILE *fd1, *fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
-	int cnt;
-
-	memset(buff, 0, sizeof(buff));
-	memset(rbuff, 0, sizeof(rbuff));
-	memset(sbuff, 0, sizeof(sbuff));
-	
-	//startSock();				//启动winsock并初始化
-	//if (callServer() == -1) 
-	//{	//发送连接请求失败
-	//	cout << "发送连接请求失败!!!";
-	//}
-
-	string str_name = floderName;
-	strcpy(name,str_name.c_str());
-
-
-	//memset(order1, 0, sizeof(order));
-	//memset(buff, 0, sizeof(buff));
-	strcat(order, "cd"), strcat(order, " "), strcat(order, name);
-	sprintf(buff, order);
-	sendTCP(buff);	
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	cout << rbuff << endl;	//pwd的
-	//closesocket(sockClient);	//关闭连接
-	//WSACleanup();				//释放Winsock
-}
+//void FtpClientClass::execute_cdFloder(string floderName)
+//{
+//	char operation[1024], name[1024];		//操作与文件名
+//	char order[1024] = "\0";				//输入的命令
+//	char buff[1024];						//用来存储经过字符串格式化的order
+//	FILE *fd1, *fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+//	int cnt;
+//
+//	memset(buff, 0, sizeof(buff));
+//	memset(rbuff, 0, sizeof(rbuff));
+//	memset(sbuff, 0, sizeof(sbuff));
+//	
+//	//startSock();				//启动winsock并初始化
+//	//if (callServer() == -1) 
+//	//{	//发送连接请求失败
+//	//	cout << "发送连接请求失败!!!";
+//	//}
+//
+//	string str_name = floderName;
+//	strcpy(name,str_name.c_str());
+//
+//
+//	//memset(order1, 0, sizeof(order));
+//	//memset(buff, 0, sizeof(buff));
+//	strcat(order, "cd"), strcat(order, " "), strcat(order, name);
+//	sprintf(buff, order);
+//	sendTCP(buff);	
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+//	cout << rbuff << endl;	//pwd的
+//	//closesocket(sockClient);	//关闭连接
+//	//WSACleanup();				//释放Winsock
+//}
 //返回上一级目录
 void FtpClientClass::execute_cdGoback()
 {

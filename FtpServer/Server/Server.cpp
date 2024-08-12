@@ -115,12 +115,12 @@ DWORD Server::createSocket() {
 DWORD Server::mkdir(char fileName[])
 {
 	char path[1000];
-	GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
+	//GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
 
-	strcat(path, "\\");
-	strcat(path, fileName);
-	cout << path << endl;
-	bool flag = CreateDirectory(path, NULL);
+	//strcat(path, "\\");
+	//strcat(path, fileName);
+	//cout << path << endl;
+	bool flag = CreateDirectory(fileName, NULL);
 	if (flag)
 	{
 		cout << "创建文件：" << fileName << "成功" << endl;
@@ -158,13 +158,13 @@ DWORD Server::delFile(char fileName[]) {
 //删除某个文件
 DWORD Server::delFile1(char fileName[])
 {
-	char path[1000];
-	GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
+	//char path[1000];
+//	GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
 
-	strcat(path, "\\");
+	/*strcat(path, "\\");
 	strcat(path, fileName);
-	cout << path << endl;
-	if (remove(path) == 0)
+	cout << path << endl;*/
+	if (remove(fileName) == 0)
 	{
 		cout << "删除成功" << endl;
 		return 1;
@@ -233,6 +233,37 @@ DWORD Server::connectProcess() {
 	}
 	
 }
+int Server::sendFileList(SOCKET datatcps,  char dirPath[])
+{
+
+
+	HANDLE hff;								//建立一个线程
+	WIN32_FIND_DATA fd;						//搜索文件
+	hff = FindFirstFile(dirPath, &fd);			//查找文件来把待操作文件的相关属性读取到WIN32_FIND_DATA结构中去 
+	if (hff == INVALID_HANDLE_VALUE)
+	{		//发生错误
+		const char* errStr = "列出文件列表时发生错误\n";
+		cout << *errStr << endl;
+		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR)
+		{
+			cout << "发送失败" << endl;
+		}
+		//closesocket(datatcps);
+		return 0;
+	}
+	BOOL flag = TRUE;
+	while (flag)
+	{//发送文件信息
+		if (!sendFileRecord(datatcps, &fd))
+		{
+			//closesocket(datatcps);
+			return 0;
+		}
+		flag = FindNextFile(hff, &fd);//查找下一个文件
+	}
+
+	return 1;
+}
 int Server::sendFile(SOCKET datatcps, FILE* file) {
 	cout << "正在发送文件…" << endl;
 	memset(sbuff, '\0', sizeof(sbuff));
@@ -263,10 +294,12 @@ int Server::sendFileList(SOCKET datatcps) {
 	HANDLE hff;								//建立一个线程
 	WIN32_FIND_DATA fd;						//搜索文件
 	hff = FindFirstFile("*", &fd);			//查找文件来把待操作文件的相关属性读取到WIN32_FIND_DATA结构中去 
-	if (hff == INVALID_HANDLE_VALUE) {		//发生错误
+	if (hff == INVALID_HANDLE_VALUE) 
+	{		//发生错误
 		const char* errStr = "列出文件列表时发生错误\n";
 		cout << *errStr << endl;
-		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR) {
+		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR) 
+		{
 			cout << "发送失败" << endl;
 		}
 		//closesocket(datatcps);
@@ -282,7 +315,7 @@ int Server::sendFileList(SOCKET datatcps) {
 		}
 		flag = FindNextFile(hff, &fd);//查找下一个文件
 	}
-//	closesocket(datatcps);
+
 	return 1;
 }
 int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//发送当前的文件记录
@@ -539,10 +572,17 @@ void Server::running()
 			send(sockServer, sbuff, size, 0);
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
+
+			memset(m_path, '\0', sizeof(m_path));
+			strcpy(m_path, rbuff + 3);
+
 			strcpy(sbuff, rbuff);
 			int size = strlen(sbuff);
 			send(sockServer, sbuff, size, 0);
-			sendFileList(sockServer);
+
+			//sendFileList(sockServer);
+			strcat(m_path, "\\*");
+			sendFileList(sockServer, m_path);
 
 			memset(sbuff, '\0', sizeof(sbuff));
 			sprintf(sbuff, "ls-end");
@@ -557,10 +597,11 @@ void Server::running()
 		}//cd
 		else if (strncmp(rbuff, "mkdir", 5) == 0)
 		{
-			strcpy(fileName, rbuff + 6);
+			memset(m_path, '\0', sizeof(m_path));
+			strcpy(m_path, rbuff + 6);
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
-			mkdir(fileName);
+			mkdir(m_path);
 		}//mkdir
 		else if (strncmp(rbuff, "del", 3) == 0) { // 删除空文件夹;
 			strcpy(fileName, rbuff + 4);//获得要删的文件名
@@ -569,13 +610,14 @@ void Server::running()
 			delFile(fileName);
 		}//del
 		else if (strncmp(rbuff, "Fdel", 4) == 0) {//删除某个文件
-			strcpy(fileName, rbuff + 5);//获得要删的文件名
+			memset(m_path, '\0', sizeof(m_path));
+			strcpy(m_path, rbuff + 5);//获得要删的文件名
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
-			delFile1(fileName);
+			delFile1(m_path);
 		}//Fdel
 		else if (strncmp(rbuff, "fldel", 5) == 0) {//删除某个文件夹内所有文件
-			char path[1000];
+			char path[260];
 			strcpy(path, rbuff + 6);//获得要删的文件名
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
@@ -587,39 +629,48 @@ void Server::running()
 			string str = path;
 			delete_listFiles(path); // 删除文件夹下的文件;
 
-			char* lastBackslash = strrchr(path, '\\');
-			if (lastBackslash != nullptr)
+			bool flag = RemoveDirectory(path); // 删除文件夹本身;
+			if (!flag)
 			{
-				// 获取文件名长度
-				size_t fileNameLength = strlen(lastBackslash + 1);
-
-				// 创建新的char数组来存储文件名
-				char* dirName = new char[fileNameLength + 1];
-				strcpy(dirName, lastBackslash + 1);
-
-				// 创建新的char数组来存储路径
-				char* directory = new char[lastBackslash - path + 1];
-				strncpy(directory, path, lastBackslash - path);
-				directory[lastBackslash - path] = '\0';
-
-				std::cout << "文件名: " << dirName << std::endl;
-				std::cout << "路径: " << directory << std::endl;
-
-
-				SetCurrentDirectory(directory);
-
-				bool flag = RemoveDirectory(path); // 删除文件夹本身;
-				if (!flag)
-				{
-					cout << "删除空文件夹：" << fileName << "失败" << endl;
-
-				}
-
-				// 释放动态分配的内存
-				delete[] dirName;
-				delete[] directory;
+				cout << "删除空文件夹：" << fileName << "失败" << endl;
 
 			}
+
+
+			//char* lastBackslash = strrchr(path, '\\');
+			//if (lastBackslash != nullptr)
+			//{
+			//	// 获取文件名长度
+			//	size_t fileNameLength = strlen(lastBackslash + 1);
+
+			//	// 创建新的char数组来存储文件名
+			//	char* dirName = new char[fileNameLength + 1];
+			//	strcpy(dirName, lastBackslash + 1);
+
+			//	// 创建新的char数组来存储路径
+			//	char* directory = new char[lastBackslash - path + 1];
+			//	strncpy(directory, path, lastBackslash - path);
+			//	directory[lastBackslash - path] = '\0';
+
+			//	std::cout << "文件名: " << dirName << std::endl;
+			//	std::cout << "路径: " << directory << std::endl;
+
+
+			//	SetCurrentDirectory(directory);
+
+			//	bool flag = RemoveDirectory(path); // 删除文件夹本身;
+			//	if (!flag)
+			//	{
+			//		cout << "删除空文件夹：" << fileName << "失败" << endl;
+
+			//	}
+
+			//	// 释放动态分配的内存
+			//	delete[] dirName;
+			//	delete[] directory;
+
+			//}
+
 		}//Fdel
 		else if (strncmp(rbuff, "user", 4) == 0) {
 			char tbuff[1024];
