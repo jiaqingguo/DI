@@ -43,6 +43,7 @@ struct table_ip
 	std::string		ip;						
 	uint32_t		module = 0;
 	uint32_t        used = 0;
+	std::string		username;
 };
 
 // 用户审批表

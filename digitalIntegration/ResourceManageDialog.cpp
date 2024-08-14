@@ -8,7 +8,7 @@
 #include "ResourceManageDialog.h"
 #include "ui_ResourceManageDialog.h"
 #include "common.h"
-
+#include "databaseDI.h"
 
 
 //#include <QJsonObject>
@@ -612,12 +612,31 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             QDataStream stream(&datagram, QIODevice::ReadOnly);
 
             stream >> infor->host_name;
+            stream >> infor->host_ip;
             stream >> infor->CPU_Message;
             stream >> infor->Memory_Message;
             stream >> infor->Disk_Message;
             quint32 temp;
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
+
+            // ²åÈëÊý¾Ý¿â;
+            table_ip stIp;
+            stIp.ip = infor->host_ip.toStdString();
+            stIp.host = infor->host_name.toStdString();
+            int count = 0;
+            if (db::databaseDI::Instance().get_ip_count(stIp.ip, count))
+            {
+                if (count <= 0)
+                {
+                    if (!db::databaseDI::Instance().add_ip(stIp))
+                    {
+                        qDebug() << "db::databaseDI::Instance().add_ip   error!";
+                    }
+                }
+
+            }
+
 
         }
         });

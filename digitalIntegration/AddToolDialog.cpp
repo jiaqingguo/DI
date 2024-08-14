@@ -29,11 +29,13 @@ void AddToolDialog::init()
     ui->allocationAllocation->setChecked(true);
    
     m_model = new QStandardItemModel();
-    m_model->setColumnCount(4);
+    m_model->setColumnCount(6);
     m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
     m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip列表"));
     m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("占用状态"));
     m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+    m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
+    m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
     ui->tableViewIpSet->setModel(m_model);
     common::setTableViewBasicConfiguration(ui->tableViewIpSet);
     
@@ -60,7 +62,7 @@ void AddToolDialog::init()
     common::delAllModelRow(m_model);
     std::list<table_ip> listData;
   
-    if (db::databaseDI::Instance().get_ip_data(listData, m_iModule))
+    if (db::databaseDI::Instance().get_all_ip_data(listData))
     {
         int i = 1;
         for (auto& stData : listData)
@@ -80,6 +82,15 @@ void AddToolDialog::init()
             item = new QStandardItem(QString::fromStdString(stData.ip));
             item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
             m_model->setItem(newRowIndex, 1, item);
+
+            item = new QStandardItem(QString::fromStdString(stData.host));
+            item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+            m_model->setItem(newRowIndex, 4, item);
+
+            item = new QStandardItem(QString::fromStdString(stData.username));
+            item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+            m_model->setItem(newRowIndex, 5, item);
+
 
             QWidget* widget = new QWidget(); // 创建一个容器Widget来存放CheckBox
             QCheckBox* checkBox = new QCheckBox(); // 创建CheckBox

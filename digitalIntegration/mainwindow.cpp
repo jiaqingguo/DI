@@ -68,6 +68,9 @@ MainWindow::~MainWindow()
     int userId = m_LoginDialog->GetUserID();
     db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
 
+    if (!db::databaseDI::Instance().updata_ipusername(m_LoginDialog->GetUser().toStdString()))
+        return;
+
     if (!db::databaseDI::Instance().update_ip_all_status())
         return;
 
@@ -260,6 +263,32 @@ void MainWindow::slot_btnAddToolTab()
 {
     QPushButton* pButton = (QPushButton*)sender();
     int moduleNumber= pButton->property("module").toInt();
+
+    if (bUserIp == true)
+    {
+        std::list<table_ip> listData;
+
+        if (db::databaseDI::Instance().get_all_ip_data(listData))
+        {
+            for (auto& stData : listData)
+            {
+                if (stData.username.empty())
+                {
+                    db::databaseDI::Instance().updata_ip_username(1, m_LoginDialog->GetUser().toStdString(), stData.id);
+                    break;
+                }
+                else if (!stData.username.empty())
+                {
+                    stData.id = stData.id + 1;
+                    //db::databaseDI::Instance().updata_ip_username(1, user_name, stData.id);
+                    //break;
+                }
+            }
+
+            bUserIp = false;
+        }
+    }
+
     AddToolDialog addToooDialog(moduleNumber);
     if (addToooDialog.exec() == QDialog::Accepted)
     {

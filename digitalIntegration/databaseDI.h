@@ -57,6 +57,15 @@ namespace db
 		bool update_ip_status(const uint32_t& id, int status);
 		bool update_ip_all_status();
 
+		//遍历ip列表，看看有没有此ip
+		bool get_ip_count(const std::string& ip, int& count);
+		//在新增工具画面中 显示数据库中的所有的ip
+		bool get_all_ip_data(std::list<table_ip>& listData);
+		//将t_ip中的username字段设置成用户名
+		bool updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id);
+		//客户端退出的时候，该用户所用的ip的username字段置nullptr
+		bool updata_ipusername(const std::string& u_name);
+
 		// 数据审批表;
 		bool add_data_approval_info(table_dataApproval& stData);
 		bool get_data_approval_list(std::list<table_dataApproval>& listData);

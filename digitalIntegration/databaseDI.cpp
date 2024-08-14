@@ -513,11 +513,12 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_ip(host,ip,module,used) values(\'%s\',\'%s\',\'%d\',\'%d\')",
+		sprintf_s(sql, "insert into t_ip(host,ip,module,used,username) values(\'%s\',\'%s\',\'%d\',\'%d\',\'%s\')",
 			stData.host.c_str(),
 			stData.ip.c_str(),
 			stData.module,
-			stData.used);
+			stData.used,
+		    stData.username.c_str());
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -597,6 +598,110 @@ namespace db
 		char sql[256] = { 0 };
 		int used = 0;
 		sprintf_s(sql, sizeof(sql), "update t_ip set used = (\'%d\')", used);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
+	bool databaseDI::get_ip_count(const std::string& m_ip, int& count)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+
+		sprintf_s(sql, "SELECT COUNT(*) AS count FROM t_ip WHERE ip= \'%s\'", m_ip.c_str());
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			count = std::atoi(sql_row[0]);
+		}
+		return true;
+	}
+
+	bool databaseDI::get_all_ip_data(std::list<table_ip>& listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_ip");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_ip stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.host = sql_row[1];
+			stData.ip = sql_row[2];
+			stData.module = std::atoi(sql_row[3]);
+			stData.used = std::atoi(sql_row[4]);
+			stData.username = sql_row[5];
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
+	bool databaseDI::updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, sizeof(sql), "update t_ip set used = \'%d\',username = \'%s\' where id = \'%d\'", status, u_name.c_str(), id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
+	bool databaseDI::updata_ipusername(const std::string& u_name)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		int used = 0;
+		sprintf_s(sql, sizeof(sql), "update t_ip set username = (\'%s\') where username = (\'%s\')", "", u_name.c_str());
 
 		if (!exec_sql(sql))
 		{

@@ -149,7 +149,7 @@ private:
 
 	GifDialog* m_GifDialog = nullptr;
 
-	bool bUserIp = false;
+	bool bUserIp = true;
 };
 
 extern MainWindow* g_pMainWindow;
