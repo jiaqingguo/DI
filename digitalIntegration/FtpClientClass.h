@@ -47,12 +47,14 @@ public:
 	void execute_getFile(string rec_name);//执行 get name
 	void execute_getFile(string filePath,string NewFilePath);//执行 get name
 	void execute_putFile(string sendfileName);//执行 put 上传
+	void execute_putFile(string localFilePath,std::string NewFilePath);//执行 put 上传
 	//void execute_cdFloder(string floderName);//执行 进入文件夹命令
 	void execute_cdGoback();//返回上一级目录
 	void execute_mkdirFolder(string folder);//新建文件夹
 	void execute_delFolder(string folder);//删除文件夹
 	void execute_Filedelete(string folder);//删除文件
 	void execute_deleteFileList(string folder);//删除某个文件夹内所有文件
+	bool  execute_rename(const std::string  oldDir,const std::string newDir);
 
 	vector<string> Gets_FolderName();//获取文件夹名称
 	vector<vector<string>> Gets_FileName();//获取文件名称

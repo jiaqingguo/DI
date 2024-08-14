@@ -20,6 +20,8 @@ struct table_user
 	uint32_t		Pop =0;	
 	time_t          CreateTime;
 	uint32_t		approval=0;
+
+	uint32_t		loginStatus = 0;
 };
 
 // ¹¤¾ß±í;

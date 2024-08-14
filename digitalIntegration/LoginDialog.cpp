@@ -45,6 +45,11 @@ void LoginDialog::Init(bool bClearPwd)
 	clearTimer();
 }
 
+int LoginDialog::GetUserID()
+{
+	return m_userID;
+}
+
 int LoginDialog::GetLoginState()
 {
 	return m_iState;
@@ -114,17 +119,28 @@ void LoginDialog::slot_btnLoginClicked()
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请输入正确的用户名密码!"));
 		return;
 	}
+	if (stData.loginStatus == 1)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("用户已登录，请勿重复登录！"));
+		return;
+	}
 
+	m_userID = stData.PKID;
+	
+	
 	/*int pop = -1;
 	db::databaseDI::Instance().get_pop(pop, m_sUser.toStdString(), sPassword.toStdString());*/
 	if (stData.Pop == 0)
 	{
 		m_pop = 0;
+		
 		ui->stackedWidget->setCurrentIndex(1);
 	}
 	else
 	{
 		m_pop = 1;
+		int loginStatus = 1;
+		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		this->accept();
 	//	this->hide();
 		/*g_pMainWindow->setUserNameText(m_sUser);
@@ -143,6 +159,10 @@ void LoginDialog::slot_btnExitClicked()
 
 void LoginDialog::slot_btnFingerprintClicked()
 {
+
+	int loginStatus = 1;
+	db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
+
 	// 识别指纹;
 	this->accept();
 	/*hide();

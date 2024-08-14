@@ -39,9 +39,12 @@ namespace db
 		bool get_user_list(std::list<table_user>& listData);
 		bool get_pop(int& pop, const std::string& user, const std::string& password);
 		bool update_user_state(const int& id, int& approval);
+		bool update_user_LoginStatus(const int& id, int& status);
 		bool del_user(const int& id);
 
+
 		// 工具表;
+
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
 		bool add_tools( table_tools& stTool);
 		bool del_tools(const int& id);

@@ -61,7 +61,7 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_user(UserName,Password,name,department,JobTitle,PhoneNumber,Pop,CreateTime,approval) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%d\')",
+		sprintf_s(sql, "insert into t_user(UserName,Password,name,department,JobTitle,PhoneNumber,Pop,CreateTime,approval) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%d\',\'%d\')",
 			userInfo.UserName.c_str(),
 			userInfo.Password.c_str(),
 			userInfo.name.c_str(),
@@ -70,7 +70,8 @@ namespace db
 			userInfo.PhoneNumber.c_str(),
 			userInfo.Pop,
 			datetime_to_string(userInfo.CreateTime).c_str(),
-			userInfo.approval);
+			userInfo.approval,
+			userInfo.loginStatus);
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -173,7 +174,7 @@ namespace db
 			userInfo.Pop = std::atoi(sql_row[7]);
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
-
+			userInfo.loginStatus = std::atoi(sql_row[10]);
 			listData.push_back(userInfo);
 		}
 		return true;
@@ -208,7 +209,7 @@ namespace db
 			userInfo.Pop = std::atoi(sql_row[7]);
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
-
+			userInfo.loginStatus = std::atoi(sql_row[10]);
 			listData.push_back(userInfo);
 		}
 		return true;
@@ -239,7 +240,7 @@ namespace db
 			userInfo.Pop = std::atoi(sql_row[7]);
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
-
+			userInfo.loginStatus= std::atoi(sql_row[10]);
 		}
 		return true;
 	}
@@ -273,7 +274,7 @@ namespace db
 			userInfo.Pop = std::atoi(sql_row[7]);
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
-
+			userInfo.loginStatus = std::atoi(sql_row[10]);
 			listData.push_back(userInfo);
 		}
 		return true;
@@ -327,6 +328,34 @@ namespace db
 
 		return true;
 
+	}
+
+	bool databaseDI::update_user_LoginStatus(const int& id, int& status)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "update t_user set loginStatus=\'%d\' where PKID=\'%d\'",
+			status,
+			id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
 	}
 
 	bool databaseDI::del_user(const int& id)

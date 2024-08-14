@@ -43,7 +43,7 @@ public:
 	
 	void Init(bool bClearPwd = false);
 
-
+	int GetUserID();
 	int GetLoginState();
 	int GetPop();
 	
@@ -83,7 +83,7 @@ private:
 	void clearTimer();
 private:
 
-
+	int m_userID;
 	// µ±Ç°µÇÂ¼×´Ì¬
 	int m_iState;
 

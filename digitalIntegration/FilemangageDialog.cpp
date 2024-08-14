@@ -280,6 +280,10 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 //	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
 	QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+	if (directory.isEmpty())
+	{
+		return;
+	}
 
 	std::string str = directory.toLocal8Bit().toStdString();
 	std::wstring wstr = directory.toStdWString();
@@ -303,6 +307,7 @@ void FilemangageDialog::slot_itemBtnDel()
 	//QPushButton* pButton = (QPushButton*)sender();
 	//int row = pButton->property("row").toInt();
 	//int column = pButton->property("column").toInt();
+
 	if (m_modelFiles->item(row, 1) != nullptr)
 	{
 		auto strFileName = m_modelFiles->item(row, 1)->text();
@@ -319,8 +324,13 @@ void FilemangageDialog::slot_itemBtnDel()
 
 void FilemangageDialog::slot_btnUploading()
 {
+	if (ui->treeWidget->currentItem() == nullptr)
+	{
+		return;
+	}
+	
 	// 弹出文件选择对话框
-	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择文件"));
+	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
 
 	if (strFilePath.isEmpty())
 		return;
@@ -333,11 +343,16 @@ void FilemangageDialog::slot_btnUploading()
 	const wchar_t* lpcwstr = wstr.c_str();
 	SetCurrentDirectory(lpcwstr);//设置当前目录
 
-	strFilePath.replace("/", "\\\\");
+	//strFilePath.replace("/", "\\\\");
 	/*if (!m_FtpClientClass->newConnection())
 		return;*/
+	//directoryPath.replace()
+	directoryPath.replace("/", "\\\\");
 
-	m_FtpClientClass->execute_putFile(strFilePath.toLocal8Bit().toStdString());
+	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
+	QString UploadingPath = dirPath + "\\" + fileInfo.fileName();
+
+	m_FtpClientClass->execute_putFile(fileInfo.fileName().toLocal8Bit().toStdString(), UploadingPath.toLocal8Bit().toStdString());
 
 }
 
@@ -351,6 +366,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
 		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
 		QAction* download = menu.addAction(QString::fromLocal8Bit("下载"));
+		QAction* rename = menu.addAction(QString::fromLocal8Bit("重命名"));
 		
 		connect(add, &QAction::triggered, [=]()
 			{
@@ -404,10 +420,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 						delete pItem;
 					}
 				//}
-			
-				
-			
-			
+
 			});
 
 
@@ -422,57 +435,37 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 				QString newDirPath = directory + "/" + pItem->text(0);
 				newDirPath.replace("/", "\\\\");
 
-				//// 创建加载对话框
-			//	QDialog loadingDialog;
-			//	loadingDialog.setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
-			//	loadingDialog.setFixedSize(200, 200);
-
-			//	//QLabel label(&loadingDialog);
-			//	//// 设置样式表
-			//	////label.setStyleSheet("QLabel { background-color: red; }");
-			//	QVBoxLayout layout(&loadingDialog);
-			//	loadingDialog.setWindowTitle(QString::fromLocal8Bit("下载"));
-			//	//layout.addWidget(&label);
-			//	loadingDialog.setLayout(&layout);
-			//	//// 创建QMovie对象并加载GIF图像  :/image/loading.gif
-			//	//QMovie *movie= new QMovie(":/image/loading.gif");
-			//	//movie->setScaledSize(QSize(label.width(), label.height())); // 设置GIF图像的大小
-			//
-			//	//label.setMovie(movie);
-			//	//movie->start();
-			//	QToolButton* pBtn = new QToolButton();
-			//	//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-			//	pBtn->setIcon(QIcon("D:\\waiting.png"));
-			////	pBtn->setIconSize(QSize(50, 46));
-			//	pBtn->setText(QString::fromLocal8Bit("等待中..."));
-			//	pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-			//	pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-			//	pBtn->setFocusPolicy(Qt::NoFocus);
-			//	pBtn->setFixedSize(55, 64);
-			//	 pBtn->show();
-			//	layout.addWidget(pBtn);
-				
-				 //显示加载对话框
-
-				/*m_GifDialog->show();*/
-				//std::thread myThread(&FilemangageDialog::downloadFtpDir,dirPath, newDirPath);
-				//std::thread myThread(/*std::bind(*/&FilemangageDialog::downloadFtpDir,this, dirPath, newDirPath);
-				/*std::thread myThread([dirPath, newDirPath]() {
-					&FilemangageDialog::downloadFtpDir(dirPath, newDirPath);
-					});*/
+			
 				g_pMainWindow->showGif();
 				//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
 	 			// m_msgBox->show();
 				 QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 				 downloadFtpDir(dirPath, newDirPath);
-				// m_msgBox->close();
-				//g_pMainWindow->show();
+				
 				g_pMainWindow->closeGif();
-				//loadingDialog.exec();
+				
 			});
+
+		connect(rename, &QAction::triggered, [=]()
+			{
+				QString oldDir = pItem->data(0, Qt::UserRole).toString();
+
+				QTreeWidgetItem* pParentItem = pItem->parent();
+				if (pParentItem == nullptr)
+				{
+					QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止重命名"));
+					return;
+				}
+				QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("重命名"), QString::fromLocal8Bit("输入新建文件夹名称："));
+				QString newDir = pParentItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+				if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
+				{
+					pItem->setText(0, DirName);
+				}
+
+			});
+
 		menu.exec(QCursor::pos());
-
-
 	}
 
 }

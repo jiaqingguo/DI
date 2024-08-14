@@ -40,7 +40,7 @@ DWORD FtpClientClass::startSock()
 	//	cout << "请输入要连接的服务器IP：";
 	//	cin >> inputIP;
 	//}ls
-	strcpy(inputIP, "127.0.0.1");
+	strcpy(inputIP, "192.168.0.119");
 //	strcpy(inputIP, "192.168.1.23"); /*给数组赋字符串*/ 
 	//设置地址结构
 	serverAddr.sin_family = AF_INET;					//表明底层是使用的哪种通信协议来递交数据的，AF_INET表示使用 TCP/IPv4 地址族进行通信
@@ -555,6 +555,50 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	//WSACleanup();				//释放Winsock
 
 }
+void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
+{
+	char operation[10], name[1024];		//操作与文件名
+	char order[1024] = "\0";				//输入的命令
+	char buff[80];						//用来存储经过字符串格式化的order
+	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+	int cnt;
+
+	memset(buff, 0, sizeof(buff));
+	memset(rbuff, 0, sizeof(rbuff));
+	memset(sbuff, 0, sizeof(sbuff));
+
+
+	string str_name = localFilePath;
+	strcpy(name, str_name.c_str());
+	//将指令整合进order，并存放进buff
+	strcat(order, "put"), strcat(order, " "), strcat(order, NewFilePath.c_str());
+	sprintf(buff, order);
+	sendTCP(buff);									//发送指令
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	cout << rbuff << endl;							//pwd功能在这里已经实现
+	if (strncmp(rbuff, "put", 3) == 0)
+	{ ///上传功能
+		strcpy(fileName, rbuff + 4);
+		fd2 = fopen(localFilePath.c_str(), "rb");				//打开一个二进制文件，文件必须存在，只允许读
+		if (fd2)
+		{ //成功打开
+			if (!sendFile(sockClient, fd2))
+			{
+				cout << "发送失败" << endl;
+
+			}
+
+			fclose(fd2);
+		}
+		else {
+			strcpy(sbuff, "无法打开文件\n");
+			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
+
+			}
+		}
+	}//put
+	cout << "上传成功!!!" << endl;
+}
 //执行 进入文件夹命令
 //void FtpClientClass::execute_cdFloder(string floderName)
 //{
@@ -758,6 +802,25 @@ void FtpClientClass::execute_deleteFileList(string folder)
 //	WSACleanup();				//释放Winsock
 
 }
+
+bool FtpClientClass::execute_rename(const std::string oldDir, const std::string newDir)
+{
+	memset(rbuff, 0, sizeof(rbuff));
+	memset(sbuff, 0, sizeof(sbuff));
+
+	strcat(sbuff, "rename ");
+	strcat(sbuff, oldDir.c_str());
+	strcat(sbuff, "|");
+	strcat(sbuff, newDir.c_str());
+	sendTCP(sbuff);
+	
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	if (strcmp(rbuff, "rename-ok") == 0) {
+		return true;
+	}
+	return false;
+}
+
 //获取文件夹名称
 vector<string> FtpClientClass::Gets_FolderName()
 {

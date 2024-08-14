@@ -556,6 +556,7 @@ void ResourceManageDialog::slot_timerTimeout()
         updateDiskWebViewShow(message.host_name);
         updateNetWebViewShow(message.host_name);
     }
+
 }
 
 void ResourceManageDialog::slot_get_data(int index)
@@ -594,29 +595,30 @@ void ResourceManageDialog::slot_get_data(int index)
     }
 }
 
-    void  ResourceManageDialog::getUdpData(Message_t * infor)
-    {
-        // UDP的连接
-        this->UdpSocket = new QUdpSocket(this);
-        //this->thread = new QThread(this);
-        //this->UdpSocket->moveToThread(this->thread);
-        this->UdpSocket->bind(QHostAddress::Any, 12345);
-        connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
-            while (this->UdpSocket->hasPendingDatagrams())
-            {
-                QByteArray datagram;
-                datagram.resize(this->UdpSocket->pendingDatagramSize());
-                this->UdpSocket->readDatagram(datagram.data(), datagram.size());
+void  ResourceManageDialog::getUdpData(Message_t * infor)
+{
+    // UDP的连接
+    this->UdpSocket = new QUdpSocket(this);
+    //this->thread = new QThread(this);
+    //this->UdpSocket->moveToThread(this->thread);
+    this->UdpSocket->bind(QHostAddress::Any, 12345);
+    connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
+        while (this->UdpSocket->hasPendingDatagrams())
+        {
+            QByteArray datagram;
+            datagram.resize(this->UdpSocket->pendingDatagramSize());
+            this->UdpSocket->readDatagram(datagram.data(), datagram.size());
 
-                QDataStream stream(&datagram, QIODevice::ReadOnly);
+            QDataStream stream(&datagram, QIODevice::ReadOnly);
 
-                stream >> infor->host_name;
-                stream >> infor->CPU_Message;
-                stream >> infor->Memory_Message;
-                stream >> infor->Disk_Message;
-                quint32 temp;
-                stream >> temp;
-                infor->Net_Message = static_cast<unsigned long>(temp);
-            }
-            });
-    }
+            stream >> infor->host_name;
+            stream >> infor->CPU_Message;
+            stream >> infor->Memory_Message;
+            stream >> infor->Disk_Message;
+            quint32 temp;
+            stream >> temp;
+            infor->Net_Message = static_cast<unsigned long>(temp);
+
+        }
+        });
+}

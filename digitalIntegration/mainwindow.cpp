@@ -64,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    int loginStatus = 0;
+    int userId = m_LoginDialog->GetUserID();
+    db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
 
     if (!db::databaseDI::Instance().update_ip_all_status())
         return;

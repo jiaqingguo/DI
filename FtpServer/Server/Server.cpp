@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 #pragma warning(disable : 4996) 
 #include "Winsock.h"
@@ -28,7 +29,7 @@ using namespace std;
 #define SEND_PORT 4302	//发送端口
 #pragma comment(lib, "wsock32.lib")
 
-
+namespace fs = std::filesystem;
 
 char namePassword[1024] = "zwj 123456";	//用户名和密码
 
@@ -159,7 +160,7 @@ DWORD Server::delFile(char fileName[]) {
 DWORD Server::delFile1(char fileName[])
 {
 	//char path[1000];
-//	GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
+ //	GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
 
 	/*strcat(path, "\\");
 	strcat(path, fileName);
@@ -524,21 +525,27 @@ void Server::running()
 			//string msg = " ---收到获取命令---";
 			//TimeSave("E:\\jh\\Time_Server.txt", msg);
 
+			memset(m_path, '\0', sizeof(m_path));
+			strcpy(m_path, rbuff + 4);
 
-			fd = fopen(fileName, "wb");
+
+
+			//fd = fopen(fileName, "wb");
+			fd = fopen(m_path, "wb");
 			if (fd == NULL)
 			{
-				cout << "无法打开文件" << fileName << endl;
+				cout << "无法打开文件" << m_path << endl;
 				return ;
 			}
-			sprintf(sbuff, "put %s", fileName);
+			memset(sbuff, '\0', sizeof(sbuff));
+			sprintf(sbuff, "put %s", m_path);
 			if (!send(sockServer, sbuff, sizeof(sbuff), 0))
 			{
 				fclose(fd);
 				return ;
 			}
 
-			memset(sbuff, '\0', sizeof(rbuff));
+			memset(rbuff, '\0', sizeof(rbuff));
 			cout << "careate file start save" << endl;
 			while ((cnt = recv(sockServer, rbuff, sizeof(rbuff), 0)) > 0)
 			{
@@ -636,42 +643,62 @@ void Server::running()
 
 			}
 
-
-			//char* lastBackslash = strrchr(path, '\\');
-			//if (lastBackslash != nullptr)
-			//{
-			//	// 获取文件名长度
-			//	size_t fileNameLength = strlen(lastBackslash + 1);
-
-			//	// 创建新的char数组来存储文件名
-			//	char* dirName = new char[fileNameLength + 1];
-			//	strcpy(dirName, lastBackslash + 1);
-
-			//	// 创建新的char数组来存储路径
-			//	char* directory = new char[lastBackslash - path + 1];
-			//	strncpy(directory, path, lastBackslash - path);
-			//	directory[lastBackslash - path] = '\0';
-
-			//	std::cout << "文件名: " << dirName << std::endl;
-			//	std::cout << "路径: " << directory << std::endl;
-
-
-			//	SetCurrentDirectory(directory);
-
-			//	bool flag = RemoveDirectory(path); // 删除文件夹本身;
-			//	if (!flag)
-			//	{
-			//		cout << "删除空文件夹：" << fileName << "失败" << endl;
-
-			//	}
-
-			//	// 释放动态分配的内存
-			//	delete[] dirName;
-			//	delete[] directory;
-
-			//}
-
 		}//Fdel
+		else if (strncmp(rbuff, "rename", 6) == 0) // 文件夹重命名;
+		{
+			char tbuff[1024];
+			strcpy(tbuff, rbuff + 7);
+
+			// 创建一个可修改的char数组，拷贝输入内容
+			char* buffer = new char[strlen(tbuff) + 1];
+			strcpy(buffer, tbuff);
+
+			// 使用strtok分割字符串
+			char* firstPart = strtok(buffer, "|");  // 获取第一个部分
+			char* secondPart = strtok(nullptr, "|"); // 获取第二个部分
+
+			// 将分割的内容转换为std::string
+			std::string oldPath = firstPart ? firstPart : ""; // 检查是否为空
+			std::string newPath = secondPart ? secondPart : "";
+
+	
+			bool bRet = true;
+			memset(sbuff, '\0', sizeof(sbuff));
+			
+			try {
+				// 检查旧文件是否存在
+				if (fs::exists(oldPath) && fs::is_directory(oldPath))
+				{
+					// newPath
+					fs::rename(oldPath, newPath);
+				
+					std::cout << "File renamed from " << oldPath << " to " << newPath << std::endl;
+				}
+				else {
+					bRet = false;
+					std::cerr << "Error: The file " << oldPath << " does not exist." << std::endl;
+				}
+			}
+			catch (const fs::filesystem_error& e) {
+				bRet = false;
+				std::cerr << "Filesystem error: " << e.what() << std::endl;
+			}
+			catch (const std::exception& e) {
+				bRet = false;
+				std::cerr << "Error: " << e.what() << std::endl;
+			}
+
+			if (bRet)
+			{
+				sprintf(sbuff, "rename-ok");
+			}
+			else
+			{
+				sprintf(sbuff, "rename-false");
+			}
+			int size = strlen(sbuff);
+			send(sockServer, sbuff, size, 0);
+		}
 		else if (strncmp(rbuff, "user", 4) == 0) {
 			char tbuff[1024];
 			strcpy(tbuff, rbuff + 5);
