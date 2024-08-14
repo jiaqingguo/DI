@@ -63,5 +63,9 @@ namespace db
 		bool get_data_approval_list_by_condition(std::list<table_dataApproval>& listData, const int& rows, const int& offset);
 		bool get_data_approval_count(int& count);
 		bool update_data_approval_state(const int& id, int& approval);
+
+
+		// 下载审批表
+		bool add_download_approval_info(table_DownloadApproval& stData);
 	};
 }

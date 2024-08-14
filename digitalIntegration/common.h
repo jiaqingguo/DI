@@ -32,7 +32,7 @@ namespace common
 	extern QString			strFtpIp;    // ftp的ip
 	extern int				iFtpport;
 	extern int				iUserID;
-	extern bool             bAdministrator // 是否是管理员;
+	extern bool             bAdministrator; // 是否是管理员;
 
 	extern int onePageRows;     // 每页显示的行数;
 	// Windows C++

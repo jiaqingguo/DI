@@ -60,6 +60,19 @@ struct table_dataApproval
 	uint32_t        state = 0;
 };
 
+// 下载审批表
+struct table_DownloadApproval
+{
+	uint32_t		id = 0;			       // ID(主键自增unsigned int);
+	uint32_t		userID = 0;
+	time_t			applicationTime;    //申请时间
+	
+	std::string		filePath;
+	std::string		fileType;
+	time_t			createTime;
+	uint32_t        status = 0;
+};
+
 enum EUserTable : uint32_t
 {
 	EUT_NAME,
