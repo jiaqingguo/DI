@@ -872,4 +872,39 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::add_download_approval_info(table_DownloadApproval& stData)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
+
+		sprintf_s(sql, "insert into t_download_approval(userID,applicationTime,filePath,fileType,fileTime,status) values(\'%d\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\')",
+			stData.userID,
+			datetime_to_string(stData.applicationTime).c_str(),
+			stData.filePath.c_str(),
+			stData.fileType.c_str(),
+			datetime_to_string(stData.createTime).c_str(),
+			stData.status);
+
+		if (!exec_sql(last_id, sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		stData.id = last_id;
+		return true;
+	}
+
 }

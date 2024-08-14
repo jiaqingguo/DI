@@ -14,7 +14,8 @@
 #include "Util/UtilTool.h"
 #include "GifDialog.h"
 #include "mainwindow.h"
-#include  <thread>
+#include "databaseDI.h"
+#include "globel.h"
 
 FilemangageDialog::FilemangageDialog(QWidget *parent) :
     QDialog(parent),
@@ -241,7 +242,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 	
 		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
 		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // 设置文件所在目录;
-
+		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole);  //设置文件时间 ;
 
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
@@ -271,13 +272,25 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 void FilemangageDialog::slot_itemBtnDownload()
 {
 	int row = ui->tableView->currentIndex().row();
-	//QPushButton* pButton = (QPushButton*)sender();
-	//int row = pButton->property("row").toInt();
-	//int column = pButton->property("column").toInt();
 
-	//QModelIndex index = m_modelFiles->index(row, 0);
 	auto strFileName = m_modelFiles->item(row,1)->text();
-	//if()
+	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
+	QString fileAllPath = dirPath + "\\" + strFileName;
+	fileAllPath.replace("/", "\\\\");
+
+	
+	if (!common::bAdministrator)
+	{
+		table_DownloadApproval stDownloadApproval;
+		stDownloadApproval.userID = common::iUserID;
+		stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
+		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
+		
+		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
+
+
+		return;
+	}
 
 //	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
 	QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
@@ -293,9 +306,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 	/*if (!m_FtpClientClass->newConnection())
 		return;*/
-	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
-	QString fileAllPath = dirPath + "\\" + strFileName;
-	fileAllPath.replace("/", "\\\\");
+	
 	//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
 	QString newFilePath= directory + "\\" + strFileName;
 	newFilePath.replace("/", "\\\\");
