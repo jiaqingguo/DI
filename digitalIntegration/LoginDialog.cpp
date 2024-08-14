@@ -1,3 +1,8 @@
+
+
+#include <QValidator>
+#include <QMessageBox>
+
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
 
@@ -5,9 +10,7 @@
 #include "mainwindow.h"
 #include "databaseDI.h"
 #include "RegisterDialog.h"
-
-#include <QValidator>
-#include <QMessageBox>
+#include "common.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -126,6 +129,7 @@ void LoginDialog::slot_btnLoginClicked()
 	}
 
 	m_userID = stData.PKID;
+	common::iUserID = stData.PKID;
 	
 	
 	/*int pop = -1;
@@ -133,12 +137,13 @@ void LoginDialog::slot_btnLoginClicked()
 	if (stData.Pop == 0)
 	{
 		m_pop = 0;
-		
+		common::bAdministrator = false;
 		ui->stackedWidget->setCurrentIndex(1);
 	}
 	else
 	{
 		m_pop = 1;
+		common::bAdministrator = true;
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		this->accept();

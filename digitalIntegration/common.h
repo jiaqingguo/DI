@@ -24,11 +24,15 @@ struct NetworkInterface
 namespace common
 {
 
-	extern int tableViewRowHeight;
-	extern int tableViewHeight;
-	extern int tableViewPageRows;
-	extern unsigned long   dwLastIn;           //上一秒钟的接收字节数
-	extern unsigned long   dwLastOut;          //上一秒钟的发送字节数
+	extern int				tableViewRowHeight;
+	extern int				tableViewHeight;
+	extern int				tableViewPageRows;
+	extern unsigned long	dwLastIn;           //上一秒钟的接收字节数
+	extern unsigned long	dwLastOut;          //上一秒钟的发送字节数
+	extern QString			strFtpIp;    // ftp的ip
+	extern int				iFtpport;
+	extern int				iUserID;
+	extern bool             bAdministrator // 是否是管理员;
 
 	extern int onePageRows;     // 每页显示的行数;
 	// Windows C++

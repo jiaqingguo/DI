@@ -277,6 +277,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 	//QModelIndex index = m_modelFiles->index(row, 0);
 	auto strFileName = m_modelFiles->item(row,1)->text();
+	//if()
 
 //	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
 	QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
