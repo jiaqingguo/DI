@@ -407,6 +407,27 @@ namespace common
     {
       
     }
+
+    time_t string_to_datetime(const std::string& str)
+    {
+        tm tm_;
+        int year = 0;
+        int month = 0;
+        int day = 0;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        sscanf(str.data(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second);
+        tm_.tm_year = year - 1900;
+        tm_.tm_mon = month - 1;
+        tm_.tm_mday = day;
+        tm_.tm_hour = hour;
+        tm_.tm_min = minute;
+        tm_.tm_sec = second;
+        tm_.tm_isdst = 0;
+        time_t t_ = mktime(&tm_);
+        return t_;
+    }
    
     void setTableViewBasicConfiguration(QTableView* tableView)
     {

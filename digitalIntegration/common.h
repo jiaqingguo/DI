@@ -55,6 +55,11 @@ namespace common
 	void PrintAdapterInfo();
 
 	unsigned long GetNetworkInterfacesThroughput();
+
+	// ---------类型转换-----------
+	// string转time_t;
+	time_t string_to_datetime(const std::string& str);
+
 	//Qt相关函数----------------------------;
 	 // 删除所有行 保留标题;
 	void delAllModelRow(QStandardItemModel* model);

@@ -285,7 +285,10 @@ void FilemangageDialog::slot_itemBtnDownload()
 		stDownloadApproval.userID = common::iUserID;
 		stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
 		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
-		
+
+		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
+		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
 		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
 
 

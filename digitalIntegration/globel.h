@@ -70,7 +70,7 @@ struct table_DownloadApproval
 	
 	std::string		filePath;
 	std::string		fileType;
-	time_t			createTime;
+	time_t			fileTime;
 	uint32_t        status = 0;
 };
 
