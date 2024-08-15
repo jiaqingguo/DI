@@ -94,7 +94,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initInitface()
 {
-
+    m_LoginDialog = new LoginDialog(this);
     if (m_LoginDialog->exec() == QDialog::Accepted)
     {
         ui->labelUserName->setText(m_LoginDialog->GetUser());
@@ -112,7 +112,7 @@ void MainWindow::initInitface()
    
 
     m_GifDialog = new GifDialog;
-    m_LoginDialog = new LoginDialog(this);
+    
    
     m_RegisterDialog = new RegisterDialog(this);
 
