@@ -94,6 +94,16 @@ void Widget::slot_useUdp()
 
     QString localHostName=QHostInfo::localHostName();   //获取主机名
     message->host_name=localHostName;
+    //获取本机的IP地址
+    QList<QHostAddress> addresses = QNetworkInterface::allAddresses();
+    for (const QHostAddress &address : addresses) {
+           // 检查是否是IPv4地址
+           if (address.protocol() == QAbstractSocket::IPv4Protocol&&!address.isLoopback()) {
+               // 打印IPv4地址
+               message->host_ip=address.toString();
+           }
+       }
+    //qDebug()<<message->host_ip;
     message->CPU_Message=common::getCpuUsage();
 
     long allPhysicsMem;
@@ -112,6 +122,7 @@ void Widget::slot_useUdp()
     QByteArray dataGram;
     QDataStream stream(&dataGram,QIODevice::WriteOnly);
     stream<<message->host_name;
+    stream<<message->host_ip;
     stream<<message->CPU_Message;
     stream<<message->Memory_Message;
     stream<<message->Disk_Message;

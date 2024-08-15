@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QUdpSocket>
 #include <QHostInfo>
+#include <QNetworkInterface>
 #include "gethostinformation.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,6 +18,7 @@ QT_END_NAMESPACE
 typedef struct _Message
 {
     QString host_name;
+    QString host_ip;
     double CPU_Message;
     double Memory_Message;
     double Disk_Message;

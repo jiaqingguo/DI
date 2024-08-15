@@ -10,7 +10,7 @@ AddToolDialog::AddToolDialog(int module, QWidget *parent) :m_iModule(module),
     ui(new Ui::AddToolDialog)
 {
     ui->setupUi(this);
-    ui->btnAdd->setEnabled(false);
+    //ui->btnAdd->setEnabled(false);
     init();
 
   
@@ -29,13 +29,13 @@ void AddToolDialog::init()
     ui->allocationAllocation->setChecked(true);
    
     m_model = new QStandardItemModel();
-    m_model->setColumnCount(6);
+    m_model->setColumnCount(5);
     m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
     m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip列表"));
     m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("占用状态"));
-    m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
-    m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
-    m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
+    //m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+    m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
+    m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
     ui->tableViewIpSet->setModel(m_model);
     common::setTableViewBasicConfiguration(ui->tableViewIpSet);
     
@@ -85,25 +85,25 @@ void AddToolDialog::init()
 
             item = new QStandardItem(QString::fromStdString(stData.host));
             item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-            m_model->setItem(newRowIndex, 4, item);
+            m_model->setItem(newRowIndex, 3, item);
 
             item = new QStandardItem(QString::fromStdString(stData.username));
             item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-            m_model->setItem(newRowIndex, 5, item);
+            m_model->setItem(newRowIndex, 4, item);
 
 
             QWidget* widget = new QWidget(); // 创建一个容器Widget来存放CheckBox
             QCheckBox* checkBox = new QCheckBox(); // 创建CheckBox
             checkBox->setProperty("row", newRowIndex); // set custom property
-            checkBox->setProperty("column", 3);
+            //checkBox->setProperty("column", 3);
 
-            checkBoxList.append(checkBox); // 将checkBox添加到列表中
+          //checkBoxList.append(checkBox); // 将checkBox添加到列表中
 
             QHBoxLayout* layout = new QHBoxLayout(widget); // 为容器Widget设置水平布局
             layout->addWidget(checkBox); // 将CheckBox添加到布局中
             layout->setAlignment(Qt::AlignCenter); // 设置布局中的控件居中对齐
             layout->setContentsMargins(0, 0, 0, 0); // 移除布局边距
-            ui->tableViewIpSet->setIndexWidget(m_model->index(newRowIndex, 3), widget);
+            //ui->tableViewIpSet->setIndexWidget(m_model->index(newRowIndex, 3), widget);
             connect(checkBox, &QCheckBox::clicked, [=](bool checked) {
                 if (checked) {
                     ui->btnAdd->setEnabled(true);
