@@ -33,6 +33,7 @@ namespace db
 		bool is_exist_user(const std::string &user, const std::string &password);
 		bool get_user_count( int& count);
 		// 条件查询
+		bool get_user_by_condition(table_user& stData, const int& userID,const int& approval = 1);
 		bool get_user_list_by_condition(std::list<table_user>& listData, const int& rows, const int& offset);
 		bool get_user_list_by_condition(std::list<table_user>& listData, const std::string & fields, const std::string& value );
 		bool get_user(table_user& userInfo, const std::string& user);
@@ -76,5 +77,7 @@ namespace db
 
 		// 下载审批表
 		bool add_download_approval_info(table_DownloadApproval& stData);
+		bool get_download_approval_list(std::list<table_DownloadApproval>& listData);
+		bool update_download_approval_status(const int& id, int& approval);
 	};
 }

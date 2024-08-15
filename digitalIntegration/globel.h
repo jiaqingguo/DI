@@ -72,6 +72,11 @@ struct table_DownloadApproval
 	std::string		fileType;
 	time_t			fileTime;
 	uint32_t        status = 0;
+
+	// 关联的表外数据
+	std::string    userName;
+	std::string    department;
+
 };
 
 enum EUserTable : uint32_t

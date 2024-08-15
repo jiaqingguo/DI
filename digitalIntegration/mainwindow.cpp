@@ -95,19 +95,7 @@ MainWindow::~MainWindow()
 void MainWindow::initInitface()
 {
     m_LoginDialog = new LoginDialog(this);
-    if (m_LoginDialog->exec() == QDialog::Accepted)
-    {
-        ui->labelUserName->setText(m_LoginDialog->GetUser());
-        if (m_LoginDialog->GetPop())
-        {
-            ui->btnApprovalProgress->hide();
-        }
-        this->showMaximized();
-    }
-    else
-    {
-        this->close();
-    }
+   
 
    
 
@@ -210,7 +198,19 @@ void MainWindow::initInitface()
     updateModuleToolIcon(3);
     updateModuleToolIcon(4);
 
-   
+    if (m_LoginDialog->exec() == QDialog::Accepted)
+    {
+        ui->labelUserName->setText(m_LoginDialog->GetUser());
+        if (m_LoginDialog->GetPop())
+        {
+            ui->btnApprovalProgress->hide();
+        }
+        this->showMaximized();
+    }
+    else
+    {
+        this->close();
+    }
 }
 
 void MainWindow::showRegisterDialog()

@@ -146,6 +146,38 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_user_by_condition(table_user &stData, const int& userID, const int& approval)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_user where PKID = \'%d\' AND approval=\'%d\'", userID, approval);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.PKID = std::atoi(sql_row[0]);
+			stData.UserName = sql_row[1];
+			stData.Password = sql_row[2];
+			stData.name = sql_row[3];
+			stData.department = sql_row[4];
+			stData.JobTitle = sql_row[5];
+			stData.PhoneNumber = sql_row[6];
+			stData.Pop = std::atoi(sql_row[7]);
+			stData.CreateTime = string_to_datetime(sql_row[8]);
+			stData.approval = std::atoi(sql_row[9]);
+			stData.loginStatus = std::atoi(sql_row[10]);
+			//listData.push_back(userInfo);
+		}
+		return true;
+	}
+
 	bool databaseDI::get_user_list_by_condition(std::list<table_user>& listData, const int& rows, const int& offset)
 	{
 		listData.clear();
@@ -887,7 +919,7 @@ namespace db
 			datetime_to_string(stData.applicationTime).c_str(),
 			stData.filePath.c_str(),
 			stData.fileType.c_str(),
-			datetime_to_string(stData.createTime).c_str(),
+			datetime_to_string(stData.fileTime).c_str(),
 			stData.status);
 
 		if (!exec_sql(last_id, sql))
@@ -904,6 +936,64 @@ namespace db
 			return false;
 
 		stData.id = last_id;
+		return true;
+	}
+
+	bool databaseDI::get_download_approval_list(std::list<table_DownloadApproval>& listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_download_approval");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_DownloadApproval stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.userID = std::atoi(sql_row[1]);
+			stData.applicationTime = string_to_datetime(sql_row[2]);
+			stData.filePath = sql_row[3];
+			stData.fileType = sql_row[4];
+			stData.fileTime = string_to_datetime(sql_row[5]);
+			stData.status = std::atoi(sql_row[6]);
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
+	bool databaseDI::update_download_approval_status(const int& id, int& approval)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "update t_download_approval set status=\'%d\' where id=\'%d\'",
+			approval,
+			id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
 		return true;
 	}
 

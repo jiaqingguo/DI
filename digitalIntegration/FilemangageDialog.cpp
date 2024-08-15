@@ -242,7 +242,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 	
 		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
 		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // 设置文件所在目录;
-		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole);  //设置文件时间 ;
+		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole+1);  //设置文件时间 ;
 
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
@@ -279,21 +279,21 @@ void FilemangageDialog::slot_itemBtnDownload()
 	fileAllPath.replace("/", "\\\\");
 
 	
-	if (!common::bAdministrator)
-	{
-		table_DownloadApproval stDownloadApproval;
-		stDownloadApproval.userID = common::iUserID;
-		stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
-		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
+	//if (!common::bAdministrator)
+	//{
+	//	table_DownloadApproval stDownloadApproval;
+	//	stDownloadApproval.userID = common::iUserID;
+	//	stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
+	//	stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
 
-		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
-		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	//	stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
+	//	stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	//	stDownloadApproval.status = 0;
+	//	db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
 
-		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
 
-
-		return;
-	}
+	//	//return;
+	//}
 
 //	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
 	QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());

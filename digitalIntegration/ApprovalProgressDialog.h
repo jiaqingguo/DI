@@ -6,6 +6,8 @@
 
 struct table_user;
 struct table_dataApproval;
+struct table_DownloadApproval;
+
 class QStandardItemModel;
 class QSpinBox;
 
@@ -24,7 +26,8 @@ public:
     void init();
 private:
     void flushUserTableShow(std::list<table_user> &listUser);
-    void flushDataTableShow(std::list<table_dataApproval>& listData,const int &offsetRows);
+  //  void flushDataTableShow(std::list<table_dataApproval>& listData,const int &offsetRows);
+    void flushDownloadTableShow(std::list<table_DownloadApproval>& listData, const int& offsetRows);
   /*  std::list<table_user> processList(const std::list<table_user>& listUser, const int& num, const int& offsetRows);
     std::list<table_dataApproval> processList(const std::list<table_dataApproval>& listUser, const int& num, const int& offsetRows);*/
     template<typename T>
@@ -68,8 +71,8 @@ private:
     int m_UserTotalRows = 0;
 
     std::list<table_user> m_listUser;
-    std::list<table_dataApproval> m_listDataApproval;
-    
+   // std::list<table_dataApproval> m_listDataApproval;
+    std::list<table_DownloadApproval> m_listDataApproval;
    
 };
 

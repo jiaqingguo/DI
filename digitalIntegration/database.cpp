@@ -336,10 +336,19 @@ namespace db
 
 	std::string database::datetime_to_string(const time_t& timeValue)
 	{
-		std::stringstream ss;
+		/*std::stringstream ss;
 		ss << std::put_time(std::localtime(&timeValue), "%Y-%m-%d %H:%M:%S");
-		return ss.str();
+		return ss.str();*/
+		// 使用 std::localtime 转换 time_t 到 tm
+		std::tm* localTime = std::localtime(&timeValue);
+		if (!localTime) {
+			// 处理 localtime 失败的情况
+			return "Invalid time";
+		}
 
+		std::stringstream ss;
+		ss << std::put_time(localTime, "%Y-%m-%d %H:%M:%S");
+		return ss.str();
 		// 第二种
 	/*	char buffer[80];
 		strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&timeValue));
