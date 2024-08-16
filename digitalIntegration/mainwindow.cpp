@@ -210,6 +210,7 @@ void MainWindow::initInitface()
     else
     {
         this->close();
+       // exit(1);
     }
 }
 

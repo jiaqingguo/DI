@@ -61,7 +61,7 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_user(UserName,Password,name,department,JobTitle,PhoneNumber,Pop,CreateTime,approval) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%d\',\'%d\')",
+		sprintf_s(sql, "insert into t_user(UserName,Password,name,department,JobTitle,PhoneNumber,Pop,CreateTime,approval,loginStatus) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%d\',\'%d\')",
 			userInfo.UserName.c_str(),
 			userInfo.Password.c_str(),
 			userInfo.name.c_str(),

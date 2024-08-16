@@ -56,6 +56,7 @@ public:
 	void execute_deleteFileList(string folder);//删除某个文件夹内所有文件
 	bool  execute_rename(const std::string  oldDir,const std::string newDir);
 
+	//vector<vector<string>> Gets_FolderName();//获取文件夹名称
 	vector<string> Gets_FolderName();//获取文件夹名称
 	vector<vector<string>> Gets_FileName();//获取文件名称
 
@@ -70,7 +71,7 @@ private:
 	bool checkFlag;			//标志是否通过登陆
 
 	FileInformation m_FileInformation;
-	vector<string> vecName;//存放文件夹名称的vector
+	vector<string> vecDirName;//存放文件夹名称的vector
 	vector<vector<string>> vecFileName;//存放文件名称和文件时间
 	
 };

@@ -134,7 +134,6 @@ bool FilemangageDialog::getFtpFolderShow()
 			}
 		}
 		
-		
 
 		return 1;
 	}
@@ -142,15 +141,10 @@ bool FilemangageDialog::getFtpFolderShow()
 
 void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const std::string strFolder)
 {
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
-//	m_FtpClientClass->execute_cdFloder(strFolder);//进入子文件夹
-
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
+	
 	m_FtpClientClass->execute_ls(strFolder);//执行ls 
 	
-	vector<string> vecFolders = m_FtpClientClass->Gets_FolderName();
+	auto vecFolders = m_FtpClientClass->Gets_FolderName();
 	for (int j = 0; j < vecFolders.size(); j++)
 	{
 		QTreeWidgetItem* pItem = new QTreeWidgetItem();
@@ -158,6 +152,7 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 		QString strPath = pParentItem->data(0,Qt::UserRole).toString() + "\\" + strText;
 		pItem->setText(0, QString::fromLocal8Bit(vecFolders[j].c_str()));
 		pItem->setData(0, Qt::UserRole, strPath);
+		pItem->setData(0, Qt::UserRole+1, QString::fromLocal8Bit(vecFolders[j].c_str()));
 		pItem->setIcon(0, QIcon(":/image/Dir.png"));
 		pItem->setToolTip(0, strText);
 		std::string strDirPath = strFolder + "\\" + vecFolders[j];
@@ -166,9 +161,7 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 		pParentItem->addChild(pItem);
 	}
 	
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
-//	m_FtpClientClass->execute_cdGoback();//返回上一级目录
+	return;
 }
 
 void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
@@ -276,44 +269,45 @@ void FilemangageDialog::slot_itemBtnDownload()
 	auto strFileName = m_modelFiles->item(row,1)->text();
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
 	QString fileAllPath = dirPath + "\\" + strFileName;
-	fileAllPath.replace("/", "\\\\");
+	//fileAllPath.replace("/", "\\\\");
 
-	
-	//if (!common::bAdministrator)
-	//{
-	//	table_DownloadApproval stDownloadApproval;
-	//	stDownloadApproval.userID = common::iUserID;
-	//	stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
-	//	stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
-
-	//	stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
-	//	stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-	//	stDownloadApproval.status = 0;
-	//	db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
-
-
-	//	//return;
-	//}
-
-//	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
-	QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
-	if (directory.isEmpty())
+	fileAllPath.replace("\\", "\\\\");
+	if (!common::bAdministrator) // 普通用户
 	{
-		return;
+		table_DownloadApproval stDownloadApproval;
+		stDownloadApproval.userID = common::iUserID;
+		stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
+		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
+
+		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
+		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+		stDownloadApproval.status = 0;
+		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
+	}
+	else
+	{
+		//	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+		if (directory.isEmpty())
+		{
+			return;
+		}
+
+		std::string str = directory.toLocal8Bit().toStdString();
+		std::wstring wstr = directory.toStdWString();
+		const wchar_t* lpcwstr = wstr.c_str();
+		SetCurrentDirectory(lpcwstr);//设置当前目录
+
+		/*if (!m_FtpClientClass->newConnection())
+			return;*/
+
+			//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
+		QString newFilePath = directory + "\\" + strFileName;
+		newFilePath.replace("/", "\\\\");
+		m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
 	}
 
-	std::string str = directory.toLocal8Bit().toStdString();
-	std::wstring wstr = directory.toStdWString();
-	const wchar_t* lpcwstr = wstr.c_str();
-	SetCurrentDirectory(lpcwstr);//设置当前目录
 
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
-	
-	//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
-	QString newFilePath= directory + "\\" + strFileName;
-	newFilePath.replace("/", "\\\\");
-	m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
 }
 
 void FilemangageDialog::slot_itemBtnDel()
@@ -421,43 +415,50 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
 				dirPath.replace("/", "\\\\");
 				parentDir.replace("/", "\\\\");
-				/*if (m_FtpClientClass->newConnection())
-				{
-					m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());*/
-
-					/*m_FtpClientClass->newConnection();
-					m_FtpClientClass->execute_cdFloder(parentDir.toLocal8Bit().toStdString());*/
-
-					//if (m_FtpClientClass->newConnection())
-					{
+			
 						//m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
-						m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
-						delete pItem;
-					}
-				//}
+				m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
+				
+	
 
 			});
-
 
 		connect(download, &QAction::triggered, [=]()  // 下载文件夹及所有子文件夹及子文件;
 			{
 				QTreeWidgetItem* pParentItem = pItem->parent();
 				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
 				dirPath.replace("/", "\\\\");
-				QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
-				if (directory.isEmpty())
-					return;
-				QString newDirPath = directory + "/" + pItem->text(0);
-				newDirPath.replace("/", "\\\\");
-
-			
-				g_pMainWindow->showGif();
-				//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
-	 			// m_msgBox->show();
-				 QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
-				 downloadFtpDir(dirPath, newDirPath);
 				
-				g_pMainWindow->closeGif();
+
+				if (!common::bAdministrator) // 普通用户
+				{
+				/*	table_DownloadApproval stDownloadApproval;
+					stDownloadApproval.userID = common::iUserID;
+					stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+					stDownloadApproval.fileType = "dir";  
+					stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0,Qt::UserRole + 1).toString().toStdString());
+					
+					stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+					stDownloadApproval.status = 0;
+					db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);*/
+				}
+				else
+				{
+					QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+					if (directory.isEmpty())
+						return;
+					QString newDirPath = directory + "/" + pItem->text(0);
+					newDirPath.replace("/", "\\\\");
+
+					g_pMainWindow->showGif();
+					//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
+					// m_msgBox->show();
+					QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+					downloadFtpDir(dirPath, newDirPath);
+
+					g_pMainWindow->closeGif();
+				}
+				
 				
 			});
 

@@ -124,8 +124,8 @@ void FtpClientClass::help()
 void FtpClientClass::list(SOCKET sockfd)
 {
 	vecFileName.clear();
-	vecName.clear();
-	
+	vecDirName.clear();
+	vector<string> eachDirData;
 	vector<string> eachFile;
 	//列出远方当前目录
 	int nRead;
@@ -170,7 +170,10 @@ void FtpClientClass::list(SOCKET sockfd)
 		{
 			if(fileDir == "<DIR>")
 			{
-				vecName.push_back(name);
+				/*eachDirData.push_back(name);
+				eachDirData.push_back(str_time);
+				vecDirName.push_back(eachDirData);*/
+				vecDirName.push_back(name);
 			}else
 			{
 				eachFile.clear();
@@ -824,7 +827,7 @@ bool FtpClientClass::execute_rename(const std::string oldDir, const std::string 
 //获取文件夹名称
 vector<string> FtpClientClass::Gets_FolderName()
 {
-	return vecName;
+	return vecDirName;
 }
 //获取文件名称
 vector<vector<string>> FtpClientClass::Gets_FileName()

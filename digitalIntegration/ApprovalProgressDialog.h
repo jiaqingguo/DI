@@ -25,6 +25,8 @@ public:
 
     void init();
 private:
+
+    void getDownloadData(std::list<table_DownloadApproval>& listData);
     void flushUserTableShow(std::list<table_user> &listUser);
   //  void flushDataTableShow(std::list<table_dataApproval>& listData,const int &offsetRows);
     void flushDownloadTableShow(std::list<table_DownloadApproval>& listData, const int& offsetRows);

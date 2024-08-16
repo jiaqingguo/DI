@@ -137,13 +137,13 @@ void LoginDialog::slot_btnLoginClicked()
 	if (stData.Pop == 0)
 	{
 		m_pop = 0;
-		common::bAdministrator = false;
+		common::bAdministrator = true;
 		ui->stackedWidget->setCurrentIndex(1);
 	}
 	else
 	{
 		m_pop = 1;
-		common::bAdministrator = true;
+		common::bAdministrator = false;
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		this->accept();

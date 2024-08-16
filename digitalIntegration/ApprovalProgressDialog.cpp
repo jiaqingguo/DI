@@ -9,6 +9,7 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QFileInfo>
 
 
 ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
@@ -138,7 +139,7 @@ ApprovalProgressDialog::~ApprovalProgressDialog()
 void ApprovalProgressDialog::init()
 {
     
-    db::databaseDI::Instance().get_download_approval_list(m_listDataApproval);
+    getDownloadData(m_listDataApproval);
     m_DataApprovalTotalRows = m_listDataApproval.size();
     if (m_DataApprovalTotalRows <= common::tableViewPageRows)
     {
@@ -307,10 +308,10 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
     for (auto& stData : listData)
     {
 
-        table_user stUserData;
+       /* table_user stUserData;
         db::databaseDI::Instance().get_user_by_condition(stUserData,stData.userID);
         stData.userName = stUserData.name;
-        stData.department = stUserData.department;
+        stData.department = stUserData.department;*/
 
         int newRowIndex = m_modelDataApproval->rowCount(); // 获取当前行数
         m_modelDataApproval->insertRow(newRowIndex); // 插入新行
@@ -324,19 +325,23 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
         m_modelDataApproval->setData(index, stData.id, Qt::UserRole);  // 设置id;
         //  item->setText(QString::fromStdString(stData.name));
 
-        item = new QStandardItem(QString::fromStdString(stUserData.name));
+        item = new QStandardItem(QString::fromStdString(stData.userName));
         item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
         m_modelDataApproval->setItem(newRowIndex, 1, item);
 
-        item = new QStandardItem(QString::fromStdString(stUserData.department));
+        item = new QStandardItem(QString::fromStdString(stData.department));
         item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
         m_modelDataApproval->setItem(newRowIndex, 2, item);
 
-        item = new QStandardItem(QDateTime::fromTime_t(stUserData.CreateTime).toString("yyyy/MM/dd HH:mm:ss"));
+        item = new QStandardItem(QDateTime::fromTime_t(stData.applicationTime).toString("yyyy/MM/dd HH:mm:ss"));
         item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
         m_modelDataApproval->setItem(newRowIndex, 3, item);
 
-        item = new QStandardItem(QString::fromStdString(stData.filePath));
+
+        QString filePath = QString::fromLocal8Bit(stData.filePath.c_str());
+        QFileInfo fileInfo1(filePath);
+
+        item = new QStandardItem(fileInfo1.fileName());
         item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
         m_modelDataApproval->setItem(newRowIndex, 4, item);
 
@@ -414,6 +419,20 @@ std::list<T> ApprovalProgressDialog::processList(const std::list<T>& listData, c
     return listTemp;
 }
 
+
+void ApprovalProgressDialog::getDownloadData(std::list<table_DownloadApproval>& listData)
+{
+    db::databaseDI::Instance().get_download_approval_list(listData);
+
+    for (auto& stData : listData)
+    {
+
+        table_user stUserData;
+        db::databaseDI::Instance().get_user_by_condition(stUserData, stData.userID);
+        stData.userName = stUserData.name;
+        stData.department = stUserData.department;
+    }
+}
 
 void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 {
@@ -707,19 +726,20 @@ void ApprovalProgressDialog::slot_combocUserCurrentIndexChanged(int index)
 
 void ApprovalProgressDialog::slot_dataApprovalQuery()
 {
-    //数据审批 查询;
+    //下载审批 查询;
     int index = ui->comboBoxDataField->currentIndex();
   //  std::string strFields = userTable_to_string((EUserTable)index);
     QString strQueryValue = ui->lineEditDataQueryValue->text();
 
-    if (ui->checkBox_1->isChecked() == false) {
+    if (ui->checkBox_1->isChecked() == false) 
+    {
         if (strQueryValue.size() <= 0)
         {
-            db::databaseDI::Instance().get_download_approval_list(m_listDataApproval);
+            getDownloadData(m_listDataApproval);
         }
         else
         {
-            db::databaseDI::Instance().get_download_approval_list(m_listDataApproval);
+            getDownloadData(m_listDataApproval);
             if (index == 0)
             {
                 std::string strValue = strQueryValue.toStdString();
@@ -771,27 +791,16 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
             }
             else if (index == 3)
             {
-                //std::string strValue = strQueryValue.toStdString();
-                //auto it = m_listDataApproval.begin();
-                //while (it != m_listDataApproval.end())
-                //{
-                //    if ((*it).host != strValue)
-                //    {
-                //        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                //    }
-                //    else
-                //    {
-                //        ++it;
-                //    }
-                //}
-            }
-            else if (index == 4)
-            {
+                std::string strValue = strQueryValue.toStdString();
+
 
                 auto it = m_listDataApproval.begin();
                 while (it != m_listDataApproval.end())
                 {
-                    if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                    QString filePath = QString::fromLocal8Bit((*it).filePath.c_str());
+                    QFileInfo fileInfo1(filePath);
+
+                    if (!fileInfo1.fileName().contains(strQueryValue))
                     {
                         it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
                     }
@@ -801,39 +810,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
                     }
                 }
             }
-            else if (index == 5)
-            {
-                //std::string strValue = strQueryValue.toStdString();
-                //auto it = m_listDataApproval.begin();
-                //while (it != m_listDataApproval.end())
-                //{
-                //    if ((*it).tool != strValue)
-                //    {
-                //        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                //    }
-                //    else
-                //    {
-                //        ++it;
-                //    }
-                //}
-            }
-            else if (index == 6)
-            {
-                std::string strValue = strQueryValue.toStdString();
-                auto it = m_listDataApproval.begin();
-                while (it != m_listDataApproval.end())
-                {
-                    if ((*it).filePath != strValue)
-                    {
-                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
-                    }
-                    else
-                    {
-                        ++it;
-                    }
-                }
-            }
-            else if (index == 7)
+            else if (index == 4)
             {
                 std::string strValue = strQueryValue.toStdString();
                 auto it = m_listDataApproval.begin();
@@ -848,8 +825,25 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
                         ++it;
                     }
                 }
+              
             }
-            else if (index == 8)
+            else if (index == 5)
+            {
+                auto it = m_listDataApproval.begin();
+                while (it != m_listDataApproval.end())
+                {
+                    if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
+                    {
+                        it = m_listDataApproval.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
+                
+            }
+            else if (index == 6)
             {
                 int state = -1;
                 if (strQueryValue == QString::fromLocal8Bit("已通过"))
@@ -879,8 +873,10 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
             }
         }
     }
-    else if (ui->checkBox_1->isChecked() == true) {
-    db::databaseDI::Instance().get_download_approval_list(m_listDataApproval);
+    else if (ui->checkBox_1->isChecked() == true)
+     {
+    
+    getDownloadData(m_listDataApproval);
     QDateTime origin_time = QDateTime::fromString("1970/01/01 08:00", "yyyy/MM/dd HH:mm");
     QDateTime startDatetime = ui->dateTimeEdit1_start->dateTime();
     QDateTime endDatetime = ui->dateTimeEdit2_end->dateTime();
