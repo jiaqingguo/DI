@@ -112,7 +112,7 @@ void MainWindow::initInitface()
     m_DataManageDialog = new DataManageDialog(this);
 
     m_FilemangageDialog = new FilemangageDialog(this);
-    connect(m_FilemangageDialog, &FilemangageDialog::signal_downloadFinsh, this, &MainWindow::slot_downlaodFinsh, Qt::BlockingQueuedConnection);
+  
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
     m_OneClickLoadDialog = new OneClickLoadDialog(this);
@@ -206,6 +206,7 @@ void MainWindow::initInitface()
             ui->btnApprovalProgress->hide();
         }
         this->showMaximized();
+        m_FilemangageDialog->initTableViewDownload();
     }
     else
     {

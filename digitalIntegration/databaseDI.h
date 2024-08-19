@@ -78,6 +78,7 @@ namespace db
 		// 下载审批表
 		bool add_download_approval_info(table_DownloadApproval& stData);
 		bool get_download_approval_list(std::list<table_DownloadApproval>& listData);
+		bool get_download_approval_list_by_userID(std::list<table_DownloadApproval>& listData,const int &userID);
 		bool update_download_approval_status(const int& id, int& approval);
 	};
 }

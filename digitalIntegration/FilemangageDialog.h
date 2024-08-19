@@ -20,8 +20,13 @@ class FilemangageDialog : public QDialog
 public:
     explicit FilemangageDialog(QWidget *parent = nullptr);
     ~FilemangageDialog();
+
+    void initTableViewDownload();
+    void flushTableViewDownload();
 private:
+   
     bool getFtpFolderShow();
+
 
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
@@ -39,6 +44,8 @@ private slots:
 
     // Ê÷ÓÒ¼ü²Ëµ¥;
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
+
+    void  slot_ItemDownloadBtnClicked();
 private:
     Ui::FilemangageDialog *ui;
 
@@ -48,6 +55,7 @@ private:
     GifDialog *m_GifDialog = nullptr;
 
     QMessageBox *m_msgBox = nullptr;
+    QStandardItemModel* m_modelDownload = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H

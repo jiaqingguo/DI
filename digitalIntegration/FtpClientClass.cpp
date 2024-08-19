@@ -170,10 +170,11 @@ void FtpClientClass::list(SOCKET sockfd)
 		{
 			if(fileDir == "<DIR>")
 			{
-				/*eachDirData.push_back(name);
+				eachDirData.clear();
+				eachDirData.push_back(name);
 				eachDirData.push_back(str_time);
-				vecDirName.push_back(eachDirData);*/
-				vecDirName.push_back(name);
+				vecDirName.push_back(eachDirData);
+				//vecDirName.push_back(name);
 			}else
 			{
 				eachFile.clear();
@@ -213,7 +214,11 @@ int FtpClientClass::user()
 	cin >> name;
 	strcat(order, operation), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return 0;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;
 	return 1;
@@ -230,7 +235,11 @@ int FtpClientClass::pass()
 	cin >> name;
 	strcat(order, operation), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return 0;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;
 	if (strcmp(rbuff, "wrong") == 0) {
@@ -258,7 +267,11 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 		if (len == 0)
 		{
 			sprintf(sbuff, "put-end", sbuff);
-			sendTCP(sbuff);									//发送指令
+			//sendTCP(sbuff);									//发送指令
+			if (sendTCP(sbuff) == -1)									//发送指令
+			{
+				return 0;
+			}
 			break;
 		}
 		else if (len < sizeof(sbuff)) 
@@ -340,7 +353,11 @@ void FtpClientClass::execute_ls(const std::string strDirPath)
 	//strcat(order, "ls");
 	sprintf(order, "ls %s", strDirPath.c_str());
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	list(sockClient);
@@ -366,7 +383,11 @@ string FtpClientClass::Gets_CurrentPath()
 	memset(buff, 0, sizeof(buff));
 	strcat(order, "pwd");
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	str_path = rbuff;
@@ -403,7 +424,11 @@ void FtpClientClass::execute_getFile(string rec_name)
 	//将指令整合进order，并存放进buff
 	strcat(order, "get"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	if (strncmp(rbuff, "get", 3) == 0) 
@@ -463,12 +488,18 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	//将指令整合进order，并存放进buff
 	strcat(order, "get"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	while (1)
 	{
 		int num=recv(sockClient, rbuff, 1024, 0);		//接收信息 
 		cout << rbuff << endl;							//pwd功能在这里已经实现
-
+		if (strncmp(rbuff, "openFailed", 10) == 0)
+		{
+			return;
+		}
 		if (strncmp(rbuff, "get", 3) == 0)
 		{			///下载功能
 			//callServer();
@@ -528,7 +559,11 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	//将指令整合进order，并存放进buff
 	strcat(order, "put"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	if (strncmp(rbuff, "put", 3) == 0) 
@@ -576,7 +611,11 @@ void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 	//将指令整合进order，并存放进buff
 	strcat(order, "put"), strcat(order, " "), strcat(order, NewFilePath.c_str());
 	sprintf(buff, order);
-	sendTCP(buff);									//发送指令
+	//sendTCP(buff);									//发送指令
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	if (strncmp(rbuff, "put", 3) == 0)
@@ -662,7 +701,11 @@ void FtpClientClass::execute_cdGoback()
 	//memset(buff, 0, sizeof(buff));
 	strcat(order, "cd"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);	
+	//sendTCP(buff);	
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	//closesocket(sockClient);	//关闭连接
@@ -695,7 +738,11 @@ void FtpClientClass::execute_mkdirFolder(string folder)
 	//memset(buff, 0, sizeof(buff));
 	strcat(order, "mkdir"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);	
+	//sendTCP(buff);	
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	//closesocket(sockClient);	//关闭连接
@@ -729,7 +776,11 @@ void FtpClientClass::execute_delFolder(string folder)
 	//memset(buff, 0, sizeof(buff));
 	strcat(order, "del"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);	
+	//sendTCP(buff);	
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	//closesocket(sockClient);	//关闭连接
@@ -764,7 +815,11 @@ void FtpClientClass::execute_Filedelete(string folder)
 	//memset(buff, 0, sizeof(buff));
 	strcat(order, "Fdel"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);	
+//	sendTCP(buff);	
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 	//closesocket(sockClient);	//关闭连接
@@ -798,7 +853,11 @@ void FtpClientClass::execute_deleteFileList(string folder)
 	//memset(buff, 0, sizeof(buff));
 	strcat(order, "fldel"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	sendTCP(buff);	
+	//sendTCP(buff);	
+	if (sendTCP(buff) == -1)									//发送指令
+	{
+		return;
+	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;	//pwd的
 //	closesocket(sockClient);	//关闭连接
@@ -815,7 +874,11 @@ bool FtpClientClass::execute_rename(const std::string oldDir, const std::string 
 	strcat(sbuff, oldDir.c_str());
 	strcat(sbuff, "|");
 	strcat(sbuff, newDir.c_str());
-	sendTCP(sbuff);
+	//sendTCP(sbuff);
+	if (sendTCP(sbuff) == -1)									//发送指令
+	{
+		return false;
+	}
 	
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	if (strcmp(rbuff, "rename-ok") == 0) {
@@ -825,7 +888,7 @@ bool FtpClientClass::execute_rename(const std::string oldDir, const std::string 
 }
 
 //获取文件夹名称
-vector<string> FtpClientClass::Gets_FolderName()
+/*vector<string>*/ 	vector<vector<string>> FtpClientClass::Gets_FolderName()
 {
 	return vecDirName;
 }

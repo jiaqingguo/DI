@@ -236,8 +236,6 @@ DWORD Server::connectProcess() {
 }
 int Server::sendFileList(SOCKET datatcps,  char dirPath[])
 {
-
-
 	HANDLE hff;								//½¨Á¢Ò»¸öÏß³Ì
 	WIN32_FIND_DATA fd;						//ËÑË÷ÎÄ¼ş
 	hff = FindFirstFile(dirPath, &fd);			//²éÕÒÎÄ¼şÀ´°Ñ´ı²Ù×÷ÎÄ¼şµÄÏà¹ØÊôĞÔ¶ÁÈ¡µ½WIN32_FIND_DATA½á¹¹ÖĞÈ¥ 
@@ -360,7 +358,7 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 	memcpy(fileRecord1, &m_FileInformation, sizeof(m_FileInformation));
 
 	cout << m_FileInformation.fileName << endl;
-
+	int size = sizeof(m_FileInformation);
 	if (send(datatcps, fileRecord1, sizeof(m_FileInformation), 0) == SOCKET_ERROR) {
 		//Í¨¹ıdatatcps½Ó¿Ú·¢ËÍfileRecordÊı¾İ£¬³É¹¦·µ»Ø·¢ËÍµÄ×Ö½ÚÊı   
 		cout << "·¢ËÍÊ§°Ü" << endl;
@@ -495,12 +493,13 @@ void Server::running()
 
 			}
 			else {
-				strcpy(sbuff, "ÎŞ·¨´ò¿ªÎÄ¼ş\n");
-				if (send(sockServer, sbuff, sizeof(sbuff), 0)) {
-					return ;
+				strcpy(sbuff, "openFailed\n");
+				if (send(sockServer, sbuff, sizeof(sbuff), 0)) 
+				{
+					cout << "openFailed send sucess" << endl;
 				}
 				else {
-					cout << "2222222222222" << endl;
+					cout << "openFailed send failed" << endl;
 				}
 			}
 		}//get
@@ -585,7 +584,7 @@ void Server::running()
 
 			strcpy(sbuff, rbuff);
 			int size = strlen(sbuff);
-			send(sockServer, sbuff, size, 0);
+			send(sockServer, sbuff, 1024, 0);
 
 			//sendFileList(sockServer);
 			strcat(m_path, "\\*");

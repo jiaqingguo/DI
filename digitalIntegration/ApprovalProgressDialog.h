@@ -63,8 +63,8 @@ private:
 private:
     Ui::ApprovalProgressDialog *ui;
 
-    QStandardItemModel* m_modelDataApproval;
-    QStandardItemModel* m_modelUser;
+    QStandardItemModel* m_modelDataApproval = nullptr;
+    QStandardItemModel* m_modelUser = nullptr;
 
     int m_DataApprovalTatalPage = 0;
     int m_DataApprovalTotalRows = 0;

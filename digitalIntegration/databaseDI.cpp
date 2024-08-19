@@ -969,6 +969,36 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_download_approval_list_by_userID(std::list<table_DownloadApproval>& listData, const int& userID)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_download_approval where userID=\'%d\'",userID);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_DownloadApproval stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.userID = std::atoi(sql_row[1]);
+			stData.applicationTime = string_to_datetime(sql_row[2]);
+			stData.filePath = sql_row[3];
+			stData.fileType = sql_row[4];
+			stData.fileTime = string_to_datetime(sql_row[5]);
+			stData.status = std::atoi(sql_row[6]);
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
 	bool databaseDI::update_download_approval_status(const int& id, int& approval)
 	{
 		// 启动事务;

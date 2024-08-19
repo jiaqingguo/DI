@@ -6,6 +6,9 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QMessageBox>
+#include <QDateTime>
+
+#include <QDebug>
 
 #include "FilemangageDialog.h"
 #include "ui_FilemangageDialog.h"
@@ -57,18 +60,18 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	m_modelFiles->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 	m_modelFiles->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
-	ui->tableView->setModel(m_modelFiles);
-	common::setTableViewBasicConfiguration(ui->tableView);
-	ui->tableView->verticalHeader()->setVisible(false);
-	ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(0, 80); // 设置列的固定宽度
-	ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(2, 80); // 设置列的固定宽度
-	ui->tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Fixed);
-	ui->tableView->setColumnWidth(3, 80); // 设置列的固定宽度
+	ui->tableViewFile->setModel(m_modelFiles);
+	common::setTableViewBasicConfiguration(ui->tableViewFile);
+	ui->tableViewFile->verticalHeader()->setVisible(false);
+	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+	ui->tableViewFile->setColumnWidth(0, 80); // 设置列的固定宽度
+	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Fixed);
+	ui->tableViewFile->setColumnWidth(2, 80); // 设置列的固定宽度
+	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Fixed);
+	ui->tableViewFile->setColumnWidth(3, 80); // 设置列的固定宽度
 
 	 // 启用悬浮显示
-	//ui->tableView->setMouseTracking(true);
+	//ui->tableViewFile->setMouseTracking(true);
 	
 	getFtpFolderShow();
 
@@ -85,6 +88,147 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 FilemangageDialog::~FilemangageDialog()
 {
     delete ui;
+}
+
+void FilemangageDialog::initTableViewDownload()
+{
+	if (common::bAdministrator) // 管理员;
+	{
+		// 隐藏第二个标签页
+		ui->tabWidget->removeTab(1); // 移除 Tab 2
+		return;
+	}
+	
+
+	m_modelDownload = new QStandardItemModel();
+	m_modelDownload->setColumnCount(9);
+	m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
+	m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("申请人"));
+	m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("所在部门"));
+	m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("申请时间"));
+	m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("文件名"));
+	m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
+	m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
+	m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("状态"));
+	m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+	ui->tableViewDownload->setModel(m_modelDownload);
+	common::setTableViewBasicConfiguration(ui->tableViewDownload);
+	
+	ui->tableViewDownload->verticalHeader()->setVisible(false);
+
+	flushTableViewDownload();
+}
+
+void FilemangageDialog::flushTableViewDownload()
+{
+	common::delAllModelRow(m_modelDownload);
+
+	std::list<table_DownloadApproval> listDataApproval;
+	db::databaseDI::Instance().get_download_approval_list_by_userID(listDataApproval, common::iUserID);
+	for (auto& stData : listDataApproval)
+	{
+
+		table_user stUserData;
+		db::databaseDI::Instance().get_user_by_condition(stUserData, stData.userID);
+		stData.userName = stUserData.name;
+		stData.department = stUserData.department;
+	}
+	int i = 0;
+	for (auto& stData : listDataApproval)
+	{
+
+		/* table_user stUserData;
+		 db::databaseDI::Instance().get_user_by_condition(stUserData,stData.userID);
+		 stData.userName = stUserData.name;
+		 stData.department = stUserData.department;*/
+
+		int newRowIndex = m_modelDownload->rowCount(); // 获取当前行数
+		m_modelDownload->insertRow(newRowIndex); // 插入新行
+
+		QStandardItem* item = new QStandardItem(QString::number(i + 1));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
+		m_modelDownload->setItem(newRowIndex, 0, item);
+
+		QModelIndex index = m_modelDownload->index(newRowIndex, 0);
+		m_modelDownload->setData(index, stData.id, Qt::UserRole);  // 设置id;
+		//m_modelDownload->setData(index,QString::fromLocal8Bit(stData.filePath.c_str(), Qt::UserRole));
+		//  item->setText(QString::fromStdString(stData.name));
+
+		item = new QStandardItem(QString::fromStdString(stData.userName));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDownload->setItem(newRowIndex, 1, item);
+
+		item = new QStandardItem(QString::fromStdString(stData.department));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDownload->setItem(newRowIndex, 2, item);
+
+		item = new QStandardItem(QDateTime::fromTime_t(stData.applicationTime).toString("yyyy/MM/dd HH:mm:ss"));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDownload->setItem(newRowIndex, 3, item);
+
+
+		QString filePath = QString::fromLocal8Bit(stData.filePath.c_str());
+		QFileInfo fileInfo1(filePath);
+
+		item = new QStandardItem(fileInfo1.fileName());
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+
+		m_modelDownload->setItem(newRowIndex, 4, item);
+		QModelIndex indexFilePath = m_modelDownload->index(newRowIndex, 4);
+		m_modelDownload->setData(indexFilePath, filePath, Qt::UserRole);
+
+
+		item = new QStandardItem(QString::fromStdString(stData.fileType));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDownload->setItem(newRowIndex, 5, item);
+
+		item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDownload->setItem(newRowIndex, 6, item);
+
+
+
+
+		// add button to the last column
+		QPushButton* buttonD = new QPushButton(QString::fromLocal8Bit("下载"));
+		buttonD->setObjectName("itemBtnYes");
+		buttonD->setProperty("row", newRowIndex); // set custom property
+		buttonD->setProperty("column", 8);
+		buttonD->setProperty("approval", 1);
+		connect(buttonD, SIGNAL(clicked()), this, SLOT(slot_ItemDownloadBtnClicked()));
+		ui->tableViewDownload->setIndexWidget(m_modelDownload->index(newRowIndex, 8), buttonD);
+		//buttonD->setEnabled(false);
+
+
+		if (stData.status == 1)
+		{
+			item = new QStandardItem(QString::fromLocal8Bit("已通过"));
+			item->setForeground(QBrush(QColor(Qt::green)));
+			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+			m_modelDownload->setItem(newRowIndex, 7, item);
+			buttonD->setEnabled(true);
+
+		}
+		else if (stData.status == 0)
+		{
+			item = new QStandardItem(QString::fromLocal8Bit("待审核"));
+			item->setForeground(QBrush(QColor("#33C1FF")));
+			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+			m_modelDownload->setItem(newRowIndex, 7, item);
+			buttonD->setEnabled(false);
+		}
+		else if (stData.status == 2)
+		{
+			item = new QStandardItem(QString::fromLocal8Bit("已驳回"));
+			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+			item->setForeground(QBrush(QColor(Qt::red)));
+			m_modelDownload->setItem(newRowIndex, 7, item);
+			buttonD->setEnabled(true);
+
+		}
+		i++;
+	}
 }
 
 bool FilemangageDialog::getFtpFolderShow()
@@ -120,14 +264,15 @@ bool FilemangageDialog::getFtpFolderShow()
 			{
 
 				QTreeWidgetItem* pItem = new QTreeWidgetItem();
-				QString strText = QString::fromLocal8Bit(vecFolderNames[i].c_str());
+				QString strText = QString::fromLocal8Bit(vecFolderNames[i][0].c_str());
 				QString strPath = RootPath + "\\" + strText;
 				pItem->setText(0, strText);
 				pItem->setData(0, Qt::UserRole, strPath);
+				pItem->setData(0, Qt::UserRole+1, QString::fromLocal8Bit(vecFolderNames[i][1].c_str()));
 				pItem->setIcon(0, QIcon(":/image/Dir.png"));
 				pItem->setToolTip(0, strText);
 
-				std::string strDirPath = strRootPath + "\\" + vecFolderNames[i];
+				std::string strDirPath = strRootPath + "\\" + vecFolderNames[i][0];
 				createTreeChildNode(pItem, strDirPath);
 				//createTreeChildNode(pItem, vecFolderNames[i]);
 				pRootItem->addChild(pItem);
@@ -148,14 +293,14 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 	for (int j = 0; j < vecFolders.size(); j++)
 	{
 		QTreeWidgetItem* pItem = new QTreeWidgetItem();
-		QString strText = QString::fromLocal8Bit(vecFolders[j].c_str());
+		QString strText = QString::fromLocal8Bit(vecFolders[j][0].c_str());
 		QString strPath = pParentItem->data(0,Qt::UserRole).toString() + "\\" + strText;
-		pItem->setText(0, QString::fromLocal8Bit(vecFolders[j].c_str()));
+		pItem->setText(0, QString::fromLocal8Bit(vecFolders[j][0].c_str()));
 		pItem->setData(0, Qt::UserRole, strPath);
-		pItem->setData(0, Qt::UserRole+1, QString::fromLocal8Bit(vecFolders[j].c_str()));
+		pItem->setData(0, Qt::UserRole+1, QString::fromLocal8Bit(vecFolders[j][1].c_str()));
 		pItem->setIcon(0, QIcon(":/image/Dir.png"));
 		pItem->setToolTip(0, strText);
-		std::string strDirPath = strFolder + "\\" + vecFolders[j];
+		std::string strDirPath = strFolder + "\\" + vecFolders[j][0];
 		createTreeChildNode(pItem, strDirPath);
 		//createTreeChildNode(pItem, vecFolders[j]);
 		pParentItem->addChild(pItem);
@@ -199,8 +344,8 @@ void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString&
 	
 	for (int j = 0; j < vecFtpDirData.size(); j++)
 	{
-		QString ftpDirPath = strDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j].c_str());
-		QString newChildDirPath = newDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j].c_str());
+		QString ftpDirPath = strDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j][0].c_str());
+		QString newChildDirPath = newDirPath + "\\\\" + QString::fromLocal8Bit(vecFtpDirData[j][0].c_str());
 		downloadFtpDir(ftpDirPath, newChildDirPath);
 	}
 	
@@ -249,7 +394,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		buttonYes->setProperty("column", 2);
 
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_itemBtnDownload()));
-		ui->tableView->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
+		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
 
 		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("删除"));
 		buttonNo->setObjectName("itemBtnDel");
@@ -257,14 +402,14 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		buttonNo->setProperty("column", 3);
 
 		connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_itemBtnDel()));
-		ui->tableView->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
+		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
 	}
 	// 注意要考虑要不要切回根目录;
 }
 
 void FilemangageDialog::slot_itemBtnDownload()
 {
-	int row = ui->tableView->currentIndex().row();
+	int row = ui->tableViewFile->currentIndex().row();
 
 	auto strFileName = m_modelFiles->item(row,1)->text();
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
@@ -282,7 +427,10 @@ void FilemangageDialog::slot_itemBtnDownload()
 		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
 		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 		stDownloadApproval.status = 0;
-		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
+		if (db::databaseDI::Instance().add_download_approval_info(stDownloadApproval))
+		{
+			flushTableViewDownload();
+		}
 	}
 	else
 	{
@@ -312,7 +460,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 void FilemangageDialog::slot_itemBtnDel()
 {
-	int row = ui->tableView->currentIndex().row();
+	int row = ui->tableViewFile->currentIndex().row();
 	//QPushButton* pButton = (QPushButton*)sender();
 	//int row = pButton->property("row").toInt();
 	//int column = pButton->property("column").toInt();
@@ -427,12 +575,12 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 			{
 				QTreeWidgetItem* pParentItem = pItem->parent();
 				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
-				dirPath.replace("/", "\\\\");
-				
+				//dirPath.replace("/", "\\\\");
+				dirPath.replace("\\", "\\\\");
 
 				if (!common::bAdministrator) // 普通用户
 				{
-				/*	table_DownloadApproval stDownloadApproval;
+					table_DownloadApproval stDownloadApproval;
 					stDownloadApproval.userID = common::iUserID;
 					stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
 					stDownloadApproval.fileType = "dir";  
@@ -440,7 +588,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 					
 					stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 					stDownloadApproval.status = 0;
-					db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);*/
+					db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
 				}
 				else
 				{
@@ -486,6 +634,67 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 
 }
 
+void FilemangageDialog::slot_ItemDownloadBtnClicked()
+{
+	QPushButton* pButton = (QPushButton*)sender();
+	int row = pButton->property("row").toInt();
+	int column = pButton->property("column").toInt();
+	int approval = pButton->property("approval").toInt();
+
+	QModelIndex index = m_modelDownload->index(row, 0);
+	int id = m_modelDownload->data(index, Qt::UserRole).toInt();
+	QModelIndex indexFilePath = m_modelDownload->index(row, 4);
+	QString strFilaPath = m_modelDownload->data(indexFilePath, Qt::UserRole).toString();
+
+	QString strFileType=m_modelDownload->item(row, 5)->text();
+
+	QString strFileName = m_modelDownload->item(row, 4)->text();
+	if (strFileType == "dir")  // 下载文件夹
+	{
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+		if (directory.isEmpty())
+			return;
+		QString newDirPath = directory + "\\" + strFileName;
+		newDirPath.replace("/", "\\\\");
+
+		g_pMainWindow->showGif();
+		//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
+		// m_msgBox->show();
+		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+		downloadFtpDir(strFileType, newDirPath);
+
+		g_pMainWindow->closeGif();
+	}
+	else  
+	{       // 下载文件
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+		if (directory.isEmpty())
+		{
+			return;
+		}
+
+		std::string str = directory.toLocal8Bit().toStdString();
+		std::wstring wstr = directory.toStdWString();
+		const wchar_t* lpcwstr = wstr.c_str();
+		SetCurrentDirectory(lpcwstr);//设置当前目录
+
+		/*if (!m_FtpClientClass->newConnection())
+			return;*/
+
+			//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
+		QString newFilePath = directory + "\\" + strFileName;
+		newFilePath.replace("/", "\\\\");
+		m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+	}
+
+
+
+	
+
+	//ui->tableViewUser->setCurrentIndex(index);
+
+}
+
 void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column)
 {
 	//QString strDirPath = item->data(column, Qt::UserRole).toString();
@@ -521,7 +730,7 @@ void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, 
  //       buttonYes->setProperty("column", 2);
 
  //       connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
- //       ui->tableView->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
+ //       ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
 
  //       QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("删除"));
  //       buttonNo->setObjectName("itemBtnDel");
@@ -529,7 +738,7 @@ void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, 
  //       buttonNo->setProperty("column", 3);
 	//
 	//	connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
-	//	ui->tableView->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
+	//	ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
  //   }
 	//// 注意要考虑要不要切回根目录;
 }
