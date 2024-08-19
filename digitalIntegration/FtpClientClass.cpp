@@ -386,7 +386,7 @@ string FtpClientClass::Gets_CurrentPath()
 	//sendTCP(buff);									//发送指令
 	if (sendTCP(buff) == -1)									//发送指令
 	{
-		return;
+		return "";
 	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
