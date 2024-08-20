@@ -35,17 +35,18 @@ public:
 
 	DWORD mkdir(char fileName[]);				//创建文件夹
 	void help();								//菜单
-	void list(SOCKET sockfd);					//列出远方当前目录
+	int list(SOCKET sockfd);					//列出远方当前目录
 	DWORD sendTCP(char data[]);					//发送要执行的命令至服务端
 	int user();									//上传用户名
 	int pass();									//上传密码
 	int sendFile(SOCKET datatcps, FILE* file);	//put 传送给远方一个文件
 	bool newConnection();
 	//void execute_ls();//获取当前文件名称 执行ls
-	void execute_ls(const std::string  strDirPath);//获取指定路径的文件名称 执行ls
-	string Gets_CurrentPath();//获取当前路径
+	int execute_ls(const std::string  strDirPath);//获取指定路径的文件名称 执行ls
+	//string Gets_CurrentPath();//获取当前路径
+	bool Gets_CurrentPath(std::string& strRootPath);
 	void execute_getFile(string rec_name);//执行 get name
-	void execute_getFile(string filePath,string NewFilePath);//执行 get name
+	int execute_getFile(string filePath,string NewFilePath);//执行 get name
 	void execute_putFile(string sendfileName);//执行 put 上传
 	void execute_putFile(string localFilePath,std::string NewFilePath);//执行 put 上传
 	//void execute_cdFloder(string floderName);//执行 进入文件夹命令

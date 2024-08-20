@@ -90,12 +90,61 @@ FilemangageDialog::~FilemangageDialog()
     delete ui;
 }
 
+void FilemangageDialog::flushFtpDirShow()
+{
+
+	ui->treeWidget->clear();
+
+	string strRootPath;
+	
+	if (!m_FtpClientClass->Gets_CurrentPath(strRootPath))
+	{
+		return;
+	}
+	// 创建节点
+	QTreeWidgetItem* pRootItem = new QTreeWidgetItem();
+	QString RootPath = QString::fromLocal8Bit(strRootPath.c_str());
+	pRootItem->setText(0, RootPath);
+	pRootItem->setData(0, Qt::UserRole, RootPath);
+	pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // 设置图标（请确保路径正确）:/image/ftpDir.png
+	pRootItem->setToolTip(0, RootPath);
+	ui->treeWidget->addTopLevelItem(pRootItem);
+
+
+	//if (m_FtpClientClass->newConnection())
+	{
+		m_FtpClientClass->execute_ls(strRootPath);//执行ls 
+
+	//在树分支显示当前路径文件夹名称
+
+		auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
+		for (int i = 0; i < vecFolderNames.size(); i++)
+		{
+			QTreeWidgetItem* pItem = new QTreeWidgetItem();
+			QString strText = QString::fromLocal8Bit(vecFolderNames[i][0].c_str());
+			QString strPath = RootPath + "\\" + strText;
+			pItem->setText(0, strText);
+			pItem->setData(0, Qt::UserRole, strPath);
+			pItem->setData(0, Qt::UserRole + 1, QString::fromLocal8Bit(vecFolderNames[i][1].c_str()));
+			pItem->setIcon(0, QIcon(":/image/Dir.png"));
+			pItem->setToolTip(0, strText);
+
+			std::string strDirPath = strRootPath + "\\" + vecFolderNames[i][0];
+			createTreeChildNode(pItem, strDirPath);
+			//createTreeChildNode(pItem, vecFolderNames[i]);
+			pRootItem->addChild(pItem);
+		}
+	}
+
+}
+
 void FilemangageDialog::initTableViewDownload()
 {
 	if (common::bAdministrator) // 管理员;
 	{
 		// 隐藏第二个标签页
 		ui->tabWidget->removeTab(1); // 移除 Tab 2
+		m_strDolwnloadText = QString::fromLocal8Bit("下载");
 		return;
 	}
 	
@@ -242,7 +291,14 @@ bool FilemangageDialog::getFtpFolderShow()
 	{
 		///***********************把当前文件路径显示在树形结构上*****************************/
 		string strRootPath;
-		strRootPath = m_FtpClientClass->Gets_CurrentPath();
+
+	
+		bool ret = m_FtpClientClass->Gets_CurrentPath(strRootPath);
+		if (!ret)
+		{
+			return false;
+		}
+			
 		// 创建节点
 		QTreeWidgetItem* pRootItem = new QTreeWidgetItem();
 		QString RootPath = QString::fromLocal8Bit(strRootPath.c_str());
@@ -280,8 +336,9 @@ bool FilemangageDialog::getFtpFolderShow()
 		}
 		
 
-		return 1;
+		
 	}
+	return true;
 }
 
 void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const std::string strFolder)
@@ -309,24 +366,32 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 	return;
 }
 
-void FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
+int FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
 {
-	QDir dir(newDirPath);
-	if (!dir.exists())
-	{
-		if (!dir.mkdir(newDirPath))
-		{
-			//qDebug() << "文件夹创建失败！";
-			return;
-		}
-	}
+	
 	
 	/*if (!m_FtpClientClass->newConnection())
 		return;*/
 	//m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
 	/*if (!m_FtpClientClass->newConnection())
 		return;*/
-	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//执行ls 
+	int ret=m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//执行ls 
+
+	if (ret !=1)
+	{
+		
+		return ret;
+	}
+	QDir dir(newDirPath);
+	if (!dir.exists())
+	{
+		if (!dir.mkdir(newDirPath))
+		{
+			//qDebug() << "文件夹创建失败！";
+			return -3;
+		}
+	}
+	
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
 	auto vecFtpDirData = m_FtpClientClass->Gets_FolderName();
@@ -369,11 +434,11 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 	common::delAllModelRow(m_modelFiles);
 	for (int i = 0; i < vecFileData.size(); i++)
 	{
-
+		int j = i + 1;
 		int newRowIndex = m_modelFiles->rowCount(); // 获取当前行数
 		m_modelFiles->insertRow(newRowIndex); // 插入新行
 
-		QStandardItem* item = new QStandardItem(QString::number(i));
+		QStandardItem* item = new QStandardItem(QString::number(j));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelFiles->setItem(newRowIndex, 0, item);
 
@@ -388,7 +453,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 
 		
 
-		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("下载"));
+		QPushButton* buttonYes = new QPushButton(m_strDolwnloadText);
 		buttonYes->setObjectName("itemBtnDownload");
 		buttonYes->setProperty("row", newRowIndex); // set custom property
 		buttonYes->setProperty("column", 2);
@@ -522,7 +587,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 		QMenu menu;
 		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
 		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
-		QAction* download = menu.addAction(QString::fromLocal8Bit("下载"));
+		QAction* download = menu.addAction(m_strDolwnloadText);
 		QAction* rename = menu.addAction(QString::fromLocal8Bit("重命名"));
 		
 		connect(add, &QAction::triggered, [=]()
@@ -567,8 +632,8 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 						//m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
 				m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
 				
-	
-
+				pParentItem->removeChild(pItem); // 先获取 childItem
+				delete pItem;
 			});
 
 		connect(download, &QAction::triggered, [=]()  // 下载文件夹及所有子文件夹及子文件;
@@ -625,6 +690,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 				if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
 				{
 					pItem->setText(0, DirName);
+					pItem->setData(0, Qt::UserRole, newDir);
 				}
 
 			});
@@ -661,9 +727,13 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 		//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
 		// m_msgBox->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
-		downloadFtpDir(strFileType, newDirPath);
-
+		int ret =downloadFtpDir(strFilaPath, newDirPath);
 		g_pMainWindow->closeGif();
+		if (ret == -1)
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("要下载的ftp目录已删除"));
+			return;
+		}
 	}
 	else  
 	{       // 下载文件
@@ -684,7 +754,11 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 			//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
-		m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+		int ret =m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+		if (ret == 1)
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("所要下载的Ftp文件已删除"));
+		}
 	}
 
 

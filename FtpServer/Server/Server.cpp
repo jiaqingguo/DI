@@ -241,7 +241,7 @@ int Server::sendFileList(SOCKET datatcps,  char dirPath[])
 	hff = FindFirstFile(dirPath, &fd);			//查找文件来把待操作文件的相关属性读取到WIN32_FIND_DATA结构中去 
 	if (hff == INVALID_HANDLE_VALUE)
 	{		//发生错误
-		const char* errStr = "列出文件列表时发生错误\n";
+		const char* errStr = "ls-falied\n";
 		cout << *errStr << endl;
 		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR)
 		{
@@ -588,12 +588,15 @@ void Server::running()
 
 			//sendFileList(sockServer);
 			strcat(m_path, "\\*");
-			sendFileList(sockServer, m_path);
-
-			memset(sbuff, '\0', sizeof(sbuff));
-			sprintf(sbuff, "ls-end");
-			size = strlen(sbuff);
-			send(sockServer, sbuff, size, 0);
+			int ret =sendFileList(sockServer, m_path);
+			if (ret == 1)
+			{
+				memset(sbuff, '\0', sizeof(sbuff));
+				sprintf(sbuff, "ls-end");
+				size = strlen(sbuff);
+				send(sockServer, sbuff, size, 0);
+			}
+			
 		}//ls
 		else if (strncmp(rbuff, "cd", 2) == 0) {
 			strcpy(fileName, rbuff + 3);

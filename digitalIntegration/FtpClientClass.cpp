@@ -121,7 +121,7 @@ void FtpClientClass::help()
 		<< "       |________________________________________________|    " << endl;
 }
 //列出远方当前目录
-void FtpClientClass::list(SOCKET sockfd)
+int FtpClientClass::list(SOCKET sockfd)
 {
 	vecFileName.clear();
 	vecDirName.clear();
@@ -138,11 +138,15 @@ void FtpClientClass::list(SOCKET sockfd)
 		memset(recvBuf, 0, sizeof(recvBuf));
 		nRead = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
 		cout << "sizeof(rbuff):" << sizeof(rbuff) << endl;
-		
+		if (strncmp(recvBuf, "ls-falied", 9) == 0)
+		{
+			return -1;
+		} 
+
 		//recv通过sockClient套接口接受数据存入rbuff缓冲区，返回接收到的字节数
 		if (nRead == SOCKET_ERROR) {
 			cout << "读取时发生错误" << endl;
-			return;
+			return -2;
 			//exit(1);
 		}
         else if (nRead == 0) 
@@ -188,7 +192,7 @@ void FtpClientClass::list(SOCKET sockfd)
 	
 		//cout << "rbuff " << recvBuf << "----------------"<< endl;
 	}
-
+	return 1;
 }
 //发送要执行的命令至服务端
 DWORD FtpClientClass::sendTCP(char data[])
@@ -334,7 +338,7 @@ bool FtpClientClass::newConnection()
 //	//WSACleanup();				//释放Winsock
 //}
 
-void FtpClientClass::execute_ls(const std::string strDirPath)
+int FtpClientClass::execute_ls(const std::string strDirPath)
 {
 	char operation[10], name[20];		//操作与文件名
 	char order[260] = "\0";				//输入的命令
@@ -356,15 +360,50 @@ void FtpClientClass::execute_ls(const std::string strDirPath)
 	//sendTCP(buff);									//发送指令
 	if (sendTCP(buff) == -1)									//发送指令
 	{
-		return;
+		return 0;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	cout << rbuff << endl;	//pwd的
-	list(sockClient);
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
+	cout << rbuff << endl;	
+	//if(ls - falied)
+	
+	return list(sockClient);
 }
 
-//获取当前路径
-string FtpClientClass::Gets_CurrentPath()
+////获取当前路径
+//string FtpClientClass::Gets_CurrentPath()
+//{
+//	memset(rbuff, 0, sizeof(rbuff));
+//	string str_path;
+//
+//	char operation[10], name[20];		//操作与文件名
+//	char order[30] = "\0";				//输入的命令
+//	char buff[80];						//用来存储经过字符串格式化的order
+//
+//	//startSock();				//启动winsock并初始化
+//	//if (callServer() == -1) 
+//	//{	//发送连接请求失败
+//	//	cout << "发送连接请求失败!!!";
+//	//}
+//
+//	memset(order, 0, sizeof(order));
+//	memset(buff, 0, sizeof(buff));
+//	strcat(order, "pwd");
+//	sprintf(buff, order);
+//	//sendTCP(buff);									//发送指令
+//	if (sendTCP(buff) == -1)									//发送指令
+//	{
+//		return "";
+//	}
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+//	cout << rbuff << endl;							//pwd功能在这里已经实现
+//	str_path = rbuff;
+//
+////	closesocket(sockClient);	//关闭连接
+//	//WSACleanup();				//释放Winsock
+//	return str_path;
+//}
+
+bool FtpClientClass::Gets_CurrentPath(std::string& strRootPath)
 {
 	memset(rbuff, 0, sizeof(rbuff));
 	string str_path;
@@ -373,30 +412,20 @@ string FtpClientClass::Gets_CurrentPath()
 	char order[30] = "\0";				//输入的命令
 	char buff[80];						//用来存储经过字符串格式化的order
 
-	//startSock();				//启动winsock并初始化
-	//if (callServer() == -1) 
-	//{	//发送连接请求失败
-	//	cout << "发送连接请求失败!!!";
-	//}
-
 	memset(order, 0, sizeof(order));
 	memset(buff, 0, sizeof(buff));
 	strcat(order, "pwd");
 	sprintf(buff, order);
-	//sendTCP(buff);									//发送指令
+
 	if (sendTCP(buff) == -1)									//发送指令
 	{
-		return "";
+		return false;
 	}
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
 	cout << rbuff << endl;							//pwd功能在这里已经实现
-	str_path = rbuff;
+	strRootPath = rbuff;
 
-//	closesocket(sockClient);	//关闭连接
-	//WSACleanup();				//释放Winsock
-
-	return str_path;
-
+	return true;
 }
 //下载文件
 void FtpClientClass::execute_getFile(string rec_name)
@@ -462,7 +491,7 @@ void FtpClientClass::execute_getFile(string rec_name)
 //	closesocket(sockClient);	//关闭连接
 //	WSACleanup();				//释放Winsock
 }
-void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
+int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
 	char operation[10], name[1024];		//操作与文件名
 	char order[1024] = "\0";				//输入的命令
@@ -490,7 +519,7 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	sprintf(buff, order);
 	if (sendTCP(buff) == -1)									//发送指令
 	{
-		return;
+		return 0;
 	}
 	while (1)
 	{
@@ -498,7 +527,7 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		cout << rbuff << endl;							//pwd功能在这里已经实现
 		if (strncmp(rbuff, "openFailed", 10) == 0)
 		{
-			return;
+			return 1;
 		}
 		if (strncmp(rbuff, "get", 3) == 0)
 		{			///下载功能
@@ -530,11 +559,11 @@ void FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 			//closesocket(sockClient);
 			fclose(fd1);
 
-			return;
+			return 0;
 		}//get
 	}
 	
-
+	return 0;
 
 
 //	closesocket(sockClient);	//关闭连接

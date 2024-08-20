@@ -21,6 +21,9 @@ public:
     explicit FilemangageDialog(QWidget *parent = nullptr);
     ~FilemangageDialog();
 
+
+    void flushFtpDirShow();
+
     void initTableViewDownload();
     void flushTableViewDownload();
 private:
@@ -30,7 +33,7 @@ private:
 
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
-    void downloadFtpDir(const QString &strDirPath,const QString &newDirPath);
+    int downloadFtpDir(const QString &strDirPath,const QString &newDirPath);
 signals:
     void  signal_downloadFinsh();
 private slots:
@@ -45,7 +48,7 @@ private slots:
     // Ê÷ÓÒ¼ü²Ëµ¥;
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
 
-    void  slot_ItemDownloadBtnClicked();
+    void slot_ItemDownloadBtnClicked();
 private:
     Ui::FilemangageDialog *ui;
 
@@ -56,6 +59,8 @@ private:
 
     QMessageBox *m_msgBox = nullptr;
     QStandardItemModel* m_modelDownload = nullptr;
+
+    QString m_strDolwnloadText = QString::fromLocal8Bit("ÉêÇëÏÂÔØ");
 };
 
 #endif // FILEMANGAGEDIALOG_H
