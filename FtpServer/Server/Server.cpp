@@ -226,6 +226,7 @@ void Server::delete_listFiles(string dir)
 	_findclose(handle);
 	return;
 }
+
 DWORD Server::connectProcess() {
 	addrLen = sizeof(ClientAddr);//addrLen是对象地址的长度 
 	if (listen(sockClient, 10) < 0) {//让套接字进入被动监听状态，参数2为请求队列的最大长度
@@ -287,8 +288,40 @@ int Server::sendFile(SOCKET datatcps, FILE* file) {
 			break;
 		}
 	}
-	//closesocket(datatcps);
 	cout << "发送成功" << endl;
+	return 1;
+	
+}
+
+int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
+{
+	// 发送文件数据
+	char buffer[10240]; // 一次最多发送 10240 字节
+
+	while (file)
+	{
+		memset(buffer, 0, sizeof(buffer));
+		file.read(buffer, sizeof(buffer));
+		std::streamsize bytes_read = file.gcount();
+
+		// 计算要发送的实际大小
+		int data_size = static_cast<int>(bytes_read);
+		if (data_size == 0) {
+			break; // 文件已读完
+		}
+		// 如果读取的字节数大于 10240，则设置为 10240
+		if (data_size > 10240) {
+			data_size = 10240;
+		}
+
+		// 发送数据大小（int 类型）和实际数据
+		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
+		send(datatcps, buffer, data_size, 0);
+		
+	}
+	// 发送结束信号
+	int end_signal = 0; // 0 作为结束信号
+	send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
 	return 1;
 }
 int Server::sendFileList(SOCKET datatcps) {
@@ -460,114 +493,208 @@ void Server::running()
 		cout << endl << "获取并执行的命令：" << rbuff << endl;
 		if (strncmp(rbuff, "get", 3) == 0)
 		{
+			//char fileName[256];	//文件名
+			//strcpy(fileName, rbuff + 4);
+			//FILE* file;//定义一个文件访问指针
+			////处理下载文件请求
+			//file = fopen(fileName, "rb");//二进制打开文件，只允许读
+			//if (file != NULL)
+			//{
+			//	memset(sbuff, '/0', sizeof(sbuff));
+			//	sprintf(sbuff, "get %s", fileName);
+			//	int size = strlen(sbuff);
+			//	int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
+			//	if (ret <=0) {
+			//		fclose(file);
+			//		return ;
+			//	}
+			//	else {//创建额外数据连接传送数据
+			//		//string msg = " ---发送文件成功---";
+			//		//TimeSave("E:\\jh\\Time_Server.txt", msg);
+			//		if (!sendFile(sockServer, file)) {
+			//			return;
+			//		}
+			//		else
+			//		{
+			//			cout << "111111111" << endl;
+			//		}
+
+			//		/*memset(sbuff, '\0', sizeof(sbuff));
+			//		sprintf(sbuff, "get-end");
+			//		size = strlen(sbuff);
+			//		send(sockServer, sbuff, size, 0);*/
+			//		fclose(file);
+			//	}
+
+			//}
+			//else 
+			//{
+			//	strcpy(sbuff, "openFailed\n");
+			//	if (send(sockServer, sbuff, sizeof(sbuff), 0)) 
+			//	{
+			//		cout << "openFailed send sucess" << endl;
+			//	}
+			//	else {
+			//		cout << "openFailed send failed" << endl;
+			//	}
+			//}
+
 			char fileName[256];	//文件名
 			strcpy(fileName, rbuff + 4);
-			FILE* file;//定义一个文件访问指针
-			//处理下载文件请求
-			file = fopen(fileName, "rb");//二进制打开文件，只允许读
-			if (file != NULL)
+
+			std::ifstream fileStream(fileName, std::ios::binary);
+			if (fileStream)
 			{
 				memset(sbuff, '/0', sizeof(sbuff));
 				sprintf(sbuff, "get %s", fileName);
 				int size = strlen(sbuff);
 				int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
-				if (ret <=0) {
-					fclose(file);
+				if (ret <=0) 
+				{
+					//fclose(file);
 					return ;
 				}
-				else {//创建额外数据连接传送数据
-					//string msg = " ---发送文件成功---";
-					//TimeSave("E:\\jh\\Time_Server.txt", msg);
-					if (!sendFile(sockServer, file)) {
+				else 
+				{//创建额外数据连接传送数据
+					
+					if (!sendFileData(sockServer, fileStream))
+					{
+						cout << "发送文件数据" << endl;
 						return;
 					}
 					else
 					{
-						cout << "111111111" << endl;
+						cout << "发送文件数据完成" << endl;
 					}
 
 					/*memset(sbuff, '\0', sizeof(sbuff));
 					sprintf(sbuff, "get-end");
 					size = strlen(sbuff);
 					send(sockServer, sbuff, size, 0);*/
-					fclose(file);
+					fileStream.close();
 				}
 
 			}
-			else {
+			else
+			{
 				strcpy(sbuff, "openFailed\n");
-				if (send(sockServer, sbuff, sizeof(sbuff), 0)) 
+				if (send(sockServer, sbuff, sizeof(sbuff), 0))
 				{
 					cout << "openFailed send sucess" << endl;
 				}
 				else {
 					cout << "openFailed send failed" << endl;
 				}
+			//	std::cerr << "无法打开文件: " << file_path << std::endl;
+				
 			}
+			
+
 		}//get
-		else if (strncmp(rbuff, "put", 3) == 0) {
-			FILE* fd;
+		else if (strncmp(rbuff, "put", 3) == 0)
+		{
+			//FILE* fd;
+			//int cnt;
+			//string str_rbuff = rbuff;
+
+			//vector<string> str_;
+			//string pattern = "\\";
+			//str_ = my_split(rbuff, pattern);
+			//if (str_.size() > 1)
+			//{
+			//	cout << str_[str_.size() - 1] << endl;
+			//	string str_name = str_[str_.size() - 1];
+			//	strcpy(fileName, str_name.c_str());
+			//}
+			//else
+			//{
+			//	strcpy(fileName, rbuff + 4);
+			//}
+			//
+			//memset(m_path, '\0', sizeof(m_path));
+			//strcpy(m_path, rbuff + 4);
+
+			//fd = fopen(m_path, "wb");
+			//if (fd == NULL)
+			//{
+			//	cout << "无法打开文件" << m_path << endl;
+			//	return ;
+			//}
+			//memset(sbuff, '\0', sizeof(sbuff));
+			//sprintf(sbuff, "put %s", m_path);
+			//if (!send(sockServer, sbuff, sizeof(sbuff), 0))
+			//{
+			//	fclose(fd);
+			//	return ;
+			//}
+
+			//memset(rbuff, '\0', sizeof(rbuff));
+			//cout << "careate file start save" << endl;
+			//while ((cnt = recv(sockServer, rbuff, sizeof(rbuff), 0)) > 0)
+			//{
+			//	if (strncmp(rbuff, "put-end", 7) == 0)
+			//	{
+			//		break;
+			//	}
+			//	fwrite(rbuff, sizeof(char), cnt, fd);//把cnt个数据长度为char的数据从rbuff输入到fd指向的文件
+			//	memset(rbuff, '\0', sizeof(rbuff));
+			//	if (cnt < 1024)
+			//	{
+			//		break;
+			//	}
+			//}
+			//fclose(fd);
+			//cout << " file  save finsh" << endl;
+			
+			
 			int cnt;
-			string str_rbuff = rbuff;
-
-			vector<string> str_;
-			string pattern = "\\";
-			str_ = my_split(rbuff, pattern);
-			if (str_.size() > 1)
-			{
-				cout << str_[str_.size() - 1] << endl;
-				string str_name = str_[str_.size() - 1];
-				strcpy(fileName, str_name.c_str());
-			}
-			else
-			{
-				strcpy(fileName, rbuff + 4);
-			}
-			//string msg = " ---收到获取命令---";
-			//TimeSave("E:\\jh\\Time_Server.txt", msg);
-
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 4);
-
-
-
-			//fd = fopen(fileName, "wb");
-			fd = fopen(m_path, "wb");
-			if (fd == NULL)
-			{
-				cout << "无法打开文件" << m_path << endl;
-				return ;
-			}
 			memset(sbuff, '\0', sizeof(sbuff));
 			sprintf(sbuff, "put %s", m_path);
 			if (!send(sockServer, sbuff, sizeof(sbuff), 0))
 			{
-				fclose(fd);
-				return ;
+				return;
 			}
 
 			memset(rbuff, '\0', sizeof(rbuff));
 			cout << "careate file start save" << endl;
-			while ((cnt = recv(sockServer, rbuff, sizeof(rbuff), 0)) > 0)
+			std::ofstream file(m_path, std::ios::binary);
+			char buffer[10240]; // 接收缓冲区
+
+			while (true)
 			{
-				if (strncmp(rbuff, "put-end", 7) == 0)
-				{
-					break;
+				// 接收数据大小（int 类型）
+				int data_size=0;
+				size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
+				if (bytes_received <= 0 || data_size == 0) {
+					break; // 如果接收失败或数据大小为 0，则退出循环
 				}
-				fwrite(rbuff, sizeof(char), cnt, fd);//把cnt个数据长度为char的数据从rbuff输入到fd指向的文件
-				memset(rbuff, '\0', sizeof(rbuff));
-				if (cnt < 1024)
+				int recv_size = data_size;
+				while (1)
 				{
-					break;
+					// 接收实际数据
+					memset(buffer, 0, sizeof(buffer));
+					bytes_received = recv(sockServer, buffer, recv_size, 0);
+
+					// 将接收到的数据写入文件
+					file.write(buffer, bytes_received);
+
+					if (bytes_received < data_size)
+					{
+						recv_size = data_size - bytes_received;
+					}
+					else
+					{
+						break; // 如果接收全部完成，退出循环;
+					}
 				}
 			}
-			cout << " file  save finsh" << endl;
-			//string msg = " ---成功收到客户端上传文件请求---";
-			//TimeSave("E:\\Time_Server_Put.txt", msg);
-			//cout << "成功获得文件" << fileName << endl;
-			fclose(fd);
-			//msg = " ------------------";
-			//TimeSave("E:\\jh\\Time_Server_Put.txt", msg);
+
+			file.close();
+			std::cout << "文件接收完毕，连接关闭。" << std::endl;
+			cout << " put 命令执行完成" << endl;
+
 			string  timeddd = GetTimeString();
 			cout << timeddd << endl;
 		}//put
@@ -598,7 +725,7 @@ void Server::running()
 				size = strlen(sbuff);
 				send(sockServer, sbuff, size, 0);
 			}
-			
+			cout << endl << "ls 执行完成："  << endl;
 		}//ls
 		else if (strncmp(rbuff, "cd", 2) == 0) {
 			strcpy(fileName, rbuff + 3);

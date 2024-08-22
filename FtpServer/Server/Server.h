@@ -23,6 +23,7 @@ public:
 	int sendFileList(SOCKET datatcps);
 	int sendFileList(SOCKET datatcps, char fileName[]);
 	int sendFile(SOCKET datatcps, FILE* file);
+		int sendFileData(SOCKET datatcps, std::ifstream& file);
 	void delete_listFiles(string dir);
 	DWORD connectProcess();
 

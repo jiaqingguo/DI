@@ -1,4 +1,6 @@
 //#include "stdafx.h"
+#include <fstream>
+
 #include "FtpClientClass.h"
 #include "Util/UtilTool.h"
 
@@ -138,7 +140,7 @@ int FtpClientClass::list(SOCKET sockfd)
 		memset(rbuff, 0, sizeof(rbuff));
 		memset(recvBuf, 0, sizeof(recvBuf));
 		nRead = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
-		cout << "sizeof(rbuff):" << sizeof(rbuff) << endl;
+		cout << "sizeof(recvBuf):" << sizeof(recvBuf) << endl;
 		if (strncmp(recvBuf, "ls-falied", 9) == 0)
 		{
 			return -1;
@@ -289,6 +291,37 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 	cout << "传输完成" << endl;
 	return true;
 }
+int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
+{
+	// 发送文件数据
+	char buffer[10240]; // 一次最多发送 10240 字节
+
+	while (file)
+	{
+		memset(buffer, 0, sizeof(buffer));
+		file.read(buffer, sizeof(buffer));
+		std::streamsize bytes_read = file.gcount();
+
+		// 计算要发送的实际大小
+		int data_size = static_cast<int>(bytes_read);
+		if (data_size == 0) {
+			break; // 文件已读完
+		}
+		// 如果读取的字节数大于 10240，则设置为 10240
+		if (data_size > 10240) {
+			data_size = 10240;
+		}
+
+		// 发送数据大小（int 类型）和实际数据
+		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
+		send(datatcps, buffer, data_size, 0);
+
+	}
+	// 发送结束信号
+	int end_signal = 0; // 0 作为结束信号
+	send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
+	return 1;
+}
 bool FtpClientClass::newConnection()
 {
 	////启动winsock并初始化
@@ -363,7 +396,7 @@ int FtpClientClass::execute_ls(const std::string strDirPath)
 	{
 		return 0;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
+	int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
 	cout << rbuff << endl;	
 	//if(ls - falied)
 	
@@ -492,105 +525,153 @@ void FtpClientClass::execute_getFile(string rec_name)
 //	closesocket(sockClient);	//关闭连接
 //	WSACleanup();				//释放Winsock
 }
+//int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
+//{
+//	char operation[10], name[1024];		//操作与文件名
+//	char order[1024] = "\0";				//输入的命令
+//	char buff[1024];						//用来存储经过字符串格式化的order
+//	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+//	int cnt;
+//
+//	char buff_test[100];
+//
+//
+//	//发送连接请求成功，初始化数据
+//
+//	memset(buff, 0, sizeof(buff));
+//	memset(rbuff, 0, sizeof(rbuff));
+//	memset(sbuff, 0, sizeof(sbuff));
+//
+//	string str_name = filePath;
+//	strcpy(name, filePath.c_str());
+//	//将指令整合进order，并存放进buff
+//	strcat(order, "get"), strcat(order, " "), strcat(order, name);
+//	sprintf(buff, order);
+//	if (sendTCP(buff) == -1)									//发送指令
+//	{
+//		return 0;
+//	}
+//	while (1)
+//	{
+//		int num=recv(sockClient, rbuff, 1024, 0);		//接收信息 
+//		cout << rbuff << endl;							//pwd功能在这里已经实现
+//		if (strncmp(rbuff, "openFailed", 10) == 0)
+//		{
+//			return 1;
+//		}
+//		if (strncmp(rbuff, "get", 3) == 0)
+//		{			///下载功能
+//			
+//			fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
+//			if (fd1 == NULL)
+//			{
+//				cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
+//				//return 1;
+//			}
+//			memset(rbuff, 0, sizeof(rbuff));
+//			int size = 0;
+//			while ((cnt = recv(sockClient, rbuff, 1024, 0)) > 0) 
+//			{
+//
+//				if (strncmp(rbuff , "get-end", 7) == 0)
+//				{
+//					break;
+//				}
+//				if (strncmp(rbuff + cnt - 7, "get-end", 7) == 0)
+//				{
+//					// ?????????????????   可能会服务端发送的最后一拍无法完整的加上get-end;
+//					memset(rbuff + cnt, 0, sizeof(rbuff) - cnt);
+//					fwrite(rbuff, 1, cnt, fd1);
+//					break;
+//				}
+//				fwrite(rbuff, 1, cnt, fd1);
+//				memset(rbuff, 0, sizeof(rbuff));
+//				
+//			}
+//			
+//			fclose(fd1);
+//
+//			return 0;
+//		}//get
+//	}
+//	
+//	return 0;
+//}
+
 int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
-	char operation[10], name[1024];		//操作与文件名
-	char order[1024] = "\0";				//输入的命令
+
+		
+
 	char buff[1024];						//用来存储经过字符串格式化的order
-	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
-	int cnt;
-
-	char buff_test[100];
-	//startSock();				//启动winsock并初始化
-	//if (callServer() == -1) 
-	//{	//发送连接请求失败
-	//	cout << "发送请求失败!!!" << endl;
-	//}
-
-	//发送连接请求成功，初始化数据
-
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 
-	string str_name = filePath;
-	strcpy(name, filePath.c_str());
+	//string str_name = filePath;
+	
 	//将指令整合进order，并存放进buff
-	strcat(order, "get"), strcat(order, " "), strcat(order, name);
-	sprintf(buff, order);
+	strcat(buff, "get"), strcat(buff, " "), strcat(buff, filePath.c_str());
 	if (sendTCP(buff) == -1)									//发送指令
 	{
 		return 0;
 	}
 	while (1)
 	{
-		int num=recv(sockClient, rbuff, 1024, 0);		//接收信息 
-		cout << rbuff << endl;							//pwd功能在这里已经实现
+		int num = recv(sockClient, rbuff, 1024, 0);		//接收信息 
+//		cout << rbuff << endl;							//pwd功能在这里已经实现
 		if (strncmp(rbuff, "openFailed", 10) == 0)
 		{
-			return 1;
+			return -1;
 		}
 		if (strncmp(rbuff, "get", 3) == 0)
-		{			///下载功能
-			//callServer();
-			fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
-			if (fd1 == NULL)
+		{
+			std::ofstream file(NewFilePath, std::ios::binary);
+			char buffer[10240]; // 接收缓冲区
+
+			while (true)
 			{
-				cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
-				//return 1;
+				// 接收数据大小（int 类型）
+				int data_size;
+
+				size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
+
+				if (bytes_received <= 0 || data_size == 0) {
+					break; // 如果接收失败或数据大小为 0，则退出循环
+				}
+
+				int recv_size = data_size;
+				while (1)
+				{
+					// 接收实际数据
+					memset(buffer, 0, sizeof(buffer));
+					bytes_received = recv(sockClient, buffer, recv_size, 0);
+
+					// 将接收到的数据写入文件
+					file.write(buffer, bytes_received);
+					
+					if (bytes_received < data_size)
+					{
+						recv_size = data_size - bytes_received;
+
+					}
+					else
+					{
+						break; // 如果接收全部完成，退出循环;
+					}
+				}
+
+
+
 			}
-			memset(rbuff, 0, sizeof(rbuff));
-			int size = 0;
-			while ((cnt = recv(sockClient, rbuff, 1024, 0)) > 0) 
-			{
 
-			
-				
-				if (cnt < 1024)
-				{
-					int a = 0;
-					//break;
-				}
-
-				
-				// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
-				   //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
-				
-				if (strncmp(rbuff , "get-end", 7) == 0)
-				{
-					break;
-				}
-				if (strncmp(rbuff + cnt - 7, "get-end", 7) == 0)
-				{
-					// ?????????????????   可能会服务端发送的最后一拍无法完整的加上get-end;
-					memset(rbuff + cnt, 0, sizeof(rbuff) - cnt);
-					fwrite(rbuff, 1, cnt, fd1);
-					break;
-				}
-				fwrite(rbuff, 1, cnt, fd1);
-				memset(rbuff, 0, sizeof(rbuff));
-				
-
-				/*if (cnt < 1024)
-				{
-					break;
-				}*/
-			}
-			//string msg = " ---收到文件后---";
-			//TimeSave("E:\\jh\\Time_Client.txt", msg);
-
-			//closesocket(sockClient);
-			fclose(fd1);
-
-			return 0;
-		}//get
+			file.close();
+			std::cout << "文件接收完毕，连接关闭。" << std::endl;
+			return 1;
+		}
 	}
 	
-	return 0;
-
-
-//	closesocket(sockClient);	//关闭连接
-//	WSACleanup();				//释放Winsock
+	
 }
 //执行 put 上传
 void FtpClientClass::execute_putFile(string sendfileName)
@@ -645,54 +726,109 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	//WSACleanup();				//释放Winsock
 
 }
+//void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
+//{
+//	char operation[10], name[1024];		//操作与文件名
+//	char order[1024] = "\0";				//输入的命令
+//	char buff[80];						//用来存储经过字符串格式化的order
+//	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+//	int cnt;
+//
+//	memset(buff, 0, sizeof(buff));
+//	memset(rbuff, 0, sizeof(rbuff));
+//	memset(sbuff, 0, sizeof(sbuff));
+//
+//
+//	string str_name = localFilePath;
+//	strcpy(name, str_name.c_str());
+//	//将指令整合进order，并存放进buff
+//	strcat(order, "put"), strcat(order, " "), strcat(order, NewFilePath.c_str());
+//	sprintf(buff, order);
+//	//sendTCP(buff);									//发送指令
+//	if (sendTCP(buff) == -1)									//发送指令
+//	{
+//		return;
+//	}
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+//	cout << rbuff << endl;							//pwd功能在这里已经实现
+//	if (strncmp(rbuff, "put", 3) == 0)
+//	{ ///上传功能
+//		strcpy(fileName, rbuff + 4);
+//		fd2 = fopen(localFilePath.c_str(), "rb");				//打开一个二进制文件，文件必须存在，只允许读
+//		if (fd2)
+//		{ //成功打开
+//			if (!sendFile(sockClient, fd2))
+//			{
+//				cout << "发送失败" << endl;
+//
+//			}
+//
+//			fclose(fd2);
+//		}
+//		else {
+//			strcpy(sbuff, "无法打开文件\n");
+//			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
+//
+//			}
+//		}
+//	}//put
+//	cout << "上传成功!!!" << endl;
+//}
+
 void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
 {
-	char operation[10], name[1024];		//操作与文件名
-	char order[1024] = "\0";				//输入的命令
-	char buff[80];						//用来存储经过字符串格式化的order
-	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
+	char buff[1024];						//用来存储经过字符串格式化的order
 	int cnt;
 
-	memset(buff, 0, sizeof(buff));
+	
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 
-
-	string str_name = localFilePath;
-	strcpy(name, str_name.c_str());
 	//将指令整合进order，并存放进buff
-	strcat(order, "put"), strcat(order, " "), strcat(order, NewFilePath.c_str());
-	sprintf(buff, order);
-	//sendTCP(buff);									//发送指令
+	memset(buff, 0, sizeof(buff));
+	strcat(buff, "put"), strcat(buff, " "), strcat(buff, NewFilePath.c_str());
+	
 	if (sendTCP(buff) == -1)									//发送指令
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	cout << rbuff << endl;							//pwd功能在这里已经实现
+	int size= recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	cout << rbuff << size <<endl;							//pwd功能在这里已经实现
 	if (strncmp(rbuff, "put", 3) == 0)
 	{ ///上传功能
-		strcpy(fileName, rbuff + 4);
-		fd2 = fopen(localFilePath.c_str(), "rb");				//打开一个二进制文件，文件必须存在，只允许读
-		if (fd2)
-		{ //成功打开
-			if (!sendFile(sockClient, fd2))
+		//strcpy(fileName, rbuff + 4);
+		std::ifstream fileStream(localFilePath, std::ios::binary);
+		if (fileStream.is_open())
+		{
+			if (!sendFileData(sockClient, fileStream))
 			{
-				cout << "发送失败" << endl;
-
+				cout << "发送文件数据" << endl;
+				return;
+			}
+			else
+			{
+				cout << "发送文件数据完成" << endl;
 			}
 
-			fclose(fd2);
+
+			fileStream.close();
+
 		}
-		else {
+		else
+		{
 			strcpy(sbuff, "无法打开文件\n");
-			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
+			if (send(sockClient, sbuff, sizeof(sbuff), 0)) 
+			{
 
 			}
+			//	std::cerr << "无法打开文件: " << file_path << std::endl;
+
 		}
+		
 	}//put
 	cout << "上传成功!!!" << endl;
 }
+
 //执行 进入文件夹命令
 //void FtpClientClass::execute_cdFloder(string floderName)
 //{

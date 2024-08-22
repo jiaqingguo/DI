@@ -40,6 +40,7 @@ public:
 	int user();									//上传用户名
 	int pass();									//上传密码
 	int sendFile(SOCKET datatcps, FILE* file);	//put 传送给远方一个文件
+	int sendFileData(SOCKET datatcps, std::ifstream& file);
 	bool newConnection();
 	//void execute_ls();//获取当前文件名称 执行ls
 	int execute_ls(const std::string  strDirPath);//获取指定路径的文件名称 执行ls

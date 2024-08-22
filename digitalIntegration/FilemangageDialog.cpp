@@ -634,7 +634,7 @@ void FilemangageDialog::slot_btnUploading()
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
 	QString UploadingPath = dirPath + "\\" + fileInfo.fileName();
 
-	m_FtpClientClass->execute_putFile(fileInfo.fileName().toLocal8Bit().toStdString(), UploadingPath.toLocal8Bit().toStdString());
+	m_FtpClientClass->execute_putFile(fileInfo.absoluteFilePath().toLocal8Bit().toStdString(), UploadingPath.toLocal8Bit().toStdString());
 
 }
 
