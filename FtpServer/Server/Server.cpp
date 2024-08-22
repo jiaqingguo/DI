@@ -282,6 +282,8 @@ int Server::sendFile(SOCKET datatcps, FILE* file) {
 			break;
 		}
 		else if (len < sizeof(sbuff)) {//文件传送结束
+			sprintf(sbuff, "get-end", sbuff);
+			send(datatcps, sbuff, strlen(sbuff), 0);					//发送指令
 			break;
 		}
 	}

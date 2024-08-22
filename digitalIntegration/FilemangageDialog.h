@@ -34,6 +34,8 @@ private:
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
     int downloadFtpDir(const QString &strDirPath,const QString &newDirPath);
+    void traverseUploadDir(const QString& strUploadDir,const QString& strDstDir);
+    bool IsAdministratorDir(const QTreeWidgetItem* pItem);
 signals:
     void  signal_downloadFinsh();
 private slots:
@@ -44,6 +46,7 @@ private slots:
     void slot_itemBtnDel();
 
     void slot_btnUploading();
+    void slot_btnUploadingDir();
 
     // Ê÷ÓÒ¼ü²Ëµ¥;
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
@@ -61,6 +64,10 @@ private:
     QStandardItemModel* m_modelDownload = nullptr;
 
     QString m_strDolwnloadText = QString::fromLocal8Bit("ÉêÇëÏÂÔØ");
+
+    QTreeWidgetItem* m_pRootItem = nullptr;
+
+    QString m_AdministratorDir = "vip";
 };
 
 #endif // FILEMANGAGEDIALOG_H

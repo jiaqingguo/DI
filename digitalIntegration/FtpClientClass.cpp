@@ -41,6 +41,7 @@ DWORD FtpClientClass::startSock()
 	//	cin >> inputIP;
 	//}ls
 	strcpy(inputIP, "192.168.0.119");
+	//strcpy(inputIP, "192.168.0.158");
 //	strcpy(inputIP, "192.168.1.23"); /*给数组赋字符串*/ 
 	//设置地址结构
 	serverAddr.sin_family = AF_INET;					//表明底层是使用的哪种通信协议来递交数据的，AF_INET表示使用 TCP/IPv4 地址族进行通信
@@ -538,20 +539,42 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 				cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
 				//return 1;
 			}
-			memset(rbuff, '\0', sizeof(rbuff));
-			while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) 
+			memset(rbuff, 0, sizeof(rbuff));
+			int size = 0;
+			while ((cnt = recv(sockClient, rbuff, 1024, 0)) > 0) 
 			{
-				if (strncmp(rbuff, "get-end", 7) == 0)
-				{
-					break;
-				}
-				// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
-				fwrite(rbuff, 1, cnt, fd1);    //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
-				memset(rbuff, '\0', sizeof(rbuff));
+
+			
+				
 				if (cnt < 1024)
 				{
+					int a = 0;
+					//break;
+				}
+
+				
+				// cout<<"缓冲区"<<rbuff<<endl<<"长度"<<cnt<<endl;
+				   //C 库函数 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) 把 ptr 所指向的数组中的数据写入到给定流 stream 中。
+				
+				if (strncmp(rbuff , "get-end", 7) == 0)
+				{
 					break;
 				}
+				if (strncmp(rbuff + cnt - 7, "get-end", 7) == 0)
+				{
+					// ?????????????????   可能会服务端发送的最后一拍无法完整的加上get-end;
+					memset(rbuff + cnt, 0, sizeof(rbuff) - cnt);
+					fwrite(rbuff, 1, cnt, fd1);
+					break;
+				}
+				fwrite(rbuff, 1, cnt, fd1);
+				memset(rbuff, 0, sizeof(rbuff));
+				
+
+				/*if (cnt < 1024)
+				{
+					break;
+				}*/
 			}
 			//string msg = " ---收到文件后---";
 			//TimeSave("E:\\jh\\Time_Client.txt", msg);
