@@ -601,8 +601,6 @@ void FtpClientClass::execute_getFile(string rec_name)
 int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
 
-		
-
 	char buff[1024];						//用来存储经过字符串格式化的order
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));

@@ -2,6 +2,7 @@
 #define FILEMANGAGEDIALOG_H
 
 #include <QDialog>
+#include <QSet>
 
 class QTreeWidgetItem;
 class FtpClientClass;
@@ -36,21 +37,26 @@ private:
     int downloadFtpDir(const QString &strDirPath,const QString &newDirPath);
     void traverseUploadDir(const QString& strUploadDir,const QString& strDstDir);
     bool IsAdministratorDir(const QTreeWidgetItem* pItem);
+    void getAdministratorDirs();
+    void traverseAdministratorChildDir( QTreeWidgetItem* pItem);
 signals:
     void  signal_downloadFinsh();
 private slots:
 
     void slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column);
     void slot_treeWidgetItemClicked(QTreeWidgetItem* item, int column);
+    //  viewItem 下载按钮;
     void slot_itemBtnDownload();
+    //  viewItem 删除按钮;
     void slot_itemBtnDel();
 
+    // 上传文件按钮;
     void slot_btnUploading();
+    // 上传文件夹按钮;
     void slot_btnUploadingDir();
-
     // 树右键菜单;
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
-
+    //  审批页面  viewItem 下载按钮;
     void slot_ItemDownloadBtnClicked();
 private:
     Ui::FilemangageDialog *ui;
@@ -67,7 +73,11 @@ private:
 
     QTreeWidgetItem* m_pRootItem = nullptr;
 
-    QString m_AdministratorDir = "vip";
+    QString m_AdministratorDir = "D:\\FileData\\vip";
+
+    //QVector<QString> m_vecAdministratorDir;
+    QSet<QString> m_vecAdministratorDir;
+    QMenu m_menu;
 };
 
 #endif // FILEMANGAGEDIALOG_H
