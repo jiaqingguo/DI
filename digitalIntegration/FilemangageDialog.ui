@@ -36,7 +36,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>FTP服务</string>
+       <string>文件数据</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <property name="leftMargin">
@@ -102,9 +102,30 @@
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>压缩</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>解压</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="pushButton">
                <property name="text">
-                <string>上传</string>
+                <string>上传文件</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnUploadDir">
+               <property name="text">
+                <string> 上传文件夹</string>
                </property>
               </widget>
              </item>
