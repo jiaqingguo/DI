@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 16/08/2024 14:02:04
+ Date: 28/08/2024 09:12:57
 */
 
 SET NAMES utf8mb4;
@@ -89,7 +89,7 @@ CREATE TABLE `t_download_approval`  (
   `fileTime` datetime(0) NULL DEFAULT NULL COMMENT '文件生成时间',
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '审批状态 0 未审批 1：审批通过 2：驳回审批；',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_download_approval
@@ -102,8 +102,32 @@ INSERT INTO `t_download_approval` VALUES (5, 68, '2024-08-16 10:02:38', 'D:\\1_p
 INSERT INTO `t_download_approval` VALUES (6, 68, '2024-08-16 10:02:51', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\debug\\imageformats\\resources\\qtwebengine_resources_200p.pak', 'pak', '2020-03-28 06:05:00', '0');
 INSERT INTO `t_download_approval` VALUES (7, 105, '2024-08-16 10:25:46', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\x64\\Server.tlog\\CL.command.1.tlog', 'tlog', '2024-08-15 17:36:00', '0');
 INSERT INTO `t_download_approval` VALUES (8, 105, '2024-08-16 10:25:50', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\x64\\Server.tlog\\link.write.1.tlog', 'tlog', '2024-08-15 17:36:00', '0');
-INSERT INTO `t_download_approval` VALUES (9, 105, '2024-08-16 10:25:52', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\x64\\Server.tlog\\link.command.1.tlog', 'tlog', '2024-08-15 17:36:00', '0');
-INSERT INTO `t_download_approval` VALUES (10, 105, '2024-08-16 11:17:06', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\debug\\resources\\qtwebengine_resources.pak', 'pak', '2020-03-28 06:05:00', '0');
+INSERT INTO `t_download_approval` VALUES (9, 105, '2024-08-16 10:25:52', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\x64\\Server.tlog\\link.command.1.tlog', 'tlog', '2024-08-15 17:36:00', '1');
+INSERT INTO `t_download_approval` VALUES (10, 105, '2024-08-16 11:17:06', 'D:\\1_project\\Z_project\\GitProject\\DI\\FtpServer\\Server\\debug\\resources\\qtwebengine_resources.pak', 'pak', '2020-03-28 06:05:00', '1');
+INSERT INTO `t_download_approval` VALUES (11, 105, '2024-08-16 14:30:27', 'D:\\FtpData\\debug\\qss', 'dir', '2024-08-16 11:20:00', '1');
+INSERT INTO `t_download_approval` VALUES (12, 105, '2024-08-19 13:33:09', 'D:\\FtpData\\debug\\position\\qtposition_winrtd.dll', 'dll', '2020-03-28 05:03:00', '1');
+INSERT INTO `t_download_approval` VALUES (13, 105, '2024-08-19 13:43:18', 'D:\\FtpData\\debug\\translations\\qtwebengine_locales\\bn.pak', 'pak', '2020-03-28 06:05:00', '1');
+INSERT INTO `t_download_approval` VALUES (14, 105, '2024-08-19 17:55:48', 'D:\\FtpData\\debug\\translations\\qt_da.qm', 'qm', '2024-08-06 15:11:00', '0');
+INSERT INTO `t_download_approval` VALUES (15, 105, '2024-08-19 17:55:49', 'D:\\FtpData\\debug\\translations\\qt_da.qm', 'qm', '2024-08-06 15:11:00', '0');
+INSERT INTO `t_download_approval` VALUES (16, 105, '2024-08-19 17:55:55', 'D:\\FtpData\\debug\\translations\\qt_en.qm', 'qm', '2024-08-06 15:11:00', '0');
+INSERT INTO `t_download_approval` VALUES (17, 105, '2024-08-20 14:52:31', 'D:\\FtpData/x64', 'dir', '2024-08-19 17:36:00', '0');
+
+-- ----------------------------
+-- Table structure for t_fingerprint
+-- ----------------------------
+DROP TABLE IF EXISTS `t_fingerprint`;
+CREATE TABLE `t_fingerprint`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fingerData` varbinary(2048) NULL DEFAULT NULL COMMENT '指纹',
+  `fingerLen` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_fingerprint
+-- ----------------------------
+INSERT INTO `t_fingerprint` VALUES (12, 0x4C4F53533231, 1292);
+INSERT INTO `t_fingerprint` VALUES (13, 0x4C5753533231, 1300);
 
 -- ----------------------------
 -- Table structure for t_ip
@@ -140,7 +164,7 @@ CREATE TABLE `t_tools`  (
   `module` int NOT NULL COMMENT '模块',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_PKID`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 197 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 198 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_tools
@@ -158,7 +182,7 @@ INSERT INTO `t_tools` VALUES (189, 'CD', 'VD', 'D:\\1_project\\jqg\\demo\\qt\\di
 INSERT INTO `t_tools` VALUES (190, 'QQ', 'host1', 'D:\\tools\\QQ\\Bin\\QQ.exe', 'D:\\1_project\\jqg\\demo\\qt\\digitalIntegration\\image\\QQ.png', 1);
 INSERT INTO `t_tools` VALUES (191, 'EV录屏', 'host1', 'D:\\tools\\EVCapture\\EVCapture.exe', 'D:\\1_project\\jqg\\demo\\qt\\digitalIntegration\\image\\EV.ico', 1);
 INSERT INTO `t_tools` VALUES (194, '1', 'host2', '1', '1', 2);
-INSERT INTO `t_tools` VALUES (196, '贾', 'host1', '11', '11', 1);
+INSERT INTO `t_tools` VALUES (197, 'VS', 'host2', 'VS', 'VS', 1);
 
 -- ----------------------------
 -- Table structure for t_user
@@ -177,7 +201,7 @@ CREATE TABLE `t_user`  (
   `approval` varchar(50) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '' COMMENT '审批 0:未审批 1：审批同意，2审批驳回 ',
   `loginStatus` int NULL DEFAULT NULL COMMENT '1：一登录 0:未登录',
   PRIMARY KEY (`PKID`, `UserName`, `Password`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 241 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
@@ -202,12 +226,18 @@ INSERT INTO `t_user` VALUES (95, '45', '444', '44', '44', '44', '44', '1', '2024
 INSERT INTO `t_user` VALUES (96, '46', '46', '46', '46', '46', '46', '1', '2024-06-24 17:32:48', '0', 2);
 INSERT INTO `t_user` VALUES (97, '47', '47', '47', '47', '47', '47', '1', '2024-06-24 17:33:01', '0', 2);
 INSERT INTO `t_user` VALUES (98, '48', '48', '48', '48', '48', '48', '0', '2024-06-24 17:33:09', '0', 2);
-INSERT INTO `t_user` VALUES (99, '49', '49', '49', '49', '49', '49', '0', '2024-06-24 17:33:21', '1', 2);
+INSERT INTO `t_user` VALUES (99, '49', '49', '49', '49', '49', '49', '1', '2024-06-24 17:33:21', '1', 0);
 INSERT INTO `t_user` VALUES (100, 'wz', '1', '1', '1', '1', '1', '0', '2024-07-03 14:54:47', '1', 0);
-INSERT INTO `t_user` VALUES (101, '110', '1', '110', '110', '110', '110', '1', '2024-07-03 15:14:53', '1', 2);
-INSERT INTO `t_user` VALUES (102, '111', '1', '111', '111', '111', '111', '1', '2024-07-03 15:18:08', '0', 2);
 INSERT INTO `t_user` VALUES (103, 'wxb', '1', '1', '1', '1', '1', '0', '2024-07-08 09:05:05', '1', 0);
-INSERT INTO `t_user` VALUES (104, 'ww', '1', '1', '1', '1', '1', '0', '2024-07-08 09:32:13', '1', 2);
-INSERT INTO `t_user` VALUES (105, '7', '7', '777', '7', '7', '7', '1', '2024-08-16 09:57:41', '1', 0);
+INSERT INTO `t_user` VALUES (231, 'ddd', '1', '1', '1', '1', '1', '0', '2024-08-26 11:38:52', '0', 0);
+INSERT INTO `t_user` VALUES (232, 'nnnjj', '1', '1', '1', '1', '1', '0', '2024-08-26 14:24:45', '0', 0);
+INSERT INTO `t_user` VALUES (233, 'dfvdbfd', '1', '1', '1', '1', '', '0', '2024-08-26 14:27:41', '0', 0);
+INSERT INTO `t_user` VALUES (234, 'ggggg', 'q', '1', '1', '1', '1', '0', '2024-08-26 15:14:29', '0', 0);
+INSERT INTO `t_user` VALUES (235, '123', '123', 'JIA', '', '', '', '0', '2024-08-26 16:14:58', '0', 0);
+INSERT INTO `t_user` VALUES (236, 'hhhh', '1', '1', '1', '1', '1', '0', '2024-08-26 16:27:38', '0', 0);
+INSERT INTO `t_user` VALUES (237, 'ssssss', '1', '1', '1', '1', '1', '0', '2024-08-26 16:47:17', '0', 0);
+INSERT INTO `t_user` VALUES (238, 'jjj', '1', '1', '1', '1', '1', '0', '2024-08-26 17:00:16', '0', 0);
+INSERT INTO `t_user` VALUES (239, 'ghh', '1', '1', '1', '1', '1', '0', '2024-08-26 17:09:24', '0', 0);
+INSERT INTO `t_user` VALUES (240, 'zzzzz', '1', '11', '1', '1', '1', '0', '2024-08-26 17:21:37', '0', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -9,6 +9,8 @@ class FtpClientClass;
 class QStandardItemModel;
 class GifDialog;
 class QMessageBox;
+class QMenu;
+class QStandardItem;
 
 namespace Ui {
 class FilemangageDialog;
@@ -58,6 +60,13 @@ private slots:
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
     //  审批页面  viewItem 下载按钮;
     void slot_ItemDownloadBtnClicked();
+    void slot_actionMkdir();
+    void slot_actionDelDir();
+    void slot_actionDownload();
+    void slot_actioxnRename();
+
+
+    void slot_tableViewFilesItemChanged(QStandardItem* item);
 private:
     Ui::FilemangageDialog *ui;
 
@@ -77,7 +86,11 @@ private:
 
     //QVector<QString> m_vecAdministratorDir;
     QSet<QString> m_vecAdministratorDir;
-    QMenu m_menu;
+    QMenu  *m_pMenu = nullptr;
+    QAction * m_actionMkdir = nullptr;
+    QAction * m_actionDel = nullptr;
+    QAction * m_actionDownload= nullptr;
+    QAction * m_actionRename = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H

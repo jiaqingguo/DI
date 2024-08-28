@@ -42,7 +42,7 @@ DWORD FtpClientClass::startSock()
 	//	cout << "请输入要连接的服务器IP：";
 	//	cin >> inputIP;
 	//}ls
-	strcpy(inputIP, "192.168.0.119");
+	strcpy(inputIP, "127.0.0.1");
 	//strcpy(inputIP, "192.168.0.158");
 //	strcpy(inputIP, "192.168.1.23"); /*给数组赋字符串*/ 
 	//设置地址结构

@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QMenu>
 
 #include <QDebug>
 
@@ -84,6 +85,9 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &FilemangageDialog::slot_treeWidgteCustomContextMenuRequested);
 	
+	// 连接 itemChanged 信号到自定义槽
+	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
+	
 }
 
 FilemangageDialog::~FilemangageDialog()
@@ -149,27 +153,39 @@ void FilemangageDialog::initTableViewDownload()
 		// 隐藏第二个标签页
 		ui->tabWidget->removeTab(1); // 移除 Tab 2
 		m_strDolwnloadText = QString::fromLocal8Bit("下载");
-		return;
 	}
-	
+	else
+	{
+		m_modelDownload = new QStandardItemModel();
+		m_modelDownload->setColumnCount(9);
+		m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
+		m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("申请人"));
+		m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("所在部门"));
+		m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("申请时间"));
+		m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("文件名"));
+		m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
+		m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
+		m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("状态"));
+		m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+		ui->tableViewDownload->setModel(m_modelDownload);
+		common::setTableViewBasicConfiguration(ui->tableViewDownload);
 
-	m_modelDownload = new QStandardItemModel();
-	m_modelDownload->setColumnCount(9);
-	m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
-	m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("申请人"));
-	m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("所在部门"));
-	m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("申请时间"));
-	m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("文件名"));
-	m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
-	m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
-	m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("状态"));
-	m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("操作"));
-	ui->tableViewDownload->setModel(m_modelDownload);
-	common::setTableViewBasicConfiguration(ui->tableViewDownload);
-	
-	ui->tableViewDownload->verticalHeader()->setVisible(false);
+		ui->tableViewDownload->verticalHeader()->setVisible(false);
 
-	flushTableViewDownload();
+		flushTableViewDownload();
+	}
+
+	m_pMenu = new QMenu;
+
+	m_actionMkdir= m_pMenu->addAction(QString::fromLocal8Bit("新建文件夹"));
+	m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除文件夹"));
+	m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
+	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
+	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
+	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
+	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
+	connect(m_actionRename, &QAction::triggered, this, &FilemangageDialog::slot_actioxnRename);
+	
 }
 
 void FilemangageDialog::flushTableViewDownload()
@@ -200,6 +216,7 @@ void FilemangageDialog::flushTableViewDownload()
 
 		QStandardItem* item = new QStandardItem(QString::number(i + 1));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	
 		//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
 		m_modelDownload->setItem(newRowIndex, 0, item);
 
@@ -519,12 +536,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 {
 	QString strDirPath = pTreeItem->data(column, Qt::UserRole).toString();
 
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
-//	m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
-
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
+	
 	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//执行ls 
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
@@ -538,6 +550,8 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 
 		QStandardItem* item = new QStandardItem(QString::number(j));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		item->setCheckable(true); // 设置为可勾选
+		item->setCheckState(Qt::Unchecked); // 初始为不勾选;
 		m_modelFiles->setItem(newRowIndex, 0, item);
 
 	
@@ -699,130 +713,142 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 
 	if (!common::bAdministrator)  // 非管理员;
 	{
-		
 		if (pItem->data(0, Qt::UserRole + 1).toInt()==1)
 		{
 			return;
 		}
 	}
 
+
+	/*if (pItem == m_pRootItem)
+	{
+		m_actionDownload->setEnabled(false);
+		m_actionRename->setEnabled(false);
+		m_actionDel->setEnabled(false);
+	}
+	else 
+	{
+		m_actionDownload->setEnabled(true);
+		m_actionRename->setEnabled(true);
+		m_actionDel->setEnabled(true);
+	}*/
+
+	m_pMenu->exec(QCursor::pos());
 	/*if (pItem)
 	{*/
-		
-		QMenu menu;
-		QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
-		QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
-		QAction* download = menu.addAction(m_strDolwnloadText);
-		QAction* rename = menu.addAction(QString::fromLocal8Bit("重命名"));
-		
-		connect(add, &QAction::triggered, [=]()
-			{
-				QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("新建"), QString::fromLocal8Bit("输入新建文件夹名称："));
-				if (!DirName.isEmpty())	// 用户输入了文件名称
-				{
-					QString dirPath = pItem->data(0, Qt::UserRole).toString();
-			
-					QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
-					m_FtpClientClass->execute_mkdirFolder(strPath.toLocal8Bit().toStdString());
+		//
+		//QMenu menu;
+		//QAction* add = menu.addAction(QString::fromLocal8Bit("新建文件夹"));
+		//QAction* del = menu.addAction(QString::fromLocal8Bit("删除文件夹"));
+		//QAction* download = menu.addAction(m_strDolwnloadText);
+		//QAction* rename = menu.addAction(QString::fromLocal8Bit("重命名"));
+		//
+		//connect(add, &QAction::triggered, [=]()
+		//	{
+		//		QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("新建"), QString::fromLocal8Bit("输入新建文件夹名称："));
+		//		if (!DirName.isEmpty())	// 用户输入了文件名称
+		//		{
+		//			QString dirPath = pItem->data(0, Qt::UserRole).toString();
+		//	
+		//			QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+		//			m_FtpClientClass->execute_mkdirFolder(strPath.toLocal8Bit().toStdString());
 
-					QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
-							
-					pNewItem->setText(0, DirName);
-					pNewItem->setData(0, Qt::UserRole, strPath);
-					pNewItem->setIcon(0, QIcon(":/image/Dir.png"));
-					pNewItem->setToolTip(0, DirName);
+		//			QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
+		//					
+		//			pNewItem->setText(0, DirName);
+		//			pNewItem->setData(0, Qt::UserRole, strPath);
+		//			pNewItem->setIcon(0, QIcon(":/image/Dir.png"));
+		//			pNewItem->setToolTip(0, DirName);
 
-					pItem->addChild(pNewItem);
-								
-				}
-			});
+		//			pItem->addChild(pNewItem);
+		//						
+		//		}
+		//	});
 
-		connect(del, &QAction::triggered, [=]()
-			{
-				QTreeWidgetItem* pParentItem = pItem->parent();
-				if (!pParentItem)
-					return;
-				QString parentDir = pParentItem->data(0, Qt::UserRole).toString();
-				QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
-				dirPath.replace("/", "\\\\");
-				parentDir.replace("/", "\\\\");
-			
-			   //m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
-				m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
-				
-				pParentItem->removeChild(pItem); // 先获取 childItem
-				delete pItem;
-			});
+		//connect(del, &QAction::triggered, [=]()
+		//	{
+		//		QTreeWidgetItem* pParentItem = pItem->parent();
+		//		if (!pParentItem)
+		//			return;
+		//		QString parentDir = pParentItem->data(0, Qt::UserRole).toString();
+		//		QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
+		//		dirPath.replace("/", "\\\\");
+		//		parentDir.replace("/", "\\\\");
+		//	
+		//	   //m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+		//		m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
+		//		
+		//		pParentItem->removeChild(pItem); // 先获取 childItem
+		//		delete pItem;
+		//	});
 
-		connect(download, &QAction::triggered, [=]()  // 下载文件夹及所有子文件夹及子文件;
-			{
-				//QTreeWidgetItem* pParentItem = pItem->parent();
-				QString dirPath = pItem->data(0, Qt::UserRole).toString();
-				//QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
-				
-				//dirPath.replace("/", "\\\\");
-				dirPath.replace("\\", "\\\\");
+		//connect(download, &QAction::triggered, [=]()  // 下载文件夹及所有子文件夹及子文件;
+		//	{
+		//		//QTreeWidgetItem* pParentItem = pItem->parent();
+		//		QString dirPath = pItem->data(0, Qt::UserRole).toString();
+		//		//QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "/" + pItem->text(0);
+		//		
+		//		//dirPath.replace("/", "\\\\");
+		//		dirPath.replace("\\", "\\\\");
 
-				if (!common::bAdministrator) // 普通用户
-				{
-					table_DownloadApproval stDownloadApproval;
-					stDownloadApproval.userID = common::iUserID;
-					stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
-					stDownloadApproval.fileType = "dir";  
-					stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0,Qt::UserRole + 1).toString().toStdString());
-					
-					stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-					stDownloadApproval.status = 0;
-					db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
-				}
-				else
-				{
-					QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
-					if (directory.isEmpty())
-						return;
-					QString newDirPath = directory + "/" + pItem->text(0);
-					newDirPath.replace("/", "\\\\");
+		//		if (!common::bAdministrator) // 普通用户
+		//		{
+		//			table_DownloadApproval stDownloadApproval;
+		//			stDownloadApproval.userID = common::iUserID;
+		//			stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+		//			stDownloadApproval.fileType = "dir";  
+		//			stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0,Qt::UserRole + 1).toString().toStdString());
+		//			
+		//			stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+		//			stDownloadApproval.status = 0;
+		//			db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
+		//		}
+		//		else
+		//		{
+		//			QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+		//			if (directory.isEmpty())
+		//				return;
+		//			QString newDirPath = directory + "/" + pItem->text(0);
+		//			newDirPath.replace("/", "\\\\");
 
-					g_pMainWindow->showGif();
-					//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
-					// m_msgBox->show();
-					QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
-					downloadFtpDir(dirPath, newDirPath);
+		//			g_pMainWindow->showGif();
+		//			
+		//			QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+		//			downloadFtpDir(dirPath, newDirPath);
 
-					g_pMainWindow->closeGif();
-				}
-				
-				
-			});
+		//			g_pMainWindow->closeGif();
+		//		}
+		//		
+		//		
+		//	});
 
-		connect(rename, &QAction::triggered, [=]()
-			{
-				QString oldDir = pItem->data(0, Qt::UserRole).toString();
+		//connect(rename, &QAction::triggered, [=]()
+		//	{
+		//		QString oldDir = pItem->data(0, Qt::UserRole).toString();
 
-				QTreeWidgetItem* pParentItem = pItem->parent();
-				if (pParentItem == nullptr)
-				{
-					QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止重命名"));
-					return;
-				}
-				QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("重命名"), QString::fromLocal8Bit("输入新建文件夹名称："));
-				QString newDir = pParentItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
-				if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
-				{
-					pItem->setText(0, DirName);
-					pItem->setData(0, Qt::UserRole, newDir);
-				}
+		//		QTreeWidgetItem* pParentItem = pItem->parent();
+		//		if (pParentItem == nullptr)
+		//		{
+		//			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止重命名"));
+		//			return;
+		//		}
+		//		QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("重命名"), QString::fromLocal8Bit("输入新建文件夹名称："));
+		//		QString newDir = pParentItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+		//		if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
+		//		{
+		//			pItem->setText(0, DirName);
+		//			pItem->setData(0, Qt::UserRole, newDir);
+		//		}
 
-			});
+		//	});
 
+		//if (pItem == m_pRootItem)
+		//{
+		//	rename->setEnabled(false);
+		//	download->setEnabled(false);
+		//}
 
-		if (pItem == m_pRootItem)
-		{
-			rename->setEnabled(false);
-			download->setEnabled(false);
-		}
-
-		menu.exec(QCursor::pos());
+		//menu.exec(QCursor::pos());
 	//}
 
 }
@@ -893,50 +919,125 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 
 }
 
+void FilemangageDialog::slot_actionMkdir()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+
+	QString text = pItem->text(0);
+
+	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("新建"), QString::fromLocal8Bit("输入新建文件夹名称："));
+	if (!DirName.isEmpty())	// 用户输入了文件名称
+	{
+		QString dirPath = pItem->data(0, Qt::UserRole).toString();
+
+		QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+		m_FtpClientClass->execute_mkdirFolder(strPath.toLocal8Bit().toStdString());
+
+		QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
+
+		pNewItem->setText(0, DirName);
+		pNewItem->setData(0, Qt::UserRole, strPath);
+		pNewItem->setIcon(0, QIcon(":/image/Dir.png"));
+		pNewItem->setToolTip(0, DirName);
+
+		pItem->addChild(pNewItem);
+	}
+}
+
+void FilemangageDialog::slot_actionDelDir()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+	if (pItem == nullptr)
+		return;
+	QTreeWidgetItem* pParentItem = pItem->parent();
+	if (!pParentItem)
+		return;
+	QString parentDir = pParentItem->data(0, Qt::UserRole).toString();
+	QString dirPath = pParentItem->data(0, Qt::UserRole).toString() + "\\" + pItem->text(0);
+	dirPath.replace("/", "\\\\");
+	parentDir.replace("/", "\\\\");
+
+	//m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+	m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
+
+	pParentItem->removeChild(pItem); // 先获取 childItem
+	delete pItem;
+}
+
+void FilemangageDialog::slot_actionDownload()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+	if (pItem == nullptr)
+		return;
+
+	QString dirPath = pItem->data(0, Qt::UserRole).toString();
+
+	dirPath.replace("\\", "\\\\");
+
+	if (!common::bAdministrator) // 普通用户
+	{
+		table_DownloadApproval stDownloadApproval;
+		stDownloadApproval.userID = common::iUserID;
+		stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+		stDownloadApproval.fileType = "dir";
+		stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0, Qt::UserRole + 1).toString().toStdString());
+
+		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+		stDownloadApproval.status = 0;
+		db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
+	}
+	else
+	{
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("选择下载目录"), QDir::currentPath());
+		if (directory.isEmpty())
+			return;
+		QString newDirPath = directory + "/" + pItem->text(0);
+		newDirPath.replace("/", "\\\\");
+
+		g_pMainWindow->showGif();
+
+		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+		downloadFtpDir(dirPath, newDirPath);
+
+		g_pMainWindow->closeGif();
+	}
+}
+
+void FilemangageDialog::slot_actioxnRename()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+	if (pItem == nullptr)
+		return;
+
+	QString oldDir = pItem->data(0, Qt::UserRole).toString();
+
+	QTreeWidgetItem* pParentItem = pItem->parent();
+	if (pParentItem == nullptr)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止重命名"));
+		return;
+	}
+	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("重命名"), QString::fromLocal8Bit("输入新建文件夹名称："));
+	QString newDir = pParentItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
+	if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
+	{
+		pItem->setText(0, DirName);
+		pItem->setData(0, Qt::UserRole, newDir);
+	}
+}
+
+void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
+{
+	if (item->checkState() == Qt::Checked)
+	{
+		qDebug() << item->text() << "is checked";
+	}
+	else {
+		qDebug() << item->text() << "is unchecked";
+	}
+}
+
 void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column)
 {
-	//QString strDirPath = item->data(column, Qt::UserRole).toString();
-
-	//m_FtpClientClass->newConnection();
-	//m_FtpClientClass->execute_cdFloder(strDirPath.toLocal8Bit().toStdString());//进入子文件夹
-
-	//m_FtpClientClass->newConnection();
-	//m_FtpClientClass->execute_ls();//执行ls 
-
-	//auto vecFileData = m_FtpClientClass->Gets_FileName();
-
-	//common::delAllModelRow(m_modelFiles);
-	//for (int i = 0; i < vecFileData.size(); i++)
-	//{
-	//
- //       int newRowIndex = m_modelFiles->rowCount(); // 获取当前行数
-	//	m_modelFiles->insertRow(newRowIndex); // 插入新行
-
- //       QStandardItem* item = new QStandardItem(QString::number(i));
- //       item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	//	m_modelFiles->setItem(newRowIndex, 0, item);
-
- //       item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
- //       item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	//	m_modelFiles->setItem(newRowIndex, 1, item);
- //      
- // 
- //       // add button to the last column
- //       QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("下载"));
- //       buttonYes->setObjectName("itemBtnDownload");
- //       buttonYes->setProperty("row", newRowIndex); // set custom property
- //       buttonYes->setProperty("column", 2);
-
- //       connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
- //       ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
-
- //       QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("删除"));
- //       buttonNo->setObjectName("itemBtnDel");
- //       buttonNo->setProperty("row", newRowIndex); // set custom property
- //       buttonNo->setProperty("column", 3);
-	//
-	//	connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
-	//	ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
- //   }
-	//// 注意要考虑要不要切回根目录;
+	
 }

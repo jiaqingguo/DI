@@ -51,7 +51,7 @@ namespace db
 		uint64_t datetime_to_uint64(const time_t&tm);
 	protected:
 		MYSQL*					mysql_						= nullptr;					// mysql句柄;
-		std::string				server_						= "192.168.0.119";		// 服务地址;
+		std::string				server_						= "127.0.0.1";		// 服务地址;
 		std::string				user_						= "root";					// 用户名;
 		std::string				pwd_						= "123456";					// 密码;
 		uint16_t				port_						= 3306;						// 端口号;

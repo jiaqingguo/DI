@@ -102,6 +102,20 @@
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>压缩</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>解压</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="pushButton">
                <property name="text">
                 <string>上传文件</string>
