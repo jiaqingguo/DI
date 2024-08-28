@@ -299,7 +299,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 				//memcpy(szLastRegTemplate2, reinterpret_cast<const char*>(a.data()), nLastRegTempLen);
 				//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, szLastRegTemplate, nLastRegTempLen);
 
-				ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp,len);
+				//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp,len);
 				//ret = ZKFPM_DBIdentify(hDBCache, m_f.fingerdata, m_f.fingerlen, &tid, &score);
 				if (ZKFP_ERR_OK >= ret)  //表示操作失败  0表示成功
 				{

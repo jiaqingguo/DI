@@ -12,16 +12,16 @@
 #include <databaseDI.h>
 
 
-#include "include/zkinterface.h"
-#include "include/libzkfperrdef.h"
-#include "include/libzkfptype.h"
-#include "include/libzkfp.h"
+#include "libxzkfp/include/zkinterface.h"
+#include "libxzkfp/include/libzkfperrdef.h"
+#include "libxzkfp/include/libzkfptype.h"
+#include "libxzkfp/include/libzkfp.h"
 
 
 #ifdef _WIN64
-#pragma comment(lib, "x64lib/libzkfp.lib")
+#pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
 #else
-#pragma comment(lib, "x86lib/libzkfp.lib")
+#pragma comment(lib, "libxzkfp/x86lib/libzkfp.lib")
 #endif
 
 #define ENROLLCNT 3
