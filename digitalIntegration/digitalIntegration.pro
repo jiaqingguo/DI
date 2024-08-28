@@ -37,6 +37,7 @@ SOURCES += \
     common.cpp \
     database.cpp \
     databaseDI.cpp \
+    fingerDlg.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -64,6 +65,7 @@ HEADERS += \
     common.h \
     database.h \
     databaseDI.h \
+    fingerDlg.h \
     globel.h \
     mainwindow.h
 

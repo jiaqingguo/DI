@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <afxwin.h>
-#include "Resource.h"
+//#include <afxwin.h>
+//#include "Resource.h"
 #include <QDebug>
 #include <QMessagebox>
 #include <iostream>
@@ -82,7 +82,7 @@ public:
 	int nLastRegTempLen2;
 	int nFakeFunOn;
 
-	fingerDlg(CWnd* pParent = NULL);	// 标准构造函数
+	fingerDlg(QDialog* pParent = NULL);	// 标准构造函数
 	
 	// 对话框数据
 	enum { IDD = IDD_LIBZKFPDEMO_DIALOG };

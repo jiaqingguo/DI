@@ -28,7 +28,7 @@ int m_score=0;
 
 
 
-fingerDlg::fingerDlg(CWnd* pParent /*=NULL*/)
+fingerDlg::fingerDlg(QDialog* pParent /*=NULL*/)
 {
 	hDBCache=NULL;
 	//hDevice=NULL;
@@ -166,7 +166,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 
 void fingerDlg::DoRegister(unsigned char* temp, int len)
 {
-	CString strLog;
+	//CString strLog;
 
 	if (m_enrollIdx >= ENROLLCNT)  //3
 	{
@@ -180,7 +180,7 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 		{
 			m_enrollIdx = 0;
 			m_bRegister = FALSE;
-			AfxMessageBox(_T("请按相同的手指"), MB_OK);
+			//AfxMessageBox(_T("请按相同的手指"), MB_OK);
 			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Please press the same finger while registering"));
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
 			return;
@@ -251,23 +251,23 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 			}
 			else
 			{
-				strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
+				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
 				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-				QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
+				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
 			}
 		}
 		else
 		{
-			QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register fail"));
+			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register fail"));
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
 			return;
 		}
 	}
 	else
 	{
-		strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
+		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
 		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-		qDebug() << strLog;
+		//qDebug() << strLog;
 		//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
 	}
 }
@@ -276,7 +276,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 {	
 	//if (m_nLastRegTempLen > 0)	//have enroll one more template
 	//{
-		CString strLog;
+		//CString strLog;
 		if (m_bIdentify)   //识别按钮被点击
 		{
 			int ret = ZKFP_ERR_OK;
@@ -303,13 +303,13 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 				//ret = ZKFPM_DBIdentify(hDBCache, m_f.fingerdata, m_f.fingerlen, &tid, &score);
 				if (ZKFP_ERR_OK >= ret)  //表示操作失败  0表示成功
 				{
-					strLog.Format(_T("Identify fail, ret = %d"), ret);
+					//strLog.Format(_T("Identify fail, ret = %d"), ret);
 					//SetDlgItemText(IDC_EDIT_RESULT, strLog);
 					MessageBox(NULL, TEXT("登录失败"), TEXT("提示"), 0);
 				}
 				else
 				{
-					strLog.Format(_T("Identify succ, tid=%d, score=%d"), tid, m_score);
+				//	strLog.Format(_T("Identify succ, tid=%d, score=%d"), tid, m_score);
 					//SetDlgItemText(IDC_EDIT_RESULT, strLog);
 					MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);
 				}
@@ -321,12 +321,12 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			int ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate, nLastRegTempLen, temp, len);
 			if (ZKFP_ERR_OK > ret)  //ret表示的是比对分数
 			{
-				strLog.Format(_T("Match finger fail, ret = %d"), ret);
+				//strLog.Format(_T("Match finger fail, ret = %d"), ret);
 				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
 			}
 			else
 			{
-				strLog.Format(_T("Match succ, score=%d"), ret);
+				//strLog.Format(_T("Match succ, score=%d"), ret);
 				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
 			}
 		}
