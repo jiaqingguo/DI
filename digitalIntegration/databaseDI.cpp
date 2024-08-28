@@ -1028,7 +1028,8 @@ namespace db
 	}
 
 	//指纹表的操作
-	bool databaseDI::add_user_finger(table_fingerprint &fingerprint)
+	//bool databaseDI::add_user_finger(table_fingerprint &fingerprint)
+		bool databaseDI::add_user_finger(unsigned char *tempdata,int templen)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1039,8 +1040,8 @@ namespace db
 		char sql[1024] = { 0 };
 
 		sprintf_s(sql, "insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",
-			fingerprint.fingerdata,
-			fingerprint.fingerlen);
+			tempdata,
+			templen);
 		
 		/*sprintf_s(sql, "INSERT INTO t_fingerprint(fingerData, fingerLen) VALUES ('%.*s', %d)", 
 			static_cast<int>(fingerprint.fingerdata.size()), // 指定字符串长度

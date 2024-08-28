@@ -165,7 +165,7 @@ void LoginDialog::slot_btnExitClicked()
 void LoginDialog::slot_btnFingerprintClicked()
 {
 
-	int loginStatus = 1;
+	int loginStatus = 0;
 	db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 
 	// Ê¶±ðÖ¸ÎÆ;
@@ -180,7 +180,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 		}
 		m_bIdentify = TRUE;
 	}
-	this->accept();
+	//this->accept();
 	
 
 	/*hide();
