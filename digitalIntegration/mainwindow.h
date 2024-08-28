@@ -6,6 +6,9 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 #include <QApplication>
+
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -23,6 +26,8 @@ class OneClickSaveDialog;
 class OneClickLoadDialog;
 class FilemangageDialog;
 class GifDialog;
+
+class fingerDlg;
 
 /*!
 * \class	QssAutoLoader
@@ -150,6 +155,11 @@ private:
 	GifDialog* m_GifDialog = nullptr;
 
 	bool bUserIp = true;
+
+	//Ö¸ÎÆ
+	fingerDlg *m_fingerDlg = nullptr;
+
+	
 };
 
 extern MainWindow* g_pMainWindow;

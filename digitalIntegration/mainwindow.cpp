@@ -1,3 +1,5 @@
+#pragma comment  (lib, "User32.lib")
+#include "fingerDlg.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -57,13 +59,21 @@ MainWindow::MainWindow(QWidget *parent)
     QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
     strQssPath.replace("/", "\\\\");
     m_pQssAutoLoader->setAutoloadQss(strQssPath);
+
+	this->m_fingerDlg = new fingerDlg();
+	this->m_fingerDlg->finger_init();
     
     initInitface();
+	
 }
 
 
 MainWindow::~MainWindow()
 {
+	//if (this->m_fingerDlg != nullptr)
+		//delete this->m_fingerDlg;
+
+
     int loginStatus = 0;
     int userId = m_LoginDialog->GetUserID();
     db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
@@ -498,4 +508,3 @@ void MainWindow::updateModuleToolIcon(int module)
         }
     }
 }
-

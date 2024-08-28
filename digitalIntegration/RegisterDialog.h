@@ -3,9 +3,12 @@
 
 #include <QDialog>
 
+
 namespace Ui {
 class RegisterDialog;
 }
+
+class fingerDlg;
 
 class RegisterDialog : public QDialog
 {
@@ -17,6 +20,7 @@ public:
 private slots:
     void slot_btnRegister();
     void slot_btnFingerprintInput();
+
 
 private:
     Ui::RegisterDialog *ui;

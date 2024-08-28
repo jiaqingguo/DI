@@ -1027,4 +1027,76 @@ namespace db
 		return true;
 	}
 
+	//指纹表的操作
+	bool databaseDI::add_user_finger(table_fingerprint &fingerprint)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
+
+		sprintf_s(sql, "insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",
+			fingerprint.fingerdata,
+			fingerprint.fingerlen);
+		
+		/*sprintf_s(sql, "INSERT INTO t_fingerprint(fingerData, fingerLen) VALUES ('%.*s', %d)", 
+			static_cast<int>(fingerprint.fingerdata.size()), // 指定字符串长度
+			fingerprint.fingerdata.data(), 
+			fingerprint.fingerlen);*/
+
+
+
+		if (!exec_sql(last_id, sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		//fingerprint.id = last_id;
+		return true;
+	}
+
+
+	//获取注册的指纹的数据
+	bool databaseDI::get_user_finger(std::list<table_fingerprint>& listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_fingerprint");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_fingerprint userInfo;
+		//memset(&userInfo, 0, sizeof(table_fingerprint));
+		while (sql_row = mysql_fetch_row(result))
+		{
+			userInfo.id= std::atoi(sql_row[0]);
+			
+			//memcpy(userInfo.fingerdata, sql_row[1], std::atoi(sql_row[2]));
+			userInfo.fingerdata = sql_row[1];
+			userInfo.fingerlen = std::atoi(sql_row[2]);
+			listData.push_back(userInfo);
+		}
+		return true;
+	}
+
 }
+
+

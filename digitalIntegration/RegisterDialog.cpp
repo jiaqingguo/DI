@@ -1,3 +1,5 @@
+#include "fingerDlg.h"
+
 #include "RegisterDialog.h"
 #include "ui_RegisterDialog.h"
 #include "mainwindow.h"
@@ -119,8 +121,24 @@ void RegisterDialog::slot_btnRegister()
 void RegisterDialog::slot_btnFingerprintInput()
 {
    
-    QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
-   // this->accept();
-    close();
-   // g_pMainWindow->show();
+    
+    //this->accept();
+    //close();
+	//g_pMainWindow->show();
+
+	if (NULL != m_hDevice)
+	{
+		if (!m_bRegister)
+		{
+			m_bRegister = TRUE;
+			m_enrollIdx = 0;
+			//ui->label_7->setText("1111");
+			QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请连续按3次手指"));
+			//SetDlgItemText(IDC_EDIT_RESULT, _T("Doing register, please press your finger 3 times!"));
+		}
+	}
+
+	//QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
+	close();
+
 }

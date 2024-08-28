@@ -43,6 +43,9 @@ namespace db
 		bool update_user_LoginStatus(const int& id, int& status);
 		bool del_user(const int& id);
 
+		//指纹表
+		bool add_user_finger(table_fingerprint &fingerprint);
+		bool get_user_finger(std::list<table_fingerprint>& listData);
 
 		// 工具表;
 
