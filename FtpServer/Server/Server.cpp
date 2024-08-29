@@ -22,6 +22,7 @@
 #include <tchar.h>
 #include <WinNetWk.h>
 #include <stdio.h>
+#include "ZipFunction.h"
 #pragma comment(lib, "Mpr.lib")
 using namespace std;
 
@@ -829,6 +830,26 @@ void Server::running()
 			}
 			int size = strlen(sbuff);
 			send(sockServer, sbuff, size, 0);
+		}
+		else if (strncmp(rbuff, "compress", 8) == 0) // Ñ¹Ëõ;
+		{
+			std::vector<std::string> vecPath;
+			char buffer[1024];
+			while (1)
+			{
+				
+				memset(buffer, 0, sizeof(buffer));
+				int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
+				if (strncmp(rbuff, "compress-path-end", 17) == 0)
+				{
+					break;
+				}
+				//std::string  strPath(buffer);
+				vecPath.push_back(buffer);
+			}
+			memset(sbuff, 0, sizeof(sbuff));
+			sprintf(sbuff, "compress-ok");
+			send(sockServer, sbuff, strlen(sbuff), 0);
 		}
 		else if (strncmp(rbuff, "user", 4) == 0) {
 			char tbuff[1024];

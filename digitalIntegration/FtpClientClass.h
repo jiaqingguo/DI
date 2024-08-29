@@ -56,7 +56,8 @@ public:
 	void execute_delFolder(string folder);//删除文件夹
 	void execute_Filedelete(string folder);//删除文件
 	void execute_deleteFileList(string folder);//删除某个文件夹内所有文件
-	bool  execute_rename(const std::string  oldDir,const std::string newDir);
+	bool execute_rename(const std::string  oldDir,const std::string newDir);
+	bool execute_compress(const std::vector<std::string>  vecPath, const std::string newZip); // 压缩文件;
 
 	vector<vector<string>> Gets_FolderName();//获取文件夹名称
 	//vector<string> Gets_FolderName();//获取文件夹名称

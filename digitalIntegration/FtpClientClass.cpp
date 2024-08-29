@@ -1073,6 +1073,43 @@ bool FtpClientClass::execute_rename(const std::string oldDir, const std::string 
 	return false;
 }
 
+bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, const std::string newZip)
+{
+	
+	memset(sbuff, 0, sizeof(sbuff));
+
+	strcat(sbuff, "compress");
+	if (sendTCP(sbuff) == -1)									//发送指令
+	{
+		return false;
+	}
+
+	// 循环发送要压缩的路径
+	for (const auto& strPath : vecPath)
+	{
+		memset(sbuff, 0, sizeof(sbuff));
+		sprintf(sbuff, strPath.c_str());
+		if (sendTCP(sbuff) == -1)	
+		{
+			return false;
+		}
+	}
+	// 发送路径结束标志
+	memset(sbuff, 0, sizeof(sbuff));
+	strcat(sbuff, "compress-path-end");
+	if (sendTCP(sbuff) == -1)
+	{
+		return false;
+	}
+
+	memset(rbuff, 0, sizeof(rbuff));
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	if (strcmp(rbuff, "compress-ok") == 0) {
+		return true;
+	}
+	return false;
+}
+
 //获取文件夹名称
 /*vector<string>*/ 	vector<vector<string>> FtpClientClass::Gets_FolderName()
 {

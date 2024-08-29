@@ -65,8 +65,9 @@ private slots:
     void slot_actionDownload();
     void slot_actioxnRename();
 
-
     void slot_tableViewFilesItemChanged(QStandardItem* item);
+
+    void slot_btnCompress(); // Ñ¹Ëõ
 private:
     Ui::FilemangageDialog *ui;
 

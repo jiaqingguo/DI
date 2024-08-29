@@ -47,9 +47,9 @@ namespace db
 		//bool add_user_finger(table_fingerprint &fingerprint);
 		bool add_user_finger(unsigned char *tempdata, int templen);
 		bool get_user_finger(std::list<table_fingerprint>& listData);
+		
 
 		// 工具表;
-
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
 		bool add_tools( table_tools& stTool);
 		bool del_tools(const int& id);

@@ -85,6 +85,8 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &FilemangageDialog::slot_treeWidgteCustomContextMenuRequested);
 	
+
+	connect(ui->pushButton_2, &QPushButton::clicked,this, &FilemangageDialog::slot_btnCompress);
 	// 连接 itemChanged 信号到自定义槽
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
 	
@@ -545,6 +547,9 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // 设置文件所在目录;
 		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole+1);  //设置文件时间 ;
 
+		QString strFilePath = strDirPath + "\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
+		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //设置文件路径 ;
+
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelFiles->setItem(newRowIndex, 1, item);
@@ -904,6 +909,20 @@ void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
 	}
 	else {
 		qDebug() << item->text() << "is unchecked";
+	}
+}
+
+void FilemangageDialog::slot_btnCompress()
+{
+	// 遍历每一行的第一列，检查勾选状态并打印数据
+	for (int row = 0; row < m_modelFiles->rowCount(); ++row) 
+	{
+		QStandardItem* item = m_modelFiles->item(row, 0);  // 获取第一列项
+		if (item && item->checkState() == Qt::Checked) 
+		{
+			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole+2).toString();  // 获取data
+			qDebug() << "Checked Item Data:" << strFilePath;  // 打印 data
+		}
 	}
 }
 

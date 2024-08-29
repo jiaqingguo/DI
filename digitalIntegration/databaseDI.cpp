@@ -1098,6 +1098,61 @@ namespace db
 		return true;
 	}
 
+	//bool databaseDI::add_user_finger(const std::string& ffingerdata, int fingerlen)
+	//{
+	//	const char* query = "INSERT INTO t_fingerprint(fingerData, fingerLen) VALUES (?, ?)";
+	//	MYSQL_STMT* stmt = mysql_stmt_init(mysql_);
+
+	//	
+
+	//	if (!stmt) {
+	//		qDebug("SQL：mysql_stmt_init() failed\n");
+	//		
+	//		return false;
+	//	}
+
+	//	if (mysql_stmt_prepare(stmt, query, strlen(query))) 
+	//	{
+	//		qDebug("SQL：mysql_stmt_prepare() failed\n");
+	//		
+	//		mysql_stmt_close(stmt);
+	//		return false;
+	//	}
+
+	//	MYSQL_BIND bind[2]; // 绑定参数
+	//	memset(bind, 0, sizeof(bind));
+
+	//	// 第一个参数
+	//	bind[0].buffer_type = MYSQL_TYPE_STRING;
+	//	bind[0].buffer = (char*)ffingerdata.data();
+	//	bind[0].buffer_length = ffingerdata.size();  // 使用实际长度
+
+	//	// 第二个参数
+	//	bind[1].buffer_type = MYSQL_TYPE_LONG;
+	//	bind[1].buffer = (char*)&fingerlen;
+
+	//	// 绑定参数
+	//	if (mysql_stmt_bind_param(stmt, bind)) {
+	//	
+	//		qDebug("SQL：mysql_stmt_bind_param() failed\n");
+	//		mysql_stmt_close(stmt);
+	//		return false;
+	//	}
+
+	//	// 执行语句
+	//	if (mysql_stmt_execute(stmt)) {
+	//	
+	//		qDebug("SQL：mysql_stmt_execute() failed\n");
+	//	}
+	//	else {
+	//		
+	//		qDebug("SQL：nsert successful() failed\n");
+	//	}
+
+	//	mysql_stmt_close(stmt); // 清理资源
+	//	return true;
+	//}
+
 }
 
 
