@@ -580,7 +580,6 @@ void ApprovalProgressDialog::slot_DataApprovalBtnNext()
 
 void ApprovalProgressDialog::slot_DataApprovalPageTo()
 {
-  
     ui->lineEditDataApprovalPage->setFocus();
     if (ui->lineEditDataApprovalPage->text().isEmpty()) return;
 

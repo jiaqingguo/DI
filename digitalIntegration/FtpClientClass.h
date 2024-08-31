@@ -37,6 +37,7 @@ public:
 	void help();								//菜单
 	int list(SOCKET sockfd);					//列出远方当前目录
 	DWORD sendTCP(char data[]);					//发送要执行的命令至服务端
+	DWORD sendTCP(char data[], int sendSize);
 	int user();									//上传用户名
 	int pass();									//上传密码
 	int sendFile(SOCKET datatcps, FILE* file);	//put 传送给远方一个文件
@@ -58,9 +59,10 @@ public:
 	void execute_deleteFileList(string folder);//删除某个文件夹内所有文件
 	bool execute_rename(const std::string  oldDir,const std::string newDir);
 	bool execute_compress(const std::vector<std::string>  vecPath, const std::string newZip); // 压缩文件;
+	bool execute_uncompress(const std::vector<std::string>  vecPath); // 解压文件;
 
 	vector<vector<string>> Gets_FolderName();//获取文件夹名称
-	//vector<string> Gets_FolderName();//获取文件夹名称
+	// vector<string> Gets_FolderName();//获取文件夹名称
 	vector<vector<string>> Gets_FileName();//获取文件名称
 
 	

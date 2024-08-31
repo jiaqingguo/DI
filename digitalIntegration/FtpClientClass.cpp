@@ -202,6 +202,20 @@ DWORD FtpClientClass::sendTCP(char data[])
 {
 	//发送要执行的命令至服务端
 	int length = send(sockClient, data, strlen(data), 0);
+	if (length <= 0) 
+	{
+		cout << "发送命令至服务端失败" << endl;
+		closesocket(sockClient);//当不使用socket()创建的套接字时，应该调用closesocket()函数将它关闭，就如同调用fclose()函数关闭一个文件，用来进行套接字资源的释放。
+		WSACleanup();
+		return -1;
+	}
+	return 1;
+}
+
+DWORD FtpClientClass::sendTCP(char data[],int sendSize)
+{
+	//发送要执行的命令至服务端
+	int length = send(sockClient, data, sendSize, 0);
 	if (length <= 0) {
 		cout << "发送命令至服务端失败" << endl;
 		closesocket(sockClient);//当不使用socket()创建的套接字时，应该调用closesocket()函数将它关闭，就如同调用fclose()函数关闭一个文件，用来进行套接字资源的释放。
@@ -1079,7 +1093,7 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 	memset(sbuff, 0, sizeof(sbuff));
 
 	strcat(sbuff, "compress");
-	if (sendTCP(sbuff) == -1)									//发送指令
+	if (sendTCP(sbuff,sizeof(sbuff)) == -1)									//发送指令
 	{
 		return false;
 	}
@@ -1089,14 +1103,15 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 	{
 		memset(sbuff, 0, sizeof(sbuff));
 		sprintf(sbuff, strPath.c_str());
-		if (sendTCP(sbuff) == -1)	
+		if (sendTCP(sbuff, sizeof(sbuff)) == -1)
 		{
 			return false;
 		}
 	}
 	// 发送路径结束标志
 	memset(sbuff, 0, sizeof(sbuff));
-	strcat(sbuff, "compress-path-end");
+	strcat(sbuff, "compress-zipname ");
+	strcat(sbuff, newZip.c_str());
 	if (sendTCP(sbuff) == -1)
 	{
 		return false;
@@ -1104,18 +1119,63 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 
 	memset(rbuff, 0, sizeof(rbuff));
 	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	if (strcmp(rbuff, "compress-ok") == 0) {
+	if (strncmp(rbuff, "compress-ok",11) == 0) {
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 	return false;
 }
 
-//获取文件夹名称
+// 解压文件;
+bool FtpClientClass::execute_uncompress(const std::vector<std::string> vecPath)
+{
+	memset(sbuff, 0, sizeof(sbuff));
+
+	strcat(sbuff, "uncompress");
+	if (sendTCP(sbuff, sizeof(sbuff)) == -1)									//发送指令
+	{
+		return false;
+	}
+
+	// 循环发送要压缩的路径
+	for (const auto& strPath : vecPath)
+	{
+		memset(sbuff, 0, sizeof(sbuff));
+		sprintf(sbuff, strPath.c_str());
+		if (sendTCP(sbuff, sizeof(sbuff)) == -1)
+		{
+			return false;
+		}
+	}
+	// 发送路径结束标志
+	memset(sbuff, 0, sizeof(sbuff));
+	strcat(sbuff, "uncompress-paths-end");
+	if (sendTCP(sbuff) == -1)
+	{
+		return false;
+	}
+
+	memset(rbuff, 0, sizeof(rbuff));
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	if (strncmp(rbuff, "uncompress-ok", 13) == 0) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
+
+// 获取文件夹名称
 /*vector<string>*/ 	vector<vector<string>> FtpClientClass::Gets_FolderName()
 {
 	return vecDirName;
 }
-//获取文件名称
+// 获取文件名称
 vector<vector<string>> FtpClientClass::Gets_FileName()
 {
 	return vecFileName;

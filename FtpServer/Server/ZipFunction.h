@@ -35,6 +35,6 @@ void CompressDirectory(std::filesystem::path directoryPath,
 // 只支持多个文件 目录的话会缺少层级;
 void CompressMultFile(const std::vector<fs::path>& paths, const fs::path& zipFilePath);
 
-void CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFilePath);
+bool CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFilePath);
 
 #endif

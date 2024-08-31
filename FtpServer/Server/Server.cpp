@@ -494,52 +494,6 @@ void Server::running()
 		cout << endl << "获取并执行的命令：" << rbuff << endl;
 		if (strncmp(rbuff, "get", 3) == 0)
 		{
-			//char fileName[256];	//文件名
-			//strcpy(fileName, rbuff + 4);
-			//FILE* file;//定义一个文件访问指针
-			////处理下载文件请求
-			//file = fopen(fileName, "rb");//二进制打开文件，只允许读
-			//if (file != NULL)
-			//{
-			//	memset(sbuff, '/0', sizeof(sbuff));
-			//	sprintf(sbuff, "get %s", fileName);
-			//	int size = strlen(sbuff);
-			//	int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
-			//	if (ret <=0) {
-			//		fclose(file);
-			//		return ;
-			//	}
-			//	else {//创建额外数据连接传送数据
-			//		//string msg = " ---发送文件成功---";
-			//		//TimeSave("E:\\jh\\Time_Server.txt", msg);
-			//		if (!sendFile(sockServer, file)) {
-			//			return;
-			//		}
-			//		else
-			//		{
-			//			cout << "111111111" << endl;
-			//		}
-
-			//		/*memset(sbuff, '\0', sizeof(sbuff));
-			//		sprintf(sbuff, "get-end");
-			//		size = strlen(sbuff);
-			//		send(sockServer, sbuff, size, 0);*/
-			//		fclose(file);
-			//	}
-
-			//}
-			//else 
-			//{
-			//	strcpy(sbuff, "openFailed\n");
-			//	if (send(sockServer, sbuff, sizeof(sbuff), 0)) 
-			//	{
-			//		cout << "openFailed send sucess" << endl;
-			//	}
-			//	else {
-			//		cout << "openFailed send failed" << endl;
-			//	}
-			//}
-
 			char fileName[256];	//文件名
 			strcpy(fileName, rbuff + 4);
 
@@ -552,12 +506,10 @@ void Server::running()
 				int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
 				if (ret <=0) 
 				{
-					//fclose(file);
 					return ;
 				}
 				else 
 				{//创建额外数据连接传送数据
-					
 					if (!sendFileData(sockServer, fileStream))
 					{
 						cout << "发送文件数据" << endl;
@@ -568,10 +520,6 @@ void Server::running()
 						cout << "发送文件数据完成" << endl;
 					}
 
-					/*memset(sbuff, '\0', sizeof(sbuff));
-					sprintf(sbuff, "get-end");
-					size = strlen(sbuff);
-					send(sockServer, sbuff, size, 0);*/
 					fileStream.close();
 				}
 
@@ -586,68 +534,11 @@ void Server::running()
 				else {
 					cout << "openFailed send failed" << endl;
 				}
-			//	std::cerr << "无法打开文件: " << file_path << std::endl;
-				
+			//	std::cerr << "无法打开文件: " << file_path << std::endl;	
 			}
-			
-
 		}//get
 		else if (strncmp(rbuff, "put", 3) == 0)
 		{
-			//FILE* fd;
-			//int cnt;
-			//string str_rbuff = rbuff;
-
-			//vector<string> str_;
-			//string pattern = "\\";
-			//str_ = my_split(rbuff, pattern);
-			//if (str_.size() > 1)
-			//{
-			//	cout << str_[str_.size() - 1] << endl;
-			//	string str_name = str_[str_.size() - 1];
-			//	strcpy(fileName, str_name.c_str());
-			//}
-			//else
-			//{
-			//	strcpy(fileName, rbuff + 4);
-			//}
-			//
-			//memset(m_path, '\0', sizeof(m_path));
-			//strcpy(m_path, rbuff + 4);
-
-			//fd = fopen(m_path, "wb");
-			//if (fd == NULL)
-			//{
-			//	cout << "无法打开文件" << m_path << endl;
-			//	return ;
-			//}
-			//memset(sbuff, '\0', sizeof(sbuff));
-			//sprintf(sbuff, "put %s", m_path);
-			//if (!send(sockServer, sbuff, sizeof(sbuff), 0))
-			//{
-			//	fclose(fd);
-			//	return ;
-			//}
-
-			//memset(rbuff, '\0', sizeof(rbuff));
-			//cout << "careate file start save" << endl;
-			//while ((cnt = recv(sockServer, rbuff, sizeof(rbuff), 0)) > 0)
-			//{
-			//	if (strncmp(rbuff, "put-end", 7) == 0)
-			//	{
-			//		break;
-			//	}
-			//	fwrite(rbuff, sizeof(char), cnt, fd);//把cnt个数据长度为char的数据从rbuff输入到fd指向的文件
-			//	memset(rbuff, '\0', sizeof(rbuff));
-			//	if (cnt < 1024)
-			//	{
-			//		break;
-			//	}
-			//}
-			//fclose(fd);
-			//cout << " file  save finsh" << endl;
-			
-			
 			int cnt;
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 4);
@@ -677,7 +568,11 @@ void Server::running()
 					// 接收实际数据
 					memset(buffer, 0, sizeof(buffer));
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
-
+					if (bytes_received = -1)
+					{
+						std::cout << "客户端已退出 ！！！！！！！！！\n";
+						return;
+					}
 					// 将接收到的数据写入文件
 					file.write(buffer, bytes_received);
 
@@ -696,8 +591,7 @@ void Server::running()
 			std::cout << "文件接收完毕，连接关闭。" << std::endl;
 			cout << " put 命令执行完成" << endl;
 
-			string  timeddd = GetTimeString();
-			cout << timeddd << endl;
+			cout << GetTimeString() << endl;
 		}//put
 		else if (strncmp(rbuff, "pwd", 3) == 0) {
 			char path[1000];
@@ -793,7 +687,6 @@ void Server::running()
 			std::string oldPath = firstPart ? firstPart : ""; // 检查是否为空
 			std::string newPath = secondPart ? secondPart : "";
 
-	
 			bool bRet = true;
 			memset(sbuff, '\0', sizeof(sbuff));
 			
@@ -833,22 +726,86 @@ void Server::running()
 		}
 		else if (strncmp(rbuff, "compress", 8) == 0) // 压缩;
 		{
-			std::vector<std::string> vecPath;
+			//std::vector<std::string> vecPath;
+			std::vector<fs::path> paths;
+			std::string strZipPath;
 			char buffer[1024];
 			while (1)
 			{
-				
 				memset(buffer, 0, sizeof(buffer));
 				int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
-				if (strncmp(rbuff, "compress-path-end", 17) == 0)
+				if (recvSize == -1)
 				{
+					std::cout << "客户端已退出 ！！！！！！！！！\n";
+					//return;
+				}
+				if (strncmp(buffer, "compress-zipname", 16) == 0)
+				{
+					char zipPath[1024] = { 0 };
+					
+					strcpy(zipPath, buffer + 17);
+					strZipPath = zipPath;
 					break;
 				}
 				//std::string  strPath(buffer);
-				vecPath.push_back(buffer);
-			}
+				paths.push_back(buffer);
+			} 
+
 			memset(sbuff, 0, sizeof(sbuff));
-			sprintf(sbuff, "compress-ok");
+			if (CompressMult2Zip(paths, strZipPath))
+			{
+				sprintf(sbuff, "compress-ok");
+				send(sockServer, sbuff, strlen(sbuff), 0);
+			}
+			else
+			{
+				sprintf(sbuff, "compress-false");
+				send(sockServer, sbuff, strlen(sbuff), 0);
+			}
+			
+		}
+		else if (strncmp(rbuff, "uncompress", 10) == 0) // 解压;
+		{
+			//std::vector<std::string> vecPath;
+			std::vector<fs::path> paths;
+			//std::string strZipPath;
+			char buffer[1024];
+			while (1)
+			{
+				memset(buffer, 0, sizeof(buffer));
+				int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
+				if (recvSize == -1)
+				{
+					std::cout << "客户端已退出 ！！！！！！！！！\n";
+					//return;
+				}
+				if (strncmp(buffer, "uncompress-paths-end", 20) == 0)
+				{
+					/*char zipPath[1024] = { 0 };
+
+					strcpy(zipPath, buffer + 17);
+					strZipPath = zipPath;*/
+					break;
+				}
+				//std::string  strPath(buffer);
+				paths.push_back(buffer);
+			}
+
+			for (auto& path : paths)
+			{
+				// 检查文件路径是否以 .zip 结尾
+				if (path.extension() == ".zip")
+				{
+					// 返回不带 .zip 后缀的新路径
+					fs::path newDir= path.parent_path() / path.stem(); // 添加父目录并返回新的目录名
+					std::string strDir = newDir.string();
+					extractZip(path, strDir);
+				}
+			
+			}
+
+			memset(sbuff, 0, sizeof(sbuff));
+			sprintf(sbuff, "uncompress-ok");
 			send(sockServer, sbuff, strlen(sbuff), 0);
 		}
 		else if (strncmp(rbuff, "user", 4) == 0) {
@@ -859,7 +816,12 @@ void Server::running()
 			strcpy(sbuff, "成功获取用户名\0");
 			send(sockServer, sbuff, sizeof(sbuff), 0);
 
-			recv(sockServer, rbuff, sizeof(rbuff), 0);
+			int recvSize=recv(sockServer, rbuff, sizeof(rbuff), 0);
+			if (recvSize == -1)
+			{
+				std::cout << "客户端已退出 ！！！！！！！！！\n";
+				return;
+			}
 			cout << endl << "获取并执行的命令：" << rbuff << endl;
 			strcat(tbuff, rbuff + 5);
 			if (strcmp(tbuff, namePassword) == 0) {//验证是否正确并返回数据给客户端
@@ -937,7 +899,12 @@ bool Server::receiveFile(std::string filename)
 
 	//先接收文件大小信息
 	memset(buf, 0, maxSize);
-	recv(sockServer, buf, 1024, 0);
+	int recvSize=recv(sockServer, buf, 1024, 0);
+	if (recvSize == -1)
+	{
+		std::cout << "客户端已退出 ！！！！！！！！！\n";
+		return false;
+	}
 	int fileSize = atoi(buf);
 	std::cout << "File's size is:" << fileSize << std::endl;
 
@@ -948,6 +915,11 @@ bool Server::receiveFile(std::string filename)
 	while (true) {
 		memset(buf, 0, maxSize);
 		len = recv(sockServer, buf, 1024, 0);
+		if (len = -1)
+		{
+			std::cout << "客户端已退出 ！！！！！！！！！\n";
+			return false;
+		}
 		storeFile.write(buf, 1024);
 		if (len == SOCKET_ERROR) {
 			std::cout << "Receive occur error\n";

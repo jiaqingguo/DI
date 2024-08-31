@@ -230,7 +230,7 @@ void CompressMultFile(const std::vector<fs::path>& paths, const fs::path& zipFil
     }
 }
 
-void CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFilePath)
+bool CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFilePath)
 {
     int errorCode = 0;
     zip_t* zipArchive = zip_open(zipFilePath.u8string().c_str(), ZIP_CREATE | ZIP_TRUNCATE, &errorCode);
@@ -239,35 +239,59 @@ void CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFil
         zip_error_init_with_code(&zipError, errorCode);
         std::cerr << "Failed to open output file " << zipFilePath << ": " << zip_error_strerror(&zipError) << std::endl;
         zip_error_fini(&zipError);
-        return;
+        return false;
     }
-
-    for (const auto& path : paths)
+    if (paths.size() == 1)   /// if else 的区别在   CompressDirectory2Zip(path.parent_path(), path, zipArchive);  CompressDirectory2Zip(path, path, zipArchive);
     {
-        if (fs::exists(path))
+        for (const auto& path : paths)
         {
-            if (fs::is_regular_file(path))
+            if (fs::exists(path))
             {
-                CompressFile2Zip(path, path.filename().u8string().c_str(), zipArchive);
+                if (fs::is_regular_file(path))
+                {
+                    CompressFile2Zip(path, path.filename().u8string().c_str(), zipArchive);
+                }
+                else if (fs::is_directory(path))
+                {
+                    CompressDirectory2Zip(path, path, zipArchive);
+                }
             }
-            else if (fs::is_directory(path))
-            {
-
-
-                CompressDirectory2Zip(path.parent_path(), path, zipArchive);
+            else {
+                std::cerr << "Path does not exist: " << path << std::endl;
             }
-        }
-        else {
-            std::cerr << "Path does not exist: " << path << std::endl;
         }
     }
+    else  
+    {
+        for (const auto& path : paths)
+        {
+            if (fs::exists(path))
+            {
+                if (fs::is_regular_file(path))
+                {
+                    CompressFile2Zip(path, path.filename().u8string().c_str(), zipArchive);
+                }
+                else if (fs::is_directory(path))
+                {
+                    CompressDirectory2Zip(path.parent_path(), path, zipArchive);
+                }
+            }
+            else {
+                std::cerr << "Path does not exist: " << path << std::endl;
+            }
+        }
 
+    }
+
+    
     // 关闭 ZIP 文件
     errorCode = zip_close(zipArchive);
-    if (errorCode != 0) {
+    if (errorCode != 0) 
+    {
         zip_error_t zipError;
         zip_error_init_with_code(&zipError, errorCode);
         std::cerr << zip_error_strerror(&zipError) << std::endl;
         zip_error_fini(&zipError);
     }
+    return true;
 }

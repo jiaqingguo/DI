@@ -41,7 +41,6 @@ fingerDlg::fingerDlg(QDialog* pParent /*=NULL*/)
 
 void fingerDlg::finger_init()
 {
-
 	// TODO: 在此添加控件通知处理程序代码
 
 	if (NULL == m_hDevice)
