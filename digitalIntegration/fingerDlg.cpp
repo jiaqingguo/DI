@@ -1,6 +1,7 @@
 //#pragma comment (lib, "User32.lib")
 
 #include "fingerDlg.h"
+#include "MainWindow.h"
 
 //HANDLE m_hDBCache = NULL;
 HANDLE m_hDevice = NULL;
@@ -28,7 +29,7 @@ int m_score=0;
 
 
 
-fingerDlg::fingerDlg(QDialog* pParent /*=NULL*/)
+fingerDlg::fingerDlg(QDialog* pParent)
 {
 	hDBCache=NULL;
 	//hDevice=NULL;
@@ -37,6 +38,36 @@ fingerDlg::fingerDlg(QDialog* pParent /*=NULL*/)
 	hThreadWork = NULL;
 	pImgBuf=NULL;
 	Tid=1;   //指纹 ID（>0 的 32 位无符号整数）
+
+}
+
+fingerDlg::~fingerDlg()
+{
+	if (NULL != m_hDevice)
+	{
+		if (NULL != pImgBuf)
+		{
+			delete[] pImgBuf;
+			pImgBuf = NULL;
+		}
+		bStopThread = TRUE;
+		if (NULL != hThreadWork)
+		{
+			WaitForSingleObject(hThreadWork, INFINITE);
+			CloseHandle(hThreadWork);
+			hThreadWork = NULL;
+		}
+		if (NULL != hDBCache)
+		{
+			ZKFPM_DBFree(hDBCache);
+			hDBCache = NULL;
+		}
+		ZKFPM_CloseDevice(m_hDevice);
+		ZKFPM_Terminate();
+		m_hDevice = NULL;
+		//SetDlgItemText(IDC_EDIT_RESULT, _T("Close Succ"));
+		Tid = 1;
+	}
 }
 
 void fingerDlg::finger_init()
@@ -86,16 +117,9 @@ void fingerDlg::finger_init()
 		ZKFPM_GetParameters(m_hDevice, 2, (unsigned char*)&imgFPHeight, &size);
 		pImgBuf = new unsigned char[imgFPWidth*imgFPHeight];
 		nLastRegTempLen = 0;
-		//GetDlgItem(IDC_BTN_CONN)->EnableWindow(FALSE);
-		//GetDlgItem(IDC_BTN_DISCONN)->EnableWindow(TRUE);
-		//GetDlgItem(IDC_BTN_REG)->EnableWindow(TRUE);
-		//(IDC_BTN_DBCLEAR)->EnableWindow(TRUE);
-		//GetDlgItem(IDC_BTN_VERIFY)->EnableWindow(TRUE);
-		//GetDlgItem(IDC_BTN_IDENTIFY)->EnableWindow(TRUE);
 		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
 		memset(&szLastRegTemplate, 0x0, sizeof(szLastRegTemplate));
 		qDebug() << "Init ZKFPM success";
-		////SetDlgItemText(IDC_EDIT_RESULT, _T("Init Succ"));
 		Tid = 1;
 		m_enrollIdx = 0;
 		m_bRegister = FALSE;
@@ -105,6 +129,8 @@ void fingerDlg::finger_init()
 		qDebug() << "Already Init";
 		//SetDlgItemText(IDC_EDIT_RESULT, _T("Already Init"));
 	}
+
+	
 }
 
 
@@ -119,9 +145,9 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 			unsigned char szTemplate[MAX_TEMPLATE_SIZE]; //返回的指纹模板
 			unsigned int tempLen = MAX_TEMPLATE_SIZE;    //预分配 fpTemplate 内存大小2048
 
+			memset(szTemplate,0, MAX_TEMPLATE_SIZE);
 			//采集指纹，指纹模板
 			int ret = ZKFPM_AcquireFingerprint(m_hDevice, pDlg->pImgBuf, pDlg->imgFPWidth*pDlg->imgFPHeight, szTemplate, &tempLen);
-			//qDebug() << "1111111111111111111111111111111" << ret;
 			if (ZKFP_ERR_OK == ret)
 			{
 				if (1 == pDlg->nFakeFunOn)	//FakeFinger Test假的
@@ -167,7 +193,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 void fingerDlg::DoRegister(unsigned char* temp, int len)
 {
 	//CString strLog;
-
+	bool succ2 = false;
 	if (m_enrollIdx >= ENROLLCNT)  //3
 	{
 		m_enrollIdx = 0;	//restart enroll
@@ -206,46 +232,19 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 			{
 				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
 				
-				nLastRegTempLen = cbRegTemp;    
-				//字节流转换成Base64字符串
-				//unsigned int base64str_len = (cbRegTemp * 4 + 4) / 3;
-				//char *base_str = new char[base64str_len + 1];
-				//memset(base_str, 0, base64str_len + 1);
-				//int ret = 0;
+				nLastRegTempLen = cbRegTemp; 
 
-				//Base64字符串转换成字节流
-				//const char *base_str;
-
-				//if(ret = ZKFPM_BlobToBase64(reinterpret_cast<unsigned char *>(szRegTemp), cbRegTemp,base_str, base64str_len + 1))
-				//{
-				//if (ret = ZKFPM_Base64ToBlob(base_str, szLastRegTemplate, nLastRegTempLen))
-				//{
-					table_fingerprint stfinger;
-					//memset(&stfinger, 0, sizeof(stfinger));
-					//std::string a(reinterpret_cast<const char*>(szLastRegTemplate), nLastRegTempLen);
-				    //memcpy(szLastRegTemplate2, reinterpret_cast<const char*>(a.data()), nLastRegTempLen);
-
-					//stfinger.fingerdata = std::string(reinterpret_cast<const char*>(szLastRegTemplate),nLastRegTempLen);
-
-
-					//memcpy(stfinger.fingerdata, szLastRegTemplate, nLastRegTempLen);
-					//memcpy(stfinger.fingerdata, szRegTemp, cbRegTemp);
-
-
-					//stfinger.fingerlen = nLastRegTempLen;
-
-
-					//char temp[] = {0};
-					//sprintf(temp, "insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')");
-
-					if (!db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen))
+					if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen))
 					{
-						return;
+						succ2 = true;
+						//return;
 					}
-					//}
-				//}
-
-				MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+					if (succ2)
+					{
+						MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+						emit regist_succ();
+					}
+				
 				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register success"));
 				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
 			}
@@ -276,45 +275,42 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 {	
 	//if (m_nLastRegTempLen > 0)	//have enroll one more template
 	//{
-		//CString strLog;
 		if (m_bIdentify)   //识别按钮被点击
 		{
 			int ret = ZKFP_ERR_OK;
-			unsigned int tid = 0;
-			unsigned int score = 0;
-			//ret = ZKFPM_DBIdentify(hDBCache, temp, len, &tid, &score);//指纹 1:N 识别temp指纹模板  返回 指纹id、对比分数
+			//unsigned int tid = 0;
+			//unsigned int score = 0;
 
-			//ret = ZKFPM_DBAdd(hDBCache, Tid++, temp, len);
+			bool success = false;
 
-			std::list<table_fingerprint> m_finger;
-			//m_finger.clear();
-			db::databaseDI::Instance().get_user_finger(m_finger);
-			for (auto &m_f : m_finger)
+			std::vector<std::pair<unsigned char *,int>> vec_finger;
+			db::databaseDI::Instance().get_user_finger(vec_finger,60);
+			//std::string u_finger;
+			//db::databaseDI::Instance().get_user_finger(u_finger, len3,57);
+			for (auto &v_f :vec_finger)
 			{
-				memcpy(szLastRegTemplate2, reinterpret_cast<const char*>(m_f.fingerdata.c_str()), m_f.fingerlen);
-				nLastRegTempLen2 = m_f.fingerlen;
-				szLastRegTemplate2[nLastRegTempLen2 + 1] = '\0';
-				
-				//std::string a(reinterpret_cast<const char*>(szLastRegTemplate), nLastRegTempLen);
-				//memcpy(szLastRegTemplate2, reinterpret_cast<const char*>(a.data()), nLastRegTempLen);
-				//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, szLastRegTemplate, nLastRegTempLen);
-
-				//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp,len);
-				//ret = ZKFPM_DBIdentify(hDBCache, m_f.fingerdata, m_f.fingerlen, &tid, &score);
-				if (ZKFP_ERR_OK >= ret)  //表示操作失败  0表示成功
+				//std::memcpy(szLastRegTemplate3,u_finger.data(), len3);
+				ret = ZKFPM_DBMatch(hDBCache, v_f.first,v_f.second, temp,len);
+				if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
 				{
-					//strLog.Format(_T("Identify fail, ret = %d"), ret);
-					//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-					MessageBox(NULL, TEXT("登录失败"), TEXT("提示"), 0);
-				}
-				else
-				{
-				//	strLog.Format(_T("Identify succ, tid=%d, score=%d"), tid, m_score);
-					//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-					MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);
+					success = true;
+					break;
 				}
 			}
-			
+			for (auto& v_f : vec_finger) {
+				delete[] v_f.first; 
+				v_f.first = nullptr; 
+			}
+			vec_finger.clear();
+			if (success) 
+			{
+				//MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);
+				emit login_succ();
+			}
+			else 
+			{
+				MessageBox(NULL, TEXT("指纹验证失败"), TEXT("提示"), 0);
+			}
 		}
 		else  //验证按钮点击
 		{//比对两枚指纹是否匹配  指纹模板1 长度  指纹模板2 长度       返回值 如果  大于等于0的话，是比对分数  小于0出错。

@@ -61,6 +61,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_pQssAutoLoader->setAutoloadQss(strQssPath);
 
 	this->m_fingerDlg = new fingerDlg();
+
+	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &MainWindow::slot_login_succ);
+	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &MainWindow::slot_regist_succ);
+
 	this->m_fingerDlg->finger_init();
     
     initInitface();
@@ -70,8 +74,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-	//if (this->m_fingerDlg != nullptr)
-		//delete this->m_fingerDlg;
+	if (m_fingerDlg != nullptr)
+		delete m_fingerDlg;
 
 
     int loginStatus = 0;
@@ -105,8 +109,6 @@ MainWindow::~MainWindow()
 void MainWindow::initInitface()
 {
     m_LoginDialog = new LoginDialog(this);
-   
-
    
 
     m_GifDialog = new GifDialog;
@@ -507,4 +509,13 @@ void MainWindow::updateModuleToolIcon(int module)
             pLayout->addWidget(pBtn);
         }
     }
+}
+
+void MainWindow::slot_login_succ()
+{
+	this->m_LoginDialog->accept();
+}
+void MainWindow::slot_regist_succ()
+{
+	
 }

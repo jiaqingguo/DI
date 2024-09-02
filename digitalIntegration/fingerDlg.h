@@ -11,12 +11,10 @@
 #include <string>
 #include <databaseDI.h>
 
-
 #include "libxzkfp/include/zkinterface.h"
 #include "libxzkfp/include/libzkfperrdef.h"
 #include "libxzkfp/include/libzkfptype.h"
 #include "libxzkfp/include/libzkfp.h"
-
 
 #ifdef _WIN64
 #pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
@@ -56,7 +54,7 @@ extern int m_score;
 
 class fingerDlg : public QDialog
 {
-	//Q_OBJECT
+	Q_OBJECT
 public:
 	HANDLE hDBCache; //缓冲区的句柄
 	//HANDLE hDevice;
@@ -83,22 +81,21 @@ public:
 	int nFakeFunOn;
 
 	fingerDlg(QDialog* pParent = NULL);	// 标准构造函数
-	
-	// 对话框数据
-	enum { IDD = IDD_LIBZKFPDEMO_DIALOG };
 
+	~fingerDlg();
+	
 
 	void finger_init();
 
 	void DoRegister(unsigned char* temp, int len);
 	void DoVerify(unsigned char *temp, int len);
 
-	//传递本文件中定义的变量使用的函数
-	//void finger_passing_arguments(HANDLE &hDevice, bool bRegister);
-
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
 
-	
+signals:
+	void login_succ();
+	void regist_succ();
+
 
 };
 #endif

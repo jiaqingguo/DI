@@ -2,6 +2,8 @@
 #include <mysql.h>
 #include "databaseDI.h" 
 #include <QDebug>
+#include <sstream>
+#include <iomanip>
 
 namespace db
 {
@@ -1027,29 +1029,29 @@ namespace db
 		return true;
 	}
 
-	//指纹表的操作
-	//bool databaseDI::add_user_finger(table_fingerprint &fingerprint)
-		bool databaseDI::add_user_finger(unsigned char *tempdata,int templen)
+	//指纹表的操作，16进制添加指纹到数据库中
+	bool databaseDI::add_user_finger(unsigned char *tempdata,int templen)
 	{
 		// 启动事务;
 		if (!startup_transaction())
 			return false;
 
 		uint32_t last_id = 0;
+
+		std::ostringstream oss;
+		oss << std::hex << std::setfill('0');
+		for (int i = 0; i < templen; ++i) {
+			oss << std::setw(2) << static_cast<int>(tempdata[i]);
+		}
+		std::string hexStr = oss.str();
+
 		// 执行SQL语句;
-		char sql[1024] = { 0 };
+		char sql[3072] = { 0 };
 
-		sprintf_s(sql, "insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",
-			tempdata,
+		sprintf_s(sql,sizeof(sql),"insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",
+			hexStr.c_str(),
 			templen);
-		
-		/*sprintf_s(sql, "INSERT INTO t_fingerprint(fingerData, fingerLen) VALUES ('%.*s', %d)", 
-			static_cast<int>(fingerprint.fingerdata.size()), // 指定字符串长度
-			fingerprint.fingerdata.data(), 
-			fingerprint.fingerlen);*/
-
-
-
+	
 		if (!exec_sql(last_id, sql))
 		{
 			// 回滚事务;
@@ -1069,31 +1071,41 @@ namespace db
 
 
 	//获取注册的指纹的数据
-	bool databaseDI::get_user_finger(std::list<table_fingerprint>& listData)
+	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid)
+	//bool databaseDI::get_user_finger(std::string &u_finger,int &templen,int userid)
 	{
-		listData.clear();
+		//listData.clear();
 
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_fingerprint");
-
+		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where id=\'%d\'", userid);
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
 
-		table_fingerprint userInfo;
-		//memset(&userInfo, 0, sizeof(table_fingerprint));
 		while (sql_row = mysql_fetch_row(result))
 		{
-			userInfo.id= std::atoi(sql_row[0]);
+			int templen = std::atoi(sql_row[1]);
+			const char *tempdata = sql_row[0];
+
+			// 分配内存存储二进制数据
+			unsigned char*  binaryData = new unsigned char[templen];
+
+			// 将十六进制字符串转换为二进制数据
+			for (int i = 0; i < templen ; i += 2) { 
+				// 每次处理两个字符
+				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
+				// 将十六进制字符转换为无符号整数
+				binaryData[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
+			}
+			//std::string u_finger2(reinterpret_cast<const char*>(binaryData),templen);
+			//u_finger = u_finger2;
+			// 存储数据和长度到 vector
+			vec.push_back(std::make_pair(binaryData, templen ));
 			
-			//memcpy(userInfo.fingerdata, sql_row[1], std::atoi(sql_row[2]));
-			userInfo.fingerdata = sql_row[1];
-			userInfo.fingerlen = std::atoi(sql_row[2]);
-			listData.push_back(userInfo);
 		}
 		return true;
 	}
