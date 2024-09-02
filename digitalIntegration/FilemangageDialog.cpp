@@ -11,6 +11,7 @@
 
 #include <QDebug>
 
+
 #include "FilemangageDialog.h"
 #include "ui_FilemangageDialog.h"
 #include "FtpClientClass.h"
@@ -20,6 +21,9 @@
 #include "mainwindow.h"
 #include "databaseDI.h"
 #include "globel.h"
+
+
+
 
 FilemangageDialog::FilemangageDialog(QWidget *parent) :
     QDialog(parent),
@@ -85,6 +89,9 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &FilemangageDialog::slot_treeWidgteCustomContextMenuRequested);
 	
+
+	connect(ui->pushButton_2, &QPushButton::clicked,this, &FilemangageDialog::slot_btnCompress);
+	connect(ui->pushButton_3, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUnCompress);
 	// 连接 itemChanged 信号到自定义槽
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
 	
@@ -146,6 +153,49 @@ void FilemangageDialog::flushFtpDirShow()
 	getAdministratorDirs();
 }
 
+void FilemangageDialog::flushFtpDirShow(QTreeWidgetItem* pCurItem)
+{
+
+	if (pCurItem == nullptr)
+		return;
+	pCurItem->takeChildren();
+
+	QString RootPath = pCurItem->data(0, Qt::UserRole).toString();
+	string strRootPath= RootPath.toLocal8Bit().toStdString();
+
+	
+	
+
+
+	//if (m_FtpClientClass->newConnection())
+	{
+		m_FtpClientClass->execute_ls(strRootPath);//执行ls 
+
+	//在树分支显示当前路径文件夹名称
+
+		auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
+		for (int i = 0; i < vecFolderNames.size(); i++)
+		{
+			QTreeWidgetItem* pItem = new QTreeWidgetItem();
+			QString strText = QString::fromLocal8Bit(vecFolderNames[i][0].c_str());
+
+			QString strPath = RootPath + "\\" + strText;
+			pItem->setText(0, strText);
+			pItem->setData(0, Qt::UserRole, strPath);
+
+			pItem->setData(0, Qt::UserRole + 1, QString::fromLocal8Bit(vecFolderNames[i][1].c_str()));
+			pItem->setIcon(0, QIcon(":/image/Dir.png"));
+			pItem->setToolTip(0, strText);
+
+			std::string strDirPath = strRootPath + "\\" + vecFolderNames[i][0];
+			createTreeChildNode(pItem, strDirPath);
+			//createTreeChildNode(pItem, vecFolderNames[i]);
+			pCurItem->addChild(pItem);
+		}
+	}
+	pCurItem->setExpanded(true);
+}
+
 void FilemangageDialog::initTableViewDownload()
 {
 	if (common::bAdministrator) // 管理员;
@@ -181,10 +231,12 @@ void FilemangageDialog::initTableViewDownload()
 	m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除文件夹"));
 	m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
 	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
+	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
 	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
 	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
 	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
 	connect(m_actionRename, &QAction::triggered, this, &FilemangageDialog::slot_actioxnRename);
+	connect(m_actionCompressDir, &QAction::triggered, this, &FilemangageDialog::slot_actionCompressDir);
 	
 }
 
@@ -477,6 +529,61 @@ void FilemangageDialog::traverseAdministratorChildDir( QTreeWidgetItem* pItem)
 	}
 }
 
+void FilemangageDialog::flushTableViewFtpFile()
+{
+	common::delAllModelRow(m_modelFiles);
+	if (ui->treeWidget->currentItem() == nullptr)
+		return;
+	QString strDirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
+
+	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//执行ls 
+
+	auto vecFileData = m_FtpClientClass->Gets_FileName();
+
+	for (int i = 0; i < vecFileData.size(); i++)
+	{
+		int j = i + 1;
+		int newRowIndex = m_modelFiles->rowCount(); // 获取当前行数
+		m_modelFiles->insertRow(newRowIndex); // 插入新行
+
+		QStandardItem* item = new QStandardItem(QString::number(j));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		item->setCheckable(true); // 设置为可勾选
+		item->setCheckState(Qt::Unchecked); // 初始为不勾选;
+		m_modelFiles->setItem(newRowIndex, 0, item);
+
+
+		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
+		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // 设置文件所在目录;
+		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole + 1);  //设置文件时间 ;
+
+		QString strFilePath = strDirPath + "\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
+		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //设置文件路径 ;
+
+		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelFiles->setItem(newRowIndex, 1, item);
+
+
+
+		QPushButton* buttonYes = new QPushButton(m_strDolwnloadText);
+		buttonYes->setObjectName("itemBtnDownload");
+		buttonYes->setProperty("row", newRowIndex); // set custom property
+		buttonYes->setProperty("column", 2);
+
+		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_itemBtnDownload()));
+		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
+
+		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("删除"));
+		buttonNo->setObjectName("itemBtnDel");
+		buttonNo->setProperty("row", newRowIndex); // set custom property
+		buttonNo->setProperty("column", 3);
+
+		connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_itemBtnDel()));
+		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
+	}
+}
+
 void FilemangageDialog::traverseUploadDir(const QString& strUploadDir, const QString& strDstDir)
 {
 	
@@ -520,14 +627,14 @@ void FilemangageDialog::traverseUploadDir(const QString& strUploadDir, const QSt
 
 void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, int column)
 {
+	common::delAllModelRow(m_modelFiles);
+	
 	QString strDirPath = pTreeItem->data(column, Qt::UserRole).toString();
 
-	
 	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//执行ls 
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
 
-	common::delAllModelRow(m_modelFiles);
 	for (int i = 0; i < vecFileData.size(); i++)
 	{
 		int j = i + 1;
@@ -544,6 +651,9 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
 		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // 设置文件所在目录;
 		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole+1);  //设置文件时间 ;
+
+		QString strFilePath = strDirPath + "\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
+		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //设置文件路径 ;
 
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
@@ -811,6 +921,8 @@ void FilemangageDialog::slot_actionMkdir()
 		pNewItem->setToolTip(0, DirName);
 
 		pItem->addChild(pNewItem);
+
+		
 	}
 }
 
@@ -827,11 +939,12 @@ void FilemangageDialog::slot_actionDelDir()
 	dirPath.replace("/", "\\\\");
 	parentDir.replace("/", "\\\\");
 
-	//m_FtpClientClass->execute_delFolder(pItem->text(0).toLocal8Bit().toStdString());
+	
 	m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
 
 	pParentItem->removeChild(pItem); // 先获取 childItem
 	delete pItem;
+	flushTableViewFtpFile();
 }
 
 void FilemangageDialog::slot_actionDownload()
@@ -896,6 +1009,26 @@ void FilemangageDialog::slot_actioxnRename()
 	}
 }
 
+void FilemangageDialog::slot_actionCompressDir()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+	if (pItem == nullptr)
+		return;
+
+	QTreeWidgetItem* pParentItem = pItem->parent();
+	if (pParentItem == nullptr)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止压缩"));
+		return;
+	}
+	std::string dirPath = pItem->data(0, Qt::UserRole).toString().toLocal8Bit().toStdString();
+	std::vector<std::string> vecPath;
+	vecPath.push_back(dirPath);
+	std::string  newZipPath = dirPath+".zip"; // 添加父目录并返回新的目录名
+	
+	m_FtpClientClass->execute_compress(vecPath, newZipPath);
+}
+
 void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
 {
 	if (item->checkState() == Qt::Checked)
@@ -905,6 +1038,97 @@ void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
 	else {
 		qDebug() << item->text() << "is unchecked";
 	}
+}
+
+void FilemangageDialog::slot_btnCompress()
+{
+
+	if (ui->treeWidget->currentItem() == nullptr)
+	{
+		return;
+	}
+	int bChecked = false;
+	// 遍历每一行的第一列，检查勾选状态并打印数据
+	std::vector < std::string> vecPath;
+	for (int row = 0; row < m_modelFiles->rowCount(); ++row) 
+	{
+		QStandardItem* item = m_modelFiles->item(row, 0);  // 获取第一列项
+		if (item && item->checkState() == Qt::Checked) 
+		{
+			bChecked = true;
+			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole+2).toString();  // 获取data
+			vecPath.push_back(strFilePath.toLocal8Bit().toStdString());
+			qDebug() << "Checked Item Data:" << strFilePath;  // 打印 data
+		}
+	}
+	if (!bChecked)
+	{
+		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请勾选要压缩的文件"));
+	}
+
+	QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("压缩"), QString::fromLocal8Bit("压缩包名称："));
+	if (NewZipName.isEmpty())
+		return;
+	if (!NewZipName.endsWith(".zip", Qt::CaseInsensitive))
+	{
+		 NewZipName = NewZipName + ".zip";  // 添加 .zip 后缀
+	}
+	
+	QString stDirPath = ui->treeWidget->currentItem()->data(0,Qt::UserRole).toString();
+	
+	QString newZipPath = stDirPath + "\\" + NewZipName;
+	if (m_FtpClientClass->execute_compress(vecPath, newZipPath.toLocal8Bit().toStdString()))
+	{
+		//slot_treeWidgetItemClicked(ui->treeWidget->currentItem(), 0);
+		flushTableViewFtpFile();
+	}
+	else
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("压缩失败"));
+		return;
+	}
+	
+}
+
+void FilemangageDialog::slot_btnUnCompress()
+{
+	if (ui->treeWidget->currentItem() == nullptr)
+	{
+		return;
+	}
+	int bChecked = false;
+	int bZipFile = true;
+	// 遍历每一行的第一列，检查勾选状态并打印数据
+	std::vector < std::string> vecPath;
+	for (int row = 0; row < m_modelFiles->rowCount(); ++row)
+	{
+		QStandardItem* item = m_modelFiles->item(row, 0);  // 获取第一列项
+		if (item && item->checkState() == Qt::Checked)
+		{
+			bChecked = true;
+			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // 获取data
+			if (!strFilePath.endsWith(".zip", Qt::CaseInsensitive))
+			{
+				bZipFile = false;
+			}
+			vecPath.push_back(strFilePath.toLocal8Bit().toStdString());
+			qDebug() << "Checked Item Data:" << strFilePath;  // 打印 data
+		}
+	}
+	if (!bChecked)
+	{
+		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请勾选要解压的文件"));
+		return;
+	}
+	if (!bZipFile)
+	{
+		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("解压文件格式不正确，请重新勾选"));
+		return;
+	}
+
+	m_FtpClientClass->execute_uncompress(vecPath);
+
+	flushFtpDirShow(ui->treeWidget->currentItem());
 }
 
 void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column)

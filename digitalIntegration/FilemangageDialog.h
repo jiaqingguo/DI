@@ -24,11 +24,12 @@ public:
     explicit FilemangageDialog(QWidget *parent = nullptr);
     ~FilemangageDialog();
 
-
-    void flushFtpDirShow();
-
     void initTableViewDownload();
+    void flushFtpDirShow();
+    void flushFtpDirShow(QTreeWidgetItem* pParentItem);
+    
     void flushTableViewDownload();
+    void flushTableViewFtpFile();
 private:
    
     bool getFtpFolderShow();
@@ -41,6 +42,7 @@ private:
     bool IsAdministratorDir(const QTreeWidgetItem* pItem);
     void getAdministratorDirs();
     void traverseAdministratorChildDir( QTreeWidgetItem* pItem);
+  
 signals:
     void  signal_downloadFinsh();
 private slots:
@@ -64,9 +66,12 @@ private slots:
     void slot_actionDelDir();
     void slot_actionDownload();
     void slot_actioxnRename();
-
+    void slot_actionCompressDir();
 
     void slot_tableViewFilesItemChanged(QStandardItem* item);
+
+    void slot_btnCompress();   // —πÀı
+    void slot_btnUnCompress(); // Ω‚—πÀı
 private:
     Ui::FilemangageDialog *ui;
 
@@ -91,6 +96,7 @@ private:
     QAction * m_actionDel = nullptr;
     QAction * m_actionDownload= nullptr;
     QAction * m_actionRename = nullptr;
+    QAction* m_actionCompressDir = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H

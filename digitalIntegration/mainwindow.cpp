@@ -109,11 +109,9 @@ MainWindow::~MainWindow()
 void MainWindow::initInitface()
 {
     m_LoginDialog = new LoginDialog(this);
-   
-
-    m_GifDialog = new GifDialog;
+  
+   m_GifDialog = new GifDialog;
     
-   
     m_RegisterDialog = new RegisterDialog(this);
 
     m_ResourceManageDialog = new ResourceManageDialog(this);

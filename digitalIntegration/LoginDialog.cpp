@@ -156,8 +156,7 @@ void LoginDialog::slot_btnLoginClicked()
 }
 
 void LoginDialog::slot_btnExitClicked()
-{
-             
+{  
 	RegisterDialog registerDialog;
 	registerDialog.exec();
 }
@@ -165,11 +164,9 @@ void LoginDialog::slot_btnExitClicked()
 void LoginDialog::slot_btnFingerprintClicked()
 {
 
-	int loginStatus = 1;
+	int loginStatus = 0;
 	db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 
-	// Ê¶±ðÖ¸ÎÆ;
-	//this->accept();
 	if (NULL != m_hDevice)
 	{
 		if (m_bRegister)
@@ -179,9 +176,11 @@ void LoginDialog::slot_btnFingerprintClicked()
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Start verify last register template"));
 		}
 		m_bIdentify = TRUE;
+
 	}
-	this->accept();
+
 	
+	//this->accept();
 
 	/*hide();
 	g_pMainWindow->setUserNameText(m_sUser);

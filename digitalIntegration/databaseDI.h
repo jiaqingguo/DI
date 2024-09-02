@@ -46,12 +46,12 @@ namespace db
 		//指纹表
 		bool add_user_finger(unsigned char *tempdata, int templen);
 		//bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
+		
 
 		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
 		// 工具表;
-
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
 		bool add_tools( table_tools& stTool);
 		bool del_tools(const int& id);

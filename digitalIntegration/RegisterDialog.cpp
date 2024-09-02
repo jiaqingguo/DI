@@ -132,12 +132,11 @@ void RegisterDialog::slot_btnFingerprintInput()
 		{
 			m_bRegister = TRUE;
 			m_enrollIdx = 0;
-			//ui->label_7->setText("1111");
+			//ui->label_7->setText(QString::fromLocal8Bit("请连续按3次手指"));
 			QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请连续按3次手指"));
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Doing register, please press your finger 3 times!"));
 		}
 	}
-
 	//QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
 	close();
 
