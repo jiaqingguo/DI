@@ -180,7 +180,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	}
 
 	
-	this->accept();
+	//this->accept();
 
 	/*hide();
 	g_pMainWindow->setUserNameText(m_sUser);
