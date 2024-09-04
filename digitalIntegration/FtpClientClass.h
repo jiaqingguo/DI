@@ -26,7 +26,7 @@ struct FileInformation
 class FtpClientClass
 {
 public:
-	FtpClientClass();
+	FtpClientClass(std::string serverIp, unsigned short ServerPort);
 	~FtpClientClass();
 
 	DWORD startSock();							//启动winsock并初始化
@@ -70,6 +70,7 @@ private:
 	SOCKET sockClient;		//客户端对象
 	sockaddr_in serverAddr;	//服务器地址
 	char inputIP[20];		//存储输入的服务器IP
+	unsigned short m_serverPort;
 	char fileName[128];		//文件名
 	char rbuff[1024];		//接收缓冲区
 	char sbuff[1024];		//发送缓冲区

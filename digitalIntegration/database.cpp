@@ -9,6 +9,12 @@
 
 namespace db
 {
+	void database::setDbLoginData(const std::string& server, const std::string& user, const std::string& password)
+	{
+		server_ = server;
+		user_ = user;
+		pwd_ = password;
+	}
 	MYSQL* database::get_sql_query()
 	{
 		if (mysql_ == nullptr)

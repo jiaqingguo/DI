@@ -116,12 +116,8 @@ DWORD Server::createSocket() {
 }
 DWORD Server::mkdir(char fileName[])
 {
-	char path[1000];
-	//GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录
-
-	//strcat(path, "\\");
-	//strcat(path, fileName);
-	//cout << path << endl;
+	//char path[1000];
+	
 	bool flag = CreateDirectory(fileName, NULL);
 	if (flag)
 	{
@@ -595,8 +591,8 @@ void Server::running()
 		}//put
 		else if (strncmp(rbuff, "pwd", 3) == 0) {
 			char path[1000];
-			//strcpy(sbuff, "D:\\AjhwtWork");//我自己选择的绝对路径
-			GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录			
+			//strcpy(sbuff, "T:\\贾庆国\\CS");//我自己选择的绝对路径
+			 GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录			
 			strcpy(sbuff, path);
 			int size = strlen(sbuff);
 			send(sockServer, sbuff, size, 0);
@@ -635,6 +631,7 @@ void Server::running()
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
 			mkdir(m_path);
+			//mkdir("T:\\贾庆国\\CS\\2222.txt");
 		}//mkdir
 		else if (strncmp(rbuff, "del", 3) == 0) { // 删除空文件夹;
 			strcpy(fileName, rbuff + 4);//获得要删的文件名

@@ -19,10 +19,10 @@ namespace db
         // 数据库操作;
 	public:
 		// 打开数据库;
-		virtual bool open()override;
+		virtual bool open() override;
 
 		// 关闭数据库;
-		virtual bool close()override;
+		virtual bool close() override;
 
 		// 业务操作;
 	public:

@@ -42,8 +42,12 @@ namespace common
     unsigned long   dwLastOut = 0;          //上一秒钟的发送字节数
     int             onePageRows=12;                   // 每页显示的行数;
     QString         strFtpIp = "127.0.0.1";    // ftp的ip
-    int             iFtpport = 5555;
-    int				iUserID=-1;
+    int             iFtpPort = 5555;
+    QString         strDbIp = "127.0.0.1";
+    QString         strDbUser = "root";
+    QString         strDbPassword = "123456";
+
+    int				iUserID=-1;              //数据库用户id
     extern bool     bAdministrator = false; // 是否是管理员;
 
     __int64 Filetime2Int64(const FILETIME& ftime)

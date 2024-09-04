@@ -19,9 +19,11 @@ void TimeSave(string data, string source)
 	fprintf(lOG, "\n");
 	fclose(lOG);
 }
-FtpClientClass::FtpClientClass()
+FtpClientClass::FtpClientClass(std::string serverIp, unsigned short ServerPort)
 {
 	checkFlag = false;
+	strcpy(inputIP, serverIp.c_str());
+	m_serverPort = ServerPort;
 }
 FtpClientClass::~FtpClientClass()
 {
@@ -42,13 +44,13 @@ DWORD FtpClientClass::startSock()
 	//	cout << "请输入要连接的服务器IP：";
 	//	cin >> inputIP;
 	//}ls
-	strcpy(inputIP, "127.0.0.1");
+	//strcpy(inputIP, "127.0.0.1");
 	//strcpy(inputIP, "192.168.0.158");
 //	strcpy(inputIP, "192.168.1.23"); /*给数组赋字符串*/ 
 	//设置地址结构
 	serverAddr.sin_family = AF_INET;					//表明底层是使用的哪种通信协议来递交数据的，AF_INET表示使用 TCP/IPv4 地址族进行通信
 	serverAddr.sin_addr.s_addr = inet_addr(inputIP);	//指定服务器IP，十进制转化成二进制IPV4地址
-	serverAddr.sin_port = htons(RECV_PORT);				//设置端口号，htons用于将主机字节序改为网络字节序
+	serverAddr.sin_port = htons(m_serverPort);				//设置端口号，htons用于将主机字节序改为网络字节序
 	return 1;
 }
 //创建socket

@@ -56,7 +56,7 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	//ui->treeWidget->takeTopLevelItem(ui->treeWidget->indexOfTopLevelItem(rootItem));
 	// Òþ²Ø±êÌâÀ¸
 	ui->treeWidget->setHeaderHidden(true);
-    m_FtpClientClass = new FtpClientClass;
+    m_FtpClientClass = new FtpClientClass(common::strFtpIp.toStdString(),common::iFtpPort);
 
 	m_modelFiles = new QStandardItemModel();
 	m_modelFiles->setColumnCount(4);
