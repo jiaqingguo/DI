@@ -1047,11 +1047,9 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[3072] = { 0 };
+		sprintf_s(sql,sizeof(sql),"insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",hexStr.c_str(),templen);
 
-		sprintf_s(sql,sizeof(sql),"insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",
-			hexStr.c_str(),
-			templen);
-	
+
 		if (!exec_sql(last_id, sql))
 		{
 			// 回滚事务;
@@ -1071,7 +1069,8 @@ namespace db
 
 
 	//获取注册的指纹的数据
-	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid)
+	//bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid)
+	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec)
 	//bool databaseDI::get_user_finger(std::string &u_finger,int &templen,int userid)
 	{
 		//listData.clear();
@@ -1081,7 +1080,8 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where id=\'%d\'", userid);
+		//sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where id=\'%d\'", userid);
+		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint");
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;

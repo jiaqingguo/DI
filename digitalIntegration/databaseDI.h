@@ -48,7 +48,8 @@ namespace db
 		//bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
 		
 
-		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid);
+		//bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid);
+		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
 		// 工具表;
