@@ -161,7 +161,6 @@ private:
 
 public slots:
 	void slot_login_succ();
-	void slot_regist_succ();
 
 
 

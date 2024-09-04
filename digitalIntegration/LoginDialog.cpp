@@ -172,7 +172,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 		if (m_bRegister)
 		{
 			m_bRegister = FALSE;
-			QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Start verify last register template"));
+			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Start verify last register template"));
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Start verify last register template"));
 		}
 		m_bIdentify = TRUE;
