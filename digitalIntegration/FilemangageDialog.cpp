@@ -739,7 +739,8 @@ void FilemangageDialog::slot_itemBtnDel()
 		QString delFilePath = dirPath + "\\" + strFileName;
 		m_FtpClientClass->execute_Filedelete(delFilePath.toLocal8Bit().toStdString());
 
-		m_modelFiles->removeRow(row);
+		//m_modelFiles->removeRow(row);
+		flushTableViewFtpFile();
 	}
 	
 }

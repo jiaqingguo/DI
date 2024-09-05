@@ -12,12 +12,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
@@ -28,7 +28,8 @@ QT_BEGIN_NAMESPACE
 class Ui_InformationConfihurationDialog
 {
 public:
-    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout_13;
+    QSplitter *splitter;
     QTabWidget *tabWidget;
     QWidget *tab;
     QVBoxLayout *verticalLayout_9;
@@ -39,13 +40,6 @@ public:
     QPushButton *btnToolAdd1;
     QPushButton *btnToolDel1;
     QSpacerItem *verticalSpacer;
-    QGroupBox *groupBox_2;
-    QHBoxLayout *horizontalLayout;
-    QTableView *tableViewIP1;
-    QVBoxLayout *verticalLayout_2;
-    QPushButton *btnIpAdd1;
-    QPushButton *btnIpDel1;
-    QSpacerItem *verticalSpacer_2;
     QWidget *tab_2;
     QVBoxLayout *verticalLayout_10;
     QGroupBox *groupBox_3;
@@ -94,15 +88,25 @@ public:
     QPushButton *btnIpAdd4;
     QPushButton *btnIpDel4;
     QSpacerItem *verticalSpacer_8;
+    QGroupBox *groupBox_2;
+    QHBoxLayout *horizontalLayout;
+    QTableView *tableViewIP1;
+    QVBoxLayout *verticalLayout_2;
+    QPushButton *btnIpAdd1;
+    QPushButton *btnIpDel1;
+    QSpacerItem *verticalSpacer_2;
 
     void setupUi(QDialog *InformationConfihurationDialog)
     {
         if (InformationConfihurationDialog->objectName().isEmpty())
             InformationConfihurationDialog->setObjectName(QString::fromUtf8("InformationConfihurationDialog"));
-        InformationConfihurationDialog->resize(607, 447);
-        gridLayout = new QGridLayout(InformationConfihurationDialog);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        tabWidget = new QTabWidget(InformationConfihurationDialog);
+        InformationConfihurationDialog->resize(791, 719);
+        verticalLayout_13 = new QVBoxLayout(InformationConfihurationDialog);
+        verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
+        splitter = new QSplitter(InformationConfihurationDialog);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setOrientation(Qt::Vertical);
+        tabWidget = new QTabWidget(splitter);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -140,39 +144,6 @@ public:
 
 
         verticalLayout_9->addWidget(groupBox);
-
-        groupBox_2 = new QGroupBox(tab);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        horizontalLayout = new QHBoxLayout(groupBox_2);
-        horizontalLayout->setSpacing(0);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        tableViewIP1 = new QTableView(groupBox_2);
-        tableViewIP1->setObjectName(QString::fromUtf8("tableViewIP1"));
-
-        horizontalLayout->addWidget(tableViewIP1);
-
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        btnIpAdd1 = new QPushButton(groupBox_2);
-        btnIpAdd1->setObjectName(QString::fromUtf8("btnIpAdd1"));
-
-        verticalLayout_2->addWidget(btnIpAdd1);
-
-        btnIpDel1 = new QPushButton(groupBox_2);
-        btnIpDel1->setObjectName(QString::fromUtf8("btnIpDel1"));
-
-        verticalLayout_2->addWidget(btnIpDel1);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer_2);
-
-
-        horizontalLayout->addLayout(verticalLayout_2);
-
-
-        verticalLayout_9->addWidget(groupBox_2);
 
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -388,8 +359,40 @@ public:
         verticalLayout_12->addWidget(groupBox_8);
 
         tabWidget->addTab(tab_4, QString());
+        splitter->addWidget(tabWidget);
+        groupBox_2 = new QGroupBox(splitter);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        horizontalLayout = new QHBoxLayout(groupBox_2);
+        horizontalLayout->setSpacing(0);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        tableViewIP1 = new QTableView(groupBox_2);
+        tableViewIP1->setObjectName(QString::fromUtf8("tableViewIP1"));
 
-        gridLayout->addWidget(tabWidget, 0, 0, 1, 1);
+        horizontalLayout->addWidget(tableViewIP1);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        btnIpAdd1 = new QPushButton(groupBox_2);
+        btnIpAdd1->setObjectName(QString::fromUtf8("btnIpAdd1"));
+
+        verticalLayout_2->addWidget(btnIpAdd1);
+
+        btnIpDel1 = new QPushButton(groupBox_2);
+        btnIpDel1->setObjectName(QString::fromUtf8("btnIpDel1"));
+
+        verticalLayout_2->addWidget(btnIpDel1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer_2);
+
+
+        horizontalLayout->addLayout(verticalLayout_2);
+
+        splitter->addWidget(groupBox_2);
+
+        verticalLayout_13->addWidget(splitter);
 
 
         retranslateUi(InformationConfihurationDialog);
@@ -406,9 +409,6 @@ public:
         groupBox->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
-        groupBox_2->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
-        btnIpAdd1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
-        btnIpDel1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2271", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
@@ -431,6 +431,9 @@ public:
         btnIpAdd4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnIpDel4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2274", nullptr));
+        groupBox_2->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
+        btnIpAdd1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
+        btnIpDel1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
     } // retranslateUi
 
 };

@@ -509,6 +509,35 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_ip_data(std::list<table_ip>& listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_ip");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_ip stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.host = sql_row[2];
+			stData.software =sql_row[3];
+			stData.module = std::atoi(sql_row[4]);
+			stData.used = std::atoi(sql_row[5]);
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
 	bool databaseDI::get_ip_data(std::list<table_ip>& listData, const int& module)
 	{
 		listData.clear();

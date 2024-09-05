@@ -24,6 +24,7 @@ public:
     void initFaceData();
 
     void flushToolModelData(QStandardItemModel* model,const int &module);
+    void flushIpModelData(QStandardItemModel* model);
     void flushIpModelData(QStandardItemModel* model, const int& module);
     
     void clearModelData(QStandardItemModel* model);

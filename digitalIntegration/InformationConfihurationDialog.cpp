@@ -89,9 +89,10 @@ void InformationConfihurationDialog::init()
     common::setTableViewBasicConfiguration(ui->tableViewTool4);
 
     m_modelIP1 = new QStandardItemModel();
-    m_modelIP1->setColumnCount(2);
-    m_modelIP1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
-    m_modelIP1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
+    m_modelIP1->setColumnCount(3);
+    m_modelIP1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ip"));
+    m_modelIP1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("主机"));
+    m_modelIP1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("软件"));
     ui->tableViewIP1->setModel(m_modelIP1);
     common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
@@ -175,7 +176,7 @@ void InformationConfihurationDialog::initFaceData()
     flushToolModelData(m_modelTool3,3);
     flushToolModelData(m_modelTool4,4);
 
-    flushIpModelData(m_modelIP1, 1);
+    flushIpModelData(m_modelIP1);
     flushIpModelData(m_modelIP2, 2);
     flushIpModelData(m_modelIP3, 3);
     flushIpModelData(m_modelIP4, 4);
@@ -212,6 +213,33 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
         }
 
     }
+}
+
+void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel)
+{
+    delAllModelRow(pModel);
+    std::list<table_ip> listData;
+    if (db::databaseDI::Instance().get_ip_data(listData))
+    {
+        for (const auto& stIp : listData)
+        {
+            int newRowIndex = pModel->rowCount(); // 获取当前行数
+            pModel->insertRow(newRowIndex); // 插入新行
+
+            QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.ip));
+            // item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+            pModel->setItem(newRowIndex, 0, item);
+            QModelIndex index = pModel->index(newRowIndex, 0);
+            pModel->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+
+            pModel->setItem(newRowIndex, 0, item);
+            pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.host)));
+
+        
+            pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
+        }
+    }
+
 }
 
 void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel, const int& module)

@@ -46,12 +46,14 @@ struct table_tools
 // ip表;
 struct table_ip
 {
-	uint32_t		id = 0;			       // ID(主键自增unsigned int);
-	std::string		host;			     
-	std::string		ip;						
+	uint32_t		id = 0;			       // ID(主键自增unsigned int); 
+	std::string		ip;		
+	std::string		host;
+	std::string     software;
 	uint32_t		module = 0;
 	uint32_t        used = 0;
 	std::string		username;
+	
 };
 
 // 用户审批表

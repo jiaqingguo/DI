@@ -58,7 +58,7 @@ namespace db
 		bool del_tools(const int& id);
 
 		// ip表;
-
+		bool get_ip_data(std::list<table_ip>& listData);
 		bool get_ip_data(std::list<table_ip>& listData, const int& module);
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);
