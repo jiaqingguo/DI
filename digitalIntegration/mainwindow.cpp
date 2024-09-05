@@ -433,8 +433,11 @@ void MainWindow::slot_btnAddToolTab()
             int i = common::iSoftStartHostNum %3;
             if (common::vecHostIps.size() >= i)
             {
+                auto it = std::next(common::vecHostIps.begin(), i); // 移动到第i个元素
+                std::string strValue = *it;
+
                 QString strDspPath = exeDir + "\\dsp\\" + QString::number(common::iLoginNum) + "\\"
-                    + common::vecHostIps.at(i) + toolName + ".bsp";
+                    +QString::fromStdString(strValue) + toolName + ".bsp";
 
                 // 启动bsp 嵌入
             }

@@ -7,6 +7,7 @@
 #include <list>
 #include <string>
 #include <unordered_map>
+#include <set>
 
 namespace db
 {
@@ -41,6 +42,7 @@ namespace db
 		bool get_pop(int& pop, const std::string& user, const std::string& password);
 		// 获取用户登录数量;
 		bool get_user_login_number(int& loginNumber);
+
 		bool update_user_state(const int& id, int& approval);
 		bool update_user_LoginStatus(const int& id, int& status);
 		bool del_user(const int& id);
@@ -62,6 +64,7 @@ namespace db
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
 		bool get_ip_data(std::list<table_ip>& listData, const int& module);
+		bool get_ip_data_by_number(std::set<std::string> vecIpData, const int& number);
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);
 		bool update_ip_status(const uint32_t& id, int status);

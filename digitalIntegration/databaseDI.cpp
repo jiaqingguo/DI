@@ -586,6 +586,31 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_ip_data_by_number(std::set<std::string> setIpData, const int& number)
+	{
+		setIpData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select ip from t_ip where module=\'%d\'", number);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		//table_ip stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			std::string strIp= sql_row[0];
+			
+			setIpData.insert(strIp);
+		}
+		return true;
+	}
+
 	bool databaseDI::add_ip(table_ip& stData)
 	{
 		// 启动事务;
