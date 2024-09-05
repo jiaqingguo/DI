@@ -164,8 +164,7 @@ void LoginDialog::slot_btnExitClicked()
 void LoginDialog::slot_btnFingerprintClicked()
 {
 
-	int loginStatus = 0;
-	db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
+	
 
 	if (NULL != m_hDevice)
 	{
@@ -180,7 +179,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	}
 
 	
-	this->accept();
+	//this->accept();
 
 	/*hide();
 	g_pMainWindow->setUserNameText(m_sUser);

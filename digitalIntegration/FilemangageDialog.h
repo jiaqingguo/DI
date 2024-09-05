@@ -52,7 +52,7 @@ private slots:
     //  viewItem 下载按钮;
     void slot_itemBtnDownload();
     //  viewItem 删除按钮;
-    void slot_itemBtnDel();
+    void slot_itmemBtnDel();
 
     // 上传文件按钮;
     void slot_btnUploading();

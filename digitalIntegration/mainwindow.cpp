@@ -508,6 +508,8 @@ void MainWindow::updateModuleToolIcon(int module)
 
 void MainWindow::slot_login_succ()
 {
+    int loginStatus = 1;
+    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 	this->m_LoginDialog->accept();
 }
 
