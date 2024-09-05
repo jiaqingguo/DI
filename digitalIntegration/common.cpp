@@ -48,7 +48,9 @@ namespace common
     QString         strDbPassword = "123456";
 
     int				iUserID=-1;              //数据库用户id
-    extern bool     bAdministrator = false; // 是否是管理员;
+    bool            bAdministrator = false; // 是否是管理员;
+
+    int				iLoginNum = 1;      // 登录顺序; 123456;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
