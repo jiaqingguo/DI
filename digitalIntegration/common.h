@@ -38,6 +38,8 @@ namespace common
 	extern int				iUserID;
 	extern bool             bAdministrator;     // 是否是管理员;
 	extern int				onePageRows;      // 每页显示的行数;
+
+	extern int				iLoginNum=0;      // 登录顺序; 123456;
 	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 
