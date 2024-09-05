@@ -102,6 +102,8 @@ public:
 	
 	void showGif();
 	void closeGif();
+
+	bool showLoginDialog();
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();

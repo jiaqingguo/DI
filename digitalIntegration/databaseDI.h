@@ -39,6 +39,8 @@ namespace db
 		bool get_user(table_user& userInfo, const std::string& user);
 		bool get_user_list(std::list<table_user>& listData);
 		bool get_pop(int& pop, const std::string& user, const std::string& password);
+		// 获取用户登录数量;
+		bool get_user_login_number(int& loginNumber);
 		bool update_user_state(const int& id, int& approval);
 		bool update_user_LoginStatus(const int& id, int& status);
 		bool del_user(const int& id);

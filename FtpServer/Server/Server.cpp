@@ -455,6 +455,7 @@ Server::Server(SOCKET s)
 
 Server::~Server()
 {
+	cout << "~Server() 执行析构" << endl;
 }
 
 bool Server::welcome()
@@ -485,6 +486,7 @@ void Server::running()
 		}
 		else if (ret < 0)
 		{
+			closesocket(sockServer);
 			return;
 		}
 		cout << endl << "获取并执行的命令：" << rbuff << endl;
@@ -502,6 +504,7 @@ void Server::running()
 				int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
 				if (ret <=0) 
 				{
+					closesocket(sockServer);
 					return ;
 				}
 				else 
@@ -542,6 +545,7 @@ void Server::running()
 			sprintf(sbuff, "put %s", m_path);
 			if (!send(sockServer, sbuff, sizeof(sbuff), 0))
 			{
+				closesocket(sockServer);
 				return;
 			}
 
@@ -567,6 +571,7 @@ void Server::running()
 					if (bytes_received = -1)
 					{
 						std::cout << "客户端已退出 ！！！！！！！！！\n";
+						closesocket(sockServer);
 						return;
 					}
 					// 将接收到的数据写入文件
@@ -817,6 +822,7 @@ void Server::running()
 			if (recvSize == -1)
 			{
 				std::cout << "客户端已退出 ！！！！！！！！！\n";
+				closesocket(sockServer);
 				return;
 			}
 			cout << endl << "获取并执行的命令：" << rbuff << endl;
@@ -828,37 +834,9 @@ void Server::running()
 				send(sockServer, "wrong\0", sizeof(sbuff), 0);
 			}
 		}//user pass
-		//closesocket(sockServer);
+		
 	}
-	//welcome();
-
-	//while (true) {
-	//	if (recv(server, buf, maxSize, 0) == 0) {
-	//		std::cout << "recv() Faied!\n";
-	//	}
-
-	//	std::string paramter;
-	//	int cmd = commandParse(buf, paramter);
-
-	//	switch (cmd) {
-	//	case 0:
-	//		std::cout << "Command is invalid\n";
-	//		break;
-
-	//	case 1:
-	//		std::cout << "Start receive the file from client.\n";
-	//		receiveFile(paramter);
-	//		break;
-
-	//	case 2:
-	//		std::cout << "Start send file to client.\n";
-	//		sendFile(paramter);
-	//		break;
-
-	//	default:
-	//		std::cout << "Command is invalid\n";
-	//	}
-	//}
+	cout << "Server::runing() 运行结束" << endl;
 }
 
 int Server::commandParse(char* instruck, std::string &paramter)

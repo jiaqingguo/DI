@@ -128,6 +128,13 @@ void LoginDialog::slot_btnLoginClicked()
 		return;
 	}
 
+	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+	if (common::iLoginNum >= 6)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("限制同时登录六个用户，请勿继续登录！"));
+		return;
+	}
+
 	m_userID = stData.PKID;
 	common::iUserID = stData.PKID;
 	
@@ -151,8 +158,7 @@ void LoginDialog::slot_btnLoginClicked()
 		/*g_pMainWindow->setUserNameText(m_sUser);
 		g_pMainWindow->showMaximized();*/
 
-	}
-	
+	}	
 }
 
 void LoginDialog::slot_btnExitClicked()
@@ -163,9 +169,6 @@ void LoginDialog::slot_btnExitClicked()
 
 void LoginDialog::slot_btnFingerprintClicked()
 {
-
-	
-
 	if (NULL != m_hDevice)
 	{
 		if (m_bRegister)
@@ -178,8 +181,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	
-	//this->accept();
+	this->accept();
 
 	/*hide();
 	g_pMainWindow->setUserNameText(m_sUser);

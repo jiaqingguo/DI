@@ -205,21 +205,21 @@ void MainWindow::initInitface()
     updateModuleToolIcon(3);
     updateModuleToolIcon(4);
 
-    if (m_LoginDialog->exec() == QDialog::Accepted)
-    {
-        ui->labelUserName->setText(m_LoginDialog->GetUser());
-        if (m_LoginDialog->GetPop())
-        {
-            ui->btnApprovalProgress->hide();
-        }
-        this->showMaximized();
-        m_FilemangageDialog->initTableViewDownload();
-    }
-    else
-    {
-        this->close();
-        exit(1);
-    }
+    //if (m_LoginDialog->exec() == QDialog::Accepted)
+    //{
+    //    ui->labelUserName->setText(m_LoginDialog->GetUser());
+    //    if (m_LoginDialog->GetPop())
+    //    {
+    //        ui->btnApprovalProgress->hide();
+    //    }
+    //    this->showMaximized();
+    //    m_FilemangageDialog->initTableViewDownload();
+    //}
+    //else
+    //{
+    //    this->close();
+    //    //exit(1);
+    //}
 }
 
 void MainWindow::showRegisterDialog()
@@ -240,6 +240,27 @@ void MainWindow::closeGif()
 {
     m_GifDialog->close();
    // m_FilemangageDialog->exec();
+}
+bool MainWindow::showLoginDialog()
+{
+    if (m_LoginDialog->exec() == QDialog::Accepted)
+    {
+        ui->labelUserName->setText(m_LoginDialog->GetUser());
+        if (m_LoginDialog->GetPop())
+        {
+            ui->btnApprovalProgress->hide();
+        }
+        this->showMaximized();
+        m_FilemangageDialog->initTableViewDownload();
+        return true;
+    }
+    else
+    {
+        this->close();
+        return false;
+        //exit(1);
+    }
+    return false;
 }
 void MainWindow::slot_btnResourceManageClicked()
 {
@@ -309,6 +330,10 @@ void MainWindow::slot_btnAddToolTab()
         QWidget* pWidget = new QWidget;
         if (moduleNumber == 1)
         { 
+            QString exeDir = QCoreApplication::applicationDirPath();
+            QString strDspPath = exeDir + "\\dsp\\"+QString::number(common::iLoginNum)+ "\\"+toolName+".bsp";
+
+
             WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
             if (winId != 0)
             {
@@ -318,7 +343,6 @@ void MainWindow::slot_btnAddToolTab()
                 widget->setWindowTitle(tabName);
                 if (displayMode == 0)
                 {
-                   
                     ui->tabWidgetModulel1->addTab(widget, tabName);
                 }
                 else
@@ -364,7 +388,6 @@ void MainWindow::slot_btnAddToolTab()
                 widget->setWindowTitle(tabName);
                 if (displayMode == 0)
                 {
-                  
                     ui->tabWidgetModulel3->addTab(widget, tabName);
                 }
                 else
@@ -394,8 +417,31 @@ void MainWindow::slot_btnAddToolTab()
                 }
                
             }
-      
         }
+
+
+        if (moduleNumber == 1)
+        {
+            QString exeDir = QCoreApplication::applicationDirPath();
+            QString strDspPath = exeDir + "\\dsp\\" + QString::number(common::iLoginNum) + "\\" + toolName + ".bsp";
+
+            // 启动bsp 嵌入
+        }
+        else
+        {
+            QString exeDir = QCoreApplication::applicationDirPath();
+            int i = common::iSoftStartHostNum %3;
+            if (common::vecHostIps.size() >= i)
+            {
+                QString strDspPath = exeDir + "\\dsp\\" + QString::number(common::iLoginNum) + "\\"
+                    + common::vecHostIps.at(i) + toolName + ".bsp";
+
+                // 启动bsp 嵌入
+            }
+           
+
+        }
+       
 
     }
     

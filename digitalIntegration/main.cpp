@@ -54,6 +54,10 @@ int main(int argc, char* argv[])
     db::databaseDI::Instance().setDbLoginData(common::strDbIp.toStdString(), common::strDbUser.toStdString(), common::strDbPassword.toStdString());
     db::databaseDI::Instance().open();
     MainWindow w;
+    if (!w.showLoginDialog())
+    {
+        a.exit(1);
+    }
 
     return a.exec();
 }

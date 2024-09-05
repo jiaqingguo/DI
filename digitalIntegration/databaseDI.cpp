@@ -335,6 +335,26 @@ namespace db
 		return false;
 	}
 
+	bool databaseDI::get_user_login_number(int& loginNumber)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "SELECT COUNT(*) AS count FROM t_user WHERE  loginStatus = 1");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			loginNumber = std::atoi(sql_row[0]);
+		}
+		return true;
+	}
+
 	bool databaseDI::update_user_state(const int& id, int& approval)
 	{
 		// 启动事务;
