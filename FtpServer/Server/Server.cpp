@@ -482,6 +482,7 @@ void Server::running()
 		int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
 		if (ret == 0)
 		{
+			cout << endl << "获取并执行的命令：0" << rbuff << endl;
 			continue;
 		}
 		else if (ret < 0)

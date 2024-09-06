@@ -153,6 +153,8 @@ void LoginDialog::slot_btnLoginClicked()
 		common::bAdministrator = false;
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
+		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps,common::iLoginNum);
+
 		this->accept();
 	//	this->hide();
 		/*g_pMainWindow->setUserNameText(m_sUser);

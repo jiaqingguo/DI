@@ -54,7 +54,7 @@ namespace common
 
     int				        iLoginNum = 1;      // 登录顺序; 123456;
     int                     iSoftStartHostNum = 1;  // 模块234软件 启动的所在主机标志;
-    std::set<std::string>    vecHostIps;         // 每个用户分配的三个主机网卡ip;
+    std::set<std::string>    setHostIps;         // 每个用户分配的三个主机网卡ip;
 
 
     __int64 Filetime2Int64(const FILETIME& ftime)

@@ -64,7 +64,7 @@ namespace db
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
 		bool get_ip_data(std::list<table_ip>& listData, const int& module);
-		bool get_ip_data_by_number(std::set<std::string> vecIpData, const int& number);
+		
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);
 		bool update_ip_status(const uint32_t& id, int status);
@@ -78,6 +78,11 @@ namespace db
 		bool updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id);
 		//客户端退出的时候，该用户所用的ip的username字段置nullptr
 		bool updata_ipusername(const std::string& u_name);
+
+
+
+		/// ip配置表;
+		bool get_ip_data_by_number(std::set<std::string> vecIpData, const int& number);
 
 		// 数据审批表;
 		bool add_data_approval_info(table_dataApproval& stData);

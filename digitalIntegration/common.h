@@ -42,7 +42,7 @@ namespace common
 
 	extern int				iLoginNum;          // 登录顺序; 123456;
 	extern int              iSoftStartHostNum;  // 模块234软件 启动的所在主机标志;
-	extern   std::set<std::string>    vecHostIps;         // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+	extern   std::set<std::string>    setHostIps;         // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 

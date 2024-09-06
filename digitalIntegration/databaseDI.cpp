@@ -595,7 +595,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select ip from t_ip where module=\'%d\'", number);
+		sprintf_s(sql, "select ip from t_ip_configure where number=\'%d\'", number);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)

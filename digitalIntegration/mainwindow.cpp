@@ -423,23 +423,26 @@ void MainWindow::slot_btnAddToolTab()
         if (moduleNumber == 1)
         {
             QString exeDir = QCoreApplication::applicationDirPath();
-            QString strDspPath = exeDir + "\\dsp\\" + QString::number(common::iLoginNum) + "\\" + toolName + ".bsp";
+            QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".bsp";
 
             // 启动bsp 嵌入
+            int a = 1;
         }
         else
         {
             QString exeDir = QCoreApplication::applicationDirPath();
             int i = common::iSoftStartHostNum %3;
-            if (common::vecHostIps.size() >= i)
+            if (common::setHostIps.size() >= i)
             {
-                auto it = std::next(common::vecHostIps.begin(), i); // 移动到第i个元素
+                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
                 std::string strValue = *it;
 
-                QString strDspPath = exeDir + "\\dsp\\" + QString::number(common::iLoginNum) + "\\"
-                    +QString::fromStdString(strValue) + toolName + ".bsp";
+
+                QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
+                    +QString::fromStdString(strValue) + "/"+toolName + ".bsp";
 
                 // 启动bsp 嵌入
+                int a = 1;
             }
            
 
@@ -559,6 +562,7 @@ void MainWindow::slot_login_succ()
 {
     int loginStatus = 1;
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 	this->m_LoginDialog->accept();
 }
 
