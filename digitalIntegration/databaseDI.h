@@ -49,16 +49,13 @@ namespace db
 
 		//指纹表
 		bool add_user_finger(unsigned char *tempdata, int templen);
-		//bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
-		
-
-		//bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid);
 		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
 		// 工具表;
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
 		bool add_tools( table_tools& stTool);
+		bool add_ip_tools(table_ip &stIp);
 		bool del_tools(const int& id);
 
 		// ip表;
@@ -83,6 +80,10 @@ namespace db
 
 		/// ip配置表;
 		bool get_ip_data_by_number(std::set<std::string> vecIpData, const int& number);
+
+		bool get_all_ip(std::list<table_ip_configure>& listData);
+
+
 
 		// 数据审批表;
 		bool add_data_approval_info(table_dataApproval& stData);

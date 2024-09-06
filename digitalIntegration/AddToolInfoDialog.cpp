@@ -22,14 +22,14 @@ AddToolInfoDialog::~AddToolInfoDialog()
 }
 
 
-void AddToolInfoDialog::getToolsData(table_tools& toolData)
+void AddToolInfoDialog::getToolsData(table_ip& toolsData)
 {
-    toolData.host=ui->lineEditHost->text().toStdString();
-    toolData.name = ui->lineEditToolName->text().toStdString();
-    QString strPath = ui->lineEditToolPath->text();
-    strPath.replace("\\","\\\\");
-    toolData.path = strPath.toStdString();
-    toolData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
+    //toolData.host=ui->lineEditHost->text().toStdString();
+    toolsData.software = ui->lineEditToolName->text().toStdString();
+    //QString strPath = ui->lineEditToolPath->text();
+    //strPath.replace("\\","\\\\");
+    //toolData.path = strPath.toStdString();
+    toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
 }
 void AddToolInfoDialog::slot_btnOk()
 {

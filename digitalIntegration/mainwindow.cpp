@@ -562,6 +562,9 @@ void MainWindow::slot_login_succ()
 {
     int loginStatus = 1;
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+
+
+	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 	this->m_LoginDialog->accept();
 }
