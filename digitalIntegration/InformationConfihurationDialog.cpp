@@ -96,7 +96,7 @@ void InformationConfihurationDialog::init()
     ui->tableViewIP1->setModel(m_modelIP1);
     common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
-    m_modelIP2 = new QStandardItemModel();
+ /*   m_modelIP2 = new QStandardItemModel();
     m_modelIP2->setColumnCount(2);
     m_modelIP2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
     m_modelIP2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
@@ -115,7 +115,7 @@ void InformationConfihurationDialog::init()
     m_modelIP4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
     m_modelIP4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
     ui->tableViewIP4->setModel(m_modelIP4);
-    common::setTableViewBasicConfiguration(ui->tableViewIP4);
+    common::setTableViewBasicConfiguration(ui->tableViewIP4);*/
 
     //m_modelIP1->appendRow(QList<QStandardItem*>()
     //    << new QStandardItem("computer1")
@@ -132,25 +132,27 @@ void InformationConfihurationDialog::init()
     ui->btnToolAdd3->setProperty("module", 3);
     ui->btnToolAdd4->setProperty("module", 4);
     ui->btnIpAdd1->setProperty("module", 1);
-    ui->btnIpAdd2->setProperty("module", 2);
+    ui->btnIpAdd1->setHidden(true);
+ /*   ui->btnIpAdd2->setProperty("module", 2);
     ui->btnIpAdd3->setProperty("module", 3);
-    ui->btnIpAdd4->setProperty("module", 4);
+    ui->btnIpAdd4->setProperty("module", 4);*/
     ui->btnToolDel1->setProperty("module", 1);
     ui->btnToolDel2->setProperty("module", 2);
     ui->btnToolDel3->setProperty("module", 3);
     ui->btnToolDel4->setProperty("module", 4);
     ui->btnIpDel1->setProperty("module", 1);
-    ui->btnIpDel2->setProperty("module", 2);
-    ui->btnIpDel3->setProperty("module", 3);
-    ui->btnIpDel4->setProperty("module", 4);
+    ui->btnIpDel1->setHidden(true);
+    //ui->btnIpDel2->setProperty("module", 2);
+    //ui->btnIpDel3->setProperty("module", 3);
+    //ui->btnIpDel4->setProperty("module", 4);
     connect(ui->btnToolAdd1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
     connect(ui->btnToolAdd2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
     connect(ui->btnToolAdd3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
     connect(ui->btnToolAdd4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
     connect(ui->btnIpAdd1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
-    connect(ui->btnIpAdd2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
+  /*  connect(ui->btnIpAdd2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
     connect(ui->btnIpAdd3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
-    connect(ui->btnIpAdd4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
+    connect(ui->btnIpAdd4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);*/
 
     connect(ui->btnToolDel1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolDel);
     connect(ui->btnToolDel2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolDel);
@@ -158,9 +160,9 @@ void InformationConfihurationDialog::init()
     connect(ui->btnToolDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolDel);
 
     connect(ui->btnIpDel1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
-    connect(ui->btnIpDel2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
+ /*   connect(ui->btnIpDel2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
     connect(ui->btnIpDel3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
-    connect(ui->btnIpDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
+    connect(ui->btnIpDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);*/
 
     ui->tableViewTool1->setMouseTracking(true);
 
@@ -177,9 +179,9 @@ void InformationConfihurationDialog::initFaceData()
     flushToolModelData(m_modelTool4,4);
 
     flushIpModelData(m_modelIP1);
-    flushIpModelData(m_modelIP2, 2);
-    flushIpModelData(m_modelIP3, 3);
-    flushIpModelData(m_modelIP4, 4);
+    //flushIpModelData(m_modelIP2, 2);
+    //flushIpModelData(m_modelIP3, 3);
+    //flushIpModelData(m_modelIP4, 4);
 }
 
 void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* model, const int& module)
@@ -371,7 +373,7 @@ void InformationConfihurationDialog::slot_btnIpAdd()
         {
             pModel = m_modelIP1;
         }
-        else if (moduleNumber == 2)
+    /*    else if (moduleNumber == 2)
         {
             pModel = m_modelIP2;
         }
@@ -382,7 +384,7 @@ void InformationConfihurationDialog::slot_btnIpAdd()
         else if (moduleNumber == 4)
         {
             pModel = m_modelIP4;
-        }
+        }*/
         if (pModel == nullptr)
             return;
 
@@ -470,21 +472,21 @@ void InformationConfihurationDialog::slot_btnIpDel()
 
         pModel= m_modelIP1;
     }
-    else if (moduleNumber == 2)
-    {
-        currentIndex = ui->tableViewIP2->currentIndex();
-        pModel = m_modelIP2;
-    }
-    else if (moduleNumber == 3)
-    {
-        currentIndex = ui->tableViewIP3->currentIndex();
-        pModel = m_modelIP3;
-    }
-    else if (moduleNumber == 4)
-    {
-        currentIndex = ui->tableViewIP4->currentIndex();
-        pModel = m_modelIP4;
-    }
+    //else if (moduleNumber == 2)
+    //{
+    //    currentIndex = ui->tableViewIP2->currentIndex();
+    //    pModel = m_modelIP2;
+    //}
+    //else if (moduleNumber == 3)
+    //{
+    //    currentIndex = ui->tableViewIP3->currentIndex();
+    //    pModel = m_modelIP3;
+    //}
+    //else if (moduleNumber == 4)
+    //{
+    //    currentIndex = ui->tableViewIP4->currentIndex();
+    //    pModel = m_modelIP4;
+    //}
 
     if (pModel == nullptr)
         return;

@@ -49,13 +49,6 @@ public:
     QPushButton *btnToolAdd2;
     QPushButton *btnToolDel2;
     QSpacerItem *verticalSpacer_3;
-    QGroupBox *groupBox_4;
-    QHBoxLayout *horizontalLayout_4;
-    QTableView *tableViewIP2;
-    QVBoxLayout *verticalLayout_4;
-    QPushButton *btnIpAdd2;
-    QPushButton *btnIpDel2;
-    QSpacerItem *verticalSpacer_4;
     QWidget *tab_3;
     QVBoxLayout *verticalLayout_11;
     QGroupBox *groupBox_5;
@@ -67,11 +60,7 @@ public:
     QSpacerItem *verticalSpacer_5;
     QGroupBox *groupBox_6;
     QHBoxLayout *horizontalLayout_6;
-    QTableView *tableViewIP3;
     QVBoxLayout *verticalLayout_6;
-    QPushButton *btnIpAdd3;
-    QPushButton *btnIpDel3;
-    QSpacerItem *verticalSpacer_6;
     QWidget *tab_4;
     QVBoxLayout *verticalLayout_12;
     QGroupBox *groupBox_7;
@@ -81,13 +70,6 @@ public:
     QPushButton *btnToolAdd4;
     QPushButton *btnToolDel4;
     QSpacerItem *verticalSpacer_7;
-    QGroupBox *groupBox_8;
-    QHBoxLayout *horizontalLayout_8;
-    QTableView *tableViewIP4;
-    QVBoxLayout *verticalLayout_8;
-    QPushButton *btnIpAdd4;
-    QPushButton *btnIpDel4;
-    QSpacerItem *verticalSpacer_8;
     QGroupBox *groupBox_2;
     QHBoxLayout *horizontalLayout;
     QTableView *tableViewIP1;
@@ -183,39 +165,6 @@ public:
 
         verticalLayout_10->addWidget(groupBox_3);
 
-        groupBox_4 = new QGroupBox(tab_2);
-        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        horizontalLayout_4 = new QHBoxLayout(groupBox_4);
-        horizontalLayout_4->setSpacing(0);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        tableViewIP2 = new QTableView(groupBox_4);
-        tableViewIP2->setObjectName(QString::fromUtf8("tableViewIP2"));
-
-        horizontalLayout_4->addWidget(tableViewIP2);
-
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        btnIpAdd2 = new QPushButton(groupBox_4);
-        btnIpAdd2->setObjectName(QString::fromUtf8("btnIpAdd2"));
-
-        verticalLayout_4->addWidget(btnIpAdd2);
-
-        btnIpDel2 = new QPushButton(groupBox_4);
-        btnIpDel2->setObjectName(QString::fromUtf8("btnIpDel2"));
-
-        verticalLayout_4->addWidget(btnIpDel2);
-
-        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_4->addItem(verticalSpacer_4);
-
-
-        horizontalLayout_4->addLayout(verticalLayout_4);
-
-
-        verticalLayout_10->addWidget(groupBox_4);
-
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -260,27 +209,8 @@ public:
         horizontalLayout_6->setSpacing(0);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
-        tableViewIP3 = new QTableView(groupBox_6);
-        tableViewIP3->setObjectName(QString::fromUtf8("tableViewIP3"));
-
-        horizontalLayout_6->addWidget(tableViewIP3);
-
         verticalLayout_6 = new QVBoxLayout();
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-        btnIpAdd3 = new QPushButton(groupBox_6);
-        btnIpAdd3->setObjectName(QString::fromUtf8("btnIpAdd3"));
-
-        verticalLayout_6->addWidget(btnIpAdd3);
-
-        btnIpDel3 = new QPushButton(groupBox_6);
-        btnIpDel3->setObjectName(QString::fromUtf8("btnIpDel3"));
-
-        verticalLayout_6->addWidget(btnIpDel3);
-
-        verticalSpacer_6 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_6->addItem(verticalSpacer_6);
-
 
         horizontalLayout_6->addLayout(verticalLayout_6);
 
@@ -324,39 +254,6 @@ public:
 
 
         verticalLayout_12->addWidget(groupBox_7);
-
-        groupBox_8 = new QGroupBox(tab_4);
-        groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
-        horizontalLayout_8 = new QHBoxLayout(groupBox_8);
-        horizontalLayout_8->setSpacing(0);
-        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
-        tableViewIP4 = new QTableView(groupBox_8);
-        tableViewIP4->setObjectName(QString::fromUtf8("tableViewIP4"));
-
-        horizontalLayout_8->addWidget(tableViewIP4);
-
-        verticalLayout_8 = new QVBoxLayout();
-        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        btnIpAdd4 = new QPushButton(groupBox_8);
-        btnIpAdd4->setObjectName(QString::fromUtf8("btnIpAdd4"));
-
-        verticalLayout_8->addWidget(btnIpAdd4);
-
-        btnIpDel4 = new QPushButton(groupBox_8);
-        btnIpDel4->setObjectName(QString::fromUtf8("btnIpDel4"));
-
-        verticalLayout_8->addWidget(btnIpDel4);
-
-        verticalSpacer_8 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_8->addItem(verticalSpacer_8);
-
-
-        horizontalLayout_8->addLayout(verticalLayout_8);
-
-
-        verticalLayout_12->addWidget(groupBox_8);
 
         tabWidget->addTab(tab_4, QString());
         splitter->addWidget(tabWidget);
@@ -413,23 +310,15 @@ public:
         groupBox_3->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
-        groupBox_4->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
-        btnIpAdd2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
-        btnIpDel2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2272", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         groupBox_6->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
-        btnIpAdd3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
-        btnIpDel3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2273", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
-        groupBox_8->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
-        btnIpAdd4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
-        btnIpDel4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2274", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
         btnIpAdd1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));

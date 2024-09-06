@@ -47,9 +47,9 @@ private:
     QStandardItemModel* m_modelTool3 = nullptr;
     QStandardItemModel* m_modelTool4 = nullptr;
     QStandardItemModel* m_modelIP1 = nullptr;
-    QStandardItemModel* m_modelIP2 = nullptr;
-    QStandardItemModel* m_modelIP3 = nullptr;
-    QStandardItemModel* m_modelIP4 = nullptr;
+    //QStandardItemModel* m_modelIP2 = nullptr;
+    //QStandardItemModel* m_modelIP3 = nullptr;
+    //QStandardItemModel* m_modelIP4 = nullptr;
 
     AddToolInfoDialog* m_AddToolInfoDialog = nullptr;
     AddIpInfoDialog* m_AddIpInfoDialog = nullptr;
