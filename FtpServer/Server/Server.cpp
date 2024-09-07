@@ -35,6 +35,9 @@ namespace fs = std::filesystem;
 char namePassword[1024] = "zwj 123456";	//ÓÃ»§ÃûºÍÃÜÂë
 
 
+
+
+
 struct FileInformation
 {
 	int fileYear;
@@ -239,12 +242,12 @@ int Server::sendFileList(SOCKET datatcps,  char dirPath[])
 	hff = FindFirstFile(dirPath, &fd);			//²éÕÒÎÄ¼şÀ´°Ñ´ı²Ù×÷ÎÄ¼şµÄÏà¹ØÊôĞÔ¶ÁÈ¡µ½WIN32_FIND_DATA½á¹¹ÖĞÈ¥ 
 	if (hff == INVALID_HANDLE_VALUE)
 	{		//·¢Éú´íÎó
-		const char* errStr = "ls-falied\n";
+		/*const char* errStr = "ls-falied\n";
 		cout << *errStr << endl;
 		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR)
 		{
 			cout << "·¢ËÍÊ§°Ü" << endl;
-		}
+		}*/
 		//closesocket(datatcps);
 		return 0;
 	}
@@ -391,6 +394,7 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 
 	cout << m_FileInformation.fileName << endl;
 	int size = sizeof(m_FileInformation);
+	send(datatcps, reinterpret_cast<const char*>(&size),sizeof(int), 0);
 	if (send(datatcps, fileRecord1, sizeof(m_FileInformation), 0) == SOCKET_ERROR) {
 		//Í¨¹ıdatatcps½Ó¿Ú·¢ËÍfileRecordÊı¾İ£¬³É¹¦·µ»Ø·¢ËÍµÄ×Ö½ÚÊı   
 		cout << "·¢ËÍÊ§°Ü" << endl;
@@ -609,20 +613,30 @@ void Server::running()
 			strcpy(m_path, rbuff + 3);
 
 			strcpy(sbuff, rbuff);
-			int size = strlen(sbuff);
-			send(sockServer, sbuff, 1024, 0);
+			/*int size = strlen(sbuff);
+			send(sockServer, sbuff, 1024, 0);*/
 
 			//sendFileList(sockServer);
 			strcat(m_path, "\\*");
 			int ret =sendFileList(sockServer, m_path);
-			if (ret == 1)
+			int sendSize = 0;
+			send(sockServer, reinterpret_cast<const char*>(&sendSize), sizeof(int), 0);
+			/*if (ret == 1)
 			{
 				memset(sbuff, '\0', sizeof(sbuff));
 				sprintf(sbuff, "ls-end");
-				size = strlen(sbuff);
+				int size = strlen(sbuff);
 				send(sockServer, sbuff, size, 0);
+				cout << endl << "ls-end Ö´ĞĞÍê³É£º" << endl;
 			}
-			cout << endl << "ls Ö´ĞĞÍê³É£º"  << endl;
+			else {
+				memset(sbuff, '\0', sizeof(sbuff));
+				sprintf(sbuff, "ls-falied");
+				int size = strlen(sbuff);
+				send(sockServer, sbuff, size, 0);
+				cout << endl << "ls-falied Ö´ĞĞÍê³É£º" << endl;
+			}*/
+			
 		}//ls
 		else if (strncmp(rbuff, "cd", 2) == 0) {
 			strcpy(fileName, rbuff + 3);

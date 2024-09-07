@@ -133,65 +133,78 @@ int FtpClientClass::list(SOCKET sockfd)
 	vector<string> eachDirData;
 	vector<string> eachFile;
 	//列出远方当前目录
-	int nRead;
+	int iCurRecvSize;
 	memset(sbuff, '\0', sizeof(sbuff));
 	char recvBuf[1024];
 	char time[300];
 	while (1) 
 	{
-		memset(rbuff, 0, sizeof(rbuff));
-		memset(recvBuf, 0, sizeof(recvBuf));
-		nRead = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
-		cout << "sizeof(recvBuf):" << sizeof(recvBuf) << endl;
-		if (strncmp(recvBuf, "ls-falied", 9) == 0)
+		// 接收数据大小（int 类型）
+		int iAllDataSize = 0;
+		size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
+		if (bytes_received <= 0 || iAllDataSize == 0) {
+			break; // 如果接收失败或数据大小为 0，则退出循环
+		}
+		int recv_size = iAllDataSize;
+		char combinedBuf[sizeof(m_FileInformation)]; // 用于组合完整数据
+		int combinedBufstart = 0;
+		while (1)
 		{
-			return -1;
-		} 
+			//memset(rbuff, 0, sizeof(rbuff));
+			memset(recvBuf, 0, sizeof(recvBuf));
+			//iRecvSize = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
+			iCurRecvSize = recv(sockClient, recvBuf, recv_size, 0);
+			if (iCurRecvSize == SOCKET_ERROR) {
+				cout << "读取时发生错误" << endl;
+				return -2;
+				//exit(1);
+			}
+			if (iCurRecvSize < recv_size) //iAllDataSize的值应该是540
+			{
+				recv_size = recv_size - iCurRecvSize;
+				// 将接收到的数据复制到组合缓冲区
+				memcpy(combinedBuf + combinedBufstart, recvBuf, iCurRecvSize);
+				combinedBufstart += iCurRecvSize; // 更新已接收数据的总大小
+				continue;
+			}
+			else
+			{
+				memcpy(combinedBuf, recvBuf, iCurRecvSize);
+				break;
+			}
 
-		//recv通过sockClient套接口接受数据存入rbuff缓冲区，返回接收到的字节数
-		if (nRead == SOCKET_ERROR) {
-			cout << "读取时发生错误" << endl;
-			return -2;
-			//exit(1);
 		}
-        else if (nRead == 0) 
-		{ //数据读取结束
-			break;
-		}
-		if (strncmp(recvBuf, "ls-end", 6) == 0)
-		{
-			break;
-		}
-		memcpy(&m_FileInformation, recvBuf, sizeof(m_FileInformation));
+		memcpy(&m_FileInformation, combinedBuf, sizeof(m_FileInformation));
 		//显示数据
-		rbuff[nRead] = '\0';
+		//rbuff[iCurRecvSize] = '\0';
 		cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
 		string name(m_FileInformation.fileName);
 		string fileDir(m_FileInformation.fileDir);
-		sprintf(time, "%04d-%02d-%02d %02d:%02d",m_FileInformation.fileYear,m_FileInformation.fileMonth,m_FileInformation.fileDay,
-			m_FileInformation.fileHour,m_FileInformation.fileMinute);
+		sprintf(time, "%04d-%02d-%02d %02d:%02d", m_FileInformation.fileYear, m_FileInformation.fileMonth, m_FileInformation.fileDay,
+			m_FileInformation.fileHour, m_FileInformation.fileMinute);
 		string str_time(time);
-		if(name == "." || name == "..")
+		if (name == "." || name == "..")
 		{
-			cout << "不要.和.."<< endl;
+			cout << "不要.和.." << endl;
 		}
 		else
 		{
-			if(fileDir == "<DIR>")
+			if (fileDir == "<DIR>")
 			{
 				eachDirData.clear();
 				eachDirData.push_back(name);
 				eachDirData.push_back(str_time);
 				vecDirName.push_back(eachDirData);
 				//vecDirName.push_back(name);
-			}else
+			}
+			else
 			{
 				eachFile.clear();
 				eachFile.push_back(name);
 				eachFile.push_back(str_time);
 				vecFileName.push_back(eachFile);
 			}
-			
+
 
 		}
 	
@@ -412,8 +425,8 @@ int FtpClientClass::execute_ls(const std::string strDirPath)
 	{
 		return 0;
 	}
-	int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
-	cout << rbuff << endl;	
+	//int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
+	//cout << rbuff << endl;	
 	//if(ls - falied)
 	
 	return list(sockClient);
