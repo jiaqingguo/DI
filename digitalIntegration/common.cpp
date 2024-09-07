@@ -52,7 +52,7 @@ namespace common
     int				        iUserID=-1;              //数据库用户id
     bool                    bAdministrator = false; // 是否是管理员;
 
-    int				        iLoginNum = 1;      // 登录顺序; 123456;
+    int				        iLoginNum = 4;      // 登录顺序; 123456;
     int                     iSoftStartHostNum = 1;  // 模块234软件 启动的所在主机标志;
     std::set<std::string>    setHostIps;         // 每个用户分配的三个主机网卡ip;
 

@@ -504,6 +504,40 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::add_ip_tools(table_ip &stIp)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
+
+		sprintf_s(sql, R"(insert into t_ip(ip,host,software,module,number) values('%s', '%s', '%s', '%d', '%d'))",
+			stIp.ip.c_str(),
+			stIp.host.c_str(),
+			stIp.software.c_str(),
+			stIp.module,
+			stIp.number);
+
+		if (!exec_sql(last_id, sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		stIp.id = last_id;
+		return true;
+	}
+
 	bool databaseDI::del_tools(const int& id)
 	{
 				// 启动事务;
@@ -553,6 +587,7 @@ namespace db
 			stData.software =sql_row[3];
 			stData.module = std::atoi(sql_row[4]);
 			stData.used = std::atoi(sql_row[5]);
+			stData.number = std::atoi(sql_row[8]);
 			listData.push_back(stData);
 		}
 		return true;
@@ -577,10 +612,12 @@ namespace db
 		while (sql_row = mysql_fetch_row(result))
 		{
 			stData.id = std::atoi(sql_row[0]);
-			stData.host = sql_row[1];
-			stData.ip = sql_row[2];
-			stData.module = std::atoi(sql_row[3]);
-			stData.used = std::atoi(sql_row[4]);
+			stData.ip = sql_row[1];
+			stData.host = sql_row[2];
+			stData.software = sql_row[3];
+			stData.module = std::atoi(sql_row[4]);
+			stData.icoPath = sql_row[7];
+			stData.number = std::atoi(sql_row[8]);
 			listData.push_back(stData);
 		}
 		return true;
@@ -610,6 +647,35 @@ namespace db
 		}
 		return true;
 	}
+
+	bool databaseDI::get_all_ip(std::list<table_ip_configure>& listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_ip_configure");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_ip_configure stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.hostname = sql_row[2];
+			stData.number = std::atoi(sql_row[3]);
+
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
 
 	bool databaseDI::add_ip(table_ip& stData)
 	{

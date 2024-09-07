@@ -5,7 +5,7 @@
 
 #include <QDialog>
 
-struct table_tools;
+struct table_ip;
 
 namespace Ui {
 class AddToolInfoDialog;
@@ -19,7 +19,8 @@ public:
     explicit AddToolInfoDialog(QWidget *parent = nullptr);
     ~AddToolInfoDialog();
 
-    void getToolsData(table_tools& toolData);
+    //void getToolsData(table_ip& toolData);
+	void getToolsData(table_ip& toolsData);
 private slots:
     void slot_btnOk();
 private:

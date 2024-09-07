@@ -117,10 +117,9 @@ void main()
 	ser.sin_family = AF_INET;
 	ser.sin_port = htons(iPort);
 	ser.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(sListen, (LPSOCKADDR)&ser, sizeof(ser)) == SOCKET_ERROR) {
-		std::cout << "bind() Failed\n";
-		return;
-	}
+	bind(sListen, (LPSOCKADDR)&ser, sizeof(ser));
+	
+
 
 	//¼àÌý
 	if (listen(sListen, 5) == SOCKET_ERROR) {

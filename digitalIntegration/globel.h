@@ -53,7 +53,17 @@ struct table_ip
 	uint32_t		module = 0;
 	uint32_t        used = 0;
 	std::string		username;
+	std::string		icoPath;
+	uint32_t        number = 0;
 	
+};
+
+struct table_ip_configure
+{
+	uint32_t		id = 0;
+	std::string		ip;
+	std::string		hostname;
+	uint32_t        number = 0;
 };
 
 // 用户审批表

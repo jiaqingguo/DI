@@ -349,6 +349,7 @@ void FilemangageDialog::flushTableViewDownload()
 
 bool FilemangageDialog::getFtpFolderShow()
 {
+	//return false;
 	if (m_FtpClientClass->newConnection() == false)
 	{
 		return false;

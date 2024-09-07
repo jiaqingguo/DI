@@ -175,7 +175,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			Sleep(100);
+			Sleep(20);
 		}
     }
 	return 0;
@@ -305,6 +305,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			{
 				//MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);
 				emit login_succ();
+				bStopThread = TRUE;
 			}
 			else 
 			{
