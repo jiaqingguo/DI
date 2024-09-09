@@ -483,7 +483,12 @@ void Server::running()
 	{
 		memset(rbuff, 0, sizeof(rbuff));
 		memset(sbuff, 0, sizeof(sbuff));
+
 		int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
+		//int ret = recvTcpOneAll();
+		//memcpy(&rbuff, m_recvOneAllData, sizeof(rbuff));
+
+
 		if (ret == 0)
 		{
 			cout << endl << "获取并执行的命令：0" << rbuff << endl;
@@ -600,12 +605,24 @@ void Server::running()
 			cout << GetTimeString() << endl;
 		}//put
 		else if (strncmp(rbuff, "pwd", 3) == 0) {
-			char path[1000];
+			//
+			////strcpy(sbuff, "T:\\贾庆国\\CS");//我自己选择的绝对路径
+			// GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录			
+			//strcpy(sbuff, path);
+			//int size = strlen(sbuff);
+			//send(sockServer, sbuff, size, 0);
+
+
+			
+			memset(m_sendOneAllData, 0, sizeof(m_sendOneAllData));
 			//strcpy(sbuff, "T:\\贾庆国\\CS");//我自己选择的绝对路径
-			 GetCurrentDirectory(sizeof(path), path);//找到当前进程的当前目录			
-			strcpy(sbuff, path);
-			int size = strlen(sbuff);
-			send(sockServer, sbuff, size, 0);
+			GetCurrentDirectory(sizeof(m_sendOneAllData), m_sendOneAllData);//找到当前进程的当前目录
+			
+			if (sendTcpOneAll() <= 0)
+			{
+
+			}
+			cout <<  "pwd 执行结束"  << endl;
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
 
@@ -878,6 +895,67 @@ int Server::commandParse(char* instruck, std::string &paramter)
 	return -1;
 }
 
+
+bool Server::sendTcpOneAll()
+{
+	
+	//int data_size=；
+	int dataSize = sizeof(m_sendOneAllData);
+	send(sockServer, reinterpret_cast<const char*>(&dataSize), sizeof(dataSize), 0);
+	int length = send(sockServer, m_sendOneAllData, dataSize, 0);
+	if (length <= 0) {
+		cout << "发送命令至服务端失败" << endl;
+		closesocket(sockServer);//当不使用socket()创建的套接字时，应该调用closesocket()函数将它关闭，就如同调用fclose()函数关闭一个文件，用来进行套接字资源的释放。
+		WSACleanup();
+		return length;
+	}
+
+	return length;
+}
+int Server::recvTcpOneAll()
+{
+	// 接收数据大小（int 类型）
+	int iAllDataSize = 0;
+	size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
+	if (bytes_received <= 0) {
+		return bytes_received; // 如果接收失败，则退出
+	}
+	int recv_size = iAllDataSize;
+	char combinedBuf[sizeof(m_recvOneAllData)];// 用于组合完整数据
+	int combinedBufstart = 0;
+	int iCurRecvSize = 0;
+	char recvBuf[1024];
+	while (1)
+	{
+		//memset(rbuff, 0, sizeof(rbuff));
+		memset(recvBuf, 0, sizeof(recvBuf));
+		//iRecvSize = recv(sockServer, recvBuf, sizeof(m_FileInformation), 0);
+		iCurRecvSize = recv(sockServer, recvBuf, recv_size, 0);
+		if (iCurRecvSize == SOCKET_ERROR) {
+			cout << "读取时发生错误" << endl;
+			return -1;
+			
+		}
+		if (iCurRecvSize < recv_size) //iAllDataSize的值应该是540
+		{
+			recv_size = recv_size - iCurRecvSize;
+			// 将接收到的数据复制到组合缓冲区
+			memcpy(combinedBuf + combinedBufstart, recvBuf, iCurRecvSize);
+			combinedBufstart += iCurRecvSize; // 更新已接收数据的总大小
+			continue;
+		}
+		else
+		{
+			//memcpy(combinedBuf, recvBuf, iCurRecvSize)
+			memcpy(combinedBuf + combinedBufstart, recvBuf, iCurRecvSize);//????+ combinedBufstart
+			break;
+		}
+
+	}
+	memcpy(&m_recvOneAllData, combinedBuf, sizeof(m_recvOneAllData));
+
+	return 1;
+}
 bool Server::receiveFile(std::string filename)
 {
 	//创建与上次文件名相同的文件

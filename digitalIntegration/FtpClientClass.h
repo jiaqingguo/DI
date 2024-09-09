@@ -38,6 +38,8 @@ public:
 	int list(SOCKET sockfd);					//列出远方当前目录
 	DWORD sendTCP(char data[]);					//发送要执行的命令至服务端
 	DWORD sendTCP(char data[], int sendSize);
+	bool sendTcpOneAll();
+	bool recvTcpOneAll();
 	int user();									//上传用户名
 	int pass();									//上传密码
 	int sendFile(SOCKET datatcps, FILE* file);	//put 传送给远方一个文件
@@ -48,7 +50,7 @@ public:
 	//string Gets_CurrentPath();//获取当前路径
 	bool Gets_CurrentPath(std::string& strRootPath);
 	void execute_getFile(string rec_name);//执行 get name
-	int execute_getFile(string filePath,string NewFilePath);//执行 get name
+	int  execute_getFile(string filePath,string NewFilePath);//执行 get name
 	void execute_putFile(string sendfileName);//执行 put 上传
 	void execute_putFile(string localFilePath,std::string NewFilePath);//执行 put 上传
 	//void execute_cdFloder(string floderName);//执行 进入文件夹命令
@@ -60,6 +62,7 @@ public:
 	bool execute_rename(const std::string  oldDir,const std::string newDir);
 	bool execute_compress(const std::vector<std::string>  vecPath, const std::string newZip); // 压缩文件;
 	bool execute_uncompress(const std::vector<std::string>  vecPath); // 解压文件;
+	
 
 	vector<vector<string>> Gets_FolderName();//获取文件夹名称
 	// vector<string> Gets_FolderName();//获取文件夹名称
@@ -75,6 +78,9 @@ private:
 	char rbuff[1024];		//接收缓冲区
 	char sbuff[1024];		//发送缓冲区
 	bool checkFlag;			//标志是否通过登陆
+
+	char m_sendOneAllData[1024];
+	char m_recvOneAllData[1024];
 
 	FileInformation m_FileInformation;
 	vector<vector<string>> vecDirName;//存放文件夹名称的vector
