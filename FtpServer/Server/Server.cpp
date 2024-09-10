@@ -484,9 +484,9 @@ void Server::running()
 		memset(rbuff, 0, sizeof(rbuff));
 		memset(sbuff, 0, sizeof(sbuff));
 
-		int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
-		//int ret = recvTcpOneAll();
-		//memcpy(&rbuff, m_recvOneAllData, sizeof(rbuff));
+		//int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
+		int ret = recvTcpOneAll();
+		memcpy(&rbuff, m_recvOneAllData, sizeof(rbuff));
 
 
 		if (ret == 0)
@@ -936,6 +936,11 @@ int Server::recvTcpOneAll()
 			return -1;
 			
 		}
+		else if (iCurRecvSize == 0)
+		{
+			continue;
+		}
+
 		if (iCurRecvSize < recv_size) //iAllDataSize的值应该是540
 		{
 			recv_size = recv_size - iCurRecvSize;
