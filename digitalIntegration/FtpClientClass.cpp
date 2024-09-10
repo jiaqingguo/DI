@@ -245,7 +245,7 @@ bool FtpClientClass::sendTcpOneAll()
 {
 
 	//int data_size=£»
-	int dataSize = sizeof(m_sendOneAllData);
+	int dataSize = strlen(m_sendOneAllData);
 	send(sockClient, reinterpret_cast<const char*>(&dataSize), sizeof(dataSize), 0);
 	int length = send(sockClient, m_sendOneAllData, dataSize, 0);
 	if (length <= 0) {
@@ -557,6 +557,10 @@ bool FtpClientClass::Gets_CurrentPath(std::string& strRootPath)
 	{
 		return false;
 	}
+	/*if (!sendTcpOneAll())
+	{
+		return false;
+	}*/
 	if (recvTcpOneAll())
 	{
 
