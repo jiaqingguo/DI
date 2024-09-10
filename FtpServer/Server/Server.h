@@ -3,7 +3,7 @@
 #include <Winsock2.h>
 #include <string>
 
-using namespace std;
+//using namespace std;
 
 class Server
 {
@@ -12,8 +12,8 @@ public:
 	~Server();
 
 
-	string GetTimeString();
-	void TimeSave(string data, string source);
+	std::string GetTimeString();
+	void TimeSave(std::string data, std::string source);
 	DWORD startSock();
 	DWORD createSocket();
 	DWORD mkdir(char fileName[]);
@@ -23,9 +23,11 @@ public:
 	int sendFileList(SOCKET datatcps);
 	int sendFileList(SOCKET datatcps, char fileName[]);
 	int sendFile(SOCKET datatcps, FILE* file);
-		int sendFileData(SOCKET datatcps, std::ifstream& file);
-	void delete_listFiles(string dir);
+	int sendFileData(SOCKET datatcps, std::ifstream& file);
+	void delete_listFiles(std::string dir);
 	DWORD connectProcess();
+	bool sendTcpOneAll();
+	int recvTcpOneAll();
 
 	void InitResource();
 	//欢迎函数
@@ -57,5 +59,8 @@ private:
 	char order[20];		//命令
 	char rbuff[1024];	//接收缓冲区
 	char sbuff[1024];	//发送缓冲区
+
+	char m_sendOneAllData[1024];
+	char m_recvOneAllData[1024];
 };
 

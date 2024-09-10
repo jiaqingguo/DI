@@ -11,6 +11,7 @@
 //void server(SOCKET s);
 #include <windows.h>
 #include <winnetwk.h>
+
 #pragma comment(lib, "Mpr.lib")
 
 
@@ -72,7 +73,7 @@ void InitResource(/*const TCHAR* szUserName, const TCHAR* szPasswd*/) {
 
 void main()
 {
-	InitResource();
+	//InitResource();
 	char chInput[512];
 
 	char fileName_my[120] = "Y:\\¼ÖÇì¹ú";//"D:\\FileData";// "E:\\1008";
@@ -109,7 +110,7 @@ void main()
 	//´´½¨Socket
 	sListen = socket(AF_INET, SOCK_STREAM, 0);
 	if (sListen == INVALID_SOCKET) {
-		std::cout << "socket() Failed:" << WSAGetLastError() <<"\n";
+		std::cout << "socket() Failed:" << WSAGetLastError() << "\n";
 		return;
 	}
 
@@ -117,13 +118,15 @@ void main()
 	ser.sin_family = AF_INET;
 	ser.sin_port = htons(iPort);
 	ser.sin_addr.s_addr = htonl(INADDR_ANY);
-	bind(sListen, (LPSOCKADDR)&ser, sizeof(ser));
-	
-
+	//bind(sListen, (LPSOCKADDR)&ser, sizeof(ser));
+	if (bind(sListen, (LPSOCKADDR)&ser, sizeof(ser)) == SOCKET_ERROR) {
+		std::cout << "bind() Failed\n";
+		return;
+	}
 
 	//¼àÌý
 	if (listen(sListen, 5) == SOCKET_ERROR) {
-		std::cout << "listen() Failed\n";
+		std::cout << "bind() Failed: " << WSAGetLastError() << "\n";
 		return;
 	}
 
