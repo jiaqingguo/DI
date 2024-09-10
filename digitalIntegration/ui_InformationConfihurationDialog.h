@@ -58,9 +58,6 @@ public:
     QPushButton *btnToolAdd3;
     QPushButton *btnToolDel3;
     QSpacerItem *verticalSpacer_5;
-    QGroupBox *groupBox_6;
-    QHBoxLayout *horizontalLayout_6;
-    QVBoxLayout *verticalLayout_6;
     QWidget *tab_4;
     QVBoxLayout *verticalLayout_12;
     QGroupBox *groupBox_7;
@@ -203,20 +200,6 @@ public:
 
         verticalLayout_11->addWidget(groupBox_5);
 
-        groupBox_6 = new QGroupBox(tab_3);
-        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        horizontalLayout_6 = new QHBoxLayout(groupBox_6);
-        horizontalLayout_6->setSpacing(0);
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-
-        horizontalLayout_6->addLayout(verticalLayout_6);
-
-
-        verticalLayout_11->addWidget(groupBox_6);
-
         tabWidget->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QString::fromUtf8("tab_4"));
@@ -314,7 +297,6 @@ public:
         groupBox_5->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
-        groupBox_6->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "ip\345\210\227\350\241\250", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("InformationConfihurationDialog", "\346\250\241\345\235\2273", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));

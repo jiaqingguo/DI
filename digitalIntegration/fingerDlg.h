@@ -29,28 +29,10 @@
 #define FP_MTHRESHOLD_CODE 2
 
 extern HANDLE m_hDevice;    //设备操作实例句柄
-//extern HANDLE m_hDBCache;   //缓冲区句柄
-//extern HANDLE m_hThreadWork;
-//extern int m_imgFPWidth;
-//extern int m_imgFPHeight;
-
 extern bool m_bIdentify;
 extern bool m_bRegister;
-//extern bool m_bStopThread;
 extern int m_enrollIdx;
 extern int m_score;
-
-//extern unsigned char m_arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   存储指纹
-//extern unsigned int m_arrPreTempsLen[3];
-//extern int m_Tid;   //指纹 ID（>0 的 32 位无符号整数）
-
-
-//extern unsigned char* m_pImgBuf;
-
-//Last register template, use for verify   下一个注册模板，用于验证
-//extern unsigned char m_szLastRegTemplate[MAX_TEMPLATE_SIZE];
-//extern int m_nLastRegTempLen;
-//extern int m_nFakeFunOn;
 
 class fingerDlg : public QDialog
 {
@@ -60,18 +42,14 @@ public:
 	//HANDLE hDevice;
 	HANDLE hThreadWork;
 	//bool bRegister;
-	unsigned char* pImgBuf ;
+	unsigned char* pImgBuf;
 	int imgFPWidth;
 	int imgFPHeight;
 	bool bStopThread;
 
-	//bool bIdentify;
-	//int enrollIdx;
-
 	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   存储指纹
 	unsigned int arrPreTempsLen[3];
-	int Tid ;   //指纹 ID（>0 的 32 位无符号整数）
-
+	int Tid;   //指纹 ID（>0 的 32 位无符号整数）
 
 	//Last register template, use for verify   下一个注册模板，用于验证
 	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
@@ -83,7 +61,6 @@ public:
 	fingerDlg(QDialog* pParent = NULL);	// 标准构造函数
 
 	~fingerDlg();
-	
 
 	void finger_init();
 
@@ -91,11 +68,11 @@ public:
 	void DoVerify(unsigned char *temp, int len);
 
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
+	CRITICAL_SECTION g_cs;
 
 signals:
 	void login_succ();
 	void regist_succ();
-
 
 };
 #endif

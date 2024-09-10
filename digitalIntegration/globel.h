@@ -25,12 +25,12 @@ struct table_user
 };
 
 //指纹表
-struct table_fingerprint
-{
-	uint32_t	    id = 0;			       // ID(主键自增unsigned int);
-	std::string     fingerdata;
-	uint32_t	    fingerlen = 0;
-};
+//struct table_fingerprint
+//{
+//	uint32_t	    id = 0;			       // ID(主键自增unsigned int);
+//	std::string     fingerdata;
+//	uint32_t	    fingerlen = 0;
+//};
 
 // 工具表;
 struct table_tools

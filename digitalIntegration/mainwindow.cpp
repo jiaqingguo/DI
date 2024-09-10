@@ -74,8 +74,8 @@ MainWindow::~MainWindow()
     int userId = m_LoginDialog->GetUserID();
     db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
 
-    if (!db::databaseDI::Instance().updata_ipusername(m_LoginDialog->GetUser().toStdString()))
-        return;
+    /*if (!db::databaseDI::Instance().updata_ipusername(m_LoginDialog->GetUser().toStdString()))
+        return;*/
 
     if (!db::databaseDI::Instance().update_ip_all_status())
         return;
@@ -107,7 +107,7 @@ void MainWindow::initInitface()
 
     m_LoginDialog = new LoginDialog(this);
   
-   m_GifDialog = new GifDialog;
+    m_GifDialog = new GifDialog;
     
     m_RegisterDialog = new RegisterDialog(this);
 
@@ -294,29 +294,29 @@ void MainWindow::slot_btnAddToolTab()
     QPushButton* pButton = (QPushButton*)sender();
     int moduleNumber= pButton->property("module").toInt();
 
-    if (bUserIp == true)
+    //if (bUserIp == true)
     {
-        std::list<table_ip> listData;
+        //std::list<table_ip> listData;
 
-        if (db::databaseDI::Instance().get_all_ip_data(listData))
-        {
-            for (auto& stData : listData)
-            {
-                if (stData.username.empty())
-                {
-                    db::databaseDI::Instance().updata_ip_username(1, m_LoginDialog->GetUser().toStdString(), stData.id);
-                    break;
-                }
-                else if (!stData.username.empty())
-                {
-                    stData.id = stData.id + 1;
-                    //db::databaseDI::Instance().updata_ip_username(1, user_name, stData.id);
-                    //break;
-                }
-            }
+        //if (db::databaseDI::Instance().get_all_ip_data(listData))
+        //{
+        //    for (auto& stData : listData)
+        //    {
+        //        if (stData.username.empty())
+        //        {
+        //            db::databaseDI::Instance().updata_ip_username(1, m_LoginDialog->GetUser().toStdString(), stData.id);
+        //            break;
+        //        }
+        //        else if (!stData.username.empty())
+        //        {
+        //            stData.id = stData.id + 1;
+        //            //db::databaseDI::Instance().updata_ip_username(1, user_name, stData.id);
+        //            //break;
+        //        }
+        //    }
 
-            bUserIp = false;
-        }
+        //    bUserIp = false;
+        //}
     }
 
     AddToolDialog addToooDialog(moduleNumber);
@@ -563,8 +563,6 @@ void MainWindow::slot_login_succ()
     int loginStatus = 1;
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 
-
-	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 	this->m_LoginDialog->accept();
 }

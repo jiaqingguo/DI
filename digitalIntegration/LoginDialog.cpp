@@ -13,10 +13,10 @@
 #include "common.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::LoginDialog)
+	QDialog(parent),
+	ui(new Ui::LoginDialog)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 	setWindowTitle(("欢迎使用数字样机硬件一体化平台"));
 	ui->stackedWidget->setCurrentIndex(0);
 	//setWindowTitle(GBK_STRING("欢迎使用数字样机硬件一体化平台"));
@@ -26,7 +26,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
 	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
-	
+
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
@@ -35,11 +35,14 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(ui->lePassword, &QLineEdit::textChanged, this, &LoginDialog::slot_lePwdTextChanged);
 	connect(ui->lePassword, &QLineEdit::editingFinished, this, &LoginDialog::slot_lePwdEditingFinished);
 	connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
+
+	//fingerDlg *fingerDialog = new fingerDlg();
+	//connect(fingerDialog,&fingerDlg::regist_succ, this, &LoginDialog::slot_btnExitClicked);
 }
 
 LoginDialog::~LoginDialog()
 {
-    delete ui;
+	delete ui;
 }
 
 void LoginDialog::Init(bool bClearPwd)
@@ -110,7 +113,7 @@ void LoginDialog::slot_btnLoginClicked()
 	stData.UserName = "";
 	stData.Password = "";
 	db::databaseDI::Instance().get_user(stData, m_sUser.toStdString());
-	
+
 	if (stData.approval == 0)
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
@@ -137,8 +140,8 @@ void LoginDialog::slot_btnLoginClicked()
 
 	m_userID = stData.PKID;
 	common::iUserID = stData.PKID;
-	
-	
+
+
 	/*int pop = -1;
 	db::databaseDI::Instance().get_pop(pop, m_sUser.toStdString(), sPassword.toStdString());*/
 	if (stData.Pop == 0)
@@ -153,18 +156,18 @@ void LoginDialog::slot_btnLoginClicked()
 		common::bAdministrator = false;
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
-		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps,common::iLoginNum);
+		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 
 		this->accept();
-	//	this->hide();
-		/*g_pMainWindow->setUserNameText(m_sUser);
-		g_pMainWindow->showMaximized();*/
+		//	this->hide();
+			/*g_pMainWindow->setUserNameText(m_sUser);
+			g_pMainWindow->showMaximized();*/
 
-	}	
+	}
 }
 
 void LoginDialog::slot_btnExitClicked()
-{  
+{
 	RegisterDialog registerDialog;
 	registerDialog.exec();
 }

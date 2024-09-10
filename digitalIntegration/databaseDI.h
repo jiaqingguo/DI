@@ -33,6 +33,7 @@ namespace db
 		bool is_exist_user(const std::string& user);
 		bool is_exist_user(const std::string &user, const std::string &password);
 		bool get_user_count( int& count);
+		bool get_new_regist_user(int &id);//获取最新注册的用户的id
 		// 条件查询
 		bool get_user_by_condition(table_user& stData, const int& userID,const int& approval = 1);
 		bool get_user_list_by_condition(std::list<table_user>& listData, const int& rows, const int& offset);
@@ -40,6 +41,7 @@ namespace db
 		bool get_user(table_user& userInfo, const std::string& user);
 		bool get_user_list(std::list<table_user>& listData);
 		bool get_pop(int& pop, const std::string& user, const std::string& password);
+		bool get_approval(int &approval,int &id);
 		// 获取用户登录数量;
 		bool get_user_login_number(int& loginNumber);
 
@@ -48,8 +50,9 @@ namespace db
 		bool del_user(const int& id);
 
 		//指纹表
-		bool add_user_finger(unsigned char *tempdata, int templen);
-		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec);
+		bool add_user_finger(unsigned char *tempdata, int &templen, const int &id);
+		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int &userid);
+		bool get_user_finger2(unsigned char *temp,int &templen, int &userid);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
 		// 工具表;
@@ -71,7 +74,7 @@ namespace db
 		bool get_ip_count(const std::string& ip, int& count);
 		//在新增工具画面中 显示数据库中的所有的ip
 		bool get_all_ip_data(std::list<table_ip>& listData);
-		//将t_ip中的username字段设置成用户名
+		//将t_ip中的username字段设置成用户名，显示已占用
 		bool updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id);
 		//客户端退出的时候，该用户所用的ip的username字段置nullptr
 		bool updata_ipusername(const std::string& u_name);

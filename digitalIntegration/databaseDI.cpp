@@ -111,7 +111,7 @@ namespace db
 
 	bool databaseDI::is_exist_user(const std::string &user, const std::string &password)
 	{
-			// 结果集声明;
+		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
@@ -126,9 +126,9 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_user_count( int& count)
+	bool databaseDI::get_user_count(int& count)
 	{
-		
+
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
@@ -140,13 +140,37 @@ namespace db
 		if (result == nullptr)
 			return false;
 
-		
+
 		while (sql_row = mysql_fetch_row(result))
 		{
 			count = std::atoi(sql_row[0]);
 		}
 		return true;
 	}
+
+	bool databaseDI::get_new_regist_user(int &id)
+	{
+		//listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_user");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_user userInfo;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			id = std::atoi(sql_row[0]);
+		}
+		return true;
+	}
+
 
 	bool databaseDI::get_user_by_condition(table_user &stData, const int& userID, const int& approval)
 	{
@@ -161,7 +185,7 @@ namespace db
 		if (result == nullptr)
 			return false;
 
-		
+
 		while (sql_row = mysql_fetch_row(result))
 		{
 			stData.PKID = std::atoi(sql_row[0]);
@@ -249,7 +273,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_user(table_user& userInfo,  const std::string& user)
+	bool databaseDI::get_user(table_user& userInfo, const std::string& user)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
@@ -274,14 +298,14 @@ namespace db
 			userInfo.Pop = std::atoi(sql_row[7]);
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
-			userInfo.loginStatus= std::atoi(sql_row[10]);
+			userInfo.loginStatus = std::atoi(sql_row[10]);
 		}
 		return true;
 	}
 
 	bool databaseDI::get_user_list(std::list<table_user>& listData)
 	{
-		
+
 		listData.clear();
 
 		// 结果集声明;
@@ -334,6 +358,27 @@ namespace db
 		}
 		return false;
 	}
+
+	bool databaseDI::get_approval(int &approval, int &id)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select approval from t_user where PKID = \'%d\'", id);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			approval = std::atoi(sql_row[0]);
+		}
+		return false;
+	}
+
 
 	bool databaseDI::get_user_login_number(int& loginNumber)
 	{
@@ -461,14 +506,14 @@ namespace db
 			stTool.path = sql_row[3];
 			stTool.icoPath = sql_row[4];
 			stTool.module = std::atoi(sql_row[5]);
-		
+
 
 			listTools.push_back(stTool);
 		}
 		return true;
 	}
 
-	bool databaseDI::add_tools( table_tools& stTool)
+	bool databaseDI::add_tools(table_tools& stTool)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -480,7 +525,7 @@ namespace db
 
 
 		//sprintf_s(sql, "insert into t_tools(name,host,path,icoPath,module) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%d\')",
-			sprintf_s(sql, R"(insert into t_tools(name,host,path,icoPath,module) values('%s', '%s', '%s', '%s', '%d'))",
+		sprintf_s(sql, R"(insert into t_tools(name,host,path,icoPath,module) values('%s', '%s', '%s', '%s', '%d'))",
 			stTool.name.c_str(),
 			stTool.host.c_str(),
 			stTool.path.c_str(),
@@ -540,7 +585,7 @@ namespace db
 
 	bool databaseDI::del_tools(const int& id)
 	{
-				// 启动事务;
+		// 启动事务;
 		if (!startup_transaction())
 			return false;
 
@@ -584,7 +629,7 @@ namespace db
 			stData.id = std::atoi(sql_row[0]);
 			stData.ip = sql_row[1];
 			stData.host = sql_row[2];
-			stData.software =sql_row[3];
+			stData.software = sql_row[3];
 			stData.module = std::atoi(sql_row[4]);
 			stData.used = std::atoi(sql_row[5]);
 			stData.number = std::atoi(sql_row[8]);
@@ -641,8 +686,8 @@ namespace db
 		//table_ip stData;
 		while (sql_row = mysql_fetch_row(result))
 		{
-			std::string strIp= sql_row[0];
-			
+			std::string strIp = sql_row[0];
+
 			setIpData.insert(strIp);
 		}
 		return true;
@@ -692,7 +737,7 @@ namespace db
 			stData.ip.c_str(),
 			stData.module,
 			stData.used,
-		    stData.username.c_str());
+			stData.username.c_str());
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -1120,7 +1165,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_download_approval where userID=\'%d\'",userID);
+		sprintf_s(sql, "select * from t_download_approval where userID=\'%d\'", userID);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -1170,7 +1215,7 @@ namespace db
 	}
 
 	//指纹表的操作，16进制添加指纹到数据库中
-	bool databaseDI::add_user_finger(unsigned char *tempdata,int templen)
+	bool databaseDI::add_user_finger(unsigned char *tempdata, int &templen, const int &id)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1187,7 +1232,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[3072] = { 0 };
-		sprintf_s(sql,sizeof(sql),"insert into t_fingerprint(fingerData,fingerLen) values(\'%s\',\'%d\')",hexStr.c_str(),templen);
+		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", hexStr.c_str(), templen, id);
 
 
 		if (!exec_sql(last_id, sql))
@@ -1209,9 +1254,7 @@ namespace db
 
 
 	//获取注册的指纹的数据
-	//bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int userid)
-	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec)
-	//bool databaseDI::get_user_finger(std::string &u_finger,int &templen,int userid)
+	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec, int &userid)
 	{
 		//listData.clear();
 
@@ -1220,8 +1263,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		//sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where id=\'%d\'", userid);
-		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint");
+		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
@@ -1235,7 +1277,7 @@ namespace db
 			unsigned char*  binaryData = new unsigned char[templen];
 
 			// 将十六进制字符串转换为二进制数据
-			for (int i = 0; i < templen ; i += 2) { 
+			for (int i = 0; i < templen; i += 2) {
 				// 每次处理两个字符
 				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
 				// 将十六进制字符转换为无符号整数
@@ -1244,8 +1286,39 @@ namespace db
 			//std::string u_finger2(reinterpret_cast<const char*>(binaryData),templen);
 			//u_finger = u_finger2;
 			// 存储数据和长度到 vector
-			vec.push_back(std::make_pair(binaryData, templen ));
-			
+			vec.push_back(std::make_pair(binaryData, templen));
+
+		}
+		return true;
+	}
+
+	bool databaseDI::get_user_finger2(unsigned char *temp, int &templen, int &userid)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			int templen = std::atoi(sql_row[1]);
+			const char *tempdata = sql_row[0];
+
+			// 分配内存存储二进制数据
+			temp = new unsigned char[templen];
+
+			// 将十六进制字符串转换为二进制数据
+			for (int i = 0; i < templen; i += 2) {
+				// 每次处理两个字符
+				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
+				// 将十六进制字符转换为无符号整数
+				temp[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
+			}
 		}
 		return true;
 	}

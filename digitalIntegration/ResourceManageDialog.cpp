@@ -621,7 +621,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             infor->Net_Message = static_cast<unsigned long>(temp);
 
             // ²åÈëÊý¾Ý¿â;
-            table_ip stIp;
+           /* table_ip stIp;
             stIp.ip = infor->host_ip.toStdString();
             stIp.host = infor->host_name.toStdString();
             int count = 0;
@@ -635,9 +635,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
                     }
                 }
 
-            }
-
-
+            }*/
         }
         });
 }
