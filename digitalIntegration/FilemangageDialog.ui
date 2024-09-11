@@ -130,6 +130,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="btnCopy">
+               <property name="text">
+                <string>复制路径</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

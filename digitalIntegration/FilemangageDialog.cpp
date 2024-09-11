@@ -94,6 +94,7 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	connect(ui->pushButton_3, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUnCompress);
 	// 连接 itemChanged 信号到自定义槽
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
+	connect(ui->btnCopy, &QPushButton::clicked, this, &FilemangageDialog::slot_btnCopyPath);
 	
 }
 
@@ -232,6 +233,7 @@ void FilemangageDialog::initTableViewDownload()
 	m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
 	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
 	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
+	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("复制路径"));
 	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
 	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
 	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
@@ -754,8 +756,9 @@ void FilemangageDialog::slot_btnUploading()
 	}
 	
 	// 弹出文件选择对话框
-	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
-
+	//QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
+	QString defaultPath = "Y:\\贾庆国";
+	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"), defaultPath);
 	if (strFilePath.isEmpty())
 		return;
 
@@ -1031,6 +1034,20 @@ void FilemangageDialog::slot_actionCompressDir()
 	m_FtpClientClass->execute_compress(vecPath, newZipPath);
 }
 
+void FilemangageDialog::slot_actionCopyPath()
+{
+	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
+	if (pItem == nullptr)
+		return;
+	QTreeWidgetItem* pParentItem = pItem->parent();
+	if (pParentItem == nullptr)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("根目录禁止复制路径"));
+		return;
+	}
+	common::strCopyPath = pItem->data(0, Qt::UserRole).toString();
+}
+
 void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
 {
 	if (item->checkState() == Qt::Checked)
@@ -1131,6 +1148,52 @@ void FilemangageDialog::slot_btnUnCompress()
 	m_FtpClientClass->execute_uncompress(vecPath);
 
 	flushFtpDirShow(ui->treeWidget->currentItem());
+}
+
+void FilemangageDialog::slot_btnCopyPath()
+{
+	if (ui->treeWidget->currentItem() == nullptr)
+	{
+		return;
+	}
+
+	int iChecked = 0;
+	std::vector < std::string> vecPath;
+	for (int row = 0; row < m_modelFiles->rowCount(); ++row)
+	{
+		QStandardItem* item = m_modelFiles->item(row, 0);  // 获取第一列项
+		if (item && item->checkState() == Qt::Checked)
+		{
+			iChecked++;
+			
+			common::strCopyPath= m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // 获取data
+			qDebug() << "CopyPath:" << common::strCopyPath;  // 打印 data
+		}
+	}
+	if (iChecked != 1)
+	{
+
+		common::strCopyPath = "";
+		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请选择一个要复制的路径"));
+		return;
+	}
+	
+	
+}
+
+void FilemangageDialog::slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath)
+{
+
+	if (m_FtpClientClass->execute_compress(vecStrPath, strZipPath))
+	{
+		
+		flushTableViewFtpFile();
+	}
+	else
+	{
+		//QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("压缩失败"));
+		return;
+	}
 }
 
 void FilemangageDialog::slot_treeWidgetItemDoubleClicked(QTreeWidgetItem* item, int column)

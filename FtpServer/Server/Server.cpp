@@ -484,18 +484,19 @@ void Server::running()
 		memset(rbuff, 0, sizeof(rbuff));
 		memset(sbuff, 0, sizeof(sbuff));
 
-		//int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
-		int ret = recvTcpOneAll();
-		memcpy(&rbuff, m_recvOneAllData, sizeof(rbuff));
+		int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
+		//int ret = recvTcpOneAll();
+		//memcpy(&rbuff, m_recvOneAllData, sizeof(rbuff));
 
 
 		if (ret == 0)
 		{
 			cout << endl << "获取并执行的命令：0" << rbuff << endl;
-			continue;
+			return;
 		}
 		else if (ret < 0)
 		{
+			cout << endl << "获取并执行的命令：" << ret << endl;
 			closesocket(sockServer);
 			return;
 		}
