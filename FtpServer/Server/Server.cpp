@@ -297,9 +297,10 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 {
 	// 发送文件数据
 	char buffer[10240]; // 一次最多发送 10240 字节
-
+	cout << "文件数据开始读取" << endl;
 	while (file)
 	{
+		
 		memset(buffer, 0, sizeof(buffer));
 		file.read(buffer, sizeof(buffer));
 		std::streamsize bytes_read = file.gcount();
@@ -319,6 +320,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 		send(datatcps, buffer, data_size, 0);
 		
 	}
+	cout << "文件数据读取完成，发送结束0" << endl;
 	// 发送结束信号
 	int end_signal = 0; // 0 作为结束信号
 	send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
@@ -511,18 +513,18 @@ void Server::running()
 			{
 				memset(sbuff, '/0', sizeof(sbuff));
 				sprintf(sbuff, "get %s", fileName);
-				int size = strlen(sbuff);
-				int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
+				//int size = strlen(sbuff);
+			/*	int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
 				if (ret <=0) 
 				{
 					closesocket(sockServer);
 					return ;
 				}
-				else 
+				else */
 				{//创建额外数据连接传送数据
 					if (!sendFileData(sockServer, fileStream))
 					{
-						cout << "发送文件数据" << endl;
+						cout << "发送文件数据失败" << endl;
 						return;
 					}
 					else
@@ -536,14 +538,19 @@ void Server::running()
 			}
 			else
 			{
-				strcpy(sbuff, "openFailed\n");
+
+				// 发送结束信号
+				int end_signal = 0; // 0 作为结束信号
+				send(sockServer, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
+
+				/*strcpy(sbuff, "openFailed\n");
 				if (send(sockServer, sbuff, sizeof(sbuff), 0))
 				{
 					cout << "openFailed send sucess" << endl;
 				}
 				else {
 					cout << "openFailed send failed" << endl;
-				}
+				}*/
 			//	std::cerr << "无法打开文件: " << file_path << std::endl;	
 			}
 		}//get

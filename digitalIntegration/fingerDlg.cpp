@@ -26,7 +26,7 @@ fingerDlg::fingerDlg(QDialog* pParent)
 fingerDlg::~fingerDlg()
 {
 	DeleteCriticalSection(&g_cs);
-	if (NULL != m_hDevice)
+	if (m_hDevice)
 	{
 		if (NULL != pImgBuf)
 		{

@@ -724,7 +724,12 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
+
+		m_GifDialog->show();
+		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+
 		m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+		m_GifDialog->close();
 	}
 }
 

@@ -723,16 +723,16 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	{
 		return 0;
 	}
-	while (1)
-	{
-		int num = recv(sockClient, rbuff, 1024, 0);		//接收信息 
-//		cout << rbuff << endl;							//pwd功能在这里已经实现
-		if (strncmp(rbuff, "openFailed", 10) == 0)
-		{
-			return -1;
-		}
-		if (strncmp(rbuff, "get", 3) == 0)
-		{
+	/*while (1)
+	{*/
+		//int num = recv(sockClient, rbuff, 1024, 0);		//接收信息 
+
+		//if (strncmp(rbuff, "openFailed", 10) == 0)
+		//{
+		//	return -1;
+		//}
+		//if (strncmp(rbuff, "get", 3) == 0)
+		//{
 			std::ofstream file(NewFilePath, std::ios::binary);
 			char buffer[10240]; // 接收缓冲区
 
@@ -775,8 +775,8 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 			file.close();
 			std::cout << "文件接收完毕，连接关闭。" << std::endl;
 			return 1;
-		}
-	}
+		//}
+	//}
 	
 	
 }
