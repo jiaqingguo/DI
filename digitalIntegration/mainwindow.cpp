@@ -227,6 +227,8 @@ void MainWindow::initInitface()
     //    this->close();
     //    //exit(1);
     //}
+
+   
 }
 
 void MainWindow::showRegisterDialog()
@@ -259,6 +261,7 @@ bool MainWindow::showLoginDialog()
         }
         this->showMaximized();
         m_FilemangageDialog->initTableViewDownload();
+        connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
         return true;
     }
     else

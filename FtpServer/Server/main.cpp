@@ -73,7 +73,7 @@ void InitResource(/*const TCHAR* szUserName, const TCHAR* szPasswd*/) {
 
 void main()
 {
-	//InitResource();
+	InitResource();
 	char chInput[512];
 
 	char fileName_my[120] = "Y:\\贾庆国";//"D:\\FileData";// "E:\\1008";
@@ -89,7 +89,7 @@ void main()
 	int iLen;
 	int iSend;
 	char buf[] = "I am a server";
-	struct sockaddr_in ser, cli;//网络地址
+	struct sockaddr_in ser, cli;  // 网络地址
 	//定义多线程指针，用于创建线程
 	std::thread* t;
 	//用于线程的管理，保存创建的多线程指针，程序结束时释放占用的内存

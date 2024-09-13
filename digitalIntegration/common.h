@@ -28,22 +28,24 @@ namespace common
 	extern int				tableViewRowHeight;
 	extern int				tableViewHeight;
 	extern int				tableViewPageRows;
-	extern unsigned long	dwLastIn;           //上一秒钟的接收字节数
-	extern unsigned long	dwLastOut;          //上一秒钟的发送字节数
-	extern QString			strFtpIp;			// ftp的ip
+	extern unsigned long	dwLastIn;				//上一秒钟的接收字节数
+	extern unsigned long	dwLastOut;				//上一秒钟的发送字节数
+	extern QString			strFtpIp;				// ftp的ip
 	extern int				iFtpPort;
 	extern QString          strDbIp;
 	extern QString          strDbUser;
 	extern QString          strDbPassword;
 
 	extern int				iUserID;
-	extern bool             bAdministrator;     // 是否是管理员;
-	extern int				onePageRows;        // 每页显示的行数;
+	extern bool             bAdministrator;			 // 是否是管理员;
+	extern int				onePageRows;			 // 每页显示的行数;
 
-	extern int				iLoginNum;          // 登录顺序; 123456;
-	extern int              iSoftStartHostNum;  // 模块234软件 启动的所在主机标志;
-	extern   std::set<std::string>    setHostIps;         // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
-	// Windows C++
+	extern int				iLoginNum;				 // 登录顺序; 123456;
+	extern int              iSoftStartHostNum;		 // 模块234软件 启动的所在主机标志;
+	extern   std::set<std::string>    setHostIps;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+
+	extern QString          strCopyPath;				 // 复制的远程路径;
+ 	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 
 

@@ -30,6 +30,8 @@ public:
     
     void flushTableViewDownload();
     void flushTableViewFtpFile();
+
+
 private:
    
     bool getFtpFolderShow();
@@ -42,7 +44,7 @@ private:
     bool IsAdministratorDir(const QTreeWidgetItem* pItem);
     void getAdministratorDirs();
     void traverseAdministratorChildDir( QTreeWidgetItem* pItem);
-  
+    
 signals:
     void  signal_downloadFinsh();
 private slots:
@@ -67,11 +69,18 @@ private slots:
     void slot_actionDownload();
     void slot_actioxnRename();
     void slot_actionCompressDir();
+    void slot_actionCopyPath();
 
     void slot_tableViewFilesItemChanged(QStandardItem* item);
 
+
     void slot_btnCompress();   // Ñ¹Ëõ
     void slot_btnUnCompress(); // ½âÑ¹Ëõ
+
+    void slot_btnCopyPath();  // ¸´ÖÆÂ·¾¶
+
+public slots:
+    void slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath);
 private:
     Ui::FilemangageDialog *ui;
 
@@ -97,6 +106,7 @@ private:
     QAction * m_actionDownload= nullptr;
     QAction * m_actionRename = nullptr;
     QAction* m_actionCompressDir = nullptr;
+    QAction* m_actionCopyPath = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H
