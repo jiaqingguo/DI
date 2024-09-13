@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -32,8 +31,18 @@ public:
     QLineEdit *lineEditToolName;
     QLabel *label_4;
     QLineEdit *lineEditIconPath;
-    QLabel *label;
-    QComboBox *comboBoxIP;
+    QLabel *labelIP1;
+    QLineEdit *lineEditIP1;
+    QLabel *labelIP2;
+    QLabel *labelIP3;
+    QLabel *labelIP4;
+    QLabel *labelIP5;
+    QLabel *labelIP6;
+    QLineEdit *lineEditIP2;
+    QLineEdit *lineEditIP3;
+    QLineEdit *lineEditIP4;
+    QLineEdit *lineEditIP5;
+    QLineEdit *lineEditIP6;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnOK;
@@ -43,7 +52,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(343, 177);
+        AddToolInfoDialog->resize(343, 302);
         verticalLayout = new QVBoxLayout(AddToolInfoDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
@@ -68,15 +77,65 @@ public:
 
         formLayout->setWidget(1, QFormLayout::FieldRole, lineEditIconPath);
 
-        label = new QLabel(AddToolInfoDialog);
-        label->setObjectName(QString::fromUtf8("label"));
+        labelIP1 = new QLabel(AddToolInfoDialog);
+        labelIP1->setObjectName(QString::fromUtf8("labelIP1"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, label);
+        formLayout->setWidget(2, QFormLayout::LabelRole, labelIP1);
 
-        comboBoxIP = new QComboBox(AddToolInfoDialog);
-        comboBoxIP->setObjectName(QString::fromUtf8("comboBoxIP"));
+        lineEditIP1 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP1->setObjectName(QString::fromUtf8("lineEditIP1"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, comboBoxIP);
+        formLayout->setWidget(2, QFormLayout::FieldRole, lineEditIP1);
+
+        labelIP2 = new QLabel(AddToolInfoDialog);
+        labelIP2->setObjectName(QString::fromUtf8("labelIP2"));
+
+        formLayout->setWidget(3, QFormLayout::LabelRole, labelIP2);
+
+        labelIP3 = new QLabel(AddToolInfoDialog);
+        labelIP3->setObjectName(QString::fromUtf8("labelIP3"));
+
+        formLayout->setWidget(4, QFormLayout::LabelRole, labelIP3);
+
+        labelIP4 = new QLabel(AddToolInfoDialog);
+        labelIP4->setObjectName(QString::fromUtf8("labelIP4"));
+
+        formLayout->setWidget(5, QFormLayout::LabelRole, labelIP4);
+
+        labelIP5 = new QLabel(AddToolInfoDialog);
+        labelIP5->setObjectName(QString::fromUtf8("labelIP5"));
+
+        formLayout->setWidget(6, QFormLayout::LabelRole, labelIP5);
+
+        labelIP6 = new QLabel(AddToolInfoDialog);
+        labelIP6->setObjectName(QString::fromUtf8("labelIP6"));
+
+        formLayout->setWidget(7, QFormLayout::LabelRole, labelIP6);
+
+        lineEditIP2 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP2->setObjectName(QString::fromUtf8("lineEditIP2"));
+
+        formLayout->setWidget(3, QFormLayout::FieldRole, lineEditIP2);
+
+        lineEditIP3 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP3->setObjectName(QString::fromUtf8("lineEditIP3"));
+
+        formLayout->setWidget(4, QFormLayout::FieldRole, lineEditIP3);
+
+        lineEditIP4 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP4->setObjectName(QString::fromUtf8("lineEditIP4"));
+
+        formLayout->setWidget(5, QFormLayout::FieldRole, lineEditIP4);
+
+        lineEditIP5 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP5->setObjectName(QString::fromUtf8("lineEditIP5"));
+
+        formLayout->setWidget(6, QFormLayout::FieldRole, lineEditIP5);
+
+        lineEditIP6 = new QLineEdit(AddToolInfoDialog);
+        lineEditIP6->setObjectName(QString::fromUtf8("lineEditIP6"));
+
+        formLayout->setWidget(7, QFormLayout::FieldRole, lineEditIP6);
 
 
         verticalLayout->addLayout(formLayout);
@@ -110,7 +169,12 @@ public:
         AddToolInfoDialog->setWindowTitle(QCoreApplication::translate("AddToolInfoDialog", "\345\242\236\345\212\240\345\267\245\345\205\267\344\277\241\346\201\257", nullptr));
         label_2->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\267\245\345\205\267\345\220\215\347\247\260:", nullptr));
         label_4->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\233\276\346\240\207\350\267\257\345\276\204:", nullptr));
-        label->setText(QCoreApplication::translate("AddToolInfoDialog", "IP\357\274\232", nullptr));
+        labelIP1->setText(QCoreApplication::translate("AddToolInfoDialog", "IP1\357\274\232", nullptr));
+        labelIP2->setText(QCoreApplication::translate("AddToolInfoDialog", "IP2:", nullptr));
+        labelIP3->setText(QCoreApplication::translate("AddToolInfoDialog", "IP3:", nullptr));
+        labelIP4->setText(QCoreApplication::translate("AddToolInfoDialog", "IP4:", nullptr));
+        labelIP5->setText(QCoreApplication::translate("AddToolInfoDialog", "IP5:", nullptr));
+        labelIP6->setText(QCoreApplication::translate("AddToolInfoDialog", "IP6:", nullptr));
         btnOK->setText(QCoreApplication::translate("AddToolInfoDialog", "\347\241\256\345\256\232", nullptr));
     } // retranslateUi
 

@@ -62,12 +62,11 @@ namespace db
 		bool add_tools( table_tools& stTool);
 		bool add_ip_tools(table_ip &stIp);
 		bool del_tools(const int& id);
-		bool update_tools_username(const int &number, const std::string &user);
-		bool del_tools_username(const int &number);
 
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
-		bool get_ip_data(std::list<table_ip>& listData, const int& module);
+		//bool get_ip_data(std::list<table_ip>& listData, const int& module);
+		bool get_ip_data(std::map<std::string,table_ip>& softMap, const int& module,const int &number);
 		
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);
@@ -88,7 +87,7 @@ namespace db
 		// ip配置表;
 		bool get_ip_data_by_number(std::set<std::string> &vecIpData, const int& number);
 		bool get_all_ip(std::list<table_ip_configure>& listData);
-		bool get_host(std::string &hostname,std::string &ip);
+		bool get_host(std::string &hostname,unsigned int &number,std::string &ip);
 
 
 

@@ -69,10 +69,6 @@ MainWindow::~MainWindow()
 	if (m_fingerDlg != nullptr)
 		delete m_fingerDlg;
 
-	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-	if (!db::databaseDI::Instance().del_tools_username(common::iLoginNum))
-		return;
-
     int loginStatus = 0;
     int userId = m_LoginDialog->GetUserID();
     db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
@@ -342,6 +338,7 @@ void MainWindow::slot_btnAddToolTab()
         if (moduleNumber == 1)
         { 
             QString exeDir = QCoreApplication::applicationDirPath();
+			qDebug() << exeDir;
             QString strDspPath = exeDir + "\\dsp\\"+QString::number(common::iLoginNum)+ "\\"+toolName+".bsp";
 
 
@@ -546,18 +543,20 @@ void MainWindow::updateModuleToolIcon(int module)
     }
 
     common::clearLayout(pLayout);
-    std::list<table_tools> listTools;
-    if (db::databaseDI::Instance().get_tools(listTools, module))
+	std::map<std::string, table_ip> ipMap;
+    if (db::databaseDI::Instance().get_ip_data(ipMap, module,common::iLoginNum))
     {
-        for (const auto& stTool : listTools)
+        for (const auto& stTool : ipMap)
         {
-			if (stTool.username == std::to_string(common::iUserID))
+			const std::string& software = stTool.first;
+			const table_ip& data = stTool.second;
+			//if (stTool.username == std::to_string(common::iUserID))
 			{
 				QToolButton* pBtn = new QToolButton();
 				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("²âÊÔ"));
-				pBtn->setIcon(QIcon(QString::fromStdString(stTool.icoPath)));
+				pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
 				pBtn->setIconSize(QSize(50, 46));
-				pBtn->setText(QString::fromStdString(stTool.name));
+				pBtn->setText(QString::fromStdString(software));
 				pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 				pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
 				pBtn->setFocusPolicy(Qt::NoFocus);
@@ -578,9 +577,6 @@ void MainWindow::slot_login_succ()
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-
-	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-	db::databaseDI::Instance().update_tools_username(common::iLoginNum, std::to_string(common::iUserID));
 
 	this->m_LoginDialog->accept();
 }

@@ -649,57 +649,6 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::update_tools_username(const int &number, const std::string &user)
-	{
-		// 启动事务;
-		if (!startup_transaction())
-			return false;
-
-		// 执行SQL语句;
-		char sql[256] = { 0 };
-		sprintf_s(sql, sizeof(sql), "update t_tools set username = (\'%s\') where number = (\'%d\')", user.c_str(), number);
-
-		if (!exec_sql(sql))
-		{
-			// 回滚事务;
-			if (!rollback_transaction())
-				return false;
-			// 修改数据失败;
-			return false;
-		}
-
-		// 提交事务;
-		if (!commit_transaction())
-			return false;
-
-		return true;
-	}
-
-	bool databaseDI::del_tools_username(const int &number)
-	{
-		// 启动事务;
-		if (!startup_transaction())
-			return false;
-
-		// 执行SQL语句;
-		char sql[256] = { 0 };
-		sprintf_s(sql, "update t_tools set username = (\'%s'\) where number = (\'%d\')","",number);
-
-		if (!exec_sql(sql))
-		{
-			// 回滚事务;
-			if (!rollback_transaction())
-				return false;
-			// 修改数据失败;
-			return false;
-		}
-		// 提交事务;
-		if (!commit_transaction())
-			return false;
-
-		return true;
-	}
-
 	bool databaseDI::get_ip_data(std::list<table_ip>& listData)
 	{
 		listData.clear();
@@ -731,35 +680,30 @@ namespace db
 		}
 		return true;
 	}
-
-	bool databaseDI::get_ip_data(std::list<table_ip>& listData, const int& module)
+	//bool databaseDI::get_ip_data(std::list<table_ip>& listData, const int& module)
+	bool databaseDI::get_ip_data(std::map<std::string,table_ip>& softMap, const int& module, const int &number)
 	{
-		listData.clear();
+		softMap.clear();
 
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_ip where module=\'%d\'", module);
+		sprintf_s(sql, "select * from t_ip where module=\'%d\' and number=\'%d\'", module,number);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
 
-		table_ip stData;
+		
 		while (sql_row = mysql_fetch_row(result))
 		{
-			stData.id = std::atoi(sql_row[0]);
-			stData.ip = sql_row[1];
-			stData.host = sql_row[2];
-			stData.software = sql_row[3];
-			stData.module = std::atoi(sql_row[4]);
-			stData.used = std::atoi(sql_row[5]);
-			stData.username = sql_row[6];
+			std::string software = sql_row[3];
+			table_ip stData;
 			stData.icoPath = sql_row[7];
 			stData.number = std::atoi(sql_row[8]);
-			listData.push_back(stData);
+			softMap[software] = stData;
 		}
 		return true;
 	}
@@ -817,14 +761,14 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_host(std::string &hostname,std::string &ip)
+	bool databaseDI::get_host(std::string &hostname, unsigned int &number, std::string &ip)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select hostName from t_ip_configure where ip = \'%s\'", ip.c_str());
+		sprintf_s(sql, "select hostName,number from t_ip_configure where ip = \'%s\'", ip.c_str());
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -833,6 +777,7 @@ namespace db
 		while (sql_row = mysql_fetch_row(result))
 		{
 			hostname = sql_row[0];
+			number = std::atoi((sql_row[1]));
 		}
 		return true;
 	}

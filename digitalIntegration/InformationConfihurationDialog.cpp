@@ -35,11 +35,11 @@ void InformationConfihurationDialog::init()
 	m_AddIpInfoDialog = new AddIpInfoDialog(this);
 
 	m_modelTool1 = new QStandardItemModel();
-	m_modelTool1->setColumnCount(3);
-	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
-	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
+	m_modelTool1->setColumnCount(2);
+	//m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
+	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
 	//m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool1->setModel(m_modelTool1);
 	common::setTableViewBasicConfiguration(ui->tableViewTool1);
 
@@ -62,29 +62,29 @@ void InformationConfihurationDialog::init()
 
 
 	m_modelTool2 = new QStandardItemModel();
-	m_modelTool2->setColumnCount(3);
-	m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
-	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
+	m_modelTool2->setColumnCount(2);
+	//m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
+	m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
 	//m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool2->setModel(m_modelTool2);
 	common::setTableViewBasicConfiguration(ui->tableViewTool2);
 
 	m_modelTool3 = new QStandardItemModel();
-	m_modelTool3->setColumnCount(3);
-	m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
-	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
+	m_modelTool3->setColumnCount(2);
+	//m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
+	m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
 	//m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool3->setModel(m_modelTool3);
 	common::setTableViewBasicConfiguration(ui->tableViewTool3);
 
 	m_modelTool4 = new QStandardItemModel();
-	m_modelTool4->setColumnCount(3);
-	m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
-	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
+	m_modelTool4->setColumnCount(2);
+	//m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
+	m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
 	//m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool4->setModel(m_modelTool4);
 	common::setTableViewBasicConfiguration(ui->tableViewTool4);
 
@@ -186,96 +186,50 @@ void InformationConfihurationDialog::initFaceData()
 
 void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* model, const int& module)
 {
-	//delAllModelRow(model);
-	//std::list<table_ip> listTools;
-	//if (db::databaseDI::Instance().get_ip_data(listTools, module))
-	//{
-	//	for (const auto& stTool : listTools)
-	//	{
-	//		/*   model->appendRow(QList<QStandardItem*>()
-	//			   << new QStandardItem(QString::fromStdString(stTool.host))
-	//			   << new QStandardItem(QString::fromStdString(stTool.name))
-	//			   << new QStandardItem(QString::fromStdString(stTool.path))
-	//			   << new QStandardItem(QString::fromStdString(stTool.icoPath)));*/
-	//		if (stTool.number == common::iLoginNum && stTool.username == std::to_string(common::iUserID))// &&不显示其他用户添加的软件
-	//		{
-	//			int newRowIndex = model->rowCount(); // 获取当前行数
-	//			model->insertRow(newRowIndex); // 插入新行
-
-	//			QStandardItem* item = new QStandardItem(QString::fromStdString(stTool.host));
-	//			// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	//			model->setItem(newRowIndex, 0, item);
-	//			//QModelIndex index = model->index(newRowIndex, 0);
-	//			//model->setData(index, stTool.id, Qt::UserRole);  // 设置id;
-	//			model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stTool.software)));
-	//			model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stTool.icoPath)));
-	//		}
-	//	}
-
-	//}
-
 	delAllModelRow(model);
-	std::list<table_tools> listTools;
-	if (db::databaseDI::Instance().get_tools(listTools, module))
+	std::map<std::string, table_ip> ipMap;
+	if (db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum))
 	{
-		for (const auto& stTool : listTools)
+		for (const auto& stTool : ipMap)
 		{
+			const std::string& software = stTool.first;
+			const table_ip& data = stTool.second;
 			/*   model->appendRow(QList<QStandardItem*>()
 				   << new QStandardItem(QString::fromStdString(stTool.host))
 				   << new QStandardItem(QString::fromStdString(stTool.name))
 				   << new QStandardItem(QString::fromStdString(stTool.path))
 				   << new QStandardItem(QString::fromStdString(stTool.icoPath)));*/
-			if (stTool.username == std::to_string(common::iUserID))
+				   //if (data.username == std::to_string(common::iUserID))
+				   //if (data.number == common::iLoginNum)// &&不显示其他用户添加的软件
 			{
 				int newRowIndex = model->rowCount(); // 获取当前行数
 				model->insertRow(newRowIndex); // 插入新行
 
-				QStandardItem* item = new QStandardItem(QString::fromStdString(stTool.host));
+				//QStandardItem* item = new QStandardItem(QString::fromStdString(stTool.host));
 				// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-				model->setItem(newRowIndex, 0, item);
+				//model->setItem(newRowIndex, 0, item);
 				//QModelIndex index = model->index(newRowIndex, 0);
 				//model->setData(index, stTool.id, Qt::UserRole);  // 设置id;
-				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stTool.name)));
-				model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stTool.icoPath)));
+				model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
+				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.icoPath)));
 			}
 		}
 
 	}
+
+
 }
 
 void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel)
 {
-	//delAllModelRow(pModel);
-	//std::list<table_ip> listData;
-	//if (db::databaseDI::Instance().get_ip_data(listData))
-	//{
-	//	for (const auto& stIp : listData)
-	//	{
-	//		if (stIp.number == common::iLoginNum && stIp.username == std::to_string(common::iUserID))
-	//		{
-	//			int newRowIndex = pModel->rowCount(); // 获取当前行数
-	//			pModel->insertRow(newRowIndex); // 插入新行
-
-	//			QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.ip));
-	//			// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	//			pModel->setItem(newRowIndex, 0, item);
-	//			//QModelIndex index = pModel->index(newRowIndex, 0);
-	//			//pModel->setData(index, stIp.id, Qt::UserRole);  // 设置id;
-
-	//			//pModel->setItem(newRowIndex, 0, item);
-	//			pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.host)));
-	//			pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
-	//		}
-	//	}
-	//}
-
 	delAllModelRow(pModel);
-	std::list<table_tools> listData;
-	if (db::databaseDI::Instance().get_tools(listData))
+	std::list<table_ip> listData;
+	if (db::databaseDI::Instance().get_ip_data(listData))
 	{
 		for (const auto& stIp : listData)
 		{
-			if (stIp.username == std::to_string(common::iUserID))
+			//if (stIp.number == common::iLoginNum && stIp.username == std::to_string(common::iUserID))
+			if (stIp.number == common::iLoginNum)
 			{
 				int newRowIndex = pModel->rowCount(); // 获取当前行数
 				pModel->insertRow(newRowIndex); // 插入新行
@@ -288,39 +242,39 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 
 				//pModel->setItem(newRowIndex, 0, item);
 				pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.host)));
-				pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.name)));
+				pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
 			}
 		}
 	}
 
 }
 
-void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel, const int& module)
-{
-	delAllModelRow(pModel);
-	std::list<table_ip> listData;
-	if (db::databaseDI::Instance().get_ip_data(listData, module))
-	{
-		for (const auto& stIp : listData)
-		{
-			//pModel->appendRow(QList<QStandardItem*>()
-			//    << new QStandardItem(QString::fromStdString(stData.host))
-			//    << new QStandardItem(QString::fromStdString(stData.ip)));
-
-			int newRowIndex = pModel->rowCount(); // 获取当前行数
-			pModel->insertRow(newRowIndex); // 插入新行
-
-			QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
-			// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-			pModel->setItem(newRowIndex, 0, item);
-			QModelIndex index = pModel->index(newRowIndex, 0);
-			pModel->setData(index, stIp.id, Qt::UserRole);  // 设置id;
-
-			pModel->setItem(newRowIndex, 0, item);
-			pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.ip)));
-		}
-	}
-}
+//void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel, const int& module)
+//{
+//	delAllModelRow(pModel);
+//	std::list<table_ip> listData;
+//	if (db::databaseDI::Instance().get_ip_data(listData, module))
+//	{
+//		for (const auto& stIp : listData)
+//		{
+//			//pModel->appendRow(QList<QStandardItem*>()
+//			//    << new QStandardItem(QString::fromStdString(stData.host))
+//			//    << new QStandardItem(QString::fromStdString(stData.ip)));
+//
+//			int newRowIndex = pModel->rowCount(); // 获取当前行数
+//			pModel->insertRow(newRowIndex); // 插入新行
+//
+//			QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
+//			// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+//			pModel->setItem(newRowIndex, 0, item);
+//			QModelIndex index = pModel->index(newRowIndex, 0);
+//			pModel->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+//
+//			pModel->setItem(newRowIndex, 0, item);
+//			pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.ip)));
+//		}
+//	}
+//}
 
 
 
@@ -348,86 +302,140 @@ void InformationConfihurationDialog::delAllModelRow(QStandardItemModel* model)
 
 void InformationConfihurationDialog::slot_btnToolAdd()
 {
-	int i = 0;
 	QPushButton* pButton = (QPushButton*)sender();
 	int moduleNumber = pButton->property("module").toInt();
 
 	AddToolInfoDialog addToolInfoDialog;
+
+	QLineEdit* lineEdit1 = addToolInfoDialog.getlineEditIP1();
+	QLineEdit* lineEdit2 = addToolInfoDialog.getlineEditIP2();
+	QLineEdit* lineEdit3 = addToolInfoDialog.getlineEditIP3();
+	QLineEdit* lineEdit4 = addToolInfoDialog.getlineEditIP4();
+	QLineEdit* lineEdit5 = addToolInfoDialog.getlineEditIP5();
+	QLineEdit* lineEdit6 = addToolInfoDialog.getlineEditIP6();
+	QLabel *label1 = addToolInfoDialog.getlabelIP1();
+	QLabel *label2 = addToolInfoDialog.getlabelIP2();
+	QLabel *label3 = addToolInfoDialog.getlabelIP3();
+	QLabel *label4 = addToolInfoDialog.getlabelIP4();
+	QLabel *label5 = addToolInfoDialog.getlabelIP5();
+	QLabel *label6 = addToolInfoDialog.getlabelIP6();
+	if (moduleNumber != 1)
+	{
+		lineEdit1->setVisible(false);
+		lineEdit2->setVisible(false);
+		lineEdit3->setVisible(false);
+		lineEdit4->setVisible(false);
+		lineEdit5->setVisible(false);
+		lineEdit6->setVisible(false);
+		label1->setVisible(false);
+		label2->setVisible(false);
+		label3->setVisible(false);
+		label4->setVisible(false);
+		label5->setVisible(false);
+		label6->setVisible(false);
+	}
+
 	table_ip stIp;
-	table_tools stTool;
 	std::list<table_ip_configure> listData;
+	std::string ipData[6];
 	if (addToolInfoDialog.exec() == QDialog::Accepted)
 	{
-		addToolInfoDialog.getToolsData(stIp);
+		addToolInfoDialog.getToolsData(stIp, ipData);
 		db::databaseDI::Instance().get_all_ip(listData);
 		//for (auto &soft_ip : listData)
+		//{
+		QStandardItemModel* pModel = nullptr;
+		if (moduleNumber == 1)
 		{
-			//if (soft_ip.number == common::iLoginNum)
+			pModel = m_modelTool1;
+
+			//模块1中添加软件的逻辑
+			for (int i = 0; i < 6; i++)
 			{
-				stTool.name = stIp.software;
-				stTool.icoPath = stIp.icoPath;
-				stTool.ip = stIp.ip;
-				db::databaseDI::Instance().get_host(stTool.host, stTool.ip);
-				stTool.module = moduleNumber;
-				stTool.number = 0;
-				stTool.username = std::to_string(common::iUserID);
-			}
-		}
-
-		for (auto &soft_ip : listData)
-		{
-			stIp.ip = soft_ip.ip;
-			stIp.host = soft_ip.hostname;
-			stIp.module = moduleNumber;
-			stIp.used = 0;
-			stIp.username = std::to_string(common::iUserID);
-			stIp.number = soft_ip.number;
-
-				QStandardItemModel* pModel = nullptr;
-				if (moduleNumber == 1)
-				{
-					pModel = m_modelTool1;
-
-					//模块1中添加软件的逻辑
-
-				}
-				else if (moduleNumber == 2)
-				{
-					pModel = m_modelTool2;
-
-				}
-				else if (moduleNumber == 3)
-				{
-					pModel = m_modelTool3;
-
-				}
-				else if (moduleNumber == 4)
-				{
-					pModel = m_modelTool4;
-
-				}
-				if (pModel == nullptr)
-					return;
-				//int newRowIndex = pModel->rowCount(); // 获取当前行数
-				//pModel->insertRow(newRowIndex); // 插入新行
-				//QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
-				//// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-				//pModel->setItem(newRowIndex, 0, item);
-
-				//pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.software)));
-				//pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.icoPath)));
-
+				stIp.ip = ipData[i];
+				db::databaseDI::Instance().get_host(stIp.host, stIp.number, stIp.ip);
+				//stIp.host = soft_ip.hostname;
+				stIp.module = moduleNumber;
+				stIp.used = 0;
+				stIp.username = std::to_string(common::iUserID);
+				//stIp.number = soft_ip.number;
 				// 插入数据库;
 				if (!db::databaseDI::Instance().add_ip_tools(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
-		}
-		if (!db::databaseDI::Instance().add_tools(stTool))
-		{
-			qDebug() << "db::databaseDI::Instance().add_tools   error!";
-		}
+			}
 
+		}
+		else if (moduleNumber == 2)
+		{
+			for (auto &soft_ip : listData)
+			{
+				pModel = m_modelTool2;
+
+				stIp.ip = soft_ip.ip;
+				stIp.host = soft_ip.hostname;
+				stIp.module = moduleNumber;
+				stIp.used = 0;
+				stIp.username = std::to_string(common::iUserID);
+				stIp.number = soft_ip.number;
+				//stIp.number = common::iLoginNum;
+				// 插入数据库;
+				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				{
+					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+				}
+			}
+		}
+		else if (moduleNumber == 3)
+		{
+			for (auto &soft_ip : listData)
+			{
+				pModel = m_modelTool3;
+
+				stIp.ip = soft_ip.ip;
+				stIp.host = soft_ip.hostname;
+				stIp.module = moduleNumber;
+				stIp.used = 0;
+				stIp.username = std::to_string(common::iUserID);
+				stIp.number = soft_ip.number;
+				// 插入数据库;
+				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				{
+					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+				}
+			}
+		}
+		else if (moduleNumber == 4)
+		{
+			for (auto &soft_ip : listData)
+			{
+				pModel = m_modelTool4;
+
+				stIp.ip = soft_ip.ip;
+				stIp.host = soft_ip.hostname;
+				stIp.module = moduleNumber;
+				stIp.used = 0;
+				stIp.username = std::to_string(common::iUserID);
+				stIp.number = soft_ip.number;
+				// 插入数据库;
+				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				{
+					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+				}
+			}
+		}
+		if (pModel == nullptr)
+			return;
+		//int newRowIndex = pModel->rowCount(); // 获取当前行数
+		//pModel->insertRow(newRowIndex); // 插入新行
+		//QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
+		//// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		//pModel->setItem(newRowIndex, 0, item);
+
+		//pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.software)));
+		//pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.icoPath)));
+//}
 		emit  signal_updateToolIcon(moduleNumber);
 	}
 
