@@ -24,13 +24,13 @@ void AddToolDialog::init()
 	ui->allocationAllocation->setChecked(true);
 
 	m_model = new QStandardItemModel();
-	m_model->setColumnCount(5);
+	m_model->setColumnCount(3);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
 	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip列表"));
 	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("占用状态"));
 	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
-	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
-	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
+	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
+	//m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
 	ui->tableViewIpSet->setModel(m_model);
 	common::setTableViewBasicConfiguration(ui->tableViewIpSet);
 
@@ -44,20 +44,22 @@ void AddToolDialog::init()
 	//2.1 combox 软件数据;
 
 	ui->comboBoxToolNames->clear();
-	std::list<table_tools> listTools;
-	if (db::databaseDI::Instance().get_tools(listTools, m_iModule))
+	std::map<std::string, table_ip> ipMap;
+	if (db::databaseDI::Instance().get_ip_data(ipMap, m_iModule, common::iLoginNum))
 	{
-		for (const auto& stTool : listTools)
+		for (const auto& stTool : ipMap)
 		{
-			ui->comboBoxToolNames->addItem(QString::fromStdString(stTool.name));
+			const std::string& software = stTool.first;
+			//const table_ip& data = stTool.second;
+			ui->comboBoxToolNames->addItem(QString::fromStdString(software));
 		}
 	}
 
 
 	common::delAllModelRow(m_model);
-	std::list<table_ip> listData;
+	std::list<table_ip_configure> listData;
 
-	//if (db::databaseDI::Instance().get_all_ip_data(listData))
+	if (db::databaseDI::Instance().get_all_ip(listData))
 	{
 		int i = 1;
 		for (auto& stData : listData)
@@ -78,13 +80,13 @@ void AddToolDialog::init()
 			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 			m_model->setItem(newRowIndex, 1, item);
 
-			item = new QStandardItem(QString::fromStdString(stData.host));
-			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-			m_model->setItem(newRowIndex, 3, item);
+			//item = new QStandardItem(QString::fromStdString(stData.host));
+			//item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+			//m_model->setItem(newRowIndex, 3, item);
 
-			item = new QStandardItem(QString::fromStdString(stData.username));
-			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-			m_model->setItem(newRowIndex, 4, item);
+			//item = new QStandardItem(QString::fromStdString(stData.username));
+			//item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+			//m_model->setItem(newRowIndex, 4, item);
 
 
 			QWidget* widget = new QWidget(); // 创建一个容器Widget来存放CheckBox
@@ -130,14 +132,14 @@ void AddToolDialog::init()
    //                 }
    //             }
    //             });
-			if (stData.used == 0)
+			//if (stData.used == 0)
 			{
 				item = new QStandardItem(QString::fromLocal8Bit("未占用"));
 				item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 				m_model->setItem(newRowIndex, 2, item);
 				connect(checkBox, &QCheckBox::clicked, this, &AddToolDialog::slot_ipCheckBoxClicked);
 			}
-			else
+			//else
 			{
 				checkBox->setChecked(true);
 				checkBox->setDisabled(true);

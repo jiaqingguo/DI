@@ -158,9 +158,6 @@ void LoginDialog::slot_btnLoginClicked()
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 
-		db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-		db::databaseDI::Instance().update_tools_username(common::iLoginNum, std::to_string(common::iUserID));
-
 		this->accept();
 		//	this->hide();
 			/*g_pMainWindow->setUserNameText(m_sUser);

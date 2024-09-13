@@ -17,14 +17,6 @@ AddToolInfoDialog::AddToolInfoDialog(QWidget *parent) :
     ui->lineEditIconPath->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
 
-	std::set<std::string> conboBoxip;
-	if (db::databaseDI::Instance().get_ip_data_by_number(conboBoxip, common::iLoginNum))
-	{
-		for (const std::string &ip : conboBoxip)
-		{
-			ui->comboBoxIP->addItem(QString::fromStdString(ip));
-		}
-	}
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -32,7 +24,17 @@ AddToolInfoDialog::~AddToolInfoDialog()
     delete ui;
 }
 
-void AddToolInfoDialog::getToolsData(table_ip& toolsData)
+//void AddToolInfoDialog::getToolsData(table_ip& toolsData)
+//{
+//	//toolData.host=ui->lineEditHost->text().toStdString();
+//	toolsData.software = ui->lineEditToolName->text().toStdString();
+//	//QString strPath = ui->lineEditToolPath->text();
+//	//strPath.replace("\\","\\\\");
+//	//toolData.path = strPath.toStdString();
+//	toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
+//	toolsData.ip = ui->lineEditIP1->text().toStdString();
+//}
+void AddToolInfoDialog::getToolsData(table_ip& toolsData,std::string ipdata[6])
 {
 	//toolData.host=ui->lineEditHost->text().toStdString();
 	toolsData.software = ui->lineEditToolName->text().toStdString();
@@ -40,8 +42,12 @@ void AddToolInfoDialog::getToolsData(table_ip& toolsData)
 	//strPath.replace("\\","\\\\");
 	//toolData.path = strPath.toStdString();
 	toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
-	QString temp = ui->comboBoxIP->currentText();
-	toolsData.ip = temp.toStdString();
+	ipdata[0] = ui->lineEditIP1->text().toStdString();
+	ipdata[1] = ui->lineEditIP2->text().toStdString();
+	ipdata[2] = ui->lineEditIP3->text().toStdString();
+	ipdata[3] = ui->lineEditIP4->text().toStdString();
+	ipdata[4] = ui->lineEditIP5->text().toStdString();
+	ipdata[5] = ui->lineEditIP6->text().toStdString();
 }
 
 
@@ -70,4 +76,53 @@ void AddToolInfoDialog::slot_btnOk()
     }
     this->accept();
    
+}
+
+QLineEdit* AddToolInfoDialog::getlineEditIP1()
+{
+	return ui->lineEditIP1;
+}
+QLineEdit* AddToolInfoDialog::getlineEditIP2()
+{
+	return ui->lineEditIP2;
+}
+QLineEdit* AddToolInfoDialog::getlineEditIP3()
+{
+	return ui->lineEditIP3;
+}
+QLineEdit* AddToolInfoDialog::getlineEditIP4()
+{
+	return ui->lineEditIP4;
+}
+QLineEdit* AddToolInfoDialog::getlineEditIP5()
+{
+	return ui->lineEditIP5;
+}
+QLineEdit* AddToolInfoDialog::getlineEditIP6()
+{
+	return ui->lineEditIP6;
+}
+QLabel* AddToolInfoDialog::getlabelIP1()
+{
+	return ui->labelIP1;
+}
+QLabel* AddToolInfoDialog::getlabelIP2()
+{
+	return ui->labelIP2;
+}
+QLabel* AddToolInfoDialog::getlabelIP3()
+{
+	return ui->labelIP3;
+}
+QLabel* AddToolInfoDialog::getlabelIP4()
+{
+	return ui->labelIP4;
+}
+QLabel* AddToolInfoDialog::getlabelIP5()
+{
+	return ui->labelIP5;
+}
+QLabel* AddToolInfoDialog::getlabelIP6()
+{
+	return ui->labelIP6;
 }
