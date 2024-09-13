@@ -233,13 +233,13 @@ void FilemangageDialog::initTableViewDownload()
 	m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
 	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
 	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
-	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("复制路径"));
+	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("复制路径")); 
 	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
 	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
 	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
 	connect(m_actionRename, &QAction::triggered, this, &FilemangageDialog::slot_actioxnRename);
 	connect(m_actionCompressDir, &QAction::triggered, this, &FilemangageDialog::slot_actionCompressDir);
-	
+	connect(m_actionCopyPath, &QAction::triggered, this, &FilemangageDialog::slot_actionCopyPath);
 }
 
 void FilemangageDialog::flushTableViewDownload()
@@ -1188,10 +1188,13 @@ void FilemangageDialog::slot_btnCopyPath()
 
 void FilemangageDialog::slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath)
 {
-
-	if (m_FtpClientClass->execute_compress(vecStrPath, strZipPath))
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在压缩保存"));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+	int ret = m_FtpClientClass->execute_compress(vecStrPath, strZipPath);
+	m_GifDialog->close();
+	if (ret)
 	{
-		
 		flushTableViewFtpFile();
 	}
 	else

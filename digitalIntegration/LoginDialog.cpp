@@ -162,10 +162,6 @@ void LoginDialog::slot_btnLoginClicked()
 		db::databaseDI::Instance().update_tools_username(common::iLoginNum, std::to_string(common::iUserID));
 
 		this->accept();
-		//	this->hide();
-			/*g_pMainWindow->setUserNameText(m_sUser);
-			g_pMainWindow->showMaximized();*/
-
 	}
 }
 
@@ -189,11 +185,9 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	//this->accept();
+	this->accept();
 
-	/*hide();
-	g_pMainWindow->setUserNameText(m_sUser);
-	g_pMainWindow->showMaximized();*/
+
 }
 
 void LoginDialog::slot_timeout()

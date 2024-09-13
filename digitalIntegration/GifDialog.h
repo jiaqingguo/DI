@@ -15,6 +15,7 @@ public:
     explicit GifDialog(QWidget *parent = nullptr);
     ~GifDialog();
 
+    void setTitleText(QString text);
 private:
     Ui::GifDialog *ui;
 };

@@ -8,7 +8,8 @@ GifDialog::GifDialog(QWidget *parent) :
 {
     ui->setupUi(this);
    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
-    setWindowTitle(QString::fromLocal8Bit("正在下载"));
+   setWindowTitle(QString::fromLocal8Bit("正在下载"));
+   // setWindowTitle(strTille);
    // ui->toolButton->setFixedSize(55, 64);
     ui->toolButton->setIcon(QIcon(":/image/waiting.png"));
     //	ui->toolButton->setIconSize(QSize(50, 46));
@@ -27,4 +28,9 @@ GifDialog::GifDialog(QWidget *parent) :
 GifDialog::~GifDialog()
 {
     delete ui;
+}
+
+void GifDialog::setTitleText(QString text)
+{
+    setWindowTitle(text);
 }
