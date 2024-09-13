@@ -40,7 +40,10 @@ struct table_tools
 	std::string		host;		
 	std::string		path;
 	std::string		icoPath;
-	uint32_t		module=0;
+	uint32_t		module = 0;
+	std::string     ip;
+	uint32_t		number = 0;
+	std::string     username;
 };
 
 // ip±í;

@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -31,10 +32,8 @@ public:
     QLineEdit *lineEditToolName;
     QLabel *label_4;
     QLineEdit *lineEditIconPath;
-    QLineEdit *lineEditHost;
     QLabel *label;
-    QLabel *label_3;
-    QLineEdit *lineEdit_2;
+    QComboBox *comboBoxIP;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnOK;
@@ -44,7 +43,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(363, 178);
+        AddToolInfoDialog->resize(343, 177);
         verticalLayout = new QVBoxLayout(AddToolInfoDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
@@ -52,42 +51,32 @@ public:
         label_2 = new QLabel(AddToolInfoDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_2);
+        formLayout->setWidget(0, QFormLayout::LabelRole, label_2);
 
         lineEditToolName = new QLineEdit(AddToolInfoDialog);
         lineEditToolName->setObjectName(QString::fromUtf8("lineEditToolName"));
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, lineEditToolName);
+        formLayout->setWidget(0, QFormLayout::FieldRole, lineEditToolName);
 
         label_4 = new QLabel(AddToolInfoDialog);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_4);
+        formLayout->setWidget(1, QFormLayout::LabelRole, label_4);
 
         lineEditIconPath = new QLineEdit(AddToolInfoDialog);
         lineEditIconPath->setObjectName(QString::fromUtf8("lineEditIconPath"));
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, lineEditIconPath);
-
-        lineEditHost = new QLineEdit(AddToolInfoDialog);
-        lineEditHost->setObjectName(QString::fromUtf8("lineEditHost"));
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, lineEditHost);
+        formLayout->setWidget(1, QFormLayout::FieldRole, lineEditIconPath);
 
         label = new QLabel(AddToolInfoDialog);
         label->setObjectName(QString::fromUtf8("label"));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, label);
+        formLayout->setWidget(2, QFormLayout::LabelRole, label);
 
-        label_3 = new QLabel(AddToolInfoDialog);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        comboBoxIP = new QComboBox(AddToolInfoDialog);
+        comboBoxIP->setObjectName(QString::fromUtf8("comboBoxIP"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_3);
-
-        lineEdit_2 = new QLineEdit(AddToolInfoDialog);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, lineEdit_2);
+        formLayout->setWidget(2, QFormLayout::FieldRole, comboBoxIP);
 
 
         verticalLayout->addLayout(formLayout);
@@ -121,8 +110,7 @@ public:
         AddToolInfoDialog->setWindowTitle(QCoreApplication::translate("AddToolInfoDialog", "\345\242\236\345\212\240\345\267\245\345\205\267\344\277\241\346\201\257", nullptr));
         label_2->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\267\245\345\205\267\345\220\215\347\247\260:", nullptr));
         label_4->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\233\276\346\240\207\350\267\257\345\276\204:", nullptr));
-        label->setText(QCoreApplication::translate("AddToolInfoDialog", "\344\270\273\346\234\272\357\274\232", nullptr));
-        label_3->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\267\245\345\205\267\350\267\257\345\276\204\357\274\232", nullptr));
+        label->setText(QCoreApplication::translate("AddToolInfoDialog", "IP\357\274\232", nullptr));
         btnOK->setText(QCoreApplication::translate("AddToolInfoDialog", "\347\241\256\345\256\232", nullptr));
     } // retranslateUi
 

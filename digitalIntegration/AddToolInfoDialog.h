@@ -25,6 +25,7 @@ private slots:
     void slot_btnOk();
 private:
     Ui::AddToolInfoDialog *ui;
+
 };
 
 #endif // ADDTOOLINFODIALOG_H

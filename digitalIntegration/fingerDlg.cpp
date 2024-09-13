@@ -158,7 +158,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			Sleep(5);
+			Sleep(50);
 		}
 	}
 	return 0;

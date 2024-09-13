@@ -131,7 +131,7 @@ void LoginDialog::slot_btnLoginClicked()
 		return;
 	}
 
-	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
 	if (common::iLoginNum >= 6)
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("限制同时登录六个用户，请勿继续登录！"));
@@ -157,6 +157,9 @@ void LoginDialog::slot_btnLoginClicked()
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+
+		db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+		db::databaseDI::Instance().update_tools_username(common::iLoginNum, std::to_string(common::iUserID));
 
 		this->accept();
 		//	this->hide();
@@ -186,7 +189,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	this->accept();
+	//this->accept();
 
 	/*hide();
 	g_pMainWindow->setUserNameText(m_sUser);

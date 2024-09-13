@@ -137,6 +137,7 @@ private:
 	ResourceManageDialog* m_ResourceManageDialog = nullptr; // 资源管理界面;
 
 	InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// 信息配置界面;
+	InformationConfihurationDialog* m_inforConfihurationDialog = nullptr;
 
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
 

@@ -69,6 +69,9 @@ MainWindow::~MainWindow()
 	if (m_fingerDlg != nullptr)
 		delete m_fingerDlg;
 
+	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+	if (!db::databaseDI::Instance().del_tools_username(common::iLoginNum))
+		return;
 
     int loginStatus = 0;
     int userId = m_LoginDialog->GetUserID();
@@ -140,15 +143,19 @@ void MainWindow::initInitface()
         });
     connect(ui->btnModule1, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(1);
+		updateModuleToolIcon(1);
         });
     connect(ui->btnModule2, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(2);
+		updateModuleToolIcon(2);
         });
     connect(ui->btnModule3, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(3);
+		updateModuleToolIcon(3);
         });
     connect(ui->btnModule4, &QPushButton::clicked, [this]() {
         ui->stackedWidget->setCurrentIndex(4);
+		updateModuleToolIcon(4);
         });
 
     ui->btnResourceManage->setCheckable(true);
@@ -200,11 +207,11 @@ void MainWindow::initInitface()
     connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
     
 
-    updateModuleToolIcon(1);
+    /*updateModuleToolIcon(1);
     updateModuleToolIcon(2);
     updateModuleToolIcon(3);
     updateModuleToolIcon(4);
-
+*/
     //if (m_LoginDialog->exec() == QDialog::Accepted)
     //{
     //    ui->labelUserName->setText(m_LoginDialog->GetUser());
@@ -271,6 +278,7 @@ void MainWindow::slot_btnResourceManageClicked()
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
 {
+	m_InforConfihurationDialog->initFaceData();
     m_InforConfihurationDialog->exec();
     ui->btnInformationConfihuration->setChecked(false);
 }
@@ -540,20 +548,23 @@ void MainWindow::updateModuleToolIcon(int module)
     {
         for (const auto& stTool : listTools)
         {
-            QToolButton* pBtn = new QToolButton();
-            //QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-            pBtn->setIcon(QIcon(QString::fromStdString(stTool.icoPath)));
-            pBtn->setIconSize(QSize(50, 46));
-            pBtn->setText(QString::fromStdString(stTool.name));
-            pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-            pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-            pBtn->setFocusPolicy(Qt::NoFocus);
-            pBtn->setFixedSize(55, 64);
-         //   pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+			if (stTool.username == std::to_string(common::iUserID))
+			{
+				QToolButton* pBtn = new QToolButton();
+				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
+				pBtn->setIcon(QIcon(QString::fromStdString(stTool.icoPath)));
+				pBtn->setIconSize(QSize(50, 46));
+				pBtn->setText(QString::fromStdString(stTool.name));
+				pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+				pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+				pBtn->setFocusPolicy(Qt::NoFocus);
+				pBtn->setFixedSize(55, 64);
+				//   pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
 
-            pBtn->setEnabled(true);
+				pBtn->setEnabled(true);
 
-            pLayout->addWidget(pBtn);
+				pLayout->addWidget(pBtn);
+			}
         }
     }
 }
@@ -564,6 +575,10 @@ void MainWindow::slot_login_succ()
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+
+	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+	db::databaseDI::Instance().update_tools_username(common::iLoginNum, std::to_string(common::iUserID));
+
 	this->m_LoginDialog->accept();
 }
 

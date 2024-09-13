@@ -55,11 +55,15 @@ namespace db
 		bool get_user_finger2(unsigned char *temp,int &templen, int &userid);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
+
 		// 工具表;
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
+		bool get_tools(std::list<table_tools>& listTools);
 		bool add_tools( table_tools& stTool);
 		bool add_ip_tools(table_ip &stIp);
 		bool del_tools(const int& id);
+		bool update_tools_username(const int &number, const std::string &user);
+		bool del_tools_username(const int &number);
 
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
@@ -70,21 +74,21 @@ namespace db
 		bool update_ip_status(const uint32_t& id, int status);
 		bool update_ip_all_status();
 
-		//遍历ip列表，看看有没有此ip
+		//遍历t_ip列表查询ip数量
 		bool get_ip_count(const std::string& ip, int& count);
-		//在新增工具画面中 显示数据库中的所有的ip
+		//在新增工具画面中 显示t_ip中的所有的ip
 		bool get_all_ip_data(std::list<table_ip>& listData);
 		//将t_ip中的username字段设置成用户名，显示已占用
 		bool updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id);
-		//客户端退出的时候，该用户所用的ip的username字段置nullptr
+		//退出时，t_ip的username字段置0
 		bool updata_ipusername(const std::string& u_name);
 
 
 
-		/// ip配置表;
-		bool get_ip_data_by_number(std::set<std::string> vecIpData, const int& number);
-
+		// ip配置表;
+		bool get_ip_data_by_number(std::set<std::string> &vecIpData, const int& number);
 		bool get_all_ip(std::list<table_ip_configure>& listData);
+		bool get_host(std::string &hostname,std::string &ip);
 
 
 

@@ -37,6 +37,7 @@ private slots:
 
     void  slot_btnToolDel();
     void  slot_btnIpDel();
+
 signals:
     void signal_updateToolIcon(int module);
     //void slot_tooltip(QModelIndex index);
