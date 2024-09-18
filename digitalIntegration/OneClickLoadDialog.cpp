@@ -106,10 +106,11 @@ void OneClickLoadDialog::slot_btnOK()
 {
 	//std::vector<std::string> vecStrSoftware;
 	QString exeDir = QCoreApplication::applicationDirPath();
-	for (int row = 0; row < m_model->rowCount(); ++row) {
+	for (int row = 0; row < m_model->rowCount(); ++row) 
+	{
 		QStandardItem* item = m_model->item(row, 1); // 获取当前行的第2列项
-		if (item) {
-			//vecStrSoftware.push_back(item->text().toLocal8Bit().toStdString());
+		if (item) 
+		{
 			QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item->text() + ".bsp";
 
 			//启动bsp的嵌入
@@ -119,7 +120,7 @@ void OneClickLoadDialog::slot_btnOK()
 			table_load_project stData;
 			stData.projectPath = item->text().toStdString();
 			stData.userID = common::iUserID;
-			//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID))
+			if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID))
 			{
 				if (!db::databaseDI::Instance().add_load_software(stData))
 				{

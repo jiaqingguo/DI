@@ -52,7 +52,7 @@ namespace db
 		//指纹表
 		bool add_user_finger(unsigned char *tempdata, int &templen, const int &id);
 		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int &userid);
-		bool get_user_finger2(unsigned char *temp,int &templen, int &userid);
+		bool get_user_finger2(unsigned char *&temp,int &templen, int &userid);
 
 		//bool get_user_finger(std::string &u_finger, int &templen, int userid);
 

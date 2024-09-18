@@ -156,7 +156,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			Sleep(40);
+			//Sleep(100);
 		}
 	}
 	return 0;
@@ -267,26 +267,32 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 
 		if (approval == 1)
 		{
-			db::databaseDI::Instance().get_user_finger(vec_finger, common::iUserID);
-			//db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID);
-
-			if (vec_finger.size() != 0)
+			//db::databaseDI::Instance().get_user_finger(vec_finger, common::iUserID);
+			if (!db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID))
 			{
-				for (auto &v_f : vec_finger)
+				return;
+			}
+
+			//if (vec_finger.size() != 0)
+			if(szLastRegTemplate2 && nLastRegTempLen2 != 0)
+			{
+				//for (auto &v_f : vec_finger)
 				{
-					ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
-					//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp, len);
+					//ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
+					ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp, len);
 					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
 					{
 						success = true;
-						break;
+						delete[] szLastRegTemplate2;
+						//break;
 					}
 				}
-				for (auto& v_f : vec_finger) {
+				/*for (auto& v_f : vec_finger) 
+				{
 					delete[] v_f.first;
 					v_f.first = nullptr;
 				}
-				vec_finger.clear();
+				vec_finger.clear();*/
 				if (success)
 				{
 					//MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);

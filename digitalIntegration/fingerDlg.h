@@ -53,7 +53,7 @@ public:
 
 	//Last register template, use for verify   下一个注册模板，用于验证
 	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
-	unsigned char szLastRegTemplate2[MAX_TEMPLATE_SIZE];
+	unsigned char *szLastRegTemplate2;
 	int nLastRegTempLen;
 	int nLastRegTempLen2;
 	int nFakeFunOn;

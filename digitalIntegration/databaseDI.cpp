@@ -1375,35 +1375,41 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_user_finger2(unsigned char *temp, int &templen, int &userid)
+	bool databaseDI::get_user_finger2(unsigned char *&temp, int &templen, int &userid)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
+		sprintf_s(sql, sizeof(sql),"select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
 
+		// 分配内存存储二进制数据
+		temp = new unsigned char[2048];
+		bool flag = false;
 		while (sql_row = mysql_fetch_row(result))
 		{
-			int templen = std::atoi(sql_row[1]);
+			templen = std::atoi(sql_row[1]);
 			const char *tempdata = sql_row[0];
-
-			// 分配内存存储二进制数据
-			temp = new unsigned char[templen];
-
+		
 			// 将十六进制字符串转换为二进制数据
-			for (int i = 0; i < templen; i += 2) {
+			for (int i = 0; i < templen; i += 2)
+			{
 				// 每次处理两个字符
 				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
 				// 将十六进制字符转换为无符号整数
 				temp[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
 			}
+			flag = true;
 		}
-		return true;
+		if (!flag) {
+			delete[] temp;  // 确保没有数据加载时释放内存
+			temp = nullptr;
+		}
+		return flag;
 	}
 
 	//bool databaseDI::add_user_finger(const std::string& ffingerdata, int fingerlen)
@@ -1559,7 +1565,7 @@ namespace db
 		{
 			return true;
 		}
-		return true;
+		return false;
 	}
 }
 
