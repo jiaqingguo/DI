@@ -24,6 +24,7 @@ private slots:
 
     void slot_ipCheckBoxClicked();
     void slot_btnAddClicked();
+	void slot_display_lineEditIP(QString text);
 private:
     Ui::AddToolDialog *ui;
     QStandardItemModel* m_model;

@@ -25,7 +25,6 @@ fingerDlg::fingerDlg(QDialog* pParent)
 
 fingerDlg::~fingerDlg()
 {
-	DeleteCriticalSection(&g_cs);
 	if (m_hDevice)
 	{
 		if (NULL != pImgBuf)
@@ -99,7 +98,6 @@ void fingerDlg::finger_init()
 		pImgBuf = new unsigned char[imgFPWidth*imgFPHeight];
 		nLastRegTempLen = 0;
 		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
-		InitializeCriticalSection(&g_cs);
 		memset(&szLastRegTemplate, 0x0, sizeof(szLastRegTemplate));
 		qDebug() << "Init ZKFPM success";
 		Tid = 1;
@@ -158,7 +156,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			Sleep(50);
+			Sleep(40);
 		}
 	}
 	return 0;
@@ -276,11 +274,8 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			{
 				for (auto &v_f : vec_finger)
 				{
-					//等待获取关键段对象
-					EnterCriticalSection(&g_cs);
 					ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
 					//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp, len);
-					LeaveCriticalSection(&g_cs);
 					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
 					{
 						success = true;

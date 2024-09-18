@@ -68,7 +68,6 @@ public:
 	void DoVerify(unsigned char *temp, int len);
 
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
-	CRITICAL_SECTION g_cs;
 
 signals:
 	void login_succ();

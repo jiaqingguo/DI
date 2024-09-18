@@ -781,7 +781,26 @@ namespace db
 		}
 		return true;
 	}
+	
+	bool databaseDI::get_ip_by_software(std::string &ip, std::string software,int &number)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
 
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select ip from t_ip where software = \'%s\' and number = \'%d\'", software.c_str(),number);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			ip = sql_row[0];
+		}
+		return true;
+	}
 
 	bool databaseDI::add_ip(table_ip& stData)
 	{
@@ -1293,7 +1312,10 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[3072] = { 0 };
-		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", hexStr.c_str(), templen, id);
+		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", 
+			hexStr.c_str(), 
+			templen, 
+			id);
 
 
 		if (!exec_sql(last_id, sql))
@@ -1439,6 +1461,106 @@ namespace db
 	//	return true;
 	//}
 
+	bool databaseDI::add_load_software(table_load_project &stData)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
+
+		sprintf_s(sql, "insert into t_load_project(projectPath,userId) values(\'%s\',\'%d\')",
+			stData.projectPath.c_str(),
+			stData.userID);
+
+		if (!exec_sql(last_id, sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		stData.id = last_id;
+		return true;
+	}
+
+	bool databaseDI::get_load_software(std::list<table_load_project> &listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_load_project");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_load_project stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.projectPath = sql_row[1];
+			stData.userID = std::atoi(sql_row[2]);
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
+	bool databaseDI::del_load_software(std::string software, int &userid)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "delete from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')", userid,software.c_str());
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+	bool databaseDI::get_software(std::string software, int &userid)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')",userid,software.c_str());
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			return true;
+		}
+		return true;
+	}
 }
 
 

@@ -449,13 +449,11 @@ void MainWindow::slot_btnAddToolTab()
                 QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
                     +QString::fromStdString(strValue) + "/"+toolName + ".bsp";
 
-                // 启动bsp 嵌入
+                // 启动bsp嵌入
                 int a = 1;
             }
-           
 
         }
-       
 
     }
     
@@ -463,6 +461,30 @@ void MainWindow::slot_btnAddToolTab()
 
 void MainWindow::slot_btnOneClickLoad()
 {
+	if (!m_OneClickLoadDialog->m_model->rowCount())
+	{
+		std::list<table_load_project> listData;
+		if (db::databaseDI::Instance().get_load_software(listData))
+		{
+			for (auto &stData : listData)
+			{
+				if (stData.userID == common::iUserID)
+				{
+					int newRowIndex = m_OneClickLoadDialog->m_model->rowCount(); // 获取当前行数
+					m_OneClickLoadDialog->m_model->insertRow(newRowIndex); // 插入新行
+
+					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
+					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
+					QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
+					// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+					//m_model->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+
+					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stData.projectPath)));
+
+				}
+			}
+		}
+	}
    
     m_OneClickLoadDialog->exec();
     QPushButton* pButton = (QPushButton*)sender();
@@ -576,6 +598,7 @@ void MainWindow::slot_login_succ()
     int loginStatus = 1;
     db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 
+	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 
 	this->m_LoginDialog->accept();

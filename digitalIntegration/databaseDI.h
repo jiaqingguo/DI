@@ -88,6 +88,7 @@ namespace db
 		bool get_ip_data_by_number(std::set<std::string> &vecIpData, const int& number);
 		bool get_all_ip(std::list<table_ip_configure>& listData);
 		bool get_host(std::string &hostname,unsigned int &number,std::string &ip);
+		bool get_ip_by_software(std::string &ip,std::string software,int &number);
 
 
 
@@ -104,5 +105,11 @@ namespace db
 		bool get_download_approval_list(std::list<table_DownloadApproval>& listData);
 		bool get_download_approval_list_by_userID(std::list<table_DownloadApproval>& listData,const int &userID);
 		bool update_download_approval_status(const int& id, int& approval);
+
+		//用户加载表
+		bool add_load_software(table_load_project &stData);
+		bool get_load_software(std::list<table_load_project> &listData);
+		bool del_load_software(std::string software,int &userid);
+		bool get_software(std::string software, int &userid);
 	};
 }

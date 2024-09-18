@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
+    <width>347</width>
     <height>360</height>
    </rect>
   </property>
@@ -72,7 +72,7 @@
         </size>
        </property>
        <property name="text">
-        <string>网络分配:</string>
+        <string>IP:</string>
        </property>
       </widget>
      </item>
@@ -83,10 +83,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QComboBox" name="comboBoxToolNames"/>
-     </item>
-     <item row="1" column="1" colspan="2">
+     <item row="1" column="1" colspan="3">
       <widget class="QComboBox" name="comboBoxDisplayMode">
        <item>
         <property name="text">
@@ -100,25 +97,11 @@
        </item>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="allocationAllocation">
-       <property name="text">
-        <string>分配</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
+     <item row="2" column="1" colspan="3">
+      <widget class="QComboBox" name="comboBoxToolNames"/>
      </item>
-     <item row="3" column="2">
-      <widget class="QCheckBox" name="checkBoxNoAllocate">
-       <property name="text">
-        <string>不分配</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
+     <item row="3" column="1" colspan="3">
+      <widget class="QLineEdit" name="lineEditIP"/>
      </item>
     </layout>
    </item>
@@ -181,7 +164,4 @@
  </widget>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

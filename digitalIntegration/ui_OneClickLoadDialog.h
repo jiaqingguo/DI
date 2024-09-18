@@ -25,23 +25,52 @@ class Ui_OneClickLoadDialog
 {
 public:
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_9;
     QTableView *tableView;
+    QVBoxLayout *verticalLayout_9;
+    QPushButton *btnAdd;
+    QPushButton *btnDel;
+    QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
-    QPushButton *btnOK;
+    QPushButton *btnOk;
     QSpacerItem *horizontalSpacer_2;
 
     void setupUi(QDialog *OneClickLoadDialog)
     {
         if (OneClickLoadDialog->objectName().isEmpty())
             OneClickLoadDialog->setObjectName(QString::fromUtf8("OneClickLoadDialog"));
-        OneClickLoadDialog->resize(532, 292);
+        OneClickLoadDialog->resize(512, 292);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         tableView = new QTableView(OneClickLoadDialog);
         tableView->setObjectName(QString::fromUtf8("tableView"));
 
-        verticalLayout->addWidget(tableView);
+        horizontalLayout_9->addWidget(tableView);
+
+        verticalLayout_9 = new QVBoxLayout();
+        verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        btnAdd = new QPushButton(OneClickLoadDialog);
+        btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
+
+        verticalLayout_9->addWidget(btnAdd);
+
+        btnDel = new QPushButton(OneClickLoadDialog);
+        btnDel->setObjectName(QString::fromUtf8("btnDel"));
+
+        verticalLayout_9->addWidget(btnDel);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_9->addItem(verticalSpacer);
+
+
+        horizontalLayout_9->addLayout(verticalLayout_9);
+
+
+        verticalLayout->addLayout(horizontalLayout_9);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -49,10 +78,10 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        btnOK = new QPushButton(OneClickLoadDialog);
-        btnOK->setObjectName(QString::fromUtf8("btnOK"));
+        btnOk = new QPushButton(OneClickLoadDialog);
+        btnOk->setObjectName(QString::fromUtf8("btnOk"));
 
-        horizontalLayout->addWidget(btnOK);
+        horizontalLayout->addWidget(btnOk);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -70,7 +99,9 @@ public:
     void retranslateUi(QDialog *OneClickLoadDialog)
     {
         OneClickLoadDialog->setWindowTitle(QCoreApplication::translate("OneClickLoadDialog", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
-        btnOK->setText(QCoreApplication::translate("OneClickLoadDialog", "\347\241\256\345\256\232", nullptr));
+        btnAdd->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\242\236\345\212\240", nullptr));
+        btnDel->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\210\240\351\231\244", nullptr));
+        btnOk->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\212\240\350\275\275", nullptr));
     } // retranslateUi
 
 };

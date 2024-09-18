@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+class QStandardItemModel;
+
 namespace Ui {
 class OneClickLoadDialog;
 }
@@ -14,9 +16,14 @@ class OneClickLoadDialog : public QDialog
 public:
     explicit OneClickLoadDialog(QWidget *parent = nullptr);
     ~OneClickLoadDialog();
-
+	QStandardItemModel* m_model = nullptr;
 private:
     Ui::OneClickLoadDialog *ui;
+	
+private slots:
+	void slot_btnAdd();
+	void slot_btnDel();
+	void slot_btnOK();
 };
 
 #endif // ONECLICKLOADDIALOG_H

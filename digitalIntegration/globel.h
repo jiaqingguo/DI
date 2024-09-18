@@ -99,7 +99,14 @@ struct table_DownloadApproval
 	// 关联的表外数据
 	std::string    userName;
 	std::string    department;
+};
 
+//用户加载表
+struct table_load_project
+{
+	uint32_t		id = 0;			       // ID(主键自增unsigned int);
+	std::string     projectPath;
+	uint32_t		userID = 0;
 };
 
 

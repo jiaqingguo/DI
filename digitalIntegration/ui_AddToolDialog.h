@@ -11,8 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
@@ -38,10 +36,9 @@ public:
     QLineEdit *lineEditTabName;
     QLabel *label_4;
     QLabel *label;
-    QComboBox *comboBoxToolNames;
     QComboBox *comboBoxDisplayMode;
-    QCheckBox *allocationAllocation;
-    QCheckBox *checkBoxNoAllocate;
+    QComboBox *comboBoxToolNames;
+    QLineEdit *lineEditIP;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_2;
     QTableView *tableViewIpSet;
@@ -49,13 +46,12 @@ public:
     QSpacerItem *horizontalSpacer;
     QPushButton *btnAdd;
     QSpacerItem *horizontalSpacer_2;
-    QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *AddToolDialog)
     {
         if (AddToolDialog->objectName().isEmpty())
             AddToolDialog->setObjectName(QString::fromUtf8("AddToolDialog"));
-        AddToolDialog->resize(447, 360);
+        AddToolDialog->resize(347, 360);
         verticalLayout = new QVBoxLayout(AddToolDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         gridLayout = new QGridLayout();
@@ -91,31 +87,22 @@ public:
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        comboBoxToolNames = new QComboBox(AddToolDialog);
-        comboBoxToolNames->setObjectName(QString::fromUtf8("comboBoxToolNames"));
-
-        gridLayout->addWidget(comboBoxToolNames, 2, 1, 1, 2);
-
         comboBoxDisplayMode = new QComboBox(AddToolDialog);
         comboBoxDisplayMode->addItem(QString());
         comboBoxDisplayMode->addItem(QString());
         comboBoxDisplayMode->setObjectName(QString::fromUtf8("comboBoxDisplayMode"));
 
-        gridLayout->addWidget(comboBoxDisplayMode, 1, 1, 1, 2);
+        gridLayout->addWidget(comboBoxDisplayMode, 1, 1, 1, 3);
 
-        allocationAllocation = new QCheckBox(AddToolDialog);
-        buttonGroup = new QButtonGroup(AddToolDialog);
-        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
-        buttonGroup->addButton(allocationAllocation);
-        allocationAllocation->setObjectName(QString::fromUtf8("allocationAllocation"));
+        comboBoxToolNames = new QComboBox(AddToolDialog);
+        comboBoxToolNames->setObjectName(QString::fromUtf8("comboBoxToolNames"));
 
-        gridLayout->addWidget(allocationAllocation, 3, 1, 1, 1);
+        gridLayout->addWidget(comboBoxToolNames, 2, 1, 1, 3);
 
-        checkBoxNoAllocate = new QCheckBox(AddToolDialog);
-        buttonGroup->addButton(checkBoxNoAllocate);
-        checkBoxNoAllocate->setObjectName(QString::fromUtf8("checkBoxNoAllocate"));
+        lineEditIP = new QLineEdit(AddToolDialog);
+        lineEditIP->setObjectName(QString::fromUtf8("lineEditIP"));
 
-        gridLayout->addWidget(checkBoxNoAllocate, 3, 2, 1, 1);
+        gridLayout->addWidget(lineEditIP, 3, 1, 1, 3);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -162,13 +149,11 @@ public:
         AddToolDialog->setWindowTitle(QCoreApplication::translate("AddToolDialog", "\346\226\260\345\242\236\345\267\245\345\205\267\347\224\273\351\235\242", nullptr));
         label_2->setText(QCoreApplication::translate("AddToolDialog", "\345\261\225\347\244\272\346\226\271\345\274\217\357\274\232", nullptr));
         label_3->setText(QCoreApplication::translate("AddToolDialog", "\345\267\245\345\205\267\345\220\215\347\247\260\357\274\232", nullptr));
-        label_4->setText(QCoreApplication::translate("AddToolDialog", "\347\275\221\347\273\234\345\210\206\351\205\215:", nullptr));
+        label_4->setText(QCoreApplication::translate("AddToolDialog", "IP:", nullptr));
         label->setText(QCoreApplication::translate("AddToolDialog", "\346\240\207\347\255\276\345\220\215\347\247\260\357\274\232", nullptr));
         comboBoxDisplayMode->setItemText(0, QCoreApplication::translate("AddToolDialog", "Tab\351\241\265", nullptr));
         comboBoxDisplayMode->setItemText(1, QCoreApplication::translate("AddToolDialog", "\345\274\271\347\252\227", nullptr));
 
-        allocationAllocation->setText(QCoreApplication::translate("AddToolDialog", "\345\210\206\351\205\215", nullptr));
-        checkBoxNoAllocate->setText(QCoreApplication::translate("AddToolDialog", "\344\270\215\345\210\206\351\205\215", nullptr));
         groupBox->setTitle(QCoreApplication::translate("AddToolDialog", "ip\350\256\276\347\275\256\357\274\232", nullptr));
         btnAdd->setText(QCoreApplication::translate("AddToolDialog", "\346\226\260\345\242\236", nullptr));
     } // retranslateUi

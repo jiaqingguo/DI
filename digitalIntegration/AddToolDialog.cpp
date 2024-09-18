@@ -21,7 +21,8 @@ AddToolDialog::~AddToolDialog()
 
 void AddToolDialog::init()
 {
-	ui->allocationAllocation->setChecked(true);
+	ui->groupBox->hide();
+	//ui->allocationAllocation->setChecked(true);
 
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(3);
@@ -47,14 +48,22 @@ void AddToolDialog::init()
 	std::map<std::string, table_ip> ipMap;
 	if (db::databaseDI::Instance().get_ip_data(ipMap, m_iModule, common::iLoginNum))
 	{
+		//ui->comboBoxToolNames->addItem("");
+		ui->comboBoxToolNames->clear();
 		for (const auto& stTool : ipMap)
 		{
 			const std::string& software = stTool.first;
-			//const table_ip& data = stTool.second;
+			const table_ip& data = stTool.second;
 			ui->comboBoxToolNames->addItem(QString::fromStdString(software));
 		}
 	}
 
+	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this,&AddToolDialog::slot_display_lineEditIP);
+	// 手动触发槽函数以显示初始 IP 地址
+	if (ui->comboBoxToolNames->count() > 0) 
+	{
+		slot_display_lineEditIP(ui->comboBoxToolNames->itemText(0));
+	}
 
 	common::delAllModelRow(m_model);
 	std::list<table_ip_configure> listData;
@@ -181,5 +190,18 @@ void AddToolDialog::slot_ipCheckBoxClicked()
 void AddToolDialog::slot_btnAddClicked()
 {
 	this->accept();
+}
+
+void AddToolDialog::slot_display_lineEditIP(QString text)
+{
+	std::string ip;
+	if (db::databaseDI::Instance().get_ip_by_software(ip, text.toStdString(), common::iLoginNum))
+	{
+		ui->lineEditIP->setText(ip.c_str());
+	}
+	else
+	{
+		ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
+	}
 }
 
