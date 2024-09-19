@@ -25,7 +25,6 @@ fingerDlg::fingerDlg(QDialog* pParent)
 
 fingerDlg::~fingerDlg()
 {
-	DeleteCriticalSection(&g_cs);
 	if (m_hDevice)
 	{
 		if (NULL != pImgBuf)
@@ -99,12 +98,22 @@ void fingerDlg::finger_init()
 		pImgBuf = new unsigned char[imgFPWidth*imgFPHeight];
 		nLastRegTempLen = 0;
 		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
-		InitializeCriticalSection(&g_cs);
 		memset(&szLastRegTemplate, 0x0, sizeof(szLastRegTemplate));
 		qDebug() << "Init ZKFPM success";
+
 		Tid = 1;
 		m_enrollIdx = 0;
 		m_bRegister = FALSE;
+
+		
+		//打开进程锁
+		//hmutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, TEXT("MutexTest"));
+		////创建进程锁
+		//if (hmutex == NULL)
+		//{
+		//	std::cout << "Create MutexTest!" << endl;
+		//	hmutex = CreateMutex(NULL, false, TEXT("MutexTest"));
+		//}
 	}
 	else
 	{
@@ -158,7 +167,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			Sleep(50);
+			Sleep(100);
 		}
 	}
 	return 0;
@@ -269,29 +278,35 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 
 		if (approval == 1)
 		{
-			db::databaseDI::Instance().get_user_finger(vec_finger, common::iUserID);
-			//db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID);
+			//db::databaseDI::Instance().get_user_finger(vec_finger, common::iUserID);
+			db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID);
 
-			if (vec_finger.size() != 0)
+			//if (vec_finger.size() != 0)
+			if(szLastRegTemplate2 && nLastRegTempLen2 != 0)
 			{
-				for (auto &v_f : vec_finger)
+				//for (auto &v_f : vec_finger)
 				{
-					//等待获取关键段对象
-					EnterCriticalSection(&g_cs);
-					ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
-					//ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp, len);
-					LeaveCriticalSection(&g_cs);
+					//ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
+					ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate2, nLastRegTempLen2, temp, len);
 					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
 					{
 						success = true;
-						break;
+						delete[] szLastRegTemplate2;
+						//break;
 					}
+					// 操作完成后释放进程锁
+					/*ReleaseMutex(hmutex);
+					if (hmutex != NULL)
+					{
+						CloseHandle(hmutex);
+					}*/
 				}
-				for (auto& v_f : vec_finger) {
+				/*for (auto& v_f : vec_finger) 
+				{
 					delete[] v_f.first;
 					v_f.first = nullptr;
 				}
-				vec_finger.clear();
+				vec_finger.clear();*/
 				if (success)
 				{
 					//MessageBox(NULL, TEXT("登录成功"), TEXT("提示"), 0);

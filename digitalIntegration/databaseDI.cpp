@@ -781,7 +781,26 @@ namespace db
 		}
 		return true;
 	}
+	
+	bool databaseDI::get_ip_by_software(std::string &ip, std::string software,int &number)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
 
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select ip from t_ip where software = \'%s\' and number = \'%d\'", software.c_str(),number);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			ip = sql_row[0];
+		}
+		return true;
+	}
 
 	bool databaseDI::add_ip(table_ip& stData)
 	{
@@ -1293,7 +1312,10 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[3072] = { 0 };
-		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", hexStr.c_str(), templen, id);
+		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", 
+			hexStr.c_str(), 
+			templen, 
+			id);
 
 
 		if (!exec_sql(last_id, sql))
@@ -1353,35 +1375,41 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_user_finger2(unsigned char *temp, int &templen, int &userid)
+	bool databaseDI::get_user_finger2(unsigned char *&temp, int &templen, int &userid)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
+		sprintf_s(sql, sizeof(sql),"select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
 
+		// 分配内存存储二进制数据
+		temp = new unsigned char[2048];
+		bool flag = false;
 		while (sql_row = mysql_fetch_row(result))
 		{
-			int templen = std::atoi(sql_row[1]);
+			templen = std::atoi(sql_row[1]);
 			const char *tempdata = sql_row[0];
-
-			// 分配内存存储二进制数据
-			temp = new unsigned char[templen];
-
+		
 			// 将十六进制字符串转换为二进制数据
-			for (int i = 0; i < templen; i += 2) {
+			for (int i = 0; i < templen; i += 2)
+			{
 				// 每次处理两个字符
 				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
 				// 将十六进制字符转换为无符号整数
 				temp[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
 			}
+			flag = true;
 		}
-		return true;
+		if (!flag) {
+			delete[] temp;  // 确保没有数据加载时释放内存
+			temp = nullptr;
+		}
+		return flag;
 	}
 
 	//bool databaseDI::add_user_finger(const std::string& ffingerdata, int fingerlen)
@@ -1439,6 +1467,106 @@ namespace db
 	//	return true;
 	//}
 
+	bool databaseDI::add_load_software(table_load_project &stData)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
+
+		sprintf_s(sql, "insert into t_load_project(projectPath,userId) values(\'%s\',\'%d\')",
+			stData.projectPath.c_str(),
+			stData.userID);
+
+		if (!exec_sql(last_id, sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		stData.id = last_id;
+		return true;
+	}
+
+	bool databaseDI::get_load_software(std::list<table_load_project> &listData)
+	{
+		listData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_load_project");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_load_project stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.projectPath = sql_row[1];
+			stData.userID = std::atoi(sql_row[2]);
+			listData.push_back(stData);
+		}
+		return true;
+	}
+
+	bool databaseDI::del_load_software(std::string software, int &userid)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "delete from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')", userid,software.c_str());
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+	bool databaseDI::get_software(std::string software, int &userid)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')",userid,software.c_str());
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 

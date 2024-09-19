@@ -46,6 +46,8 @@ public:
 	int imgFPWidth;
 	int imgFPHeight;
 	bool bStopThread;
+	//互斥锁
+	//HANDLE hmutex;
 
 	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   存储指纹
 	unsigned int arrPreTempsLen[3];
@@ -53,7 +55,7 @@ public:
 
 	//Last register template, use for verify   下一个注册模板，用于验证
 	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
-	unsigned char szLastRegTemplate2[MAX_TEMPLATE_SIZE];
+	unsigned char *szLastRegTemplate2;
 	int nLastRegTempLen;
 	int nLastRegTempLen2;
 	int nFakeFunOn;
@@ -68,7 +70,6 @@ public:
 	void DoVerify(unsigned char *temp, int len);
 
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
-	CRITICAL_SECTION g_cs;
 
 signals:
 	void login_succ();

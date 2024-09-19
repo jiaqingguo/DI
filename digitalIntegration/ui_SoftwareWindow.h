@@ -23,7 +23,7 @@ public:
     {
         if (SoftwareWindow->objectName().isEmpty())
             SoftwareWindow->setObjectName(QString::fromUtf8("SoftwareWindow"));
-        SoftwareWindow->resize(400, 300);
+        SoftwareWindow->resize(626, 513);
 
         retranslateUi(SoftwareWindow);
 
