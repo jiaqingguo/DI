@@ -46,6 +46,8 @@ public:
 	int imgFPWidth;
 	int imgFPHeight;
 	bool bStopThread;
+	//»¥³âËø
+	//HANDLE hmutex;
 
 	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   ´æ´¢Ö¸ÎÆ
 	unsigned int arrPreTempsLen[3];

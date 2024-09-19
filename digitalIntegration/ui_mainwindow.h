@@ -714,8 +714,8 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
-        tabWidgetModulel1->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(1);
+        tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
 

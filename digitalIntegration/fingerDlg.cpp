@@ -100,9 +100,20 @@ void fingerDlg::finger_init()
 		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
 		memset(&szLastRegTemplate, 0x0, sizeof(szLastRegTemplate));
 		qDebug() << "Init ZKFPM success";
+
 		Tid = 1;
 		m_enrollIdx = 0;
 		m_bRegister = FALSE;
+
+		
+		//打开进程锁
+		//hmutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, TEXT("MutexTest"));
+		////创建进程锁
+		//if (hmutex == NULL)
+		//{
+		//	std::cout << "Create MutexTest!" << endl;
+		//	hmutex = CreateMutex(NULL, false, TEXT("MutexTest"));
+		//}
 	}
 	else
 	{
@@ -156,7 +167,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-			//Sleep(100);
+			Sleep(100);
 		}
 	}
 	return 0;
@@ -268,10 +279,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 		if (approval == 1)
 		{
 			//db::databaseDI::Instance().get_user_finger(vec_finger, common::iUserID);
-			if (!db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID))
-			{
-				return;
-			}
+			db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID);
 
 			//if (vec_finger.size() != 0)
 			if(szLastRegTemplate2 && nLastRegTempLen2 != 0)
@@ -286,6 +294,12 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 						delete[] szLastRegTemplate2;
 						//break;
 					}
+					// 操作完成后释放进程锁
+					/*ReleaseMutex(hmutex);
+					if (hmutex != NULL)
+					{
+						CloseHandle(hmutex);
+					}*/
 				}
 				/*for (auto& v_f : vec_finger) 
 				{

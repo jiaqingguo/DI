@@ -66,9 +66,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-	if (m_fingerDlg != nullptr)
-		delete m_fingerDlg;
-
     int loginStatus = 0;
     int userId = m_LoginDialog->GetUserID();
     db::databaseDI::Instance().update_user_LoginStatus(userId, loginStatus);
@@ -602,5 +599,8 @@ void MainWindow::slot_login_succ()
     db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
 
 	this->m_LoginDialog->accept();
+
+	if (m_fingerDlg != nullptr)
+		delete m_fingerDlg;
 }
 
