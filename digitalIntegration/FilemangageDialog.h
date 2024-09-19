@@ -73,7 +73,6 @@ private slots:
 
     void slot_tableViewFilesItemChanged(QStandardItem* item);
 
-
     void slot_btnCompress();   // —πÀı
     void slot_btnUnCompress(); // Ω‚—πÀı
 

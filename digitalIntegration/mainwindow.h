@@ -33,7 +33,7 @@ class fingerDlg;
 * \class	QssAutoLoader
 * \brief	修改qss文件时 使程序立刻生效显示.
 * \author	Jiaqg
-* \date	2021/1/21
+* \date		2021/1/21
 */
 
 class QssAutoLoader : public QObject
