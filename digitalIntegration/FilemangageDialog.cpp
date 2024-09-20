@@ -762,7 +762,7 @@ void FilemangageDialog::slot_btnUploading()
 	
 	// 弹出文件选择对话框
 	//QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
-	QString defaultPath = "Y:\\贾庆国";
+	QString defaultPath = "C:\\";
 	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"), defaultPath);
 	if (strFilePath.isEmpty())
 		return;
@@ -1088,6 +1088,7 @@ void FilemangageDialog::slot_btnCompress()
 	if (!bChecked)
 	{
 		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请勾选要压缩的文件"));
+		return;
 	}
 
 	QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("压缩"), QString::fromLocal8Bit("压缩包名称："));
@@ -1105,11 +1106,13 @@ void FilemangageDialog::slot_btnCompress()
 	{
 		//slot_treeWidgetItemClicked(ui->treeWidget->currentItem(), 0);
 		flushTableViewFtpFile();
+		QMessageBox::warning(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("压缩成功"));
+		
 	}
 	else
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("压缩失败"));
-		return;
+		
 	}
 	
 }

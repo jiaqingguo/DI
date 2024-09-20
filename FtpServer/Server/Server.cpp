@@ -120,7 +120,7 @@ DWORD Server::createSocket() {
 DWORD Server::mkdir(char fileName[])
 {
 	//char path[1000];
-	
+
 	bool flag = CreateDirectory(fileName, NULL);
 	if (flag)
 	{
@@ -233,9 +233,9 @@ DWORD Server::connectProcess() {
 		cout << "¼àÌýÊ§°Ü" << endl;
 		return -1;
 	}
-	
+
 }
-int Server::sendFileList(SOCKET datatcps,  char dirPath[])
+int Server::sendFileList(SOCKET datatcps, char dirPath[])
 {
 	HANDLE hff;								//½¨Á¢Ò»¸öÏß³Ì
 	WIN32_FIND_DATA fd;						//ËÑË÷ÎÄ¼þ
@@ -270,7 +270,7 @@ int Server::sendFile(SOCKET datatcps, FILE* file) {
 	while (1)
 	{//´ÓÎÄ¼þÖÐÑ­»·¶ÁÈ¡Êý¾Ý²¢·¢ËÍÖÁ¿Í»§¶Ë
 		int len = fread(sbuff, 1, sizeof(sbuff), file);//°ÑfileÖ¸ÕëÖ¸ÏòµÄÎÄ¼þÖÐµÄÄÚÈÝ¶ÁÈ¡µ½sbuffÖÐ
-		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR) 
+		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR)
 		{
 			cout << "Á¬½ÓÊ§°Ü" << endl;
 			//closesocket(datatcps);
@@ -290,7 +290,7 @@ int Server::sendFile(SOCKET datatcps, FILE* file) {
 	}
 	cout << "·¢ËÍ³É¹¦" << endl;
 	return 1;
-	
+
 }
 
 int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
@@ -300,7 +300,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 	cout << "ÎÄ¼þÊý¾Ý¿ªÊ¼¶ÁÈ¡" << endl;
 	while (file)
 	{
-		
+
 		memset(buffer, 0, sizeof(buffer));
 		file.read(buffer, sizeof(buffer));
 		std::streamsize bytes_read = file.gcount();
@@ -318,7 +318,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 		// ·¢ËÍÊý¾Ý´óÐ¡£¨int ÀàÐÍ£©ºÍÊµ¼ÊÊý¾Ý
 		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
 		send(datatcps, buffer, data_size, 0);
-		
+
 	}
 	cout << "ÎÄ¼þÊý¾Ý¶ÁÈ¡Íê³É£¬·¢ËÍ½áÊø0" << endl;
 	// ·¢ËÍ½áÊøÐÅºÅ
@@ -330,11 +330,11 @@ int Server::sendFileList(SOCKET datatcps) {
 	HANDLE hff;								//½¨Á¢Ò»¸öÏß³Ì
 	WIN32_FIND_DATA fd;						//ËÑË÷ÎÄ¼þ
 	hff = FindFirstFile("*", &fd);			//²éÕÒÎÄ¼þÀ´°Ñ´ý²Ù×÷ÎÄ¼þµÄÏà¹ØÊôÐÔ¶ÁÈ¡µ½WIN32_FIND_DATA½á¹¹ÖÐÈ¥ 
-	if (hff == INVALID_HANDLE_VALUE) 
+	if (hff == INVALID_HANDLE_VALUE)
 	{		//·¢Éú´íÎó
 		const char* errStr = "ÁÐ³öÎÄ¼þÁÐ±íÊ±·¢Éú´íÎó\n";
 		cout << *errStr << endl;
-		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR) 
+		if (send(datatcps, errStr, strlen(errStr), 0) == SOCKET_ERROR)
 		{
 			cout << "·¢ËÍÊ§°Ü" << endl;
 		}
@@ -396,7 +396,7 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 
 	cout << m_FileInformation.fileName << endl;
 	int size = sizeof(m_FileInformation);
-	send(datatcps, reinterpret_cast<const char*>(&size),sizeof(int), 0);
+	send(datatcps, reinterpret_cast<const char*>(&size), sizeof(int), 0);
 	if (send(datatcps, fileRecord1, sizeof(m_FileInformation), 0) == SOCKET_ERROR) {
 		//Í¨¹ýdatatcps½Ó¿Ú·¢ËÍfileRecordÊý¾Ý£¬³É¹¦·µ»Ø·¢ËÍµÄ×Ö½ÚÊý   
 		cout << "·¢ËÍÊ§°Ü" << endl;
@@ -466,7 +466,7 @@ Server::~Server()
 
 bool Server::welcome()
 {
-	char *welcome = "Welcome, my friend\n";
+	char* welcome = "Welcome, my friend\n";
 
 	//·¢ËÍÐÅÏ¢¸ø¿Í»§¶Ë
 	int iSend = send(sockServer, welcome, 1024, 0);
@@ -515,7 +515,7 @@ void Server::running()
 				sprintf(sbuff, "get %s", fileName);
 				//int size = strlen(sbuff);
 			/*	int ret = send(sockServer, sbuff, sizeof(sbuff), 0);
-				if (ret <=0) 
+				if (ret <=0)
 				{
 					closesocket(sockServer);
 					return ;
@@ -551,7 +551,7 @@ void Server::running()
 				else {
 					cout << "openFailed send failed" << endl;
 				}*/
-			//	std::cerr << "ÎÞ·¨´ò¿ªÎÄ¼þ: " << file_path << std::endl;	
+				//	std::cerr << "ÎÞ·¨´ò¿ªÎÄ¼þ: " << file_path << std::endl;	
 			}
 		}//get
 		else if (strncmp(rbuff, "put", 3) == 0)
@@ -575,7 +575,7 @@ void Server::running()
 			while (true)
 			{
 				// ½ÓÊÕÊý¾Ý´óÐ¡£¨int ÀàÐÍ£©
-				int data_size=0;
+				int data_size = 0;
 				size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
 				if (bytes_received <= 0 || data_size == 0) {
 					break; // Èç¹û½ÓÊÕÊ§°Ü»òÊý¾Ý´óÐ¡Îª 0£¬ÔòÍË³öÑ­»·
@@ -586,7 +586,7 @@ void Server::running()
 					// ½ÓÊÕÊµ¼ÊÊý¾Ý
 					memset(buffer, 0, sizeof(buffer));
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
-					if (bytes_received = -1)
+					if (bytes_received == -1)
 					{
 						std::cout << "¿Í»§¶ËÒÑÍË³ö £¡£¡£¡£¡£¡£¡£¡£¡£¡\n";
 						closesocket(sockServer);
@@ -621,16 +621,16 @@ void Server::running()
 			//send(sockServer, sbuff, size, 0);
 
 
-			
+
 			memset(m_sendOneAllData, 0, sizeof(m_sendOneAllData));
 			//strcpy(sbuff, "T:\\¼ÖÇì¹ú\\CS");//ÎÒ×Ô¼ºÑ¡ÔñµÄ¾ø¶ÔÂ·¾¶
 			GetCurrentDirectory(sizeof(m_sendOneAllData), m_sendOneAllData);//ÕÒµ½µ±Ç°½ø³ÌµÄµ±Ç°Ä¿Â¼
-			
+
 			if (sendTcpOneAll() <= 0)
 			{
 
 			}
-			cout <<  "pwd Ö´ÐÐ½áÊø"  << endl;
+			cout << "pwd Ö´ÐÐ½áÊø" << endl;
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
 
@@ -643,7 +643,7 @@ void Server::running()
 
 			//sendFileList(sockServer);
 			strcat(m_path, "\\*");
-			int ret =sendFileList(sockServer, m_path);
+			int ret = sendFileList(sockServer, m_path);
 			int sendSize = 0;
 			send(sockServer, reinterpret_cast<const char*>(&sendSize), sizeof(int), 0);
 			/*if (ret == 1)
@@ -661,7 +661,7 @@ void Server::running()
 				send(sockServer, sbuff, size, 0);
 				cout << endl << "ls-falied Ö´ÐÐÍê³É£º" << endl;
 			}*/
-			
+
 		}//ls
 		else if (strncmp(rbuff, "cd", 2) == 0) {
 			strcpy(fileName, rbuff + 3);
@@ -731,14 +731,14 @@ void Server::running()
 
 			bool bRet = true;
 			memset(sbuff, '\0', sizeof(sbuff));
-			
+
 			try {
 				// ¼ì²é¾ÉÎÄ¼þÊÇ·ñ´æÔÚ
 				if (fs::exists(oldPath) && fs::is_directory(oldPath))
 				{
 					// newPath
 					fs::rename(oldPath, newPath);
-				
+
 					std::cout << "File renamed from " << oldPath << " to " << newPath << std::endl;
 				}
 				else {
@@ -784,14 +784,14 @@ void Server::running()
 				if (strncmp(buffer, "compress-zipname", 16) == 0)
 				{
 					char zipPath[1024] = { 0 };
-					
+
 					strcpy(zipPath, buffer + 17);
 					strZipPath = zipPath;
 					break;
 				}
 				//std::string  strPath(buffer);
 				paths.push_back(buffer);
-			} 
+			}
 
 			memset(sbuff, 0, sizeof(sbuff));
 			if (CompressMult2Zip(paths, strZipPath))
@@ -804,7 +804,7 @@ void Server::running()
 				sprintf(sbuff, "compress-false");
 				send(sockServer, sbuff, strlen(sbuff), 0);
 			}
-			
+
 		}
 		else if (strncmp(rbuff, "uncompress", 10) == 0) // ½âÑ¹;
 		{
@@ -839,11 +839,11 @@ void Server::running()
 				if (path.extension() == ".zip")
 				{
 					// ·µ»Ø²»´ø .zip ºó×ºµÄÐÂÂ·¾¶
-					fs::path newDir= path.parent_path() / path.stem(); // Ìí¼Ó¸¸Ä¿Â¼²¢·µ»ØÐÂµÄÄ¿Â¼Ãû
+					fs::path newDir = path.parent_path() / path.stem(); // Ìí¼Ó¸¸Ä¿Â¼²¢·µ»ØÐÂµÄÄ¿Â¼Ãû
 					std::string strDir = newDir.string();
 					extractZip(path, strDir);
 				}
-			
+
 			}
 
 			memset(sbuff, 0, sizeof(sbuff));
@@ -858,7 +858,7 @@ void Server::running()
 			strcpy(sbuff, "³É¹¦»ñÈ¡ÓÃ»§Ãû\0");
 			send(sockServer, sbuff, sizeof(sbuff), 0);
 
-			int recvSize=recv(sockServer, rbuff, sizeof(rbuff), 0);
+			int recvSize = recv(sockServer, rbuff, sizeof(rbuff), 0);
 			if (recvSize == -1)
 			{
 				std::cout << "¿Í»§¶ËÒÑÍË³ö £¡£¡£¡£¡£¡£¡£¡£¡£¡\n";
@@ -874,12 +874,12 @@ void Server::running()
 				send(sockServer, "wrong\0", sizeof(sbuff), 0);
 			}
 		}//user pass
-		
+
 	}
 	cout << "Server::runing() ÔËÐÐ½áÊø" << endl;
 }
 
-int Server::commandParse(char* instruck, std::string &paramter)
+int Server::commandParse(char* instruck, std::string& paramter)
 {
 	std::string string(buf);
 	std::cout << string << std::endl;
@@ -906,7 +906,7 @@ int Server::commandParse(char* instruck, std::string &paramter)
 
 bool Server::sendTcpOneAll()
 {
-	
+
 	//int data_size=£»
 	int dataSize = sizeof(m_sendOneAllData);
 	send(sockServer, reinterpret_cast<const char*>(&dataSize), sizeof(dataSize), 0);
@@ -942,7 +942,7 @@ int Server::recvTcpOneAll()
 		if (iCurRecvSize == SOCKET_ERROR) {
 			cout << "¶ÁÈ¡Ê±·¢Éú´íÎó" << endl;
 			return -1;
-			
+
 		}
 		else if (iCurRecvSize == 0)
 		{
@@ -980,7 +980,7 @@ bool Server::receiveFile(std::string filename)
 
 	//ÏÈ½ÓÊÕÎÄ¼þ´óÐ¡ÐÅÏ¢
 	memset(buf, 0, maxSize);
-	int recvSize=recv(sockServer, buf, 1024, 0);
+	int recvSize = recv(sockServer, buf, 1024, 0);
 	if (recvSize == -1)
 	{
 		std::cout << "¿Í»§¶ËÒÑÍË³ö £¡£¡£¡£¡£¡£¡£¡£¡£¡\n";
@@ -1008,8 +1008,8 @@ bool Server::receiveFile(std::string filename)
 
 		//Èç¹ûÊ£ÏÂµÄÐ¡ÓÚµÈÓÚ0£¬ËµÃ÷ÎÄ¼þ´«ÊäÍê±Ï£¬ÍË³öÑ­»·
 		remain -= 1024;
-		if(remain <= 0) {
-		//if (strlen(buf) == 0) {
+		if (remain <= 0) {
+			//if (strlen(buf) == 0) {
 			break;
 		}
 

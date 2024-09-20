@@ -61,6 +61,12 @@ MainWindow::MainWindow(QWidget *parent)
     m_pQssAutoLoader->setAutoloadQss(strQssPath);
 
 	initInitface();
+
+    QString target = "\\\\192.168.0.250\\"; // 实际路径
+    QString username = "share"; // 实际用户名
+    QString password = "Share123"; // 实际密码
+
+    common::addNetworkCredential(target, username, password);
 }
 
 
@@ -261,7 +267,6 @@ bool MainWindow::showLoginDialog()
     {
         this->close();
         return false;
-        //exit(1);
     }
     return false;
 }
@@ -298,31 +303,7 @@ void MainWindow::slot_btnAddToolTab()
     QPushButton* pButton = (QPushButton*)sender();
     int moduleNumber= pButton->property("module").toInt();
 
-    //if (bUserIp == true)
-    {
-        //std::list<table_ip> listData;
-
-        //if (db::databaseDI::Instance().get_all_ip_data(listData))
-        //{
-        //    for (auto& stData : listData)
-        //    {
-        //        if (stData.username.empty())
-        //        {
-        //            db::databaseDI::Instance().updata_ip_username(1, m_LoginDialog->GetUser().toStdString(), stData.id);
-        //            break;
-        //        }
-        //        else if (!stData.username.empty())
-        //        {
-        //            stData.id = stData.id + 1;
-        //            //db::databaseDI::Instance().updata_ip_username(1, user_name, stData.id);
-        //            //break;
-        //        }
-        //    }
-
-        //    bUserIp = false;
-        //}
-    }
-
+    
     AddToolDialog addToooDialog(moduleNumber);
     if (addToooDialog.exec() == QDialog::Accepted)
     {
