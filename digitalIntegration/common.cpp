@@ -25,7 +25,13 @@
 #include <IPHlpApi.h>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib, "Ws2_32.lib")
+
+#pragma comment(lib, "Advapi32.lib")
+
+#include <wincred.h>
 // Qt
+#include <QCoreApplication>
+
 #include <QStandardItemModel>
 #include <QStandardItemModel>
 #include <QTableView>
@@ -52,7 +58,7 @@ namespace common
     int				        iUserID=-1;                 //数据库用户id
     bool                    bAdministrator = false;     // 是否是管理员;
 
-    int				        iLoginNum = 0;              // 登录顺序; 123456;
+    int				        iLoginNum = 1;              // 登录顺序; 123456;
     int                     iSoftStartHostNum = 1;      // 模块234软件 启动的所在主机标志;
     std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
 
@@ -494,8 +500,34 @@ namespace common
     //    return tagBuffer;
     //}
 
-   
 
+    void addNetworkCredential(const QString& target, const QString& username, const QString& password) {
+        CREDENTIALW  cred;
+        memset(&cred, 0, sizeof(CREDENTIAL));
+
+        cred.Type = CRED_TYPE_GENERIC;
+        cred.TargetName = const_cast<LPWSTR>(reinterpret_cast<const wchar_t*>(target.utf16()));
+        cred.UserName = const_cast<LPWSTR>(reinterpret_cast<const wchar_t*>(username.utf16()));
+        cred.CredentialBlobSize = password.length() * sizeof(wchar_t);
+       // cred.
+        // Create a vector to hold the password
+        std::vector<wchar_t> passwordBlob(password.length() + 1);
+
+        // 使用 std::copy 将 QString 转换为 wchar_t
+        std::copy(password.utf16(), password.utf16() + password.length() + 1, passwordBlob.data());
+
+        cred.CredentialBlob = reinterpret_cast<LPBYTE>(passwordBlob.data());
+      //  cred.CredentialBlob = const_cast<LPWSTR>(reinterpret_cast<const wchar_t*>(password.utf16()));
+        cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
+
+        // 保存凭据
+        if (CredWrite(&cred, 0)) {
+            std::cout << "凭据已成功保存。" << std::endl;
+        }
+        else {
+            std::cerr << "保存凭据失败，错误代码：" << GetLastError() << std::endl;
+        }
+    }
    
 }
 

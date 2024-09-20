@@ -4,6 +4,8 @@
 #include <string>
 #include <set>
 
+
+
 struct _FILETIME;
 struct NetworkInterface;
 
@@ -101,6 +103,10 @@ namespace common
 	/*std::string Wchar2string(WCHAR wChar[]);
 
 	wchar_t* String2Wchar(const std::string strTag);*/
+
+
+	void addNetworkCredential(const QString& target, const QString& username, const QString& password);
+	
 
 }
 
