@@ -429,6 +429,7 @@ void MainWindow::slot_btnAddToolTab()
 
                 // ∆Ù∂Øbsp«∂»Î
                 int a = 1;
+                common::iSoftStartHostNum++;
             }
 
         }

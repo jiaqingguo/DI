@@ -704,11 +704,25 @@ void Server::running()
 			string str = path;
 			delete_listFiles(path); // 删除文件夹下的文件;
 
-			bool flag = RemoveDirectory(path); // 删除文件夹本身;
-			if (!flag)
-			{
-				cout << "删除空文件夹：" << fileName << "失败" << endl;
+			//bool flag = RemoveDirectory(path); // 删除文件夹本身;
+			//if (!flag)
+			//{
+			//	cout << "删除空文件夹：" << fileName << "失败" << endl;
 
+			//}
+			try 
+			{
+				if (fs::exists(path) && fs::is_directory(path))
+				{
+					fs::remove_all(path);
+					std::cout << "Directory " << path << " deleted successfully." << std::endl;
+				}
+				else {
+					std::cout << " delete Directory " << path << " does not exist." << std::endl;
+				}
+			}
+			catch (const fs::filesystem_error& e) {
+				std::cerr << "Error deleting directory: " << e.what() << std::endl;
 			}
 
 		}//Fdel
