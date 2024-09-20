@@ -1477,7 +1477,7 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_load_project(projectPath,userId) values(\'%s\',\'%d\')",
+		sprintf_s(sql, "insert into t_one_click_load(software,usrID) values(\'%s\',\'%d\')",
 			stData.projectPath.c_str(),
 			stData.userID);
 
@@ -1507,7 +1507,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_load_project");
+		sprintf_s(sql, "select * from t_one_click_load");
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -1532,7 +1532,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "delete from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')", userid,software.c_str());
+		sprintf_s(sql, "delete from t_one_click_load where usrID = (\'%d\') and software = (\'%s\')", userid,software.c_str());
 
 		if (!exec_sql(sql))
 		{
@@ -1555,7 +1555,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_load_project where userId = (\'%d\') and projectPath = (\'%s\')",userid,software.c_str());
+		sprintf_s(sql, "select * from t_one_click_load where usrID = (\'%d\') and software = (\'%s\')",userid,software.c_str());
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
