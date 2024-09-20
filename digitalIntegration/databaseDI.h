@@ -107,9 +107,9 @@ namespace db
 		bool update_download_approval_status(const int& id, int& approval);
 
 		//用户加载表
-		bool add_load_software(table_load_project &stData);
-		bool get_load_software(std::list<table_load_project> &listData);
-		bool del_load_software(std::string software,int &userid);
-		bool get_software(std::string software, int &userid);
+		bool add_load_software(table_one_load_software &stData);
+		bool get_load_software(std::list<table_one_load_software> &listData);
+		bool del_load_software(std::string software,int &userid, const int &module);
+		bool get_software(std::string software, int &userid,const int &module);
 	};
 }

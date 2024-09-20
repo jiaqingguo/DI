@@ -194,14 +194,28 @@ void AddToolDialog::slot_btnAddClicked()
 
 void AddToolDialog::slot_display_lineEditIP(QString text)
 {
-	std::string ip;
-	if (db::databaseDI::Instance().get_ip_by_software(ip, text.toStdString(), common::iLoginNum))
+	if (m_iModule == 1)
 	{
-		ui->lineEditIP->setText(ip.c_str());
+		std::string ip;
+		if (db::databaseDI::Instance().get_ip_by_software(ip, text.toStdString(), common::iLoginNum))
+		{
+			ui->lineEditIP->setText(ip.c_str());
+		}
+		else
+		{
+			ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
+		}
 	}
 	else
 	{
-		ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strValue = *it;
+			ui->lineEditIP->setText(QString::fromStdString(strValue));
+			common::iSoftStartHostNum++;
+		}
 	}
 }
 

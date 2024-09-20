@@ -62,7 +62,6 @@ namespace db
 		uint32_t last_id = 0;
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
-
 		sprintf_s(sql, "insert into t_user(UserName,Password,name,department,JobTitle,PhoneNumber,Pop,CreateTime,approval,loginStatus) values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%d\',\'%d\')",
 			userInfo.UserName.c_str(),
 			userInfo.Password.c_str(),
@@ -1467,7 +1466,7 @@ namespace db
 	//	return true;
 	//}
 
-	bool databaseDI::add_load_software(table_load_project &stData)
+	bool databaseDI::add_load_software(table_one_load_software &stData)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1477,9 +1476,10 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_one_click_load(software,usrID) values(\'%s\',\'%d\')",
+		sprintf_s(sql, "insert into t_one_click_load(software,usrID,module) values(\'%s\',\'%d\',\'%d\')",
 			stData.projectPath.c_str(),
-			stData.userID);
+			stData.userID,
+			stData.module);
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -1498,7 +1498,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_load_software(std::list<table_load_project> &listData)
+	bool databaseDI::get_load_software(std::list<table_one_load_software> &listData)
 	{
 		listData.clear();
 
@@ -1513,18 +1513,19 @@ namespace db
 		if (result == nullptr)
 			return false;
 
-		table_load_project stData;
+		table_one_load_software stData;
 		while (sql_row = mysql_fetch_row(result))
 		{
 			stData.id = std::atoi(sql_row[0]);
 			stData.projectPath = sql_row[1];
 			stData.userID = std::atoi(sql_row[2]);
+			stData.module = std::atoi(sql_row[3]);
 			listData.push_back(stData);
 		}
 		return true;
 	}
 
-	bool databaseDI::del_load_software(std::string software, int &userid)
+	bool databaseDI::del_load_software(std::string software, int &userid,const int &module)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1532,7 +1533,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "delete from t_one_click_load where usrID = (\'%d\') and software = (\'%s\')", userid,software.c_str());
+		sprintf_s(sql, "delete from t_one_click_load where usrID = (\'%d\') and software = (\'%s\') and module = (\'%d\')", userid,software.c_str(),module);
 
 		if (!exec_sql(sql))
 		{
@@ -1548,14 +1549,14 @@ namespace db
 
 		return true;
 	}
-	bool databaseDI::get_software(std::string software, int &userid)
+	bool databaseDI::get_software(std::string software, int &userid,const int &module)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_one_click_load where usrID = (\'%d\') and software = (\'%s\')",userid,software.c_str());
+		sprintf_s(sql, "select * from t_one_click_load where usrID = (\'%d\') and software = (\'%s\') and module = (\'%d\')",userid,software.c_str(),module);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)

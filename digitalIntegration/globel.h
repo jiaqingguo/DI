@@ -102,11 +102,12 @@ struct table_DownloadApproval
 };
 
 //用户加载表
-struct table_load_project
+struct table_one_load_software
 {
 	uint32_t		id = 0;			       // ID(主键自增unsigned int);
 	std::string     projectPath;
 	uint32_t		userID = 0;
+	uint32_t		module = 0;
 };
 
 

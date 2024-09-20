@@ -448,6 +448,7 @@ void MainWindow::slot_btnAddToolTab()
 
                 // Æô¶¯bspÇ¶Èë
                 int a = 1;
+				common::iSoftStartHostNum++;
             }
 
         }
@@ -460,7 +461,7 @@ void MainWindow::slot_btnOneClickLoad()
 {
 	if (!m_OneClickLoadDialog->m_model->rowCount())
 	{
-		std::list<table_load_project> listData;
+		std::list<table_one_load_software> listData;
 		if (db::databaseDI::Instance().get_load_software(listData))
 		{
 			for (auto &stData : listData)
@@ -477,7 +478,7 @@ void MainWindow::slot_btnOneClickLoad()
 					//m_model->setData(index, stIp.id, Qt::UserRole);  // ÉèÖÃid;
 
 					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stData.projectPath)));
-
+					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 2, new QStandardItem(QString::number(stData.module)));
 				}
 			}
 		}
