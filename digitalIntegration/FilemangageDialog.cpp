@@ -783,8 +783,11 @@ void FilemangageDialog::slot_btnUploading()
 
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
 	QString UploadingPath = dirPath + "\\" + fileInfo.fileName();
-
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_putFile(fileInfo.absoluteFilePath().toLocal8Bit().toStdString(), UploadingPath.toLocal8Bit().toStdString());
+	m_GifDialog->close();
 	slot_treeWidgetItemClicked(ui->treeWidget->currentItem(), 0);
 }
 

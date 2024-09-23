@@ -723,60 +723,53 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	{
 		return 0;
 	}
-	/*while (1)
-	{*/
-		//int num = recv(sockClient, rbuff, 1024, 0);		//接收信息 
 
-		//if (strncmp(rbuff, "openFailed", 10) == 0)
-		//{
-		//	return -1;
-		//}
-		//if (strncmp(rbuff, "get", 3) == 0)
-		//{
-			std::ofstream file(NewFilePath, std::ios::binary);
-			char buffer[10240]; // 接收缓冲区
+	std::ofstream file(NewFilePath, std::ios::binary);
+	char buffer[10240]; // 接收缓冲区
 
-			while (true)
-			{
-				// 接收数据大小（int 类型）
-				int data_size;
+	while (true)
+	{
+		// 接收数据大小（int 类型）
+		int data_size;
 
-				size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
-
-				if (bytes_received <= 0 || data_size == 0) {
-					break; // 如果接收失败或数据大小为 0，则退出循环
-				}
-
-				int recv_size = data_size;
-				while (1)
-				{
-					// 接收实际数据
-					memset(buffer, 0, sizeof(buffer));
-					bytes_received = recv(sockClient, buffer, recv_size, 0);
-
-					// 将接收到的数据写入文件
-					file.write(buffer, bytes_received);
+		size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
+		cout << "data_size: " << data_size << endl;
+		if (bytes_received <= 0 || data_size == 0) {
+			break; // 如果接收失败或数据大小为 0，则退出循环
+		}
+		if (data_size < 10240)
+		{
+			int a = 0;
+		}
+		int recv_size = data_size;
+		while (1)
+		{
+			// 接收实际数据
+			memset(buffer, 0, sizeof(buffer));
+			bytes_received = recv(sockClient, buffer, recv_size, 0);
+			cout << "bytes_received and recv_size : " << bytes_received<< " : "<<recv_size << endl;
+			// 将接收到的数据写入文件
+			file.write(buffer, bytes_received);
 					
-					if (bytes_received < data_size)
-					{
-						recv_size = data_size - bytes_received;
-
-					}
-					else
-					{
-						break; // 如果接收全部完成，退出循环;
-					}
-				}
-
-
-
+			if (bytes_received < recv_size)
+			{
+				recv_size = recv_size - bytes_received;
+				
 			}
+			else
+			{
+				break; // 如果接收全部完成，退出循环;
+			}
+		}
 
-			file.close();
-			std::cout << "文件接收完毕，连接关闭。" << std::endl;
-			return 1;
-		//}
-	//}
+
+
+	}
+
+	file.close();
+	std::cout << "文件接收完毕，连接关闭。" << std::endl;
+	return 1;
+
 	
 	
 }

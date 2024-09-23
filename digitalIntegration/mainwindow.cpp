@@ -429,11 +429,9 @@ void MainWindow::slot_btnAddToolTab()
 
                 // ∆Ù∂Øbsp«∂»Î
                 int a = 1;
-<<<<<<< HEAD
-				common::iSoftStartHostNum++;
-=======
+
                 common::iSoftStartHostNum++;
->>>>>>> remotes/origin/main
+
             }
 
         }

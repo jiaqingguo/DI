@@ -595,9 +595,9 @@ void Server::running()
 					// 将接收到的数据写入文件
 					file.write(buffer, bytes_received);
 
-					if (bytes_received < data_size)
+					if (bytes_received < recv_size)
 					{
-						recv_size = data_size - bytes_received;
+						recv_size = recv_size - bytes_received;
 					}
 					else
 					{
