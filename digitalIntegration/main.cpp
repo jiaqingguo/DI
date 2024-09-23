@@ -1,6 +1,7 @@
 
 #include <QApplication>
 #include <QSettings>
+#include <QMessageBox>
 #include "mainwindow.h"
 
 #include "databaseDI.h"
@@ -52,7 +53,11 @@ int main(int argc, char* argv[])
 
 
     db::databaseDI::Instance().setDbLoginData(common::strDbIp.toStdString(), common::strDbUser.toStdString(), common::strDbPassword.toStdString());
-    db::databaseDI::Instance().open();
+    if (!db::databaseDI::Instance().open())
+    {
+        QMessageBox::warning(nullptr, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("数据库连接失败"));
+        return 0;
+    }
     MainWindow w;
     if (!w.showLoginDialog())
     {

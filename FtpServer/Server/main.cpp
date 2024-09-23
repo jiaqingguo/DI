@@ -73,10 +73,11 @@ void InitResource(/*const TCHAR* szUserName, const TCHAR* szPasswd*/) {
 
 void main()
 {
-	InitResource();
+	//InitResource();
 	char chInput[512];
 
-	char fileName_my[120] = "Y:\\贾庆国";//"D:\\FileData";// "E:\\1008";
+//	char fileName_my[120] = "Y:\\贾庆国";//"D:\\FileData";// "E:\\1008";
+	char fileName_my[120] = "D:\\FileData";//"D:\\FileData";// "E:\\1008";
 	SetCurrentDirectory(fileName_my);//设置当前目录 
 
 	sprintf_s(chInput, "int:%d\n", 500);

@@ -904,7 +904,7 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 		int ret =m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
 		m_GifDialog->close();
-		if (ret == 1)
+		if (ret !=1)
 		{
 			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("所要下载的Ftp文件已删除"));
 		}
@@ -1019,6 +1019,10 @@ void FilemangageDialog::slot_actioxnRename()
 	{
 		pItem->setText(0, DirName);
 		pItem->setData(0, Qt::UserRole, newDir);
+	}
+	else {
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("重命名失败"));
+		
 	}
 }
 
