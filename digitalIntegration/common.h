@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <set>
-
+#include <windows.h>
 
 
 struct _FILETIME;
@@ -67,6 +67,20 @@ namespace common
 	void PrintAdapterInfo();
 
 	unsigned long GetNetworkInterfacesThroughput();
+
+	HWND FindMainWindow(unsigned long process_id);
+	
+	std::vector<HWND> getWindowHandlesByProcessId(DWORD processID);
+
+	HWND FindWindowByProcessId(DWORD processID);
+	HWND StartExeAndFindWindow(QString & strPath);
+
+
+
+	void InitResource();
+	void UnInitResource();
+
+	void startDspExe(QString& strPath);
 
 	// ---------类型转换-----------
 	// string转time_t;

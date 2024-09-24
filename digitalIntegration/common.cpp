@@ -29,6 +29,12 @@
 #pragma comment(lib, "Advapi32.lib")
 
 #include <wincred.h>
+#include <tlhelp32.h>
+
+#include <winnetwk.h>
+
+#pragma comment(lib, "Mpr.lib")
+
 // Qt
 #include <QCoreApplication>
 
@@ -37,6 +43,7 @@
 #include <QTableView>
 #include <QHeaderView>
 #include <QLayout>
+#include <QByteArray>
 
 #include <set>
 
@@ -410,9 +417,292 @@ namespace common
             delete item;
         }
     }
+    HWND FindWindowByProcessId(DWORD processID) {
+        HWND hwnd = NULL;
+        EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL 
+        {
+            DWORD wndProcessId;
+            GetWindowThreadProcessId(hwnd, &wndProcessId);
+
+            if (wndProcessId == lParam && IsWindowVisible(hwnd)) {
+                *(HWND*)lParam = hwnd;
+                return FALSE; // 找到目标窗口后停止枚举
+            }
+            return TRUE; // 继续枚举
+        }, (LPARAM)&hwnd);
+
+        return hwnd;
+    }
+
+    QString GetWindowTitle(DWORD processID) {
+        HWND hwnd = FindWindowByProcessId(processID);
+        if (hwnd) {
+            const int length = GetWindowTextLength(hwnd) + 1;
+            TCHAR* title = new TCHAR[length];
+            GetWindowText(hwnd, title, length); // 获取窗口标题
+            QString windowTitle = QString::fromWCharArray(title);
+            delete[] title; // 释放内存
+            return windowTitle;
+        }
+        return QString();
+    }
+    HWND findWindowByProcessId(DWORD processID) {
+        HWND hwnd = NULL;
+        EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL {
+            DWORD windowProcessId;
+            GetWindowThreadProcessId(hwnd, &windowProcessId);
+            if (windowProcessId == (DWORD)lParam) {
+                *(HWND*)lParam = hwnd;
+                return FALSE; // 找到后停止
+            }
+            return TRUE; // 继续枚举
+            }, (LPARAM)&hwnd);
+
+        return hwnd;
+    }
+    HANDLE getProcessHandle(DWORD processID) {
+        // 使用 PROCESS_ALL_ACCESS 权限打开进程
+        HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
+        if (hProcess == NULL) {
+           // qDebug() << "Could not open process. Error:" << GetLastError();
+        }
+        return hProcess;
+    }
+
+    struct EnumWindowData {
+        std::vector<HWND> windowHandles; // 用于存储窗口句柄
+        DWORD processID;                  // 目标进程 ID
+    };
+    std::vector<HWND> getWindowHandlesByProcessId(DWORD processID) 
+    {
+        EnumWindowData data = { {}, processID }; // 初始化数据结构
+
+        EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL {
+            EnumWindowData* pData = reinterpret_cast<EnumWindowData*>(lParam);
+            DWORD windowProcessId;
+            GetWindowThreadProcessId(hwnd, &windowProcessId);
+
+            // 检查进程 ID 是否匹配
+            if (windowProcessId == pData->processID) {
+                pData->windowHandles.push_back(hwnd); // 添加窗口句柄
+            }
+
+            return TRUE; // 继续枚举窗口
+            }, reinterpret_cast<LPARAM>(&data)); // 传递数据结构的指针
+
+        return data.windowHandles; // 返回找到的窗口句柄
+    }
+
+
+
+    HWND StartExeAndFindWindow(QString strPath)
+    {
+        std::wstring wStr = strPath.toStdWString();
+
+        // 从std::wstring获取LPCWSTR
+        LPCWSTR lpwstr = wStr.c_str();
+        // 启动进程
+        STARTUPINFO si = { sizeof(si) };
+        PROCESS_INFORMATION pi;
+
+        if (CreateProcess(lpwstr, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+            std::cout << "Process started!" << std::endl;
+
+            // 等待一段时间，让窗口创建
+            Sleep(1000); // 视情况而定，可能需要调整
+
+            // 获取窗口句柄
+            HWND hwnd = FindWindowByProcessId(pi.dwProcessId);
+            if (hwnd) {
+                std::cout << "Window handle: " << hwnd << std::endl;
+            }
+            else {
+                std::cout << "No top-level window found for the process." << std::endl;
+            }
+
+            // 关闭进程句柄
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+            return hwnd;
+        }
+        else {
+            std::cout << "Failed to start process. Error: " << GetLastError() << std::endl;
+            return HWND();
+        }
+       
+    }
 
    
 
+    //BOOL CALLBACK SEnumProc(HWND hWnd, LPARAM Param) 
+    //{
+    //    BOOL bRet = TRUE;
+    //    TCHAR szClassName[256] = { 0 };
+    //    GetC1assName(hWnd, szC1assName, 255);
+    //    if (1strcmpi(_T("MainWnd")， szClassName) == 0) {
+    //        DWORD dwProcessId = 0;
+    //        GetWindowThreadProcessId(hWnd, &dwProcessId);
+    //        if (dwProcessId == GetProcessIdByName(_T("BDWa11Paper_d. exe"))) {
+    //            g_hWnd = hWnd; bRet = FALSE;
+    //        }
+    //        return bRet;
+    //    }
+        
+
+    struct handle_data {
+        unsigned long process_id;
+        HWND best_handle;
+    };
+
+    BOOL IsMainWindow(HWND handle)
+    {
+        return GetWindow(handle, GW_OWNER) == (HWND)0 && IsWindowVisible(handle);
+    }
+
+    BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM lParam)
+    {
+        handle_data& data = *(handle_data*)lParam;
+        unsigned long process_id = 0;
+        GetWindowThreadProcessId(handle, &process_id);
+        if (data.process_id != process_id || !IsMainWindow(handle)) {
+            return TRUE;
+        }
+        data.best_handle = handle;
+        return FALSE;
+    }
+    HWND FindMainWindow(unsigned long process_id)
+    {
+        handle_data data;
+        data.process_id = process_id;
+        data.best_handle = 0;
+        EnumWindows(EnumWindowsCallback, (LPARAM)&data);
+        return data.best_handle;
+    }
+
+   
+
+
+
+
+
+    void InitResource()
+    {
+
+        TCHAR szPasswd[] = TEXT("administrataor");          //共享资源授权用户的密码
+        TCHAR szUserName[] = TEXT("Ate123");        //共享资源授权的用户
+        NETRESOURCE net_Resource;
+
+        // 初始化NETRESOURCE结构
+        net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
+        net_Resource.dwScope = RESOURCE_CONNECTED;
+        net_Resource.dwType = RESOURCETYPE_DISK;
+        net_Resource.dwUsage = 0;
+        net_Resource.lpComment = NULL; // 可以设为NULL
+        TCHAR localName[] = TEXT("Y:");  // 映射成本地驱动器 Z:
+        net_Resource.lpLocalName = localName;
+        net_Resource.lpProvider = NULL;
+        TCHAR lpRemoteName[] = TEXT("\\\\192.168.1.247\\share");  // 共享资源的路径
+
+        net_Resource.lpRemoteName = lpRemoteName; // 共享资源的路径
+
+        DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+
+        // 取消已有连接
+        WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
+
+        // 添加新连接
+        DWORD dw = WNetAddConnection2(&net_Resource, szPasswd, szUserName, 0);
+        switch (dw) {
+        case ERROR_SUCCESS:
+            ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+            break;
+        case ERROR_ACCESS_DENIED:
+            printf(("没有权限访问！\n"));
+            break;
+        case ERROR_ALREADY_ASSIGNED:
+            ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+            break;
+        case ERROR_INVALID_ADDRESS:
+            printf(("IP地址无效\n"));
+            break;
+        case ERROR_NO_NETWORK:
+            printf(("网络不可达!\n"));
+            break;
+        case ERROR_NO_TOKEN:
+            printf(("没有有效的凭据！请检查用户名和密码。\n"));
+            break;
+        case ERROR_SESSION_CREDENTIAL_CONFLICT:
+            printf(("ERROR_SESSION_CREDENTIAL_CONFLICT。\n"));
+            break;
+        default:
+            printf(("发生错误，错误代码: %lu\n"), dw);
+
+            break;
+        }
+
+    }
+
+    void startDspExe(QString& strPath)
+    {
+
+       
+        DWORD bufferSize = MAX_PATH;
+        char currentDirectory[MAX_PATH];
+
+        //// 获取当前工作目录
+        //if (GetCurrentDirectoryA(bufferSize, currentDirectory)) {
+        //    std::cout << "Current Directory: " << currentDirectory << std::endl;
+
+        //   
+        //   
+        //}
+        QByteArray byteArray = strPath.toUtf8(); // 转换为 UTF-8 编码
+            // 应用程序路径
+        LPCSTR applicationPath = byteArray.constData();//= "E:\Visual Studio 2017.rdp";// "C:\\Path\\To\\Your\\Application.exe"; // 替换为实际路径
+
+            // 调用 ShellExecuteA 来打开应用程序
+            HINSTANCE result = ShellExecuteA(NULL, "open", applicationPath, NULL, currentDirectory, SW_SHOW);
+
+            // 检查返回值
+            if ((int)result > 32) {
+                std::cout << "Application opened successfully." << std::endl;
+            }
+            else {
+                std::cerr << "Failed to open application. Error code: " << (int)result << std::endl;
+            }
+        
+       
+    }
+
+    void UnInitResource()
+    {
+        TCHAR szPasswd[] = TEXT("administrataor");          //共享资源授权用户的密码
+        TCHAR szUserName[] = TEXT("Ate123");        //共享资源授权的用户
+
+        //TCHAR szPasswd[] = TEXT("Share123");          //共享资源授权用户的密码
+        //TCHAR szUserName[] = TEXT("share");        //共享资源授权的用户
+        NETRESOURCE net_Resource;
+
+        // 初始化NETRESOURCE结构
+        net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
+        net_Resource.dwScope = RESOURCE_CONNECTED;
+        net_Resource.dwType = RESOURCETYPE_DISK;
+        net_Resource.dwUsage = 0;
+        net_Resource.lpComment = NULL; // 可以设为NULL
+        TCHAR localName[] = TEXT("Y:");  // 映射成本地驱动器 Z:
+        net_Resource.lpLocalName = localName;
+        net_Resource.lpProvider = NULL;
+        TCHAR lpRemoteName[] = TEXT("\\\\192.168.1.247\\share");  // 共享资源的路径
+
+        net_Resource.lpRemoteName = lpRemoteName; // 共享资源的路径
+
+        DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+
+        // 取消已有连接
+        WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
+
+      
+    }
     void delAllModelRow(QStandardItemModel* model)
     {
         int rowCount = model->rowCount();

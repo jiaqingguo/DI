@@ -420,10 +420,10 @@ void Server::InitResource()
 	net_Resource.dwType = RESOURCETYPE_ANY;
 	net_Resource.dwUsage = 0;
 	net_Resource.lpComment = TEXT("");
-	net_Resource.lpLocalName = TEXT("z:");  //映射成本地驱动器z:
+	net_Resource.lpLocalName = TEXT("Y:");  //映射成本地驱动器z:
 	net_Resource.lpProvider = NULL;
 	//net_Resource.lpRemoteName = TEXT("\\\\192.168.196.254\\share"); // \\servername\共享资源名
-	net_Resource.lpRemoteName = TEXT("\\\\data\\share"); // \\servername\共享资源名
+	net_Resource.lpRemoteName = TEXT("\\\\192.168.0.250\\share"); // \\servername\共享资源名
 	DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 
@@ -556,6 +556,7 @@ void Server::running()
 		}//get
 		else if (strncmp(rbuff, "put", 3) == 0)
 		{
+			char m_path[256];
 			int cnt;
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 4);
@@ -633,7 +634,7 @@ void Server::running()
 			cout << "pwd 执行结束" << endl;
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
-
+			char m_path[256];
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 3);
 
@@ -671,6 +672,7 @@ void Server::running()
 		}//cd
 		else if (strncmp(rbuff, "mkdir", 5) == 0)
 		{
+			char m_path[256];
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 6);
 			strcpy(sbuff, rbuff);
@@ -685,6 +687,7 @@ void Server::running()
 			delFile(fileName);
 		}//del
 		else if (strncmp(rbuff, "Fdel", 4) == 0) {//删除某个文件
+			char m_path[256];
 			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 5);//获得要删的文件名
 			strcpy(sbuff, rbuff);
