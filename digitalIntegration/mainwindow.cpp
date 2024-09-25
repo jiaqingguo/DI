@@ -25,6 +25,7 @@
 #include <QLabel>
 #include <qwidget.h>
 #include <QtWebEngineWidgets>
+#include <QProcess>
 #include "windows.h"
 
 
@@ -89,6 +90,30 @@ MainWindow::MainWindow(QWidget *parent)
     QString password = "Share123"; // 实际密码
 
     common::addNetworkCredential(target, username, password);
+
+    QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
+
+    // 创建 QProcess 对象
+    QProcess process;
+
+    // 启动 cmd 进程并执行命令
+    process.start("cmd.exe", QStringList() << "/C" << command);
+
+    // 等待命令执行完成
+    if (process.waitForFinished())
+    {
+        // 获取命令输出（用于调试或查看结果）
+        QString output = process.readAllStandardOutput();
+        QString error = process.readAllStandardError();
+
+        // 打印输出到控制台
+        qDebug() << "Output:" << output;
+        qDebug() << "Error:" << error;
+    }
+    else
+    {
+        qDebug() << "Process failed to start or execute.";
+    }
 }
 
 
@@ -375,6 +400,53 @@ void MainWindow::slot_btnAddToolTab()
         else if (moduleNumber == 2)
         {
 
+
+            //TCHAR userName[] = TEXT("Administrator");
+            //TCHAR password[] = TEXT("Ate123");
+            //TCHAR localDrive[] = TEXT("Y");  //本地驱动器映射
+            //TCHAR remotePath[] = TEXT("\\192.168.1.247");  // 共享资源的路径
+
+            //std::wstring target = L"\\\\192.168.1.247"; // 远程目录路径
+            //std::wstring username = L"Administrator"; // 用户名
+            //std::wstring password = L"Ate123"; // 密码
+
+            
+           // TCHAR userName[] = TEXT("share");
+           // TCHAR password[] = TEXT("Share123");
+           // TCHAR localDrive[] = TEXT("Y");  //本地驱动器映射
+           // TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
+
+           //common::InitResource(userName, password, localDrive, remotePath);
+
+            // C:\Windows\System32\drivers\etc\hosts
+            // 定义要执行的命令
+            QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
+
+            // 创建 QProcess 对象
+            QProcess process;
+
+            // 启动 cmd 进程并执行命令
+            process.start("cmd.exe", QStringList() << "/C" << command);
+
+            // 等待命令执行完成
+            if (process.waitForFinished())
+            {
+                // 获取命令输出（用于调试或查看结果）
+                QString output = process.readAllStandardOutput();
+                QString error = process.readAllStandardError();
+
+                // 打印输出到控制台
+                qDebug() << "Output:" << output;
+                qDebug() << "Error:" << error;
+            }
+            else
+            {
+                qDebug() << "Process failed to start or execute.";
+            }
+
+            QString str = "D:\\Visual Studio 2017.rdp";
+            // 启动bsp 
+            common::startDspExe(str);
             //QProcess *process = new QProcess;
             //// 启动外部程序
             //QString program = "D:\\tools\\EVCapture\\EVCapture.exe"; // 替换为您的外部程序路径
