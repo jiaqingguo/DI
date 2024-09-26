@@ -54,10 +54,10 @@ private:
 	sockaddr_in ClientAddr;//客户端地址 
 
 	int addrLen;		//地址长度
-	char fileName[20];	//文件名
+	//char fileName[20];	//文件名
 	//char m_path[256];	//文件名
 
-	char order[20];		//命令
+	//char order[20];		//命令
 	char rbuff[1024];	//接收缓冲区
 	char sbuff[1024];	//发送缓冲区
 

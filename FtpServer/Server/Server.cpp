@@ -665,6 +665,7 @@ void Server::running()
 
 		}//ls
 		else if (strncmp(rbuff, "cd", 2) == 0) {
+			char fileName[20];	//文件名
 			strcpy(fileName, rbuff + 3);
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);
@@ -681,6 +682,7 @@ void Server::running()
 			//mkdir("T:\\贾庆国\\CS\\2222.txt");
 		}//mkdir
 		else if (strncmp(rbuff, "del", 3) == 0) { // 删除空文件夹;
+			char fileName[20];	//文件名
 			strcpy(fileName, rbuff + 4);//获得要删的文件名
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);//发送回信息
