@@ -661,7 +661,7 @@ void MainWindow::slot_btnAddToolTab()
         if (moduleNumber == 1)
         {
             QString exeDir = QCoreApplication::applicationDirPath();
-            QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".bsp";
+            QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
 
             // Æô¶¯bsp 
             common::startDspExe(strDspPath);
@@ -678,7 +678,7 @@ void MainWindow::slot_btnAddToolTab()
 
 
                 QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
-                    +QString::fromStdString(strValue) + "/"+toolName + ".bsp";
+                    +QString::fromStdString(strValue) + "/"+toolName + ".rdp";
 
                
                 common::iSoftStartHostNum++;

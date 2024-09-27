@@ -55,6 +55,8 @@ private:
     AddToolInfoDialog* m_AddToolInfoDialog = nullptr;
     AddIpInfoDialog* m_AddIpInfoDialog = nullptr;
 
+	int module = 1;
+
   
 };
 
