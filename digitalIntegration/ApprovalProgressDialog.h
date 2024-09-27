@@ -57,7 +57,6 @@ private slots:
     void slot_userQuery();
 
     void slot_spinBoxEnter();
-    //void slot_user_time_select();
 private:
    // void hideTableRows(Q)
 private:

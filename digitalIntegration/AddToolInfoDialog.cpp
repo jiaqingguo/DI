@@ -6,15 +6,21 @@
 #include "common.h"
 #include "databaseDI.h"
 
-AddToolInfoDialog::AddToolInfoDialog(QWidget *parent) :
+AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(module),
     QDialog(parent),
     ui(new Ui::AddToolInfoDialog)
 {
     ui->setupUi(this);
     //ui->lineEditHost->setMaxLength(15);
-    ui->lineEditToolName->setMaxLength(15);
+    ui->lineEditToolName->setMaxLength(20);
     //ui->lineEditToolPath->setMaxLength(15);
-    ui->lineEditIconPath->setMaxLength(30);
+    ui->lineEditIconPath->setMaxLength(100);
+	ui->lineEditIP1->setMaxLength(15);
+	ui->lineEditIP2->setMaxLength(15);
+	ui->lineEditIP3->setMaxLength(15);
+	ui->lineEditIP4->setMaxLength(15);
+	ui->lineEditIP5->setMaxLength(15);
+	ui->lineEditIP6->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
 
 }
@@ -64,6 +70,7 @@ void AddToolInfoDialog::slot_btnOk()
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具名称不能为空!"));
         return;
     }
+
    /* if (ui->lineEditToolPath->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具路径不能为空!"));
@@ -74,6 +81,18 @@ void AddToolInfoDialog::slot_btnOk()
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("图标路径不能为空!"));
         return;
     }
+	if ((ui->lineEditIP1->text().toStdString().empty() 
+		|| ui->lineEditIP2->text().toStdString().empty() 
+		|| ui->lineEditIP3->text().toStdString().empty()
+		|| ui->lineEditIP4->text().toStdString().empty() 
+		|| ui->lineEditIP5->text().toStdString().empty() 
+		|| ui->lineEditIP6->text().toStdString().empty())
+		&& m_iModule == 1)
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("IP不能为空!"));
+		return;
+	}
+	
     this->accept();
  
 }

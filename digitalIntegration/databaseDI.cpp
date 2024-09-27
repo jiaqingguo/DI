@@ -1017,6 +1017,27 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::select_same_name_software(const std::string &software, const int& module)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select software from t_ip where software = (\'%s\') and module = (\'%d\')",software.c_str(),module);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		
+		while (sql_row = mysql_fetch_row(result))
+		{
+			return true;
+		}
+		return false;
+	}
+
 	bool databaseDI::add_data_approval_info(table_dataApproval& stData)
 	{
 		// 启动事务;

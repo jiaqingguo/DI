@@ -10,6 +10,7 @@
 #include <QToolTip>
 #include <QModelIndex>
 #include <QDebug>
+#include <QMessageBox>
 
 
 InformationConfihurationDialog::InformationConfihurationDialog(QWidget *parent) :
@@ -31,7 +32,7 @@ InformationConfihurationDialog::~InformationConfihurationDialog()
 void InformationConfihurationDialog::init()
 {
 
-	m_AddToolInfoDialog = new AddToolInfoDialog(this);
+	m_AddToolInfoDialog = new AddToolInfoDialog(module);
 	m_AddIpInfoDialog = new AddIpInfoDialog(this);
 
 	m_modelTool1 = new QStandardItemModel();
@@ -305,7 +306,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	QPushButton* pButton = (QPushButton*)sender();
 	int moduleNumber = pButton->property("module").toInt();
 
-	AddToolInfoDialog addToolInfoDialog;
+	AddToolInfoDialog addToolInfoDialog(moduleNumber);
 
 	QLineEdit* lineEdit1 = addToolInfoDialog.getlineEditIP1();
 	QLineEdit* lineEdit2 = addToolInfoDialog.getlineEditIP2();
@@ -333,6 +334,13 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		label4->setVisible(false);
 		label5->setVisible(false);
 		label6->setVisible(false);
+		
+		lineEdit1->setEnabled(false);
+		lineEdit2->setEnabled(false);
+		lineEdit3->setEnabled(false);
+		lineEdit4->setEnabled(false);
+		lineEdit5->setEnabled(false);
+		lineEdit6->setEnabled(false);
 	}
 
 	table_ip stIp;
@@ -342,8 +350,11 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	{
 		addToolInfoDialog.getToolsData(stIp, ipData);
 		db::databaseDI::Instance().get_all_ip(listData);
-		//for (auto &soft_ip : listData)
-		//{
+		if (db::databaseDI::Instance().select_same_name_software(stIp.software, moduleNumber))
+		{
+			QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("该模块下已存在该软件,添加失败！"));
+			return;
+		}
 		QStandardItemModel* pModel = nullptr;
 		if (moduleNumber == 1)
 		{
@@ -435,7 +446,6 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 		//pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.software)));
 		//pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.icoPath)));
-//}
 		emit  signal_updateToolIcon(moduleNumber);
 	}
 

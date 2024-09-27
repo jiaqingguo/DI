@@ -18,7 +18,7 @@ class AddToolInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddToolInfoDialog(QWidget *parent = nullptr);
+    explicit AddToolInfoDialog(int module,QWidget *parent = nullptr);
     ~AddToolInfoDialog();
 
     //void getToolsData(table_ip& toolData);
@@ -41,6 +41,7 @@ private slots:
     void slot_btnOk();
 private:
     Ui::AddToolInfoDialog *ui;
+	int m_iModule = 0;
 
 };
 

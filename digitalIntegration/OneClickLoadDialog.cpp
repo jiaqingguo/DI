@@ -122,7 +122,7 @@ void OneClickLoadDialog::slot_btnOK()
 		{
 			if (item_software)
 			{
-				QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item_software->text() + ".bsp";
+				QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item_software->text() + ".rdp";
 				qDebug() << strDspPath;
 				//启动bsp的嵌入
 				int a = 1;
@@ -153,7 +153,7 @@ void OneClickLoadDialog::slot_btnOK()
 
 
 					QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
-						+ QString::fromStdString(strValue) + "/" + item_software->text() + ".bsp";
+						+ QString::fromStdString(strValue) + "/" + item_software->text() + ".rdp";
 					qDebug() << strDspPath;
 					// 启动bsp嵌入
 					int a = 1;
