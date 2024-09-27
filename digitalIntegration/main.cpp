@@ -46,6 +46,10 @@ int main(int argc, char* argv[])
             common::strDbUser = settings.value("user").toString();
             common::strDbPassword = settings.value("password").toString();
         }
+        else 
+        {
+            common::strVipPath = settings.value("vipPath").toString();
+        }
           // 结束当前节的切换
         settings.endGroup();
     }

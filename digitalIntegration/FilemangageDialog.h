@@ -94,7 +94,7 @@ private:
 
     QTreeWidgetItem* m_pRootItem = nullptr;
 
-    QString m_AdministratorDir = "D:\\FileData\\vip";
+   // QString m_AdministratorDir = "Y:\\FileData\\vip";
 
     //QVector<QString> m_vecAdministratorDir;
     QSet<QString> m_vecAdministratorDir;

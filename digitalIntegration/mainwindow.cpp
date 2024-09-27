@@ -76,21 +76,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
     setWindowIcon(QIcon(":/image/tubiao.png"));
-
-    // qss文件监控类
-    m_pQssAutoLoader = new QssAutoLoader;
-    QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
-    strQssPath.replace("/", "\\\\");
-    m_pQssAutoLoader->setAutoloadQss(strQssPath);
-
-	initInitface();
-
-    QString target = "\\\\192.168.0.250\\"; // 实际路径
-    QString username = "share"; // 实际用户名
-    QString password = "Share123"; // 实际密码
-
-    common::addNetworkCredential(target, username, password);
-
     QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
     // 创建 QProcess 对象
@@ -114,6 +99,21 @@ MainWindow::MainWindow(QWidget *parent)
     {
         qDebug() << "Process failed to start or execute.";
     }
+    // qss文件监控类
+    m_pQssAutoLoader = new QssAutoLoader;
+    QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
+    strQssPath.replace("/", "\\\\");
+    m_pQssAutoLoader->setAutoloadQss(strQssPath);
+
+	initInitface();
+
+    QString target = "\\\\192.168.0.250\\"; // 实际路径
+    QString username = "share"; // 实际用户名
+    QString password = "Share123"; // 实际密码
+
+    common::addNetworkCredential(target, username, password);
+
+   
 }
 
 

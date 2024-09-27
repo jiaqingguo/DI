@@ -46,7 +46,8 @@ namespace common
 	extern int              iSoftStartHostNum;		 // 模块234软件 启动的所在主机标志;
 	extern   std::set<std::string>    setHostIps;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
-	extern QString          strCopyPath;				 // 复制的远程路径;
+	extern QString          strCopyPath;			 // 复制的远程路径;
+	extern QString          strVipPath;				 //   普通用户不能操作的路径;
  	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 

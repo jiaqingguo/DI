@@ -478,7 +478,7 @@ int FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& 
 
 bool FilemangageDialog::IsAdministratorDir(const QTreeWidgetItem* pItem)
 {
-	if (pItem->text(0) == m_AdministratorDir)
+	if (pItem->text(0) == common::strVipPath)
 	{
 		return true;
 	}
@@ -498,7 +498,7 @@ void FilemangageDialog::getAdministratorDirs()
 	for (int i = 0; i < m_pRootItem->childCount(); ++i)
 	{
 		QString  strPath = m_pRootItem->child(i)->data(0, Qt::UserRole).toString();
-		if (strPath == m_AdministratorDir)
+		if (strPath == common::strVipPath)
 		{
 			pAdminItem = m_pRootItem->child(i);
 			pAdminItem->setData(0, Qt::UserRole + 1, iAdminDir);
