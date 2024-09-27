@@ -36,7 +36,6 @@ private:
    
     bool getFtpFolderShow();
 
-
     void createTreeChildNode( QTreeWidgetItem* pParentItem,const std::string strFolder);
 
     int downloadFtpDir(const QString &strDirPath,const QString &newDirPath);

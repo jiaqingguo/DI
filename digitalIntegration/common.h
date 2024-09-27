@@ -77,9 +77,9 @@ namespace common
 
 
 
-	void InitResource();
+	void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath);
 	void UnInitResource();
-
+	void StoreCredential(const std::wstring& target, const std::wstring& username, const std::wstring& password);
 	void startDspExe(QString& strPath);
 
 	// ---------ÀàÐÍ×ª»»-----------

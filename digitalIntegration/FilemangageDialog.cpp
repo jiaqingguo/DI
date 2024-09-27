@@ -1095,6 +1095,7 @@ void FilemangageDialog::slot_btnCompress()
 	if (!bChecked)
 	{
 		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请勾选要压缩的文件"));
+		return;
 	}
 
 	QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("压缩"), QString::fromLocal8Bit("压缩包名称："));
