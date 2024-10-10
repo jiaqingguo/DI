@@ -130,12 +130,28 @@ void RegisterDialog::slot_btnFingerprintInput()
 		{
 			m_bRegister = TRUE;
 			m_enrollIdx = 0;
-			ui->label_7->setText(QString::fromLocal8Bit("请连续按3次手指"));
-			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请连续按3次手指"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Doing register, please press your finger 3 times!"));
+			//ui->label_7->setText(QString::fromLocal8Bit("注册指纹，请按3次手指"));
+			
+			
+			connect(timer, &QTimer::timeout, this, &RegisterDialog::slot_updateLabelText);
+			timer->start(1000);
 		}
 	}
 	//QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
 	//close();
 
+}
+void RegisterDialog::slot_updateLabelText()
+{
+	static QString texts[] = {QString::fromLocal8Bit("请按3次手指"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
+	if (m_enrollIdx < 3){
+		ui->label_7->setText(texts[m_enrollIdx]);
+		///++m_enrollIdx;
+	}
+	else {
+		// 当文本变化三次后，可以停止定时器
+		// 假设timer是定时器的成员变量
+		timer->stop();
+		m_enrollIdx = 0; // 重置计数器，以便可以重复使用
+	}
 }

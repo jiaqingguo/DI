@@ -36,8 +36,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(ui->lePassword, &QLineEdit::editingFinished, this, &LoginDialog::slot_lePwdEditingFinished);
 	connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
-	//fingerDlg *fingerDialog = new fingerDlg();
-	//connect(fingerDialog,&fingerDlg::regist_succ, this, &LoginDialog::slot_btnExitClicked);
+	this->m_fingerDlg = new fingerDlg();
+	this->m_fingerDlg->finger_init();
+	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
+	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
+
+	this->registerDialog = new RegisterDialog();
 }
 
 LoginDialog::~LoginDialog()
@@ -165,8 +169,8 @@ void LoginDialog::slot_btnLoginClicked()
 
 void LoginDialog::slot_btnExitClicked()
 {
-	RegisterDialog registerDialog;
-	registerDialog.exec();
+	
+	registerDialog->exec();
 }
 
 void LoginDialog::slot_btnFingerprintClicked()
@@ -230,4 +234,23 @@ void LoginDialog::slot_lePwdTextChanged(const QString& text)
 void LoginDialog::slot_lePwdEditingFinished()
 {
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png);");
+}
+
+void LoginDialog::slot_login_succ()
+{
+	int loginStatus = 1;
+	db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+
+	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+	db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+
+	this->accept();
+
+	if (m_fingerDlg != nullptr)
+		delete m_fingerDlg;
+}
+
+void LoginDialog::slot_regist_succ()
+{
+	registerDialog->close();
 }

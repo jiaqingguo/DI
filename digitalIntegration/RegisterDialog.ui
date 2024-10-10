@@ -197,7 +197,7 @@
             </font>
            </property>
            <property name="text">
-            <string>指纹录入</string>
+            <string>注册指纹</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

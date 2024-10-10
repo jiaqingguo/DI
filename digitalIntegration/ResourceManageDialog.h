@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QMap>
 #include <QUdpSocket>
+#include <QHostAddress>
 class QStandardItemModel;
 class QWebEngineView;
 class QJsonObject;

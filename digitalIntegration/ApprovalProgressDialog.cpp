@@ -1490,6 +1490,18 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					state = 0;
 				}
+				auto it = m_listUser.begin();
+				while (it != m_listUser.end())
+				{
+					if ((*it).approval != state)
+					{
+						it = m_listUser.erase(it); // 删除不符合条件的元素，并返回指向下一个元素的迭代器
+					}
+					else
+					{
+						++it;
+					}
+				}
 			}
 		}
 	}

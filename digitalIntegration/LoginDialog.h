@@ -3,7 +3,8 @@
 
 #include <QDialog>
 
-
+class fingerDlg;
+class RegisterDialog;
 namespace Ui {
 class LoginDialog;
 }
@@ -94,6 +95,13 @@ private:
 	QString m_sUser;
 private:
     Ui::LoginDialog *ui;
+
+	//Ö¸ÎÆ
+	fingerDlg *m_fingerDlg = nullptr;
+	RegisterDialog *registerDialog = nullptr;
+public slots:
+	void slot_login_succ();
+	void slot_regist_succ();
 };
 
 #endif // LOGINDIALOG_H

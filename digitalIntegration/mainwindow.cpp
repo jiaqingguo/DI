@@ -149,9 +149,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initInitface()
 {
-	this->m_fingerDlg = new fingerDlg();
+	/*this->m_fingerDlg = new fingerDlg();
 	this->m_fingerDlg->finger_init();
-	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &MainWindow::slot_login_succ);
+	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &MainWindow::slot_login_succ);*/
 
 
     m_LoginDialog = new LoginDialog(this);
@@ -827,17 +827,17 @@ void MainWindow::updateModuleToolIcon(int module)
     }
 }
 
-void MainWindow::slot_login_succ()
-{
-    int loginStatus = 1;
-    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
-
-	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-
-	this->m_LoginDialog->accept();
-
-	if (m_fingerDlg != nullptr)
-		delete m_fingerDlg;
-}
+//void MainWindow::slot_login_succ()
+//{
+//    int loginStatus = 1;
+//    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+//
+//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+//    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+//
+//	this->m_LoginDialog->accept();
+//
+//	if (m_fingerDlg != nullptr)
+//		delete m_fingerDlg;
+//}
 

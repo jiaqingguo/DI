@@ -27,7 +27,7 @@ class OneClickLoadDialog;
 class FilemangageDialog;
 class GifDialog;
 
-class fingerDlg;
+//class fingerDlg;
 
 /*!
 * \class	QssAutoLoader
@@ -161,10 +161,10 @@ private:
 	bool bUserIp = true;
 
 	//Ö¸ÎÆ
-	fingerDlg *m_fingerDlg = nullptr;
+	//fingerDlg *m_fingerDlg = nullptr;
 
-public slots:
-	void slot_login_succ();
+//public slots:
+	//void slot_login_succ();
 
 
 

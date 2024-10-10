@@ -50,7 +50,7 @@ namespace db
 		bool del_user(const int& id);
 
 		//指纹表
-		bool add_user_finger(unsigned char *tempdata, int &templen, const int &id);
+		bool add_user_finger(unsigned char *tempdata, const int &templen, const int &id);
 		bool get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec,int &userid);
 		bool get_user_finger2(unsigned char *&temp,int &templen, int &userid);
 
@@ -61,7 +61,7 @@ namespace db
 		bool get_tools(std::list<table_tools>& listTools);
 		bool add_tools( table_tools& stTool);
 		bool add_ip_tools(table_ip &stIp);
-		bool del_tools(const int& id);
+		
 
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
@@ -82,6 +82,7 @@ namespace db
 		//退出时，t_ip的username字段置0
 		bool updata_ipusername(const std::string& u_name);
 		bool select_same_name_software(const std::string &software, const int& module);
+		bool del_tools(const std::string &software,const int &name);
 
 
 

@@ -171,6 +171,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 {
     m_webEngineViewCpu = new QWebEngineView();
     QString pathNet = qApp->applicationDirPath() + "/eChartFileCpu.html";
+	//qDebug() << qApp->applicationDirPath()<<"11111111111"<<pathNet;
     m_webEngineViewCpu->load(QUrl(pathNet));
 
     widget->layout()->addWidget(m_webEngineViewCpu);
@@ -209,7 +210,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 
 void ResourceManageDialog::initWebViewMemory(QWidget* widget)
 {
-    m_webEngineViewMemory= new QWebEngineView();
+    m_webEngineViewMemory= new QWebEngineView(); 
     QString path = qApp->applicationDirPath() + "/eChartFileMemory.html";
     m_webEngineViewMemory->load(QUrl(path));
 
@@ -537,25 +538,29 @@ void ResourceManageDialog::slot_timerTimeout()
     { // 如果不存在，才添加
         ui->comboBox->addItem(message.host_name);
     }
-    if (CPU_init == true) {
+    if (CPU_init == true && message.host_name == ui->comboBox->currentText()) {
         addHostCpuElemnet(message.host_name, message.CPU_Message);
+		updateCpuWebViewShow(message.host_name);
     }
-    else if (memory_init == true) {
+    else if (memory_init == true && message.host_name == ui->comboBox->currentText()) {
         addHostMemoryElemnet(message.host_name, message.Memory_Message);
+		updateMemoryWebViewShow(message.host_name);
     }
-    else if (disk_init == true) {
+    else if (disk_init == true && message.host_name == ui->comboBox->currentText()) {
+		updateDiskWebViewShow(message.host_name);
         addHostDiskElemnet(message.host_name, message.Disk_Message);
     }
-    else if (net_init == true) {
+    else if (net_init == true && message.host_name == ui->comboBox->currentText()) {
         addHostNetElemnet(message.host_name, message.Net_Message);
+		updateNetWebViewShow(message.host_name);
     }
-    if (message.host_name == ui->comboBox->currentText())
+    /*if (message.host_name == ui->comboBox->currentText())
     {
         updateCpuWebViewShow(message.host_name);
         updateMemoryWebViewShow(message.host_name);
         updateDiskWebViewShow(message.host_name);
         updateNetWebViewShow(message.host_name);
-    }
+    }*/
 
 }
 
@@ -601,7 +606,8 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
     this->UdpSocket = new QUdpSocket(this);
     //this->thread = new QThread(this);
     //this->UdpSocket->moveToThread(this->thread);
-    this->UdpSocket->bind(QHostAddress::Any, 12345);
+    this->UdpSocket->bind(QHostAddress::Any, 54321);
+
     connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
         while (this->UdpSocket->hasPendingDatagrams())
         {

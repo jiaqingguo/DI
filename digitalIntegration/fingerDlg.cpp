@@ -105,7 +105,7 @@ void fingerDlg::finger_init()
 		m_enrollIdx = 0;
 		m_bRegister = FALSE;
 
-		
+
 		//打开进程锁
 		//hmutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, TEXT("MutexTest"));
 		////创建进程锁
@@ -167,7 +167,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 				}
 			}
 
-		Sleep(100);
+			Sleep(100);
 		}
 	}
 	return 0;
@@ -215,15 +215,15 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
 			if (ZKFP_ERR_OK == ret)
 			{
-				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
+				//memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
 
-				nLastRegTempLen = cbRegTemp;
+				//nLastRegTempLen = cbRegTemp;
 
 				if (!db::databaseDI::Instance().get_new_regist_user(id))
 				{
 					return;
 				}
-				if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
+				if (db::databaseDI::Instance().add_user_finger(szRegTemp, cbRegTemp, id))
 				{
 					MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
 					emit regist_succ();
@@ -282,7 +282,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			db::databaseDI::Instance().get_user_finger2(szLastRegTemplate2, nLastRegTempLen2, common::iUserID);
 
 			//if (vec_finger.size() != 0)
-			if(szLastRegTemplate2 && nLastRegTempLen2 != 0)
+			if (szLastRegTemplate2 && nLastRegTempLen2 != 0)
 			{
 				//for (auto &v_f : vec_finger)
 				{
@@ -301,7 +301,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 						CloseHandle(hmutex);
 					}*/
 				}
-				/*for (auto& v_f : vec_finger) 
+				/*for (auto& v_f : vec_finger)
 				{
 					delete[] v_f.first;
 					v_f.first = nullptr;

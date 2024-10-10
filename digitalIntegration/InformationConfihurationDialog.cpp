@@ -210,7 +210,7 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 				// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 				//model->setItem(newRowIndex, 0, item);
 				//QModelIndex index = model->index(newRowIndex, 0);
-				//model->setData(index, stTool.id, Qt::UserRole);  // 设置id;
+				//model->setData(index, QString::fromStdString(stTool.first), Qt::UserRole);  // 设置id;
 				model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
 				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.icoPath)));
 			}
@@ -239,7 +239,7 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 				// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 				pModel->setItem(newRowIndex, 0, item);
 				//QModelIndex index = pModel->index(newRowIndex, 0);
-				//pModel->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+				//pModel->setData(index, QString::fromStdString(stIp.software), Qt::UserRole);  // 设置id;
 
 				//pModel->setItem(newRowIndex, 0, item);
 				pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.host)));
@@ -524,7 +524,6 @@ void InformationConfihurationDialog::slot_btnToolDel()
 	if (moduleNumber == 1)
 	{
 		currentIndex = ui->tableViewTool1->currentIndex();
-
 		pModelTool = m_modelTool1;
 	}
 	else if (moduleNumber == 2)
@@ -547,12 +546,16 @@ void InformationConfihurationDialog::slot_btnToolDel()
 		return;
 	if (!currentIndex.isValid())
 		return;
-	QModelIndex firstColumnIndex = pModelTool->index(currentIndex.row(), 0, QModelIndex());
+	//QModelIndex firstColumnIndex = pModelTool->index(currentIndex.row(), 0, QModelIndex());
 
-	int id = pModelTool->data(firstColumnIndex, Qt::UserRole).toInt();
-	qDebug() << "First column data of current row   id: " << id;
+	//int id = pModelTool->data(firstColumnIndex, Qt::UserRole).toInt();
+	//qDebug() << "First column data of current row   id: " << id;
+	QVariant dataVariant = pModelTool->item(currentIndex.row(), currentIndex.column())->text();
+	QString qstr = dataVariant.toString();
+	std::string software = qstr.toStdString();
+	qDebug() << "First column data of current row  software: " << software.c_str();
 
-	if (db::databaseDI::Instance().del_tools(id))
+	if (db::databaseDI::Instance().del_tools(software,common::iLoginNum))
 	{
 		pModelTool->removeRow(currentIndex.row());
 		emit  signal_updateToolIcon(moduleNumber);

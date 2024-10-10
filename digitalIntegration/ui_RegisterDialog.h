@@ -262,7 +262,7 @@ public:
         comboBox->setItemText(1, QCoreApplication::translate("RegisterDialog", "\346\231\256\351\200\232\347\224\250\346\210\267", nullptr));
 
         btnRegister->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214", nullptr));
-        label_7->setText(QCoreApplication::translate("RegisterDialog", "\346\214\207\347\272\271\345\275\225\345\205\245", nullptr));
+        label_7->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214\346\214\207\347\272\271", nullptr));
         labelFingerprint->setText(QString());
         btnFingerprintInput->setText(QCoreApplication::translate("RegisterDialog", "\345\274\200\345\247\213\345\275\225\345\205\245", nullptr));
     } // retranslateUi

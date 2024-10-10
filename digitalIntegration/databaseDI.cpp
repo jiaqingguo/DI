@@ -623,7 +623,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::del_tools(const int& id)
+	bool databaseDI::del_tools(const std::string &software, const int &name)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -631,7 +631,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "delete from t_ip where id = (\'%d\')", id);
+		sprintf_s(sql, "delete from t_ip where software = (\'%s\') and number = (\'%d\')", software.c_str(),name);
 
 		if (!exec_sql(sql))
 		{
@@ -1315,7 +1315,7 @@ namespace db
 	}
 
 	//指纹表的操作，16进制添加指纹到数据库中
-	bool databaseDI::add_user_finger(unsigned char *tempdata, int &templen, const int &id)
+	bool databaseDI::add_user_finger(unsigned char *tempdata, const int &templen, const int &id)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1331,7 +1331,7 @@ namespace db
 		std::string hexStr = oss.str();
 
 		// 执行SQL语句;
-		char sql[3072] = { 0 };
+		char sql[1024] = { 0 };
 		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", 
 			hexStr.c_str(), 
 			templen, 
