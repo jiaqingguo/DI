@@ -25,46 +25,67 @@
 #include <QLabel>
 #include <qwidget.h>
 #include <QtWebEngineWidgets>
-#include <QProcess>
+#include <QAxWidget>
 #include "windows.h"
 
+EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
+        // 将原生窗口嵌入到 Qt 的 QWidget 中
+        m_windowContainer = QWidget::createWindowContainer(QWindow::fromWinId((WId)m_hwnd), this);
+        m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
 
-std::vector<HWND> windowHandles; // 存储窗口句柄的容器
-
-// 枚举窗口的回调函数
-BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
-    DWORD processId;
-    GetWindowThreadProcessId(hwnd, &processId);
-
-    // 检查窗口是否可见并与目标进程 ID 匹配
-    if (IsWindowVisible(hwnd) && processId == static_cast<DWORD>(lParam)) {
-        windowHandles.push_back(hwnd);
+        // 调整原生窗口大小，使其铺满 QWidget
+        adjustEmbeddedWindowSize();
     }
-    return TRUE; // 继续枚举
+
+    // 调整嵌入窗口的大小为 QWidget 的大小
+void EmbeddedWidget::adjustEmbeddedWindowSize() 
+{
+    if (m_hwnd) {
+        // 获取 QWidget 的大小
+        QRect geometry = this->geometry();
+        int width = geometry.width();
+        int height = geometry.height();
+
+        // 调整外部窗口的大小和位置
+        SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
+    }
 }
 
-// 获取窗口标题
-std::wstring GetWindowTitle(HWND hwnd) {
-    const int length = GetWindowTextLength(hwnd);
-    std::wstring title(length, L'\0'); // 创建足够大小的字符串
-    GetWindowText(hwnd, &title[0], length + 1); // 获取窗口标题
-    return title;
-}
-// 定义一个接口类，用于传递数据给HTML
-//class EChartsBridge : public QObject {
-//    Q_OBJECT
-//public:
-//    explicit EChartsBridge(QObject* parent = nullptr) : QObject(parent) {}
-//
-//signals:
-//    void sendData(const QString& data);
-//
-//public slots:
-//    void receiveMessage(const QString& message) {
-//        qDebug() << "Received message from JavaScript:" << message;
-//    }
-//};
 
+    // 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
+void EmbeddedWidget::resizeEvent(QResizeEvent* event)  {
+    QWidget::resizeEvent(event);
+    adjustEmbeddedWindowSize();
+}
+
+CWidget::CWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
+    // 将原生窗口嵌入到 Qt 的 QWidget 中
+   QWindow *window= QWindow::fromWinId((WId)m_hwnd);
+
+   this->resize(window->width(), window->height());
+    m_windowContainer = QWidget::createWindowContainer(window);
+    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
+    
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(m_windowContainer);
+    this->setLayout(layout);
+    
+}
+void CWidget::mousePressEvent(QMouseEvent* event)
+{
+   
+        // 将鼠标点击的事件位置转换为全局坐标
+        QPoint globalPos = event->globalPos();
+
+        // 将全局坐标转换为容器内的坐标
+        QPoint localPos = this->mapFromGlobal(globalPos);
+
+        // 发送消息到原生窗口, 这里使用 SendMessage 函数
+        SendMessage((HWND)this->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
+    
+    QWidget::mousePressEvent(event);
+
+}
 MainWindow* g_pMainWindow = NULL;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -345,7 +366,9 @@ void MainWindow::slot_btnApprovalProgressClicked()
     m_ApprovalProgressDialog->exec();
     ui->btnApprovalProgress->setChecked(false);
 }
-
+QWidget* main_widget = nullptr;
+QWindow* main_window = nullptr;
+HWND      main_wid;
 void MainWindow::slot_btnAddToolTab()
 {
     QPushButton* pButton = (QPushButton*)sender();
@@ -367,13 +390,13 @@ void MainWindow::slot_btnAddToolTab()
 
        
         if (moduleNumber == 1)
-        { 
-            QString exeDir = QCoreApplication::applicationDirPath();
-			qDebug() << exeDir;
-            QString strDspPath = exeDir + "\\dsp\\"+QString::number(common::iLoginNum)+ "\\"+toolName+".bsp";
+        {
+            auto WNID = (WId)FindWindow(L"WeChatMainWndForPC", L"微信");
+           
 
-
-            WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
+            WId winId = (WId)WNID;
+          
+            //WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
             if (winId != 0)
             {
                 QWindow* window = QWindow::fromWinId(winId);
@@ -401,223 +424,87 @@ void MainWindow::slot_btnAddToolTab()
         {
 
 
-            //TCHAR userName[] = TEXT("Administrator");
-            //TCHAR password[] = TEXT("Ate123");
-            //TCHAR localDrive[] = TEXT("Y");  //本地驱动器映射
-            //TCHAR remotePath[] = TEXT("\\192.168.1.247");  // 共享资源的路径
+            QString strDspPath = "D:\Visual Studio 2017.rdp";
 
-            //std::wstring target = L"\\\\192.168.1.247"; // 远程目录路径
-            //std::wstring username = L"Administrator"; // 用户名
-            //std::wstring password = L"Ate123"; // 密码
-
-            
-           // TCHAR userName[] = TEXT("share");
-           // TCHAR password[] = TEXT("Share123");
-           // TCHAR localDrive[] = TEXT("Y");  //本地驱动器映射
-           // TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-
-           //common::InitResource(userName, password, localDrive, remotePath);
-
-            // C:\Windows\System32\drivers\etc\hosts
-            // 定义要执行的命令
-            QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
-
-            // 创建 QProcess 对象
-            QProcess process;
-
-            // 启动 cmd 进程并执行命令
-            process.start("cmd.exe", QStringList() << "/C" << command);
-
-            // 等待命令执行完成
-            if (process.waitForFinished())
-            {
-                // 获取命令输出（用于调试或查看结果）
-                QString output = process.readAllStandardOutput();
-                QString error = process.readAllStandardError();
-
-                // 打印输出到控制台
-                qDebug() << "Output:" << output;
-                qDebug() << "Error:" << error;
-            }
-            else
-            {
-                qDebug() << "Process failed to start or execute.";
-            }
-
-            QString str = "D:\\Visual Studio 2017.rdp";
             // 启动bsp 
-            common::startDspExe(str);
-            //QProcess *process = new QProcess;
-            //// 启动外部程序
-            //QString program = "D:\\tools\\EVCapture\\EVCapture.exe"; // 替换为您的外部程序路径
-           
+            common::startDspExe(strDspPath);
 
-            //std::wstring wStr = program.toStdWString();
-
-            //// 从std::wstring获取LPCWSTR
-            //LPCWSTR lpwstr = wStr.c_str();
-            // // 启动进程
-            //STARTUPINFO si = { sizeof(si) };
-            //PROCESS_INFORMATION pi;
-
-            //if (CreateProcess(wStr.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
-            //    std::cout << "Process started!" << std::endl;
-
-            //    // 等待一段时间，让窗口创建
-            //    Sleep(1000); // 视情况而定，可能需要调整
-
-            //    // 获取窗口句柄
-            //   // HWND hwnd = common::FindWindowByProcessId(pi.dwProcessId);
-            //    auto hwndvec =common::getWindowHandlesByProcessId(pi.dwProcessId);
-            //  /*  if (hwnd) {
-            //        std::cout << "Window handle: " << hwnd << std::endl;
-            //    }
-            //    else {
-            //        std::cout << "No top-level window found for the process." << std::endl;
-            //    }*/
-
-            //    // 关闭进程句柄
-            //    CloseHandle(pi.hProcess);
-            //    CloseHandle(pi.hThread);
-            //}
-            //else {
-            //    std::cout << "Failed to start process. Error: " << GetLastError() << std::endl;
-            //}
-
-           // WId winId2 = (WId)hnnVec[0];
-            // 获取窗口标题
-          //  QString windowTitle = common::GetWindowTitle(processId);
-     
-        //    qDebug() << "External program window title:" << windowTitle;
-       //   WId winId = (WId)FindWindow(NULL, L"EV录屏"); Visual Studio 2017
-              WId winId = (WId)FindWindow(NULL, L"Microsoft Visual Studio");
-          // WId winId = (WId)FindWindow(NULL, L"QQ"); 
-             //  WId winId = (WId)FindWindow(NULL, L"Microsoft Visual Studio"); 
-           // 获取窗口句柄
-           //auto WNID = common::FindMainWindow(processID);
-
-           //winId = (WId)WNID;
+            QString  className = "RAIL_WINDOW";
+            // 窗口句柄
+          
+            HWND WNID;
+            HWND temp = NULL;
+          
+            int i = 0;
+            WNID = common::getHWND(className, i);
+           // WId winId = (WId)WNID;
+            //WNID=FindWindow(NULL, L" (AD.jhapp.com)");
+            WId winId = (WId)WNID;
             if (winId != 0)
             {
-                QWindow* window = QWindow::fromWinId(winId);
-                QWidget* widget = QWidget::createWindowContainer(window);
-                widget->setWindowTitle(tabName);
+               
                 if (displayMode == 0)
                 {
+                    
+                   
+                    /*QRect geometry = ui->tabWidgetModulel2->widget(0)->geometry();
+                    int width = geometry.width();
+                    int height = geometry.height();
+                    SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);*/
+
+                    QWindow* window = QWindow::fromWinId(winId);
+                    int width = window->width();
+                    int height = window->height();
+                    QWidget* widget = QWidget::createWindowContainer(window,this);
+                   //widget->setFixedWidth(width);
+                   // widget->setFixedHeight(height);
+                  //  widget->resize(width, height);
+                    // 创建一个新的 QWidget
                   
+                    widget->setWindowTitle(tabName);
                     ui->tabWidgetModulel2->addTab(widget, tabName);
                 }
                 else
                 {
-                    widget->show();
+                  //SetWindowPos(WNID, HWND_TOP, 0, 0, 650, 480, SWP_NOZORDER | SWP_SHOWWINDOW);
+                    QWindow* window = QWindow::fromWinId(winId);
+                    window->setFlags(window->flags()| Qt::ForeignWindow);
+                    int width = window->width();
+                    int height = window->height();
+                    window->show();
+                   // QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
+                    //main_widget = QWidget::createWindowContainer(window);
+                  //window->setGeometry(0, 0, widget->width(), widget->height());
+                  //widget->setFixedWidth(width);
+                  // widget->setFixedHeight(height);
+                    
+                   // main_widget->show();
+                   //widget->show();
+                    // 创建一个嵌入窗口类，将原生窗口嵌入 Qt Widget
+                   /* CWidget* embeddedWidget = new CWidget(WNID);
+                    embeddedWidget->show();*/
+
+                    //QWindow* window = QWindow::fromWinId(winId);
+                    //QWidget* widget = QWidget::createWindowContainer(window);
+                    ////widget->showMaximized();
+                    //  SetWindowPos(WNID, HWND_TOP, 0, 0, 2500, 1300, SWP_NOZORDER | SWP_SHOWWINDOW);
+                    //  widget->resize(2500, 1300);
+                    //// 获取 QWidget 的大小
+                    //QRect geometry = widget->geometry();
+                    //int width = geometry.width();
+                    //int height = geometry.height();
+
+                    // 调整外部窗口的大小和位置
+                  //  SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
+                    // 创建一个QAxWidget对象
+                 
                 }
                
             }
         }
         else if (moduleNumber == 3)
         {
-             HANDLE hProcess;
-             if (1)// 测试代码
-             {
-                 //DWORD bufferSize = MAX_PATH;
-                 //wchar_t currentDirectory[MAX_PATH];
-
-                 //// 获取当前工作目录
-                 //if (GetCurrentDirectoryW(bufferSize, currentDirectory)) {
-                 //    std::wcout << L"Current Directory: " << currentDirectory << std::endl;
-
-                 //    // 应用程序路径
-                 //    LPCWSTR applicationPath = L"D:\\tools\\EVCapture\\EVCapture.exe"; // 确保路径格式正确
-
-                 //    // 设置启动信息
-                 //    SHELLEXECUTEINFOW sei = { 0 }; // 使用宽字符版本
-                 //    sei.cbSize = sizeof(SHELLEXECUTEINFO);
-                 //    sei.fMask = SEE_MASK_NOCLOSEPROCESS; // 让 ShellExecuteEx 返回进程句柄
-                 //    sei.hwnd = NULL;
-                 //    sei.lpVerb = NULL;
-                 //    sei.lpFile = applicationPath;
-                 //    sei.lpParameters = NULL;
-                 //    sei.lpDirectory = currentDirectory;
-                 //    sei.nShow = SW_SHOW;
-
-                 //    // 调用 ShellExecuteEx 来打开应用程序
-                 //    if (ShellExecuteExW(&sei)) 
-                 //    { // 使用宽字符版本
-                 //        std::wcout << L"Application opened successfully." << std::endl;
-
-                 //        // 获取进程句柄
-                 //         hProcess = sei.hProcess;
-                 //       // std::wcout << L"Process handle: " << hProcess << std::endl;
-
-                 //        // 等待进程结束
-                 //        //WaitForSingleObject(hProcess, INFINITE); // 等待直到进程结束
-
-                 //        // 关闭进程句柄
-                 //      //  CloseHandle(hProcess);
-                 //    }
-                 //    else {
-                 //        std::wcerr << L"Failed to open application. Error code: " << GetLastError() << std::endl;
-                 //    }
-                 //}
-                 //else {
-                 //    std::wcerr << L"Failed to get current directory. Error code: " << GetLastError() << std::endl;
-                 //}
-
-
-                 // 当前工作目录和应用程序路径
-                 wchar_t currentDirectory[MAX_PATH];
-                 if (GetCurrentDirectoryW(MAX_PATH, currentDirectory)) {
-                     std::wcout << L"Current Directory: " << currentDirectory << std::endl;
-
-                     LPCWSTR applicationPath = L"D:\\Visual Studio 2017.rdp"; // 确保路径格式正确
-
-                     // 设置启动信息
-                     SHELLEXECUTEINFOW sei = { 0 };
-                     sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-                     sei.fMask = SEE_MASK_NOCLOSEPROCESS; // 让 ShellExecuteEx 返回进程句柄
-                     sei.hwnd = NULL;
-                     sei.lpVerb = NULL;
-                     sei.lpFile = applicationPath;
-                     sei.lpParameters = NULL;
-                     sei.lpDirectory = currentDirectory;
-                     sei.nShow = SW_SHOW;
-
-                     // 调用 ShellExecuteEx 来打开应用程序
-                     if (ShellExecuteExW(&sei)) {
-                         std::wcout << L"Application opened successfully." << std::endl;
-
-                         // 等待一段时间，确保窗口已创建
-                         std::this_thread::sleep_for(std::chrono::seconds(1));
-
-                         // 枚举窗口，查找与新进程相关的窗口
-                         EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(sei.hProcess));
-
-                         // 输出找到的窗口句柄和标题
-                         for (HWND hwnd : windowHandles) {
-                             std::wstring title = GetWindowTitle(hwnd);
-                             std::wcout << L"Found window handle: " << hwnd << L", Title: " << title << std::endl;
-                         }
-
-                         // 等待进程结束
-                         WaitForSingleObject(sei.hProcess, INFINITE);
-                         CloseHandle(sei.hProcess);
-                     }
-                     else {
-                         std::wcerr << L"Failed to open application. Error code: " << GetLastError() << std::endl;
-                     }
-                 }
-                 else {
-                     std::wcerr << L"Failed to get current directory. Error code: " << GetLastError() << std::endl;
-                 }
-             }
-
-            WId  winId = 0;
-            if (windowHandles.size() > 0)
-            {
-                winId = (WId)windowHandles[0];
-            }
-
-            //WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
+            WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
            
             if (winId != 0)
             {
@@ -682,6 +569,8 @@ void MainWindow::slot_btnAddToolTab()
 
                
                 common::iSoftStartHostNum++;
+
+                strDspPath = "D:\\Visual Studio 2017.rdp";
                 // 启动bsp 
                 common::startDspExe(strDspPath);
                 // 嵌入
@@ -825,6 +714,38 @@ void MainWindow::updateModuleToolIcon(int module)
 			}
         }
     }
+}
+
+//bool MainWindow::event(QEvent* event)
+//{
+//    if(main_widget)
+//        main_widget->update();
+//    return QMainWindow::paintEvent(event);;
+//}
+
+void MainWindow::paintEvent(QPaintEvent* event)
+{
+    if (main_widget)
+        main_widget->update();
+
+    QMainWindow::paintEvent(event);
+}
+
+void MainWindow::mousePressEvent(QMouseEvent* event)
+{
+    if (main_widget != nullptr)
+    {
+        // 将鼠标点击的事件位置转换为全局坐标
+        QPoint globalPos = event->globalPos();
+
+        // 将全局坐标转换为容器内的坐标
+        QPoint localPos = main_widget->mapFromGlobal(globalPos);
+
+        // 发送消息到原生窗口, 这里使用 SendMessage 函数
+        SendMessage((HWND)main_widget->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
+    }
+
+    QMainWindow::mousePressEvent(event);
 }
 
 void MainWindow::slot_login_succ()

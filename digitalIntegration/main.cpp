@@ -12,7 +12,7 @@
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QString exeDir = QCoreApplication::applicationDirPath();
     QString strIniPath = exeDir + "/software.ini";
     // 创建QSettings对象并指定INI文件路径
@@ -67,6 +67,6 @@ int main(int argc, char* argv[])
     {
         a.exit(1);
     }
-
+   
     return a.exec();
 }

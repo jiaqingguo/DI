@@ -29,6 +29,35 @@ class GifDialog;
 
 class fingerDlg;
 
+class EmbeddedWidget : public QWidget {
+    Q_OBJECT
+
+public:
+	EmbeddedWidget(HWND hwnd, QWidget* parent = nullptr) ;
+
+    // 调整嵌入窗口的大小为 QWidget 的大小
+	void adjustEmbeddedWindowSize();
+
+protected:
+    // 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
+	void resizeEvent(QResizeEvent* event) override;
+
+private:
+    HWND m_hwnd;                   // 外部窗口句柄
+    QWidget *m_windowContainer;     // 用于封装原生窗口的 QWidget
+};
+
+class CWidget : public QWidget
+{
+	Q_OBJECT
+public:
+	CWidget(HWND hwnd, QWidget* parent = nullptr);
+protected:
+	void mousePressEvent(QMouseEvent* event) override;
+private:
+	HWND m_hwnd;                   // 外部窗口句柄
+	QWidget* m_windowContainer;     // 用于封装原生窗口的 QWidget
+};
 /*!
 * \class	QssAutoLoader
 * \brief	修改qss文件时 使程序立刻生效显示.
@@ -123,6 +152,12 @@ private slots:
 	void slot_downlaodFinsh();
 private:
 	void updateModuleToolIcon(int module);
+protected:
+	//virtual bool event(QEvent* event) override;
+
+	virtual void paintEvent(QPaintEvent* event);
+
+	void mousePressEvent(QMouseEvent* event) override;
 private:
     Ui::MainWindow *ui;
 

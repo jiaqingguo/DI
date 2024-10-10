@@ -670,6 +670,7 @@ void Server::running()
 			strcpy(sbuff, rbuff);
 			send(sockServer, sbuff, sizeof(sbuff), 0);
 			SetCurrentDirectory(fileName);//设置当前目录 
+			cout << "cd 执行结束" << endl;
 		}//cd
 		else if (strncmp(rbuff, "mkdir", 5) == 0)
 		{
@@ -729,7 +730,7 @@ void Server::running()
 			catch (const fs::filesystem_error& e) {
 				std::cerr << "Error deleting directory: " << e.what() << std::endl;
 			}
-
+			cout << "fldel 执行结束" << endl;
 		}//Fdel
 		else if (strncmp(rbuff, "rename", 6) == 0) // 文件夹重命名;
 		{
@@ -784,6 +785,7 @@ void Server::running()
 			}
 			int size = strlen(sbuff);
 			send(sockServer, sbuff, size, 0);
+			cout << "rename 执行结束" << endl;
 		}
 		else if (strncmp(rbuff, "compress", 8) == 0) // 压缩;
 		{
@@ -823,7 +825,7 @@ void Server::running()
 				sprintf(sbuff, "compress-false");
 				send(sockServer, sbuff, strlen(sbuff), 0);
 			}
-
+			cout << "compress 执行结束" << endl;
 		}
 		else if (strncmp(rbuff, "uncompress", 10) == 0) // 解压;
 		{
@@ -868,6 +870,7 @@ void Server::running()
 			memset(sbuff, 0, sizeof(sbuff));
 			sprintf(sbuff, "uncompress-ok");
 			send(sockServer, sbuff, strlen(sbuff), 0);
+			cout << "uncompress 执行结束" << endl;
 		}
 		else if (strncmp(rbuff, "user", 4) == 0) {
 			char tbuff[1024];
