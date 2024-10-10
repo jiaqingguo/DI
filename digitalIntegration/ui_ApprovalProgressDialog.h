@@ -52,6 +52,7 @@ public:
     QTableView *tableView;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer_4;
+    QPushButton *btnFlushDownload;
     QPushButton *btnDataApprovalLast;
     QLabel *labelDataApprovalPageShow;
     QPushButton *btnDataApprovalNext;
@@ -166,6 +167,11 @@ public:
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_4);
+
+        btnFlushDownload = new QPushButton(page);
+        btnFlushDownload->setObjectName(QString::fromUtf8("btnFlushDownload"));
+
+        horizontalLayout_3->addWidget(btnFlushDownload);
 
         btnDataApprovalLast = new QPushButton(page);
         btnDataApprovalLast->setObjectName(QString::fromUtf8("btnDataApprovalLast"));
@@ -310,7 +316,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);
@@ -324,6 +330,7 @@ public:
         lineEditDataQueryValue->setText(QString());
         checkBox_1->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnDataQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
+        btnFlushDownload->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\210\267\346\226\260", nullptr));
         btnDataApprovalLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
         labelDataApprovalPageShow->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
         btnDataApprovalNext->setText(QCoreApplication::translate("ApprovalProgressDialog", ">", nullptr));

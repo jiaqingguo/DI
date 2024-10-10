@@ -926,14 +926,16 @@ void FilemangageDialog::slot_actionMkdir()
 		QString strPath = pItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
 		m_FtpClientClass->execute_mkdirFolder(strPath.toLocal8Bit().toStdString());
 
-		QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
+
+		flushFtpDirShow(pItem);
+		/*QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
 
 		pNewItem->setText(0, DirName);
 		pNewItem->setData(0, Qt::UserRole, strPath);
 		pNewItem->setIcon(0, QIcon(":/image/Dir.png"));
 		pNewItem->setToolTip(0, DirName);
 
-		pItem->addChild(pNewItem);
+		pItem->addChild(pNewItem);*/
 
 		
 	}
