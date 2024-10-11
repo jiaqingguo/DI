@@ -25,7 +25,7 @@
 #include <QLabel>
 #include <qwidget.h>
 #include <QtWebEngineWidgets>
-#include <QAxWidget>
+//#include <QAxWidget>
 #include "windows.h"
 
 EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
@@ -716,7 +716,7 @@ void MainWindow::updateModuleToolIcon(int module)
     }
 }
 
-<<<<<<< HEAD
+
 //void MainWindow::slot_login_succ()
 //{
 //    int loginStatus = 1;
@@ -730,7 +730,7 @@ void MainWindow::updateModuleToolIcon(int module)
 //	if (m_fingerDlg != nullptr)
 //		delete m_fingerDlg;
 //}
-=======
+
 //bool MainWindow::event(QEvent* event)
 //{
 //    if(main_widget)
@@ -763,18 +763,17 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
     QMainWindow::mousePressEvent(event);
 }
 
-void MainWindow::slot_login_succ()
-{
-    int loginStatus = 1;
-    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
-
-	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-
-	this->m_LoginDialog->accept();
-
-	if (m_fingerDlg != nullptr)
-		delete m_fingerDlg;
-}
->>>>>>> e376e73ed533169646b12d0d499e15aeadbaf08f
+//void MainWindow::slot_login_succ()
+//{
+//    int loginStatus = 1;
+//    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+//
+//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+//    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+//
+//	this->m_LoginDialog->accept();
+//
+//	if (m_fingerDlg != nullptr)
+//		delete m_fingerDlg;
+//}
 
