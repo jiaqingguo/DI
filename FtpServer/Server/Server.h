@@ -26,7 +26,7 @@ public:
 	int sendFileData(SOCKET datatcps, std::ifstream& file);
 	void delete_listFiles(std::string dir);
 	DWORD connectProcess();
-	bool sendTcpOneAll();
+	int sendTcpOneAll();
 	int recvTcpOneAll();
 
 	void InitResource();

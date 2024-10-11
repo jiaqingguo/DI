@@ -556,21 +556,25 @@ void Server::running()
 		}//get
 		else if (strncmp(rbuff, "put", 3) == 0)
 		{
-			char m_path[256];
+			char path[256];
 			int cnt;
-			memset(m_path, '\0', sizeof(m_path));
-			strcpy(m_path, rbuff + 4);
-			memset(sbuff, '\0', sizeof(sbuff));
-			sprintf(sbuff, "put %s", m_path);
-			if (!send(sockServer, sbuff, sizeof(sbuff), 0))
+			memset(path, '\0', sizeof(path));
+			strcpy(path, rbuff + 4);
+			memset(m_sendOneAllData, '\0', sizeof(sbuff));
+			sprintf(m_sendOneAllData, "put %s", path);
+			if (sendTcpOneAll()<=0)
 			{
 				closesocket(sockServer);
 				return;
 			}
+			else
+			{
+				cout << "返回put指令" << endl;
+			}
 
 			memset(rbuff, '\0', sizeof(rbuff));
 			cout << "careate file start save" << endl;
-			std::ofstream file(m_path, std::ios::binary);
+			std::ofstream file(path, std::ios::binary);
 			char buffer[10240]; // 接收缓冲区
 
 			while (true)
@@ -589,7 +593,7 @@ void Server::running()
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
 					if (bytes_received == -1)
 					{
-						std::cout << "客户端已退出 ！！！！！！！！！\n";
+						std::cout << "客户端已退出   put！！！！！！！！！\n";
 						closesocket(sockServer);
 						return;
 					}
@@ -620,9 +624,6 @@ void Server::running()
 			//strcpy(sbuff, path);
 			//int size = strlen(sbuff);
 			//send(sockServer, sbuff, size, 0);
-
-
-
 			memset(m_sendOneAllData, 0, sizeof(m_sendOneAllData));
 			//strcpy(sbuff, "T:\\贾庆国\\CS");//我自己选择的绝对路径
 			GetCurrentDirectory(sizeof(m_sendOneAllData), m_sendOneAllData);//找到当前进程的当前目录
@@ -635,7 +636,7 @@ void Server::running()
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
 			char m_path[256];
-			memset(m_path, '\0', sizeof(m_path));
+			memset(m_path, 0, sizeof(m_path));
 			strcpy(m_path, rbuff + 3);
 
 			strcpy(sbuff, rbuff);
@@ -926,11 +927,11 @@ int Server::commandParse(char* instruck, std::string& paramter)
 }
 
 
-bool Server::sendTcpOneAll()
+int Server::sendTcpOneAll()
 {
 
 	//int data_size=；
-	int dataSize = sizeof(m_sendOneAllData);
+	int dataSize = strlen(m_sendOneAllData);
 	send(sockServer, reinterpret_cast<const char*>(&dataSize), sizeof(dataSize), 0);
 	int length = send(sockServer, m_sendOneAllData, dataSize, 0);
 	if (length <= 0) {
@@ -944,6 +945,7 @@ bool Server::sendTcpOneAll()
 }
 int Server::recvTcpOneAll()
 {
+	memset(m_recvOneAllData, 0, sizeof(m_recvOneAllData));
 	// 接收数据大小（int 类型）
 	int iAllDataSize = 0;
 	size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
@@ -952,6 +954,7 @@ int Server::recvTcpOneAll()
 	}
 	int recv_size = iAllDataSize;
 	char combinedBuf[sizeof(m_recvOneAllData)];// 用于组合完整数据
+	memset(combinedBuf, 0, sizeof(m_recvOneAllData));
 	int combinedBufstart = 0;
 	int iCurRecvSize = 0;
 	char recvBuf[1024];
@@ -991,6 +994,7 @@ int Server::recvTcpOneAll()
 
 	return 1;
 }
+
 bool Server::receiveFile(std::string filename)
 {
 	//创建与上次文件名相同的文件

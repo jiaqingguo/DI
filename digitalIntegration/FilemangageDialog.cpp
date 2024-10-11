@@ -765,8 +765,6 @@ void FilemangageDialog::slot_btnUploading()
 	}
 	
 	// 弹出文件选择对话框
-	//QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
-	//QString defaultPath = "C";
 	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
 	if (strFilePath.isEmpty())
 		return;
@@ -779,10 +777,7 @@ void FilemangageDialog::slot_btnUploading()
 	const wchar_t* lpcwstr = wstr.c_str();
 	SetCurrentDirectory(lpcwstr);//设置当前目录
 
-	//strFilePath.replace("/", "\\\\");
-	/*if (!m_FtpClientClass->newConnection())
-		return;*/
-	//directoryPath.replace()
+
 	directoryPath.replace("/", "\\\\");
 
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
