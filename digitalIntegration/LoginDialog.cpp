@@ -171,6 +171,7 @@ void LoginDialog::slot_btnExitClicked()
 {
 	
 	registerDialog->exec();
+	//return;
 }
 
 void LoginDialog::slot_btnFingerprintClicked()
@@ -253,4 +254,5 @@ void LoginDialog::slot_login_succ()
 void LoginDialog::slot_regist_succ()
 {
 	registerDialog->close();
+	
 }

@@ -115,7 +115,7 @@ void RegisterDialog::slot_btnRegister()
             }
         }
     }
-  
+	
 }
 
 void RegisterDialog::slot_btnFingerprintInput()

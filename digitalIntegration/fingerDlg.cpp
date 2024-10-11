@@ -207,7 +207,7 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 
 		//将 3 枚预登记指纹模板合并为一枚登记指纹
 		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
-		m_enrollIdx = 0;
+		//m_enrollIdx = 0;
 		m_bRegister = FALSE;
 		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=操作成功
 		{
@@ -295,7 +295,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 						//break;
 					}
 					// 操作完成后释放进程锁
-					/*ReleaseMutex(hmutex);
+					/*ReleaseMutex(hmutex);f
 					if (hmutex != NULL)
 					{
 						CloseHandle(hmutex);
