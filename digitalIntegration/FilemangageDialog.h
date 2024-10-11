@@ -65,10 +65,11 @@ private slots:
     void slot_ItemDownloadBtnClicked();
     void slot_actionMkdir();
     void slot_actionDelDir();
-    void slot_actionDownload();
-    void slot_actioxnRename();
-    void slot_actionCompressDir();
+    void slot_actionDownload();   // 下载菜单
+    void slot_actioxnRename();    // 重命名菜单
+    void slot_actionCompressDir();  // 压缩文件夹
     void slot_actionCopyPath();
+    void slot_actionFlush();
 
     void slot_tableViewFilesItemChanged(QStandardItem* item);
 
@@ -76,6 +77,8 @@ private slots:
     void slot_btnUnCompress(); // 解压缩
 
     void slot_btnCopyPath();  // 复制路径
+
+    void slot_tableViewDownloadContextMenu(const QPoint& pos);
 
 public slots:
     void slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath);
@@ -105,6 +108,7 @@ private:
     QAction * m_actionRename = nullptr;
     QAction* m_actionCompressDir = nullptr;
     QAction* m_actionCopyPath = nullptr;
+    QAction* m_actionFlush = nullptr;
 };
 
 #endif // FILEMANGAGEDIALOG_H

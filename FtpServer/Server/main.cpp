@@ -126,7 +126,7 @@ void main()
 	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
 
 	InitResource(userName, password, localDrive, remotePath);
-	//InitResource();
+	
 	char chInput[512];
 
 	char fileName_my[120] = "Y:\\FileData";//"D:\\FileData";// "E:\\1008";
@@ -199,8 +199,8 @@ void main()
 
 		//创建新的线程，并加入容器中，并将线程后台运行
 		
-		//server = new Server(sAccept);
-		t = new std::thread(&Server::running, new Server(sAccept));
+		server = new Server(sAccept);
+		t = new std::thread(&Server::running, server);
 		//tManage.push_back(t);
 		t->detach();
 	}

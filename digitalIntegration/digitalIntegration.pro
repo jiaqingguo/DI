@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets multimedia
+QT       += core gui webengine webenginewidgets multimedia axcontainer
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 

@@ -76,7 +76,7 @@ namespace common
 	HWND FindWindowByProcessId(DWORD processID);
 	HWND StartExeAndFindWindow(QString & strPath);
 
-
+	HWND getHWND(QString& strClassName, int& number);
 
 	void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath);
 	void UnInitResource();

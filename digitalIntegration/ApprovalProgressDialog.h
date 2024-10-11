@@ -27,8 +27,12 @@ public:
 private:
 
     void getDownloadData(std::list<table_DownloadApproval>& listData);
+
+   
     void flushUserTableShow(std::list<table_user> &listUser);
   //  void flushDataTableShow(std::list<table_dataApproval>& listData,const int &offsetRows);
+
+    void autoFlushDownloadData();
     void flushDownloadTableShow(std::list<table_DownloadApproval>& listData, const int& offsetRows);
   /*  std::list<table_user> processList(const std::list<table_user>& listUser, const int& num, const int& offsetRows);
     std::list<table_dataApproval> processList(const std::list<table_dataApproval>& listUser, const int& num, const int& offsetRows);*/
@@ -57,6 +61,8 @@ private slots:
     void slot_userQuery();
 
     void slot_spinBoxEnter();
+
+    void slot_btnFlushDownload();
 private:
    // void hideTableRows(Q)
 private:

@@ -268,6 +268,7 @@ bool FtpClientClass::recvTcpOneAll()
 	}
 	int recv_size = iAllDataSize;
 	char combinedBuf[sizeof(m_recvOneAllData)];// 用于组合完整数据
+	memset(combinedBuf, 0, sizeof(m_recvOneAllData));
 	int combinedBufstart = 0;
 	int iCurRecvSize = 0;
 	char recvBuf[1024];
@@ -298,7 +299,7 @@ bool FtpClientClass::recvTcpOneAll()
 		}
 
 	}
-	memcpy(&m_recvOneAllData, combinedBuf, sizeof(m_recvOneAllData));
+	memcpy(m_recvOneAllData, combinedBuf, sizeof(m_recvOneAllData));
 	
 	return true;
 }
@@ -407,7 +408,6 @@ int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
 		// 发送数据大小（int 类型）和实际数据
 		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
 		send(datatcps, buffer, data_size, 0);
-
 	}
 	// 发送结束信号
 	int end_signal = 0; // 0 作为结束信号
@@ -797,7 +797,8 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	//recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	recvTcpOneAll();
 	cout << rbuff << endl;							//pwd功能在这里已经实现
 	if (strncmp(rbuff, "put", 3) == 0) 
 	{ ///上传功能
@@ -875,7 +876,7 @@ void FtpClientClass::execute_putFile(string sendfileName)
 //	cout << "上传成功!!!" << endl;
 //}
 
-void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
+bool FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
 {
 	char buff[1024];						//用来存储经过字符串格式化的order
 	int cnt;
@@ -890,25 +891,23 @@ void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 	
 	if (sendTCP(buff) == -1)									//发送指令
 	{
-		return;
+		return false;
 	}
-	int size= recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
-	cout << rbuff << size <<endl;							//pwd功能在这里已经实现
-	if (strncmp(rbuff, "put", 3) == 0)
+	//int size= recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息 
+	recvTcpOneAll();
+	//cout << rbuff << size <<endl;							//pwd功能在这里已经实现
+	if (strncmp(m_recvOneAllData, "put", 3) == 0)
 	{ ///上传功能
 		//strcpy(fileName, rbuff + 4);
 		std::ifstream fileStream(localFilePath, std::ios::binary);
 		if (fileStream.is_open())
 		{
-			if (!sendFileData(sockClient, fileStream))
-			{
-				cout << "发送文件数据" << endl;
-				return;
-			}
-			else
+			if (sendFileData(sockClient, fileStream)==1)
 			{
 				cout << "发送文件数据完成" << endl;
+				
 			}
+			
 
 
 			fileStream.close();
@@ -922,11 +921,12 @@ void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 
 			}
 			//	std::cerr << "无法打开文件: " << file_path << std::endl;
-
+			return false;
 		}
 		
 	}//put
 	cout << "上传成功!!!" << endl;
+	return true;
 }
 
 //执行 进入文件夹命令
@@ -1268,3 +1268,4 @@ vector<vector<string>> FtpClientClass::Gets_FileName()
 {
 	return vecFileName;
 }
+

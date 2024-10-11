@@ -584,6 +584,40 @@ namespace common
 
 
 
+    HWND getHWND(QString& strClassName, int& number)
+    {
+        std::wstring wStr = strClassName.toStdWString();
+
+        // 从std::wstring获取LPCWSTR
+        LPCWSTR lpwstr = wStr.c_str();
+
+        HWND WNID;
+        HWND temp = NULL;
+        // 遍历相同类名的所有窗口
+        int i = 0;
+        do {
+            temp = FindWindowEx(nullptr, temp, lpwstr, nullptr);
+            if (temp != nullptr)
+            {
+                // 获取窗口标题，作为区分依据
+                char title[256];
+                GetWindowTextA(temp, title, sizeof(title));
+                if (i == number)
+                {
+                    if (IsWindow(temp))
+                    {
+                        DWORD dwStyle = GetWindowLong(temp, GWL_STYLE);
+                        ::SetWindowLong(temp, GWL_STYLE, dwStyle & ~WS_CAPTION & ~WS_BORDER & ~WS_SIZEBOX);
+                    }
+                    WNID = temp;
+                }
+                i++;
+            }
+        } while (temp != nullptr);
+
+        return WNID;
+    }
+
     void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath) {
         NETRESOURCE net_Resource;
         // 初始化NETRESOURCE结构
@@ -653,14 +687,6 @@ namespace common
        
         DWORD bufferSize = MAX_PATH;
         char currentDirectory[MAX_PATH];
-
-        //// 获取当前工作目录
-        //if (GetCurrentDirectoryA(bufferSize, currentDirectory)) {
-        //    std::cout << "Current Directory: " << currentDirectory << std::endl;
-
-        //   
-        //   
-        //}
         QByteArray byteArray = strPath.toUtf8(); // 转换为 UTF-8 编码
             // 应用程序路径
         LPCSTR applicationPath = byteArray.constData();//= "E:\Visual Studio 2017.rdp";// "C:\\Path\\To\\Your\\Application.exe"; // 替换为实际路径
