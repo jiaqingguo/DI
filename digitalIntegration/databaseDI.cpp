@@ -1331,7 +1331,7 @@ namespace db
 		std::string hexStr = oss.str();
 
 		// 执行SQL语句;
-		char sql[1024] = { 0 };
+		char sql[2048] = { 0 };
 		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')", 
 			hexStr.c_str(), 
 			templen, 
