@@ -223,6 +223,8 @@ void FilemangageDialog::initTableViewDownload()
 
 		ui->tableViewDownload->verticalHeader()->setVisible(false);
 
+		ui->tableViewDownload->setContextMenuPolicy(Qt::CustomContextMenu);
+		connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FilemangageDialog::slot_tableViewDownloadContextMenu);
 		flushTableViewDownload();
 	}
 
@@ -234,12 +236,14 @@ void FilemangageDialog::initTableViewDownload()
 	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
 	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
 	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("复制路径")); 
+	m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("刷新界面"));
 	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
 	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
 	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
 	connect(m_actionRename, &QAction::triggered, this, &FilemangageDialog::slot_actioxnRename);
 	connect(m_actionCompressDir, &QAction::triggered, this, &FilemangageDialog::slot_actionCompressDir);
 	connect(m_actionCopyPath, &QAction::triggered, this, &FilemangageDialog::slot_actionCopyPath);
+	connect(m_actionFlush, &QAction::triggered, this, &FilemangageDialog::slot_actionFlush);
 }
 
 void FilemangageDialog::flushTableViewDownload()
@@ -762,8 +766,8 @@ void FilemangageDialog::slot_btnUploading()
 	
 	// 弹出文件选择对话框
 	//QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
-	QString defaultPath = "Y:\\贾庆国";
-	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"), defaultPath);
+	//QString defaultPath = "C";
+	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("选择上传文件"));
 	if (strFilePath.isEmpty())
 		return;
 
@@ -810,7 +814,10 @@ void FilemangageDialog::slot_btnUploadingDir()
 		return;
 	QFileInfo fileInfo(directory);
 	QString strDstDir = pItem->data(0, Qt::UserRole).toString()+ "\\"+fileInfo.fileName();
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
+	m_GifDialog->show();
 	traverseUploadDir(directory, strDstDir);
+	m_GifDialog->close();
 	flushFtpDirShow();
 }
 
@@ -1062,6 +1069,11 @@ void FilemangageDialog::slot_actionCopyPath()
 	common::strCopyPath = pItem->data(0, Qt::UserRole).toString();
 }
 
+void FilemangageDialog::slot_actionFlush()
+{
+	flushFtpDirShow();
+}
+
 void FilemangageDialog::slot_tableViewFilesItemChanged(QStandardItem* item)
 {
 	if (item->checkState() == Qt::Checked)
@@ -1195,6 +1207,26 @@ void FilemangageDialog::slot_btnCopyPath()
 	
 	
 }
+
+void FilemangageDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
+{
+
+	QMenu menu(this);
+
+	// 添加菜单项
+	QAction* flushAction = menu.addAction(QString::fromLocal8Bit("刷新"));
+	
+
+	// 执行菜单并获取所选操作
+	QAction* selectedAction = menu.exec(ui->tableViewDownload->mapToGlobal(pos));
+
+	if (selectedAction == flushAction) {
+		flushTableViewDownload();
+	}
+	
+}
+	
+
 
 void FilemangageDialog::slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath)
 {

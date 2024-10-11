@@ -58,34 +58,34 @@ void EmbeddedWidget::resizeEvent(QResizeEvent* event)  {
     adjustEmbeddedWindowSize();
 }
 
-CWidget::CWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-    // 将原生窗口嵌入到 Qt 的 QWidget 中
-   QWindow *window= QWindow::fromWinId((WId)m_hwnd);
-
-   this->resize(window->width(), window->height());
-    m_windowContainer = QWidget::createWindowContainer(window);
-    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
-    
-    QGridLayout* layout = new QGridLayout;
-    layout->addWidget(m_windowContainer);
-    this->setLayout(layout);
-    
-}
-void CWidget::mousePressEvent(QMouseEvent* event)
-{
-   
-        // 将鼠标点击的事件位置转换为全局坐标
-        QPoint globalPos = event->globalPos();
-
-        // 将全局坐标转换为容器内的坐标
-        QPoint localPos = this->mapFromGlobal(globalPos);
-
-        // 发送消息到原生窗口, 这里使用 SendMessage 函数
-        SendMessage((HWND)this->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
-    
-    QWidget::mousePressEvent(event);
-
-}
+//CWidget::CWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
+//    // 将原生窗口嵌入到 Qt 的 QWidget 中
+//   QWindow *window= QWindow::fromWinId((WId)m_hwnd);
+//
+//   this->resize(window->width(), window->height());
+//    m_windowContainer = QWidget::createWindowContainer(window);
+//    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
+//    
+//    QGridLayout* layout = new QGridLayout;
+//    layout->addWidget(m_windowContainer);
+//    this->setLayout(layout);
+//    
+//}
+//void CWidget::mousePressEvent(QMouseEvent* event)
+//{
+//   
+//        // 将鼠标点击的事件位置转换为全局坐标
+//        QPoint globalPos = event->globalPos();
+//
+//        // 将全局坐标转换为容器内的坐标
+//        QPoint localPos = this->mapFromGlobal(globalPos);
+//
+//        // 发送消息到原生窗口, 这里使用 SendMessage 函数
+//        SendMessage((HWND)this->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
+//    
+//    QWidget::mousePressEvent(event);
+//
+//}
 MainWindow* g_pMainWindow = NULL;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -385,7 +385,7 @@ void MainWindow::slot_btnAddToolTab()
         addToooDialog.getToolData(tabName,toolName, mode, displayMode);
         QWidget* pWidget = new QWidget;
 
-        if (0)
+        if (1)
         {
 
        
@@ -471,15 +471,15 @@ void MainWindow::slot_btnAddToolTab()
                     window->setFlags(window->flags()| Qt::ForeignWindow);
                     int width = window->width();
                     int height = window->height();
-                    window->show();
-                   // QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
+                   // window->show();
+                   QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
                     //main_widget = QWidget::createWindowContainer(window);
                   //window->setGeometry(0, 0, widget->width(), widget->height());
                   //widget->setFixedWidth(width);
                   // widget->setFixedHeight(height);
                     
                    // main_widget->show();
-                   //widget->show();
+                   widget->show();
                     // 创建一个嵌入窗口类，将原生窗口嵌入 Qt Widget
                    /* CWidget* embeddedWidget = new CWidget(WNID);
                     embeddedWidget->show();*/

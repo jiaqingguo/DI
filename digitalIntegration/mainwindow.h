@@ -47,17 +47,17 @@ private:
     QWidget *m_windowContainer;     // 用于封装原生窗口的 QWidget
 };
 
-class CWidget : public QWidget
-{
-	Q_OBJECT
-public:
-	CWidget(HWND hwnd, QWidget* parent = nullptr);
-protected:
-	void mousePressEvent(QMouseEvent* event) override;
-private:
-	HWND m_hwnd;                   // 外部窗口句柄
-	QWidget* m_windowContainer;     // 用于封装原生窗口的 QWidget
-};
+//class CWidget : public QWidget
+//{
+//	Q_OBJECT
+//public:
+//	CWidget(HWND hwnd, QWidget* parent = nullptr);
+//protected:
+//	void mousePressEvent(QMouseEvent* event) override;
+//private:
+//	HWND m_hwnd;                   // 外部窗口句柄
+//	QWidget* m_windowContainer;     // 用于封装原生窗口的 QWidget
+//};
 /*!
 * \class	QssAutoLoader
 * \brief	修改qss文件时 使程序立刻生效显示.
