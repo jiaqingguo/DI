@@ -73,7 +73,7 @@ DWORD FtpClientClass::callServer()
 	createSocket();
 	if (connect(sockClient, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {//connect()创建与指定外部端口的连接
 		//cout << "连接失败" << endl;
-		//memset(inputIP, 0, sizeof(inputIP));
+		//memset(inputIP, 0, sizeof(inputIP));10049
 		int errorCode = WSAGetLastError();
 		cout << "连接失败，错误代码: " << WSAGetLastError() << endl;
 		return -1;
@@ -387,6 +387,7 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
 {
 	// 发送文件数据
+	int iSendMax = 10240;
 	char buffer[10240]; // 一次最多发送 10240 字节
 
 	while (file)
@@ -401,8 +402,8 @@ int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
 			break; // 文件已读完
 		}
 		// 如果读取的字节数大于 10240，则设置为 10240
-		if (data_size > 10240) {
-			data_size = 10240;
+		if (data_size > iSendMax) {
+			data_size = iSendMax;
 		}
 
 		// 发送数据大小（int 类型）和实际数据

@@ -150,7 +150,8 @@ void main()
 	std::vector<std::thread*> tManage;
 	Server* server = NULL;
 
-
+	 int send_buffer_size = 1024 * 1024; // 1 MB
+	 int recv_buffer_size = 1024 * 1024; // 1 MB
 	std::cout << "----------------------------\n";
 	std::cout << "Server waitting\n";
 	std::cout << "----------------------------\n";
@@ -167,6 +168,22 @@ void main()
 		std::cout << "socket() Failed:" << WSAGetLastError() << "\n";
 		return;
 	}
+	// 设置发送缓冲区大小
+	if (setsockopt(sListen, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char*>(&send_buffer_size), sizeof(send_buffer_size)) == SOCKET_ERROR) {
+		std::cerr << "Failed to set send buffer size." << std::endl;
+		closesocket(sListen);
+		WSACleanup();
+		return ;
+	}
+
+	// 设置接收缓冲区大小
+	if (setsockopt(sListen, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<const char*>(&recv_buffer_size), sizeof(recv_buffer_size)) == SOCKET_ERROR) {
+		std::cerr << "Failed to set receive buffer size." << std::endl;
+		closesocket(sListen);
+		WSACleanup();
+		return ;
+	}
+
 
 	//绑定IP地址
 	ser.sin_family = AF_INET;

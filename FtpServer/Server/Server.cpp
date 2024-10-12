@@ -575,25 +575,34 @@ void Server::running()
 			memset(rbuff, '\0', sizeof(rbuff));
 			cout << "careate file start save" << endl;
 			std::ofstream file(path, std::ios::binary);
-			char buffer[10240]; // 接收缓冲区
+			//char buffer[10240]; // 接收缓冲区
 
 			while (true)
 			{
 				// 接收数据大小（int 类型）
-				int data_size = 0;
-				size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
-				if (bytes_received <= 0 || data_size == 0) {
+				int data_size = -1;
+				int bytes_received = recv(sockServer, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
+				if (bytes_received <= 0 ) {
+					cout << "连接失败，错误代码: " << WSAGetLastError() << endl;
+					std::cout << bytes_received<< data_size<<" ---接收失败或要接受的数据大小为 0，则退出循环    put！！！！！！！！！\n";
 					break; // 如果接收失败或数据大小为 0，则退出循环
+				}
+				else if (data_size == 0)
+				{
+					
+					break; // 数据大小为 0，则退出循环
 				}
 				int recv_size = data_size;
 				while (1)
 				{
 					// 接收实际数据
+					char buffer[10240]; // 接收缓冲区
 					memset(buffer, 0, sizeof(buffer));
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
 					if (bytes_received == -1)
 					{
-						std::cout << "客户端已退出   put！！！！！！！！！\n";
+						cout <<"返回值:"<< bytes_received<< " 连接失败，错误代码: " << WSAGetLastError() << endl;
+						std::cout << "----2接收失败  put！！！！！！！！！\n";
 						closesocket(sockServer);
 						return;
 					}
@@ -711,13 +720,17 @@ void Server::running()
 			string str = path;
 			delete_listFiles(path); // 删除文件夹下的文件;
 
-			//bool flag = RemoveDirectory(path); // 删除文件夹本身;
-			//if (!flag)
-			//{
-			//	cout << "删除空文件夹：" << fileName << "失败" << endl;
+			bool flag = RemoveDirectory(path); // 删除文件夹本身;
+			if (!flag)
+			{
+				cout << "删除文件夹：" << path << "失败" << endl;
 
-			//}
-			try 
+			}
+			else
+			{
+				cout << "删除文件夹：" << path << "成功" << endl;
+			}
+			/*try 
 			{
 				if (fs::exists(path) && fs::is_directory(path))
 				{
@@ -730,7 +743,7 @@ void Server::running()
 			}
 			catch (const fs::filesystem_error& e) {
 				std::cerr << "Error deleting directory: " << e.what() << std::endl;
-			}
+			}*/
 			cout << "fldel 执行结束" << endl;
 		}//Fdel
 		else if (strncmp(rbuff, "rename", 6) == 0) // 文件夹重命名;
