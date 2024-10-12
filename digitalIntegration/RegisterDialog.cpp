@@ -134,7 +134,7 @@ void RegisterDialog::slot_btnFingerprintInput()
 			
 			
 			connect(timer, &QTimer::timeout, this, &RegisterDialog::slot_updateLabelText);
-			timer->start(1000);
+			timer->start(500);
 		}
 	}
 	//QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
@@ -143,8 +143,8 @@ void RegisterDialog::slot_btnFingerprintInput()
 }
 void RegisterDialog::slot_updateLabelText()
 {
-	static QString texts[] = {QString::fromLocal8Bit("请按3次手指"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
-	if (m_enrollIdx < 3){
+	static QString texts[] = { QString::fromLocal8Bit("请按3次手指"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
+	if (m_enrollIdx < 3) {
 		ui->label_7->setText(texts[m_enrollIdx]);
 		///++m_enrollIdx;
 	}
@@ -154,4 +154,8 @@ void RegisterDialog::slot_updateLabelText()
 		timer->stop();
 		m_enrollIdx = 0; // 重置计数器，以便可以重复使用
 	}
+}
+void RegisterDialog::init()
+{
+	
 }

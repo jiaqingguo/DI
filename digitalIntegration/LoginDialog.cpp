@@ -34,7 +34,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(ui->leUser, &QLineEdit::editingFinished, this, &LoginDialog::slot_leUserEditingFinished);
 	connect(ui->lePassword, &QLineEdit::textChanged, this, &LoginDialog::slot_lePwdTextChanged);
 	connect(ui->lePassword, &QLineEdit::editingFinished, this, &LoginDialog::slot_lePwdEditingFinished);
-	connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
+	//connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
 	this->m_fingerDlg = new fingerDlg();
 	this->m_fingerDlg->finger_init();
@@ -152,7 +152,9 @@ void LoginDialog::slot_btnLoginClicked()
 	{
 		m_pop = 0;
 		common::bAdministrator = true;
+		ui->btnFingerprint->hide();
 		ui->stackedWidget->setCurrentIndex(1);
+		this->slot_btnFingerprintClicked();
 	}
 	else
 	{
@@ -170,8 +172,9 @@ void LoginDialog::slot_btnLoginClicked()
 void LoginDialog::slot_btnExitClicked()
 {
 	
+	registerDialog->init();
 	registerDialog->exec();
-	//return;
+	
 }
 
 void LoginDialog::slot_btnFingerprintClicked()
@@ -188,7 +191,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	this->accept();
+	//this->accept();
 
 
 }
@@ -253,6 +256,7 @@ void LoginDialog::slot_login_succ()
 
 void LoginDialog::slot_regist_succ()
 {
+	//RegisterDialog registerDialog;
 	registerDialog->close();
 	
 }
