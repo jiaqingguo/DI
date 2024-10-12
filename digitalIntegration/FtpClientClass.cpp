@@ -179,7 +179,7 @@ int FtpClientClass::list(SOCKET sockfd)
 		memcpy(&m_FileInformation, combinedBuf, sizeof(m_FileInformation));
 		//显示数据
 		//rbuff[iCurRecvSize] = '\0';
-		cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
+		//cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
 		string name(m_FileInformation.fileName);
 		string fileDir(m_FileInformation.fileDir);
 		sprintf(time, "%04d-%02d-%02d %02d:%02d", m_FileInformation.fileYear, m_FileInformation.fileMonth, m_FileInformation.fileDay,
@@ -187,7 +187,7 @@ int FtpClientClass::list(SOCKET sockfd)
 		string str_time(time);
 		if (name == "." || name == "..")
 		{
-			cout << "不要.和.." << endl;
+			//cout << "不要.和.." << endl;
 		}
 		else
 		{
@@ -198,6 +198,7 @@ int FtpClientClass::list(SOCKET sockfd)
 				eachDirData.push_back(str_time);
 				vecDirName.push_back(eachDirData);
 				//vecDirName.push_back(name);
+				cout <<  "< DIR > "<< name << endl;
 			}
 			else
 			{
@@ -205,6 +206,7 @@ int FtpClientClass::list(SOCKET sockfd)
 				eachFile.push_back(name);
 				eachFile.push_back(str_time);
 				vecFileName.push_back(eachFile);
+				cout << "< FILE > " << name << endl;
 			}
 
 
@@ -921,7 +923,7 @@ bool FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 			{
 
 			}
-			//	std::cerr << "无法打开文件: " << file_path << std::endl;
+			std::cerr << "无法打开文件: " << localFilePath << std::endl;
 			return false;
 		}
 		

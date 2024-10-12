@@ -394,7 +394,7 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 
 	memcpy(fileRecord1, &m_FileInformation, sizeof(m_FileInformation));
 
-	cout << m_FileInformation.fileName << endl;
+	cout << m_FileInformation.fileName << "    FileType:" << m_FileInformation.fileDir << endl;
 	int size = sizeof(m_FileInformation);
 	send(datatcps, reinterpret_cast<const char*>(&size), sizeof(int), 0);
 	if (send(datatcps, fileRecord1, sizeof(m_FileInformation), 0) == SOCKET_ERROR) {
