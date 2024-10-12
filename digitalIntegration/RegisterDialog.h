@@ -18,6 +18,7 @@ class RegisterDialog : public QDialog
 public:
     explicit RegisterDialog(QWidget *parent = nullptr);
     ~RegisterDialog();
+	void init();
 private slots:
     void slot_btnRegister();
     void slot_btnFingerprintInput();
