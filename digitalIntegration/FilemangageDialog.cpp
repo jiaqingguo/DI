@@ -1045,8 +1045,11 @@ void FilemangageDialog::slot_actionCompressDir()
 	std::vector<std::string> vecPath;
 	vecPath.push_back(dirPath);
 	std::string  newZipPath = dirPath+".zip"; // 添加父目录并返回新的目录名
-	
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在压缩..."));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_compress(vecPath, newZipPath);
+	m_GifDialog->close();
 }
 
 void FilemangageDialog::slot_actionCopyPath()
@@ -1117,13 +1120,18 @@ void FilemangageDialog::slot_btnCompress()
 	QString stDirPath = ui->treeWidget->currentItem()->data(0,Qt::UserRole).toString();
 	
 	QString newZipPath = stDirPath + "\\" + NewZipName;
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在压缩..."));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	if (m_FtpClientClass->execute_compress(vecPath, newZipPath.toLocal8Bit().toStdString()))
 	{
+		m_GifDialog->close();
 		//slot_treeWidgetItemClicked(ui->treeWidget->currentItem(), 0);
 		flushTableViewFtpFile();
 	}
 	else
 	{
+		m_GifDialog->close();
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("压缩失败"));
 		return;
 	}
@@ -1166,8 +1174,11 @@ void FilemangageDialog::slot_btnUnCompress()
 		return;
 	}
 
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在解压..."));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_uncompress(vecPath);
-
+	m_GifDialog->close();
 	flushFtpDirShow(ui->treeWidget->currentItem());
 }
 

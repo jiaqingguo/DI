@@ -385,7 +385,7 @@ void MainWindow::slot_btnAddToolTab()
         addToooDialog.getToolData(tabName,toolName, mode, displayMode);
         QWidget* pWidget = new QWidget;
 
-        if (1)
+        if (0)
         {
 
        
@@ -552,7 +552,7 @@ void MainWindow::slot_btnAddToolTab()
 
             // ∆Ù∂Øbsp 
             common::startDspExe(strDspPath);
-           // «∂»Î
+            // «∂»Î
         }
         else
         {
