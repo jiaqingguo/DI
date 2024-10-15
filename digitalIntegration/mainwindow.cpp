@@ -342,6 +342,10 @@ bool MainWindow::showLoginDialog()
 void MainWindow::slot_btnResourceManageClicked()
 {
     m_ResourceManageDialog->startWebFlushTimer();
+    int  x = 0;
+    int  y = 0;
+    common::getScreenCenterPos(x,y,m_ResourceManageDialog->width(), m_ResourceManageDialog->height());
+    m_ResourceManageDialog->move(x, y);
     m_ResourceManageDialog->exec();
     m_ResourceManageDialog->stopWebFlushTimer();
     ui->btnResourceManage->setChecked(false);
@@ -349,6 +353,10 @@ void MainWindow::slot_btnResourceManageClicked()
 void MainWindow::slot_btnInformationConfihurationClicked()
 {
 	m_InforConfihurationDialog->initFaceData();
+    int  x = 0;
+    int  y = 0;
+    common::getScreenCenterPos(x, y, m_InforConfihurationDialog->width(), m_InforConfihurationDialog->height());
+    m_InforConfihurationDialog->move(x, y);
     m_InforConfihurationDialog->exec();
     ui->btnInformationConfihuration->setChecked(false);
 }
@@ -356,6 +364,10 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 void MainWindow::slot_btnDataManageClicked()
 {
     //m_DataManageDialog->exec();
+    int  x = 0;
+    int  y = 0;
+    common::getScreenCenterPos(x, y, m_FilemangageDialog->width(), m_FilemangageDialog->height());
+    m_FilemangageDialog->move(x, y);
     m_FilemangageDialog->exec();
     ui->btnDataManage->setChecked(false);
 }
@@ -363,12 +375,14 @@ void MainWindow::slot_btnDataManageClicked()
 void MainWindow::slot_btnApprovalProgressClicked()
 {
     m_ApprovalProgressDialog->init();
+    int  x = 0;
+    int  y = 0;
+    common::getScreenCenterPos(x, y, m_ApprovalProgressDialog->width(), m_ApprovalProgressDialog->height());
+    m_ApprovalProgressDialog->move(x, y);
     m_ApprovalProgressDialog->exec();
     ui->btnApprovalProgress->setChecked(false);
 }
-QWidget* main_widget = nullptr;
-QWindow* main_window = nullptr;
-HWND      main_wid;
+
 void MainWindow::slot_btnAddToolTab()
 {
     QPushButton* pButton = (QPushButton*)sender();
@@ -716,52 +730,6 @@ void MainWindow::updateModuleToolIcon(int module)
     }
 }
 
-
-//void MainWindow::slot_login_succ()
-//{
-//    int loginStatus = 1;
-//    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
-//
-//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-//    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-//
-//	this->m_LoginDialog->accept();
-//
-//	if (m_fingerDlg != nullptr)
-//		delete m_fingerDlg;
-//}
-
-//bool MainWindow::event(QEvent* event)
-//{
-//    if(main_widget)
-//        main_widget->update();
-//    return QMainWindow::paintEvent(event);;
-//}
-
-void MainWindow::paintEvent(QPaintEvent* event)
-{
-    if (main_widget)
-        main_widget->update();
-
-    QMainWindow::paintEvent(event);
-}
-
-void MainWindow::mousePressEvent(QMouseEvent* event)
-{
-    if (main_widget != nullptr)
-    {
-        // 将鼠标点击的事件位置转换为全局坐标
-        QPoint globalPos = event->globalPos();
-
-        // 将全局坐标转换为容器内的坐标
-        QPoint localPos = main_widget->mapFromGlobal(globalPos);
-
-        // 发送消息到原生窗口, 这里使用 SendMessage 函数
-        SendMessage((HWND)main_widget->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
-    }
-
-    QMainWindow::mousePressEvent(event);
-}
 
 //void MainWindow::slot_login_succ()
 //{

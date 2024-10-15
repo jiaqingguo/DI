@@ -63,6 +63,7 @@ private slots:
     void slot_treeWidgteCustomContextMenuRequested(const QPoint& pos);
     //  审批页面  viewItem 下载按钮;
     void slot_ItemDownloadBtnClicked();
+    // 右键菜单
     void slot_actionMkdir();
     void slot_actionDelDir();
     void slot_actionDownload();   // 下载菜单

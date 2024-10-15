@@ -97,28 +97,7 @@ namespace common
 
 	void clearLayout(QLayout* layout);
 
-
-	/*wchar_t* QString2wchar_t(QString str) {
-		std::wstring wstr = str.toStdWString();
-		wchar_t* lpcwstr = wstr.c_str();
-		return lpcwstr;
-	}*/
-
-	// C++
-	//LPCWSTR stringToLPCWSTR(std::string orig)
-	//{
-	//	size_t origsize = orig.length() + 1;
-	//	const size_t newsize = 100;
-	//	size_t convertedChars = 0;
-	//	wchar_t* wcstring = (wchar_t*)malloc(sizeof(wchar_t) * (orig.length() - 1));
-	//	mbstowcs_s(&convertedChars, wcstring, origsize, orig.c_str(), _TRUNCATE);
-
-	//	return wcstring;
-	//}
-	/*std::string Wchar2string(WCHAR wChar[]);
-
-	wchar_t* String2Wchar(const std::string strTag);*/
-
+	void getScreenCenterPos(int& x, int& y,const int & dialgX, const int& dialgY);
 
 	void addNetworkCredential(const QString& target, const QString& username, const QString& password);
 	

@@ -810,6 +810,7 @@ void FilemangageDialog::slot_btnUploadingDir()
 	QString strDstDir = pItem->data(0, Qt::UserRole).toString()+ "\\"+fileInfo.fileName();
 	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
 	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	traverseUploadDir(directory, strDstDir);
 	m_GifDialog->close();
 	flushFtpDirShow();
