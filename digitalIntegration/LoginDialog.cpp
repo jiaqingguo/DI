@@ -36,8 +36,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(ui->lePassword, &QLineEdit::editingFinished, this, &LoginDialog::slot_lePwdEditingFinished);
 	//connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
-	m_fingerDlg = new fingerDlg(this);
-	m_fingerDlg->finger_init();
+	this->m_fingerDlg = new fingerDlg();
+	this->m_fingerDlg->finger_init();
 	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
 	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
 
@@ -191,7 +191,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	this->accept();
+	//this->accept();
 
 
 }

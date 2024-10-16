@@ -15,6 +15,7 @@
 #include "libxzkfp/include/libzkfperrdef.h"
 #include "libxzkfp/include/libzkfptype.h"
 #include "libxzkfp/include/libzkfp.h"
+//#include "libxzkfp/include/zkfinger/zkfinger.h"
 
 #ifdef _WIN64
 #pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")

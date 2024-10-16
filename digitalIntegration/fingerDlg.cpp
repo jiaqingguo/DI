@@ -305,7 +305,9 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 
 
 					//ret = ZKFPM_DBMatch(hDBCache, v_f.first, v_f.second, temp, len);
-					ret = ZKFPM_MatchFinger(hDBCache, szLastLogTemplate2, nLastLogTempLen2, temp, len);
+					ret = ZKFPM_DBMatch(hDBCache, szLastLogTemplate2, nLastLogTempLen2, temp, len);
+
+					//DBMatch(szLastLogTemplate2, nLastLogTempLen2, temp, len);
 					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
 					{
 						success = true;
