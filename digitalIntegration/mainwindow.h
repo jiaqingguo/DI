@@ -152,12 +152,8 @@ private slots:
 	void slot_downlaodFinsh();
 private:
 	void updateModuleToolIcon(int module);
-protected:
-	//virtual bool event(QEvent* event) override;
 
-	virtual void paintEvent(QPaintEvent* event);
-
-	void mousePressEvent(QMouseEvent* event) override;
+	
 private:
     Ui::MainWindow *ui;
 

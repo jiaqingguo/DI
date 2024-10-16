@@ -37,6 +37,8 @@
 
 // Qt
 #include <QCoreApplication>
+#include <QApplication>
+#include <QScreen>
 
 #include <QStandardItemModel>
 #include <QStandardItemModel>
@@ -679,6 +681,30 @@ namespace common
       //  else {
       //      std::wcerr << L"Failed to save credentials. Error: " << GetLastError() << std::endl;
       //  }
+    }
+
+    void getScreenCenterPos(int& x, int& y, const int& dialgX, const int& dialgY)
+    {
+
+            // 获取当前活动窗口
+        QWidget *activeWindow = QApplication::activeWindow();
+        QScreen *screen = nullptr;
+
+        if (activeWindow) {
+            // 使用活动窗口
+            screen = activeWindow->screen();
+        } else {
+            // 如果没有活动窗口，使用主屏幕
+            screen = QApplication::primaryScreen();
+        }
+
+        QRect screenGeometry = screen->geometry();
+
+        // 获取对话框的大小
+        x = screenGeometry.x() + (screenGeometry.width() - dialgX) / 2;
+        y = screenGeometry.y() + (screenGeometry.height() - dialgY) / 2;
+
+   
     }
 
     void startDspExe(QString& strPath)
