@@ -191,7 +191,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	//this->accept();
+	this->accept();
 
 
 }
