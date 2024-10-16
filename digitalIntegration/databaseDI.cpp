@@ -1315,7 +1315,7 @@ namespace db
 	}
 
 	//指纹表的操作，16进制添加指纹到数据库中
-	bool databaseDI::add_user_finger(unsigned char *tempdata, const int &templen, const int &id)
+	bool databaseDI::add_user_finger(unsigned char *&tempdata,int templen, const int &id)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1325,7 +1325,7 @@ namespace db
 
 		std::ostringstream oss;
 		oss << std::hex << std::setfill('0');
-		for (int i = 0; i < templen; ++i) {
+		for (int i = 0; i < templen; i++) {
 			oss << std::setw(2) << static_cast<int>(tempdata[i]);
 		}
 		std::string hexStr = oss.str();
@@ -1357,43 +1357,43 @@ namespace db
 
 
 	//获取注册的指纹的数据
-	bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, int>>& vec, int &userid)
-	{
-		//listData.clear();
+	//bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, unsigned int>>& vec, int &userid)
+	//{
+	//	//listData.clear();
 
-		// 结果集声明;
-		MYSQL_ROW sql_row;
+	//	// 结果集声明;
+	//	MYSQL_ROW sql_row;
 
-		// 执行SQL语句;
-		char sql[256] = { 0 };
-		sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
-		MYSQL_RES* result = exec_sql_select(sql);
-		if (result == nullptr)
-			return false;
+	//	// 执行SQL语句;
+	//	char sql[256] = { 0 };
+	//	sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
+	//	MYSQL_RES* result = exec_sql_select(sql);
+	//	if (result == nullptr)
+	//		return false;
 
-		while (sql_row = mysql_fetch_row(result))
-		{
-			int templen = std::atoi(sql_row[1]);
-			const char *tempdata = sql_row[0];
+	//	while (sql_row = mysql_fetch_row(result))
+	//	{
+	//		int templen = std::atoi(sql_row[1]);
+	//		const char *tempdata = sql_row[0];
 
-			// 分配内存存储二进制数据
-			unsigned char*  binaryData = new unsigned char[templen];
+	//		// 分配内存存储二进制数据
+	//		unsigned char*  binaryData = new unsigned char[templen];
 
-			// 将十六进制字符串转换为二进制数据
-			for (int i = 0; i < templen; i += 2) {
-				// 每次处理两个字符
-				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
-				// 将十六进制字符转换为无符号整数
-				binaryData[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
-			}
-			//std::string u_finger2(reinterpret_cast<const char*>(binaryData),templen);
-			//u_finger = u_finger2;
-			// 存储数据和长度到 vector
-			vec.push_back(std::make_pair(binaryData, templen));
+	//		// 将十六进制字符串转换为二进制数据
+	//		for (int i = 0; i < templen; i += 2) {
+	//			// 每次处理两个字符
+	//			char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
+	//			// 将十六进制字符转换为无符号整数
+	//			binaryData[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
+	//		}
+	//		//std::string u_finger2(reinterpret_cast<const char*>(binaryData),templen);
+	//		//u_finger = u_finger2;
+	//		// 存储数据和长度到 vector
+	//		vec.push_back(std::make_pair(binaryData, templen));
 
-		}
-		return true;
-	}
+	//	}
+	//	return true;
+	//}
 
 	bool databaseDI::get_user_finger2(unsigned char *&temp, int &templen, int &userid)
 	{
@@ -1410,13 +1410,14 @@ namespace db
 		// 分配内存存储二进制数据
 		temp = new unsigned char[2048];
 		bool flag = false;
+		int i = 0;
 		while (sql_row = mysql_fetch_row(result))
 		{
 			templen = std::atoi(sql_row[1]);
 			const char *tempdata = sql_row[0];
 		
 			// 将十六进制字符串转换为二进制数据
-			for (int i = 0; i < templen; i += 2)
+			for (i = 0; i < templen; i += 2)
 			{
 				// 每次处理两个字符
 				char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
@@ -1424,8 +1425,10 @@ namespace db
 				temp[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
 			}
 			flag = true;
+			//temp[i] = '\0';
 		}
-		if (!flag) {
+		if (!flag) 
+		{
 			delete[] temp;  // 确保没有数据加载时释放内存
 			temp = nullptr;
 		}

@@ -27,7 +27,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
     ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
 
     QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
-    connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);
+    //connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);
 
 }
 
@@ -143,7 +143,7 @@ void RegisterDialog::slot_btnFingerprintInput()
 }
 void RegisterDialog::slot_updateLabelText()
 {
-	static QString texts[] = { QString::fromLocal8Bit("请按3次手指"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
+	static QString texts[] = { QString::fromLocal8Bit("开始指纹登记, 请按压手指3次"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
 	if (m_enrollIdx < 3) {
 		ui->label_7->setText(texts[m_enrollIdx]);
 		///++m_enrollIdx;
@@ -157,5 +157,16 @@ void RegisterDialog::slot_updateLabelText()
 }
 void RegisterDialog::init()
 {
-	
+	ui->btnFingerprintInput->hide();
+	ui->lineEditUserName->clear();
+	ui->lineEditPassword->clear();
+	ui->lineEditName->clear();
+	ui->lineEditDepartment->clear();
+	ui->lineEditJobTtile->clear();
+	ui->lineEditPhoneNumber->clear();
+
+	ui->stackedWidget->setCurrentIndex(0);
+	//ui->label_7->setText(QString::fromLocal8Bit("注册指纹，请按3次手指"));
+	//m_enrollIdx = 3;
+	this->slot_btnFingerprintInput();
 }

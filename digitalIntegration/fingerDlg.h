@@ -39,9 +39,7 @@ class fingerDlg : public QDialog
 	Q_OBJECT
 public:
 	HANDLE hDBCache; //缓冲区的句柄
-	//HANDLE hDevice;
 	HANDLE hThreadWork;
-	//bool bRegister;
 	unsigned char* pImgBuf;
 	int imgFPWidth;
 	int imgFPHeight;
@@ -53,11 +51,11 @@ public:
 	unsigned int arrPreTempsLen[3];
 	int Tid;   //指纹 ID（>0 的 32 位无符号整数）
 
-	//Last register template, use for verify   下一个注册模板，用于验证
-	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
-	unsigned char *szLastRegTemplate2;
-	int nLastRegTempLen;
-	int nLastRegTempLen2;
+	//下一个注册模板，用于验证
+	/*unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
+	
+	unsigned int nLastRegTempLen = MAX_TEMPLATE_SIZE;
+	*/
 	int nFakeFunOn;
 
 	fingerDlg(QDialog* pParent = NULL);	// 标准构造函数

@@ -242,7 +242,7 @@ public:
 
         retranslateUi(RegisterDialog);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(RegisterDialog);
