@@ -25,7 +25,8 @@
 #include <QLabel>
 #include <qwidget.h>
 #include <QtWebEngineWidgets>
-//#include <QAxWidget>
+#include <QAxWidget>
+#include <QAxObject>
 #include "windows.h"
 
 EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
@@ -403,160 +404,160 @@ void MainWindow::slot_btnAddToolTab()
         {
 
        
-        if (moduleNumber == 1)
-        {
-            auto WNID = (WId)FindWindow(L"WeChatMainWndForPC", L"微信");
-           
+        //if (moduleNumber == 1)
+        //{
+        //    auto WNID = (WId)FindWindow(L"WeChatMainWndForPC", L"微信");
+        //   
 
-            WId winId = (WId)WNID;
-          
-            //WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-            if (winId != 0)
-            {
-                QWindow* window = QWindow::fromWinId(winId);
-                QWidget* widget = QWidget::createWindowContainer(window);
-                
-                widget->setWindowTitle(tabName);
-                if (displayMode == 0)
-                {
-                    ui->tabWidgetModulel1->addTab(widget, tabName);
-                }
-                else
-                {
-                    widget->show();
-                }
-            }
-            else
-            {
-                QWidget* pWidget = new QWidget;
-                pWidget->setWindowTitle(tabName);
-                ui->tabWidgetModulel1->addTab(pWidget, tabName);
-            }
-           
-        }
-        else if (moduleNumber == 2)
-        {
+        //    WId winId = (WId)WNID;
+        //  
+        //    //WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
+        //    if (winId != 0)
+        //    {
+        //        QWindow* window = QWindow::fromWinId(winId);
+        //        QWidget* widget = QWidget::createWindowContainer(window);
+        //        
+        //        widget->setWindowTitle(tabName);
+        //        if (displayMode == 0)
+        //        {
+        //            ui->tabWidgetModulel1->addTab(widget, tabName);
+        //        }
+        //        else
+        //        {
+        //            widget->show();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        QWidget* pWidget = new QWidget;
+        //        pWidget->setWindowTitle(tabName);
+        //        ui->tabWidgetModulel1->addTab(pWidget, tabName);
+        //    }
+        //   
+        //}
+        //else if (moduleNumber == 2)
+        //{
 
 
-            QString strDspPath = "D:\Visual Studio 2017.rdp";
+        //    QString strDspPath = "D:\Visual Studio 2017.rdp";
 
-            // 启动bsp 
-            common::startDspExe(strDspPath);
+        //    // 启动bsp 
+        //    common::startDspExe(strDspPath);
 
-            QString  className = "RAIL_WINDOW";
-            // 窗口句柄
-          
-            HWND WNID;
-            HWND temp = NULL;
-          
-            int i = 0;
-            WNID = common::getHWND(className, i);
-           // WId winId = (WId)WNID;
-            //WNID=FindWindow(NULL, L" (AD.jhapp.com)");
-            WId winId = (WId)WNID;
-            if (winId != 0)
-            {
-               
-                if (displayMode == 0)
-                {
-                    
-                   
-                    /*QRect geometry = ui->tabWidgetModulel2->widget(0)->geometry();
-                    int width = geometry.width();
-                    int height = geometry.height();
-                    SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);*/
+        //    QString  className = "RAIL_WINDOW";
+        //    // 窗口句柄
+        //  
+        //    HWND WNID;
+        //    HWND temp = NULL;
+        //  
+        //    int i = 0;
+        //    WNID = common::getHWND(className, i);
+        //   // WId winId = (WId)WNID;
+        //    //WNID=FindWindow(NULL, L" (AD.jhapp.com)");
+        //    WId winId = (WId)WNID;
+        //    if (winId != 0)
+        //    {
+        //       
+        //        if (displayMode == 0)
+        //        {
+        //            
+        //           
+        //            /*QRect geometry = ui->tabWidgetModulel2->widget(0)->geometry();
+        //            int width = geometry.width();
+        //            int height = geometry.height();
+        //            SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);*/
 
-                    QWindow* window = QWindow::fromWinId(winId);
-                    int width = window->width();
-                    int height = window->height();
-                    QWidget* widget = QWidget::createWindowContainer(window,this);
-                   //widget->setFixedWidth(width);
-                   // widget->setFixedHeight(height);
-                  //  widget->resize(width, height);
-                    // 创建一个新的 QWidget
-                  
-                    widget->setWindowTitle(tabName);
-                    ui->tabWidgetModulel2->addTab(widget, tabName);
-                }
-                else
-                {
-                  //SetWindowPos(WNID, HWND_TOP, 0, 0, 650, 480, SWP_NOZORDER | SWP_SHOWWINDOW);
-                    QWindow* window = QWindow::fromWinId(winId);
-                    window->setFlags(window->flags()| Qt::ForeignWindow);
-                    int width = window->width();
-                    int height = window->height();
-                   // window->show();
-                   QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
-                    //main_widget = QWidget::createWindowContainer(window);
-                  //window->setGeometry(0, 0, widget->width(), widget->height());
-                  //widget->setFixedWidth(width);
-                  // widget->setFixedHeight(height);
-                    
-                   // main_widget->show();
-                   widget->show();
-                    // 创建一个嵌入窗口类，将原生窗口嵌入 Qt Widget
-                   /* CWidget* embeddedWidget = new CWidget(WNID);
-                    embeddedWidget->show();*/
+        //            QWindow* window = QWindow::fromWinId(winId);
+        //            int width = window->width();
+        //            int height = window->height();
+        //            QWidget* widget = QWidget::createWindowContainer(window,this);
+        //           //widget->setFixedWidth(width);
+        //           // widget->setFixedHeight(height);
+        //          //  widget->resize(width, height);
+        //            // 创建一个新的 QWidget
+        //          
+        //            widget->setWindowTitle(tabName);
+        //            ui->tabWidgetModulel2->addTab(widget, tabName);
+        //        }
+        //        else
+        //        {
+        //          //SetWindowPos(WNID, HWND_TOP, 0, 0, 650, 480, SWP_NOZORDER | SWP_SHOWWINDOW);
+        //            QWindow* window = QWindow::fromWinId(winId);
+        //            window->setFlags(window->flags()| Qt::ForeignWindow);
+        //            int width = window->width();
+        //            int height = window->height();
+        //           // window->show();
+        //           QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
+        //            //main_widget = QWidget::createWindowContainer(window);
+        //          //window->setGeometry(0, 0, widget->width(), widget->height());
+        //          //widget->setFixedWidth(width);
+        //          // widget->setFixedHeight(height);
+        //            
+        //           // main_widget->show();
+        //           widget->show();
+        //            // 创建一个嵌入窗口类，将原生窗口嵌入 Qt Widget
+        //           /* CWidget* embeddedWidget = new CWidget(WNID);
+        //            embeddedWidget->show();*/
 
-                    //QWindow* window = QWindow::fromWinId(winId);
-                    //QWidget* widget = QWidget::createWindowContainer(window);
-                    ////widget->showMaximized();
-                    //  SetWindowPos(WNID, HWND_TOP, 0, 0, 2500, 1300, SWP_NOZORDER | SWP_SHOWWINDOW);
-                    //  widget->resize(2500, 1300);
-                    //// 获取 QWidget 的大小
-                    //QRect geometry = widget->geometry();
-                    //int width = geometry.width();
-                    //int height = geometry.height();
+        //            //QWindow* window = QWindow::fromWinId(winId);
+        //            //QWidget* widget = QWidget::createWindowContainer(window);
+        //            ////widget->showMaximized();
+        //            //  SetWindowPos(WNID, HWND_TOP, 0, 0, 2500, 1300, SWP_NOZORDER | SWP_SHOWWINDOW);
+        //            //  widget->resize(2500, 1300);
+        //            //// 获取 QWidget 的大小
+        //            //QRect geometry = widget->geometry();
+        //            //int width = geometry.width();
+        //            //int height = geometry.height();
 
-                    // 调整外部窗口的大小和位置
-                  //  SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
-                    // 创建一个QAxWidget对象
-                 
-                }
-               
-            }
-        }
-        else if (moduleNumber == 3)
-        {
-            WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-           
-            if (winId != 0)
-            {
-                QWindow* window = QWindow::fromWinId(winId);
-                QWidget* widget = QWidget::createWindowContainer(window);
-                widget->setWindowTitle(tabName);
-                if (displayMode == 0)
-                {
-                    ui->tabWidgetModulel3->addTab(widget, tabName);
-                }
-                else
-                {
-                    widget->show();
-                }
-             
-            }
-            
-        }
-        else if (moduleNumber == 4)
-        {
-            WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-            if (winId != 0)
-            {
-                QWindow* window = QWindow::fromWinId(winId);
-                QWidget* widget = QWidget::createWindowContainer(window);
-                widget->setWindowTitle(tabName);
-                if (displayMode == 0)
-                {
-                   
-                    ui->tabWidgetModulel4->addTab(widget, tabName);
-                }
-                else
-                {
-                    widget->show();
-                }
-               
-            }
-        }
+        //            // 调整外部窗口的大小和位置
+        //          //  SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
+        //            // 创建一个QAxWidget对象
+        //         
+        //        }
+        //       
+        //    }
+        //}
+        //else if (moduleNumber == 3)
+        //{
+        //    WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
+        //   
+        //    if (winId != 0)
+        //    {
+        //        QWindow* window = QWindow::fromWinId(winId);
+        //        QWidget* widget = QWidget::createWindowContainer(window);
+        //        widget->setWindowTitle(tabName);
+        //        if (displayMode == 0)
+        //        {
+        //            ui->tabWidgetModulel3->addTab(widget, tabName);
+        //        }
+        //        else
+        //        {
+        //            widget->show();
+        //        }
+        //     
+        //    }
+        //    
+        //}
+        //else if (moduleNumber == 4)
+        //{
+        //    WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
+        //    if (winId != 0)
+        //    {
+        //        QWindow* window = QWindow::fromWinId(winId);
+        //        QWidget* widget = QWidget::createWindowContainer(window);
+        //        widget->setWindowTitle(tabName);
+        //        if (displayMode == 0)
+        //        {
+        //           
+        //            ui->tabWidgetModulel4->addTab(widget, tabName);
+        //        }
+        //        else
+        //        {
+        //            widget->show();
+        //        }
+        //       
+        //    }
+        //}
          };
 
         if (moduleNumber == 1)
@@ -565,8 +566,65 @@ void MainWindow::slot_btnAddToolTab()
             QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
 
             // 启动bsp 
-            common::startDspExe(strDspPath);
+            //common::startDspExe(strDspPath);
             // 嵌入
+
+           // QAxWidget* rdp = ui.axWidget;
+            QAxWidget* rdp = new QAxWidget;
+            rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+            bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
+            b = rdp->setProperty("UserName", "Administrator"); // 用户名
+            b = rdp->setProperty("Password", "Ate123"); // 密码
+
+            b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
+            b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
+            b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+            b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+
+            //普通参数,可选项
+            rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
+            b = rdp->setProperty("DisplayAlerts", false);    //不显示任何警告信息
+            b = rdp->setProperty("DisplayScrollBars", true); //显示滚动条
+            b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
+
+
+            //高级参数
+            QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
+            if (pAdvancedObject)
+            {
+                b = pAdvancedObject->setProperty("ClearTextPassword", 1);     //用户密码(这种方式每次都不需要手动输入密码)
+                b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
+
+                //高级参数,可选项
+                b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
+                b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
+                b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
+            }
+
+            QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+            if (pSecuredmObject)
+            {
+
+                b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/");
+                b = pSecuredmObject->setProperty("StartProgram", "devenv.exe");
+            }
+
+
+            QVariant v2 = rdp->dynamicCall("Connect()"); //连接
+            QWidget* axTabWidget = new QWidget();
+            QVBoxLayout* layout = new QVBoxLayout(axTabWidget);
+            layout->addWidget(rdp);
+            axTabWidget->setLayout(layout);
+               
+                if (displayMode == 0)
+                {
+                    ui->tabWidgetModulel1->addTab(axTabWidget, tabName);
+                }
+                else
+                {
+                    axTabWidget->show();
+                }
+
         }
         else
         {

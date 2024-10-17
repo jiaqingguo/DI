@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets multimedia
+QT       += core gui webengine webenginewidgets multimedia axcontainer
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 
@@ -109,3 +109,6 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/l
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.lib
 else:unix: PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.a
+
+
+
