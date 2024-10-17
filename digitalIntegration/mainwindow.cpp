@@ -578,7 +578,7 @@ void MainWindow::slot_btnAddToolTab()
 
             b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
             b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
-            b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+          //  b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
             b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
 
             //普通参数,可选项
@@ -592,9 +592,9 @@ void MainWindow::slot_btnAddToolTab()
             QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
             if (pAdvancedObject)
             {
-                b = pAdvancedObject->setProperty("ClearTextPassword", 1);     //用户密码(这种方式每次都不需要手动输入密码)
+                b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //用户密码(这种方式每次都不需要手动输入密码)
                 b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
-
+                b = pAdvancedObject->setProperty("PublicMode", true);
                 //高级参数,可选项
                 b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
                 b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
@@ -626,26 +626,84 @@ void MainWindow::slot_btnAddToolTab()
                 }
 
         }
-        else
+        else if(moduleNumber==2)
         {
             QString exeDir = QCoreApplication::applicationDirPath();
             int i = common::iSoftStartHostNum %3;
-            if (common::setHostIps.size() >= i)
+           // if (common::setHostIps.size() >= i)
             {
-                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-                std::string strValue = *it;
+                //auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+                //std::string strValue = *it;
 
 
-                QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
-                    +QString::fromStdString(strValue) + "/"+toolName + ".rdp";
+                //QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
+                //    +QString::fromStdString(strValue) + "/"+toolName + ".rdp";
 
                
-                common::iSoftStartHostNum++;
+                //common::iSoftStartHostNum++;
 
-                strDspPath = "D:\\Visual Studio 2017.rdp";
+               // strDspPath = "D:\\Visual Studio 2017.rdp";
                 // 启动bsp 
-                common::startDspExe(strDspPath);
+                //common::startDspExe(strDspPath);
                 // 嵌入
+
+                QAxWidget* rdp = new QAxWidget;
+                rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+                bool b = rdp->setProperty("Server", "192.168.1.248"); // 远程桌面的IP地址
+                b = rdp->setProperty("UserName", "Administrator"); // 用户名
+                b = rdp->setProperty("Password", "Ate123"); // 密码
+
+                b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
+                b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
+                b = rdp->setProperty("ConnectingText", QString::fromUtf8("MATLAB"));
+                b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+
+                //普通参数,可选项
+                rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
+                b = rdp->setProperty("DisplayAlerts", false);    //不显示任何警告信息
+                b = rdp->setProperty("DisplayScrollBars", true); //显示滚动条
+                b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
+
+
+                //高级参数
+                QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
+                if (pAdvancedObject)
+                {
+                    b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //用户密码(这种方式每次都不需要手动输入密码)
+                    b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
+
+                    b = pAdvancedObject->setProperty("PublicMode", false);
+                    //高级参数,可选项
+                    b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
+                    b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
+                    b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
+
+                  
+                }
+
+                QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+                if (pSecuredmObject)
+                {
+
+                    b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files/Polyspace/R2021a/bin/");
+                    b = pSecuredmObject->setProperty("StartProgram", "matlab.exe");
+                }
+
+
+                QVariant v2 = rdp->dynamicCall("Connect()"); //连接
+                QWidget* axTabWidget = new QWidget();
+                QVBoxLayout* layout = new QVBoxLayout(axTabWidget);
+                layout->addWidget(rdp);
+                axTabWidget->setLayout(layout);
+
+                if (displayMode == 0)
+                {
+                    ui->tabWidgetModulel2->addTab(axTabWidget, tabName);
+                }
+                else
+                {
+                    axTabWidget->show();
+                }
             }
 
         }
