@@ -1315,7 +1315,7 @@ namespace db
 	}
 
 	//指纹表的操作，16进制添加指纹到数据库中
-	bool databaseDI::add_user_finger(unsigned char *&tempdata,int templen, const int &id)
+	bool databaseDI::add_user_finger(unsigned char *tempdata,int &templen, const int &id)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -1395,7 +1395,7 @@ namespace db
 	//	return true;
 	//}
 
-	bool databaseDI::get_user_finger2(unsigned char *&temp, int &templen, int &userid)
+	bool databaseDI::get_user_finger2(unsigned char *temp, int &templen, int &userid)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
@@ -1408,7 +1408,7 @@ namespace db
 			return false;
 
 		// 分配内存存储二进制数据
-		temp = new unsigned char[2048];
+		//temp = new unsigned char[2048];
 		bool flag = false;
 		int i = 0;
 		while (sql_row = mysql_fetch_row(result))
@@ -1427,10 +1427,66 @@ namespace db
 			flag = true;
 			//temp[i] = '\0';
 		}
-		if (!flag) 
+		//if (!flag) 
+		//{
+		//	delete[] temp;  // 确保没有数据加载时释放内存
+		//	temp = nullptr;
+		//}
+		return flag;
+	}
+
+	bool databaseDI::add_user_finger(const QString &str, int &templen, const int &id)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		uint32_t last_id = 0;
+
+		// 执行SQL语句;
+		char sql[3000] = { 0 };
+		sprintf_s(sql, sizeof(sql), "insert into t_fingerprint(fingerData,fingerLen,registUserid) values(\'%s\',\'%d\',\'%d\')",
+			str.toStdString().c_str(),
+			templen,
+			id);
+
+
+		if (!exec_sql(last_id, sql))
 		{
-			delete[] temp;  // 确保没有数据加载时释放内存
-			temp = nullptr;
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+	bool databaseDI::get_user_finger2(QString &str, int &templen, int &userid)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, sizeof(sql), "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		bool flag = false;
+		int i = 0;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			templen = std::atoi(sql_row[1]);
+			str = QString::fromStdString(sql_row[0]);
+
+			flag = true;
+			
 		}
 		return flag;
 	}

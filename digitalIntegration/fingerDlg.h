@@ -10,12 +10,13 @@
 #include <iostream>
 #include <string>
 #include <databaseDI.h>
+#include "zkfinger.h"
 
 #include "libxzkfp/include/zkinterface.h"
 #include "libxzkfp/include/libzkfperrdef.h"
 #include "libxzkfp/include/libzkfptype.h"
 #include "libxzkfp/include/libzkfp.h"
-//#include "libxzkfp/include/zkfinger/zkfinger.h"
+
 
 #ifdef _WIN64
 #pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
@@ -70,9 +71,22 @@ public:
 
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
 
+	ZkFinger *m_zkfinger = nullptr;
+	void DoRegister2(unsigned char* temp, int len);
+	void DoVerify2(unsigned char *temp, int len);
+	QByteArray QStringToChar(const QString& str);
+	QString CharToQString(const unsigned char* buffer, int length);
+
 signals:
 	void login_succ();
 	void regist_succ();
+
+private slots:
+	void onCapture();
+
+
+
+
 
 };
 #endif

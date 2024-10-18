@@ -98,6 +98,7 @@ private:
 
 	//Ö¸ÎÆ
 	fingerDlg *m_fingerDlg = nullptr;
+	//ZKFingerDev *m_zkfDev = nullptr;
 	RegisterDialog *registerDialog = nullptr;
 public slots:
 	void slot_login_succ();
