@@ -23,7 +23,7 @@ fingerDlg::fingerDlg(QDialog* pParent)
 	pImgBuf = NULL;
 	Tid = 1;   //指纹 ID（>0 的 32 位无符号整数）
 
-	m_zkfinger = new ZkFinger();
+	//m_zkfinger = new ZkFinger();
 
 }
 
@@ -187,49 +187,49 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 }
 
 
-void fingerDlg::onCapture()
-{
-	if (m_zkfinger == nullptr) {
-		return;
-	}
-
-	if (m_hDevice == nullptr) {
-		return;
-	}
-
-	unsigned char szTemplate[MAX_TEMPLATE_SIZE];
-	unsigned int tempLen = MAX_TEMPLATE_SIZE;
-	// 采集指纹图像和模板
-	int ret = m_zkfinger->AcquireFingerprint(m_hDevice, pImgBuf, imgFPWidth * imgFPHeight, szTemplate, &tempLen);
-	if (ZKFP_ERR_OK == ret) {
-		//FakeFinger Test
-		if (1 == nFakeFunOn) {
-			int nFakeStatus = 0;
-			unsigned int retLen = sizeof(int);
-			if (0 == m_zkfinger->GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen)) {
-				if ((nFakeStatus & 0x1F) != 0x1F) {
-					QString log = QString("手指检测无效, Is Fake Finger?");
-					qWarning() << log;
-					//emit sigMessage(LOG_MSG_TYPE, log);
-					return;
-				}
-			}
-		}
-
-		//ShowFpImage(m_pImgBuf, m_imgFPWidth, m_imgFPHeight);
-		if (m_bRegister) {
-			qInfo() << QString("开始指纹注册");
-			DoRegister2(szTemplate, tempLen);
-		}
-		else {
-			qDebug() << QString("开始指纹验证");
-			DoVerify2(szTemplate, tempLen);
-		}
-	}
-	else {
-		// qDebug() << "AcquireFingerprint failed, ret =" << ret;
-	}
-}
+//void fingerDlg::onCapture()
+//{
+//	if (m_zkfinger == nullptr) {
+//		return;
+//	}
+//
+//	if (m_hDevice == nullptr) {
+//		return;
+//	}
+//
+//	unsigned char szTemplate[MAX_TEMPLATE_SIZE];
+//	unsigned int tempLen = MAX_TEMPLATE_SIZE;
+//	// 采集指纹图像和模板
+//	int ret = m_zkfinger->AcquireFingerprint(m_hDevice, pImgBuf, imgFPWidth * imgFPHeight, szTemplate, &tempLen);
+//	if (ZKFP_ERR_OK == ret) {
+//		//FakeFinger Test
+//		if (1 == nFakeFunOn) {
+//			int nFakeStatus = 0;
+//			unsigned int retLen = sizeof(int);
+//			if (0 == m_zkfinger->GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen)) {
+//				if ((nFakeStatus & 0x1F) != 0x1F) {
+//					QString log = QString("手指检测无效, Is Fake Finger?");
+//					qWarning() << log;
+//					//emit sigMessage(LOG_MSG_TYPE, log);
+//					return;
+//				}
+//			}
+//		}
+//
+//		//ShowFpImage(m_pImgBuf, m_imgFPWidth, m_imgFPHeight);
+//		if (m_bRegister) {
+//			qInfo() << QString("开始指纹注册");
+//			DoRegister2(szTemplate, tempLen);
+//		}
+//		else {
+//			qDebug() << QString("开始指纹验证");
+//			DoVerify2(szTemplate, tempLen);
+//		}
+//	}
+//	else {
+//		// qDebug() << "AcquireFingerprint failed, ret =" << ret;
+//	}
+//}
 
 
 void fingerDlg::DoRegister(unsigned char* temp, int len)
@@ -417,168 +417,168 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 		//MessageBox(NULL, TEXT("You need enroll a reg-template first!"), TEXT("提示"), 0);
 	//}
 }
-void fingerDlg::DoRegister2(unsigned char *pTemplate, int len)
-{
-	if (m_zkfinger == nullptr) {
-		return;
-	}
-
-	unsigned int fingerId = 0;
-	unsigned int score = 0;
-	int ret = m_zkfinger->DBIdentify(pTemplate, len, &fingerId, &score);
-	if (ZKFP_ERR_OK == ret) {
-		qDebug() << QString("错误，当前手指已登记! fingerId=%1, score=%2").arg(fingerId).arg(score);
-		//emit sigMessage(LOG_MSG_TYPE, QString("错误，当前手指已登记!"));
-		//m_preRegTempList.clear();
-		m_bRegister = false;
-		return;
-	}
-	int id = 0;
-	//CString strLog;
-	//bool succ2 = false;
-	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE] = { 0x0 };
-	int nLastRegTempLen = MAX_TEMPLATE_SIZE;
-
-	if (m_enrollIdx >= ENROLLCNT)  //3
-	{
-		m_enrollIdx = 0;	//restart enroll
-		return;
-	}
-	if (m_enrollIdx > 0)
-	{
-		//对比两枚指纹是否匹配
-		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], pTemplate, len))
-		{
-			m_enrollIdx = 0;
-			m_bRegister = FALSE;
-			//AfxMessageBox(_T("请按相同的手指"), MB_OK);
-			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Please press the same finger while registering"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
-			return;
-		}
-	}
-	arrPreTempsLen[m_enrollIdx] = len;
-	memcpy(arrPreRegTemps[m_enrollIdx], pTemplate, len);
-	if (++m_enrollIdx >= ENROLLCNT)
-	{
-		int ret = 0;
-		unsigned char szRegTemp[MAX_TEMPLATE_SIZE] = { 0x0 };
-		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //模板长度
-
-		//将 3 枚预登记指纹模板合并为一枚登记指纹
-		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
-		//m_enrollIdx = 0;
-		m_bRegister = FALSE;
-		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=操作成功
-		{
-			//清空缓冲区
-			//ret = ZKFPM_DBClear(hDBCache);
-
-			//添加登记指纹模板到缓冲区
-			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
-			if (ZKFP_ERR_OK == ret)
-			{
-				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
-
-				nLastRegTempLen = cbRegTemp;
-
-				/*delete[] szRegTemp;
-				szRegTemp = nullptr;*/
-
-				if (!db::databaseDI::Instance().get_new_regist_user(id))
-				{
-					return;
-				}
-				if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
-				{
-					MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
-					emit regist_succ();
-
-					//delete[] szLastRegTemplate;
-					//szLastRegTemplate = nullptr;
-					//return;
-				}
-
-
-				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register success"));
-				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
-			}
-			else
-			{
-				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
-				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
-				return;
-			}
-		}
-		else
-		{
-			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register fail"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
-			return;
-		}
-	}
-	else
-	{
-		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
-		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-		//qDebug() << strLog;
-		//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
-		return;
-	}
-}
-
-void fingerDlg::DoVerify2(unsigned char *pTemplate, int len)
-{
-	if (m_zkfinger == nullptr) {
-		return;
-	}
-
-	//if (m_nLastRegTempLen > 0) // have enroll one more template
-	{
-		if (m_bIdentify) {
-
-			unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
-			int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
-
-			int ret = ZKFP_ERR_OK;
-			unsigned int tid = 0;
-			unsigned int score = 0;
-
-			int approval = 0;
-			bool success = false;
-			db::databaseDI::Instance().get_approval(approval, common::iUserID);
-			if (approval == 1)
-			{
-				db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
-				if (szLastLogTemplate2 && nLastLogTempLen2 != 0)
-				{
-					//QByteArray temp = QStringToChar(QString::fromUtf8(reinterpret_cast<const char*>(szLastLogTemplate2)));
-					//int ret = m_zkfinger->DBMatch(reinterpret_cast<unsigned char*>(temp.data()), QString::fromUtf8(reinterpret_cast<const char*>(nLastLogTempLen2)).length(), pTemplate, len);
-					int ret = m_zkfinger->DBMatch(szLastLogTemplate2, nLastLogTempLen2, pTemplate, len);
-					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
-					{
-						success = true;
-					}
-				}
-
-				if (success)
-				{
-					emit login_succ();
-					bStopThread = TRUE;
-				}
-				else
-				{
-					MessageBox(NULL, TEXT("指纹验证失败,换手指验证"), TEXT("提示"), 0);
-				}
-			}
-			else
-			{
-				MessageBox(NULL, TEXT("此用户没有注册指纹"), TEXT("提示"), 0);
-			}
-		}
-	}
-}
+//void fingerDlg::DoRegister2(unsigned char *pTemplate, int len)
+//{
+//	if (m_zkfinger == nullptr) {
+//		return;
+//	}
+//
+//	unsigned int fingerId = 0;
+//	unsigned int score = 0;
+//	int ret = m_zkfinger->DBIdentify(pTemplate, len, &fingerId, &score);
+//	if (ZKFP_ERR_OK == ret) {
+//		qDebug() << QString("错误，当前手指已登记! fingerId=%1, score=%2").arg(fingerId).arg(score);
+//		//emit sigMessage(LOG_MSG_TYPE, QString("错误，当前手指已登记!"));
+//		//m_preRegTempList.clear();
+//		m_bRegister = false;
+//		return;
+//	}
+//	int id = 0;
+//	//CString strLog;
+//	//bool succ2 = false;
+//	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE] = { 0x0 };
+//	int nLastRegTempLen = MAX_TEMPLATE_SIZE;
+//
+//	if (m_enrollIdx >= ENROLLCNT)  //3
+//	{
+//		m_enrollIdx = 0;	//restart enroll
+//		return;
+//	}
+//	if (m_enrollIdx > 0)
+//	{
+//		//对比两枚指纹是否匹配
+//		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], pTemplate, len))
+//		{
+//			m_enrollIdx = 0;
+//			m_bRegister = FALSE;
+//			//AfxMessageBox(_T("请按相同的手指"), MB_OK);
+//			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Please press the same finger while registering"));
+//			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
+//			return;
+//		}
+//	}
+//	arrPreTempsLen[m_enrollIdx] = len;
+//	memcpy(arrPreRegTemps[m_enrollIdx], pTemplate, len);
+//	if (++m_enrollIdx >= ENROLLCNT)
+//	{
+//		int ret = 0;
+//		unsigned char szRegTemp[MAX_TEMPLATE_SIZE] = { 0x0 };
+//		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //模板长度
+//
+//		//将 3 枚预登记指纹模板合并为一枚登记指纹
+//		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
+//		//m_enrollIdx = 0;
+//		m_bRegister = FALSE;
+//		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=操作成功
+//		{
+//			//清空缓冲区
+//			//ret = ZKFPM_DBClear(hDBCache);
+//
+//			//添加登记指纹模板到缓冲区
+//			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
+//			if (ZKFP_ERR_OK == ret)
+//			{
+//				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
+//
+//				nLastRegTempLen = cbRegTemp;
+//
+//				/*delete[] szRegTemp;
+//				szRegTemp = nullptr;*/
+//
+//				if (!db::databaseDI::Instance().get_new_regist_user(id))
+//				{
+//					return;
+//				}
+//				if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
+//				{
+//					MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+//					emit regist_succ();
+//
+//					//delete[] szLastRegTemplate;
+//					//szLastRegTemplate = nullptr;
+//					//return;
+//				}
+//
+//
+//				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register success"));
+//				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
+//			}
+//			else
+//			{
+//				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
+//				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+//				//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
+//				return;
+//			}
+//		}
+//		else
+//		{
+//			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Register fail"));
+//			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
+//			return;
+//		}
+//	}
+//	else
+//	{
+//		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
+//		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+//		//qDebug() << strLog;
+//		//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromWCharArray(strLog.GetString()));
+//		return;
+//	}
+//}
+//
+//void fingerDlg::DoVerify2(unsigned char *pTemplate, int len)
+//{
+//	if (m_zkfinger == nullptr) {
+//		return;
+//	}
+//
+//	//if (m_nLastRegTempLen > 0) // have enroll one more template
+//	{
+//		if (m_bIdentify) {
+//
+//			unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
+//			int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
+//
+//			int ret = ZKFP_ERR_OK;
+//			unsigned int tid = 0;
+//			unsigned int score = 0;
+//
+//			int approval = 0;
+//			bool success = false;
+//			db::databaseDI::Instance().get_approval(approval, common::iUserID);
+//			if (approval == 1)
+//			{
+//				db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
+//				if (szLastLogTemplate2 && nLastLogTempLen2 != 0)
+//				{
+//					//QByteArray temp = QStringToChar(QString::fromUtf8(reinterpret_cast<const char*>(szLastLogTemplate2)));
+//					//int ret = m_zkfinger->DBMatch(reinterpret_cast<unsigned char*>(temp.data()), QString::fromUtf8(reinterpret_cast<const char*>(nLastLogTempLen2)).length(), pTemplate, len);
+//					int ret = m_zkfinger->DBMatch(szLastLogTemplate2, nLastLogTempLen2, pTemplate, len);
+//					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
+//					{
+//						success = true;
+//					}
+//				}
+//
+//				if (success)
+//				{
+//					emit login_succ();
+//					bStopThread = TRUE;
+//				}
+//				else
+//				{
+//					MessageBox(NULL, TEXT("指纹验证失败,换手指验证"), TEXT("提示"), 0);
+//				}
+//			}
+//			else
+//			{
+//				MessageBox(NULL, TEXT("此用户没有注册指纹"), TEXT("提示"), 0);
+//			}
+//		}
+//	}
+//}
 
 // QString 转 unsigned char 数组
 QByteArray fingerDlg::QStringToChar(const QString& str)

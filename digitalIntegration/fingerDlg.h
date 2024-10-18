@@ -71,18 +71,18 @@ public:
 
 	static DWORD WINAPI ThreadCapture(LPVOID lParam);
 
-	ZkFinger *m_zkfinger = nullptr;
-	void DoRegister2(unsigned char* temp, int len);
-	void DoVerify2(unsigned char *temp, int len);
+	//ZkFinger *m_zkfinger = nullptr;
+	//void DoRegister2(unsigned char* temp, int len);
+	//void DoVerify2(unsigned char *temp, int len);
 	QByteArray QStringToChar(const QString& str);
 	QString CharToQString(const unsigned char* buffer, int length);
 
 signals:
 	void login_succ();
 	void regist_succ();
-
-private slots:
-	void onCapture();
+//
+//private slots:
+//	void onCapture();
 
 
 

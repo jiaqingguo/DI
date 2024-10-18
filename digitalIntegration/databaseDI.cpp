@@ -1355,46 +1355,6 @@ namespace db
 		return true;
 	}
 
-
-	//获取注册的指纹的数据
-	//bool databaseDI::get_user_finger(std::vector<std::pair<unsigned char *, unsigned int>>& vec, int &userid)
-	//{
-	//	//listData.clear();
-
-	//	// 结果集声明;
-	//	MYSQL_ROW sql_row;
-
-	//	// 执行SQL语句;
-	//	char sql[256] = { 0 };
-	//	sprintf_s(sql, "select fingerData,fingerLen from t_fingerprint where registUserid=\'%d\'", userid);
-	//	MYSQL_RES* result = exec_sql_select(sql);
-	//	if (result == nullptr)
-	//		return false;
-
-	//	while (sql_row = mysql_fetch_row(result))
-	//	{
-	//		int templen = std::atoi(sql_row[1]);
-	//		const char *tempdata = sql_row[0];
-
-	//		// 分配内存存储二进制数据
-	//		unsigned char*  binaryData = new unsigned char[templen];
-
-	//		// 将十六进制字符串转换为二进制数据
-	//		for (int i = 0; i < templen; i += 2) {
-	//			// 每次处理两个字符
-	//			char byteString[3] = { tempdata[i], tempdata[i + 1], '\0' };
-	//			// 将十六进制字符转换为无符号整数
-	//			binaryData[i / 2] = static_cast<unsigned char>(std::stoul(byteString, nullptr, 16));
-	//		}
-	//		//std::string u_finger2(reinterpret_cast<const char*>(binaryData),templen);
-	//		//u_finger = u_finger2;
-	//		// 存储数据和长度到 vector
-	//		vec.push_back(std::make_pair(binaryData, templen));
-
-	//	}
-	//	return true;
-	//}
-
 	bool databaseDI::get_user_finger2(unsigned char *temp, int &templen, int &userid)
 	{
 		// 结果集声明;
