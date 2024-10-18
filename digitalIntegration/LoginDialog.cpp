@@ -11,8 +11,7 @@
 #include "databaseDI.h"
 #include "RegisterDialog.h"
 #include "common.h"
-#include "zkfinger.h"
-#include "zkfingerdev.h"
+
 
 LoginDialog::LoginDialog(QWidget *parent) :
 	QDialog(parent),
@@ -197,8 +196,9 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 	}
 
-	//this->accept();
-	//m_zkfDev->StartVerify();
+
+	this->accept();
+
 
 }
 

@@ -129,6 +129,9 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // 用户审批查询
 
 	connect(ui->btnFlushDownload, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnFlushDownload);
+	connect(ui->btnFlushUser, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnFlushUser);
+
+	
 	init();
 }
 
@@ -193,11 +196,67 @@ void ApprovalProgressDialog::autoFlushDownloadData()
 {
 	getDownloadData(m_listDataApproval);
 	m_DataApprovalTotalRows = m_listDataApproval.size();
+	if (m_DataApprovalTotalRows <= common::tableViewPageRows)
+	{
+		m_DataApprovalTatalPage = 1;
+	}
+	else
+	{
+		m_DataApprovalTatalPage = m_DataApprovalTotalRows / common::tableViewPageRows;
+		if (m_DataApprovalTatalPage % common::tableViewPageRows != 0)
+		{
+			m_DataApprovalTatalPage++;
+		}
+	}
+
 	int curPage = ui->lineEditDataApprovalPage->text().toInt();
-	int offsetRows = (curPage)*common::onePageRows;
+
+	ui->labelDataApprovalPageShow->setText(QString("%1/%2").arg(curPage).arg(m_DataApprovalTatalPage));
+	
+	int offsetRows = 0;
+	if (curPage >= 1)
+	{
+		offsetRows = (curPage - 1) * common::onePageRows;
+	}
 
 	auto listDataApproval = processList(m_listDataApproval, common::onePageRows, offsetRows);
 	flushDownloadTableShow(listDataApproval, offsetRows);
+
+}
+
+void ApprovalProgressDialog::autoFlushUserData()
+{
+
+	db::databaseDI::Instance().get_user_list(m_listUser);
+	m_UserTotalRows = m_listUser.size();
+
+	if (m_UserTotalRows <= common::tableViewPageRows)
+	{
+		m_UserTotalpage = 1;
+	}
+	else
+	{
+		m_UserTotalpage = m_UserTotalRows / common::tableViewPageRows;
+		if (m_UserTotalpage % common::tableViewPageRows != 0)
+		{
+			m_UserTotalpage++;
+		}
+	}
+
+	int curPage = ui->lineEditUserPage->text().toInt();
+
+	ui->labelUserPage->setText(QString("%1/%2").arg(curPage).arg(m_UserTotalpage));
+	
+	int offsetRows = 0;
+	if (curPage >= 1)
+	{
+		offsetRows = (curPage - 1) * common::onePageRows;
+	}
+
+	auto listData = processList(m_listUser, common::onePageRows, offsetRows);
+	flushUserTableShow(listData);
+
+
 }
 
 void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadApproval>& listData, const int& offsetRows)
@@ -437,6 +496,8 @@ void  ApprovalProgressDialog::slot_btnDataShow()
 	ui->btnData->setStyleSheet(strQssBlue);
 	ui->btnUser->setStyleSheet(strQssGray);
 	ui->stackedWidget->setCurrentIndex(0);
+
+	autoFlushDownloadData();
 }
 void  ApprovalProgressDialog::slot_btnUserShow()
 {
@@ -445,7 +506,7 @@ void  ApprovalProgressDialog::slot_btnUserShow()
 	ui->stackedWidget->setCurrentIndex(1);
 
 
-	autoFlushDownloadData();
+	
 }
 
 
@@ -1440,6 +1501,10 @@ void ApprovalProgressDialog::slot_btnFlushDownload()
 {
 	autoFlushDownloadData();
 }
+void ApprovalProgressDialog::slot_btnFlushUser()
+{
+	autoFlushUserData();
+}
 void ApprovalProgressDialog::slot_DataItemBtnClicked()
 {
 	QPushButton* pButton = (QPushButton*)sender();
@@ -1493,6 +1558,7 @@ void ApprovalProgressDialog::slot_DataItemBtnClicked()
 	}
 
 	ui->tableView->setCurrentIndex(index);
+	getDownloadData(m_listDataApproval);
 }
 
 void ApprovalProgressDialog::slot_ItemBtnClicked()
@@ -1548,5 +1614,6 @@ void ApprovalProgressDialog::slot_ItemBtnClicked()
 	}
 
 	ui->tableViewUser->setCurrentIndex(index);
+	db::databaseDI::Instance().get_user_list(m_listUser);
 }
 

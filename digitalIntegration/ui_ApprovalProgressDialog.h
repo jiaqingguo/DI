@@ -72,6 +72,7 @@ public:
     QTableView *tableViewUser;
     QHBoxLayout *horizontalLayout_4;
     QSpacerItem *horizontalSpacer_5;
+    QPushButton *btnFlushUser;
     QPushButton *btnUserLast;
     QLabel *labelUserPage;
     QPushButton *btnUserNext;
@@ -274,6 +275,11 @@ public:
 
         horizontalLayout_4->addItem(horizontalSpacer_5);
 
+        btnFlushUser = new QPushButton(page_2);
+        btnFlushUser->setObjectName(QString::fromUtf8("btnFlushUser"));
+
+        horizontalLayout_4->addWidget(btnFlushUser);
+
         btnUserLast = new QPushButton(page_2);
         btnUserLast->setObjectName(QString::fromUtf8("btnUserLast"));
 
@@ -316,7 +322,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);
@@ -339,6 +345,7 @@ public:
         lineEditUserQueryValue->setText(QString());
         checkBox_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnUserQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
+        btnFlushUser->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\210\267\346\226\260", nullptr));
         btnUserLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
         labelUserPage->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
         btnUserNext->setText(QCoreApplication::translate("ApprovalProgressDialog", ">", nullptr));
