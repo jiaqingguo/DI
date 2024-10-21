@@ -112,3 +112,18 @@ else:unix: PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.a
 
 
 
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/zkfinger/libs/win/x64lib/ -llibzkfp
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/zkfinger/libs/win/x64lib/ -llibzkfp
+#else:unix: LIBS += -L$$PWD/zkfinger/libs/win/x64lib/ -llibzkfp
+
+#INCLUDEPATH += $$PWD/zkfinger/libs/win/include
+#DEPENDPATH += $$PWD/zkfinger/libs/win/include
+
+#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/zkfinger/libs/win/x64lib/libzkfp.a
+#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/zkfinger/libs/win/x64lib/libzkfp.a
+#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/zkfinger/libs/win/x64lib/libzkfp.lib
+#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/zkfinger/libs/win/x64lib/libzkfp.lib
+#else:unix: PRE_TARGETDEPS += $$PWD/zkfinger/libs/win/x64lib/libzkfp.a
+
+
+

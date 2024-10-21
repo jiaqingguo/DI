@@ -813,7 +813,8 @@ void FilemangageDialog::slot_btnUploadingDir()
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	traverseUploadDir(directory, strDstDir);
 	m_GifDialog->close();
-	flushFtpDirShow();
+	//flushFtpDirShow();
+	flushFtpDirShow(pItem);
 }
 
 void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& pos)
@@ -930,6 +931,7 @@ void FilemangageDialog::slot_actionMkdir()
 
 
 		flushFtpDirShow(pItem);
+
 		/*QTreeWidgetItem* pNewItem = new QTreeWidgetItem();
 
 		pNewItem->setText(0, DirName);
@@ -956,9 +958,11 @@ void FilemangageDialog::slot_actionDelDir()
 	dirPath.replace("/", "\\\\");
 	parentDir.replace("/", "\\\\");
 
-	
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在删除文件夹..."));
+	m_GifDialog->show();
+	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
-
+	m_GifDialog->close();
 	pParentItem->removeChild(pItem); // 先获取 childItem
 	delete pItem;
 	flushTableViewFtpFile();
@@ -994,12 +998,13 @@ void FilemangageDialog::slot_actionDownload()
 		QString newDirPath = directory + "/" + pItem->text(0);
 		newDirPath.replace("/", "\\\\");
 
-		g_pMainWindow->showGif();
-
+		
+		m_GifDialog->show();
+	
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 		downloadFtpDir(dirPath, newDirPath);
 
-		g_pMainWindow->closeGif();
+		m_GifDialog->close();
 	}
 }
 
@@ -1018,6 +1023,11 @@ void FilemangageDialog::slot_actioxnRename()
 		return;
 	}
 	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("重命名"), QString::fromLocal8Bit("输入新建文件夹名称："));
+	if (DirName == "")
+	{
+		return;
+	}
+	
 	QString newDir = pParentItem->data(0, Qt::UserRole).toString() + "\\" + DirName;
 	if (m_FtpClientClass->execute_rename(oldDir.toLocal8Bit().toStdString(), newDir.toLocal8Bit().toStdString()))
 	{
