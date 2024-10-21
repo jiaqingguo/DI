@@ -42,7 +42,6 @@ public:
 	bool sendFile(std::string filename);
 
 
-
 private:
 	//SOCKET server;
 	int maxSize;

@@ -571,6 +571,9 @@ void MainWindow::slot_btnAddToolTab()
 
            // QAxWidget* rdp = ui.axWidget;
             QAxWidget* rdp = new QAxWidget;
+            //connect(&rdp, &QAxWidget::4
+            connect(rdp, SIGNAL(ActiveXEvent()), this, SLOT(onActiveXEvent()));
+            rdp->dynamicCall("MethodName()");
             rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
             bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
             b = rdp->setProperty("UserName", "Administrator"); // 用户名
@@ -616,14 +619,14 @@ void MainWindow::slot_btnAddToolTab()
             layout->addWidget(rdp);
             axTabWidget->setLayout(layout);
                
-                if (displayMode == 0)
-                {
-                    ui->tabWidgetModulel1->addTab(axTabWidget, tabName);
-                }
-                else
-                {
-                    axTabWidget->show();
-                }
+            if (displayMode == 0)
+            {
+                ui->tabWidgetModulel1->addTab(axTabWidget, tabName);
+            }
+            else
+            {
+                axTabWidget->show();
+            }
 
         }
         else if(moduleNumber==2)

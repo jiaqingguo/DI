@@ -260,8 +260,11 @@ int Server::sendFileList(SOCKET datatcps, char dirPath[])
 			return 0;
 		}
 		flag = FindNextFile(hff, &fd);//查找下一个文件
+		// 关闭句柄
+		//FindClose(hff);
 	}
-
+	// 关闭句柄
+	FindClose(hff);
 	return 1;
 }
 int Server::sendFile(SOCKET datatcps, FILE* file) {
@@ -350,6 +353,8 @@ int Server::sendFileList(SOCKET datatcps) {
 			return 0;
 		}
 		flag = FindNextFile(hff, &fd);//查找下一个文件
+		 // 关闭句柄
+		FindClose(hff);
 	}
 
 	return 1;
@@ -593,10 +598,11 @@ void Server::running()
 					break; // 数据大小为 0，则退出循环
 				}
 				int recv_size = data_size;
+				// 接收实际数据
+				char buffer[10240]; // 接收缓冲区
 				while (1)
 				{
-					// 接收实际数据
-					char buffer[10240]; // 接收缓冲区
+					
 					memset(buffer, 0, sizeof(buffer));
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
 					if (bytes_received == -1)
@@ -604,7 +610,7 @@ void Server::running()
 						cout <<"返回值:"<< bytes_received<< " 连接失败，错误代码: " << WSAGetLastError() << endl;
 						std::cout << "----2接收失败  put！！！！！！！！！\n";
 						closesocket(sockServer);
-						return;
+						break;
 					}
 					// 将接收到的数据写入文件
 					file.write(buffer, bytes_received);
