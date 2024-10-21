@@ -1033,6 +1033,7 @@ void FilemangageDialog::slot_actioxnRename()
 	{
 		pItem->setText(0, DirName);
 		pItem->setData(0, Qt::UserRole, newDir);
+		flushFtpDirShow(pItem);
 	}
 	else {
 		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÖØÃüÃûÊ§°Ü"));
