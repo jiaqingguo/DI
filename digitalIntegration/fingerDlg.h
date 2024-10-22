@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 #include <databaseDI.h>
-#include "zkfinger.h"
+//#include "zkfinger.h"
 
 #include "libxzkfp/include/zkinterface.h"
 #include "libxzkfp/include/libzkfperrdef.h"

@@ -163,9 +163,6 @@ void FilemangageDialog::flushFtpDirShow(QTreeWidgetItem* pCurItem)
 	QString RootPath = pCurItem->data(0, Qt::UserRole).toString();
 	string strRootPath= RootPath.toLocal8Bit().toStdString();
 
-	
-	
-
 
 	//if (m_FtpClientClass->newConnection())
 	{
@@ -727,7 +724,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
-
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
 		m_GifDialog->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 

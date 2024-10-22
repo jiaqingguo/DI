@@ -647,7 +647,7 @@ void MainWindow::slot_btnAddToolTab()
 
                // strDspPath = "D:\\Visual Studio 2017.rdp";
                 // ∆Ù∂Øbsp 
-                //common::startDspExe(strDspPath);
+              //  common::startDspExe(strDspPath);
                 // «∂»Î
 
                 QAxWidget* rdp = new QAxWidget;
