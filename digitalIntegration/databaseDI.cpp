@@ -1,4 +1,4 @@
-#define _SCL_SECURE_NO_WARNINGS
+﻿#define _SCL_SECURE_NO_WARNINGS
 #include <mysql.h>
 #include "databaseDI.h" 
 #include <QDebug>
@@ -37,7 +37,8 @@ namespace db
 
 		// 字符集设置;
 		//mysql_query(tempDB, "SET NAMES UTF8");
-		std::string char_set_name = "UTF8";
+		//db.setConnectOptions("CHARSET=utf8mb4"); // 设置字符集
+		std::string char_set_name = "utf8mb4";
 		if (mysql_set_character_set(mysql_, char_set_name.c_str()) != 0)
 		{
 			qDebug("字符集设置失败!\n%s", mysql_error(mysql_));

@@ -599,7 +599,7 @@ void Server::running()
 				}
 				int recv_size = data_size;
 				// 接收实际数据
-				char buffer[10240]; // 接收缓冲区
+				char buffer[10240]; // 接收缓冲区;
 				while (1)
 				{
 					

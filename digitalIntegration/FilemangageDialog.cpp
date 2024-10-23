@@ -163,9 +163,6 @@ void FilemangageDialog::flushFtpDirShow(QTreeWidgetItem* pCurItem)
 	QString RootPath = pCurItem->data(0, Qt::UserRole).toString();
 	string strRootPath= RootPath.toLocal8Bit().toStdString();
 
-	
-	
-
 
 	//if (m_FtpClientClass->newConnection())
 	{
@@ -253,7 +250,6 @@ void FilemangageDialog::flushTableViewDownload()
 	db::databaseDI::Instance().get_download_approval_list_by_userID(listDataApproval, common::iUserID);
 	for (auto& stData : listDataApproval)
 	{
-
 		table_user stUserData;
 		db::databaseDI::Instance().get_user_by_condition(stUserData, stData.userID);
 		stData.userName = stUserData.name;
@@ -289,7 +285,7 @@ void FilemangageDialog::flushTableViewDownload()
 		m_modelDownload->setItem(newRowIndex, 3, item);
 
 
-		QString filePath = QString::fromLocal8Bit(stData.filePath.c_str());
+		QString filePath = QString::fromStdString(stData.filePath);
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());
@@ -727,7 +723,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
-
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
 		m_GifDialog->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 
@@ -982,7 +978,8 @@ void FilemangageDialog::slot_actionDownload()
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
-		stDownloadApproval.filePath = dirPath.toUtf8().toStdString();
+		//stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+		stDownloadApproval.filePath = dirPath.toStdString();
 		stDownloadApproval.fileType = "dir";
 		stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0, Qt::UserRole + 1).toString().toStdString());
 
