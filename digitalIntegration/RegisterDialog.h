@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTimer>
+#include "fingerDlg.h"
 
 
 namespace Ui {
@@ -28,6 +29,8 @@ private slots:
 private:
     Ui::RegisterDialog *ui;
 	QTimer* timer = new QTimer(this); // 'this' 是指向当前对象的指针
+
+	fingerDlg *u_fingerDlg = new fingerDlg();
 
 };
 

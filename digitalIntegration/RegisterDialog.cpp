@@ -34,10 +34,14 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 RegisterDialog::~RegisterDialog()
 {
     delete ui;
+
+	if (u_fingerDlg != nullptr)
+		delete u_fingerDlg;
 }
 
 void RegisterDialog::slot_btnRegister()
 {
+	
     table_user stUser;
     stUser.UserName = ui->lineEditUserName->text().toStdString();
     stUser.Password = ui->lineEditPassword->text().toStdString();
@@ -61,21 +65,26 @@ void RegisterDialog::slot_btnRegister()
         if (ui->comboBox->currentIndex() == 0)
         {
             stUser.Pop = 0;
-            if (!db::databaseDI::Instance().add_user_info(stUser))
-            {
-                QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
-                return;
-            }
+			connect(this->u_fingerDlg, &fingerDlg::regist_succ,[&]() {
+				if (!db::databaseDI::Instance().add_user_info(stUser))
+				{
+					QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
+					return;
+				}
+			});
+            
             ui->stackedWidget->setCurrentIndex(1);
         }
         else
         {
             stUser.Pop = 1;
-            if (!db::databaseDI::Instance().add_user_info(stUser))
-            {
-                QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
-                return;
-            }  
+			connect(this->u_fingerDlg, &fingerDlg::regist_succ, [&]() {
+				if (!db::databaseDI::Instance().add_user_info(stUser))
+				{
+					QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
+					return;
+				}
+			});
             this->accept();
         }
     }
@@ -96,21 +105,25 @@ void RegisterDialog::slot_btnRegister()
             if (ui->comboBox->currentIndex() == 0)
             {
                 stUser.Pop = 0;
-                if (!db::databaseDI::Instance().add_user_info(stUser))
-                {
-                    QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
-                    return;
-                }
+				connect(this->u_fingerDlg, &fingerDlg::regist_succ, [&]() {
+					if (!db::databaseDI::Instance().add_user_info(stUser))
+					{
+						QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
+						return;
+					}
+				});
                 ui->stackedWidget->setCurrentIndex(1);
             }
             else
             {
                 stUser.Pop = 1;
-                if (!db::databaseDI::Instance().add_user_info(stUser))
-                {
-                    QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
-                    return;
-                }
+				connect(this->u_fingerDlg, &fingerDlg::regist_succ, [&]() {
+					if (!db::databaseDI::Instance().add_user_info(stUser))
+					{
+						QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
+						return;
+					}
+				});
                 this->accept();
             }
         }

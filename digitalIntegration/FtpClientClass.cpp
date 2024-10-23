@@ -1,11 +1,11 @@
-//#include "stdafx.h"
+ï»¿//#include "stdafx.h"
 #include <fstream>
 
 #include "FtpClientClass.h"
 #include "Util/UtilTool.h"
 
-#define RECV_PORT 4312	//½ÓÊÕ¶Ë¿Ú
-#define SEND_PORT 4302	//·¢ËÍ¶Ë¿Ú
+#define RECV_PORT 4312	//æ¥æ”¶ç«¯å£
+#define SEND_PORT 4302	//å‘é€ç«¯å£
 using namespace std;
 #pragma warning(disable : 4996) 
 //#include "Util/UtilTool.h"
@@ -29,58 +29,58 @@ FtpClientClass::~FtpClientClass()
 {
 
 }
-//Æô¶¯winsock²¢³õÊ¼»¯
+//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 DWORD FtpClientClass::startSock()
 {
-	//Æô¶¯winsock²¢³õÊ¼»¯
+	//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	WSADATA WSAData;
 	char a[20];
 	memset(a, 0, sizeof(a));
-	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0) { //¼ÓÔØwinsock°æ±¾
-		cout << "sock³õÊ¼»¯Ê§°Ü" << endl;
+	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0) { //åŠ è½½winsockç‰ˆæœ¬
+		cout << "sockåˆå§‹åŒ–å¤±è´¥" << endl;
 		return -1;
 	}
 	//if (strncmp(inputIP, a, sizeof(a)) == 0) {
-	//	cout << "ÇëÊäÈëÒªÁ¬½ÓµÄ·şÎñÆ÷IP£º";
+	//	cout << "è¯·è¾“å…¥è¦è¿æ¥çš„æœåŠ¡å™¨IPï¼š";
 	//	cin >> inputIP;
 	//}ls
 	//strcpy(inputIP, "127.0.0.1");
 	//strcpy(inputIP, "192.168.0.158");
-//	strcpy(inputIP, "192.168.1.23"); /*¸øÊı×é¸³×Ö·û´®*/ 
-	//ÉèÖÃµØÖ·½á¹¹
-	serverAddr.sin_family = AF_INET;					//±íÃ÷µ×²ãÊÇÊ¹ÓÃµÄÄÄÖÖÍ¨ĞÅĞ­ÒéÀ´µİ½»Êı¾İµÄ£¬AF_INET±íÊ¾Ê¹ÓÃ TCP/IPv4 µØÖ·×å½øĞĞÍ¨ĞÅ
-	serverAddr.sin_addr.s_addr = inet_addr(inputIP);	//Ö¸¶¨·şÎñÆ÷IP£¬Ê®½øÖÆ×ª»¯³É¶ş½øÖÆIPV4µØÖ·
-	serverAddr.sin_port = htons(m_serverPort);				//ÉèÖÃ¶Ë¿ÚºÅ£¬htonsÓÃÓÚ½«Ö÷»ú×Ö½ÚĞò¸ÄÎªÍøÂç×Ö½ÚĞò
+//	strcpy(inputIP, "192.168.1.23"); /*ç»™æ•°ç»„èµ‹å­—ç¬¦ä¸²*/ 
+	//è®¾ç½®åœ°å€ç»“æ„
+	serverAddr.sin_family = AF_INET;					//è¡¨æ˜åº•å±‚æ˜¯ä½¿ç”¨çš„å“ªç§é€šä¿¡åè®®æ¥é€’äº¤æ•°æ®çš„ï¼ŒAF_INETè¡¨ç¤ºä½¿ç”¨ TCP/IPv4 åœ°å€æ—è¿›è¡Œé€šä¿¡
+	serverAddr.sin_addr.s_addr = inet_addr(inputIP);	//æŒ‡å®šæœåŠ¡å™¨IPï¼Œåè¿›åˆ¶è½¬åŒ–æˆäºŒè¿›åˆ¶IPV4åœ°å€
+	serverAddr.sin_port = htons(m_serverPort);				//è®¾ç½®ç«¯å£å·ï¼Œhtonsç”¨äºå°†ä¸»æœºå­—èŠ‚åºæ”¹ä¸ºç½‘ç»œå­—èŠ‚åº
 	return 1;
 }
-//´´½¨socket
+//åˆ›å»ºsocket
 DWORD FtpClientClass::createSocket()
 {
-	//´´½¨socket
-	//ÒªÊ¹ÓÃÌ×½Ó×Ö£¬Ê×ÏÈ±ØĞëµ÷ÓÃsocket()º¯Êı´´½¨Ò»¸öÌ×½Ó×ÖÃèÊö·û£¬¾ÍÈçÍ¬²Ù×÷ÎÄ¼şÊ±£¬Ê×ÏÈµÃµ÷ÓÃfopen()º¯Êı´ò¿ªÒ»¸öÎÄ¼ş¡£
-	sockClient = socket(AF_INET, SOCK_STREAM, 0);//µ±scoketº¯Êı³É¹¦µ÷ÓÃÊ±·µ»ØÒ»¸öĞÂµÄSOCKET(Socket Descriptor) //SOCK_STREAM£¨Á÷Ê½Ì×½Ó×Ö£©:TcpÁ¬½Ó£¬Ìá¹©ĞòÁĞ»¯µÄ¡¢¿É¿¿µÄ¡¢Ë«ÏòÁ¬½ÓµÄ×Ö½ÚÁ÷¡£Ö§³Ö´øÍâÊı¾İ´«Êä
+	//åˆ›å»ºsocket
+	//è¦ä½¿ç”¨å¥—æ¥å­—ï¼Œé¦–å…ˆå¿…é¡»è°ƒç”¨socket()å‡½æ•°åˆ›å»ºä¸€ä¸ªå¥—æ¥å­—æè¿°ç¬¦ï¼Œå°±å¦‚åŒæ“ä½œæ–‡ä»¶æ—¶ï¼Œé¦–å…ˆå¾—è°ƒç”¨fopen()å‡½æ•°æ‰“å¼€ä¸€ä¸ªæ–‡ä»¶ã€‚
+	sockClient = socket(AF_INET, SOCK_STREAM, 0);//å½“scoketå‡½æ•°æˆåŠŸè°ƒç”¨æ—¶è¿”å›ä¸€ä¸ªæ–°çš„SOCKET(Socket Descriptor) //SOCK_STREAMï¼ˆæµå¼å¥—æ¥å­—ï¼‰:Tcpè¿æ¥ï¼Œæä¾›åºåˆ—åŒ–çš„ã€å¯é çš„ã€åŒå‘è¿æ¥çš„å­—èŠ‚æµã€‚æ”¯æŒå¸¦å¤–æ•°æ®ä¼ è¾“
 	if (sockClient == SOCKET_ERROR) {
-		cout << "´´½¨socketÊ§°Ü" << endl;
-		WSACleanup();//ÖÕÖ¹Ws2_32.dll µÄÊ¹ÓÃ
+		cout << "åˆ›å»ºsocketå¤±è´¥" << endl;
+		WSACleanup();//ç»ˆæ­¢Ws2_32.dll çš„ä½¿ç”¨
 		return -1;
 	}
 	return 1;
 }
-//·¢ËÍÁ¬½ÓÇëÇó
+//å‘é€è¿æ¥è¯·æ±‚
 DWORD FtpClientClass::callServer()
 {
-	//·¢ËÍÁ¬½ÓÇëÇó
+	//å‘é€è¿æ¥è¯·æ±‚
 	createSocket();
-	if (connect(sockClient, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {//connect()´´½¨ÓëÖ¸¶¨Íâ²¿¶Ë¿ÚµÄÁ¬½Ó
-		//cout << "Á¬½ÓÊ§°Ü" << endl;
+	if (connect(sockClient, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {//connect()åˆ›å»ºä¸æŒ‡å®šå¤–éƒ¨ç«¯å£çš„è¿æ¥
+		//cout << "è¿æ¥å¤±è´¥" << endl;
 		//memset(inputIP, 0, sizeof(inputIP));10049
 		int errorCode = WSAGetLastError();
-		cout << "Á¬½ÓÊ§°Ü£¬´íÎó´úÂë: " << WSAGetLastError() << endl;
+		cout << "è¿æ¥å¤±è´¥ï¼Œé”™è¯¯ä»£ç : " << WSAGetLastError() << endl;
 		return -1;
 	}
 	return 1;
 }
-//´´½¨ÎÄ¼ş¼Ğ
+//åˆ›å»ºæ–‡ä»¶å¤¹
 DWORD FtpClientClass::mkdir(char fileName[])
 {
 	//wstring kj;
@@ -90,7 +90,7 @@ DWORD FtpClientClass::mkdir(char fileName[])
 
 	//char path[1000];
 	//LPCWSTR path;
-	//GetCurrentDirectory(sizeof(path), path);//ÕÒµ½µ±Ç°½ø³ÌµÄµ±Ç°Ä¿Â¼
+	//GetCurrentDirectory(sizeof(path), path);//æ‰¾åˆ°å½“å‰è¿›ç¨‹çš„å½“å‰ç›®å½•
 
 	//strcat(path, "\\");
 	//strcat(path, fileName);
@@ -98,57 +98,57 @@ DWORD FtpClientClass::mkdir(char fileName[])
 	//bool flag = CreateDirectory(path, NULL);
 	//if (flag)
 	//{
-	//	cout << "´´½¨ÎÄ¼ş£º" << fileName << "³É¹¦" << endl;
+	//	cout << "åˆ›å»ºæ–‡ä»¶ï¼š" << fileName << "æˆåŠŸ" << endl;
 	//	return 1;
 	//}
 	//else
 	//{
-	//	cout << "´´½¨ÎÄ¼ş£º" << fileName << "Ê§°Ü" << endl;
+	//	cout << "åˆ›å»ºæ–‡ä»¶ï¼š" << fileName << "å¤±è´¥" << endl;
 	//	return 0;
 	//}
 	return 1;
 }
-//²Ëµ¥
+//èœå•
 void FtpClientClass::help()
 {
-	//°ïÖú²Ëµ¥
+	//å¸®åŠ©èœå•
 	cout << "        _______________________________________________  " << endl
-		<< "       |                FTP°ïÖú²Ëµ¥                     |   " << endl
-		<< "       | 1¡¢get ÏÂÔØÎÄ¼ş [ÊäÈë¸ñÊ½: get ÎÄ¼şÃû ]        |   " << endl
-		<< "       | 2¡¢put ÉÏ´«ÎÄ¼ş [ÊäÈë¸ñÊ½£ºput ÎÄ¼şÃû]         |   " << endl
-		<< "       | 3¡¢pwd ÏÔÊ¾µ±Ç°ÎÄ¼ş¼ĞµÄ¾ø¶ÔÂ·¾¶                |   " << endl
-		<< "       | 4¡¢ls  ÏÔÊ¾Ô¶·½µ±Ç°Ä¿Â¼µÄÎÄ¼ş                  |   " << endl
-		<< "       | 5¡¢cd  ¸Ä±äÔ¶·½µ±Ç°Ä¿Â¼ºÍÂ·¾¶                  |   " << endl
-		<< "       |         ½øÈëÏÂ¼¶Ä¿Â¼: cd Â·¾¶Ãû                |   " << endl
-		<< "       |         ½øÈëÉÏ¼¶Ä¿Â¼: cd ..                    |   " << endl
-		<< "       | 6¡¢mkdir ĞÂ½¨ÎÄ¼ş¼Ğ [ÊäÈë¸ñÊ½£ºmkdir ÎÄ¼şÃû]   |   " << endl
-		<< "       | 7¡¢del É¾³ıÎÄ¼ş¼Ğ [ÊäÈë¸ñÊ½£ºdel ÎÄ¼şÃû]       |   " << endl
-		<< "       | 8¡¢? »òÕß help ½øÈë°ïÖú²Ëµ¥                    |   " << endl
-		<< "       | 9¡¢quit ÍË³öFTP                                |   " << endl
+		<< "       |                FTPå¸®åŠ©èœå•                     |   " << endl
+		<< "       | 1ã€get ä¸‹è½½æ–‡ä»¶ [è¾“å…¥æ ¼å¼: get æ–‡ä»¶å ]        |   " << endl
+		<< "       | 2ã€put ä¸Šä¼ æ–‡ä»¶ [è¾“å…¥æ ¼å¼ï¼šput æ–‡ä»¶å]         |   " << endl
+		<< "       | 3ã€pwd æ˜¾ç¤ºå½“å‰æ–‡ä»¶å¤¹çš„ç»å¯¹è·¯å¾„                |   " << endl
+		<< "       | 4ã€ls  æ˜¾ç¤ºè¿œæ–¹å½“å‰ç›®å½•çš„æ–‡ä»¶                  |   " << endl
+		<< "       | 5ã€cd  æ”¹å˜è¿œæ–¹å½“å‰ç›®å½•å’Œè·¯å¾„                  |   " << endl
+		<< "       |         è¿›å…¥ä¸‹çº§ç›®å½•: cd è·¯å¾„å                |   " << endl
+		<< "       |         è¿›å…¥ä¸Šçº§ç›®å½•: cd ..                    |   " << endl
+		<< "       | 6ã€mkdir æ–°å»ºæ–‡ä»¶å¤¹ [è¾“å…¥æ ¼å¼ï¼šmkdir æ–‡ä»¶å]   |   " << endl
+		<< "       | 7ã€del åˆ é™¤æ–‡ä»¶å¤¹ [è¾“å…¥æ ¼å¼ï¼šdel æ–‡ä»¶å]       |   " << endl
+		<< "       | 8ã€? æˆ–è€… help è¿›å…¥å¸®åŠ©èœå•                    |   " << endl
+		<< "       | 9ã€quit é€€å‡ºFTP                                |   " << endl
 		<< "       |________________________________________________|    " << endl;
 }
-//ÁĞ³öÔ¶·½µ±Ç°Ä¿Â¼
+//åˆ—å‡ºè¿œæ–¹å½“å‰ç›®å½•
 int FtpClientClass::list(SOCKET sockfd)
 {
 	vecFileName.clear();
 	vecDirName.clear();
 	vector<string> eachDirData;
 	vector<string> eachFile;
-	//ÁĞ³öÔ¶·½µ±Ç°Ä¿Â¼
+	//åˆ—å‡ºè¿œæ–¹å½“å‰ç›®å½•
 	int iCurRecvSize;
 	memset(sbuff, '\0', sizeof(sbuff));
 	char recvBuf[1024];
 	char time[300];
 	while (1) 
 	{
-		// ½ÓÊÕÊı¾İ´óĞ¡£¨int ÀàĞÍ£©
+		// æ¥æ”¶æ•°æ®å¤§å°ï¼ˆint ç±»å‹ï¼‰
 		int iAllDataSize = 0;
 		size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
 		if (bytes_received <= 0 || iAllDataSize == 0) {
-			break; // Èç¹û½ÓÊÕÊ§°Ü»òÊı¾İ´óĞ¡Îª 0£¬ÔòÍË³öÑ­»·
+			break; // å¦‚æœæ¥æ”¶å¤±è´¥æˆ–æ•°æ®å¤§å°ä¸º 0ï¼Œåˆ™é€€å‡ºå¾ªç¯
 		}
 		int recv_size = iAllDataSize;
-		char combinedBuf[sizeof(m_FileInformation)]; // ÓÃÓÚ×éºÏÍêÕûÊı¾İ
+		char combinedBuf[sizeof(m_FileInformation)]; // ç”¨äºç»„åˆå®Œæ•´æ•°æ®
 		int combinedBufstart = 0;
 		while (1)
 		{
@@ -157,16 +157,16 @@ int FtpClientClass::list(SOCKET sockfd)
 			//iRecvSize = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
 			iCurRecvSize = recv(sockClient, recvBuf, recv_size, 0);
 			if (iCurRecvSize == SOCKET_ERROR) {
-				cout << "¶ÁÈ¡Ê±·¢Éú´íÎó" << endl;
+				cout << "è¯»å–æ—¶å‘ç”Ÿé”™è¯¯" << endl;
 				return -2;
 				//exit(1);
 			}
-			if (iCurRecvSize < recv_size) //iAllDataSizeµÄÖµÓ¦¸ÃÊÇ540
+			if (iCurRecvSize < recv_size) //iAllDataSizeçš„å€¼åº”è¯¥æ˜¯540
 			{
 				recv_size = recv_size - iCurRecvSize;
-				// ½«½ÓÊÕµ½µÄÊı¾İ¸´ÖÆµ½×éºÏ»º³åÇø
+				// å°†æ¥æ”¶åˆ°çš„æ•°æ®å¤åˆ¶åˆ°ç»„åˆç¼“å†²åŒº
 				memcpy(combinedBuf + combinedBufstart, recvBuf, iCurRecvSize);
-				combinedBufstart += iCurRecvSize; // ¸üĞÂÒÑ½ÓÊÕÊı¾İµÄ×Ü´óĞ¡
+				combinedBufstart += iCurRecvSize; // æ›´æ–°å·²æ¥æ”¶æ•°æ®çš„æ€»å¤§å°
 				continue;
 			}
 			else
@@ -177,7 +177,7 @@ int FtpClientClass::list(SOCKET sockfd)
 
 		}
 		memcpy(&m_FileInformation, combinedBuf, sizeof(m_FileInformation));
-		//ÏÔÊ¾Êı¾İ
+		//æ˜¾ç¤ºæ•°æ®
 		//rbuff[iCurRecvSize] = '\0';
 		//cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
 		string name(m_FileInformation.fileName);
@@ -187,7 +187,7 @@ int FtpClientClass::list(SOCKET sockfd)
 		string str_time(time);
 		if (name == "." || name == "..")
 		{
-			//cout << "²»Òª.ºÍ.." << endl;
+			//cout << "ä¸è¦.å’Œ.." << endl;
 		}
 		else
 		{
@@ -216,15 +216,15 @@ int FtpClientClass::list(SOCKET sockfd)
 	}
 	return 1;
 }
-//·¢ËÍÒªÖ´ĞĞµÄÃüÁîÖÁ·şÎñ¶Ë
+//å‘é€è¦æ‰§è¡Œçš„å‘½ä»¤è‡³æœåŠ¡ç«¯
 DWORD FtpClientClass::sendTCP(char data[])
 {
-	//·¢ËÍÒªÖ´ĞĞµÄÃüÁîÖÁ·şÎñ¶Ë
+	//å‘é€è¦æ‰§è¡Œçš„å‘½ä»¤è‡³æœåŠ¡ç«¯
 	int length = send(sockClient, data, strlen(data), 0);
 	if (length <= 0) 
 	{
-		cout << "·¢ËÍÃüÁîÖÁ·şÎñ¶ËÊ§°Ü" << endl;
-		closesocket(sockClient);//µ±²»Ê¹ÓÃsocket()´´½¨µÄÌ×½Ó×ÖÊ±£¬Ó¦¸Ãµ÷ÓÃclosesocket()º¯Êı½«Ëü¹Ø±Õ£¬¾ÍÈçÍ¬µ÷ÓÃfclose()º¯Êı¹Ø±ÕÒ»¸öÎÄ¼ş£¬ÓÃÀ´½øĞĞÌ×½Ó×Ö×ÊÔ´µÄÊÍ·Å¡£
+		cout << "å‘é€å‘½ä»¤è‡³æœåŠ¡ç«¯å¤±è´¥" << endl;
+		closesocket(sockClient);//å½“ä¸ä½¿ç”¨socket()åˆ›å»ºçš„å¥—æ¥å­—æ—¶ï¼Œåº”è¯¥è°ƒç”¨closesocket()å‡½æ•°å°†å®ƒå…³é—­ï¼Œå°±å¦‚åŒè°ƒç”¨fclose()å‡½æ•°å…³é—­ä¸€ä¸ªæ–‡ä»¶ï¼Œç”¨æ¥è¿›è¡Œå¥—æ¥å­—èµ„æºçš„é‡Šæ”¾ã€‚
 		WSACleanup();
 		return -1;
 	}
@@ -233,11 +233,11 @@ DWORD FtpClientClass::sendTCP(char data[])
 
 DWORD FtpClientClass::sendTCP(char data[],int sendSize)
 {
-	//·¢ËÍÒªÖ´ĞĞµÄÃüÁîÖÁ·şÎñ¶Ë
+	//å‘é€è¦æ‰§è¡Œçš„å‘½ä»¤è‡³æœåŠ¡ç«¯
 	int length = send(sockClient, data, sendSize, 0);
 	if (length <= 0) {
-		cout << "·¢ËÍÃüÁîÖÁ·şÎñ¶ËÊ§°Ü" << endl;
-		closesocket(sockClient);//µ±²»Ê¹ÓÃsocket()´´½¨µÄÌ×½Ó×ÖÊ±£¬Ó¦¸Ãµ÷ÓÃclosesocket()º¯Êı½«Ëü¹Ø±Õ£¬¾ÍÈçÍ¬µ÷ÓÃfclose()º¯Êı¹Ø±ÕÒ»¸öÎÄ¼ş£¬ÓÃÀ´½øĞĞÌ×½Ó×Ö×ÊÔ´µÄÊÍ·Å¡£
+		cout << "å‘é€å‘½ä»¤è‡³æœåŠ¡ç«¯å¤±è´¥" << endl;
+		closesocket(sockClient);//å½“ä¸ä½¿ç”¨socket()åˆ›å»ºçš„å¥—æ¥å­—æ—¶ï¼Œåº”è¯¥è°ƒç”¨closesocket()å‡½æ•°å°†å®ƒå…³é—­ï¼Œå°±å¦‚åŒè°ƒç”¨fclose()å‡½æ•°å…³é—­ä¸€ä¸ªæ–‡ä»¶ï¼Œç”¨æ¥è¿›è¡Œå¥—æ¥å­—èµ„æºçš„é‡Šæ”¾ã€‚
 		WSACleanup();
 		return -1;
 	}
@@ -246,13 +246,13 @@ DWORD FtpClientClass::sendTCP(char data[],int sendSize)
 bool FtpClientClass::sendTcpOneAll()
 {
 
-	//int data_size=£»
+	//int data_size=ï¼›
 	int dataSize = strlen(m_sendOneAllData);
 	send(sockClient, reinterpret_cast<const char*>(&dataSize), sizeof(dataSize), 0);
 	int length = send(sockClient, m_sendOneAllData, dataSize, 0);
 	if (length <= 0) {
-		cout << "·¢ËÍÃüÁîÖÁ·şÎñ¶ËÊ§°Ü" << endl;
-		closesocket(sockClient);//µ±²»Ê¹ÓÃsocket()´´½¨µÄÌ×½Ó×ÖÊ±£¬Ó¦¸Ãµ÷ÓÃclosesocket()º¯Êı½«Ëü¹Ø±Õ£¬¾ÍÈçÍ¬µ÷ÓÃfclose()º¯Êı¹Ø±ÕÒ»¸öÎÄ¼ş£¬ÓÃÀ´½øĞĞÌ×½Ó×Ö×ÊÔ´µÄÊÍ·Å¡£
+		cout << "å‘é€å‘½ä»¤è‡³æœåŠ¡ç«¯å¤±è´¥" << endl;
+		closesocket(sockClient);//å½“ä¸ä½¿ç”¨socket()åˆ›å»ºçš„å¥—æ¥å­—æ—¶ï¼Œåº”è¯¥è°ƒç”¨closesocket()å‡½æ•°å°†å®ƒå…³é—­ï¼Œå°±å¦‚åŒè°ƒç”¨fclose()å‡½æ•°å…³é—­ä¸€ä¸ªæ–‡ä»¶ï¼Œç”¨æ¥è¿›è¡Œå¥—æ¥å­—èµ„æºçš„é‡Šæ”¾ã€‚
 		WSACleanup();
 		return false;
 	}
@@ -262,14 +262,14 @@ bool FtpClientClass::sendTcpOneAll()
 bool FtpClientClass::recvTcpOneAll()
 {
 	memset(m_recvOneAllData, 0, sizeof(m_recvOneAllData));
-	// ½ÓÊÕÊı¾İ´óĞ¡£¨int ÀàĞÍ£©
+	// æ¥æ”¶æ•°æ®å¤§å°ï¼ˆint ç±»å‹ï¼‰
 	int iAllDataSize = 0;
 	size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
 	if (bytes_received <= 0 ) {
-		return false; // Èç¹û½ÓÊÕÊ§°Ü£¬ÔòÍË³ö
+		return false; // å¦‚æœæ¥æ”¶å¤±è´¥ï¼Œåˆ™é€€å‡º
 	}
 	int recv_size = iAllDataSize;
-	char combinedBuf[sizeof(m_recvOneAllData)];// ÓÃÓÚ×éºÏÍêÕûÊı¾İ
+	char combinedBuf[sizeof(m_recvOneAllData)];// ç”¨äºç»„åˆå®Œæ•´æ•°æ®
 	memset(combinedBuf, 0, sizeof(m_recvOneAllData));
 	int combinedBufstart = 0;
 	int iCurRecvSize = 0;
@@ -281,16 +281,16 @@ bool FtpClientClass::recvTcpOneAll()
 		//iRecvSize = recv(sockClient, recvBuf, sizeof(m_FileInformation), 0);
 		iCurRecvSize = recv(sockClient, recvBuf, recv_size, 0);
 		if (iCurRecvSize == SOCKET_ERROR) {
-			cout << "¶ÁÈ¡Ê±·¢Éú´íÎó" << endl;
+			cout << "è¯»å–æ—¶å‘ç”Ÿé”™è¯¯" << endl;
 			return false;
 			//exit(1);
 		}
-		if (iCurRecvSize < recv_size) //iAllDataSizeµÄÖµÓ¦¸ÃÊÇ540
+		if (iCurRecvSize < recv_size) //iAllDataSizeçš„å€¼åº”è¯¥æ˜¯540
 		{
 			recv_size = recv_size - iCurRecvSize;
-			// ½«½ÓÊÕµ½µÄÊı¾İ¸´ÖÆµ½×éºÏ»º³åÇø
+			// å°†æ¥æ”¶åˆ°çš„æ•°æ®å¤åˆ¶åˆ°ç»„åˆç¼“å†²åŒº
 			memcpy(combinedBuf + combinedBufstart, recvBuf, iCurRecvSize);
-			combinedBufstart += iCurRecvSize; // ¸üĞÂÒÑ½ÓÊÕÊı¾İµÄ×Ü´óĞ¡
+			combinedBufstart += iCurRecvSize; // æ›´æ–°å·²æ¥æ”¶æ•°æ®çš„æ€»å¤§å°
 			continue;
 		}
 		else
@@ -305,44 +305,44 @@ bool FtpClientClass::recvTcpOneAll()
 	
 	return true;
 }
-//ÉÏ´«ÓÃ»§Ãû
+//ä¸Šä¼ ç”¨æˆ·å
 int FtpClientClass::user()
 {
-	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[30] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	cout << "ÇëÊäÈëÓÃ»§ÃûÖ¸Áî£¨user ÓÃ»§Ãû£©£º";
+	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[30] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	cout << "è¯·è¾“å…¥ç”¨æˆ·åæŒ‡ä»¤ï¼ˆuser ç”¨æˆ·åï¼‰ï¼š";
 	cin >> operation;
 	cin >> name;
 	strcat(order, operation), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return 0;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	cout << rbuff << endl;
 	return 1;
 
 }
-//ÉÏ´«ÃÜÂë
+//ä¸Šä¼ å¯†ç 
 int FtpClientClass::pass()
 {
-	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[30] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	cout << "ÇëÊäÈëÃÜÂëÖ¸Áî£¨pass ÃÜÂë£©£º";
+	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[30] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	cout << "è¯·è¾“å…¥å¯†ç æŒ‡ä»¤ï¼ˆpass å¯†ç ï¼‰ï¼š";
 	cin >> operation;
 	cin >> name;
 	strcat(order, operation), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return 0;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	cout << rbuff << endl;
 	if (strcmp(rbuff, "wrong") == 0) {
 		return 0;
@@ -350,18 +350,18 @@ int FtpClientClass::pass()
 	return 1;
 
 }
-//put ´«ËÍ¸øÔ¶·½Ò»¸öÎÄ¼ş
+//put ä¼ é€ç»™è¿œæ–¹ä¸€ä¸ªæ–‡ä»¶
 int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 {
-	//put ´«ËÍ¸øÔ¶·½Ò»¸öÎÄ¼ş
-	cout << "ÕıÔÚ´«ÊäÎÄ¼ş¡­" << endl;
+	//put ä¼ é€ç»™è¿œæ–¹ä¸€ä¸ªæ–‡ä»¶
+	cout << "æ­£åœ¨ä¼ è¾“æ–‡ä»¶â€¦" << endl;
 	memset(sbuff, '\0', sizeof(sbuff));
 	while (1) 
-	{ //´ÓÎÄ¼şÖĞÑ­»·¶ÁÈ¡Êı¾İ²¢·¢ËÍ
-		int len = fread(sbuff, 1, sizeof(sbuff), file); //fread´ÓfileÎÄ¼ş¶ÁÈ¡sizeof(sbuff)³¤¶ÈµÄÊı¾İµ½sbuff£¬·µ»Ø³É¹¦¶ÁÈ¡µÄÊı¾İ¸öÊı
+	{ //ä»æ–‡ä»¶ä¸­å¾ªç¯è¯»å–æ•°æ®å¹¶å‘é€
+		int len = fread(sbuff, 1, sizeof(sbuff), file); //freadä»fileæ–‡ä»¶è¯»å–sizeof(sbuff)é•¿åº¦çš„æ•°æ®åˆ°sbuffï¼Œè¿”å›æˆåŠŸè¯»å–çš„æ•°æ®ä¸ªæ•°
 		if (send(datatcps, sbuff, len, 0) == SOCKET_ERROR) 
 		{
-			cout << "Óë¿Í»§¶ËµÄÁ¬½ÓÖĞ¶Ï" << endl;
+			cout << "ä¸å®¢æˆ·ç«¯çš„è¿æ¥ä¸­æ–­" << endl;
 		//	closesocket(datatcps);
 			return 0;
 		}
@@ -369,8 +369,8 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 		if (len == 0)
 		{
 			sprintf(sbuff, "put-end", sbuff);
-			//sendTCP(sbuff);									//·¢ËÍÖ¸Áî
-			if (sendTCP(sbuff) == -1)									//·¢ËÍÖ¸Áî
+			//sendTCP(sbuff);									//å‘é€æŒ‡ä»¤
+			if (sendTCP(sbuff) == -1)									//å‘é€æŒ‡ä»¤
 			{
 				return 0;
 			}
@@ -383,14 +383,14 @@ int FtpClientClass::sendFile(SOCKET datatcps, FILE* file)
 		
 	}
 //	closesocket(datatcps);
-	cout << "´«ÊäÍê³É" << endl;
+	cout << "ä¼ è¾“å®Œæˆ" << endl;
 	return true;
 }
 int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
 {
-	// ·¢ËÍÎÄ¼şÊı¾İ
+	// å‘é€æ–‡ä»¶æ•°æ®
 	int iSendMax = 10240;
-	char buffer[10240]; // Ò»´Î×î¶à·¢ËÍ 10240 ×Ö½Ú
+	char buffer[10240]; // ä¸€æ¬¡æœ€å¤šå‘é€ 10240 å­—èŠ‚
 
 	while (file)
 	{
@@ -398,52 +398,52 @@ int FtpClientClass::sendFileData(SOCKET datatcps, std::ifstream& file)
 		file.read(buffer, sizeof(buffer));
 		std::streamsize bytes_read = file.gcount();
 
-		// ¼ÆËãÒª·¢ËÍµÄÊµ¼Ê´óĞ¡
+		// è®¡ç®—è¦å‘é€çš„å®é™…å¤§å°
 		int data_size = static_cast<int>(bytes_read);
 		if (data_size == 0) {
-			break; // ÎÄ¼şÒÑ¶ÁÍê
+			break; // æ–‡ä»¶å·²è¯»å®Œ
 		}
-		// Èç¹û¶ÁÈ¡µÄ×Ö½ÚÊı´óÓÚ 10240£¬ÔòÉèÖÃÎª 10240
+		// å¦‚æœè¯»å–çš„å­—èŠ‚æ•°å¤§äº 10240ï¼Œåˆ™è®¾ç½®ä¸º 10240
 		if (data_size > iSendMax) {
 			data_size = iSendMax;
 		}
 
-		// ·¢ËÍÊı¾İ´óĞ¡£¨int ÀàĞÍ£©ºÍÊµ¼ÊÊı¾İ
+		// å‘é€æ•°æ®å¤§å°ï¼ˆint ç±»å‹ï¼‰å’Œå®é™…æ•°æ®
 		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
 		send(datatcps, buffer, data_size, 0);
 	}
-	// ·¢ËÍ½áÊøĞÅºÅ
-	int end_signal = 0; // 0 ×÷Îª½áÊøĞÅºÅ
+	// å‘é€ç»“æŸä¿¡å·
+	int end_signal = 0; // 0 ä½œä¸ºç»“æŸä¿¡å·
 	send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
 	return 1;
 }
 bool FtpClientClass::newConnection()
 {
-	////Æô¶¯winsock²¢³õÊ¼»¯
+	////å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	if(startSock() == -1)
 	{
 		return false;
 	}
 			
 	if (callServer() == -1) 
-	{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-		cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+		cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 		return false;
 	}
 	return true;
 }
-////»ñÈ¡µ±Ç°ÎÄ¼şÃû³Æ
+////è·å–å½“å‰æ–‡ä»¶åç§°
 //void FtpClientClass::execute_ls()
 //{
 //	
-//	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-//	char order[30] = "\0";				//ÊäÈëµÄÃüÁî
-//	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+//	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+//	char order[30] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+//	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 //
-//	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+//	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 //	//if (callServer() == -1) 
-//	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-//	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+//	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+//	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 //	//}
 //	memset(buff, 0, sizeof(buff));
 //	memset(rbuff, 0, sizeof(rbuff));
@@ -452,31 +452,31 @@ bool FtpClientClass::newConnection()
 //
 //	strcat(order, "ls");
 //	sprintf(buff, order);
-//	sendTCP(buff);									//·¢ËÍÖ¸Áî
-//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-//	cout << rbuff << endl;	//pwdµÄ
+//	sendTCP(buff);									//å‘é€æŒ‡ä»¤
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+//	cout << rbuff << endl;	//pwdçš„
 //	list(sockClient);
 //
 //	//for (int i = 0; i < vecName.size(); i++)
 //	//{
-//	//	cout << "vecName[i]: " << vecName[i] << endl;//´òÓ¡ÈİÆ÷µÄÄÚÈİ
+//	//	cout << "vecName[i]: " << vecName[i] << endl;//æ‰“å°å®¹å™¨çš„å†…å®¹
 //	//	ret_vec.push_back(vecName[i]);
 //	//}
 //	//vecName.push_back();
-//	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	//WSACleanup();				//ÊÍ·ÅWinsock
+//	//closesocket(sockClient);	//å…³é—­è¿æ¥
+//	//WSACleanup();				//é‡Šæ”¾Winsock
 //}
 
 int FtpClientClass::execute_ls(const std::string strDirPath)
 {
-	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[260] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[260] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
@@ -486,49 +486,49 @@ int FtpClientClass::execute_ls(const std::string strDirPath)
 	//strcat(order, "ls");
 	sprintf(order, "ls %s", strDirPath.c_str());
 	sprintf(buff, order);
-	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return 0;
 	}
-	//int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢
+	//int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯
 	//cout << rbuff << endl;	
 	//if(ls - falied)
 	
 	return list(sockClient);
 }
 
-////»ñÈ¡µ±Ç°Â·¾¶
+////è·å–å½“å‰è·¯å¾„
 //string FtpClientClass::Gets_CurrentPath()
 //{
 //	memset(rbuff, 0, sizeof(rbuff));
 //	string str_path;
 //
-//	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-//	char order[30] = "\0";				//ÊäÈëµÄÃüÁî
-//	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+//	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+//	char order[30] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+//	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 //
-//	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+//	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 //	//if (callServer() == -1) 
-//	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-//	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+//	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+//	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 //	//}
 //
 //	memset(order, 0, sizeof(order));
 //	memset(buff, 0, sizeof(buff));
 //	strcat(order, "pwd");
 //	sprintf(buff, order);
-//	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-//	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+//	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+//	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 //	{
 //		return "";
 //	}
-//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-//	cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+//	cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 //	str_path = rbuff;
 //
-////	closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	//WSACleanup();				//ÊÍ·ÅWinsock
+////	closesocket(sockClient);	//å…³é—­è¿æ¥
+//	//WSACleanup();				//é‡Šæ”¾Winsock
 //	return str_path;
 //}
 
@@ -537,26 +537,26 @@ bool FtpClientClass::Gets_CurrentPath(std::string& strRootPath)
 	memset(rbuff, 0, sizeof(rbuff));
 	string str_path;
 
-	char operation[10], name[20];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[30] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+	char operation[10], name[20];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[30] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 
 	memset(order, 0, sizeof(order));
 	memset(buff, 0, sizeof(buff));
 	strcat(order, "pwd");
 	sprintf(buff, order);
 
-	//if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	//{
 	//	return false;
 	//}
-	//recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	//cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+	//recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	//cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 	//strRootPath = rbuff;
 
 	//return true;
 
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return false;
 	}
@@ -573,22 +573,22 @@ bool FtpClientClass::Gets_CurrentPath(std::string& strRootPath)
 
 	//return false;
 }
-//ÏÂÔØÎÄ¼ş
+//ä¸‹è½½æ–‡ä»¶
 void FtpClientClass::execute_getFile(string rec_name)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[1024];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[1024];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÇëÇóÊ§°Ü!!!" << endl;
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¯·æ±‚å¤±è´¥!!!" << endl;
 	//}
 
-	//·¢ËÍÁ¬½ÓÇëÇó³É¹¦£¬³õÊ¼»¯Êı¾İ
+	//å‘é€è¿æ¥è¯·æ±‚æˆåŠŸï¼Œåˆå§‹åŒ–æ•°æ®
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
@@ -596,35 +596,35 @@ void FtpClientClass::execute_getFile(string rec_name)
 
 	string str_name = rec_name;
 	strcpy(name,str_name.c_str());
-	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 	strcat(order, "get"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 	if (strncmp(rbuff, "get", 3) == 0) 
-	{			///ÏÂÔØ¹¦ÄÜ
+	{			///ä¸‹è½½åŠŸèƒ½
 		//callServer();
-		fd1 = fopen(name, "wb");                    //ÓÃ¶ş½øÖÆµÄ·½Ê½´ò¿ªÎÄ¼ş£¬wb±íÊ¾´ò¿ª»òĞÂ½¨Ò»¸ö¶ş½øÖÆÎÄ¼ş£¨Ö»ÔÊĞíĞ´Êı¾İ£©
+		fd1 = fopen(name, "wb");                    //ç”¨äºŒè¿›åˆ¶çš„æ–¹å¼æ‰“å¼€æ–‡ä»¶ï¼Œwbè¡¨ç¤ºæ‰“å¼€æˆ–æ–°å»ºä¸€ä¸ªäºŒè¿›åˆ¶æ–‡ä»¶ï¼ˆåªå…è®¸å†™æ•°æ®ï¼‰
 		if (fd1 == NULL)
 		{
-			cout << "´ò¿ª»òÕßĞÂ½¨ " << name << "ÎÄ¼şÊ§°Ü" << endl;
+			cout << "æ‰“å¼€æˆ–è€…æ–°å»º " << name << "æ–‡ä»¶å¤±è´¥" << endl;
 			//return 1;
 		}
 		memset(rbuff, '\0', sizeof(rbuff));
 		while ((cnt = recv(sockClient, rbuff, sizeof(rbuff), 0)) > 0) {
-			fwrite(rbuff, 1, cnt, fd1);    //C ¿âº¯Êı size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) °Ñ ptr ËùÖ¸ÏòµÄÊı×éÖĞµÄÊı¾İĞ´Èëµ½¸ø¶¨Á÷ stream ÖĞ¡£
+			fwrite(rbuff, 1, cnt, fd1);    //C åº“å‡½æ•° size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) æŠŠ ptr æ‰€æŒ‡å‘çš„æ•°ç»„ä¸­çš„æ•°æ®å†™å…¥åˆ°ç»™å®šæµ stream ä¸­ã€‚
 			memset(rbuff, '\0', sizeof(rbuff));
 			if (cnt < 1024)
 			{
 				break;
-			} //C ¿âº¯Êı size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) °Ñ ptr ËùÖ¸ÏòµÄÊı×éÖĞµÄÊı¾İĞ´Èëµ½¸ø¶¨Á÷ stream ÖĞ¡£
+			} //C åº“å‡½æ•° size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) æŠŠ ptr æ‰€æŒ‡å‘çš„æ•°ç»„ä¸­çš„æ•°æ®å†™å…¥åˆ°ç»™å®šæµ stream ä¸­ã€‚
 		}
-		//string msg = " ---ÊÕµ½ÎÄ¼şºó---";
+		//string msg = " ---æ”¶åˆ°æ–‡ä»¶å---";
 		//TimeSave("E:\\jh\\Time_Client.txt", msg);
 
 		//closesocket(sockClient);
@@ -634,21 +634,21 @@ void FtpClientClass::execute_getFile(string rec_name)
 	}//get
 
 
-//	closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	WSACleanup();				//ÊÍ·ÅWinsock
+//	closesocket(sockClient);	//å…³é—­è¿æ¥
+//	WSACleanup();				//é‡Šæ”¾Winsock
 }
 //int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 //{
-//	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-//	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-//	char buff[1024];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-//	FILE* fd1, * fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+//	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+//	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+//	char buff[1024];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+//	FILE* fd1, * fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 //	int cnt;
 //
 //	char buff_test[100];
 //
 //
-//	//·¢ËÍÁ¬½ÓÇëÇó³É¹¦£¬³õÊ¼»¯Êı¾İ
+//	//å‘é€è¿æ¥è¯·æ±‚æˆåŠŸï¼Œåˆå§‹åŒ–æ•°æ®
 //
 //	memset(buff, 0, sizeof(buff));
 //	memset(rbuff, 0, sizeof(rbuff));
@@ -656,28 +656,28 @@ void FtpClientClass::execute_getFile(string rec_name)
 //
 //	string str_name = filePath;
 //	strcpy(name, filePath.c_str());
-//	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+//	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 //	strcat(order, "get"), strcat(order, " "), strcat(order, name);
 //	sprintf(buff, order);
-//	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+//	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 //	{
 //		return 0;
 //	}
 //	while (1)
 //	{
-//		int num=recv(sockClient, rbuff, 1024, 0);		//½ÓÊÕĞÅÏ¢ 
-//		cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+//		int num=recv(sockClient, rbuff, 1024, 0);		//æ¥æ”¶ä¿¡æ¯ 
+//		cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 //		if (strncmp(rbuff, "openFailed", 10) == 0)
 //		{
 //			return 1;
 //		}
 //		if (strncmp(rbuff, "get", 3) == 0)
-//		{			///ÏÂÔØ¹¦ÄÜ
+//		{			///ä¸‹è½½åŠŸèƒ½
 //			
-//			fd1 = fopen(NewFilePath.c_str(), "wb");                    //ÓÃ¶ş½øÖÆµÄ·½Ê½´ò¿ªÎÄ¼ş£¬wb±íÊ¾´ò¿ª»òĞÂ½¨Ò»¸ö¶ş½øÖÆÎÄ¼ş£¨Ö»ÔÊĞíĞ´Êı¾İ£©
+//			fd1 = fopen(NewFilePath.c_str(), "wb");                    //ç”¨äºŒè¿›åˆ¶çš„æ–¹å¼æ‰“å¼€æ–‡ä»¶ï¼Œwbè¡¨ç¤ºæ‰“å¼€æˆ–æ–°å»ºä¸€ä¸ªäºŒè¿›åˆ¶æ–‡ä»¶ï¼ˆåªå…è®¸å†™æ•°æ®ï¼‰
 //			if (fd1 == NULL)
 //			{
-//				cout << "´ò¿ª»òÕßĞÂ½¨ " << NewFilePath << "ÎÄ¼şÊ§°Ü" << endl;
+//				cout << "æ‰“å¼€æˆ–è€…æ–°å»º " << NewFilePath << "æ–‡ä»¶å¤±è´¥" << endl;
 //				//return 1;
 //			}
 //			memset(rbuff, 0, sizeof(rbuff));
@@ -691,7 +691,7 @@ void FtpClientClass::execute_getFile(string rec_name)
 //				}
 //				if (strncmp(rbuff + cnt - 7, "get-end", 7) == 0)
 //				{
-//					// ?????????????????   ¿ÉÄÜ»á·şÎñ¶Ë·¢ËÍµÄ×îºóÒ»ÅÄÎŞ·¨ÍêÕûµÄ¼ÓÉÏget-end;
+//					// ?????????????????   å¯èƒ½ä¼šæœåŠ¡ç«¯å‘é€çš„æœ€åä¸€æ‹æ— æ³•å®Œæ•´çš„åŠ ä¸Šget-end;
 //					memset(rbuff + cnt, 0, sizeof(rbuff) - cnt);
 //					fwrite(rbuff, 1, cnt, fd1);
 //					break;
@@ -713,32 +713,32 @@ void FtpClientClass::execute_getFile(string rec_name)
 int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
 
-	char buff[1024];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+	char buff[1024];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 
 	//string str_name = filePath;
 	
-	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 	strcat(buff, "get"), strcat(buff, " "), strcat(buff, filePath.c_str());
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return 0;
 	}
 
 	std::ofstream file(NewFilePath, std::ios::binary);
-	char buffer[10240]; // ½ÓÊÕ»º³åÇø
+	char buffer[10240]; // æ¥æ”¶ç¼“å†²åŒº
 
 	while (true)
 	{
-		// ½ÓÊÕÊı¾İ´óĞ¡£¨int ÀàĞÍ£©
-		int data_size;
+		// æ¥æ”¶æ•°æ®å¤§å°ï¼ˆint ç±»å‹ï¼‰
+		int data_size=0;
 
 		size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
 		cout << "data_size: " << data_size << endl;
 		if (bytes_received <= 0 || data_size == 0) {
-			break; // Èç¹û½ÓÊÕÊ§°Ü»òÊı¾İ´óĞ¡Îª 0£¬ÔòÍË³öÑ­»·
+			break; // å¦‚æœæ¥æ”¶å¤±è´¥æˆ–æ•°æ®å¤§å°ä¸º 0ï¼Œåˆ™é€€å‡ºå¾ªç¯
 		}
 		if (data_size < 10240)
 		{
@@ -747,11 +747,11 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		int recv_size = data_size;
 		while (1)
 		{
-			// ½ÓÊÕÊµ¼ÊÊı¾İ
+			// æ¥æ”¶å®é™…æ•°æ®
 			memset(buffer, 0, sizeof(buffer));
 			bytes_received = recv(sockClient, buffer, recv_size, 0);
 			cout << "bytes_received and recv_size : " << bytes_received<< " : "<<recv_size << endl;
-			// ½«½ÓÊÕµ½µÄÊı¾İĞ´ÈëÎÄ¼ş
+			// å°†æ¥æ”¶åˆ°çš„æ•°æ®å†™å…¥æ–‡ä»¶
 			file.write(buffer, bytes_received);
 					
 			if (bytes_received < recv_size)
@@ -761,7 +761,7 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 			}
 			else
 			{
-				break; // Èç¹û½ÓÊÕÈ«²¿Íê³É£¬ÍË³öÑ­»·;
+				break; // å¦‚æœæ¥æ”¶å…¨éƒ¨å®Œæˆï¼Œé€€å‡ºå¾ªç¯;
 			}
 		}
 
@@ -770,19 +770,19 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 	}
 
 	file.close();
-	std::cout << "ÎÄ¼ş½ÓÊÕÍê±Ï£¬Á¬½Ó¹Ø±Õ¡£" << std::endl;
+	std::cout << "æ–‡ä»¶æ¥æ”¶å®Œæ¯•ï¼Œè¿æ¥å…³é—­ã€‚" << std::endl;
 	return 1;
 
 	
 	
 }
-//Ö´ĞĞ put ÉÏ´«
+//æ‰§è¡Œ put ä¸Šä¼ 
 void FtpClientClass::execute_putFile(string sendfileName)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
@@ -792,50 +792,50 @@ void FtpClientClass::execute_putFile(string sendfileName)
 
 	string str_name = sendfileName;
 	strcpy(name,str_name.c_str());
-	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 	strcat(order, "put"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
-	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	//recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	//recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	recvTcpOneAll();
-	cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+	cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 	if (strncmp(rbuff, "put", 3) == 0) 
-	{ ///ÉÏ´«¹¦ÄÜ
+	{ ///ä¸Šä¼ åŠŸèƒ½
 		strcpy(fileName, rbuff + 4);
-		fd2 = fopen(fileName, "rb");				//´ò¿ªÒ»¸ö¶ş½øÖÆÎÄ¼ş£¬ÎÄ¼ş±ØĞë´æÔÚ£¬Ö»ÔÊĞí¶Á
+		fd2 = fopen(fileName, "rb");				//æ‰“å¼€ä¸€ä¸ªäºŒè¿›åˆ¶æ–‡ä»¶ï¼Œæ–‡ä»¶å¿…é¡»å­˜åœ¨ï¼Œåªå…è®¸è¯»
 		if (fd2)
-		{ //³É¹¦´ò¿ª
+		{ //æˆåŠŸæ‰“å¼€
 			if (!sendFile(sockClient, fd2)) 
 			{
-				cout << "·¢ËÍÊ§°Ü" << endl;
+				cout << "å‘é€å¤±è´¥" << endl;
 				
 			}
 		
 			fclose(fd2);
 		}
 		else {
-			strcpy(sbuff, "ÎŞ·¨´ò¿ªÎÄ¼ş\n");
+			strcpy(sbuff, "æ— æ³•æ‰“å¼€æ–‡ä»¶\n");
 			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
 				
 			}
 		}
 	}//put
-	cout << "ÉÏ´«³É¹¦!!!" << endl;
+	cout << "ä¸Šä¼ æˆåŠŸ!!!" << endl;
 
-//	closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-	//WSACleanup();				//ÊÍ·ÅWinsock
+//	closesocket(sockClient);	//å…³é—­è¿æ¥
+	//WSACleanup();				//é‡Šæ”¾Winsock
 
 }
 //void FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
 //{
-//	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-//	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-//	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-//	FILE* fd1, * fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+//	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+//	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+//	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+//	FILE* fd1, * fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 //	int cnt;
 //
 //	memset(buff, 0, sizeof(buff));
@@ -845,69 +845,69 @@ void FtpClientClass::execute_putFile(string sendfileName)
 //
 //	string str_name = localFilePath;
 //	strcpy(name, str_name.c_str());
-//	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+//	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 //	strcat(order, "put"), strcat(order, " "), strcat(order, NewFilePath.c_str());
 //	sprintf(buff, order);
-//	//sendTCP(buff);									//·¢ËÍÖ¸Áî
-//	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+//	//sendTCP(buff);									//å‘é€æŒ‡ä»¤
+//	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 //	{
 //		return;
 //	}
-//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-//	cout << rbuff << endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+//	cout << rbuff << endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 //	if (strncmp(rbuff, "put", 3) == 0)
-//	{ ///ÉÏ´«¹¦ÄÜ
+//	{ ///ä¸Šä¼ åŠŸèƒ½
 //		strcpy(fileName, rbuff + 4);
-//		fd2 = fopen(localFilePath.c_str(), "rb");				//´ò¿ªÒ»¸ö¶ş½øÖÆÎÄ¼ş£¬ÎÄ¼ş±ØĞë´æÔÚ£¬Ö»ÔÊĞí¶Á
+//		fd2 = fopen(localFilePath.c_str(), "rb");				//æ‰“å¼€ä¸€ä¸ªäºŒè¿›åˆ¶æ–‡ä»¶ï¼Œæ–‡ä»¶å¿…é¡»å­˜åœ¨ï¼Œåªå…è®¸è¯»
 //		if (fd2)
-//		{ //³É¹¦´ò¿ª
+//		{ //æˆåŠŸæ‰“å¼€
 //			if (!sendFile(sockClient, fd2))
 //			{
-//				cout << "·¢ËÍÊ§°Ü" << endl;
+//				cout << "å‘é€å¤±è´¥" << endl;
 //
 //			}
 //
 //			fclose(fd2);
 //		}
 //		else {
-//			strcpy(sbuff, "ÎŞ·¨´ò¿ªÎÄ¼ş\n");
+//			strcpy(sbuff, "æ— æ³•æ‰“å¼€æ–‡ä»¶\n");
 //			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
 //
 //			}
 //		}
 //	}//put
-//	cout << "ÉÏ´«³É¹¦!!!" << endl;
+//	cout << "ä¸Šä¼ æˆåŠŸ!!!" << endl;
 //}
 
 bool FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePath)
 {
-	char buff[1024];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
+	char buff[1024];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
 	int cnt;
 
 	
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 
-	//½«Ö¸ÁîÕûºÏ½øorder£¬²¢´æ·Å½øbuff
+	//å°†æŒ‡ä»¤æ•´åˆè¿›orderï¼Œå¹¶å­˜æ”¾è¿›buff
 	memset(buff, 0, sizeof(buff));
 	strcat(buff, "put"), strcat(buff, " "), strcat(buff, NewFilePath.c_str());
 	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return false;
 	}
-	//int size= recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	//int size= recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	recvTcpOneAll();
-	//cout << rbuff << size <<endl;							//pwd¹¦ÄÜÔÚÕâÀïÒÑ¾­ÊµÏÖ
+	//cout << rbuff << size <<endl;							//pwdåŠŸèƒ½åœ¨è¿™é‡Œå·²ç»å®ç°
 	if (strncmp(m_recvOneAllData, "put", 3) == 0)
-	{ ///ÉÏ´«¹¦ÄÜ
+	{ ///ä¸Šä¼ åŠŸèƒ½
 		//strcpy(fileName, rbuff + 4);
 		std::ifstream fileStream(localFilePath, std::ios::binary);
 		if (fileStream.is_open())
 		{
 			if (sendFileData(sockClient, fileStream)==1)
 			{
-				cout << "·¢ËÍÎÄ¼şÊı¾İÍê³É" << endl;
+				cout << "å‘é€æ–‡ä»¶æ•°æ®å®Œæˆ" << endl;
 				
 			}
 			
@@ -918,37 +918,37 @@ bool FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 		}
 		else
 		{
-			strcpy(sbuff, "ÎŞ·¨´ò¿ªÎÄ¼ş\n");
+			strcpy(sbuff, "æ— æ³•æ‰“å¼€æ–‡ä»¶\n");
 			if (send(sockClient, sbuff, sizeof(sbuff), 0)) 
 			{
 
 			}
-			std::cerr << "ÎŞ·¨´ò¿ªÎÄ¼ş: " << localFilePath << std::endl;
+			std::cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶: " << localFilePath << std::endl;
 			return false;
 		}
 		
 	}//put
-	cout << "ÉÏ´«³É¹¦!!!" << endl;
+	cout << "ä¸Šä¼ æˆåŠŸ!!!" << endl;
 	return true;
 }
 
-//Ö´ĞĞ ½øÈëÎÄ¼ş¼ĞÃüÁî
+//æ‰§è¡Œ è¿›å…¥æ–‡ä»¶å¤¹å‘½ä»¤
 //void FtpClientClass::execute_cdFloder(string floderName)
 //{
-//	char operation[1024], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-//	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-//	char buff[1024];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-//	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+//	char operation[1024], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+//	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+//	char buff[1024];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+//	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 //	int cnt;
 //
 //	memset(buff, 0, sizeof(buff));
 //	memset(rbuff, 0, sizeof(rbuff));
 //	memset(sbuff, 0, sizeof(sbuff));
 //	
-//	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+//	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 //	//if (callServer() == -1) 
-//	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-//	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+//	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+//	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 //	//}
 //
 //	string str_name = floderName;
@@ -960,28 +960,28 @@ bool FtpClientClass::execute_putFile(string localFilePath, std::string NewFilePa
 //	strcat(order, "cd"), strcat(order, " "), strcat(order, name);
 //	sprintf(buff, order);
 //	sendTCP(buff);	
-//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-//	cout << rbuff << endl;	//pwdµÄ
-//	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	//WSACleanup();				//ÊÍ·ÅWinsock
+//	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+//	cout << rbuff << endl;	//pwdçš„
+//	//closesocket(sockClient);	//å…³é—­è¿æ¥
+//	//WSACleanup();				//é‡Šæ”¾Winsock
 //}
-//·µ»ØÉÏÒ»¼¶Ä¿Â¼
+//è¿”å›ä¸Šä¸€çº§ç›®å½•
 void FtpClientClass::execute_cdGoback()
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 	
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 
 	string str_name = "..";
@@ -993,32 +993,32 @@ void FtpClientClass::execute_cdGoback()
 	strcat(order, "cd"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 	//sendTCP(buff);	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;	//pwdµÄ
-	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-	//WSACleanup();				//ÊÍ·ÅWinsock
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;	//pwdçš„
+	//closesocket(sockClient);	//å…³é—­è¿æ¥
+	//WSACleanup();				//é‡Šæ”¾Winsock
 }
-;//ĞÂ½¨ÎÄ¼ş¼Ğ
+;//æ–°å»ºæ–‡ä»¶å¤¹
 void FtpClientClass::execute_mkdirFolder(string folder)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 	
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 
 	string str_name = folder;
@@ -1030,33 +1030,33 @@ void FtpClientClass::execute_mkdirFolder(string folder)
 	strcat(order, "mkdir"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 	//sendTCP(buff);	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;	//pwdµÄ
-	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-	//WSACleanup();				//ÊÍ·ÅWinsock
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;	//pwdçš„
+	//closesocket(sockClient);	//å…³é—­è¿æ¥
+	//WSACleanup();				//é‡Šæ”¾Winsock
 
 }
-//É¾³ı¿ÕÎÄ¼ş¼Ğ
+//åˆ é™¤ç©ºæ–‡ä»¶å¤¹
 void FtpClientClass::execute_delFolder(string folder)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 	
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 
 	string str_name = folder;
@@ -1068,34 +1068,34 @@ void FtpClientClass::execute_delFolder(string folder)
 	strcat(order, "del"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 	//sendTCP(buff);	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;	//pwdµÄ
-	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-	//WSACleanup();				//ÊÍ·ÅWinsock
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;	//pwdçš„
+	//closesocket(sockClient);	//å…³é—­è¿æ¥
+	//WSACleanup();				//é‡Šæ”¾Winsock
 
 }
 
-//É¾³ıÄ³¸öÎÄ¼ş
+//åˆ é™¤æŸä¸ªæ–‡ä»¶
 void FtpClientClass::execute_Filedelete(string folder)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 	
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 
 	string str_name = folder;
@@ -1107,33 +1107,33 @@ void FtpClientClass::execute_Filedelete(string folder)
 	strcat(order, "Fdel"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 //	sendTCP(buff);	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;	//pwdµÄ
-	//closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	WSACleanup();				//ÊÍ·ÅWinsock
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;	//pwdçš„
+	//closesocket(sockClient);	//å…³é—­è¿æ¥
+//	WSACleanup();				//é‡Šæ”¾Winsock
 
 }
-//É¾³ıÄ³¸öÎÄ¼ş
+//åˆ é™¤æŸä¸ªæ–‡ä»¶
 void FtpClientClass::execute_deleteFileList(string folder)
 {
-	char operation[10], name[1024];		//²Ù×÷ÓëÎÄ¼şÃû
-	char order[1024] = "\0";				//ÊäÈëµÄÃüÁî
-	char buff[80];						//ÓÃÀ´´æ´¢¾­¹ı×Ö·û´®¸ñÊ½»¯µÄorder
-	FILE *fd1, *fd2;					//FileĞ­ÒéÖ÷ÒªÓÃÓÚ·ÃÎÊ±¾µØ¼ÆËã»úÖĞµÄÎÄ¼ş£¬fdÖ¸ÕëÖ¸ÏòÒª·ÃÎÊµÄÄ¿±êÎÄ¼ş 
+	char operation[10], name[1024];		//æ“ä½œä¸æ–‡ä»¶å
+	char order[1024] = "\0";				//è¾“å…¥çš„å‘½ä»¤
+	char buff[80];						//ç”¨æ¥å­˜å‚¨ç»è¿‡å­—ç¬¦ä¸²æ ¼å¼åŒ–çš„order
+	FILE *fd1, *fd2;					//Fileåè®®ä¸»è¦ç”¨äºè®¿é—®æœ¬åœ°è®¡ç®—æœºä¸­çš„æ–‡ä»¶ï¼ŒfdæŒ‡é’ˆæŒ‡å‘è¦è®¿é—®çš„ç›®æ ‡æ–‡ä»¶ 
 	int cnt;
 
 	memset(buff, 0, sizeof(buff));
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 	
-	//startSock();				//Æô¶¯winsock²¢³õÊ¼»¯
+	//startSock();				//å¯åŠ¨winsockå¹¶åˆå§‹åŒ–
 	//if (callServer() == -1) 
-	//{	//·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü
-	//	cout << "·¢ËÍÁ¬½ÓÇëÇóÊ§°Ü!!!";
+	//{	//å‘é€è¿æ¥è¯·æ±‚å¤±è´¥
+	//	cout << "å‘é€è¿æ¥è¯·æ±‚å¤±è´¥!!!";
 	//}
 
 	string str_name = folder;
@@ -1145,14 +1145,14 @@ void FtpClientClass::execute_deleteFileList(string folder)
 	strcat(order, "fldel"), strcat(order, " "), strcat(order, name);
 	sprintf(buff, order);
 	//sendTCP(buff);	
-	if (sendTCP(buff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(buff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return;
 	}
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
-	cout << rbuff << endl;	//pwdµÄ
-//	closesocket(sockClient);	//¹Ø±ÕÁ¬½Ó
-//	WSACleanup();				//ÊÍ·ÅWinsock
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
+	cout << rbuff << endl;	//pwdçš„
+//	closesocket(sockClient);	//å…³é—­è¿æ¥
+//	WSACleanup();				//é‡Šæ”¾Winsock
 
 }
 
@@ -1166,12 +1166,12 @@ bool FtpClientClass::execute_rename(const std::string oldDir, const std::string 
 	strcat(sbuff, "|");
 	strcat(sbuff, newDir.c_str());
 	//sendTCP(sbuff);
-	if (sendTCP(sbuff) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(sbuff) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return false;
 	}
 	
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	if (strcmp(rbuff, "rename-ok") == 0) {
 		return true;
 	}
@@ -1184,12 +1184,12 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 	memset(sbuff, 0, sizeof(sbuff));
 
 	strcat(sbuff, "compress");
-	if (sendTCP(sbuff,sizeof(sbuff)) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(sbuff,sizeof(sbuff)) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return false;
 	}
 
-	// Ñ­»··¢ËÍÒªÑ¹ËõµÄÂ·¾¶
+	// å¾ªç¯å‘é€è¦å‹ç¼©çš„è·¯å¾„
 	for (const auto& strPath : vecPath)
 	{
 		memset(sbuff, 0, sizeof(sbuff));
@@ -1199,7 +1199,7 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 			return false;
 		}
 	}
-	// ·¢ËÍÂ·¾¶½áÊø±êÖ¾
+	// å‘é€è·¯å¾„ç»“æŸæ ‡å¿—
 	memset(sbuff, 0, sizeof(sbuff));
 	strcat(sbuff, "compress-zipname ");
 	strcat(sbuff, newZip.c_str());
@@ -1209,7 +1209,7 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 	}
 
 	memset(rbuff, 0, sizeof(rbuff));
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	if (strncmp(rbuff, "compress-ok",11) == 0) {
 		return true;
 	}
@@ -1220,18 +1220,18 @@ bool FtpClientClass::execute_compress(const std::vector<std::string> vecPath, co
 	return false;
 }
 
-// ½âÑ¹ÎÄ¼ş;
+// è§£å‹æ–‡ä»¶;
 bool FtpClientClass::execute_uncompress(const std::vector<std::string> vecPath)
 {
 	memset(sbuff, 0, sizeof(sbuff));
 
 	strcat(sbuff, "uncompress");
-	if (sendTCP(sbuff, sizeof(sbuff)) == -1)									//·¢ËÍÖ¸Áî
+	if (sendTCP(sbuff, sizeof(sbuff)) == -1)									//å‘é€æŒ‡ä»¤
 	{
 		return false;
 	}
 
-	// Ñ­»··¢ËÍÒªÑ¹ËõµÄÂ·¾¶
+	// å¾ªç¯å‘é€è¦å‹ç¼©çš„è·¯å¾„
 	for (const auto& strPath : vecPath)
 	{
 		memset(sbuff, 0, sizeof(sbuff));
@@ -1241,7 +1241,7 @@ bool FtpClientClass::execute_uncompress(const std::vector<std::string> vecPath)
 			return false;
 		}
 	}
-	// ·¢ËÍÂ·¾¶½áÊø±êÖ¾
+	// å‘é€è·¯å¾„ç»“æŸæ ‡å¿—
 	memset(sbuff, 0, sizeof(sbuff));
 	strcat(sbuff, "uncompress-paths-end");
 	if (sendTCP(sbuff) == -1)
@@ -1250,7 +1250,7 @@ bool FtpClientClass::execute_uncompress(const std::vector<std::string> vecPath)
 	}
 
 	memset(rbuff, 0, sizeof(rbuff));
-	recv(sockClient, rbuff, sizeof(rbuff), 0);		//½ÓÊÕĞÅÏ¢ 
+	recv(sockClient, rbuff, sizeof(rbuff), 0);		//æ¥æ”¶ä¿¡æ¯ 
 	if (strncmp(rbuff, "uncompress-ok", 13) == 0) {
 		return true;
 	}
@@ -1261,12 +1261,12 @@ bool FtpClientClass::execute_uncompress(const std::vector<std::string> vecPath)
 	return false;
 }
 
-// »ñÈ¡ÎÄ¼ş¼ĞÃû³Æ
+// è·å–æ–‡ä»¶å¤¹åç§°
 /*vector<string>*/ 	vector<vector<string>> FtpClientClass::Gets_FolderName()
 {
 	return vecDirName;
 }
-// »ñÈ¡ÎÄ¼şÃû³Æ
+// è·å–æ–‡ä»¶åç§°
 vector<vector<string>> FtpClientClass::Gets_FileName()
 {
 	return vecFileName;

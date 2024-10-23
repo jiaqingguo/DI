@@ -398,7 +398,7 @@ void MainWindow::slot_btnAddToolTab()
         int mode = -1;
         int displayMode = 0;
         addToooDialog.getToolData(tabName,toolName, mode, displayMode);
-        QWidget* pWidget = new QWidget;
+        //QWidget* pWidget = new QWidget;
 
         if (0)
         {
@@ -632,7 +632,7 @@ void MainWindow::slot_btnAddToolTab()
         else if(moduleNumber==2)
         {
             QString exeDir = QCoreApplication::applicationDirPath();
-            int i = common::iSoftStartHostNum %3;
+            //int i = common::iSoftStartHostNum %3;
            // if (common::setHostIps.size() >= i)
             {
                 //auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素

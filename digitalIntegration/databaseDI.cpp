@@ -998,7 +998,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		int used = 0;
+		//int used = 0;
 		sprintf_s(sql, sizeof(sql), "update t_ip set username = (\'%s\') where username = (\'%s\')", "", u_name.c_str());
 
 		if (!exec_sql(sql))
@@ -1439,7 +1439,7 @@ namespace db
 			return false;
 
 		bool flag = false;
-		int i = 0;
+		//int i = 0;
 		while (sql_row = mysql_fetch_row(result))
 		{
 			templen = std::atoi(sql_row[1]);

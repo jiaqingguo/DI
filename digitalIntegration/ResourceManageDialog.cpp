@@ -284,7 +284,7 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
 
 void ResourceManageDialog::startWebFlushTimer()
 {
-    m_timer->start(1000);
+    m_timer->start(400);
 }
 
 void ResourceManageDialog::stopWebFlushTimer()

@@ -982,7 +982,7 @@ void FilemangageDialog::slot_actionDownload()
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
-		stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+		stDownloadApproval.filePath = dirPath.toUtf8().toStdString();
 		stDownloadApproval.fileType = "dir";
 		stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0, Qt::UserRole + 1).toString().toStdString());
 
