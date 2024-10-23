@@ -298,7 +298,7 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		m_modelDataApproval->setItem(newRowIndex, 3, item);
 
 
-		QString filePath = QString::fromLocal8Bit(stData.filePath.c_str());
+		QString filePath = QString::fromStdString(stData.filePath);
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());

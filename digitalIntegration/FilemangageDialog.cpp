@@ -250,7 +250,6 @@ void FilemangageDialog::flushTableViewDownload()
 	db::databaseDI::Instance().get_download_approval_list_by_userID(listDataApproval, common::iUserID);
 	for (auto& stData : listDataApproval)
 	{
-
 		table_user stUserData;
 		db::databaseDI::Instance().get_user_by_condition(stUserData, stData.userID);
 		stData.userName = stUserData.name;
@@ -286,7 +285,7 @@ void FilemangageDialog::flushTableViewDownload()
 		m_modelDownload->setItem(newRowIndex, 3, item);
 
 
-		QString filePath = QString::fromLocal8Bit(stData.filePath.c_str());
+		QString filePath = QString::fromStdString(stData.filePath);
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());
@@ -979,7 +978,7 @@ void FilemangageDialog::slot_actionDownload()
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
-		stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+		stDownloadApproval.filePath = dirPath.toStdString();// dirPath.toLocal8Bit().toStdString();
 		stDownloadApproval.fileType = "dir";
 		stDownloadApproval.fileTime = common::string_to_datetime(pItem->data(0, Qt::UserRole + 1).toString().toStdString());
 
