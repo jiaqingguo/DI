@@ -295,6 +295,8 @@ void MainWindow::initInitface()
     //    this->close();
     //    //exit(1);
     //}
+   
+    
 
    
 }
