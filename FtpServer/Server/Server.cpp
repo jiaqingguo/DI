@@ -882,6 +882,7 @@ void Server::running()
 					// 返回不带 .zip 后缀的新路径
 					fs::path newDir = path.parent_path() / path.stem(); // 添加父目录并返回新的目录名
 					std::string strDir = newDir.string();
+					std::cout << "解压 " << path << "   " << strDir << std::endl;
 					extractZip(path, strDir);
 				}
 

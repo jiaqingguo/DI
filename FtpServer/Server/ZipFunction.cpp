@@ -1,4 +1,4 @@
-
+ï»¿
 
 /*******************************************************************************
 **  AREA1  :  include header files area
@@ -6,12 +6,50 @@
 
 
 #include <iostream>
-
+#include <cassert>
 #include "ZipFunction.h"
+
+//å°†wstringè½¬æ¢æˆstring  
+std::string wstring2string(std::wstring wstr)
+{
+    std::string result;
+    //è·å–ç¼“å†²åŒºå¤§å°ï¼Œå¹¶ç”³è¯·ç©ºé—´ï¼Œç¼“å†²åŒºå¤§å°äº‹æŒ‰å­—èŠ‚è®¡ç®—çš„  
+    int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), wstr.size(), NULL, 0, NULL, NULL);
+    char* buffer = new char[len + 1];
+    //å®½å­—èŠ‚ç¼–ç è½¬æ¢æˆå¤šå­—èŠ‚ç¼–ç   
+    WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), wstr.size(), buffer, len, NULL, NULL);
+    buffer[len] = '\0';
+    //åˆ é™¤ç¼“å†²åŒºå¹¶è¿”å›å€¼  
+    result.append(buffer);
+    delete[] buffer;
+    return result;
+}
+
+#define WstringToString(str)\
+    std::wstring wide_str = std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>>{}.from_bytes(str);\
+    size_t len = wide_str.size() * 4;\
+    setlocale(LC_CTYPE, "");\
+    char* p = new char[len];\
+    size_t len2;\
+    wcstombs_s(&len2, p, len, wide_str.c_str(), len);\
+    std::string str1(p);\
+    str = str1;\
+    delete[] p;
+
+std::wstring charToWString(const char* input, UINT codePage = CP_UTF8) {
+    // è·å–æ‰€éœ€çš„å®½å­—ç¬¦æ•°é‡
+    int wideCharSize = MultiByteToWideChar(codePage, 0, input, -1, nullptr, 0);
+    std::wstring wideString(wideCharSize, L'\0');
+
+    // è¿›è¡Œè½¬æ¢
+    MultiByteToWideChar(codePage, 0, input, -1, &wideString[0], wideCharSize);
+
+    return wideString;
+}
 
 
 void extractZip(std::filesystem::path zip_file_path, const std::string& output_dir) {
-    // ´ò¿ª ZIP ÎÄ¼ş
+    // æ‰“å¼€ ZIP æ–‡ä»¶
     int err = 0;
     zip_t* zip = zip_open(zip_file_path.generic_u8string().c_str(), ZIP_RDONLY, &err);
     if (!zip) {
@@ -23,38 +61,51 @@ void extractZip(std::filesystem::path zip_file_path, const std::string& output_d
         return;
     }
 
-    // ´´½¨Êä³öÄ¿Â¼
+    // åˆ›å»ºè¾“å‡ºç›®å½•
     fs::create_directories(output_dir);
 
-    // »ñÈ¡ ZIP ÎÄ¼şÖĞµÄÎÄ¼şÊıÁ¿
+    // è·å– ZIP æ–‡ä»¶ä¸­çš„æ–‡ä»¶æ•°é‡
     zip_uint64_t num_entries = zip_get_num_entries(zip, 0);
     for (zip_uint64_t i = 0; i < num_entries; ++i) {
-        const char* name = zip_get_name(zip, i, 0);
+      //  const char* name = zip_get_name(zip, i, 0);
+        const char* name = zip_get_name(zip, i, ZIP_FL_ENC_UTF_8); // å°è¯•ä½¿ç”¨ UTF-8 ç¼–ç 
         if (!name) {
             std::cerr << "Failed to get name of entry " << i << std::endl;
             continue;
         }
-
-        // Ê¹ÓÃÃû³Æ¹¹ÔìÊä³öÎÄ¼şÂ·¾¶
-        fs::path output_file_path = fs::path(output_dir) / name;
-
-        // Èç¹ûÊÇÄ¿Â¼£¬´´½¨Ä¿Â¼
-        if (name[strlen(name) - 1] == '/') {
+        
+        std::wstring wideStr = charToWString(name);
+        std::string strName = wstring2string(wideStr);
+        fs::path output_file_path = fs::path(output_dir) / strName;
+      
+        // åˆ›å»ºç›®å½•
+        if (strName.back() == '/') {
             fs::create_directories(output_file_path);
             continue;
         }
 
-        // ´´½¨Êä³öÎÄ¼ş²¢Ğ´ÈëÄÚÈİ
-        zip_file_t* zip_file = zip_fopen(zip, name, 0);
+        zip_file_t* zip_file = zip_fopen(zip, strName.c_str(), 0);
         if (!zip_file) {
-            std::cerr << "Failed to open entry " << name << std::endl;
+            std::cerr << "Failed to open entry " << strName << ": " << zip_strerror(zip) << std::endl;
             continue;
         }
+        ////// å¦‚æœæ˜¯ç›®å½•ï¼Œåˆ›å»ºç›®å½•
+        //if (name[strlen(name) - 1] == '/') {
+        //    fs::create_directories(output_file_path);
+        //    continue;
+        //}
 
-        // ¶ÁÈ¡ÎÄ¼şÄÚÈİ
+        //// åˆ›å»ºè¾“å‡ºæ–‡ä»¶å¹¶å†™å…¥å†…å®¹
+        //zip_file_t* zip_file = zip_fopen(zip, name, 0);
+        //if (!zip_file) {
+        //    std::cerr << "Failed to open entry " << name << std::endl;
+        //    continue;
+        //}
+
+        // è¯»å–æ–‡ä»¶å†…å®¹
         std::ofstream output_file(output_file_path, std::ios::binary);
         if (!output_file.is_open()) {
-            std::cerr << "Failed to create output file: " << output_file_path << std::endl;
+            std::cerr << "Failed to create output file: " << output_file_path<<"  "<< zip_strerror(zip) << std::endl;
             zip_fclose(zip_file);
             continue;
         }
@@ -75,6 +126,7 @@ void extractZip(std::filesystem::path zip_file_path, const std::string& output_d
 
 void CompressFile2Zip(std::filesystem::path unZipFilePath, const char* relativeName, zip_t* zipArchive)
 {
+    std::cerr << "CompressFile2Zip " << unZipFilePath << std::endl;
     std::ifstream file(unZipFilePath, std::ios::binary);
     file.seekg(0, std::ios::end);
     size_t bufferSize = file.tellg();
@@ -83,7 +135,7 @@ void CompressFile2Zip(std::filesystem::path unZipFilePath, const char* relativeN
     file.seekg(0, std::ios::beg);
     file.read(bufferData, bufferSize);
 
-    //µÚËÄ¸ö²ÎÊıÈç¹û·Ç0£¬»á×Ô¶¯ÍĞ¹ÜÉêÇëµÄ×ÊÔ´£¬Ö±µ½zip_closeÖ®Ç°×Ô¶¯Ïú»Ù¡£
+    //ç¬¬å››ä¸ªå‚æ•°å¦‚æœé0ï¼Œä¼šè‡ªåŠ¨æ‰˜ç®¡ç”³è¯·çš„èµ„æºï¼Œç›´åˆ°zip_closeä¹‹å‰è‡ªåŠ¨é”€æ¯ã€‚
     zip_source_t* source =
         zip_source_buffer(zipArchive, bufferData, bufferSize, 1);
 
@@ -135,6 +187,7 @@ void CompressDirectory2Zip(std::filesystem::path rootDirectoryPath,
 {
     if (rootDirectoryPath != directoryPath)
     {
+        std::cerr << "CompressFile2Zip " << rootDirectoryPath << std::endl;
         auto pathCs = std::filesystem::relative(directoryPath, rootDirectoryPath);
         if (zip_dir_add(zipArchive, std::filesystem::relative(directoryPath, rootDirectoryPath).generic_u8string().c_str(), ZIP_FL_ENC_UTF_8) < 0)
         {
@@ -192,7 +245,7 @@ void CompressDirectory(std::filesystem::path directoryPath,
 
 
 
-// Ö»Ö§³Ö¶à¸öÎÄ¼ş Ä¿Â¼µÄ»°»áÈ±ÉÙ²ã¼¶;
+// åªæ”¯æŒå¤šä¸ªæ–‡ä»¶ ç›®å½•çš„è¯ä¼šç¼ºå°‘å±‚çº§;
 void CompressMultFile(const std::vector<fs::path>& paths, const fs::path& zipFilePath) {
     int errorCode = 0;
     zip_t* zipArchive = zip_open(zipFilePath.u8string().c_str(), ZIP_CREATE | ZIP_TRUNCATE, &errorCode);
@@ -220,7 +273,7 @@ void CompressMultFile(const std::vector<fs::path>& paths, const fs::path& zipFil
         }
     }
 
-    // ¹Ø±Õ ZIP ÎÄ¼ş
+    // å…³é—­ ZIP æ–‡ä»¶
     errorCode = zip_close(zipArchive);
     if (errorCode != 0) {
         zip_error_t zipError;
@@ -241,7 +294,7 @@ bool CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFil
         zip_error_fini(&zipError);
         return false;
     }
-    if (paths.size() == 1)   /// if else µÄÇø±ğÔÚ   CompressDirectory2Zip(path.parent_path(), path, zipArchive);  CompressDirectory2Zip(path, path, zipArchive);
+    if (paths.size() == 1)   /// if else çš„åŒºåˆ«åœ¨   CompressDirectory2Zip(path.parent_path(), path, zipArchive);  CompressDirectory2Zip(path, path, zipArchive);
     {
         for (const auto& path : paths)
         {
@@ -284,7 +337,7 @@ bool CompressMult2Zip(const std::vector<fs::path>& paths, const fs::path& zipFil
     }
 
     
-    // ¹Ø±Õ ZIP ÎÄ¼ş
+    // å…³é—­ ZIP æ–‡ä»¶
     errorCode = zip_close(zipArchive);
     if (errorCode != 0) 
     {

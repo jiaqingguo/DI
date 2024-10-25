@@ -1188,7 +1188,7 @@ void FilemangageDialog::slot_btnUnCompress()
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_uncompress(vecPath);
 	m_GifDialog->close();
-	flushFtpDirShow(ui->treeWidget->currentItem());
+	flushFtpDirShow(ui->treeWidget->currentItem()); 
 }
 
 void FilemangageDialog::slot_btnCopyPath()
