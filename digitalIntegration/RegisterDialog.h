@@ -20,6 +20,9 @@ public:
     explicit RegisterDialog(QWidget *parent = nullptr);
     ~RegisterDialog();
 	void init();
+
+	//table_user stUser;
+	
 private slots:
     void slot_btnRegister();
     void slot_btnFingerprintInput();
@@ -30,7 +33,6 @@ private:
     Ui::RegisterDialog *ui;
 	QTimer* timer = new QTimer(this); // 'this' 是指向当前对象的指针
 
-	fingerDlg *u_fingerDlg = new fingerDlg();
 
 };
 

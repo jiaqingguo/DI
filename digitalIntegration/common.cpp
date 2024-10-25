@@ -72,7 +72,8 @@ namespace common
     std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
 
     QString                 strCopyPath;                  // 复制的远程路径;
-    QString                  strVipPath;				  //   普通用户不能操作的路径;
+    QString                 strVipPath;				  //   普通用户不能操作的路径;
+	table_user              stUser;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
@@ -632,7 +633,7 @@ namespace common
         net_Resource.lpProvider = NULL;
         net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // 共享资源的路径
 
-        DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+        //DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
         // 取消已有连接
         WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
@@ -711,7 +712,7 @@ namespace common
     {
 
        
-        DWORD bufferSize = MAX_PATH;
+        //DWORD bufferSize = MAX_PATH;
         char currentDirectory[MAX_PATH];
         QByteArray byteArray = strPath.toUtf8(); // 转换为 UTF-8 编码
             // 应用程序路径
@@ -733,8 +734,8 @@ namespace common
 
     void UnInitResource()
     {
-        TCHAR szPasswd[] = TEXT("administrataor");          //共享资源授权用户的密码
-        TCHAR szUserName[] = TEXT("Ate123");        //共享资源授权的用户
+        //TCHAR szPasswd[] = TEXT("administrataor");          //共享资源授权用户的密码
+        //TCHAR szUserName[] = TEXT("Ate123");        //共享资源授权的用户
 
         //TCHAR szPasswd[] = TEXT("Share123");          //共享资源授权用户的密码
         //TCHAR szUserName[] = TEXT("share");        //共享资源授权的用户
@@ -753,7 +754,7 @@ namespace common
 
         net_Resource.lpRemoteName = lpRemoteName; // 共享资源的路径
 
-        DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+        //DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
         // 取消已有连接
         WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);

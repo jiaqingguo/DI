@@ -9,7 +9,7 @@ Widget::Widget(QWidget *parent)
     this->setWindowTitle("客户端");
 
     //用于获取主机的信息
-    my_timer=new QTimer(this);
+    this->my_timer=new QTimer();
 
     connect(my_timer,&QTimer::timeout,this,&Widget::slot_useUdp);
 

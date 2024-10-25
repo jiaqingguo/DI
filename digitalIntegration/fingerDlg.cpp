@@ -272,9 +272,6 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 		m_bRegister = FALSE;
 		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=操作成功
 		{
-			//清空缓冲区
-			//ret = ZKFPM_DBClear(hDBCache);
-
 			//添加登记指纹模板到缓冲区
 			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
 			if (ZKFP_ERR_OK == ret)
@@ -285,6 +282,11 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 
 				/*delete[] szRegTemp;
 				szRegTemp = nullptr;*/
+				if (!db::databaseDI::Instance().add_user_info(common::stUser))
+				{
+					QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
+					return;
+				}
 
 				if (!db::databaseDI::Instance().get_new_regist_user(id))
 				{
@@ -298,9 +300,6 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 					MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
 					emit regist_succ();
 
-					//delete[] szLastRegTemplate;
-					//szLastRegTemplate = nullptr;
-					//return;
 				}
 
 
@@ -342,8 +341,6 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 		int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
 
 		int ret = ZKFP_ERR_OK;
-		unsigned int tid = 0;
-		unsigned int score = 0;
 
 		int approval = 0;
 		bool success = false;

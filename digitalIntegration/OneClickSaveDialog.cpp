@@ -86,8 +86,8 @@ void OneClickSaveDialog::slot_btnPaste()
 void OneClickSaveDialog::slot_itmeBtnCopy()
 {
     QPushButton* pButton = (QPushButton*)sender();
-    int row = pButton->property("row").toInt();
-    int column = pButton->property("column").toInt();
+    //int row = pButton->property("row").toInt();
+    //int column = pButton->property("column").toInt();
    // QModelIndex index = m_model->index(row, 0);
    // int id = m_model->data(index, Qt::UserRole).toInt();
 

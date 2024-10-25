@@ -92,6 +92,9 @@ private:
     QUdpSocket* UdpSocket = nullptr;
     //QThread* thread = nullptr;
     Message_t message;
+	//通信的ip和端口，用于获取发送者的 IP 和端口
+	QHostAddress addr;
+	quint16 port;
 
 };
 
