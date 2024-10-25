@@ -602,8 +602,9 @@ void ResourceManageDialog::slot_get_data(int index)
 
 void  ResourceManageDialog::getUdpData(Message_t * infor)
 {
+	
     // UDP的连接
-    this->UdpSocket = new QUdpSocket(this);
+    this->UdpSocket = new QUdpSocket();
     //this->thread = new QThread(this);
     //this->UdpSocket->moveToThread(this->thread);
     this->UdpSocket->bind(QHostAddress::Any, 54321);
@@ -613,7 +614,12 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
         {
             QByteArray datagram;
             datagram.resize(this->UdpSocket->pendingDatagramSize());
-            this->UdpSocket->readDatagram(datagram.data(), datagram.size());
+			qint64 bytesRead = this->UdpSocket->readDatagram(datagram.data(), datagram.size(),&addr,&port);
+			qDebug() << addr.toString();
+			if (bytesRead <= 0)
+			{
+				//应该是在列表中删除那一行的信息
+			}
 
             QDataStream stream(&datagram, QIODevice::ReadOnly);
 
@@ -626,6 +632,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
 
+			this->UdpSocket->writeDatagram("receive information", addr, port);
             // 插入数据库;
            /* table_ip stIp;
             stIp.ip = infor->host_ip.toStdString();
@@ -643,5 +650,5 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 
             }*/
         }
-        });
+       });
 }

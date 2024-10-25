@@ -3,14 +3,16 @@
 #include <QApplication>
 #include <windows.h>
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     Widget w;
     w.show();
-    //窗口的隐藏
-//    w.hide();
-    //窗口的最小化
-    w.showMinimized();
+
+    //w.hide();//窗口的隐藏
+
+    w.showMinimized();//窗口的最小化
     return a.exec();
 }

@@ -262,7 +262,5 @@ void LoginDialog::slot_login_succ()
 
 void LoginDialog::slot_regist_succ()
 {
-	//RegisterDialog registerDialog;
 	registerDialog->close();
-	
 }
