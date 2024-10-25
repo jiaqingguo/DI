@@ -83,10 +83,10 @@ void extractZip(std::filesystem::path zip_file_path, const std::string& output_d
             fs::create_directories(output_file_path);
             continue;
         }
-
-        zip_file_t* zip_file = zip_fopen(zip, strName.c_str(), 0);
+        std::filesystem::path file_path(strName);
+        zip_file_t* zip_file = zip_fopen(zip, file_path.generic_u8string().c_str(), 0);
         if (!zip_file) {
-            std::cerr << "Failed to open entry " << strName << ": " << zip_strerror(zip) << std::endl;
+            std::cerr << "Failed to open entry " << file_path.generic_u8string().c_str() << ": " << zip_strerror(zip) << std::endl;
             continue;
         }
         ////// 如果是目录，创建目录

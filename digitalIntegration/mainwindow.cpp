@@ -335,7 +335,6 @@ void MainWindow::udpStartExeThread(const QString strIp, const int port)
     static char s_buf[BUF_LEN];
     while (true)
     {
-
         int nLen = m_udp->recvData(s_buf, sizeof(s_buf));
         if (nLen <= 0)
         {
@@ -347,6 +346,7 @@ void MainWindow::udpStartExeThread(const QString strIp, const int port)
         int jsonArraySize = jsonData["plcdata"].size();
         if (jsonArraySize > m_inputNames.size())
             return;*/
+        return;
     }
 }
 
@@ -453,6 +453,19 @@ void MainWindow::slot_btnAddToolTab()
         //QWidget* pWidget = new QWidget;
         table_tools stTool;
         db::databaseDI::Instance().get_tool(stTool, toolID);
+        table_account_password stAccount;
+        if (db::databaseDI::Instance().get_account_password(stAccount))
+        {
+            int state = 1;
+            db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
+        }
+        else
+        {
+            return;
+        }
+        QString strIp = QString::fromStdString(stTool.ip);
+        QString userName = "Administrator";
+        QString password = "Ate123";
 
         if (moduleNumber == 1)
         {
@@ -463,11 +476,9 @@ void MainWindow::slot_btnAddToolTab()
             // 启动bsp  
             // 使用 std::bind 绑定参数
             //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
-            QString strIp = QString::fromStdString(stTool.ip);
-            QString userName= "Administrator";
-            QString password = "Ate123";
-            std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
-
+           
+           // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
+            udpStartExeThread(strIp, 5555);
             QAxWidget* rdp = new QAxWidget;
             //connect(&rdp, &QAxWidget::4
             connect(rdp, SIGNAL(ActiveXEvent()), this, SLOT(onActiveXEvent()));
