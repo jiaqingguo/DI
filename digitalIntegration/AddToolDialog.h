@@ -19,7 +19,7 @@ public:
     
     void init();
     void initToolData(const QVector<QString> vecNames);
-    void getToolData(QString &tabName,QString& toolName, int& model, int& iDisplayMode);
+    void getToolData(QString &tabName,QString& toolName,int &toolID, int& model, int& iDisplayMode);
 private slots:
 
     void slot_ipCheckBoxClicked();

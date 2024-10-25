@@ -109,7 +109,13 @@ struct table_one_load_software
 	uint32_t		userID = 0;
 	uint32_t		module = 0;
 };
-
+struct table_account_password
+{
+	uint32_t		id = 0;			       // ID(主键自增unsigned int);
+	std::string     account;
+	std::string     password;
+	uint32_t		used = 0;   // 是否已使用;0:未使用,1已使用;
+};
 
 enum EUserTable : uint32_t
 {

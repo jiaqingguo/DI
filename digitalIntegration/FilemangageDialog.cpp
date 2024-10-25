@@ -1213,7 +1213,6 @@ void FilemangageDialog::slot_btnCopyPath()
 	}
 	if (iChecked != 1)
 	{
-
 		common::strCopyPath = "";
 		QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请选择一个要复制的路径"));
 		return;

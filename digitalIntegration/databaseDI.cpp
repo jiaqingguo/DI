@@ -515,6 +515,38 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_tool(table_tools& stTool, const int& toolId)
+	{
+		
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_tools where id=\'%d\'", toolId);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stTool.id = std::atoi(sql_row[0]);
+			stTool.name = sql_row[1];
+			stTool.host = sql_row[2];
+			stTool.path = sql_row[3];
+			stTool.icoPath = sql_row[4];
+			stTool.module = std::atoi(sql_row[5]);
+			stTool.ip = sql_row[6];
+			stTool.number = std::atoi(sql_row[7]);
+			stTool.username = sql_row[8];
+
+			
+		}
+		return true;
+	}
+
 	bool databaseDI::get_tools(std::list<table_tools>& listTools)
 	{
 		listTools.clear();
@@ -1608,6 +1640,55 @@ namespace db
 			return true;
 		}
 		return false;
+	}
+	bool databaseDI::get_account_password(table_account_password& stAccount)
+	{
+		
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_account_password where '0' LIMIT 1");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stAccount.id = std::atoi(sql_row[0]);
+			stAccount.account = (sql_row[1]);
+			stAccount.password = (sql_row[2]);
+			stAccount.used = std::atoi(sql_row[3]);
+		}
+		return true;
+	}
+	bool databaseDI::update_account_use_state(const int& id, int& status)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, sizeof(sql), "update t_account_password set used = (\'%d\') where id = (\'%d\')", status, id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
 	}
 }
 

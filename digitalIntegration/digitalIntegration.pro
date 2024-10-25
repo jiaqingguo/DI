@@ -22,6 +22,7 @@ SOURCES += \
     ApprovalProgressDialog.cpp \
     CLineEdit.cpp \
     CTableView.cpp \
+    CtrlNetwork.cpp \
     DataManageDialog.cpp \
     FilemangageDialog.cpp \
     FtpClientClass.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     CLineEdit.h \
     CPagedTableModel.h \
     CTableView.h \
+    CtrlNetwork.h \
     DataManageDialog.h \
     FilemangageDialog.h \
     FtpClientClass.h \

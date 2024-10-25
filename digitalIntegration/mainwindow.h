@@ -26,6 +26,7 @@ class OneClickSaveDialog;
 class OneClickLoadDialog;
 class FilemangageDialog;
 class GifDialog;
+class CCtrlNetwork;
 
 //class fingerDlg;
 
@@ -126,6 +127,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 	void initInitface();
+	void initUdp();
+	void udpStartExeThread(const QString strIp,const int port);
 	void showRegisterDialog();
 	void setUserNameText(const QString& userName);
 	
@@ -190,7 +193,7 @@ private:
 	GifDialog* m_GifDialog = nullptr;
 
 	bool bUserIp = true;
-
+	CCtrlNetwork* m_udp;
 	//Ö¸ÎÆ
 	//fingerDlg *m_fingerDlg = nullptr;
 

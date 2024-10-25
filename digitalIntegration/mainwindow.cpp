@@ -18,6 +18,7 @@
 #include "CustomButton.h"
 #include "common.h"
 #include "GifDialog.h"
+#include "CtrlNetwork.h"
 
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -28,6 +29,9 @@
 #include <QAxWidget>
 #include <QAxObject>
 #include "windows.h"
+
+#include <thread>
+#include <functional>
 
 EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
         // 将原生窗口嵌入到 Qt 的 QWidget 中
@@ -301,6 +305,51 @@ void MainWindow::initInitface()
    
 }
 
+
+void MainWindow::initUdp()
+{
+    m_udp = new CCtrlNetwork();
+    m_udp->init(5555);
+}
+void MainWindow::udpStartExeThread(const QString strIp, const int port)
+{
+   
+    const char* sendData;// = data.c_str();
+   
+    sockaddr_in m_sockaddr_in;
+    m_sockaddr_in.sin_family = AF_INET;
+    m_sockaddr_in.sin_addr.S_un.S_addr = inet_addr(strIp.toStdString().c_str());
+    m_sockaddr_in.sin_port = htons(port);
+    int sendSize = m_udp->sendDataTo(sendData, strlen(sendData), (sockaddr*)&m_sockaddr_in);
+    if (sendSize == -1) {
+        std::cout << "Failed to send data: " << strerror(errno) << std::endl;
+    }
+    else
+    {
+        std::cout << " sendData : " << sendData << std::endl;
+    }
+
+    // 接收数据;
+    if (!m_udp) return;
+    const int BUF_LEN = 1024 * 100;
+    static char s_buf[BUF_LEN];
+    while (true)
+    {
+
+        int nLen = m_udp->recvData(s_buf, sizeof(s_buf));
+        if (nLen <= 0)
+        {
+            break;
+        }
+
+      /*  Json jsonData = Json::parse(s_buf);
+        std::cout << " recvData : " << s_buf << std::endl;
+        int jsonArraySize = jsonData["plcdata"].size();
+        if (jsonArraySize > m_inputNames.size())
+            return;*/
+    }
+}
+
 void MainWindow::showRegisterDialog()
 {
     m_RegisterDialog->exec();
@@ -399,187 +448,37 @@ void MainWindow::slot_btnAddToolTab()
         QString tabName;
         int mode = -1;
         int displayMode = 0;
-        addToooDialog.getToolData(tabName,toolName, mode, displayMode);
+        int toolID = -1;
+        addToooDialog.getToolData(tabName,toolName, toolID,mode, displayMode);
         //QWidget* pWidget = new QWidget;
-
-        if (0)
-        {
-
-       
-        //if (moduleNumber == 1)
-        //{
-        //    auto WNID = (WId)FindWindow(L"WeChatMainWndForPC", L"微信");
-        //   
-
-        //    WId winId = (WId)WNID;
-        //  
-        //    //WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-        //    if (winId != 0)
-        //    {
-        //        QWindow* window = QWindow::fromWinId(winId);
-        //        QWidget* widget = QWidget::createWindowContainer(window);
-        //        
-        //        widget->setWindowTitle(tabName);
-        //        if (displayMode == 0)
-        //        {
-        //            ui->tabWidgetModulel1->addTab(widget, tabName);
-        //        }
-        //        else
-        //        {
-        //            widget->show();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        QWidget* pWidget = new QWidget;
-        //        pWidget->setWindowTitle(tabName);
-        //        ui->tabWidgetModulel1->addTab(pWidget, tabName);
-        //    }
-        //   
-        //}
-        //else if (moduleNumber == 2)
-        //{
-
-
-        //    QString strDspPath = "D:\Visual Studio 2017.rdp";
-
-        //    // 启动bsp 
-        //    common::startDspExe(strDspPath);
-
-        //    QString  className = "RAIL_WINDOW";
-        //    // 窗口句柄
-        //  
-        //    HWND WNID;
-        //    HWND temp = NULL;
-        //  
-        //    int i = 0;
-        //    WNID = common::getHWND(className, i);
-        //   // WId winId = (WId)WNID;
-        //    //WNID=FindWindow(NULL, L" (AD.jhapp.com)");
-        //    WId winId = (WId)WNID;
-        //    if (winId != 0)
-        //    {
-        //       
-        //        if (displayMode == 0)
-        //        {
-        //            
-        //           
-        //            /*QRect geometry = ui->tabWidgetModulel2->widget(0)->geometry();
-        //            int width = geometry.width();
-        //            int height = geometry.height();
-        //            SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);*/
-
-        //            QWindow* window = QWindow::fromWinId(winId);
-        //            int width = window->width();
-        //            int height = window->height();
-        //            QWidget* widget = QWidget::createWindowContainer(window,this);
-        //           //widget->setFixedWidth(width);
-        //           // widget->setFixedHeight(height);
-        //          //  widget->resize(width, height);
-        //            // 创建一个新的 QWidget
-        //          
-        //            widget->setWindowTitle(tabName);
-        //            ui->tabWidgetModulel2->addTab(widget, tabName);
-        //        }
-        //        else
-        //        {
-        //          //SetWindowPos(WNID, HWND_TOP, 0, 0, 650, 480, SWP_NOZORDER | SWP_SHOWWINDOW);
-        //            QWindow* window = QWindow::fromWinId(winId);
-        //            window->setFlags(window->flags()| Qt::ForeignWindow);
-        //            int width = window->width();
-        //            int height = window->height();
-        //           // window->show();
-        //           QWidget* widget = QWidget::createWindowContainer(window,nullptr,Qt::Widget|Qt::WindowStaysOnTopHint);
-        //            //main_widget = QWidget::createWindowContainer(window);
-        //          //window->setGeometry(0, 0, widget->width(), widget->height());
-        //          //widget->setFixedWidth(width);
-        //          // widget->setFixedHeight(height);
-        //            
-        //           // main_widget->show();
-        //           widget->show();
-        //            // 创建一个嵌入窗口类，将原生窗口嵌入 Qt Widget
-        //           /* CWidget* embeddedWidget = new CWidget(WNID);
-        //            embeddedWidget->show();*/
-
-        //            //QWindow* window = QWindow::fromWinId(winId);
-        //            //QWidget* widget = QWidget::createWindowContainer(window);
-        //            ////widget->showMaximized();
-        //            //  SetWindowPos(WNID, HWND_TOP, 0, 0, 2500, 1300, SWP_NOZORDER | SWP_SHOWWINDOW);
-        //            //  widget->resize(2500, 1300);
-        //            //// 获取 QWidget 的大小
-        //            //QRect geometry = widget->geometry();
-        //            //int width = geometry.width();
-        //            //int height = geometry.height();
-
-        //            // 调整外部窗口的大小和位置
-        //          //  SetWindowPos(WNID, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
-        //            // 创建一个QAxWidget对象
-        //         
-        //        }
-        //       
-        //    }
-        //}
-        //else if (moduleNumber == 3)
-        //{
-        //    WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-        //   
-        //    if (winId != 0)
-        //    {
-        //        QWindow* window = QWindow::fromWinId(winId);
-        //        QWidget* widget = QWidget::createWindowContainer(window);
-        //        widget->setWindowTitle(tabName);
-        //        if (displayMode == 0)
-        //        {
-        //            ui->tabWidgetModulel3->addTab(widget, tabName);
-        //        }
-        //        else
-        //        {
-        //            widget->show();
-        //        }
-        //     
-        //    }
-        //    
-        //}
-        //else if (moduleNumber == 4)
-        //{
-        //    WId winId = (WId)FindWindow(NULL, reinterpret_cast<LPCWSTR>(toolName.constData()));
-        //    if (winId != 0)
-        //    {
-        //        QWindow* window = QWindow::fromWinId(winId);
-        //        QWidget* widget = QWidget::createWindowContainer(window);
-        //        widget->setWindowTitle(tabName);
-        //        if (displayMode == 0)
-        //        {
-        //           
-        //            ui->tabWidgetModulel4->addTab(widget, tabName);
-        //        }
-        //        else
-        //        {
-        //            widget->show();
-        //        }
-        //       
-        //    }
-        //}
-         };
+        table_tools stTool;
+        db::databaseDI::Instance().get_tool(stTool, toolID);
 
         if (moduleNumber == 1)
         {
+            
             QString exeDir = QCoreApplication::applicationDirPath();
             QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
 
-            // 启动bsp 
-            //common::startDspExe(strDspPath);
-            // 嵌入
+            // 启动bsp  
+            // 使用 std::bind 绑定参数
+            //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
+            QString strIp = QString::fromStdString(stTool.ip);
+            QString userName= "Administrator";
+            QString password = "Ate123";
+            std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
 
-           // QAxWidget* rdp = ui.axWidget;
             QAxWidget* rdp = new QAxWidget;
             //connect(&rdp, &QAxWidget::4
             connect(rdp, SIGNAL(ActiveXEvent()), this, SLOT(onActiveXEvent()));
-            rdp->dynamicCall("MethodName()");
+         //   rdp->dynamicCall("MethodName()");
             rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
-            bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
-            b = rdp->setProperty("UserName", "Administrator"); // 用户名
-            b = rdp->setProperty("Password", "Ate123"); // 密码
+          //  bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
+            //b = rdp->setProperty("UserName", "Administrator"); // 用户名
+            //b = rdp->setProperty("Password", "Ate123"); // 密码
+            bool b = rdp->setProperty("Server", strIp); // 远程桌面的IP地址
+            b = rdp->setProperty("UserName", userName); // 用户名
+            b = rdp->setProperty("Password", password); // 密码
 
             b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
             b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
@@ -597,7 +496,7 @@ void MainWindow::slot_btnAddToolTab()
             QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
             if (pAdvancedObject)
             {
-                b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //用户密码(这种方式每次都不需要手动输入密码)
+                b = pAdvancedObject->setProperty("ClearTextPassword", password);     //用户密码(这种方式每次都不需要手动输入密码)
                 b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
                 b = pAdvancedObject->setProperty("PublicMode", true);
                 //高级参数,可选项

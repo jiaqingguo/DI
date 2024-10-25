@@ -60,6 +60,7 @@ namespace db
 
 		// 工具表;
 		bool get_tools(std::list<table_tools>& listTools, const int &module);
+		bool get_tool(table_tools& stTools, const int& toolId);
 		bool get_tools(std::list<table_tools>& listTools);
 		bool add_tools( table_tools& stTool);
 		bool add_ip_tools(table_ip &stIp);
@@ -115,5 +116,9 @@ namespace db
 		bool get_load_software(std::list<table_one_load_software> &listData);
 		bool del_load_software(std::string software,int &userid, const int &module);
 		bool get_software(std::string software, int &userid,const int &module);
+
+		// 远程账户密码表;
+		bool get_account_password(table_account_password& stAccount);
+		bool update_account_use_state(const int& id, int& approval);
 	};
 }
