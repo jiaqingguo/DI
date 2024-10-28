@@ -463,23 +463,26 @@ void MainWindow::slot_btnAddToolTab()
             return;
         }
 
-        if (db::databaseDI::Instance().get_account_password(stAccount))
-        {
-
-        }
-       QString strIp = QString::fromStdString(stTool.ip);
+        
+       
+      // QString strIp = QString::fromStdString(stTool.ip);
+      //  QString strIp;
        QString userName = "Administrator";
        QString password = "Ate123";
 
        
         if (moduleNumber == 1)
         {
-            
+            table_ip stipToolData;
+            if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+            {
+                return;
+            }
             QString exeDir = QCoreApplication::applicationDirPath();
             QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
 
             //1. 启动远端的udp;
-            startUdpRdp(strIp);
+            startUdpRdp(QString::fromStdString(stipToolData.ip));
             
             // 2.告诉udp要启动的软件;
             // 使用 std::bind 绑定参数
@@ -489,7 +492,7 @@ void MainWindow::slot_btnAddToolTab()
            strSendData += toolPath;
            // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
             // 发送的数据：1用户名&软件路径;
-            udpStartExeThread(strSendData,strIp, 5555);
+            udpStartExeThread(strSendData, QString::fromStdString(stipToolData.ip), 5555);
             //3. 嵌入远端界面;
             QAxWidget* rdp = new QAxWidget;
             //connect(&rdp, &QAxWidget::4
@@ -499,7 +502,7 @@ void MainWindow::slot_btnAddToolTab()
            // bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
             //b = rdp->setProperty("UserName", "Administrator"); // 用户名
             //b = rdp->setProperty("Password", "Ate123"); // 密码
-            bool b = rdp->setProperty("Server", strIp); // 远程桌面的IP地址
+            bool b = rdp->setProperty("Server", QString::fromStdString(stipToolData.ip)); // 远程桌面的IP地址
             b = rdp->setProperty("UserName", userName); // 用户名
             b = rdp->setProperty("Password", password); // 密码
 
@@ -555,28 +558,38 @@ void MainWindow::slot_btnAddToolTab()
         }
         else if(moduleNumber==2)
         {
-            QString exeDir = QCoreApplication::applicationDirPath();
-            //int i = common::iSoftStartHostNum %3;
-           // if (common::setHostIps.size() >= i)
-            {
-                //auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-                //std::string strValue = *it;
 
+            QString exeDir = QCoreApplication::applicationDirPath();
+            int i = common::iSoftStartHostNum %3;
+            if (common::setHostIps.size() >= i)
+            {
+                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+                std::string strIP = *it;
+                common::iSoftStartHostNum++;
 
                 //QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
                 //    +QString::fromStdString(strValue) + "/"+toolName + ".rdp";
 
                
-                //common::iSoftStartHostNum++;
+                //
 
-               // strDspPath = "D:\\Visual Studio 2017.rdp";
-                // 启动bsp 
-              //  common::startDspExe(strDspPath);
-                // 嵌入
+            
+                 //1. 启动远端的udp;
+                startUdpRdp(QString::fromStdString(strIP));
 
+                // 2.告诉udp要启动的软件;
+                // 使用 std::bind 绑定参数
+                //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
+                QString strSendData = "1";
+                strSendData += userName;
+                strSendData += toolPath;
+                // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
+                 // 发送的数据：1用户名&软件路径;
+                udpStartExeThread(strSendData, QString::fromStdString(strIP), 5555);
+                //3. 嵌入远端界面;
                 QAxWidget* rdp = new QAxWidget;
                 rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
-                bool b = rdp->setProperty("Server", "192.168.1.248"); // 远程桌面的IP地址
+                bool b = rdp->setProperty("Server", QString::fromStdString(strIP)); // 远程桌面的IP地址
                 b = rdp->setProperty("UserName", "Administrator"); // 用户名
                 b = rdp->setProperty("Password", "Ate123"); // 密码
 
