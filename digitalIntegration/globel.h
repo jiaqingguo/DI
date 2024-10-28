@@ -58,6 +58,7 @@ struct table_ip
 	std::string		username;
 	std::string		icoPath;
 	uint32_t        number = 0;
+	std::string     toolPath;
 	
 };
 

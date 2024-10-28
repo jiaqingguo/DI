@@ -54,7 +54,9 @@ void AddToolDialog::init()
 		{
 			const std::string& software = stTool.first;
 			const table_ip& data = stTool.second;
-			ui->comboBoxToolNames->addItem(QString::fromStdString(software));
+			//ui->comboBoxToolNames->addItem(QString::fromStdString(software));
+
+			ui->comboBoxToolNames->addItem(QString::fromStdString(software), QVariant(QString::fromStdString(data.toolPath))); // 添加 "Item 3"，设置数据为 3
 		}
 	}
 

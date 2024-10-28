@@ -632,7 +632,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
 
-			this->UdpSocket->writeDatagram("receive information", addr, port);
+			this->UdpSocket->writeDatagram("send to daili information", addr, port);
             // ²åÈëÊý¾Ý¿â;
            /* table_ip stIp;
             stIp.ip = infor->host_ip.toStdString();

@@ -735,6 +735,7 @@ namespace db
 			table_ip stData;
 			stData.icoPath = sql_row[7];
 			stData.number = std::atoi(sql_row[8]);
+			stData.toolPath = sql_row[9];
 			softMap[software] = stData;
 		}
 		return true;
