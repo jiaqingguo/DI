@@ -311,10 +311,9 @@ void MainWindow::initUdp()
     m_udp = new CCtrlNetwork();
     m_udp->init(5555);
 }
-void MainWindow::udpStartExeThread(const QString strIp, const int port)
-{
-   
-    const char* sendData;// = data.c_str();
+void MainWindow::udpStartExeThread(const QString strData, const QString strIp, const int port)
+{ 
+    const char* sendData= strData.toStdString().c_str();// = data.c_str();
    
     sockaddr_in m_sockaddr_in;
     m_sockaddr_in.sin_family = AF_INET;
@@ -326,7 +325,7 @@ void MainWindow::udpStartExeThread(const QString strIp, const int port)
     }
     else
     {
-        std::cout << " sendData : " << sendData << std::endl;
+        std::cout << " sendData: " << sendData << std::endl;
     }
 
     // 接收数据;
@@ -341,7 +340,7 @@ void MainWindow::udpStartExeThread(const QString strIp, const int port)
             break;
         }
 
-      /*  Json jsonData = Json::parse(s_buf);
+      /* Json jsonData = Json::parse(s_buf);
         std::cout << " recvData : " << s_buf << std::endl;
         int jsonArraySize = jsonData["plcdata"].size();
         if (jsonArraySize > m_inputNames.size())
@@ -448,11 +447,11 @@ void MainWindow::slot_btnAddToolTab()
         QString tabName;
         int mode = -1;
         int displayMode = 0;
-        int toolID = -1;
-        addToooDialog.getToolData(tabName,toolName, toolID,mode, displayMode);
+        QString  toolPath = -1;
+        addToooDialog.getToolData(tabName,toolName, toolPath,mode, displayMode);
         //QWidget* pWidget = new QWidget;
-        table_tools stTool;
-        db::databaseDI::Instance().get_tool(stTool, toolID);
+        //table_tools stTool;
+      //  db::databaseDI::Instance().get_tool(stTool, toolID);
         table_account_password stAccount;
         if (db::databaseDI::Instance().get_account_password(stAccount))
         {
@@ -463,28 +462,41 @@ void MainWindow::slot_btnAddToolTab()
         {
             return;
         }
-        QString strIp = QString::fromStdString(stTool.ip);
-        QString userName = "Administrator";
-        QString password = "Ate123";
 
+        if (db::databaseDI::Instance().get_account_password(stAccount))
+        {
+
+        }
+       QString strIp = QString::fromStdString(stTool.ip);
+       QString userName = "Administrator";
+       QString password = "Ate123";
+
+       
         if (moduleNumber == 1)
         {
             
             QString exeDir = QCoreApplication::applicationDirPath();
             QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
 
-            // 启动bsp  
+            //1. 启动远端的udp;
+            startUdpRdp(strIp);
+            
+            // 2.告诉udp要启动的软件;
             // 使用 std::bind 绑定参数
             //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
-           
+            QString strSendData="1";
+            strSendData += userName;
+           strSendData += toolPath;
            // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
-            udpStartExeThread(strIp, 5555);
+            // 发送的数据：1用户名&软件路径;
+            udpStartExeThread(strSendData,strIp, 5555);
+            //3. 嵌入远端界面;
             QAxWidget* rdp = new QAxWidget;
             //connect(&rdp, &QAxWidget::4
             connect(rdp, SIGNAL(ActiveXEvent()), this, SLOT(onActiveXEvent()));
-         //   rdp->dynamicCall("MethodName()");
+          //  rdp->dynamicCall("MethodName()");
             rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
-          //  bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
+           // bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
             //b = rdp->setProperty("UserName", "Administrator"); // 用户名
             //b = rdp->setProperty("Password", "Ate123"); // 密码
             bool b = rdp->setProperty("Server", strIp); // 远程桌面的IP地址
@@ -758,6 +770,85 @@ void MainWindow::updateModuleToolIcon(int module)
 				pLayout->addWidget(pBtn);
 			}
         }
+    }
+}
+
+void MainWindow::startUdpRdp(const QString ip)
+{
+    QAxWidget* rdp = new QAxWidget;
+    rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+    bool b = rdp->setProperty("Server", "192.168.1.248"); // 远程桌面的IP地址
+    b = rdp->setProperty("UserName", "Administrator"); // 用户名
+    b = rdp->setProperty("Password", "Ate123"); // 密码
+
+    b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
+    b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
+    b = rdp->setProperty("ConnectingText", QString::fromUtf8("MATLAB"));
+    b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+
+    //普通参数,可选项
+    rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
+    b = rdp->setProperty("DisplayAlerts", false);    //不显示任何警告信息
+    b = rdp->setProperty("DisplayScrollBars", true); //显示滚动条
+    b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
+
+
+    //高级参数
+    QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
+    if (pAdvancedObject)
+    {
+        b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //用户密码(这种方式每次都不需要手动输入密码)
+        b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
+
+        b = pAdvancedObject->setProperty("PublicMode", false);
+        //高级参数,可选项
+        b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
+        b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
+        b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
+
+
+    }
+
+    QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+    if (pSecuredmObject)
+    {
+
+        b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files/Polyspace/R2021a/bin/");
+        b = pSecuredmObject->setProperty("StartProgram", "matlab.exe");
+    }
+    QAxObject* pRdpClientShell = rdp->querySubObject("MsRdpClientShell");
+    if (pRdpClientShell)
+    {
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "screen mode id", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "redirectclipboard", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "redirectprinters", 0);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "redirectcomports", 0);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "redirectsmartcards", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "devicestoredirect", "*");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "drivestoredirect", "*");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "redirectdrives", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "session bpp", 32);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "prompt for credentials on client", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "span monitors", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "use multimon", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "remoteapplicationmode", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "server port", 3389);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "allow font smoothing", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "promptcredentialonce", 0);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "videoplaybackmode", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "audiocapturemode", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "gatewayusagemethod", 0);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "gatewayprofileusagemethod", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "gatewaycredentialssource", 0);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "full address", ip);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "alternate shell", "||devenv");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "remoteapplicationprogram", "||devenv");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "remoteapplicationname", "Visual Studio 2017");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "workspace id", "AD.jhapp.com");
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,int)", "use redirection server name", 1);
+    	pRdpClientShell->dynamicCall("SetRdpProperty(string,string)", "loadbalanceinfo", "tsv://MS Terminal Services Plugin.1.RDAPP");
+    	b = pRdpClientShell->setProperty("PublicMode", true);
+    	pRdpClientShell->dynamicCall("Launch()");
     }
 }
 

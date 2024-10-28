@@ -80,6 +80,7 @@ namespace db
 		bool get_ip_count(const std::string& ip, int& count);
 		//在新增工具画面中 显示t_ip中的所有的ip
 		bool get_all_ip_data(std::list<table_ip>& listData);
+		bool get_ip_data(table_ip &stData,const std::string strToolName,const int &number);
 		//将t_ip中的username字段设置成用户名，显示已占用
 		bool updata_ip_username(const int& status, const std::string& u_name, const uint32_t& id);
 		//退出时，t_ip的username字段置0

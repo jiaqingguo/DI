@@ -176,11 +176,11 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
 	}
 }
 
-void AddToolDialog::getToolData(QString& tabName, QString& toolName, int& toolID, int& model, int& iDisplayMode)
+void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode)
 {
 	tabName = ui->lineEditTabName->text();
 	toolName = ui->comboBoxToolNames->currentText();
-	toolID = ui->comboBoxToolNames->currentData(Qt::UserRole).toInt();
+	toolPath = ui->comboBoxToolNames->currentData(Qt::UserRole).toString();
 	model = ui->comboBoxDisplayMode->currentIndex();
 	iDisplayMode = ui->comboBoxDisplayMode->currentIndex();
 }
