@@ -47,6 +47,7 @@ void AddToolInfoDialog::getToolsData(table_ip& toolsData,std::string ipdata[6])
 	//QString strPath = ui->lineEditToolPath->text();
 	//strPath.replace("\\","\\\\");
 	//toolData.path = strPath.toStdString();
+	toolsData.toolPath = ui->lineEditToolPath->text().replace("\\", "\\\\").toStdString();
 	toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
 	ipdata[0] = ui->lineEditIP1->text().toStdString();
 	ipdata[1] = ui->lineEditIP2->text().toStdString();

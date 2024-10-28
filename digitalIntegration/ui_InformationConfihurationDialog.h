@@ -79,7 +79,7 @@ public:
     {
         if (InformationConfihurationDialog->objectName().isEmpty())
             InformationConfihurationDialog->setObjectName(QString::fromUtf8("InformationConfihurationDialog"));
-        InformationConfihurationDialog->resize(791, 719);
+        InformationConfihurationDialog->resize(791, 715);
         verticalLayout_13 = new QVBoxLayout(InformationConfihurationDialog);
         verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
         splitter = new QSplitter(InformationConfihurationDialog);

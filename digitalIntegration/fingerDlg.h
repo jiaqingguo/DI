@@ -80,6 +80,7 @@ public:
 signals:
 	void login_succ();
 	void regist_succ();
+	void no_regist_finger();
 //private slots:
 //	void onCapture();
 

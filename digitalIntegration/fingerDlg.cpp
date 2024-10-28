@@ -359,7 +359,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			db::databaseDI::Instance().get_user_finger2(str, nLastLogTempLen2, common::iUserID);
 			date = QStringToChar(str);
 			
-			if (szLastLogTemplate2 && nLastLogTempLen2 != 0)
+			if (!str.isEmpty() && nLastLogTempLen2 != 0)
 			{
 				
 					//ZKFPM_DBAdd(hDBCache, Tid++, szLastLogTemplate2, nLastLogTempLen2);
@@ -385,7 +385,8 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 			}
 			else
 			{
-				MessageBox(NULL, TEXT("此用户没有注册指纹"), TEXT("提示"), 0);
+				MessageBox(NULL, TEXT("此用户没有注册指纹,请更换用户登录"), TEXT("提示"), 0);
+				emit no_regist_finger();
 			}
 		}
 		else if (approval == 2)

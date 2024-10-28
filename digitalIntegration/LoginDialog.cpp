@@ -41,6 +41,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	this->m_fingerDlg->finger_init();
 	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
 	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
+	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);
 
 	/*this->m_zkfDev = new ZKFingerDev();
 	m_zkfDev->InitDevice();
@@ -263,4 +264,9 @@ void LoginDialog::slot_login_succ()
 void LoginDialog::slot_regist_succ()
 {
 	registerDialog->close();
+}
+
+void LoginDialog::slot_no_regist_finger()
+{
+	ui->stackedWidget->setCurrentIndex(0);
 }

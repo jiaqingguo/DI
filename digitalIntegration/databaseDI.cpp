@@ -629,7 +629,7 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, R"(insert into t_ip(ip,host,software,module,used,userName,iconPath,number) values('%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d'))",
+		sprintf_s(sql, R"(insert into t_ip(ip,host,software,module,used,userName,iconPath,number,toolPath) values('%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%s'))",
 			stIp.ip.c_str(),
 			stIp.host.c_str(),
 			stIp.software.c_str(),
@@ -637,7 +637,8 @@ namespace db
 			stIp.used,
 			stIp.username.c_str(),
 			stIp.icoPath.c_str(),
-			stIp.number);
+			stIp.number,
+			stIp.toolPath.c_str());
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -1472,17 +1473,15 @@ namespace db
 		if (result == nullptr)
 			return false;
 
-		bool flag = false;
+		
 		//int i = 0;
 		while (sql_row = mysql_fetch_row(result))
 		{
 			templen = std::atoi(sql_row[1]);
 			str = QString::fromStdString(sql_row[0]);
-
-			flag = true;
 			
 		}
-		return flag;
+		return true;
 	}
 
 	//bool databaseDI::add_user_finger(const std::string& ffingerdata, int fingerlen)
