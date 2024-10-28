@@ -637,78 +637,7 @@ void FtpClientClass::execute_getFile(string rec_name)
 //	closesocket(sockClient);	//关闭连接
 //	WSACleanup();				//释放Winsock
 }
-//int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
-//{
-//	char operation[10], name[1024];		//操作与文件名
-//	char order[1024] = "\0";				//输入的命令
-//	char buff[1024];						//用来存储经过字符串格式化的order
-//	FILE* fd1, * fd2;					//File协议主要用于访问本地计算机中的文件，fd指针指向要访问的目标文件 
-//	int cnt;
-//
-//	char buff_test[100];
-//
-//
-//	//发送连接请求成功，初始化数据
-//
-//	memset(buff, 0, sizeof(buff));
-//	memset(rbuff, 0, sizeof(rbuff));
-//	memset(sbuff, 0, sizeof(sbuff));
-//
-//	string str_name = filePath;
-//	strcpy(name, filePath.c_str());
-//	//将指令整合进order，并存放进buff
-//	strcat(order, "get"), strcat(order, " "), strcat(order, name);
-//	sprintf(buff, order);
-//	if (sendTCP(buff) == -1)									//发送指令
-//	{
-//		return 0;
-//	}
-//	while (1)
-//	{
-//		int num=recv(sockClient, rbuff, 1024, 0);		//接收信息 
-//		cout << rbuff << endl;							//pwd功能在这里已经实现
-//		if (strncmp(rbuff, "openFailed", 10) == 0)
-//		{
-//			return 1;
-//		}
-//		if (strncmp(rbuff, "get", 3) == 0)
-//		{			///下载功能
-//			
-//			fd1 = fopen(NewFilePath.c_str(), "wb");                    //用二进制的方式打开文件，wb表示打开或新建一个二进制文件（只允许写数据）
-//			if (fd1 == NULL)
-//			{
-//				cout << "打开或者新建 " << NewFilePath << "文件失败" << endl;
-//				//return 1;
-//			}
-//			memset(rbuff, 0, sizeof(rbuff));
-//			int size = 0;
-//			while ((cnt = recv(sockClient, rbuff, 1024, 0)) > 0) 
-//			{
-//
-//				if (strncmp(rbuff , "get-end", 7) == 0)
-//				{
-//					break;
-//				}
-//				if (strncmp(rbuff + cnt - 7, "get-end", 7) == 0)
-//				{
-//					// ?????????????????   可能会服务端发送的最后一拍无法完整的加上get-end;
-//					memset(rbuff + cnt, 0, sizeof(rbuff) - cnt);
-//					fwrite(rbuff, 1, cnt, fd1);
-//					break;
-//				}
-//				fwrite(rbuff, 1, cnt, fd1);
-//				memset(rbuff, 0, sizeof(rbuff));
-//				
-//			}
-//			
-//			fclose(fd1);
-//
-//			return 0;
-//		}//get
-//	}
-//	
-//	return 0;
-//}
+
 
 int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 {
@@ -749,8 +678,17 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		{
 			// 接收实际数据
 			memset(buffer, 0, sizeof(buffer));
+			if (recv_size > 10240)
+			{
+				
+				cout << "---------------------- recv_size : " << recv_size << " : " << recv_size << endl;
+			}
 			bytes_received = recv(sockClient, buffer, recv_size, 0);
 			cout << "bytes_received and recv_size : " << bytes_received<< " : "<<recv_size << endl;
+			if (bytes_received < 0)
+			{
+				cout << "execute_getFile() 连接失败，错误代码: " << WSAGetLastError() << endl;
+			}
 			// 将接收到的数据写入文件
 			file.write(buffer, bytes_received);
 					

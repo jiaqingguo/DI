@@ -893,10 +893,7 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 		const wchar_t* lpcwstr = wstr.c_str();
 		SetCurrentDirectory(lpcwstr);//设置当前目录
 
-		/*if (!m_FtpClientClass->newConnection())
-			return;*/
-
-			//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
+		//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
 		m_GifDialog->show();

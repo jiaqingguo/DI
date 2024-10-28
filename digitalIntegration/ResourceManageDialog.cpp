@@ -615,7 +615,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             QByteArray datagram;
             datagram.resize(this->UdpSocket->pendingDatagramSize());
 			qint64 bytesRead = this->UdpSocket->readDatagram(datagram.data(), datagram.size(),&addr,&port);
-			qDebug() << addr.toString();
+			//qDebug() << addr.toString();
 			if (bytesRead <= 0)
 			{
 				//应该是在列表中删除那一行的信息

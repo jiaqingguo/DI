@@ -463,8 +463,6 @@ void MainWindow::slot_btnAddToolTab()
             return;
         }
 
-        
-       
       // QString strIp = QString::fromStdString(stTool.ip);
       //  QString strIp;
        QString userName = "Administrator";
@@ -534,7 +532,6 @@ void MainWindow::slot_btnAddToolTab()
             QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
             if (pSecuredmObject)
             {
-
                 b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/");
                 b = pSecuredmObject->setProperty("StartProgram", "devenv.exe");
             }
