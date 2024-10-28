@@ -998,7 +998,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_ip_data(table_ip& stData, const std::string strToolName, const int& number)
+	bool databaseDI::get_one_ip_data(table_ip& stData, const std::string strToolName, const int& number)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
@@ -1014,11 +1014,11 @@ namespace db
 		while (sql_row = mysql_fetch_row(result))
 		{
 			stData.id = std::atoi(sql_row[0]);
-			stData.host = sql_row[1];
-			stData.ip = sql_row[2];
+			stData.ip = sql_row[1];
+			stData.host = sql_row[2];
 			stData.module = std::atoi(sql_row[3]);
-			stData.used = std::atoi(sql_row[4]);
-			stData.username = sql_row[5];
+			stData.software = (sql_row[4]);
+			stData.module = std::atoi(sql_row[5]);
 		}
 		return true;
 	}
