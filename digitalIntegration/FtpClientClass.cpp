@@ -688,6 +688,7 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 			if (bytes_received < 0)
 			{
 				cout << "execute_getFile() 连接失败，错误代码: " << WSAGetLastError() << endl;
+				break;
 			}
 			// 将接收到的数据写入文件
 			file.write(buffer, bytes_received);
