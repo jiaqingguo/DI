@@ -337,7 +337,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 	//{
 	if (m_bIdentify)   //识别按钮被点击
 	{
-		unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
+		//unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
 		int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
 
 		int ret = ZKFP_ERR_OK;

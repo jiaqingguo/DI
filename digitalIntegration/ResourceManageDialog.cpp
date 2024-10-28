@@ -605,9 +605,10 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 	
     // UDP的连接
     this->UdpSocket = new QUdpSocket();
-    //this->thread = new QThread(this);
-    //this->UdpSocket->moveToThread(this->thread);
-    this->UdpSocket->bind(QHostAddress::Any, 54321);
+    
+    //this->UdpSocket->bind(QHostAddress::Any, 54321);
+	this->UdpSocket->bind(QHostAddress::AnyIPv4,54321,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+
 
     connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
         while (this->UdpSocket->hasPendingDatagrams())
@@ -615,7 +616,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             QByteArray datagram;
             datagram.resize(this->UdpSocket->pendingDatagramSize());
 			qint64 bytesRead = this->UdpSocket->readDatagram(datagram.data(), datagram.size(),&addr,&port);
-			qDebug() << addr.toString();
+			//qDebug() << addr.toString();
 			if (bytesRead <= 0)
 			{
 				//应该是在列表中删除那一行的信息
@@ -632,7 +633,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
 
-			this->UdpSocket->writeDatagram("send to daili information", addr, port);
+			//this->UdpSocket->writeDatagram("send to daili information", addr, port);
             // 插入数据库;
            /* table_ip stIp;
             stIp.ip = infor->host_ip.toStdString();

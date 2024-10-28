@@ -81,7 +81,7 @@ void RegisterDialog::slot_btnRegister()
 				QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
 				return;
 			}
-
+			MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
 			this->accept();
 		}
 	}
@@ -120,7 +120,7 @@ void RegisterDialog::slot_btnRegister()
 					QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
 					return;
 				}
-
+				MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
 				this->accept();
 			}
 		}

@@ -36,11 +36,12 @@ void InformationConfihurationDialog::init()
 	m_AddIpInfoDialog = new AddIpInfoDialog(this);
 
 	m_modelTool1 = new QStandardItemModel();
-	m_modelTool1->setColumnCount(2);
+	m_modelTool1->setColumnCount(3);
 	//m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
 	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
-	//m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
+	m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	
 	ui->tableViewTool1->setModel(m_modelTool1);
 	common::setTableViewBasicConfiguration(ui->tableViewTool1);
 
@@ -63,29 +64,29 @@ void InformationConfihurationDialog::init()
 
 
 	m_modelTool2 = new QStandardItemModel();
-	m_modelTool2->setColumnCount(2);
+	m_modelTool2->setColumnCount(3);
 	//m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
 	m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
-	//m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
+	m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool2->setModel(m_modelTool2);
 	common::setTableViewBasicConfiguration(ui->tableViewTool2);
 
 	m_modelTool3 = new QStandardItemModel();
-	m_modelTool3->setColumnCount(2);
+	m_modelTool3->setColumnCount(3);
 	//m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
 	m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
-	//m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
+	m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool3->setModel(m_modelTool3);
 	common::setTableViewBasicConfiguration(ui->tableViewTool3);
 
 	m_modelTool4 = new QStandardItemModel();
-	m_modelTool4->setColumnCount(2);
+	m_modelTool4->setColumnCount(3);
 	//m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
 	m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
-	//m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
-	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
+	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
+	m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
 	ui->tableViewTool4->setModel(m_modelTool4);
 	common::setTableViewBasicConfiguration(ui->tableViewTool4);
 
@@ -195,6 +196,7 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 		{
 			const std::string& software = stTool.first;
 			const table_ip& data = stTool.second;
+			
 			/*   model->appendRow(QList<QStandardItem*>()
 				   << new QStandardItem(QString::fromStdString(stTool.host))
 				   << new QStandardItem(QString::fromStdString(stTool.name))
@@ -212,7 +214,8 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 				//QModelIndex index = model->index(newRowIndex, 0);
 				//model->setData(index, QString::fromStdString(stTool.first), Qt::UserRole);  // 设置id;
 				model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
-				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.icoPath)));
+				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.toolPath)));
+				model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(data.icoPath)));
 			}
 		}
 
