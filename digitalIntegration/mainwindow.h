@@ -128,7 +128,7 @@ public:
     ~MainWindow();
 	void initInitface();
 	void initUdp();
-	void udpStartExeThread(const QString strIp,const int port);
+	void udpStartExeThread(const QString strData,const QString strIp,const int port);
 	void showRegisterDialog();
 	void setUserNameText(const QString& userName);
 	
@@ -155,7 +155,7 @@ private slots:
 	void slot_downlaodFinsh();
 private:
 	void updateModuleToolIcon(int module);
-
+	void startUdpRdp(const QString ip);
 	
 private:
     Ui::MainWindow *ui;
