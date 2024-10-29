@@ -153,9 +153,15 @@ private slots:
 	void slot_updateModuleToolIcon(int module);
 
 	void slot_downlaodFinsh();
+
+	void slot_tabModule1closeTab(int index);
+	void slot_tabModule2closeTab(int index);
+	void slot_tabModule3closeTab(int index);
+	void slot_tabModule4closeTab(int index);
 private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
+	void startLongDistanceSoftware(const QString tabName ,const std::string strIp, const std::string strAccaunt, const std::string pwd, const  std::string path,QTabWidget* tabWidget=nullptr);
 	
 private:
     Ui::MainWindow *ui;
