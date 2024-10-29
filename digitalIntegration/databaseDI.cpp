@@ -1017,9 +1017,13 @@ namespace db
 			stData.id = std::atoi(sql_row[0]);
 			stData.ip = sql_row[1];
 			stData.host = sql_row[2];
-			stData.module = std::atoi(sql_row[3]);
-			stData.software = (sql_row[4]);
-			stData.module = std::atoi(sql_row[5]);
+			stData.software = (sql_row[3]);
+			stData.module = std::atoi(sql_row[4]);
+			stData.used = std::atoi(sql_row[5]);
+			stData.username = (sql_row[6]);
+			stData.icoPath = (sql_row[7]);
+			stData.number= std::atoi(sql_row[8]);
+			stData.toolPath = (sql_row[9]);;
 		}
 		return true;
 	}
@@ -1674,7 +1678,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_account_password where '0' LIMIT 1");
+		sprintf_s(sql, "select * from t_account_password where used='0' LIMIT 1");
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)

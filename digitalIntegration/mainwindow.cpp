@@ -239,6 +239,8 @@ void MainWindow::initInitface()
     connect(ui->btnDataManage, &QPushButton::clicked, this, &MainWindow::slot_btnDataManageClicked);
     connect(ui->btnApprovalProgress, &QPushButton::clicked, this, &MainWindow::slot_btnApprovalProgressClicked);
 
+    ui->tabWidgetModulel1->setTabsClosable(true);
+    ui->tabWidgetModulel2->setTabsClosable(true);
     // 初始化模块1-4界面;
     ui->tabWidgetModulel1->removeTab(1);
     ui->tabWidgetModulel2->removeTab(1);
@@ -456,7 +458,7 @@ void MainWindow::slot_btnAddToolTab()
         if (db::databaseDI::Instance().get_account_password(stAccount))
         {
             int state = 1;
-            db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
+            //db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
         }
         else
         {
@@ -465,79 +467,90 @@ void MainWindow::slot_btnAddToolTab()
 
       // QString strIp = QString::fromStdString(stTool.ip);
       //  QString strIp;
-       QString userName = "Administrator";
-       QString password = "Ate123";
+     /*  QString userName = "Administrator";
+       QString password = "Ate123";*/
 
-       
+        table_ip stipToolData;
+        if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+        {
+            return;
+        }
+
         if (moduleNumber == 1)
         {
-            table_ip stipToolData;
-            if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
-            {
-                return;
-            }
-            QString exeDir = QCoreApplication::applicationDirPath();
-            QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + toolName + ".rdp";
-
-            //1. 启动远端的udp;
-            startUdpRdp(QString::fromStdString(stipToolData.ip));
-            
-            // 2.告诉udp要启动的软件;
-            // 使用 std::bind 绑定参数
-            //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
-            QString strSendData="1";
-            strSendData += userName;
-           strSendData += toolPath;
-           // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
-            // 发送的数据：1用户名&软件路径;
-            udpStartExeThread(strSendData, QString::fromStdString(stipToolData.ip), 5555);
-            //3. 嵌入远端界面;
+           
+   
+            // 嵌入远端界面;
             QAxWidget* rdp = new QAxWidget;
-            //connect(&rdp, &QAxWidget::4
-            connect(rdp, SIGNAL(ActiveXEvent()), this, SLOT(onActiveXEvent()));
-          //  rdp->dynamicCall("MethodName()");
             rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
-           // bool b = rdp->setProperty("Server", "192.168.1.247"); // 远程桌面的IP地址
-            //b = rdp->setProperty("UserName", "Administrator"); // 用户名
-            //b = rdp->setProperty("Password", "Ate123"); // 密码
-            bool b = rdp->setProperty("Server", QString::fromStdString(stipToolData.ip)); // 远程桌面的IP地址
-            b = rdp->setProperty("UserName", userName); // 用户名
-            b = rdp->setProperty("Password", password); // 密码
 
+            bool b = rdp->setProperty("Server", stipToolData.ip.c_str()); // 远程桌面的IP地址
+            b = rdp->setProperty("UserName", stAccount.account.c_str()); // 用户名
+            b = rdp->setProperty("Password", stAccount.password.c_str()); // 密码
+            //b = rdp->setProperty("FullScreen", true); // 是否全屏
             b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
             b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
-          //  b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+            b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
             b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+            //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
+            b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
+            //b = rdp->setProperty("LaunchedViaClientShellInterface", true);
 
             //普通参数,可选项
             rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
-            b = rdp->setProperty("DisplayAlerts", false);    //不显示任何警告信息
-            b = rdp->setProperty("DisplayScrollBars", true); //显示滚动条
             b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
 
-
             //高级参数
-            QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
+            QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
             if (pAdvancedObject)
             {
-                b = pAdvancedObject->setProperty("ClearTextPassword", password);     //用户密码(这种方式每次都不需要手动输入密码)
+                b = pAdvancedObject->setProperty("ClearTextPassword", stAccount.password.c_str());     //用户密码(这种方式每次都不需要手动输入密码)
                 b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
-                b = pAdvancedObject->setProperty("PublicMode", true);
+
                 //高级参数,可选项
                 b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
                 b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
                 b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
+                b = pAdvancedObject->setProperty("RedirectDrives", true);
+                //b = pAdvancedObject->setProperty("keepAliveInterval", 30000); 
+                //b = pAdvancedObject->setProperty("MaximizeShell", 0); 
+                b = pAdvancedObject->setProperty("RedirectSmartCards", true);
+                b = pAdvancedObject->setProperty("DisableCtrlAltDel", 1);
+                //b = pAdvancedObject->setProperty("AuthenticationLevel", 2);
             }
 
+            QAxObject* pTransportObject = rdp->querySubObject("TransportSettings4");
+            if (pTransportObject)
+            {
+                b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+                //b = pTransportObject->setProperty("GatewayUserSelectedCredsSource", 0x4);
+                //b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+            }
+
+            bool securedSettingsEnabled = rdp->property("SecuredSettingsEnabled").value<bool>();
             QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+           // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
+            QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
+         //   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
+            QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
+
+            QString strArguments = strArguments1 + " \"" + QString::fromStdString(stipToolData.toolPath) + "\"";
+
             if (pSecuredmObject)
             {
-                b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/");
-                b = pSecuredmObject->setProperty("StartProgram", "devenv.exe");
+                b = pSecuredmObject->setProperty("Fullscreen", true);
+                //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
+                //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
+                b = pSecuredmObject->setProperty("StartProgram", strArguments);
+                //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
+                //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
+                //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe"));
+                b = pSecuredmObject->setProperty("AudioRedirectionMode", true);
+                b = pSecuredmObject->setProperty("KeyboardHookMode", true);
+                //b = pSecuredmObject->setProperty("PCB", "2013");
             }
 
-
-            QVariant v2 = rdp->dynamicCall("Connect()"); //连接
+            QVariant v2 = rdp->dynamicCall("Connect()"); // 连接
             QWidget* axTabWidget = new QWidget();
             QVBoxLayout* layout = new QVBoxLayout(axTabWidget);
             layout->addWidget(rdp);
@@ -549,6 +562,7 @@ void MainWindow::slot_btnAddToolTab()
             }
             else
             {
+                axTabWidget->showMaximized();
                 axTabWidget->show();
             }
 
@@ -564,69 +578,80 @@ void MainWindow::slot_btnAddToolTab()
                 std::string strIP = *it;
                 common::iSoftStartHostNum++;
 
-                //QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
-                //    +QString::fromStdString(strValue) + "/"+toolName + ".rdp";
-
-               
-                //
+         
 
             
-                 //1. 启动远端的udp;
-                startUdpRdp(QString::fromStdString(strIP));
-
-                // 2.告诉udp要启动的软件;
-                // 使用 std::bind 绑定参数
-                //auto boundFunction = std::bind(&MainWindow::udpStartExeThread, this, stTool.ip, 5556);
-                QString strSendData = "1";
-                strSendData += userName;
-                strSendData += toolPath;
-                // std::thread t(&MainWindow::udpStartExeThread, this, strIp, 5556);
-                 // 发送的数据：1用户名&软件路径;
-                udpStartExeThread(strSendData, QString::fromStdString(strIP), 5555);
+                //std::string strIP = "192.168.1.251";
                 //3. 嵌入远端界面;
+                 // 嵌入远端界面;
                 QAxWidget* rdp = new QAxWidget;
                 rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
-                bool b = rdp->setProperty("Server", QString::fromStdString(strIP)); // 远程桌面的IP地址
-                b = rdp->setProperty("UserName", "Administrator"); // 用户名
-                b = rdp->setProperty("Password", "Ate123"); // 密码
 
+                bool b = rdp->setProperty("Server", strIP.c_str()); // 远程桌面的IP地址
+                b = rdp->setProperty("UserName", stAccount.account.c_str()); // 用户名
+                b = rdp->setProperty("Password", stAccount.password.c_str()); // 密码
+                //b = rdp->setProperty("FullScreen", true); // 是否全屏
                 b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
                 b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
-                b = rdp->setProperty("ConnectingText", QString::fromUtf8("MATLAB"));
+                b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
                 b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+                //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
+                b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
+                //b = rdp->setProperty("LaunchedViaClientShellInterface", true);
 
                 //普通参数,可选项
                 rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
-                b = rdp->setProperty("DisplayAlerts", false);    //不显示任何警告信息
-                b = rdp->setProperty("DisplayScrollBars", true); //显示滚动条
                 b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
 
-
                 //高级参数
-                QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
+                QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
                 if (pAdvancedObject)
                 {
-                    b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //用户密码(这种方式每次都不需要手动输入密码)
+                    b = pAdvancedObject->setProperty("ClearTextPassword", stAccount.password.c_str());     //用户密码(这种方式每次都不需要手动输入密码)
                     b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
 
-                    b = pAdvancedObject->setProperty("PublicMode", false);
                     //高级参数,可选项
                     b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
                     b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
                     b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
-
-                  
+                    b = pAdvancedObject->setProperty("RedirectDrives", true);
+                    //b = pAdvancedObject->setProperty("keepAliveInterval", 30000); 
+                    //b = pAdvancedObject->setProperty("MaximizeShell", 0); 
+                    b = pAdvancedObject->setProperty("RedirectSmartCards", true);
+                    b = pAdvancedObject->setProperty("DisableCtrlAltDel", 1);
+                    //b = pAdvancedObject->setProperty("AuthenticationLevel", 2);
                 }
 
+                QAxObject* pTransportObject = rdp->querySubObject("TransportSettings4");
+                if (pTransportObject)
+                {
+                    b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+                    //b = pTransportObject->setProperty("GatewayUserSelectedCredsSource", 0x4);
+                    //b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+                }
+
+                bool securedSettingsEnabled = rdp->property("SecuredSettingsEnabled").value<bool>();
                 QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+                // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
+                QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
+                //   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
+                QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
+
+                QString strArguments = strArguments1 + " \"" + QString::fromStdString(stipToolData.toolPath) + "\"";
+
                 if (pSecuredmObject)
                 {
-
-                    b = pSecuredmObject->setProperty("WorkDir", "C:/Program Files/Polyspace/R2021a/bin/");
-                    b = pSecuredmObject->setProperty("StartProgram", "matlab.exe");
+                    b = pSecuredmObject->setProperty("Fullscreen", true);
+                    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
+                    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
+                    b = pSecuredmObject->setProperty("StartProgram", strArguments);
+                    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
+                    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
+                    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe"));
+                    b = pSecuredmObject->setProperty("AudioRedirectionMode", true);
+                    b = pSecuredmObject->setProperty("KeyboardHookMode", true);
+                    //b = pSecuredmObject->setProperty("PCB", "2013");
                 }
-
-
                 QVariant v2 = rdp->dynamicCall("Connect()"); //连接
                 QWidget* axTabWidget = new QWidget();
                 QVBoxLayout* layout = new QVBoxLayout(axTabWidget);
@@ -639,6 +664,7 @@ void MainWindow::slot_btnAddToolTab()
                 }
                 else
                 {
+                    axTabWidget->showMaximized();
                     axTabWidget->show();
                 }
             }

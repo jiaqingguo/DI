@@ -678,11 +678,11 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		{
 			// 接收实际数据
 			memset(buffer, 0, sizeof(buffer));
-			if (recv_size > 10240)
-			{
-				
-				cout << "---------------------- recv_size : " << recv_size << " : " << recv_size << endl;
-			}
+			///*if (recv_size > 10240)
+			//{
+			//	
+			//	cout << "---------------------- recv_size : " << recv_size << " : " << recv_size << endl;
+			//}*/
 			bytes_received = recv(sockClient, buffer, recv_size, 0);
 			cout << "bytes_received and recv_size : " << bytes_received<< " : "<<recv_size << endl;
 			if (bytes_received < 0)
