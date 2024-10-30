@@ -24,6 +24,9 @@ private slots:
 	void slot_btnAdd();
 	void slot_btnDel();
 	void slot_btnOK();
+
+signals:
+	void one_load_tools(int module,const QString &toolsName);
 };
 
 #endif // ONECLICKLOADDIALOG_H

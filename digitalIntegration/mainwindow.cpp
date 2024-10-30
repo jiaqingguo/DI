@@ -198,6 +198,7 @@ void MainWindow::initInitface()
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
     m_OneClickLoadDialog = new OneClickLoadDialog(this);
+	connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
     m_OneClickSaveDialog = new OneClickSaveDialog(this);
 
@@ -535,11 +536,6 @@ void MainWindow::slot_btnAddToolTab()
         //QWidget* pWidget = new QWidget;
         //table_tools stTool;
       //  db::databaseDI::Instance().get_tool(stTool, toolID);
-       
-
-
-      // QString strIp = QString::fromStdString(stTool.ip);
-      //  QString strIp;
 
 
         table_ip stipToolData;
@@ -552,19 +548,20 @@ void MainWindow::slot_btnAddToolTab()
         {
             QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
         }
-      
-
+  
        QString strPwd = "123456";
-       // strAccount = "user";
-        //stAccount.account = "user";
+    
         if (moduleNumber == 1)
         {
+
             if (displayMode == 0)
             {
+               
                 startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel1);
             }
             else
             {
+              
                 startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
             }
             // 嵌入远端界面;
@@ -665,6 +662,7 @@ void MainWindow::slot_btnAddToolTab()
                 std::string strIP = *it;
                 common::iSoftStartHostNum++;
 
+				strIP = "192.168.1.247";
                 if (displayMode == 0)
                 {
                     startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(),  stipToolData.toolPath, ui->tabWidgetModulel2);
@@ -881,7 +879,46 @@ void MainWindow::slot_tabModule1closeTab(int index)
     {
         return;
     }
-    // 创建消息框
+ // 创建消息框
+    QMessageBox msgBox;
+    // 设置消息框的内容
+    msgBox.setText(QString::fromLocal8Bit("请先关闭内部窗口，否则可能无法很快再次连接软件:"));
+    // 创建自定义按钮
+    QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("坚持关闭"), QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("取消关闭"), QMessageBox::RejectRole);
+    // 设置消息框的图标
+    msgBox.setIcon(QMessageBox::Information);
+    // 显示消息框
+    msgBox.exec();
+    // 判断按下的是哪个按钮
+    if (msgBox.clickedButton() != button1) {
+        //qDebug() << "用户选择了 选项 1";
+        return;
+    }
+    /*else (msgBox.clickedButton() == button3) {
+        qDebug() << "用户选择了 取消";
+    }*/
+    // 通过 axTabWidget 获取 rdp 的指针
+    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
+    if (axTabWidget)
+    {
+        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
+        if (rdp)
+        {
+            rdp->dynamicCall("Disconnect()");
+            rdp->dynamicCall("RequestClose()");//关闭插件
+        }
+    }
+           ui->tabWidgetModulel1->removeTab(index); // 移除标签
+}
+
+void MainWindow::slot_tabModule2closeTab(int index)
+{
+    if (index <= 0)
+    {
+        return;
+    }
+ // 创建消息框
     QMessageBox msgBox;
     // 设置消息框的内容
     msgBox.setText(QString::fromLocal8Bit("请先关闭内部窗口，否则可能无法很快再次连接软件:"));
@@ -912,32 +949,6 @@ void MainWindow::slot_tabModule1closeTab(int index)
         }
     }
        
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
-}
-
-void MainWindow::slot_tabModule2closeTab(int index)
-{
-    if (index <= 0)
-    {
-        return;
-    }
-    // 创建消息框
-    QMessageBox msgBox;
-    // 设置消息框的内容
-    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
-    // 创建自定义按钮
-    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
-    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
-    // 设置消息框的图标
-    msgBox.setIcon(QMessageBox::Information);
-    // 显示消息框
-    msgBox.exec();
-    // 判断按下的是哪个按钮
-    if (msgBox.clickedButton() != button1) {
-        //qDebug() << "用户选择了 选项 1";
-        return;
-    }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
 }
 
 void MainWindow::slot_tabModule3closeTab(int index)
@@ -946,13 +957,13 @@ void MainWindow::slot_tabModule3closeTab(int index)
     {
         return;
     }
-    // 创建消息框
+ // 创建消息框
     QMessageBox msgBox;
     // 设置消息框的内容
-    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
+    msgBox.setText(QString::fromLocal8Bit("请先关闭内部窗口，否则可能无法很快再次连接软件:"));
     // 创建自定义按钮
-    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
-    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
+    QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("坚持关闭"), QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("取消关闭"), QMessageBox::RejectRole);
     // 设置消息框的图标
     msgBox.setIcon(QMessageBox::Information);
     // 显示消息框
@@ -962,7 +973,21 @@ void MainWindow::slot_tabModule3closeTab(int index)
         //qDebug() << "用户选择了 选项 1";
         return;
     }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
+    /*else (msgBox.clickedButton() == button3) {
+        qDebug() << "用户选择了 取消";
+    }*/
+    // 通过 axTabWidget 获取 rdp 的指针
+    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
+    if (axTabWidget)
+    {
+        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
+        if (rdp)
+        {
+            rdp->dynamicCall("Disconnect()");
+            rdp->dynamicCall("RequestClose()");//关闭插件
+        }
+    }
+       
 }
 
 void MainWindow::slot_tabModule4closeTab(int index)
@@ -971,13 +996,13 @@ void MainWindow::slot_tabModule4closeTab(int index)
     {
         return;
     }
-    // 创建消息框
+ // 创建消息框
     QMessageBox msgBox;
     // 设置消息框的内容
-    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
+    msgBox.setText(QString::fromLocal8Bit("请先关闭内部窗口，否则可能无法很快再次连接软件:"));
     // 创建自定义按钮
-    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
-    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
+    QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("坚持关闭"), QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("取消关闭"), QMessageBox::RejectRole);
     // 设置消息框的图标
     msgBox.setIcon(QMessageBox::Information);
     // 显示消息框
@@ -987,7 +1012,21 @@ void MainWindow::slot_tabModule4closeTab(int index)
         //qDebug() << "用户选择了 选项 1";
         return;
     }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
+    /*else (msgBox.clickedButton() == button3) {
+        qDebug() << "用户选择了 取消";
+    }*/
+    // 通过 axTabWidget 获取 rdp 的指针
+    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
+    if (axTabWidget)
+    {
+        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
+        if (rdp)
+        {
+            rdp->dynamicCall("Disconnect()");
+            rdp->dynamicCall("RequestClose()");//关闭插件
+        }
+    }
+       
 }
 
 void MainWindow::updateModuleToolIcon(int module)
@@ -1131,8 +1170,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
     b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
     b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
-    b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
-    b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+    //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+    b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
     //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
     b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
     //b = rdp->setProperty("LaunchedViaClientShellInterface", true);
@@ -1208,17 +1247,67 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
 }
 
 
-//void MainWindow::slot_login_succ()
-//{
-//    int loginStatus = 1;
-//    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
-//
-//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-//    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-//
-//	this->m_LoginDialog->accept();
-//
-//	if (m_fingerDlg != nullptr)
-//		delete m_fingerDlg;
-//}
+void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
+{
+	table_account_password stAccount;
+	if (db::databaseDI::Instance().get_account_password(stAccount))
+	{
+		int state = 1;
+		db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
+	}
+	else
+	{
+		return;
+	}
+
+	table_ip stipToolData;
+	if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
+	{
+		return;
+	}
+	if (moduleNum == 1)
+	{
+		stipToolData.ip = "192.168.1.247";
+		startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
+	}
+	else if(moduleNum == 2)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+
+			stipToolData.ip = "192.168.1.247";
+
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
+		}
+	}
+	else if (moduleNum == 3)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel3);
+		}
+	}
+	else
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel4);
+		}
+	}
+}
 
