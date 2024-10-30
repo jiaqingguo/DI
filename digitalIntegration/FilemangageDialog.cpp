@@ -896,6 +896,7 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 		//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
 		m_GifDialog->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 		int ret =m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
@@ -951,7 +952,7 @@ void FilemangageDialog::slot_actionDelDir()
 	dirPath.replace("/", "\\\\");
 	parentDir.replace("/", "\\\\");
 
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在删除文件夹..."));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("正在删除文件夹"));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
@@ -993,6 +994,7 @@ void FilemangageDialog::slot_actionDownload()
 		newDirPath.replace("/", "\\\\");
 
 		
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
 		m_GifDialog->show();
 	
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
