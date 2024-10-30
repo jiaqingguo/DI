@@ -137,6 +137,8 @@ public:
 
 	bool showLoginDialog();
 
+
+	QString  getAccaunt(const QString& strIP,const QString strSoft);
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
@@ -200,6 +202,8 @@ private:
 
 	bool bUserIp = true;
 	CCtrlNetwork* m_udp;
+	 //  <ip,<软件 ，用户名int
+	QMap<QString, QMap<QString, int>> m_mapAccaunt;
 	//指纹
 	//fingerDlg *m_fingerDlg = nullptr;
 

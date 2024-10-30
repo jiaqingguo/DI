@@ -102,29 +102,29 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
     setWindowIcon(QIcon(":/image/tubiao.png"));
-    QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
+    //QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
-    // 创建 QProcess 对象
-    QProcess process;
+    //// 创建 QProcess 对象
+    //QProcess process;
 
-    // 启动 cmd 进程并执行命令
-    process.start("cmd.exe", QStringList() << "/C" << command);
+    //// 启动 cmd 进程并执行命令
+    //process.start("cmd.exe", QStringList() << "/C" << command);
 
-    // 等待命令执行完成
-    if (process.waitForFinished())
-    {
-        // 获取命令输出（用于调试或查看结果）
-        QString output = process.readAllStandardOutput();
-        QString error = process.readAllStandardError();
+    //// 等待命令执行完成
+    //if (process.waitForFinished())
+    //{
+    //    // 获取命令输出（用于调试或查看结果）
+    //    QString output = process.readAllStandardOutput();
+    //    QString error = process.readAllStandardError();
 
-        // 打印输出到控制台
-        qDebug() << "Output:" << output;
-        qDebug() << "Error:" << error;
-    }
-    else
-    {
-        qDebug() << "Process failed to start or execute.";
-    }
+    //    // 打印输出到控制台
+    //    qDebug() << "Output:" << output;
+    //    qDebug() << "Error:" << error;
+    //}
+    //else
+    //{
+    //    qDebug() << "Process failed to start or execute.";
+    //}
     // qss文件监控类
     m_pQssAutoLoader = new QssAutoLoader;
     QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
@@ -133,13 +133,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 	initInitface();
 
-    QString target = "\\\\192.168.0.250\\"; // 实际路径
-    QString username = "share"; // 实际用户名
-    QString password = "Share123"; // 实际密码
+    //QString target = "\\\\192.168.0.250\\"; // 实际路径
+    //QString username = "share"; // 实际用户名
+    //QString password = "Share123"; // 实际密码
 
-    common::addNetworkCredential(target, username, password);
+    //common::addNetworkCredential(target, username, password);
 
-   
+    m_mapAccaunt.clear();
 }
 
 
@@ -399,6 +399,80 @@ bool MainWindow::showLoginDialog()
     return false;
 }
 
+
+
+QString MainWindow::getAccaunt(const QString& strIP, const QString strSoft)
+{
+    QString strAccaunt = "";
+    if (common::iLoginNum <= 3)
+    {
+        if (m_mapAccaunt.contains(strIP))
+        {
+            QMap<QString, int>& mapData = m_mapAccaunt[strIP];
+            if (mapData.contains(strSoft))
+            {
+                int user = mapData[strSoft];
+                user++;
+                if (user > 3)
+                {
+                    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+
+                    return QString();
+                }
+                strAccaunt = "user" + QString::number(user);
+                mapData[strSoft]++;
+            }
+            else
+            {
+                mapData.insert(strSoft, 1);
+                strAccaunt = "user1";
+            }
+ 
+           
+        }
+        else
+        {
+            m_mapAccaunt[strIP].insert(strSoft, 1);
+            strAccaunt = "user1";
+        }
+    }
+    else
+    {
+        if (m_mapAccaunt.contains(strIP))
+        {
+            QMap<QString, int>& mapData = m_mapAccaunt[strIP];
+            if (mapData.contains(strSoft))
+            {
+                int user = mapData[strSoft];
+                user++;
+                if (user > 6)
+                {
+                    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+
+                    return QString();
+                }
+                strAccaunt = "user" + QString::number(user);
+                mapData[strSoft]++;
+            }
+            else
+            {
+                mapData.insert(strSoft, 4);
+                strAccaunt = "user4";
+            }
+
+
+        }
+        else
+        {
+            m_mapAccaunt[strIP].insert(strSoft, 4);
+            strAccaunt = "user4";
+        }
+    }
+    return strAccaunt;
+}
+
+
+
 void MainWindow::slot_btnResourceManageClicked()
 {
     m_ResourceManageDialog->startWebFlushTimer();
@@ -461,37 +535,37 @@ void MainWindow::slot_btnAddToolTab()
         //QWidget* pWidget = new QWidget;
         //table_tools stTool;
       //  db::databaseDI::Instance().get_tool(stTool, toolID);
-        table_account_password stAccount;
-        if (db::databaseDI::Instance().get_account_password(stAccount))
-        {
-            int state = 1;
-            //db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
-        }
-        else
-        {
-            return;
-        }
+       
+
 
       // QString strIp = QString::fromStdString(stTool.ip);
       //  QString strIp;
-     /*  QString userName = "Administrator";
-       QString password = "Ate123";*/
+
 
         table_ip stipToolData;
         if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
         {
             return;
         }
+        QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolName);
+        if (strAccount.isEmpty())
+        {
+            QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+        }
+      
 
+       QString strPwd = "123456";
+       // strAccount = "user";
+        //stAccount.account = "user";
         if (moduleNumber == 1)
         {
             if (displayMode == 0)
             {
-                startLongDistanceSoftware(tabName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
+                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel1);
             }
             else
             {
-                startLongDistanceSoftware(tabName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath);
+                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
             }
             // 嵌入远端界面;
          //   QAxWidget* rdp = new QAxWidget;
@@ -593,11 +667,11 @@ void MainWindow::slot_btnAddToolTab()
 
                 if (displayMode == 0)
                 {
-                    startLongDistanceSoftware(tabName, strIP, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(),  stipToolData.toolPath, ui->tabWidgetModulel2);
                 }
                 else
                 {
-                    startLongDistanceSoftware(tabName, strIP, stAccount.account, stAccount.password, stipToolData.toolPath);
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
                 }
          
                
@@ -703,11 +777,11 @@ void MainWindow::slot_btnAddToolTab()
 
                 if (displayMode == 0)
                 {
-                    startLongDistanceSoftware(tabName, strIP, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel3);
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel3);
                 }
                 else
                 {
-                    startLongDistanceSoftware(tabName, strIP, stAccount.account, stAccount.password, stipToolData.toolPath);
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
                 }
               }
          }
@@ -793,9 +867,7 @@ void MainWindow::slot_btnOneClickSave()
 
 void MainWindow::slot_updateModuleToolIcon(int module)
 {
-
     updateModuleToolIcon(module);
-
 }
 
 void MainWindow::slot_downlaodFinsh()
@@ -809,6 +881,37 @@ void MainWindow::slot_tabModule1closeTab(int index)
     {
         return;
     }
+    // 创建消息框
+    QMessageBox msgBox;
+    // 设置消息框的内容
+    msgBox.setText(QString::fromLocal8Bit("请先关闭内部窗口，否则可能无法很快再次连接软件:"));
+    // 创建自定义按钮
+    QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("坚持关闭"), QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("取消关闭"), QMessageBox::RejectRole);
+    // 设置消息框的图标
+    msgBox.setIcon(QMessageBox::Information);
+    // 显示消息框
+    msgBox.exec();
+    // 判断按下的是哪个按钮
+    if (msgBox.clickedButton() != button1) {
+        //qDebug() << "用户选择了 选项 1";
+        return;
+    }
+    /*else (msgBox.clickedButton() == button3) {
+        qDebug() << "用户选择了 取消";
+    }*/
+    // 通过 axTabWidget 获取 rdp 的指针
+    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
+    if (axTabWidget)
+    {
+        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
+        if (rdp)
+        {
+            rdp->dynamicCall("Disconnect()");
+            rdp->dynamicCall("RequestClose()");//关闭插件
+        }
+    }
+       
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
 }
 
@@ -816,6 +919,22 @@ void MainWindow::slot_tabModule2closeTab(int index)
 {
     if (index <= 0)
     {
+        return;
+    }
+    // 创建消息框
+    QMessageBox msgBox;
+    // 设置消息框的内容
+    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
+    // 创建自定义按钮
+    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
+    // 设置消息框的图标
+    msgBox.setIcon(QMessageBox::Information);
+    // 显示消息框
+    msgBox.exec();
+    // 判断按下的是哪个按钮
+    if (msgBox.clickedButton() != button1) {
+        //qDebug() << "用户选择了 选项 1";
         return;
     }
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
@@ -827,6 +946,22 @@ void MainWindow::slot_tabModule3closeTab(int index)
     {
         return;
     }
+    // 创建消息框
+    QMessageBox msgBox;
+    // 设置消息框的内容
+    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
+    // 创建自定义按钮
+    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
+    // 设置消息框的图标
+    msgBox.setIcon(QMessageBox::Information);
+    // 显示消息框
+    msgBox.exec();
+    // 判断按下的是哪个按钮
+    if (msgBox.clickedButton() != button1) {
+        //qDebug() << "用户选择了 选项 1";
+        return;
+    }
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
 }
 
@@ -834,6 +969,22 @@ void MainWindow::slot_tabModule4closeTab(int index)
 {
     if (index <= 0)
     {
+        return;
+    }
+    // 创建消息框
+    QMessageBox msgBox;
+    // 设置消息框的内容
+    msgBox.setText("请先关闭内部窗口，否则可能无法很快再次连接软件:");
+    // 创建自定义按钮
+    QPushButton* button1 = msgBox.addButton("坚持关闭", QMessageBox::ActionRole);
+    QPushButton* button3 = msgBox.addButton("取消关闭", QMessageBox::RejectRole);
+    // 设置消息框的图标
+    msgBox.setIcon(QMessageBox::Information);
+    // 显示消息框
+    msgBox.exec();
+    // 判断按下的是哪个按钮
+    if (msgBox.clickedButton() != button1) {
+        //qDebug() << "用户选择了 选项 1";
         return;
     }
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
@@ -978,8 +1129,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
     b = rdp->setProperty("Password", pwd.c_str()); // 密码
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
-    b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
-    b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
+    b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
+    b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
     b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
     b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
     //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
@@ -1022,7 +1173,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
     QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
     //   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
-    QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
+    //QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
    
     QString strArguments = strArguments1 + " \"" + QString::fromStdString(path) + "\"";
 
