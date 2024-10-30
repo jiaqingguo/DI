@@ -1160,6 +1160,23 @@ void MainWindow::startUdpRdp(const QString ip)
 
 void MainWindow::startLongDistanceSoftware(const QString tabName, const std::string strIp, const std::string strAccaunt, const std::string pwd, const  std::string path, QTabWidget* tabWidget)
 {
+    int height = 1000;
+    int width = 500;
+    if (tabWidget != nullptr)
+    {
+        if (ui->widgetSize != nullptr)
+        {
+            height = ui->widgetSize->height()-37;
+            width = ui->widgetSize->width()=37;
+        
+        }
+     }
+    else
+    {
+
+    }
+   
+   
     // 嵌入远端界面;
     QAxWidget* rdp = new QAxWidget;
     rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
@@ -1168,8 +1185,10 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
     b = rdp->setProperty("Password", pwd.c_str()); // 密码
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
-    b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
-    b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
+   // b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
+   // b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
+      b = rdp->setProperty("DesktopWidth", width);         //指定宽度
+    b = rdp->setProperty("DesktopHeight", height);        //指定高度
     //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
     b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
     //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));

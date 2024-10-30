@@ -69,6 +69,8 @@ public:
     QPushButton *btnM1Save;
     QTabWidget *tabWidgetModulel1;
     QWidget *tab;
+    QGridLayout *gridLayout_6;
+    QWidget *widgetSize;
     QGridLayout *gridLayout_5;
     QPushButton *btnAddTab1;
     QWidget *tab_2;
@@ -137,7 +139,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(710, 437);
+        MainWindow->resize(1190, 1031);
         MainWindow->setMinimumSize(QSize(710, 437));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -375,9 +377,15 @@ public:
         tabWidgetModulel1->setObjectName(QString::fromUtf8("tabWidgetModulel1"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        gridLayout_5 = new QGridLayout(tab);
+        gridLayout_6 = new QGridLayout(tab);
+        gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
+        gridLayout_6->setHorizontalSpacing(0);
+        gridLayout_6->setContentsMargins(0, 0, 0, 0);
+        widgetSize = new QWidget(tab);
+        widgetSize->setObjectName(QString::fromUtf8("widgetSize"));
+        gridLayout_5 = new QGridLayout(widgetSize);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        btnAddTab1 = new QPushButton(tab);
+        btnAddTab1 = new QPushButton(widgetSize);
         btnAddTab1->setObjectName(QString::fromUtf8("btnAddTab1"));
         btnAddTab1->setMinimumSize(QSize(80, 80));
         btnAddTab1->setMaximumSize(QSize(80, 80));
@@ -387,6 +395,9 @@ public:
         btnAddTab1->setFont(font);
 
         gridLayout_5->addWidget(btnAddTab1, 0, 0, 1, 1);
+
+
+        gridLayout_6->addWidget(widgetSize, 0, 0, 1, 1);
 
         tabWidgetModulel1->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -706,7 +717,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 710, 23));
+        menubar->setGeometry(QRect(0, 0, 1190, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
