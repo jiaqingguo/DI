@@ -198,6 +198,7 @@ void MainWindow::initInitface()
     m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
     m_OneClickLoadDialog = new OneClickLoadDialog(this);
+	connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
     m_OneClickSaveDialog = new OneClickSaveDialog(this);
 
@@ -465,7 +466,7 @@ void MainWindow::slot_btnAddToolTab()
         if (db::databaseDI::Instance().get_account_password(stAccount))
         {
             int state = 1;
-            //db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
+            db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
         }
         else
         {
@@ -485,6 +486,7 @@ void MainWindow::slot_btnAddToolTab()
 
         if (moduleNumber == 1)
         {
+			stipToolData.ip = "192.168.1.247";
             if (displayMode == 0)
             {
                 startLongDistanceSoftware(tabName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
@@ -591,6 +593,7 @@ void MainWindow::slot_btnAddToolTab()
                 std::string strIP = *it;
                 common::iSoftStartHostNum++;
 
+				strIP = "192.168.1.247";
                 if (displayMode == 0)
                 {
                     startLongDistanceSoftware(tabName, strIP, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
@@ -809,6 +812,7 @@ void MainWindow::slot_tabModule1closeTab(int index)
     {
         return;
     }
+	//MessageBox(NULL, TEXT("请先关闭所使用的工具，在关闭此Tab页"), TEXT("提示"), 0);
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
 }
 
@@ -818,7 +822,8 @@ void MainWindow::slot_tabModule2closeTab(int index)
     {
         return;
     }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
+
+    ui->tabWidgetModulel2->removeTab(index); // 移除标签
 }
 
 void MainWindow::slot_tabModule3closeTab(int index)
@@ -827,7 +832,7 @@ void MainWindow::slot_tabModule3closeTab(int index)
     {
         return;
     }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
+    ui->tabWidgetModulel3->removeTab(index); // 移除标签
 }
 
 void MainWindow::slot_tabModule4closeTab(int index)
@@ -836,7 +841,7 @@ void MainWindow::slot_tabModule4closeTab(int index)
     {
         return;
     }
-    ui->tabWidgetModulel1->removeTab(index); // 移除标签
+    ui->tabWidgetModulel4->removeTab(index); // 移除标签
 }
 
 void MainWindow::updateModuleToolIcon(int module)
@@ -980,8 +985,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
     b = rdp->setProperty("DesktopWidth", this->width());         //指定宽度
     b = rdp->setProperty("DesktopHeight", this->height());        //指定高度
-    b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
-    b = rdp->setProperty("DisconnectedText", QString::fromUtf8("启动失败"));
+    //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+    b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
     //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
     b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
     //b = rdp->setProperty("LaunchedViaClientShellInterface", true);
@@ -1057,17 +1062,67 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
 }
 
 
-//void MainWindow::slot_login_succ()
-//{
-//    int loginStatus = 1;
-//    db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
-//
-//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-//    db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-//
-//	this->m_LoginDialog->accept();
-//
-//	if (m_fingerDlg != nullptr)
-//		delete m_fingerDlg;
-//}
+void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
+{
+	table_account_password stAccount;
+	if (db::databaseDI::Instance().get_account_password(stAccount))
+	{
+		int state = 1;
+		db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
+	}
+	else
+	{
+		return;
+	}
+
+	table_ip stipToolData;
+	if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
+	{
+		return;
+	}
+	if (moduleNum == 1)
+	{
+		stipToolData.ip = "192.168.1.247";
+		startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
+	}
+	else if(moduleNum == 2)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+
+			stipToolData.ip = "192.168.1.247";
+
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
+		}
+	}
+	else if (moduleNum == 3)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel3);
+		}
+	}
+	else
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel4);
+		}
+	}
+}
 

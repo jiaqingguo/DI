@@ -158,6 +158,8 @@ private slots:
 	void slot_tabModule2closeTab(int index);
 	void slot_tabModule3closeTab(int index);
 	void slot_tabModule4closeTab(int index);
+
+	void slot_one_load_tools(int moduleNum,const QString &toolsName);//一键加载的槽函数
 private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
@@ -200,13 +202,6 @@ private:
 
 	bool bUserIp = true;
 	CCtrlNetwork* m_udp;
-	//指纹
-	//fingerDlg *m_fingerDlg = nullptr;
-
-//public slots:
-	//void slot_login_succ();
-
-
 
 };
 

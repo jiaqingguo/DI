@@ -12,6 +12,7 @@
 #include "globel.h"
 #include "databaseDI.h"
 #include "database.h"
+#include "mainwindow.h"
 
 OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	QDialog(parent),
@@ -95,7 +96,7 @@ void OneClickLoadDialog::slot_btnDel()
 		QVariant module_data = m_model->data(indexThird, Qt::DisplayRole);
 		// 打印或者处理数据
 		//qDebug() << "要删除的数据是：" << data.toString();
-		if (!db::databaseDI::Instance().del_load_software(name_data.toString().toStdString(), common::iUserID,module_data.toUInt()))
+		if (!db::databaseDI::Instance().del_load_software(name_data.toString().toStdString(), common::iUserID, module_data.toUInt()))
 			return;
 
 		m_model->removeRow(index.row()); // 删除第2行（索引从0开始）
@@ -122,17 +123,16 @@ void OneClickLoadDialog::slot_btnOK()
 		{
 			if (item_software)
 			{
-				QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item_software->text() + ".rdp";
-				qDebug() << strDspPath;
-				//启动bsp的嵌入
-				int a = 1;
+				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
+				//QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item_software->text() + ".rdp";
+				//qDebug() << strDspPath;
 
 				//插入数据库
 				table_one_load_software stData;
 				stData.projectPath = item_software->text().toStdString();
 				stData.module = item_module->data(Qt::DisplayRole).toInt();
 				stData.userID = common::iUserID;
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID,stData.module))
+				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
 				{
 					if (!db::databaseDI::Instance().add_load_software(stData))
 					{
@@ -141,31 +141,18 @@ void OneClickLoadDialog::slot_btnOK()
 				}
 			}
 		}
-		else //模块2 3 4 
+		else if (item_module->data(Qt::DisplayRole).toInt() == 2)
 		{
 			if (item_software)
 			{
-				int i = common::iSoftStartHostNum % 3;
-				if (common::setHostIps.size() >= i)
-				{
-					auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-					std::string strValue = *it;
-
-
-					QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/"
-						+ QString::fromStdString(strValue) + "/" + item_software->text() + ".rdp";
-					qDebug() << strDspPath;
-					// 启动bsp嵌入
-					int a = 1;
-					common::iSoftStartHostNum++;
-				}
+				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
 
 				//插入数据库
 				table_one_load_software stData;
 				stData.projectPath = item_software->text().toStdString();
 				stData.userID = common::iUserID;
 				stData.module = item_module->data(Qt::DisplayRole).toInt();
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID,stData.module))
+				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
 				{
 					if (!db::databaseDI::Instance().add_load_software(stData))
 					{
@@ -174,7 +161,47 @@ void OneClickLoadDialog::slot_btnOK()
 				}
 			}
 		}
+		else if (item_module->data(Qt::DisplayRole).toInt() == 3)
+		{
+			if (item_software)
+			{
+				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
 
+				//插入数据库
+				table_one_load_software stData;
+				stData.projectPath = item_software->text().toStdString();
+				stData.userID = common::iUserID;
+				stData.module = item_module->data(Qt::DisplayRole).toInt();
+				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				{
+					if (!db::databaseDI::Instance().add_load_software(stData))
+					{
+						return;
+					}
+				}
+			}
+			else
+			{
+				if (item_software)
+				{
+					emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
+
+					//插入数据库
+					table_one_load_software stData;
+					stData.projectPath = item_software->text().toStdString();
+					stData.userID = common::iUserID;
+					stData.module = item_module->data(Qt::DisplayRole).toInt();
+					if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+					{
+						if (!db::databaseDI::Instance().add_load_software(stData))
+						{
+							return;
+						}
+					}
+				}
+
+			}
+		}
 	}
 	this->close();
 }
