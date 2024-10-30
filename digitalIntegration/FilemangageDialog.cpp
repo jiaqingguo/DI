@@ -772,7 +772,6 @@ void FilemangageDialog::slot_btnUploading()
 	const wchar_t* lpcwstr = wstr.c_str();
 	SetCurrentDirectory(lpcwstr);//设置当前目录
 
-
 	directoryPath.replace("/", "\\\\");
 
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();

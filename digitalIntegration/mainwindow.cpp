@@ -948,7 +948,7 @@ void MainWindow::slot_tabModule2closeTab(int index)
             rdp->dynamicCall("RequestClose()");//¹Ø±Õ²å¼þ
         }
     }
-       
+    ui->tabWidgetModulel2->removeTab(index); // ÒÆ³ý±êÇ©
 }
 
 void MainWindow::slot_tabModule3closeTab(int index)
@@ -987,7 +987,7 @@ void MainWindow::slot_tabModule3closeTab(int index)
             rdp->dynamicCall("RequestClose()");//¹Ø±Õ²å¼þ
         }
     }
-       
+    ui->tabWidgetModulel3->removeTab(index); // ÒÆ³ý±êÇ©   
 }
 
 void MainWindow::slot_tabModule4closeTab(int index)
@@ -1026,7 +1026,7 @@ void MainWindow::slot_tabModule4closeTab(int index)
             rdp->dynamicCall("RequestClose()");//¹Ø±Õ²å¼þ
         }
     }
-       
+    ui->tabWidgetModulel4->removeTab(index); // ÒÆ³ý±êÇ©    
 }
 
 void MainWindow::updateModuleToolIcon(int module)
@@ -1267,7 +1267,6 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 	}
 	if (moduleNum == 1)
 	{
-		stipToolData.ip = "192.168.1.247";
 		startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
 	}
 	else if(moduleNum == 2)
@@ -1280,7 +1279,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 			std::string strIP = *it;
 			common::iSoftStartHostNum++;
 
-			stipToolData.ip = "192.168.1.247";
+		
 
 			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
 		}
