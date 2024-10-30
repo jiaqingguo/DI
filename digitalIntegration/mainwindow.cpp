@@ -1249,25 +1249,21 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
 
 void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 {
-	table_account_password stAccount;
-	if (db::databaseDI::Instance().get_account_password(stAccount))
-	{
-		int state = 1;
-		db::databaseDI::Instance().update_account_use_state(stAccount.id, state);
-	}
-	else
-	{
-		return;
-	}
-
 	table_ip stipToolData;
 	if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
 	{
 		return;
 	}
+	QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolsName);
+	if (strAccount.isEmpty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+	}
+
+	QString strPwd = "123456";
 	if (moduleNum == 1)
 	{
-		startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel1);
+		startLongDistanceSoftware(toolsName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel1);
 	}
 	else if(moduleNum == 2)
 	{
@@ -1281,7 +1277,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 
 		
 
-			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel2);
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel2);
 		}
 	}
 	else if (moduleNum == 3)
@@ -1293,7 +1289,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
 			std::string strIP = *it;
 			common::iSoftStartHostNum++;
-			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel3);
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel3);
 		}
 	}
 	else
@@ -1305,7 +1301,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
 			std::string strIP = *it;
 			common::iSoftStartHostNum++;
-			startLongDistanceSoftware(toolsName, stipToolData.ip, stAccount.account, stAccount.password, stipToolData.toolPath, ui->tabWidgetModulel4);
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel4);
 		}
 	}
 }
