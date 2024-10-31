@@ -124,8 +124,6 @@ void OneClickLoadDialog::slot_btnOK()
 			if (item_software)
 			{
 				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
-				//QString strDspPath = exeDir + "/dsp/" + QString::number(common::iLoginNum) + "/" + item_software->text() + ".rdp";
-				//qDebug() << strDspPath;
 
 				//²åÈëÊý¾Ý¿â
 				table_one_load_software stData;

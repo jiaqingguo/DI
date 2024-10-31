@@ -1069,24 +1069,26 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
     b = rdp->setProperty("Password", pwd.c_str()); // 密码
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
-   // b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
-   // b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
+    //b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
+    //b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
     int height = this->width() - 29;
     int width = this->height() - 29;
     if (tabWidget != nullptr)
     {
         if (ui->widgetSize != nullptr)
         {
-            height = ui->widgetSize->height() - 37;
-            width = ui->widgetSize->width() - 37;
+            height = ui->widgetSize->height() - 26;
+            width = ui->widgetSize->width() - 26;
+			b = rdp->setProperty("DesktopWidth", width);         //指定宽度
+			b = rdp->setProperty("DesktopHeight", height);        //指定高度
         }
     }
     else
     {
-
+		b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
+		b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
     }
-      b = rdp->setProperty("DesktopWidth", width);         //指定宽度
-    b = rdp->setProperty("DesktopHeight", height);        //指定高度
+      
     //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
     b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
     //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
@@ -1150,6 +1152,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
  
     QVBoxLayout* layout = new QVBoxLayout(widget);
     layout->addWidget(rdp);
+	layout->setMargin(0);
     widget->setLayout(layout);
     widget->m_pAxWidget = rdp;
     if (tabWidget != nullptr)
@@ -1158,6 +1161,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     }
     else
     {
+		widget->setWindowTitle(tabName);
         widget->showMaximized();
         widget->show();
     }
@@ -1166,63 +1170,77 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
 
 void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 {
-	//table_ip stipToolData;
-	//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
-	//{
-	//	return;
-	//}
-	//QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolsName);
-	//if (strAccount.isEmpty())
-	//{
-	//	QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
-	//}
+	table_ip stipToolData;
+	if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
+	{
+		return;
+	}
+	QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolsName);
+	if (strAccount.isEmpty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+		return;
+	}
 
-	//QString strPwd = "123456";
- //  
-	//if (moduleNum == 1)
-	//{
- //       
-	//	startLongDistanceSoftware(toolsName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel1);
-	//}
-	//else if(moduleNum == 2)
-	//{
-	//	QString exeDir = QCoreApplication::applicationDirPath();
-	//	int i = common::iSoftStartHostNum % 3;
-	//	if (common::setHostIps.size() >= i)
-	//	{
-	//		auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-	//		std::string strIP = *it;
-	//		common::iSoftStartHostNum++;
+	QString strPwd = "123456";
+	CWidget* axTabWidget = new CWidget();
+   
+	if (moduleNum == 1)
+	{
+        
+		axTabWidget->m_account = strAccount;
+		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+		axTabWidget->m_softwareName = toolsName;
+		startLongDistanceSoftware(toolsName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+	}
+	else if(moduleNum == 2)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
 
-	//	
+			axTabWidget->m_account = strAccount;
+			axTabWidget->m_ip = QString::fromStdString(strIP);
+			axTabWidget->m_softwareName = toolsName;
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+		}
+	}
+	else if (moduleNum == 3)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
 
-	//		startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel2);
-	//	}
-	//}
-	//else if (moduleNum == 3)
-	//{
-	//	QString exeDir = QCoreApplication::applicationDirPath();
-	//	int i = common::iSoftStartHostNum % 3;
-	//	if (common::setHostIps.size() >= i)
-	//	{
-	//		auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-	//		std::string strIP = *it;
-	//		common::iSoftStartHostNum++;
-	//		startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel3);
-	//	}
-	//}
-	//else
-	//{
-	//	QString exeDir = QCoreApplication::applicationDirPath();
-	//	int i = common::iSoftStartHostNum % 3;
-	//	if (common::setHostIps.size() >= i)
-	//	{
-	//		auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-	//		std::string strIP = *it;
-	//		common::iSoftStartHostNum++;
-	//		startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel4);
-	//	}
-	//}
+			axTabWidget->m_account = strAccount;
+			axTabWidget->m_ip = QString::fromStdString(strIP);
+			axTabWidget->m_softwareName = toolsName;
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget,ui->tabWidgetModulel3);
+		}
+	}
+	else
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		int i = common::iSoftStartHostNum % 3;
+		if (common::setHostIps.size() >= i)
+		{
+			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
+			std::string strIP = *it;
+			common::iSoftStartHostNum++;
+
+			axTabWidget->m_account = strAccount;
+			axTabWidget->m_ip = QString::fromStdString(strIP);
+			axTabWidget->m_softwareName = toolsName;
+			startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+		}
+	}
 }
 
 void MainWindow::slot_widgetAboutToQuit()
