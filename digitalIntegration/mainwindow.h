@@ -28,6 +28,7 @@ class FilemangageDialog;
 class GifDialog;
 class CCtrlNetwork;
 
+struct st_account_data;
 //class fingerDlg;
 
 class EmbeddedWidget : public QWidget {
@@ -137,8 +138,9 @@ public:
 
 	bool showLoginDialog();
 
-
+	void initAccount();
 	QString  getAccaunt(const QString& strIP,const QString strSoft);
+	void     addAccaunt(const int &module, const int& index);
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
@@ -206,8 +208,12 @@ private:
 	CCtrlNetwork* m_udp;
 	//fingerDlg *m_fingerDlg = nullptr;
  //  <ip,<软件 ，用户名int
-	QMap<QString, QMap<QString, int>> m_mapAccaunt;
-	
+	//QMap<QString, QMap<QString, int>> m_mapAccaunt;
+//	<ip, < 软件 ，用户名>
+	QMap<QString, QMap<QString, QVector<QString>>> m_mapAccauntData;
+	QVector<QString> m_vecAccount; //user 1 2 3或4 5 6
+	  // <module   <tabIndex,userName>
+	QMap<int , QMap<int , st_account_data>> m_usedAccaunt;
 
 };
 

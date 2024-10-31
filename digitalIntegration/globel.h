@@ -117,6 +117,14 @@ struct table_account_password
 	std::string     password;
 	uint32_t		used = 0;   // 是否已使用;0:未使用,1已使用;
 };
+struct st_account_data
+{
+	
+	QString     account="";
+
+	QString     ip="";
+	QString     software = "";
+};
 
 enum EUserTable : uint32_t
 {
