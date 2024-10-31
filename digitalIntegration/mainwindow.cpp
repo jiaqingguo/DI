@@ -19,6 +19,7 @@
 #include "common.h"
 #include "GifDialog.h"
 #include "CtrlNetwork.h"
+#include "CWidget.h"
 
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -421,71 +422,6 @@ void MainWindow::initAccount()
 
 QString MainWindow::getAccaunt(const QString& strIP, const QString strSoft)
 {
-  /*  QString strAccaunt = "";
-    if (common::iLoginNum <= 3)
-    {
-        if (m_mapAccaunt.contains(strIP))
-        {
-            QMap<QString, int>& mapData = m_mapAccaunt[strIP];
-            if (mapData.contains(strSoft))
-            {
-                int user = mapData[strSoft];
-                user++;
-                if (user > 3)
-                {
-                    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
-
-                    return QString();
-                }
-                strAccaunt = "user" + QString::number(user);
-                mapData[strSoft]++;
-            }
-            else
-            {
-                mapData.insert(strSoft, 1);
-                strAccaunt = "user1";
-            }
- 
-           
-        }
-        else
-        {
-            m_mapAccaunt[strIP].insert(strSoft, 1);
-            strAccaunt = "user1";
-        }
-    }
-    else
-    {
-        if (m_mapAccaunt.contains(strIP))
-        {
-            QMap<QString, int>& mapData = m_mapAccaunt[strIP];
-            if (mapData.contains(strSoft))
-            {
-                int user = mapData[strSoft];
-                user++;
-                if (user > 6)
-                {
-                    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
-
-                    return QString();
-                }
-                strAccaunt = "user" + QString::number(user);
-                mapData[strSoft]++;
-            }
-            else
-            {
-                mapData.insert(strSoft, 4);
-                strAccaunt = "user4";
-            }
-
-
-        }
-        else
-        {
-            m_mapAccaunt[strIP].insert(strSoft, 4);
-            strAccaunt = "user4";
-        }
-    }*/
     QString strAccaunt = "";
     if (m_mapAccauntData.contains(strIP))
     {
@@ -519,20 +455,30 @@ QString MainWindow::getAccaunt(const QString& strIP, const QString strSoft)
     return strAccaunt;
 }
 
-void MainWindow::addAccaunt(const int& module, const int& index)
+void MainWindow::addAccaunt(const QString& strIP, const QString& strSoft, const QString& strAcc)
 {
-    const auto& stUesdData = m_usedAccaunt[module][index];
-    if (!stUesdData.account.isEmpty())
-    {
-        QVector<QString>& vecUserName = m_mapAccauntData[stUesdData.ip][stUesdData.software];
+    QVector<QString>& vecUserName = m_mapAccauntData[strIP][strSoft];
 
-        if (!vecUserName.contains(stUesdData.account))
-        {
-            vecUserName.append(stUesdData.account);
-        }
+    if (!vecUserName.contains(strAcc))
+    {
+        vecUserName.append(strAcc);
     }
-    m_usedAccaunt[module].remove(index);
 }
+
+//void MainWindow::addAccaunt(const int& module, const int& index)
+//{
+//    const auto& stUesdData = m_usedAccaunt[module][index];
+//    if (!stUesdData.account.isEmpty())
+//    {
+//        QVector<QString>& vecUserName = m_mapAccauntData[stUesdData.ip][stUesdData.software];
+//
+//        if (!vecUserName.contains(stUesdData.account))
+//        {
+//            vecUserName.append(stUesdData.account);
+//        }
+//    }
+//    m_usedAccaunt[module].remove(index);
+//}
 
 
 
@@ -613,24 +559,24 @@ void MainWindow::slot_btnAddToolTab()
         }
   
        QString strPwd = "123456";
-    
+       CWidget* axTabWidget = new CWidget();
         if (moduleNumber == 1)
         {
 
             if (displayMode == 0)
             {
-                st_account_data stUsedData;
-                stUsedData.account = strAccount;
-                stUsedData.ip = strAccount;
-                stUsedData.software = toolName;
-               
-                m_usedAccaunt[1].insert(ui->tabWidgetModulel1->count(), stUsedData);
-                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel1);
+             
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+                axTabWidget->m_softwareName = toolName;
+                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
             }
             else
             {
-              
-                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+                axTabWidget->m_softwareName = toolName;
+                startLongDistanceSoftware(tabName, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
             }
 
 
@@ -649,17 +595,25 @@ void MainWindow::slot_btnAddToolTab()
 			
                 if (displayMode == 0)
                 {
-                    st_account_data stUsedData;
+                    /*st_account_data stUsedData;
                     stUsedData.account = strAccount;
-                    stUsedData.ip = strAccount;
+                    stUsedData.ip = ;
                     stUsedData.software = toolName;
-                    m_usedAccaunt[2].insert(ui->tabWidgetModulel2->count(), stUsedData);
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(),  stipToolData.toolPath, ui->tabWidgetModulel2);
+                    m_usedAccaunt[2].insert(ui->tabWidgetModulel2->count(), stUsedData);*/
+                   
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
+                  
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(),  stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
                 }
                 else
                 {
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
 
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
                 }
          
                
@@ -681,16 +635,18 @@ void MainWindow::slot_btnAddToolTab()
 
                 if (displayMode == 0)
                 {
-                    st_account_data stUsedData;
-                    stUsedData.account = strAccount;
-                    stUsedData.ip = strAccount;
-                    stUsedData.software = toolName;
-                    m_usedAccaunt[3].insert(ui->tabWidgetModulel3->count(), stUsedData);
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel3);
+                   
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath,  axTabWidget,ui->tabWidgetModulel3);
                 }
                 else
                 {
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
                 }
               }
          }
@@ -707,16 +663,18 @@ void MainWindow::slot_btnAddToolTab()
 
                 if (displayMode == 0)
                 {
-                    st_account_data stUsedData;
-                    stUsedData.account = strAccount;
-                    stUsedData.ip = strAccount;
-                    stUsedData.software = toolName;
-                    m_usedAccaunt[4].insert(ui->tabWidgetModulel4->count(), stUsedData);
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel4);
+                   
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget,ui->tabWidgetModulel4);
                 }
                 else
                 {
-                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath);
+                    axTabWidget->m_account = strAccount;
+                    axTabWidget->m_ip = QString::fromStdString(strIP);
+                    axTabWidget->m_softwareName = toolName;
+                    startLongDistanceSoftware(tabName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
                 }
             }
         }
@@ -830,18 +788,20 @@ void MainWindow::slot_tabModule1closeTab(int index)
     }
 
     // 通过 axTabWidget 获取 rdp 的指针
-    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
-    if (axTabWidget)
+    CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel1->widget(index);
+    if (!axTabWidget)
     {
-        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
-        if (rdp)
-        {
-            rdp->dynamicCall("Disconnect()");
-            rdp->dynamicCall("RequestClose()");//关闭插件
-        }
+        return;
     }
-   // if(m_usedAccaunt.)
-    addAccaunt(1, index);// 恢复使用的账号;
+   
+    if (axTabWidget->m_pAxWidget)
+    {
+        axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
+        axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//关闭插件
+    }
+    QString strAcc = axTabWidget->m_account;
+    QString strIp = axTabWidget->m_ip;
+    addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
     
     ui->tabWidgetModulel1->removeTab(index); // 移除标签
 }
@@ -868,21 +828,21 @@ void MainWindow::slot_tabModule2closeTab(int index)
         //qDebug() << "用户选择了 选项 1";
         return;
     }
-    /*else (msgBox.clickedButton() == button3) {
-        qDebug() << "用户选择了 取消";
-    }*/
+   
     // 通过 axTabWidget 获取 rdp 的指针
-    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
-    if (axTabWidget)
+    CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel1->widget(index);
+    if (!axTabWidget)
     {
-        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
-        if (rdp)
-        {
-            rdp->dynamicCall("Disconnect()");
-            rdp->dynamicCall("RequestClose()");//关闭插件
-        }
+        return;
     }
-    addAccaunt(2, index);// 恢复使用的账号;
+    if (axTabWidget->m_pAxWidget)
+    {
+        axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
+        axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//关闭插件
+    }
+    QString strAcc = axTabWidget->m_account;
+    QString strIp = axTabWidget->m_ip;
+    addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
     ui->tabWidgetModulel2->removeTab(index); // 移除标签
 }
 
@@ -905,22 +865,24 @@ void MainWindow::slot_tabModule3closeTab(int index)
     msgBox.exec();
     // 判断按下的是哪个按钮
     if (msgBox.clickedButton() != button1) {
-        //qDebug() << "用户选择了 选项 1";
+      
         return;
     }
    
     // 通过 axTabWidget 获取 rdp 的指针
-    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
-    if (axTabWidget)
+    CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel1->widget(index);
+    if (!axTabWidget)
     {
-        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
-        if (rdp)
-        {
-            rdp->dynamicCall("Disconnect()");
-            rdp->dynamicCall("RequestClose()");//关闭插件
-        }
+        return;
     }
-    addAccaunt(3, index);// 恢复使用的账号;
+    if (axTabWidget->m_pAxWidget)
+    {
+        axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
+        axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//关闭插件
+    }
+    QString strAcc = axTabWidget->m_account;
+    QString strIp = axTabWidget->m_ip;
+    addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
     ui->tabWidgetModulel3->removeTab(index); // 移除标签   
 }
 
@@ -948,17 +910,19 @@ void MainWindow::slot_tabModule4closeTab(int index)
     }
    
     // 通过 axTabWidget 获取 rdp 的指针
-    QWidget* axTabWidget = ui->tabWidgetModulel1->widget(index);
-    if (axTabWidget)
+    CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel1->widget(index);
+    if (!axTabWidget)
     {
-        QAxWidget* rdp = axTabWidget->findChild<QAxWidget*>();
-        if (rdp)
-        {
-            rdp->dynamicCall("Disconnect()");
-            rdp->dynamicCall("RequestClose()");//关闭插件
-        }
+        return;
     }
-    addAccaunt(4, index);// 恢复使用的账号;
+    if (axTabWidget->m_pAxWidget)
+    {
+        axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
+        axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//关闭插件
+    }
+    QString strAcc = axTabWidget->m_account;
+    QString strIp = axTabWidget->m_ip;
+    addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
     ui->tabWidgetModulel4->removeTab(index); // 移除标签    
 }
 
@@ -1091,22 +1055,10 @@ void MainWindow::startUdpRdp(const QString ip)
     }
 }
 
-void MainWindow::startLongDistanceSoftware(const QString tabName, const std::string strIp, const std::string strAccaunt, const std::string pwd, const  std::string path, QTabWidget* tabWidget)
+void MainWindow::startLongDistanceSoftware(const QString tabName, const std::string strIp, const std::string strAccaunt, const std::string pwd, const  std::string path, CWidget* widget, QTabWidget* tabWidget)
 {
-    int height = 1000;
-    int width = 500;
-    if (tabWidget != nullptr)
-    {
-        if (ui->widgetSize != nullptr)
-        {
-            height = ui->widgetSize->height()-37;
-            width = ui->widgetSize->width()-37;
-        }
-     }
-    else
-    {
-
-    }
+    connect(widget, &CWidget::signal_softwareClose, this,&MainWindow::slot_widgetAboutToQuit);
+   
    
    
     // 嵌入远端界面;
@@ -1119,6 +1071,20 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
     //b = rdp->setProperty("FullScreen", true); // 是否全屏
    // b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
    // b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
+    int height = this->width() - 29;
+    int width = this->height() - 29;
+    if (tabWidget != nullptr)
+    {
+        if (ui->widgetSize != nullptr)
+        {
+            height = ui->widgetSize->height() - 37;
+            width = ui->widgetSize->width() - 37;
+        }
+    }
+    else
+    {
+
+    }
       b = rdp->setProperty("DesktopWidth", width);         //指定宽度
     b = rdp->setProperty("DesktopHeight", height);        //指定高度
     //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
@@ -1181,19 +1147,19 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const std::str
         //b = pSecuredmObject->setProperty("PCB", "2013");
     }
     QVariant v2 = rdp->dynamicCall("Connect()"); //连接
-    QWidget* axTabWidget = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout(axTabWidget);
+ 
+    QVBoxLayout* layout = new QVBoxLayout(widget);
     layout->addWidget(rdp);
-    axTabWidget->setLayout(layout);
-
+    widget->setLayout(layout);
+    widget->m_pAxWidget = rdp;
     if (tabWidget != nullptr)
     {
-        tabWidget->addTab(axTabWidget, tabName);
+        tabWidget->addTab(widget, tabName);
     }
     else
     {
-        axTabWidget->showMaximized();
-        axTabWidget->show();
+        widget->showMaximized();
+        widget->show();
     }
 }
 
@@ -1257,5 +1223,17 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 	//		startLongDistanceSoftware(toolsName, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, ui->tabWidgetModulel4);
 	//	}
 	//}
+}
+
+void MainWindow::slot_widgetAboutToQuit()
+{
+    CWidget* axTabWidget = (CWidget*)sender();
+
+    if (axTabWidget)
+    {
+        QString strAcc = axTabWidget->m_account;
+  
+        addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
+    }
 }
 

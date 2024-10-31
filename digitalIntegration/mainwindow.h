@@ -27,6 +27,7 @@ class OneClickLoadDialog;
 class FilemangageDialog;
 class GifDialog;
 class CCtrlNetwork;
+class CWidget;
 
 struct st_account_data;
 //class fingerDlg;
@@ -140,7 +141,7 @@ public:
 
 	void initAccount();
 	QString  getAccaunt(const QString& strIP,const QString strSoft);
-	void     addAccaunt(const int &module, const int& index);
+	void     addAccaunt(const QString& strIP, const QString & strSoft, const QString& strAcc); // 恢复关闭软件已经使用的账户;
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
@@ -164,10 +165,11 @@ private slots:
 	void slot_tabModule4closeTab(int index);
 
 	void slot_one_load_tools(int moduleNum,const QString &toolsName);//一键加载的槽函数
+	void slot_widgetAboutToQuit();
 private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
-	void startLongDistanceSoftware(const QString tabName ,const std::string strIp, const std::string strAccaunt, const std::string pwd, const  std::string path,QTabWidget* tabWidget=nullptr);
+	void startLongDistanceSoftware(const QString tabName ,const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path,CWidget *widget,QTabWidget* tabWidget=nullptr);
 	
 private:
     Ui::MainWindow *ui;
