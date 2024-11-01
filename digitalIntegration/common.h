@@ -50,6 +50,7 @@ namespace common
 	extern QString          strCopyPath;			 // 复制的远程路径;
 	extern QString          strVipPath;				 //   普通用户不能操作的路径;
 	extern table_user       stUser;
+	extern int              index;                //一键加载时，点击不同模块
  	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 

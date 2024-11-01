@@ -38,14 +38,10 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	//connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
 	this->m_fingerDlg = new fingerDlg();
-	this->m_fingerDlg->finger_init();
+	/*this->m_fingerDlg->finger_init();*/
 	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
 	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
 	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);
-
-	/*this->m_zkfDev = new ZKFingerDev();
-	m_zkfDev->InitDevice();
-	m_zkfDev->StartModule();*/
 
 	this->registerDialog = new RegisterDialog();
 }
@@ -156,6 +152,8 @@ void LoginDialog::slot_btnLoginClicked()
 	db::databaseDI::Instance().get_pop(pop, m_sUser.toStdString(), sPassword.toStdString());*/
 	if (stData.Pop == 0)
 	{
+		this->m_fingerDlg->finger_init();
+
 		m_pop = 0;
 		common::bAdministrator = true;
 		ui->btnFingerprint->hide();
@@ -198,7 +196,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	}
 
 
-	this->accept();
+	//this->accept();
 
 
 }

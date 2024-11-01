@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QFileSystemWatcher>
 #include <QApplication>
-
+#include <QPushButton>
 
 
 QT_BEGIN_NAMESPACE
@@ -169,8 +169,8 @@ private slots:
 private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
-	void startLongDistanceSoftware(const QString tabName ,const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path,CWidget *widget,QTabWidget* tabWidget=nullptr);
-	
+	void startLongDistanceSoftware(const QString tabName ,const int &module,const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path,CWidget *widget,QTabWidget* tabWidget=nullptr);
+	int getBtnLoadIndex(QPushButton *btn);
 private:
     Ui::MainWindow *ui;
 

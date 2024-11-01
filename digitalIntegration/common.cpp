@@ -74,6 +74,7 @@ namespace common
     QString                 strCopyPath;                  // 复制的远程路径;
     QString                 strVipPath;				  //   普通用户不能操作的路径;
 	table_user              stUser;
+	int                     index = 0;                       //一键加载时，点击不同模块
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {

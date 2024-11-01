@@ -70,7 +70,7 @@ public:
     QTabWidget *tabWidgetModulel1;
     QWidget *tab;
     QGridLayout *gridLayout_6;
-    QWidget *widgetSize;
+    QWidget *widgetSize1;
     QGridLayout *gridLayout_5;
     QPushButton *btnAddTab1;
     QWidget *tab_2;
@@ -91,6 +91,8 @@ public:
     QTabWidget *tabWidgetModulel2;
     QWidget *tab_3;
     QGridLayout *gridLayout_4;
+    QWidget *widgetSize2;
+    QGridLayout *gridLayout_7;
     QPushButton *btnAddTab2;
     QWidget *tab_4;
     QWidget *page4;
@@ -110,6 +112,8 @@ public:
     QTabWidget *tabWidgetModulel3;
     QWidget *tab_5;
     QGridLayout *gridLayout_3;
+    QWidget *widgetSize3;
+    QGridLayout *gridLayout_8;
     QPushButton *btnAddTab3;
     QWidget *tab_6;
     QWidget *page5;
@@ -129,6 +133,8 @@ public:
     QTabWidget *tabWidgetModulel4;
     QWidget *tab_7;
     QGridLayout *gridLayout;
+    QWidget *widgetSize4;
+    QGridLayout *gridLayout_9;
     QPushButton *btnAddTab4;
     QWidget *tab_8;
     QMenuBar *menubar;
@@ -139,7 +145,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1190, 1031);
+        MainWindow->resize(942, 790);
         MainWindow->setMinimumSize(QSize(710, 437));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -381,11 +387,11 @@ public:
         gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
         gridLayout_6->setHorizontalSpacing(0);
         gridLayout_6->setContentsMargins(0, 0, 0, 0);
-        widgetSize = new QWidget(tab);
-        widgetSize->setObjectName(QString::fromUtf8("widgetSize"));
-        gridLayout_5 = new QGridLayout(widgetSize);
+        widgetSize1 = new QWidget(tab);
+        widgetSize1->setObjectName(QString::fromUtf8("widgetSize1"));
+        gridLayout_5 = new QGridLayout(widgetSize1);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        btnAddTab1 = new QPushButton(widgetSize);
+        btnAddTab1 = new QPushButton(widgetSize1);
         btnAddTab1->setObjectName(QString::fromUtf8("btnAddTab1"));
         btnAddTab1->setMinimumSize(QSize(80, 80));
         btnAddTab1->setMaximumSize(QSize(80, 80));
@@ -397,7 +403,7 @@ public:
         gridLayout_5->addWidget(btnAddTab1, 0, 0, 1, 1);
 
 
-        gridLayout_6->addWidget(widgetSize, 0, 0, 1, 1);
+        gridLayout_6->addWidget(widgetSize1, 0, 0, 1, 1);
 
         tabWidgetModulel1->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -493,13 +499,20 @@ public:
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
         gridLayout_4 = new QGridLayout(tab_3);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
-        btnAddTab2 = new QPushButton(tab_3);
+        widgetSize2 = new QWidget(tab_3);
+        widgetSize2->setObjectName(QString::fromUtf8("widgetSize2"));
+        gridLayout_7 = new QGridLayout(widgetSize2);
+        gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
+        btnAddTab2 = new QPushButton(widgetSize2);
         btnAddTab2->setObjectName(QString::fromUtf8("btnAddTab2"));
         btnAddTab2->setMinimumSize(QSize(80, 80));
         btnAddTab2->setMaximumSize(QSize(80, 80));
         btnAddTab2->setFont(font);
 
-        gridLayout_4->addWidget(btnAddTab2, 0, 0, 1, 1);
+        gridLayout_7->addWidget(btnAddTab2, 0, 0, 1, 1);
+
+
+        gridLayout_4->addWidget(widgetSize2, 0, 0, 1, 1);
 
         tabWidgetModulel2->addTab(tab_3, QString());
         tab_4 = new QWidget();
@@ -595,13 +608,20 @@ public:
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
         gridLayout_3 = new QGridLayout(tab_5);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        btnAddTab3 = new QPushButton(tab_5);
+        widgetSize3 = new QWidget(tab_5);
+        widgetSize3->setObjectName(QString::fromUtf8("widgetSize3"));
+        gridLayout_8 = new QGridLayout(widgetSize3);
+        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
+        btnAddTab3 = new QPushButton(widgetSize3);
         btnAddTab3->setObjectName(QString::fromUtf8("btnAddTab3"));
         btnAddTab3->setMinimumSize(QSize(80, 80));
         btnAddTab3->setMaximumSize(QSize(80, 80));
         btnAddTab3->setFont(font);
 
-        gridLayout_3->addWidget(btnAddTab3, 0, 0, 1, 1);
+        gridLayout_8->addWidget(btnAddTab3, 0, 0, 1, 1);
+
+
+        gridLayout_3->addWidget(widgetSize3, 0, 0, 1, 1);
 
         tabWidgetModulel3->addTab(tab_5, QString());
         tab_6 = new QWidget();
@@ -695,13 +715,20 @@ public:
         tab_7->setObjectName(QString::fromUtf8("tab_7"));
         gridLayout = new QGridLayout(tab_7);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        btnAddTab4 = new QPushButton(tab_7);
+        widgetSize4 = new QWidget(tab_7);
+        widgetSize4->setObjectName(QString::fromUtf8("widgetSize4"));
+        gridLayout_9 = new QGridLayout(widgetSize4);
+        gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
+        btnAddTab4 = new QPushButton(widgetSize4);
         btnAddTab4->setObjectName(QString::fromUtf8("btnAddTab4"));
         btnAddTab4->setMinimumSize(QSize(80, 80));
         btnAddTab4->setMaximumSize(QSize(80, 80));
         btnAddTab4->setFont(font);
 
-        gridLayout->addWidget(btnAddTab4, 0, 0, 1, 1);
+        gridLayout_9->addWidget(btnAddTab4, 0, 0, 1, 1);
+
+
+        gridLayout->addWidget(widgetSize4, 0, 0, 1, 1);
 
         tabWidgetModulel4->addTab(tab_7, QString());
         tab_8 = new QWidget();
@@ -717,7 +744,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1190, 23));
+        menubar->setGeometry(QRect(0, 0, 942, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -725,7 +752,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(3);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
