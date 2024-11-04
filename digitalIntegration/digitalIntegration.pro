@@ -20,6 +20,7 @@ SOURCES += \
     AddToolDialog.cpp \
     AddToolInfoDialog.cpp \
     ApprovalProgressDialog.cpp \
+    CAxWidget.cpp \
     CLineEdit.cpp \
     CTableView.cpp \
     CWidget.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     AddToolDialog.h \
     AddToolInfoDialog.h \
     ApprovalProgressDialog.h \
+    CAxWidget.h \
     CLineEdit.h \
     CPagedTableModel.h \
     CTableView.h \

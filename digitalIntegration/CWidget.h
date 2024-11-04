@@ -9,7 +9,7 @@ class CWidget : public QWidget
     Q_OBJECT
 public:
     explicit CWidget(QWidget *parent = nullptr);
-
+    ~CWidget();
     QString m_ip="";
     QString m_softwareName = "";
     QString m_account = "";

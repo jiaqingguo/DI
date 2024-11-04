@@ -20,6 +20,7 @@
 #include "GifDialog.h"
 #include "CtrlNetwork.h"
 #include "CWidget.h"
+#include "CAxWidget.h"
 
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -1071,7 +1072,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
    
    
     // 嵌入远端界面;
-    QAxWidget* rdp = new QAxWidget;
+  //  QAxWidget* rdp = new QAxWidget;
+    CAxWidget* rdp = new CAxWidget;
     rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
 
     bool b = rdp->setProperty("Server", strIp.c_str()); // 远程桌面的IP地址
