@@ -395,7 +395,7 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 	m_FileInformation.fileMinute = lastWriteTime.wMinute;
 	m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
 	memcpy(m_FileInformation.fileName, pfd->cFileName, sizeof(pfd->cFileName));
-	memcpy(m_FileInformation.fileDir, dir, 20);
+	memcpy(m_FileInformation.fileDir, dir, 5);
 
 	memcpy(fileRecord1, &m_FileInformation, sizeof(m_FileInformation));
 
