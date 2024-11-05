@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     MainWindow w;
     if (!w.showLoginDialog())
     {
-        a.exit(1);
+		return 0;
     }
    
     return a.exec();

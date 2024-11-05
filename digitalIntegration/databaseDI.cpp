@@ -358,7 +358,25 @@ namespace db
 		}
 		return false;
 	}
+	bool databaseDI::get_pop(int& pop, int &id)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
 
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select Pop from t_user where PKID = \'%d\' ", id);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			pop = std::atoi(sql_row[0]);
+		}
+		return false;
+	}
 	bool databaseDI::get_approval(int &approval, int &id)
 	{
 		// 结果集声明;

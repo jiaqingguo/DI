@@ -177,11 +177,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::initInitface()
 {
-	/*this->m_fingerDlg = new fingerDlg();
-	this->m_fingerDlg->finger_init();
-	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &MainWindow::slot_login_succ);*/
-
-
     m_LoginDialog = new LoginDialog(this);
   
     m_GifDialog = new GifDialog;
@@ -401,6 +396,7 @@ bool MainWindow::showLoginDialog()
     else
     {
         this->close();
+		
         return false;
     }
     return false;
@@ -500,6 +496,27 @@ void MainWindow::slot_btnResourceManageClicked()
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
 {
+	/*int pop = 0;
+	db::databaseDI::Instance().get_pop(pop, common::iUserID);
+	if (pop == 1)
+	{
+		QPushButton *add1 = m_InforConfihurationDialog->getbtnToolAdd1();
+		QPushButton *add2 = m_InforConfihurationDialog->getbtnToolAdd2();
+		QPushButton *add3 = m_InforConfihurationDialog->getbtnToolAdd3();
+		QPushButton *add4 = m_InforConfihurationDialog->getbtnToolAdd4();
+		QPushButton *del1 = m_InforConfihurationDialog->getbtnToolDel1();
+		QPushButton *del2 = m_InforConfihurationDialog->getbtnToolDel2();
+		QPushButton *del3 = m_InforConfihurationDialog->getbtnToolDel3();
+		QPushButton *del4 = m_InforConfihurationDialog->getbtnToolDel4();
+		add1->setHidden(true);
+		add2->setHidden(true);
+		add3->setHidden(true);
+		add4->setHidden(true);
+		del1->setHidden(true);
+		del2->setHidden(true);
+		del3->setHidden(true);
+		del4->setHidden(true);
+	}*/
 	m_InforConfihurationDialog->initFaceData();
     int  x = 0;
     int  y = 0;

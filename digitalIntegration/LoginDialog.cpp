@@ -175,7 +175,7 @@ void LoginDialog::slot_btnLoginClicked()
 
 void LoginDialog::slot_btnExitClicked()
 {
-	
+	this->m_fingerDlg->finger_init();
 	registerDialog->init();
 	registerDialog->exec();
 	
@@ -196,7 +196,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	}
 
 
-	this->accept();
+	//this->accept();
 
 
 }

@@ -46,18 +46,9 @@ public:
 	int imgFPWidth;
 	int imgFPHeight;
 	bool bStopThread;
-	//互斥锁
-	//HANDLE hmutex;
-
 	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   存储指纹
 	unsigned int arrPreTempsLen[3];
 	int Tid;   //指纹 ID（>0 的 32 位无符号整数）
-
-	//下一个注册模板，用于验证
-	/*unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE];
-	
-	unsigned int nLastRegTempLen = MAX_TEMPLATE_SIZE;
-	*/
 	int nFakeFunOn;
 
 	fingerDlg(QDialog* pParent = NULL);	// 标准构造函数

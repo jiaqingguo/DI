@@ -29,6 +29,16 @@ public:
     
     void clearModelData(QStandardItemModel* model);
     void delAllModelRow(QStandardItemModel* model);
+
+	/*QPushButton *getbtnToolAdd1();
+	QPushButton *getbtnToolAdd2();
+	QPushButton *getbtnToolAdd3();
+	QPushButton *getbtnToolAdd4();
+	QPushButton *getbtnToolDel1();
+	QPushButton *getbtnToolDel2();
+	QPushButton *getbtnToolDel3();
+	QPushButton *getbtnToolDel4();*/
+
 private slots:
     void slot_btnToolAdd();
 

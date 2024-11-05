@@ -104,29 +104,11 @@ void fingerDlg::finger_init()
 
 
 		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
-		/*QTimer *captrueTimer = new QTimer(this);
-		captrueTimer->setInterval(100);
-		connect(captrueTimer, &QTimer::timeout, this, &fingerDlg::onCapture);
-		captrueTimer->start();*/
-
-
-
-		//memset(&szLastRegTemplate, 0x0, sizeof(szLastRegTemplate));
 		qDebug() << "Init ZKFPM success";
 
 		Tid = 1;
 		m_enrollIdx = 0;
 		m_bRegister = FALSE;
-
-
-		//打开进程锁
-		//hmutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, TEXT("MutexTest"));
-		////创建进程锁
-		//if (hmutex == NULL)
-		//{
-		//	std::cout << "Create MutexTest!" << endl;
-		//	hmutex = CreateMutex(NULL, false, TEXT("MutexTest"));
-		//}
 	}
 	else
 	{

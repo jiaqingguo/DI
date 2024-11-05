@@ -135,6 +135,7 @@ void InformationConfihurationDialog::init()
 	ui->btnToolAdd4->setProperty("module", 4);
 	ui->btnIpAdd1->setProperty("module", 1);
 	ui->btnIpAdd1->setHidden(true);
+
 	/*   ui->btnIpAdd2->setProperty("module", 2);
 	   ui->btnIpAdd3->setProperty("module", 3);
 	   ui->btnIpAdd4->setProperty("module", 4);*/
@@ -325,7 +326,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	QLabel *label6 = addToolInfoDialog.getlabelIP6();
 	if (moduleNumber != 1)
 	{
-		lineEdit1->setVisible(false);
+		/*lineEdit1->setVisible(false);
 		lineEdit2->setVisible(false);
 		lineEdit3->setVisible(false);
 		lineEdit4->setVisible(false);
@@ -336,7 +337,19 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		label3->setVisible(false);
 		label4->setVisible(false);
 		label5->setVisible(false);
-		label6->setVisible(false);
+		label6->setVisible(false);*/
+		lineEdit1->setHidden(true);
+		lineEdit2->setHidden(true);
+		lineEdit3->setHidden(true);
+		lineEdit4->setHidden(true);
+		lineEdit5->setHidden(true);
+		lineEdit6->setHidden(true);
+		label1->setHidden(true);
+		label2->setHidden(true);
+		label3->setHidden(true);
+		label4->setHidden(true);
+		label5->setHidden(true);
+		label6->setHidden(true);
 		
 		lineEdit1->setEnabled(false);
 		lineEdit2->setEnabled(false);
@@ -607,6 +620,39 @@ void InformationConfihurationDialog::slot_btnIpDel()
 		pModel->removeRow(currentIndex.row());
 	}
 }
+
+//QPushButton *InformationConfihurationDialog::getbtnToolAdd1()
+//{
+//	return ui->btnToolAdd1;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolAdd2()
+//{
+//	return ui->btnToolAdd2;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolAdd3()
+//{
+//	return ui->btnToolAdd3;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolAdd4()
+//{
+//	return ui->btnToolAdd4;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolDel1()
+//{
+//	return ui->btnToolDel1;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolDel2()
+//{
+//	return ui->btnToolDel2;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolDel3()
+//{
+//	return ui->btnToolDel3;
+//}
+//QPushButton *InformationConfihurationDialog::getbtnToolDel4()
+//{
+//	return ui->btnToolDel4;
+//}
 
 
 

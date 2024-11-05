@@ -212,7 +212,7 @@ int FtpClientClass::list(SOCKET sockfd)
 
 		}
 	
-		//cout << "rbuff " << recvBuf << "----------------"<< endl;
+		cout << name << fileDir << "----------------"<< endl;
 	}
 	return 1;
 }
