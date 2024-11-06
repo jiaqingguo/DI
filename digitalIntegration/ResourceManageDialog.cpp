@@ -21,12 +21,13 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
     setWindowIcon(QIcon(":/image/ResourceManage.png"));
     ui->tabWidget->setCurrentIndex(0);
     m_model = new QStandardItemModel();
-    m_model->setColumnCount(5);
+    m_model->setColumnCount(6);
     m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
     m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
     m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
     m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
     m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
+	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
 
     ui->tableView->setModel(m_model);
     common::setTableViewBasicConfiguration(ui->tableView);
@@ -88,21 +89,26 @@ void ResourceManageDialog::initTableWidgetCurve()
     QWidget* tab2Widget = new QWidget;
     QWidget* tab3Widget = new QWidget;
     QWidget* tab4Widget = new QWidget;
+	QWidget* tab5Widget = new QWidget;
     // 添加一些内容到每个标签页
     tab1Widget->setLayout(new QVBoxLayout);
     tab2Widget->setLayout(new QVBoxLayout);
     tab3Widget->setLayout(new QVBoxLayout);
     tab4Widget->setLayout(new QVBoxLayout);
+	tab5Widget->setLayout(new QVBoxLayout);
 
     // 将自定义标签添加到 QTabWidget
     ui->tabWidgetCurve->addTab(tab1Widget, "");
     ui->tabWidgetCurve->addTab(tab2Widget, "");
     ui->tabWidgetCurve->addTab(tab3Widget, "");
     ui->tabWidgetCurve->addTab(tab4Widget, "");
+	ui->tabWidgetCurve->addTab(tab5Widget, "");
 
     ui->tabWidgetCurve->setTabEnabled(0, true);
     ui->tabWidgetCurve->setTabEnabled(1, true);
     ui->tabWidgetCurve->setTabEnabled(2, true);
+	ui->tabWidgetCurve->setTabEnabled(3, true);
+	ui->tabWidgetCurve->setTabEnabled(4, true);
 
     //tabWidget->setTabIcon(0, QIcon()); // 如果不需要图标，可以移除此行
 
@@ -111,13 +117,14 @@ void ResourceManageDialog::initTableWidgetCurve()
     ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("内存")));
     ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("磁盘")));
     ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("网络")));
+	ui->tabWidgetCurve->tabBar()->setTabButton(4, QTabBar::RightSide, createCustomTab("GPU"));
     connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked, this, &ResourceManageDialog::slot_get_data);
 
     initWebViewCpu(tab1Widget);
     initWebViewMemory(tab2Widget);
     initWebViewDisk(tab3Widget);
     initWebViewNet(tab4Widget);
-   
+	initWebViewGpu(tab5Widget);
 }
 
 void ResourceManageDialog::initWebViewNet(QWidget* widget)
@@ -204,8 +211,6 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
         qDebug() << js;
         m_webEngineViewCpu->page()->runJavaScript(js);
         });
-    
-
 }
 
 void ResourceManageDialog::initWebViewMemory(QWidget* widget)
@@ -282,6 +287,45 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
         });
 }
 
+void ResourceManageDialog::initWebViewGpu(QWidget* widget)
+{
+	m_webEngineViewGpu = new QWebEngineView();
+	QString pathGpu = qApp->applicationDirPath() + "/eChartFileGpu.html";
+	//qDebug() << qApp->applicationDirPath()<<"11111111111"<<pathNet;
+	m_webEngineViewGpu->load(QUrl(pathGpu));
+
+	widget->layout()->addWidget(m_webEngineViewGpu);
+
+	using NameVec = std::vector<std::string>;
+	NameVec _names = { "10", "20", "30", "40", "45", "46" ,"50" };
+
+	using ValueVec = std::vector<int>;
+	ValueVec  __values = { 0 };
+
+
+	QJsonArray  _data;
+	QJsonObject itemData;
+	for (size_t i = 0; i < _names.size(); i++)
+	{
+
+		itemData.insert("itemName", QString::fromLocal8Bit(_names[i].c_str()));
+		//  itemData.insert("itemValue", __values[i]);
+		_data.append(itemData);
+	}
+	m_jsonDataGpu.insert("titleName", QString::fromLocal8Bit("GPU"));
+	m_jsonDataGpu.insert("data", _data);
+
+	m_jsonDataGpu.insert("type", "line");
+
+	QObject::connect(m_webEngineViewGpu, &QWebEngineView::loadFinished, [=]() {
+		QString optionStr = QJsonDocument(m_jsonDataGpu).toJson();
+		//用到js中init() 函数
+		QString js = QString("setData(%1)").arg(optionStr);
+		qDebug() << js;
+		m_webEngineViewGpu->page()->runJavaScript(js);
+	});
+}
+
 void ResourceManageDialog::startWebFlushTimer()
 {
     m_timer->start(1000);
@@ -350,7 +394,17 @@ void ResourceManageDialog::addHostDiskElemnet(const QString& host, const double&
     //updateDiskWebViewShow(host);
 }
 
-void ResourceManageDialog::updateHostTableShow(const QString& host, const double& dCpu, const double& dMemory, const double& dDisk, const double& dNet)
+void ResourceManageDialog::addHostGpuElemnet(const QString& host, const double& value)
+{
+
+	if (m_mapGpuData[host].size() >= m_vectorMaxSize)
+	{
+		m_mapGpuData[host].remove(0);
+	}
+	m_mapGpuData[host].push_back(value);
+}
+
+void ResourceManageDialog::updateHostTableShow(const QString& host, const double& dCpu, const double& dMemory, const double& dDisk, const double& dNet, const double& dGpu)
 {
     for (int row = 0; row < m_model->rowCount();row++)
     {
@@ -367,7 +421,15 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
             item->setText(QString::number(dDisk) + QString(" %"));
           
             item = m_model->item(row, 4);
-            item->setText(QString::number(dNet) + QString(" Kbps"));
+			QString netData = "Kbps";
+			if (dNet > 1024)
+			{
+				netData = "Mbps";
+			}
+            item->setText(QString::number(dNet) + netData);
+
+			item = m_model->item(row, 5);
+			item->setText(QString::number(dGpu) + QString(" %"));
             return;
         }
     }
@@ -379,6 +441,7 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
     m_model->setItem(newRowIndex, 2, new QStandardItem(QString::number(dMemory)));
     m_model->setItem(newRowIndex, 3, new QStandardItem(QString::number(dDisk)));
     m_model->setItem(newRowIndex, 4, new QStandardItem(QString::number(dNet)));
+	m_model->setItem(newRowIndex, 5, new QStandardItem(QString::number(dGpu)));
     
 }
 
@@ -478,6 +541,30 @@ void ResourceManageDialog::updateNetWebViewShow(const QString& host)
     m_webEngineViewNet->page()->runJavaScript(js);
 }
 
+void ResourceManageDialog::updateGpuWebViewShow(const QString& host)
+{
+	QVector<double>& vectorData = m_mapGpuData[host];
+	using NameVec = std::vector<std::string>;
+
+	QJsonArray  _data;
+	for (size_t i = 0; i < vectorData.size(); i++)
+	{
+		QJsonObject itemData;
+
+		itemData.insert("itemValue", vectorData[i]);
+		_data.append(itemData);
+	}
+	QJsonObject jsonData;
+	jsonData.insert("data", _data);
+	jsonData.insert("titleName", QString::fromLocal8Bit("Gpu使用率"));
+
+	QString optionStr = QJsonDocument(jsonData).toJson();
+	//用到js中init() 函数
+	QString js = QString("setData(%1)").arg(optionStr);
+	//qDebug() << js;
+	m_webEngineViewGpu->page()->runJavaScript(js);
+}
+
 void ResourceManageDialog::slot_modelItemChanged(QStandardItem* item)
 {
     // 打印修改后的值
@@ -530,7 +617,7 @@ void ResourceManageDialog::slot_timerTimeout()
         //加载列表页面的四个数据
        // updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
     if (message.host_name != 0) {
-        updateHostTableShow(message.host_name, message.CPU_Message, message.Memory_Message, message.Disk_Message, message.Net_Message);
+        updateHostTableShow(message.host_name, message.CPU_Message, message.Memory_Message, message.Disk_Message, message.Net_Message,message.Gpu_Message);
     }
     // 检查comboBox中是否已经存在该项
     int index = ui->comboBox->findText(message.host_name);
@@ -554,6 +641,9 @@ void ResourceManageDialog::slot_timerTimeout()
         //addHostNetElemnet(message.host_name, message.Net_Message);
 		updateNetWebViewShow(message.host_name);
     }
+	else if (Gpu_init == true && message.host_name == ui->comboBox->currentText()) {
+		updateGpuWebViewShow(message.host_name);
+	}
     /*if (message.host_name == ui->comboBox->currentText())
     {
         updateCpuWebViewShow(message.host_name);
@@ -572,7 +662,7 @@ void ResourceManageDialog::slot_get_data(int index)
         memory_init = false;
         disk_init = false;
         net_init = false;
-
+		Gpu_init = false;
     }
     else if (index == 1)
     {
@@ -580,7 +670,7 @@ void ResourceManageDialog::slot_get_data(int index)
         memory_init = true;
         disk_init = false;
         net_init = false;
-
+		Gpu_init = false;
     }
     else if (index == 2)
     {
@@ -588,7 +678,7 @@ void ResourceManageDialog::slot_get_data(int index)
         memory_init = false;
         disk_init = true;
         net_init = false;
-
+		Gpu_init = false;
     }
     else if (index == 3)
     {
@@ -596,8 +686,16 @@ void ResourceManageDialog::slot_get_data(int index)
         memory_init = false;
         disk_init = false;
         net_init = true;
-
+		Gpu_init = false;
     }
+	else if (index == 4)
+	{
+		CPU_init = false;
+		memory_init = false;
+		disk_init = false;
+		net_init = false;
+		Gpu_init = true;
+	}
 }
 
 void  ResourceManageDialog::getUdpData(Message_t * infor)
@@ -632,6 +730,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             quint32 temp;
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
+			stream >> infor->Gpu_Message;
 			//if (CPU_init == true)
 			{
 				addHostCpuElemnet(infor->host_name, infor->CPU_Message);
@@ -647,6 +746,10 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			//else if (net_init == true)
 			{
 				addHostNetElemnet(infor->host_name, infor->Net_Message);
+			}
+			//else if (Gpu_init == true)
+			{
+				addHostGpuElemnet(infor->host_name, infor->Gpu_Message);
 			}
 
 			//this->UdpSocket->writeDatagram("send to daili information", addr, port);

@@ -119,6 +119,7 @@ void OneClickLoadDialog::slot_btnOK()
 	{
 		QStandardItem* item_software = m_model->item(row, 1); // 获取当前行的第2列项
 		QStandardItem* item_module = m_model->item(row, 2);
+
 		if (item_module->data(Qt::DisplayRole).toInt() == 1)
 		{
 			if (item_software)

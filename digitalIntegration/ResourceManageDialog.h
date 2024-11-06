@@ -20,6 +20,7 @@ typedef struct _Message
     double Memory_Message = 0;
     double Disk_Message = 0;
     unsigned long Net_Message = 0;
+	double Gpu_Message = 0;
 }Message_t;
 
 namespace Ui {
@@ -39,6 +40,7 @@ public:
     void initWebViewCpu(QWidget* widget);
     void initWebViewMemory(QWidget* widget);
     void initWebViewDisk(QWidget* widget);
+	void initWebViewGpu(QWidget* widget);
 
     void startWebFlushTimer();
     void stopWebFlushTimer();
@@ -48,13 +50,15 @@ public:
     void addHostNetElemnet(const QString& host, const unsigned long& value);
     void addHostMemoryElemnet(const QString& host, const double& value);
     void addHostDiskElemnet(const QString& host, const double& value);
+	void addHostGpuElemnet(const QString& host, const double& value);
 
-    void updateHostTableShow(const QString& host, const double& dCpu, const double& dMemory, const double& dDisk, const double& dNet);
+    void updateHostTableShow(const QString& host, const double& dCpu, const double& dMemory, const double& dDisk, const double& dNet, const double& dGpu);
 
     void updateCpuWebViewShow(const QString & host);
     void updateMemoryWebViewShow(const QString& host);
     void updateDiskWebViewShow(const QString& host);
     void updateNetWebViewShow(const QString& host);
+	void updateGpuWebViewShow(const QString& host);
     void getUdpData(Message_t* infor);
 private slots:
     void slot_modelItemChanged(QStandardItem* item);
@@ -72,21 +76,25 @@ private:
     QWebEngineView* m_webEngineViewNet = nullptr;
     QWebEngineView* m_webEngineViewMemory = nullptr;
     QWebEngineView* m_webEngineViewDisk = nullptr;
+	QWebEngineView* m_webEngineViewGpu = nullptr;
     QJsonObject m_jsonDataNet;
     QJsonObject m_jsonDataCpu;
     QJsonObject m_jsonDataMemory;
     QJsonObject m_jsonDataDisk;
+	QJsonObject m_jsonDataGpu;
 
     int m_vectorMaxSize = 60;
     QMap<QString, QVector<double>> m_mapCpuData;
     QMap<QString, QVector<double>> m_mapNetData;
     QMap<QString, QVector<double>> m_mapMemoryData;
     QMap<QString, QVector<double>> m_mapDiskData;
+	QMap<QString, QVector<double>> m_mapGpuData;
 
     bool CPU_init = true;
     bool memory_init = false;
     bool disk_init = false;
     bool net_init = false;
+	bool Gpu_init = false;
 
     QTimer* m_timer = nullptr;
     QUdpSocket* UdpSocket = nullptr;
