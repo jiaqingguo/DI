@@ -95,6 +95,7 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
 	connect(ui->btnCopy, &QPushButton::clicked, this, &FilemangageDialog::slot_btnCopyPath);
 	connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this]() {
+		
 		flushTableViewDownload();
 		});
 }

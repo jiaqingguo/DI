@@ -68,6 +68,10 @@ struct table_ip_configure
 	std::string		ip;
 	std::string		hostname;
 	uint32_t        number = 0;
+	bool operator<(const table_ip_configure& other) const
+	{
+		return id <other.id; // 定义相等比较
+	}
 };
 
 // 用户审批表

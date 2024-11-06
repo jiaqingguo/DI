@@ -212,10 +212,10 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 	else
 	{
 		int i = common::iSoftStartHostNum % 3;
-		if (common::setHostIps.size() >= i)
+		if (common::setHostData.size() >= i)
 		{
-			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-			std::string strValue = *it;
+			auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+			std::string strValue = it->ip;
 			ui->lineEditIP->setText(QString::fromStdString(strValue));
 			common::iSoftStartHostNum++;
 		}

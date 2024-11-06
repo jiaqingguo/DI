@@ -3,6 +3,8 @@
 #include <QValidator>
 #include <QMessageBox>
 
+#include <set>
+
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
 
@@ -167,8 +169,8 @@ void LoginDialog::slot_btnLoginClicked()
 		int loginStatus = 1;
 		db::databaseDI::Instance().update_user_LoginStatus(m_userID, loginStatus);
 		db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-		db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
-
+		//db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+		db::databaseDI::Instance().get_ip_data_by_number( common::iLoginNum, common::setHostData);
 		this->accept();
 	}
 }
@@ -194,9 +196,9 @@ void LoginDialog::slot_btnFingerprintClicked()
 		m_bIdentify = TRUE;
 
 	}
-
-
-	//this->accept();
+	int i = 1;
+	db::databaseDI::Instance().get_ip_data_by_number(i, common::setHostData);
+	this->accept();
 
 
 }
@@ -251,7 +253,8 @@ void LoginDialog::slot_login_succ()
 	db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
 
 	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-	db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+//	db::databaseDI::Instance().get_ip_data_by_number(common::setHostIps, common::iLoginNum);
+	db::databaseDI::Instance().get_ip_data_by_number( common::iLoginNum, common::setHostData);
 
 	this->accept();
 

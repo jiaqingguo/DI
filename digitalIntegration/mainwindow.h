@@ -170,7 +170,10 @@ private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
 	void startLongDistanceSoftware(const QString tabName ,const int &module,const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path,CWidget *widget,QTabWidget* tabWidget=nullptr);
+	void startLongDistanceHost(const QString tabName, const int& module, const std::string strIp, const std::string strAccaunt, const std::string pwd, CWidget* widget, QTabWidget* tabWidget = nullptr);
+
 	int getBtnLoadIndex(QPushButton *btn);
+	bool isHardwareAccelerator(const std::string str);
 private:
     Ui::MainWindow *ui;
 

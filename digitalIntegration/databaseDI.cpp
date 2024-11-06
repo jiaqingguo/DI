@@ -760,31 +760,59 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::get_ip_data_by_number(std::set<std::string> &setIpData, const int& number)
+	//bool databaseDI::get_ip_data_by_number(std::set<std::string> &setIpData, const int& number)
+	//{
+	//	setIpData.clear();
+
+	//	// 结果集声明;
+	//	MYSQL_ROW sql_row;
+
+	//	// 执行SQL语句;
+	//	char sql[256] = { 0 };
+	//	sprintf_s(sql, "select ip from t_ip_configure where number=\'%d\'", number);
+
+	//	MYSQL_RES* result = exec_sql_select(sql);
+	//	if (result == nullptr)
+	//		return false;
+
+	//	//table_ip stData;
+	//	while (sql_row = mysql_fetch_row(result))
+	//	{
+	//		std::string strIp = sql_row[0];
+
+	//		setIpData.insert(strIp);
+	//	}
+	//	return true;
+	//}
+
+	bool databaseDI::get_ip_data_by_number(const int& number,std::set<table_ip_configure>& vecIpData)
 	{
-		setIpData.clear();
+		vecIpData.clear();
 
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select ip from t_ip_configure where number=\'%d\'", number);
+		sprintf_s(sql, "select *from t_ip_configure where number=\'%d\'", number);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
 
-		//table_ip stData;
+		table_ip_configure stData;
 		while (sql_row = mysql_fetch_row(result))
 		{
-			std::string strIp = sql_row[0];
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.hostname = sql_row[2];
+			stData.number = std::atoi(sql_row[3]);
 
-			setIpData.insert(strIp);
+			vecIpData.insert(stData);
 		}
 		return true;
+		
 	}
-
 	bool databaseDI::get_all_ip(std::list<table_ip_configure>& listData)
 	{
 		listData.clear();
