@@ -391,6 +391,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
+				else
+				{
+					flushToolModelData(m_modelTool1, 1);
+				}
 			}
 
 		}
@@ -412,6 +416,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
+				else
+				{
+					flushToolModelData(m_modelTool2, 2);
+				}
 			}
 		}
 		else if (moduleNumber == 3)
@@ -431,6 +439,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
+				else
+				{
+					flushToolModelData(m_modelTool3, 3);
+				}
 			}
 		}
 		else if (moduleNumber == 4)
@@ -449,6 +461,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				if (!db::databaseDI::Instance().add_ip_tools(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+				}
+				else
+				{
+					flushToolModelData(m_modelTool4, 4);
 				}
 			}
 		}

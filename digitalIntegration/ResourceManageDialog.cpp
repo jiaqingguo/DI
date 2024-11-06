@@ -367,7 +367,7 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
             item->setText(QString::number(dDisk) + QString(" %"));
           
             item = m_model->item(row, 4);
-            item->setText(QString::number(dNet) + QString(" Mbps"));
+            item->setText(QString::number(dNet) + QString(" Kbps"));
             return;
         }
     }
@@ -539,19 +539,19 @@ void ResourceManageDialog::slot_timerTimeout()
         ui->comboBox->addItem(message.host_name);
     }
     if (CPU_init == true && message.host_name == ui->comboBox->currentText()) {
-        addHostCpuElemnet(message.host_name, message.CPU_Message);
+        //addHostCpuElemnet(message.host_name, message.CPU_Message);
 		updateCpuWebViewShow(message.host_name);
     }
     else if (memory_init == true && message.host_name == ui->comboBox->currentText()) {
-        addHostMemoryElemnet(message.host_name, message.Memory_Message);
+        //addHostMemoryElemnet(message.host_name, message.Memory_Message);
 		updateMemoryWebViewShow(message.host_name);
     }
     else if (disk_init == true && message.host_name == ui->comboBox->currentText()) {
 		updateDiskWebViewShow(message.host_name);
-        addHostDiskElemnet(message.host_name, message.Disk_Message);
+        //addHostDiskElemnet(message.host_name, message.Disk_Message);
     }
     else if (net_init == true && message.host_name == ui->comboBox->currentText()) {
-        addHostNetElemnet(message.host_name, message.Net_Message);
+        //addHostNetElemnet(message.host_name, message.Net_Message);
 		updateNetWebViewShow(message.host_name);
     }
     /*if (message.host_name == ui->comboBox->currentText())
@@ -632,6 +632,22 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
             quint32 temp;
             stream >> temp;
             infor->Net_Message = static_cast<unsigned long>(temp);
+			//if (CPU_init == true)
+			{
+				addHostCpuElemnet(infor->host_name, infor->CPU_Message);
+			}
+			//else if (memory_init == true)
+			{
+				addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
+			}
+			//else if (disk_init == true)
+			{
+				addHostDiskElemnet(infor->host_name, infor->Disk_Message);
+			}
+			//else if (net_init == true)
+			{
+				addHostNetElemnet(infor->host_name, infor->Net_Message);
+			}
 
 			//this->UdpSocket->writeDatagram("send to daili information", addr, port);
             // ²åÈëÊı¾İ¿â;
