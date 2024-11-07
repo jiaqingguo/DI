@@ -92,7 +92,8 @@ namespace db
 
 
 		// ip配置表;
-		bool get_ip_data_by_number(std::set<std::string> &vecIpData, const int& number);
+		//bool get_ip_data_by_number(std::set<std::string> &vecIpData, const int& number);
+		bool get_ip_data_by_number(const int& number, std::set<table_ip_configure>& vecIpData);
 		bool get_all_ip(std::list<table_ip_configure>& listData);
 		bool get_host(std::string &hostname,unsigned int &number,std::string &ip);
 		bool get_ip_by_software(std::string &ip,std::string software,int &number);

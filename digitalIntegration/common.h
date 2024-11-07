@@ -45,7 +45,8 @@ namespace common
 
 	extern int				iLoginNum;				 // 登录顺序; 123456;
 	extern int              iSoftStartHostNum;		 // 模块234软件 启动的所在主机标志;
-	extern   std::set<std::string>    setHostIps;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+	//extern   std::set<std::string>    setHostIps;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+	extern   std::set<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
 	extern QString          strCopyPath;			 // 复制的远程路径;
 	extern QString          strVipPath;				 //   普通用户不能操作的路径;

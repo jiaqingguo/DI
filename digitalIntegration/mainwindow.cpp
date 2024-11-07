@@ -582,6 +582,18 @@ void MainWindow::slot_btnAddToolTab()
   
        QString strPwd = "123456";
        CWidget* axTabWidget = new CWidget();
+
+       QString exeDir = QCoreApplication::applicationDirPath();
+       int i = common::iSoftStartHostNum % 3;
+       if (common::setHostData.size() < i)
+       {
+           QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+           return;
+       }
+        auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+        std::string strIP = it->ip;
+        common::iSoftStartHostNum++;
+
         if (moduleNumber == 1)
         {
 
@@ -591,115 +603,146 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
                 axTabWidget->m_softwareName = toolName;
-
-                startLongDistanceSoftware(tabName, moduleNumber,stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+                
+                if (isHardwareAccelerator(stipToolData.host))
+                {
+                    startLongDistanceHost(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+                }
+                else
+                {
+                    startLongDistanceSoftware(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+                }
+               
             }
             else
             {
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
                 axTabWidget->m_softwareName = toolName;
-                startLongDistanceSoftware(tabName, moduleNumber,stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+
+                if (isHardwareAccelerator(it->hostname))
+                {
+                    startLongDistanceHost(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+                }
+                else
+                {
+                    startLongDistanceSoftware(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                }
+               
             }
 
 
         }
         else if(moduleNumber==2)
         {
-
-            QString exeDir = QCoreApplication::applicationDirPath();
-            int i = common::iSoftStartHostNum %3;
-            if (common::setHostIps.size() >= i)
-            {
-                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-                std::string strIP = *it;
-                common::iSoftStartHostNum++;
-
-			
                 if (displayMode == 0)
                 {
-                    /*st_account_data stUsedData;
-                    stUsedData.account = strAccount;
-                    stUsedData.ip = ;
-                    stUsedData.software = toolName;
-                    m_usedAccaunt[2].insert(ui->tabWidgetModulel2->count(), stUsedData);*/
-                   
+
                     axTabWidget->m_account = strAccount;
                     axTabWidget->m_ip = QString::fromStdString(strIP);
                     axTabWidget->m_softwareName = toolName;
-                  
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(),  stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+
+                    if (isHardwareAccelerator(it->hostname))
+                    {
+                        startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+                    }
+                    else
+                    {
+                        startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+                    }
+                   
                 }
                 else
                 {
                     axTabWidget->m_account = strAccount;
                     axTabWidget->m_ip = QString::fromStdString(strIP);
                     axTabWidget->m_softwareName = toolName;
-
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                    if (isHardwareAccelerator(it->hostname))
+                    {
+                        startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+                    }
+                    else
+                    {
+                        startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                    }
+                    
                 }
          
                
               
-            }
+            
 
         }
         else if (moduleNumber == 3)
         {
 
-            QString exeDir = QCoreApplication::applicationDirPath();
-            int i = common::iSoftStartHostNum % 3;
-            if (common::setHostIps.size() >= i)
+            if (displayMode == 0)
             {
-                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-                std::string strIP = *it;
-                common::iSoftStartHostNum++;
 
-
-                if (displayMode == 0)
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(strIP);
+                axTabWidget->m_softwareName = toolName;
+                if (isHardwareAccelerator(it->hostname))
                 {
-                   
-                    axTabWidget->m_account = strAccount;
-                    axTabWidget->m_ip = QString::fromStdString(strIP);
-                    axTabWidget->m_softwareName = toolName;
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath,  axTabWidget,ui->tabWidgetModulel3);
+                    startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
                 }
                 else
                 {
-                    axTabWidget->m_account = strAccount;
-                    axTabWidget->m_ip = QString::fromStdString(strIP);
-                    axTabWidget->m_softwareName = toolName;
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                    startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
                 }
-              }
+            }
+            else
+            {
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(strIP);
+                axTabWidget->m_softwareName = toolName;
+                if (isHardwareAccelerator(it->hostname))
+                {
+                    startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+                }
+                else
+                {
+                    startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                }
+                  
+            }
          }
         else if(moduleNumber == 4)
         {
-            QString exeDir = QCoreApplication::applicationDirPath();
-            int i = common::iSoftStartHostNum % 3;
-            if (common::setHostIps.size() >= i)
+          
+            if (displayMode == 0)
             {
-                auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-                std::string strIP = *it;
-                common::iSoftStartHostNum++;
-
-
-                if (displayMode == 0)
-                {
                    
-                    axTabWidget->m_account = strAccount;
-                    axTabWidget->m_ip = QString::fromStdString(strIP);
-                    axTabWidget->m_softwareName = toolName;
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget,ui->tabWidgetModulel4);
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(strIP);
+                axTabWidget->m_softwareName = toolName;
+                if (isHardwareAccelerator(it->hostname))
+                {
+                    startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
                 }
                 else
                 {
-                    axTabWidget->m_account = strAccount;
-                    axTabWidget->m_ip = QString::fromStdString(strIP);
-                    axTabWidget->m_softwareName = toolName;
-                    startLongDistanceSoftware(tabName, moduleNumber,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                    startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
                 }
+              
             }
+            else
+            {
+                axTabWidget->m_account = strAccount;
+                axTabWidget->m_ip = QString::fromStdString(strIP);
+                axTabWidget->m_softwareName = toolName;
+                if (isHardwareAccelerator(it->hostname))
+                {
+                    startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+                }
+                else
+                {
+                    startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+                }
+               
+            }
+            
         }
     }
     
@@ -1233,6 +1276,157 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
     }
 }
 
+void MainWindow::startLongDistanceHost(const QString tabName, const int& module, const std::string strIp, const std::string strAccaunt, const std::string pwd, CWidget* widget, QTabWidget* tabWidget)
+{
+    connect(widget, &CWidget::signal_softwareClose, this, &MainWindow::slot_widgetAboutToQuit);
+
+
+
+    // 嵌入远端界面;
+  //  QAxWidget* rdp = new QAxWidget;
+    CAxWidget* rdp = new CAxWidget;
+    rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+
+    bool b = rdp->setProperty("Server", strIp.c_str()); // 远程桌面的IP地址
+    b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
+    b = rdp->setProperty("Password", pwd.c_str()); // 密码
+    //b = rdp->setProperty("FullScreen", true); // 是否全屏
+    //b = rdp->setProperty("DesktopWidth", this->width()-29);         //指定宽度
+    //b = rdp->setProperty("DesktopHeight", this->height()-29);        //指定高度
+    int height = this->width() - 29;
+    int width = this->height() - 29;
+
+    if (tabWidget != nullptr)
+    {
+        if (module == 1)
+        {
+            QWidget* TabWidget = ui->tabWidgetModulel1->widget(0);
+            if (TabWidget)
+            {
+                height = TabWidget->height();
+                width = TabWidget->width();
+            }
+
+        }
+        else if (module == 2)
+        {
+            QWidget* TabWidget = ui->tabWidgetModulel2->widget(0);
+            if (TabWidget)
+            {
+
+                height = TabWidget->height();
+                width = TabWidget->width();
+
+            }
+        }
+        else if (module == 3)
+        {
+            QWidget* TabWidget = ui->tabWidgetModulel3->widget(0);
+            if (TabWidget)
+            {
+                height = TabWidget->height();
+                width = TabWidget->width();
+            }
+        }
+        else if (module == 4)
+        {
+            //height = ui->widgetSize4->height() - 26;
+            //width = ui->widgetSize4->width() - 26;
+            QWidget* TabWidget = ui->tabWidgetModulel4->widget(0);
+            if (TabWidget)
+            {
+                height = TabWidget->height();
+                width = TabWidget->width();
+            }
+        }
+        b = rdp->setProperty("DesktopWidth", width);         //指定宽度
+        b = rdp->setProperty("DesktopHeight", height);        //指定高度
+        qDebug() << "1111" << "width :" << width << "height : " << height;
+    }
+    else
+    {
+        b = rdp->setProperty("DesktopWidth", this->width() - 29);         //指定宽度
+        b = rdp->setProperty("DesktopHeight", this->height() - 29);        //指定高度
+    }
+
+    //b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
+    b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
+    //b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
+    b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
+    //b = rdp->setProperty("LaunchedViaClientShellInterface", true);
+
+    //普通参数,可选项
+    rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
+    b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
+
+    //高级参数
+    QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
+    if (pAdvancedObject)
+    {
+        b = pAdvancedObject->setProperty("ClearTextPassword", pwd.c_str());     //用户密码(这种方式每次都不需要手动输入密码)
+        b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //必须设置,否则远程连接失败
+
+        //高级参数,可选项
+        b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //位图缓存
+        b = pAdvancedObject->setProperty("Compress", 1);                 //启用压缩,减小带宽
+        b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //超时时间,s
+        b = pAdvancedObject->setProperty("RedirectDrives", true);
+        //b = pAdvancedObject->setProperty("keepAliveInterval", 30000); 
+        //b = pAdvancedObject->setProperty("MaximizeShell", 0); 
+        b = pAdvancedObject->setProperty("RedirectSmartCards", true);
+        b = pAdvancedObject->setProperty("DisableCtrlAltDel", 1);
+        //b = pAdvancedObject->setProperty("AuthenticationLevel", 2);
+    }
+
+    QAxObject* pTransportObject = rdp->querySubObject("TransportSettings4");
+    if (pTransportObject)
+    {
+        b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+        //b = pTransportObject->setProperty("GatewayUserSelectedCredsSource", 0x4);
+        //b = pTransportObject->setProperty("GatewayProfileUsageMethod", 1);
+    }
+
+    bool securedSettingsEnabled = rdp->property("SecuredSettingsEnabled").value<bool>();
+    QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
+    // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
+   // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
+    //   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
+    //QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
+
+   // QString strArguments = strArguments1 + " \"" + QString::fromStdString(path) + "\"";
+
+    //if (pSecuredmObject)
+    //{
+    //    b = pSecuredmObject->setProperty("Fullscreen", true);
+    //    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
+    //    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
+    //    b = pSecuredmObject->setProperty("StartProgram", strArguments);
+    //    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
+    //    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
+    //    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe"));
+    //    b = pSecuredmObject->setProperty("AudioRedirectionMode", true);
+    //    b = pSecuredmObject->setProperty("KeyboardHookMode", true);
+    //    //b = pSecuredmObject->setProperty("PCB", "2013");
+    //}
+    QVariant v2 = rdp->dynamicCall("Connect()"); //连接
+
+    QVBoxLayout* layout = new QVBoxLayout(widget);
+    layout->addWidget(rdp);
+    layout->setMargin(0);
+    widget->setLayout(layout);
+    widget->m_pAxWidget = rdp;
+    if (tabWidget != nullptr)
+    {
+        tabWidget->addTab(widget, tabName);
+    }
+    else
+    {
+        widget->setWindowTitle(tabName);
+        widget->showMaximized();
+        widget->show();
+    }
+}
+
 int MainWindow::getBtnLoadIndex(QPushButton *btn)
 {
 	if (btn->objectName() == "btnM1Load")
@@ -1253,6 +1447,22 @@ int MainWindow::getBtnLoadIndex(QPushButton *btn)
 	}
 }
 
+bool MainWindow::isHardwareAccelerator(const std::string str)
+{
+    std::string  prefix = "加速机";
+    QString strprefix = QString::fromLocal8Bit("加速机");
+    QString  value = QString::fromStdString(str);
+    if (value.contains(strprefix))
+    {
+        return true;
+    }
+   /* if (value.compare(0, prefix.size(), prefix) == 0) {
+        return true;
+    }*/
+
+    return false;
+}
+
 
 void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 {
@@ -1269,62 +1479,109 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 	}
 
 	QString strPwd = "123456";
+    
 	CWidget* axTabWidget = new CWidget();
+
+    int i = common::iSoftStartHostNum % 3;
+    if (common::setHostData.size() < i)
+    {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程ip问题 请检查代码！"));
+        return;
+    }
+    auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+    std::string strIP = it->ip;
+    common::iSoftStartHostNum++;
    
 	if (moduleNum == 1)
 	{
-        
 		axTabWidget->m_account = strAccount;
 		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
 		axTabWidget->m_softwareName = toolsName;
-		startLongDistanceSoftware(toolsName,common::index,stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+        if (isHardwareAccelerator(it->hostname))
+        {
+            startLongDistanceHost(toolsName, common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+        }
+        else
+        {
+            startLongDistanceSoftware(toolsName, common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+
+        }
 	}
 	else if(moduleNum == 2)
 	{
 		QString exeDir = QCoreApplication::applicationDirPath();
-		int i = common::iSoftStartHostNum % 3;
-		if (common::setHostIps.size() >= i)
+		//int i = common::iSoftStartHostNum % 3;
+		//if (common::setHostData.size() >= i)
 		{
-			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-			std::string strIP = *it;
-			common::iSoftStartHostNum++;
+		//	auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+			std::string strIP = it->ip;
+		//	common::iSoftStartHostNum++;
 
 			axTabWidget->m_account = strAccount;
 			axTabWidget->m_ip = QString::fromStdString(strIP);
 			axTabWidget->m_softwareName = toolsName;
-			startLongDistanceSoftware(toolsName, common::index,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+
+            if (isHardwareAccelerator(it->hostname))
+            {
+                startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+            }
+            else
+            {
+                startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+            }
+			
 		}
 	}
 	else if (moduleNum == 3)
 	{
-		QString exeDir = QCoreApplication::applicationDirPath();
-		int i = common::iSoftStartHostNum % 3;
-		if (common::setHostIps.size() >= i)
+		
+		//int i = common::iSoftStartHostNum % 3;
+		//if (common::setHostData.size() >= i)
 		{
-			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-			std::string strIP = *it;
-			common::iSoftStartHostNum++;
+		//	auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+			std::string strIP = it->ip;
+		//	common::iSoftStartHostNum++;
 
 			axTabWidget->m_account = strAccount;
 			axTabWidget->m_ip = QString::fromStdString(strIP);
 			axTabWidget->m_softwareName = toolsName;
-			startLongDistanceSoftware(toolsName, common::index,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget,ui->tabWidgetModulel3);
+
+            if (isHardwareAccelerator(it->hostname))
+            {
+                startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+
+            }
+            else
+            {
+                startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+            }
+			
 		}
 	}
-	else
+	else if(moduleNum ==4 )
 	{
-		QString exeDir = QCoreApplication::applicationDirPath();
-		int i = common::iSoftStartHostNum % 3;
-		if (common::setHostIps.size() >= i)
+	
+	/*	int i = common::iSoftStartHostNum % 3;
+		if (common::setHostData.size() >= i)*/
 		{
-			auto it = std::next(common::setHostIps.begin(), i); // 移动到第i个元素
-			std::string strIP = *it;
-			common::iSoftStartHostNum++;
+		//	auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+			std::string strIP = it->ip;
+			//common::iSoftStartHostNum++;
 
 			axTabWidget->m_account = strAccount;
 			axTabWidget->m_ip = QString::fromStdString(strIP);
 			axTabWidget->m_softwareName = toolsName;
-			startLongDistanceSoftware(toolsName, common::index,strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+            if (isHardwareAccelerator(it->hostname))
+            {
+                startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+
+
+            }
+            else
+            {
+                startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+            }
+			
 		}
 	}
 }

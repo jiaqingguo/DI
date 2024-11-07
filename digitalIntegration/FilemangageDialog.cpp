@@ -94,7 +94,10 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
 	// 连接 itemChanged 信号到自定义槽
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
 	connect(ui->btnCopy, &QPushButton::clicked, this, &FilemangageDialog::slot_btnCopyPath);
-	
+	connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this]() {
+		
+		flushTableViewDownload();
+		});
 }
 
 FilemangageDialog::~FilemangageDialog()
