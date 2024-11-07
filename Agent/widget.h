@@ -12,9 +12,12 @@
 #include <tchar.h>
 #include "gethostinformation.h"
 
+class CPerformHelper;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
+
 
 //用于UDP之间通信
 typedef struct _Message
@@ -38,7 +41,8 @@ public:
     //获取主机信息
     void get_file_information();
 
-
+    void initGpu();
+    double getGpuUsage();
 	QList<QPair<QHostAddress, quint16>> m_serverList;
 
 private:
@@ -46,7 +50,8 @@ private:
 
     QTimer *my_timer = nullptr;
     QUdpSocket *UDPSocket = nullptr;
-  
+    CPerformHelper *perfmon= nullptr;
+    PDH_FMT_COUNTERVALUE m_SystemValue = { 0 };
 private slots:
     void slot_useUdp();
 

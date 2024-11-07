@@ -1,6 +1,16 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <cmath>
+
+#include <qdebug.h>
+
+#include "Win32Utils/CDeviceHelper.h"
+#include "Win32Utils/CWmiQueryHelper.h"
+#include "Win32Utils/CDeviceHelper.h"
+#include "Win32Utils/CStrUtils.h"
+#include "CPerformHelper.h"
+
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -14,6 +24,7 @@ Widget::Widget(QWidget *parent)
     // 设置定时器类型为Qt::VeryCoarseTimer
     this->my_timer->setTimerType(Qt::VeryCoarseTimer);
 
+    initGpu();
     connect(my_timer,&QTimer::timeout,this,&Widget::slot_useUdp);
     this->my_timer->start(2000);
 
@@ -39,6 +50,69 @@ Widget::~Widget()
     delete my_timer;
     my_timer = nullptr;
     delete ui;
+}
+
+void Widget::initGpu()
+{
+
+    std::vector<VIDEO_ADAPTER_DESC_INFO> vResult = CDeviceHelper::GetAllVideoAdapterDesc();
+
+    CDeviceHelper obj;
+
+    clock_t tmBegin = ::clock();
+    DEVICE_INFO info = obj.GetDeviceInfo();
+    clock_t tmEnd = ::clock();
+
+    
+
+     perfmon = new CPerformHelper;
+
+    int nTimeInterval = 1000;
+
+    perfmon->Initialize();
+    perfmon->SetCollectInterval(nTimeInterval);
+    perfmon->AddCounter(_T(PERFM_PATH_CPU_UTILITY));
+    perfmon->AddCounter(_T(PERFM_PATH_DISK_READ_RATE));
+    perfmon->AddCounter(_T(PERFM_PATH_DISK_WRITE_RATE));
+    perfmon->AddCounter(_T(PERFM_PATH_CPU_PERFORMANCE));
+    perfmon->AddCounter(_T(PERFM_PATH_CPU_FREQUENCY));
+    perfmon->AddCounter(_T(PERFM_PATH_NETWORK_RECV_RATE));
+    perfmon->AddCounter(_T(PERFM_PATH_NETWORK_SENT_RATE));
+    perfmon->AddCounter(_T(PERFM_PATH_GPU_UTILITY));
+    perfmon->AddCounter(_T(PERFM_PATH_GPU_MEMORY_DEDICATED_USAGE_UTILITY));
+    perfmon->AddCounter(_T(PERFM_PATH_GPU_MEMORY_SHARE_USAGE_UTILITY));
+    perfmon->AddCounter(_T(PERFM_PATH_GPU_MEMORY_TOTAL_COMMITTED_USAGE_UTILITY));
+    perfmon->StartCollect();
+
+   // PDH_FMT_COUNTERVALUE value = { 0 };
+
+    SIZE_T DedicatedVideoMemory = vResult[0].AdapterDesc.DedicatedVideoMemory;
+    SIZE_T DedicatedSystemMemory = vResult[0].AdapterDesc.DedicatedSystemMemory;
+    SIZE_T SharedSystemMemory = vResult[0].AdapterDesc.SharedSystemMemory;
+
+    MEMORYSTATUSEX memStatus = { 0 };
+    memStatus.dwLength = sizeof(MEMORYSTATUSEX);
+
+    double lfFrequency = 0.0f;
+    //while (1)
+    //{
+    //    //获取GPU占用率
+    //    if (perfmon->GetFormattedCounterArray(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE, &m_SystemValue))
+    //    {
+    //      //  Console::Printf(_T("GPU 利用率: %.1lf%%"), value.doubleValue);
+    //     
+    //        qDebug() << "GPU 利用率: " << m_SystemValue.doubleValue << "%%";
+    //    }
+    //}
+}
+
+double Widget::getGpuUsage()
+{
+    if (perfmon->GetFormattedCounterArray(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE, &m_SystemValue))
+    {
+        return   m_SystemValue.doubleValue;
+    }
+    return 0.0;
 }
 
 
@@ -84,6 +158,9 @@ void Widget::get_file_information()
 
 void Widget::slot_useUdp()
 {
+
+    qDebug() << "GPU 利用率: " << getGpuUsage() << "%%";
+
     this->UDPSocket = new QUdpSocket();
     Message_t *message = new Message_t();
 
@@ -116,9 +193,9 @@ void Widget::slot_useUdp()
     //        common::PrintAdapterInfo();
     message->Net_Message = common::GetNetworkInterfacesThroughput();
     double value;
-	value = common::getGpuUsage(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE);
+	//value = common::getGpuUsage(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE);
     //int roundedValue = static_cast<int>(value);
-    message->Gpu_Message = value;
+   // message->Gpu_Message = value;
 
     QByteArray dataGram;
     QDataStream stream(&dataGram, QIODevice::WriteOnly);

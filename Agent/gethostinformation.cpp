@@ -13,12 +13,8 @@
 #include <wininet.h>
 //#include <iphlpapi.h>
 #include <IPHlpApi.h>
-#include "getGpu.h"
+
 //class CPerformHelper;
-#include "Win32Utils/CDeviceHelper.h"
-#include "Win32Utils/CWmiQueryHelper.h"
-#include "Win32Utils/CDeviceHelper.h"
-#include "Win32Utils/CStrUtils.h"
 
 
 //#pragma comment(lib, "IPHLPAPI.lib")
@@ -292,49 +288,49 @@ namespace common {
 
 	}
 
-	double getGpuUsage(const std::wstring& strCounterPath, DWORD dwFormat)
-	{
-		setlocale(LC_ALL, "");
+	//double getGpuUsage(const std::wstring& strCounterPath, DWORD dwFormat)
+	//{
+	//	setlocale(LC_ALL, "");
 
-		std::vector<VIDEO_ADAPTER_DESC_INFO> vResult = CDeviceHelper::GetAllVideoAdapterDesc();
+	//	std::vector<VIDEO_ADAPTER_DESC_INFO> vResult = CDeviceHelper::GetAllVideoAdapterDesc();
 
-		CDeviceHelper obj;
+	//	CDeviceHelper obj;
 
-		clock_t tmBegin = ::clock();
-		DEVICE_INFO info = obj.GetDeviceInfo();
-		clock_t tmEnd = ::clock();
+	//	clock_t tmBegin = ::clock();
+	//	DEVICE_INFO info = obj.GetDeviceInfo();
+	//	clock_t tmEnd = ::clock();
 
-		//Console::Printf(_T("cost time: %d\r\n"), tmEnd - tmBegin);
+	//	//Console::Printf(_T("cost time: %d\r\n"), tmEnd - tmBegin);
 
-		CPerformHelper perfmon;
+	//	CPerformHelper perfmon;
 
-		//int nTimeInterval = 1000;
+	//	//int nTimeInterval = 1000;
 
-		perfmon.Initialize();
-		perfmon.AddCounter(_T(PERFM_PATH_GPU_UTILITY));
-		perfmon.StartCollect();
+	//	perfmon.Initialize();
+	//	perfmon.AddCounter(_T(PERFM_PATH_GPU_UTILITY));
+	//	perfmon.StartCollect();
 
-		PDH_FMT_COUNTERVALUE value = { 0 };
+	//	PDH_FMT_COUNTERVALUE value = { 0 };
 
-		/*SIZE_T DedicatedVideoMemory = vResult[0].AdapterDesc.DedicatedVideoMemory;
-		SIZE_T DedicatedSystemMemory = vResult[0].AdapterDesc.DedicatedSystemMemory;
-		SIZE_T SharedSystemMemory = vResult[0].AdapterDesc.SharedSystemMemory;*/
+	//	/*SIZE_T DedicatedVideoMemory = vResult[0].AdapterDesc.DedicatedVideoMemory;
+	//	SIZE_T DedicatedSystemMemory = vResult[0].AdapterDesc.DedicatedSystemMemory;
+	//	SIZE_T SharedSystemMemory = vResult[0].AdapterDesc.SharedSystemMemory;*/
 
-		MEMORYSTATUSEX memStatus = { 0 };
-		memStatus.dwLength = sizeof(MEMORYSTATUSEX);
+	//	MEMORYSTATUSEX memStatus = { 0 };
+	//	memStatus.dwLength = sizeof(MEMORYSTATUSEX);
 
-		//double lfFrequency = 0.0f;
-		//::GlobalMemoryStatusEx(&memStatus);
+	//	//double lfFrequency = 0.0f;
+	//	//::GlobalMemoryStatusEx(&memStatus);
 
-		//Console::Clear();
-		//获取GPU占用率
-		if (perfmon.GetFormattedCounterArray(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE, &value))
-		{
-			//Console::Printf(_T("GPU 利用率: %.1lf%%"), value.doubleValue);
-			//Console::Printf(_T("\r\n"));
-		}
-		return value.doubleValue;
-	}
+	//	//Console::Clear();
+	//	//获取GPU占用率
+	//	if (perfmon.GetFormattedCounterArray(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE, &value))
+	//	{
+	//		//Console::Printf(_T("GPU 利用率: %.1lf%%"), value.doubleValue);
+	//		//Console::Printf(_T("\r\n"));
+	//	}
+	//	return value.doubleValue;
+	//}
 
 
 }

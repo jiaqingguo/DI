@@ -18,21 +18,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
+SOURCES += gethostinformation.cpp \
+    CPerformHelper.cpp \
     Win32Utils/CDeviceHelper.cpp \
     Win32Utils/CStrUtils.cpp \
     Win32Utils/CWmiQueryHelper.cpp \
-    getGpu.cpp \
-    gethostinformation.cpp \
     main.cpp \
     widget.cpp
 
-HEADERS += \
+HEADERS += gethostinformation.h \
+    CPerformHelper.h \
     Win32Utils/CDeviceHelper.h \
     Win32Utils/CStrUtils.h \
     Win32Utils/CWmiQueryHelper.h \
-    getGpu.h \
-    gethostinformation.h \
     widget.h
 
 FORMS += \
