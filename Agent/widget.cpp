@@ -1,17 +1,21 @@
 #include "widget.h"
 #include "ui_widget.h"
-
+#include <cmath>
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->setWindowTitle("客户端");
+    setWindowTitle("代理");
 
     //用于获取主机的信息
     this->my_timer=new QTimer();
 
+    // 设置定时器类型为Qt::VeryCoarseTimer
+    this->my_timer->setTimerType(Qt::VeryCoarseTimer);
+
     connect(my_timer,&QTimer::timeout,this,&Widget::slot_useUdp);
+    this->my_timer->start(2000);
 
     //QString localHostName=QHostInfo::localHostName();   //获取主机名
     //QHostInfo hostInfo=QHostInfo::fromName(localHostName);//本机的IP地址
@@ -22,27 +26,18 @@ Widget::Widget(QWidget *parent)
     //        }
     //如果主机的IP列表不为空，则显示其第8个IP地址
     //ui->textEdit->append(listAdress.at(7).toString());
-
-    my_timer->start(100);
-
-    //    connect(this->UDPSocket,&QUdpSocket::readyRead,[=](){
-    //        while(this->UDPSocket->hasPendingDatagrams())
-    //        {
-    //            QByteArray receivedDatagram;
-    //            receivedDatagram.resize(this->UDPSocket->pendingDatagramSize());
-    //            QHostAddress serverReplyAddress;
-    //            quint16 serverReplyPort;
-
-    //            qint64 bytesReceived = this->UDPSocket->readDatagram(receivedDatagram.data(), receivedDatagram.size(),&serverReplyAddress, &serverReplyPort);
-    //            ui->textEdit->append(receivedDatagram.data());
-    //        }
-    //    });
+    
 }
 
 Widget::~Widget()
 {
+    UDPSocket->close();
+    delete UDPSocket;
+    UDPSocket = nullptr;
+
     my_timer->stop();
     delete my_timer;
+    my_timer = nullptr;
     delete ui;
 }
 
@@ -89,44 +84,51 @@ void Widget::get_file_information()
 
 void Widget::slot_useUdp()
 {
-    Message_t *message=new Message_t();
-    QUdpSocket *UDPSocket=new QUdpSocket();
+    this->UDPSocket = new QUdpSocket();
+    Message_t *message = new Message_t();
 
-    QString localHostName=QHostInfo::localHostName();   //获取主机名
-    message->host_name=localHostName;
+    //qDebug() << "111111111111111111111111111";
+
+    QString localHostName = QHostInfo::localHostName();   //获取主机名
+    message->host_name = localHostName;
     //获取本机的IP地址
     QList<QHostAddress> addresses = QNetworkInterface::allAddresses();
     for (const QHostAddress &address : addresses) {
-           // 检查是否是IPv4地址
-           if (address.protocol() == QAbstractSocket::IPv4Protocol&&!address.isLoopback()) {
-               // 打印IPv4地址
-               message->host_ip=address.toString();
-           }
-       }
+        // 检查是否是IPv4地址
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) {
+            // 打印IPv4地址
+            message->host_ip = address.toString();
+        }
+    }
     //qDebug()<<message->host_ip;
-    message->CPU_Message=common::getCpuUsage();
+    message->CPU_Message = common::getCpuUsage();
 
     long allPhysicsMem;
     long freePhysicsMem;
     common::getPhysicsMem(allPhysicsMem, freePhysicsMem);
-    message->Memory_Message=(allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
+    message->Memory_Message = (allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
 
     double lFreeAll;
     double lToalAll;
     common::getAllDisSpace(lFreeAll, lToalAll);
-    message->Disk_Message=(lToalAll - lFreeAll) * 100.0 / lToalAll;
+    message->Disk_Message = (lToalAll - lFreeAll) * 100.0 / lToalAll;
     //        common::getNetworkInterfaceStatistics();
     //        common::PrintAdapterInfo();
-    message->Net_Message=common::GetNetworkInterfacesThroughput();
+    message->Net_Message = common::GetNetworkInterfacesThroughput();
+    double value;
+	value = common::getGpuUsage(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE);
+    //int roundedValue = static_cast<int>(value);
+    message->Gpu_Message = value;
 
     QByteArray dataGram;
-    QDataStream stream(&dataGram,QIODevice::WriteOnly);
-    stream<<message->host_name;
-    stream<<message->host_ip;
-    stream<<message->CPU_Message;
-    stream<<message->Memory_Message;
-    stream<<message->Disk_Message;
-    stream<<static_cast<quint32>(message->Net_Message);
+    QDataStream stream(&dataGram, QIODevice::WriteOnly);
+    stream << message->host_name;
+    stream << message->host_ip;
+    stream << message->CPU_Message;
+    stream << message->Memory_Message;
+    stream << message->Disk_Message;
+    stream << static_cast<quint32>(message->Net_Message);
+    stream << message->Gpu_Message;
 
 
     //用于获取发送者的 IP 和端口
@@ -134,18 +136,57 @@ void Widget::slot_useUdp()
     //    QHostAddress IP;
     //    quint16 Port=0;
     get_file_information();
-    //    qint64 bytesWritten;
-    for (const auto &server : m_serverList) {
-        UDPSocket->writeDatagram(dataGram,server.first,server.second);
+
+
+    qint64 ret;
+    bool result = UDPSocket->bind(QHostAddress::AnyIPv4,12345,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+    if(!result)
+    {
+        qDebug() << "Failed to bind port" << UDPSocket->errorString();
+    }
+    for (const auto &server : m_serverList)
+    {
+        ret = UDPSocket->writeDatagram(dataGram, server.first, server.second);
+        if (ret == -1) {
+            // 发送失败
+            qDebug() << "Error sending datagram:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+
+            ui->textEdit->append(UDPSocket->errorString());
+        }
+        else {
+            // 发送成功
+            qDebug() << "Bytes sent:" << ret;
+            ui->textEdit->append(QString::number(ret));
+        }
+
         //const QHostAddress &ip = server.first;
         //quint16 port = server.second;
         //qDebug() << "IP:" << ip.toString() << "Port:" << port;
 
         //确保数据报被发送
-        UDPSocket->waitForBytesWritten();
+        //UDPSocket->waitForBytesWritten();
+
     }
+    //    connect(UDPSocket,&QUdpSocket::readyRead,[=](){
+    //        while(UDPSocket->hasPendingDatagrams())
+    //        {
+    //            QByteArray receivedDatagram;
+    //            receivedDatagram.resize(UDPSocket->pendingDatagramSize());
+    //            QHostAddress serverReplyAddress;
+    //            quint16 serverReplyPort;
 
-
-
+    //            qint64 bytesReceived = UDPSocket->readDatagram(receivedDatagram.data(), receivedDatagram.size(),&serverReplyAddress, &serverReplyPort);
+    //            if(bytesReceived > 0 )
+    //            {
+    //                ui->lineEdit->setText(receivedDatagram.data());
+    //            }
+    //            else
+    //            {
+    //                ui->lineEdit->setText(UDPSocket->errorString());
+    //            }
+    //        }
+    //    });
+    delete message;
+    message = nullptr;
 }
 

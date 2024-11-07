@@ -705,13 +705,18 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
     this->UdpSocket = new QUdpSocket();
     
     //this->UdpSocket->bind(QHostAddress::Any, 54321);
-	this->UdpSocket->bind(QHostAddress::AnyIPv4,54321,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+	bool ret;
+	ret = this->UdpSocket->bind(QHostAddress::AnyIPv4,54321,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+	if (!ret)
+	{
+		qDebug() << ret;
+	}
 
 
     connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
         while (this->UdpSocket->hasPendingDatagrams())
         {
-            QByteArray datagram;
+            QByteArray datagram; 
             datagram.resize(this->UdpSocket->pendingDatagramSize());
 			qint64 bytesRead = this->UdpSocket->readDatagram(datagram.data(), datagram.size(),&addr,&port);
 			//qDebug() << addr.toString();

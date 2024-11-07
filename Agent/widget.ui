@@ -13,6 +13,39 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>210</y>
+     <width>771</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>751</width>
+      <height>271</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>50</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
