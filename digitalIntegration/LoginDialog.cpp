@@ -198,7 +198,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	}
 	int i = 1;
 	db::databaseDI::Instance().get_ip_data_by_number(i, common::setHostData);
-	this->accept();
+	//this->accept();
 
 
 }

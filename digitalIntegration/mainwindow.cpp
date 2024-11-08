@@ -1497,7 +1497,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 		axTabWidget->m_account = strAccount;
 		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
 		axTabWidget->m_softwareName = toolsName;
-        if (isHardwareAccelerator(it->hostname))
+        if (isHardwareAccelerator(stipToolData.host))
         {
             startLongDistanceHost(toolsName, common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
         }
@@ -1574,8 +1574,6 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
             if (isHardwareAccelerator(it->hostname))
             {
                 startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
-
-
             }
             else
             {

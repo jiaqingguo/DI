@@ -193,9 +193,9 @@ void Widget::slot_useUdp()
     //        common::PrintAdapterInfo();
     message->Net_Message = common::GetNetworkInterfacesThroughput();
     double value;
-	//value = common::getGpuUsage(_T(PERFM_PATH_GPU_UTILITY), PDH_FMT_DOUBLE);
+	value = getGpuUsage();
     //int roundedValue = static_cast<int>(value);
-   // message->Gpu_Message = value;
+    message->Gpu_Message = value;
 
     QByteArray dataGram;
     QDataStream stream(&dataGram, QIODevice::WriteOnly);
