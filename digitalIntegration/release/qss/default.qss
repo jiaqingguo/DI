@@ -1,0 +1,435 @@
+
+/* ------------------------ 登录页面----------------------start*/
+/*
+ * 登录页面图标-用户名
+ */
+LoginDialog QLabel#lblUser {
+	width: 34px;
+	height: 35px;
+	border-image: url(:/image/user.png);
+}
+
+/*
+ * 登录页面图标-密码 16A0CF
+ */
+LoginDialog QLabel#lblPwd {
+	width: 34px;
+	height: 35px;
+	border-image: url(:/image/password.png);
+}
+
+LoginDialog QLabel#labelFingerprint {
+	border-image: url(:/image/fingerprint.png);
+}
+
+LoginDialog QPushButton#btnRegister {
+    border: none; /* 移除按钮边框 */
+    text-decoration: underline; /* 添加文字下划线 */
+}
+/* ------------------------登录页面----------------------end*/
+
+/* ------------------------ 注册页面----------------------start*/
+RegisterDialog QLabel#labelFingerprint {
+	border-image: url(:/image/fingerprint.png);
+}
+
+/* ------------------------ 注册页面----------------------end*/
+
+/* ------------------------主界面----------------------start*/
+QLabel#labelUserIcon{
+	min-width: 40px;
+	min-height: 40px;
+	border-image:url(:/image/user.png);
+	background-size: contain; /* 图片按比例缩放，保持全部显示在 QLabel 内部 */
+}
+
+/*
+ * ***背景
+ */
+QWidget#widgetModules {
+	background-color: white;
+}
+ 
+
+QWidget#widgetFunctionBtns {
+	background-color: #F0F0F0;
+}
+QStackedWidget#stackedWidget {
+	background-color: white;
+}
+
+
+/* 普通状态 */
+QWidget#widgetModules QPushButton {
+    min-width:43px;
+	max-width:43px;
+	border-style: solid;
+    border-width: 1px;
+    border-radius: 0px; /* 圆角边框 */
+    border-color: #1F4E79;
+    padding: 1px;
+	
+}
+
+/* 悬浮状态 */
+QWidget#widgetModules QPushButton:hover {
+     background-color: #87CEFA; /* 浅蓝色 */
+	 
+}
+
+
+/* 选中状态 */
+QWidget#widgetModules QPushButton:checked {
+    background-color: #17C1FF; 
+	color: white; /* 将按钮文字颜色设置为白色 */
+	
+}
+
+
+/*
+ *  数据管理界面
+ */
+ 
+ 
+QDialog#DataManageDialog QPushButton#itemBtn {
+    background-color: #17C1FF; 
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; /* 圆角边框 */
+    border-color: #1F4E79;
+    padding: 6px;
+	color: white; /* 将按钮文字颜色设置为白色 */
+}
+
+/*
+ *  审批进度界面
+ */
+QDialog#ApprovalProgressDialog QPushButton#itemBtnYes {
+    background-color: #17C1FF; 
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; /* 圆角边框 */
+    border-color: #1F4E79;
+    padding: 6px;
+	color: white; /* 将按钮文字颜色设置为白色 */
+}
+QDialog#ApprovalProgressDialog QPushButton#itemBtnYes:disabled {
+    background-color:gray; 
+   
+}
+QDialog#ApprovalProgressDialog QPushButton#itemBtnNo {
+    background-color: red; 
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; /* 圆角边框 */
+    border-color: #1F4E79;
+    padding: 6px;
+	 color: white; /* 将按钮文字颜色设置为白色 */
+}
+QDialog#ApprovalProgressDialog QPushButton#itemBtnNo:disabled {
+     background-color:gray; 
+}
+
+/* 功能界面 四个按钮样式 */
+QWidget#widgetFunctionBtns QPushButton#btnResourceManage {
+    background-image: url(:/image/ResourceManage.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 1px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px; 
+	border: none;
+}
+QWidget#widgetFunctionBtns QPushButton#btnResourceManage:checked {
+    background-image: url(:/image/ResourceManage_select.png);
+}
+QWidget#widgetFunctionBtns QPushButton#btnInformationConfihuration {
+    background-image: url(:/image/InformationConfihuration.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 1px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetFunctionBtns QPushButton#btnInformationConfihuration:checked {
+    background-image: url(:/image/InformationConfihuration_select.png);
+}
+QWidget#widgetFunctionBtns QPushButton#btnDataManage {
+    background-image: url(:/image/DataManage.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 1px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetFunctionBtns QPushButton#btnDataManage:checked {
+    background-image: url(:/image/DataManage_select.png);
+}
+QWidget#widgetFunctionBtns QPushButton#btnApprovalProgress {
+    background-image: url(:/image/ApprovalProgress.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 1px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetFunctionBtns QPushButton#btnApprovalProgress:checked {
+    background-image: url(:/image/ApprovalProgress_select.png);
+}
+
+
+
+/* ------------------------ 申请审批----------------------start*/
+
+
+
+/* ------------------------ 申请审批----------------------end*/
+
+/* ------------------------ DataManageDialog----------------------start*/
+
+/* ------------------------ DataManageDialog----------------------end*/
+
+/* 一键加载 按钮样式 */
+QWidget#widgetM1 QPushButton#btnM1Load {
+    background-image: url(:/image/load-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+
+QWidget#widgetM1 QPushButton#btnM1Load:checked {
+    background-image: url(:/image/load.png);
+}
+QWidget#widgetM2 QPushButton#btnM2Load {
+    background-image: url(:/image/load-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM2 QPushButton#btnM2Load:checked {
+    background-image: url(:/image/load.png);
+}
+QWidget#widgetM3 QPushButton#btnM3Load {
+    background-image: url(:/image/load-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM3 QPushButton#btnM3Load:checked {
+    background-image: url(:/image/load.png);
+}
+QWidget#widgetM4 QPushButton#btnM4Load {
+    background-image: url(:/image/load-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM4 QPushButton#btnM4Load:checked {
+    background-image: url(:/image/load.png);
+}
+
+
+/* 一键保存 按钮样式 */
+QWidget#widgetM1 QPushButton#btnM1Save {
+    background-image: url(:/image/save-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM1 QPushButton#btnM1Save:checked {
+    background-image: url(:/image/save.png);
+}
+QWidget#widgetM2 QPushButton#btnM2Save {
+    background-image: url(:/image/save-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM2 QPushButton#btnM2Save:checked {
+    background-image: url(:/image/save.png);
+}
+QWidget#widgetM3 QPushButton#btnM3Save {
+    background-image: url(:/image/save-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM3 QPushButton#btnM3Save:checked {
+    background-image: url(:/image/save.png);
+}
+QWidget#widgetM4 QPushButton#btnM4Save {
+    background-image: url(:/image/save-gray.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 0px;
+    background-repeat: no-repeat;
+	padding-bottom: 2px;
+    text-align: bottom;
+   
+    font-size: 12px;
+   
+	border: none;
+}
+QWidget#widgetM4 QPushButton#btnM4Save:checked {
+    background-image: url(:/image/save.png);
+}
+
+
+
+
+QHeaderView::section {
+	background-color: #87CEEB;
+ }
+ QHeaderView::section:checked { 
+        background-color: #87CEEB; 
+        }
+ QHeaderView::section:pressed { 
+        background-color: #87CEEB; 
+        }
+
+/* 模块1-4 软件按钮样式 #ADD8E6#87CEEB*/
+QWidget#widgetM1 QPushButton#pushButton_6,
+QWidget#widgetM2 QPushButton#pushButton_10,
+QWidget#widgetM3 QPushButton#pushButton_14,
+QWidget#widgetM4 QPushButton#pushButton_18{
+    background-image: url(:/image/adobe_after_effects.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetM1 QPushButton#pushButton,
+QWidget#widgetM2 QPushButton#pushButton_21,
+QWidget#widgetM3 QPushButton#pushButton_16,
+QWidget#widgetM4 QPushButton#pushButton_5{
+    background-image: url(:/image/adobe_illustrator.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetM1 QPushButton#pushButton_2,
+QWidget#widgetM2 QPushButton#pushButton_23,
+QWidget#widgetM3 QPushButton#pushButton_17,
+QWidget#widgetM4 QPushButton#pushButton_13{
+    background-image: url(:/image/adobe_after_effects.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetM1 QPushButton#pushButton_3,
+QWidget#widgetM2 QPushButton#pushButton_24,
+QWidget#widgetM3 QPushButton#pushButton_20,
+QWidget#widgetM4 QPushButton#pushButton_12{
+    background-image: url(:/image/adobe_photoshop.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetM1 QPushButton#pushButton_7,
+QWidget#widgetM2 QPushButton#pushButton_22,
+QWidget#widgetM3 QPushButton#pushButton_19,
+QWidget#widgetM4 QPushButton#pushButton_9{
+    background-image: url(:/image/adobe_indesign.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+QWidget#widgetM1 QPushButton#pushButton_4,
+QWidget#widgetM2 QPushButton#pushButton_11,
+QWidget#widgetM3 QPushButton#pushButton_15,
+QWidget#widgetM4 QPushButton#pushButton_8{
+    background-image: url(:/image/adobe_xd.png);
+    background-origin: content;
+    background-position: top;
+    padding-top: 3px;
+    background-repeat: no-repeat;
+	padding-bottom: 0px;
+    text-align: bottom;
+    font-size: 12px;
+	border: none;
+}
+
