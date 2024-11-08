@@ -699,7 +699,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
-		stDownloadApproval.filePath = fileAllPath.toLocal8Bit().toStdString();
+		stDownloadApproval.filePath = fileAllPath.toStdString();
 		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
 
 		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
