@@ -72,6 +72,8 @@ namespace common
    // std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
        std::set<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
+     //  std::map<std::string, table_ip_configure>  setHostData;// 每个用户分配的三个主机网卡ip;包括Gpu信息;
+
     QString                 strCopyPath;                  // 复制的远程路径;
     QString                 strVipPath;				  //   普通用户不能操作的路径;
 	table_user              stUser;
@@ -770,6 +772,28 @@ namespace common
         {
             model->removeRow(row);
         }
+    }
+
+    void findIpWithGpuMinValue(table_ip_configure& stHost)
+    {
+        double minCpuUsage = 0;// td::numeric_limits<double>::max(); // 初始化为最大值
+      //  std::string minIpAddress; // 存储最小 CPU 使用率对应的 IP 地址
+
+        // 遍历 set
+        for (const auto& item : setHostData) 
+        {
+            if (item.dGpuUsage < minCpuUsage) 
+            {
+                minCpuUsage = item.dGpuUsage; // 更新最小 CPU 使用率
+              //  minIpAddress = item.dGpuUsage; // 更新对应的 IP 地址
+                stHost.ip = item.ip;
+                stHost.hostname = item.hostname;
+                stHost.id = item.id;
+                stHost.number = item.number;
+            }
+        }
+
+      //  return minIpAddress; // 返回具有最小 GPU 使用率的 IP 地址
     }
     void hideMidelRowsbyColumnValue(QStandardItemModel* model, const int& Column, const QString& strValue)
     {

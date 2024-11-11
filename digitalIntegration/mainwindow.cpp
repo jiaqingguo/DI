@@ -583,16 +583,26 @@ void MainWindow::slot_btnAddToolTab()
        QString strPwd = "123456";
        CWidget* axTabWidget = new CWidget();
 
-       QString exeDir = QCoreApplication::applicationDirPath();
-       int i = common::iSoftStartHostNum % 3;
-       if (common::setHostData.size() < i)
+
+       //int i = common::iSoftStartHostNum % 3;
+       //if (common::setHostData.size() < i)
+       //{
+       //    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+       //    return;
+       //}
+       //auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+       //std::string strIP = it->ip;
+       //common::iSoftStartHostNum++;
+       
+       table_ip_configure st;
+       common::findIpWithGpuMinValue(st);
+       std::string strIP = st.ip;
+       if (strIP.empty())
        {
            QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
            return;
        }
-        auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
-        std::string strIP = it->ip;
-        common::iSoftStartHostNum++;
+
 
         if (moduleNumber == 1)
         {
@@ -620,7 +630,7 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
                 axTabWidget->m_softwareName = toolName;
 
-                if (isHardwareAccelerator(it->hostname))
+                if (isHardwareAccelerator(st.hostname))
                 {
                     startLongDistanceHost(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
                 }
@@ -642,7 +652,7 @@ void MainWindow::slot_btnAddToolTab()
                     axTabWidget->m_ip = QString::fromStdString(strIP);
                     axTabWidget->m_softwareName = toolName;
 
-                    if (isHardwareAccelerator(it->hostname))
+                    if (isHardwareAccelerator(st.hostname))
                     {
                         startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
                     }
@@ -657,7 +667,7 @@ void MainWindow::slot_btnAddToolTab()
                     axTabWidget->m_account = strAccount;
                     axTabWidget->m_ip = QString::fromStdString(strIP);
                     axTabWidget->m_softwareName = toolName;
-                    if (isHardwareAccelerator(it->hostname))
+                    if (isHardwareAccelerator(st.hostname))
                     {
                         startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
                     }
@@ -682,7 +692,7 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(strIP);
                 axTabWidget->m_softwareName = toolName;
-                if (isHardwareAccelerator(it->hostname))
+                if (isHardwareAccelerator(st.hostname))
                 {
                     startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
                 }
@@ -697,7 +707,7 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(strIP);
                 axTabWidget->m_softwareName = toolName;
-                if (isHardwareAccelerator(it->hostname))
+                if (isHardwareAccelerator(st.hostname))
                 {
                     startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
                 }
@@ -717,7 +727,7 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(strIP);
                 axTabWidget->m_softwareName = toolName;
-                if (isHardwareAccelerator(it->hostname))
+                if (isHardwareAccelerator(st.hostname))
                 {
                     startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
                 }
@@ -732,7 +742,7 @@ void MainWindow::slot_btnAddToolTab()
                 axTabWidget->m_account = strAccount;
                 axTabWidget->m_ip = QString::fromStdString(strIP);
                 axTabWidget->m_softwareName = toolName;
-                if (isHardwareAccelerator(it->hostname))
+                if (isHardwareAccelerator(st.hostname))
                 {
                     startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
                 }
@@ -1464,6 +1474,8 @@ bool MainWindow::isHardwareAccelerator(const std::string str)
 }
 
 
+
+
 void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
 {
 	table_ip stipToolData;
@@ -1489,6 +1501,7 @@ void MainWindow::slot_one_load_tools(int moduleNum,const QString &toolsName)
         return;
     }
     auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+
     std::string strIP = it->ip;
     common::iSoftStartHostNum++;
    

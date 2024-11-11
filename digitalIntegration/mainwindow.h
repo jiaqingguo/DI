@@ -174,6 +174,7 @@ private:
 
 	int getBtnLoadIndex(QPushButton *btn);
 	bool isHardwareAccelerator(const std::string str);
+	
 private:
     Ui::MainWindow *ui;
 

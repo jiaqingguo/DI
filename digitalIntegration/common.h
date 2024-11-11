@@ -48,10 +48,15 @@ namespace common
 	//extern   std::set<std::string>    setHostIps;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 	extern   std::set<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
+	//extern   QMap<QString, table_ip_configure>  setHostData;
+
 	extern QString          strCopyPath;			 // 复制的远程路径;
 	extern QString          strVipPath;				 //   普通用户不能操作的路径;
 	extern table_user       stUser;
 	extern int              index;                //一键加载时，点击不同模块
+
+
+	void findIpWithGpuMinValue(table_ip_configure &stHost);
  	// Windows C++
 	//__int64 Filetime2Int64(const FILETIME& ftime);
 

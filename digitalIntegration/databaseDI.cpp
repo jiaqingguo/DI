@@ -813,6 +813,33 @@ namespace db
 		return true;
 		
 	}
+	bool databaseDI::get_ip_data_by_number(const int& number, std::map<std::string, table_ip_configure>& mapIpData)
+	{
+		mapIpData.clear();
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select *from t_ip_configure where number=\'%d\'", number);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		table_ip_configure stData;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.hostname = sql_row[2];
+			stData.number = std::atoi(sql_row[3]);
+
+			mapIpData[stData.ip]=stData;
+		}
+		return true;
+	}
 	bool databaseDI::get_all_ip(std::list<table_ip_configure>& listData)
 	{
 		listData.clear();
