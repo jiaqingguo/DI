@@ -2,13 +2,13 @@
 #define _libzkfp_h
 /**
 *	@file		libzkfp.h
-*	@brief		½Ó¿Ú¶¨Òå
+*	@brief		æ¥å£å®šä¹‰
 *	@author		scar chen
 *	@date		2016-04-12
 *	@version	5.0
-*	@par	°æÈ¨£º
+*	@par	ç‰ˆæƒï¼š
 *				ZKTeco
-*	@par	ÀúÊ·°æ±¾			
+*	@par	å†å²ç‰ˆæœ¬
 *
 *	@note
 *
@@ -16,198 +16,202 @@
 
 
 #include "libzkfptype.h"
+#include <Windows.h>
 
+namespace winapi {
+	typedef HANDLE HANDLE;
+}
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-/**
-	*	@brief	³õÊ¼»¯¿â
-	*	@param	:
-	*		ÎŞ
-	*	@return
-	*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
-	*	value			|	type		|	description of value
-	*	----------------|---------------|-------------------------------
-	*	0				|	int			|	³É¹¦
-	*	ÆäËû			|	int			|	Ê§°Ü
-	*	@note 
-*/
-ZKINTERFACE int APICALL ZKFPM_Init();
-
-/**
-	*	@brief	ÊÍ·Å¿â
-	*	@param	:
-	*		ÎŞ
-	*	@return
-	*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
-	*	value			|	type		|	description of value
-	*	----------------|---------------|-------------------------------
-	*	0				|	int			|	³É¹¦
-	*	ÆäËû			|	int			|	Ê§°Ü
-	*	@note 
-*/
-ZKINTERFACE int APICALL ZKFPM_Terminate();
-
-/**
-	*	@brief	»ñÈ¡Éè±¸Êı
-	*	@param	:
-	*		ÎŞ
-	*	@return
-	*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
-	*		µ±Ç°½ÓÈëÖ¸¾²ÂöÒÇÉè±¸Êı
-	*	@note 
-*/
-ZKINTERFACE int APICALL ZKFPM_GetDeviceCount();
-
-
-/**
-		*	@brief	´ò¿ªÉè±¸
+	/**
+		*	@brief	åˆå§‹åŒ–åº“
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
-		*	name			|	type		  |	param direction		|	description of param
-		*	----------------|-----------------|---------------------|------------------------
-		*	index			|	int			  |	[in]				|	Éè±¸Ë÷Òı
+		*		æ— 
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	NULL			|	HANDLE		|	Ê§°Ü
-		*	ÆäËû			|	HANDLE		|	³É¹¦
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
+	ZKINTERFACE int APICALL ZKFPM_Init();
+
+	/**
+		*	@brief	é‡Šæ”¾åº“
+		*	@param	:
+		*		æ— 
+		*	@return
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
+		*	value			|	type		|	description of value
+		*	----------------|---------------|-------------------------------
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
+	*/
+	ZKINTERFACE int APICALL ZKFPM_Terminate();
+
+	/**
+		*	@brief	è·å–è®¾å¤‡æ•°
+		*	@param	:
+		*		æ— 
+		*	@return
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
+		*		å½“å‰æ¥å…¥æŒ‡é™è„‰ä»ªè®¾å¤‡æ•°
+		*	@note
+	*/
+	ZKINTERFACE int APICALL ZKFPM_GetDeviceCount();
+
+
+	/**
+			*	@brief	æ‰“å¼€è®¾å¤‡
+			*	@param	:
+			*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
+			*	name			|	type		  |	param direction		|	description of param
+			*	----------------|-----------------|---------------------|------------------------
+			*	index			|	int			  |	[in]				|	è®¾å¤‡ç´¢å¼•
+			*	@return
+			*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
+			*	value			|	type		|	description of value
+			*	----------------|---------------|-------------------------------
+			*	NULL			|	HANDLE		|	å¤±è´¥
+			*	å…¶ä»–			|	HANDLE		|	æˆåŠŸ
+			*	@note
+		*/
 	ZKINTERFACE HANDLE APICALL ZKFPM_OpenDevice(int index);
 
 	/**
-		*	@brief	¹Ø±ÕÉè±¸
+		*	@brief	å…³é—­è®¾å¤‡
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_CloseDevice(HANDLE hDevice);
 
-	
+
 
 	/**
-		*	@brief	ÉèÖÃ²ÎÊı
+		*	@brief	è®¾ç½®å‚æ•°
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
-		*	nParamCode		|	int			  |	[in]				|	²ÎÊıÀàĞÍ
-		*	paramValue		|	unsigned char*|	[in]				|	²ÎÊıÖµ
-		*	cbParamValue	|	unsigned int  |	[in]				|	²ÎÊıÊı¾İ³¤¶È
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	nParamCode		|	int			  |	[in]				|	å‚æ•°ç±»å‹
+		*	paramValue		|	unsigned char*|	[in]				|	å‚æ•°å€¼
+		*	cbParamValue	|	unsigned int  |	[in]				|	å‚æ•°æ•°æ®é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_SetParameters(HANDLE hDevice, int nParamCode, unsigned char* paramValue, unsigned int cbParamValue);
 
 	/**
-		*	@brief	»ñÈ¡²ÎÊı
+		*	@brief	è·å–å‚æ•°
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
-		*	nParamCode		|	int			  |	[in]				|	²ÎÊıÀàĞÍ
-		*	paramValue		|	unsigned char*|	[out]				|	²ÎÊıÖµ
-		*	cbParamValue	|	unsigned int* |	[out]				|	²ÎÊıÊı¾İ³¤¶È
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	nParamCode		|	int			  |	[in]				|	å‚æ•°ç±»å‹
+		*	paramValue		|	unsigned char*|	[out]				|	å‚æ•°å€¼
+		*	cbParamValue	|	unsigned int* |	[out]				|	å‚æ•°æ•°æ®é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_GetParameters(HANDLE hDevice, int nParamCode, unsigned char* paramValue, unsigned int* cbParamValue);
-	
+
 	/**
-		*	@brief	»ñÈ¡Ö¸ÎÆ(Í¼Ïñ/Ä£°å£©
+		*	@brief	è·å–æŒ‡çº¹(å›¾åƒ/æ¨¡æ¿ï¼‰
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
-		*	fpImage			|	unsigned char*|	[out]				|	Ö¸ÎÆÍ¼Ïñ
-		*	cbFPImage		|	unsigned int  |	[in]				|	fpImageÄÚ´æ´óĞ¡
-		*	fpTemplate		|	unsigned char*|	[out]				|	Ö¸ÎÆÄ£°å
-		*	cbTemplate		|	unsigned int* |	[in/out]			|	Ö¸ÎÆÄ£°å³¤¶È
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fpImage			|	unsigned char*|	[out]				|	æŒ‡çº¹å›¾åƒ
+		*	cbFPImage		|	unsigned int  |	[in]				|	fpImageå†…å­˜å¤§å°
+		*	fpTemplate		|	unsigned char*|	[out]				|	æŒ‡çº¹æ¨¡æ¿
+		*	cbTemplate		|	unsigned int* |	[in/out]			|	æŒ‡çº¹æ¨¡æ¿é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_AcquireFingerprint(HANDLE hDevice, unsigned char* fpImage, unsigned int cbFPImage, unsigned char* fpTemplate, unsigned int* cbTemplate);
 
 
 	/**
-		*	@brief	»ñÈ¡Ö¸ÎÆÍ¼Ïñ
+		*	@brief	è·å–æŒ‡çº¹å›¾åƒ
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
-		*	fpImage			|	unsigned char*|	[out]				|	Ö¸ÎÆÍ¼Ïñ
-		*	cbFPImage		|	unsigned int  |	[in]				|	fpImageÄÚ´æ´óĞ¡
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fpImage			|	unsigned char*|	[out]				|	æŒ‡çº¹å›¾åƒ
+		*	cbFPImage		|	unsigned int  |	[in]				|	fpImageå†…å­˜å¤§å°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_AcquireFingerprintImage(HANDLE hDevice, unsigned char* fpImage, unsigned int cbFPImage);
 
 	/**
-		*	@brief	´´½¨Ëã·¨²Ù×÷ÊµÀı
+		*	@brief	åˆ›å»ºç®—æ³•æ“ä½œå®ä¾‹
 		*	@param	:
-		*	ÎŞ
+		*	æ— 
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	NULL			|	HANDLE		|	Ê§°Ü
-		*	ÆäËû			|	HANDLE		|	³É¹¦
-		*	@note 
+		*	NULL			|	HANDLE		|	å¤±è´¥
+		*	å…¶ä»–			|	HANDLE		|	æˆåŠŸ
+		*	@note
 	*/
 	ZKINTERFACE HANDLE APICALL ZKFPM_CreateDBCache();
 	ZKINTERFACE HANDLE APICALL ZKFPM_DBInit();	//same as ZKFPM_CreateDBCache, for new version
 	/**
-		*	@brief	ÊÍ·ÅËã·¨²Ù×÷ÊµÀı
+		*	@brief	é‡Šæ”¾ç®—æ³•æ“ä½œå®ä¾‹
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_CloseDBCache(HANDLE hDBCache);
 	ZKINTERFACE int APICALL ZKFPM_DBFree(HANDLE hDBCache); //same as ZKFPM_CloseDBCache, for new version
@@ -217,264 +221,264 @@ ZKINTERFACE int APICALL ZKFPM_GetDeviceCount();
 
 
 	/**
-		*	@brief	½«3¸öÖ¸ÎÆÄ£°åºÏ³ÉµÇ¼ÇÄ£°å
+		*	@brief	å°†3ä¸ªæŒ‡çº¹æ¨¡æ¿åˆæˆç™»è®°æ¨¡æ¿
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	temp1			|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å1
-		*	temp2			|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å2
-		*	temp3			|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å3
-		*	regTemp			|	unsigned char*|	[out]				|	µÇ¼ÇÄ£°å
-		*	cbRegTemp		|	unsigned int* |	[in/out]			|	µÇ¼ÇÄ£°å³¤¶È
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	temp1			|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿1
+		*	temp2			|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿2
+		*	temp3			|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿3
+		*	regTemp			|	unsigned char*|	[out]				|	ç™»è®°æ¨¡æ¿
+		*	cbRegTemp		|	unsigned int* |	[in/out]			|	ç™»è®°æ¨¡æ¿é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_GenRegTemplate(HANDLE hDBCache, unsigned char* temp1, unsigned char* temp2, unsigned char* temp3, unsigned char* regTemp, unsigned int* cbRegTemp);
 	ZKINTERFACE int APICALL ZKFPM_DBMerge(HANDLE hDBCache, unsigned char* temp1, unsigned char* temp2, unsigned char* temp3, unsigned char* regTemp, unsigned int* cbRegTemp);	//same as ZKFPM_GenRegTemplate, for new version
-		
+
 	/**
-		*	@brief	Ìí¼ÓÖ¸ÎÆÄ£°åµ½»º´æ
+		*	@brief	æ·»åŠ æŒ‡çº¹æ¨¡æ¿åˆ°ç¼“å­˜
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	fid				|	unsigned int  |	[in]				|	ÊÖÖ¸ID
-		*	fpTemplate		|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å
-		*	cbTemplate		|	unsigned int  |	[in]				|	Ö¸ÎÆÄ£°å³¤¶È
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fid				|	unsigned int  |	[in]				|	æ‰‹æŒ‡ID
+		*	fpTemplate		|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿
+		*	cbTemplate		|	unsigned int  |	[in]				|	æŒ‡çº¹æ¨¡æ¿é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_AddRegTemplateToDBCache(HANDLE hDBCache, unsigned int fid, unsigned char* fpTemplate, unsigned int cbTemplate);
 	ZKINTERFACE int APICALL ZKFPM_DBAdd(HANDLE hDBCache, unsigned int fid, unsigned char* fpTemplate, unsigned int cbTemplate);	//same as ZKFPM_AddRegTemplateToDBCache, for new version
 
 	/**
-		*	@brief	´Ó»º´æÉ¾³ıÖ¸ÎÆÄ£°å
+		*	@brief	ä»ç¼“å­˜åˆ é™¤æŒ‡çº¹æ¨¡æ¿
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	fid				|	unsigned int  |	[in]				|	ÊÖÖ¸ID
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fid				|	unsigned int  |	[in]				|	æ‰‹æŒ‡ID
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_DelRegTemplateFromDBCache(HANDLE hDBCache, unsigned int fid);
 	ZKINTERFACE int APICALL ZKFPM_DBDel(HANDLE hDBCache, unsigned int fid);			//same as ZKFPM_DelRegTemplateFromDBCache, for new version
-	
+
 
 	/**
-		*	@brief	Çå¿ÕËã·¨»º´æ
+		*	@brief	æ¸…ç©ºç®—æ³•ç¼“å­˜
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_ClearDBCache(HANDLE hDBCache);
 	ZKINTERFACE int APICALL ZKFPM_DBClear(HANDLE hDBCache);	//same as ZKFPM_ClearDBCache, for new version
 
 	/**
-		*	@brief	»ñÈ¡»º´æÄ£°åÊı
+		*	@brief	è·å–ç¼“å­˜æ¨¡æ¿æ•°
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	fpCount			|	unsigned int* |	[out]				|	Ö¸ÎÆÄ£°åÊı
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fpCount			|	unsigned int* |	[out]				|	æŒ‡çº¹æ¨¡æ¿æ•°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_GetDBCacheCount(HANDLE hDBCache, unsigned int* fpCount);
 	ZKINTERFACE int APICALL ZKFPM_DBCount(HANDLE hDBCache, unsigned int* fpCount);	//same as ZKFPM_GetDBCacheCount, for new version
 
 
 	/**
-		*	@brief	Ö¸ÎÆÊ¶±ğ(1:N)
+		*	@brief	æŒ‡çº¹è¯†åˆ«(1:N)
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	fpTemplate		|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å
-		*	cbTemplate		|	unsigned int  | [in]				|	Ö¸ÎÆÄ£°å´óĞ¡
-		*	FID				|	unsigned int* |	[out]				|	Ö¸¾²ÂöID
-		*	score			|	unsigned int* |	[out]				|	·ÖÊı
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fpTemplate		|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿
+		*	cbTemplate		|	unsigned int  | [in]				|	æŒ‡çº¹æ¨¡æ¿å¤§å°
+		*	FID				|	unsigned int* |	[out]				|	æŒ‡é™è„‰ID
+		*	score			|	unsigned int* |	[out]				|	åˆ†æ•°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_Identify(HANDLE hDBCache, unsigned char* fpTemplate, unsigned int cbTemplate, unsigned int* FID, unsigned int* score);
 	ZKINTERFACE int APICALL ZKFPM_DBIdentify(HANDLE hDBCache, unsigned char* fpTemplate, unsigned int cbTemplate, unsigned int* FID, unsigned int* score);	//same as ZKFPM_Identify, for new version
 
 
 	/**
-		*	@brief	±È¶ÔÁ½Ã¶Ö¸ÎÆ
+		*	@brief	æ¯”å¯¹ä¸¤æšæŒ‡çº¹
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	template1		|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å1
-		*	cbTemplate1		|	unsigned int  | [in]				|	Ö¸ÎÆÄ£°å1´óĞ¡
-		*	template2		|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å2
-		*	cbTemplate2		|	unsigned int  | [in]				|	Ö¸ÎÆÄ£°å2´óĞ¡
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	template1		|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿1
+		*	cbTemplate1		|	unsigned int  | [in]				|	æŒ‡çº¹æ¨¡æ¿1å¤§å°
+		*	template2		|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿2
+		*	cbTemplate2		|	unsigned int  | [in]				|	æŒ‡çº¹æ¨¡æ¿2å¤§å°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	>0				|	int			|	·ÖÊı
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	>0				|	int			|	åˆ†æ•°
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_MatchFinger(HANDLE hDBCache, unsigned char* template1, unsigned int cbTemplate1, unsigned char* template2, unsigned int cbTemplate2);
 	ZKINTERFACE int APICALL ZKFPM_DBMatch(HANDLE hDBCache, unsigned char* template1, unsigned int cbTemplate1, unsigned char* template2, unsigned int cbTemplate2); //same as ZKFPM_MatchFinger, for new version
 
 	/**
-		*	@brief	´ÓBitmapÎÄ¼şÌáÈ¡Ö¸ÎÆÄ£°å
+		*	@brief	ä»Bitmapæ–‡ä»¶æå–æŒ‡çº¹æ¨¡æ¿
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	lpFilePathName	|	const char*   |	[in]				|	BMPÍ¼Æ¬Â·¾¶
-		*	DPI				|	unsigned int  | [in]				|	BMPÍ¼Æ¬DPI
-		*	fpTemplate		|	unsigned char*|	[out]				|	Ö¸ÎÆÄ£°å
-		*	cbTemplate		|	unsigned int* |	[in/out]			|	Ä£°å³¤¶È
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	lpFilePathName	|	const char*   |	[in]				|	BMPå›¾ç‰‡è·¯å¾„
+		*	DPI				|	unsigned int  | [in]				|	BMPå›¾ç‰‡DPI
+		*	fpTemplate		|	unsigned char*|	[out]				|	æŒ‡çº¹æ¨¡æ¿
+		*	cbTemplate		|	unsigned int* |	[in/out]			|	æ¨¡æ¿é•¿åº¦
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	>0				|	int			|	·ÖÊı
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	>0				|	int			|	åˆ†æ•°
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_ExtractFromImage(HANDLE hDBCache, const char* lpFilePathName, unsigned int DPI, unsigned char* fpTemplate, unsigned int *cbTemplate);
 
 
 	/**
-		*	@brief	Base64×Ö·û´®×ª¶ş½øÖÆÊı¾İ
+		*	@brief	Base64å­—ç¬¦ä¸²è½¬äºŒè¿›åˆ¶æ•°æ®
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	src				|	const char*	  |	[in]				|	Base64×Ö·û´®
-		*	blob			|	unsigned char*|	[out]				|	·µ»Ø¶ş½øÖÆÊı¾İ
-		*	cbBlob			|	unsigned int  |	[in]				|	blobÄÚ´æ´óĞ¡
+		*	src				|	const char*	  |	[in]				|	Base64å­—ç¬¦ä¸²
+		*	blob			|	unsigned char*|	[out]				|	è¿”å›äºŒè¿›åˆ¶æ•°æ®
+		*	cbBlob			|	unsigned int  |	[in]				|	blobå†…å­˜å¤§å°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	>0±íÊ¾Êı¾İ³¤¶È£»<=0±íÊ¾Ê§°Ü
-		*	@note 
+		*	>0è¡¨ç¤ºæ•°æ®é•¿åº¦ï¼›<=0è¡¨ç¤ºå¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_Base64ToBlob(const char* src, unsigned char* blob, unsigned int cbBlob);
 
 	/**
-		*	@brief	¶ş½øÖÆÊı¾İ×ªBase64×Ö·û´®
+		*	@brief	äºŒè¿›åˆ¶æ•°æ®è½¬Base64å­—ç¬¦ä¸²
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	src				|const unsigned char*|	[in]			|	¶ş½øÖÆÊı¾İ
-		*	cbSrc			|	unsigned int  |	[in]				|	¶ş½øÖÆÊı¾İ³¤¶È
-		*	base64Str		|	char *		  |	[out]				|	·µ»ØBase64×Ö·û´®
-		*	cbBase64str		|	unsigned int  | [int]				|	base64Str·ÖÅäÄÚ´æ´óĞ¡
+		*	src				|const unsigned char*|	[in]			|	äºŒè¿›åˆ¶æ•°æ®
+		*	cbSrc			|	unsigned int  |	[in]				|	äºŒè¿›åˆ¶æ•°æ®é•¿åº¦
+		*	base64Str		|	char *		  |	[out]				|	è¿”å›Base64å­—ç¬¦ä¸²
+		*	cbBase64str		|	unsigned int  | [int]				|	base64Stråˆ†é…å†…å­˜å¤§å°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	>0±íÊ¾Êı¾İ³¤¶È£»<=0±íÊ¾Ê§°Ü
-		*	@note 
+		*	>0è¡¨ç¤ºæ•°æ®é•¿åº¦ï¼›<=0è¡¨ç¤ºå¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_BlobToBase64(const unsigned char* src, unsigned int cbSrc, char* base64Str, unsigned int cbBase64str);
 
 
 	/**
-		*	@brief	1:1±È¶ÔÓÃ»§Ö¸ÎÆ
+		*	@brief	1:1æ¯”å¯¹ç”¨æˆ·æŒ‡çº¹
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDBCache		|	HANDLE		  |	[in]				|	Ëã·¨²Ù×÷ÊµÀıÖ¸Õë
-		*	fpTemplate		|	unsigned char*|	[in]				|	Ö¸ÎÆÄ£°å
-		*	cbTemplate		|	unsigned int  | [in]				|	Ö¸ÎÆÄ£°å´óĞ¡
+		*	hDBCache		|	HANDLE		  |	[in]				|	ç®—æ³•æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	fpTemplate		|	unsigned char*|	[in]				|	æŒ‡çº¹æ¨¡æ¿
+		*	cbTemplate		|	unsigned int  | [in]				|	æŒ‡çº¹æ¨¡æ¿å¤§å°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	>0				|	int			|	·ÖÊı
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	>0				|	int			|	åˆ†æ•°
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_VerifyByID(HANDLE hDBCache, unsigned int fid, unsigned char* fpTemplate, unsigned int cbTemplate);
 
 	/**
-		*	@brief	»ñÈ¡×îºóÒ»´ÎÍâ²¿Í¼ÏñÊı¾İÖ¸Õë
+		*	@brief	è·å–æœ€åä¸€æ¬¡å¤–éƒ¨å›¾åƒæ•°æ®æŒ‡é’ˆ
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	width			|	int*		  |	[out]				|	Í¼Ïñ¿í
-		*	height			|	int*		  |	[out]				|	Í¼Ïñ¸ß
+		*	width			|	int*		  |	[out]				|	å›¾åƒå®½
+		*	height			|	int*		  |	[out]				|	å›¾åƒé«˜
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	Í¼ÏñÊı¾İÖ¸Õë£¬ÇëÔÚZKFPM_ExtractFromImage³É¹¦ºó»ñÈ¡
-		*	@note 
+		*	å›¾åƒæ•°æ®æŒ‡é’ˆï¼Œè¯·åœ¨ZKFPM_ExtractFromImageæˆåŠŸåè·å–
+		*	@note
 	*/
 	ZKINTERFACE unsigned char* APICALL ZKFPM_GetLastExtractImage(int * width, int* height);
 
 
 	/**
-		*	@brief	»ñÈ¡²É¼¯²ÎÊı
+		*	@brief	è·å–é‡‡é›†å‚æ•°
 		*	@param	:
-		*	²ÎÊıËµÃ÷ÈçÏÂ±í
+		*	å‚æ•°è¯´æ˜å¦‚ä¸‹è¡¨
 		*	name			|	type		  |	param direction		|	description of param
 		*	----------------|-----------------|---------------------|------------------------
-		*	hDevice			|	HANDLE		  |	[in]				|	Éè±¸²Ù×÷ÊµÀıÖ¸Õë
-		*	pCapParams		|	PZKFPCapParams|	[out]				|	²É¼¯²ÎÊı
+		*	hDevice			|	HANDLE		  |	[in]				|	è®¾å¤‡æ“ä½œå®ä¾‹æŒ‡é’ˆ
+		*	pCapParams		|	PZKFPCapParams|	[out]				|	é‡‡é›†å‚æ•°
 		*	@return
-		*	·µ»ØÖµËµÃ÷ÈçÏÂ£º
+		*	è¿”å›å€¼è¯´æ˜å¦‚ä¸‹ï¼š
 		*	value			|	type		|	description of value
 		*	----------------|---------------|-------------------------------
-		*	0				|	int			|	³É¹¦
-		*	ÆäËû			|	int			|	Ê§°Ü
-		*	@note 
+		*	0				|	int			|	æˆåŠŸ
+		*	å…¶ä»–			|	int			|	å¤±è´¥
+		*	@note
 	*/
 	ZKINTERFACE int APICALL ZKFPM_GetCaptureParams(HANDLE hDevice, PZKFPCapParams pCapParams);
 

@@ -115,3 +115,10 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/l
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.lib
 else:unix: PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.a
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+else:unix: LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+
+INCLUDEPATH += $$PWD/libxzkfp/include
+DEPENDPATH += $$PWD/libxzkfp/include

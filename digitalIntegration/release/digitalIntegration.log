@@ -1,7 +1,1 @@
-﻿  LoginDialog.cpp
-d:\1_project\z_project\gitproject\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\1_project\z_project\gitproject\di\digitalintegration\logindialog.cpp(56): warning C4100: “bClearPwd”: 未引用的形参
-d:\1_project\z_project\gitproject\di\digitalintegration\logindialog.cpp(82): warning C4100: “iRes”: 未引用的形参
-d:\1_project\z_project\gitproject\di\digitalintegration\logindialog.cpp(226): warning C4100: “text”: 未引用的形参
-d:\1_project\z_project\gitproject\di\digitalintegration\logindialog.cpp(238): warning C4100: “text”: 未引用的形参
-  digitalIntegration.vcxproj -> D:\1_project\Z_project\GitProject\DI\digitalIntegration\release\digitalIntegration.exe
+﻿  digitalIntegration.vcxproj -> E:\Git_file\DIi\DI\digitalIntegration\release\digitalIntegration.exe

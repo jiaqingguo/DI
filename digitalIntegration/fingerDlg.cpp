@@ -61,7 +61,7 @@ void fingerDlg::finger_init()
 
 	if (NULL == m_hDevice)
 	{
-		if (ZKFPM_Init() != ZKFP_ERR_OK)
+		if (ZKFPM_Init() != 0)
 		{
 			qDebug() << "Init ZKFPM fail";
 			//SetDlgItemText(IDC_EDIT_RESULT, _T("Init ZKFPM fail"));
@@ -134,7 +134,7 @@ DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
 			memset(szTemplate, 0, MAX_TEMPLATE_SIZE);
 			//采集指纹，指纹模板
 			int ret = ZKFPM_AcquireFingerprint(m_hDevice, pDlg->pImgBuf, pDlg->imgFPWidth*pDlg->imgFPHeight, szTemplate, &tempLen);
-			if (ZKFP_ERR_OK == ret)
+			if (0 == ret)
 			{
 				if (1 == pDlg->nFakeFunOn)	//FakeFinger Test假的
 				{
@@ -252,11 +252,11 @@ void fingerDlg::DoRegister(unsigned char* temp, int len)
 		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
 		//m_enrollIdx = 0;
 		m_bRegister = FALSE;
-		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=操作成功
+		if (0 == ret)   //ZKFP_ERR_OK=操作成功
 		{
 			//添加登记指纹模板到缓冲区
 			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
-			if (ZKFP_ERR_OK == ret)
+			if (0 == ret)
 			{
 				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
 
@@ -322,7 +322,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 		//unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
 		int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
 
-		int ret = ZKFP_ERR_OK;
+		int ret = 0;
 
 		int approval = 0;
 		bool success = false;
@@ -349,7 +349,7 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 
 					ret = ZKFPM_DBMatch(hDBCache, reinterpret_cast<unsigned char*>(date.data()), nLastLogTempLen2, temp, len);
 					//ret = ZKFPM_DBMatch(hDBCache, szLastLogTemplate2, nLastLogTempLen2, temp, len);
-					if (ZKFP_ERR_OK < ret)  //表示操作失败  0表示成功
+					if (0 < ret)  //表示操作失败  0表示成功
 					{
 						success = true;
 					}

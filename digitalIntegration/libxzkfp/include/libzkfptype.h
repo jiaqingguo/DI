@@ -3,13 +3,13 @@
 
 /**
 *	@file		libzkfptype.h
-*	@brief		½á¹¹Ìå¶¨Òå
+*	@brief		ç»“æ„ä½“å®šä¹‰
 *	@author		scar chen
 *	@date		2016-04-12
 *	@version	5.0
-*	@par	°æÈ¨£º
+*	@par	ç‰ˆæƒï¼š
 *				ZKTeco
-*	@par	ÀúÊ·°æ±¾			
+*	@par	å†å²ç‰ˆæœ¬			
 *
 *	@note
 *
@@ -18,20 +18,20 @@
 
 #include "zkinterface.h"
 
-#define FP_THRESHOLD_CODE		1	/**<	Ö¸ÎÆ1:1·§Öµ */
-#define FP_MTHRESHOLD_CODE		2	/**<	Ö¸ÎÆ1:N·§Öµ */
+#define FP_THRESHOLD_CODE 1   /**<	æŒ‡çº¹1:1é˜€å€¼ */
+#define FP_MTHRESHOLD_CODE 2  /**<	æŒ‡çº¹1:Né˜€å€¼ */
 #ifndef MAX_TEMPLATE_SIZE
-#define MAX_TEMPLATE_SIZE 2048		/**<	Ä£°å×î´ó³¤¶È */
+#define MAX_TEMPLATE_SIZE 2048  /**<	æ¨¡æ¿æœ€å¤§é•¿åº¦ */
 #endif
 
-/** 
-   * @brief ²É¼¯Í¼ÏñĞÅÏ¢
+/**
+   * @brief é‡‡é›†å›¾åƒä¿¡æ¯
 */
 typedef struct _ZKFPCapParams
 {
-	unsigned int imgWidth;					/**< Í¼Ïñ¿í */
-	unsigned int imgHeight;					/**< Í¼Ïñ¸ß */
-	unsigned int nDPI;						/**< Í¼ÏñDPI£¨500£© */
+    unsigned int imgWidth;					/**< å›¾åƒå®½ */
+    unsigned int imgHeight;					/**< å›¾åƒé«˜ */
+    unsigned int nDPI;						/**< å›¾åƒDPIï¼ˆ500ï¼‰ */
 }TZKFPCapParams, *PZKFPCapParams;
 
 

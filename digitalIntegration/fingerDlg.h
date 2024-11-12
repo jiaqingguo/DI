@@ -12,23 +12,20 @@
 #include <databaseDI.h>
 //#include "zkfinger.h"
 
-#include "libxzkfp/include/zkinterface.h"
-#include "libxzkfp/include/libzkfperrdef.h"
-#include "libxzkfp/include/libzkfptype.h"
+//#include "libxzkfp/include/zkinterface.h"
+//#include "libxzkfp/include/libzkfperrdef.h"
+//#include "libxzkfp/include/libzkfptype.h"
 #include "libxzkfp/include/libzkfp.h"
 
 
-#ifdef _WIN64
-#pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
-#else
-#pragma comment(lib, "libxzkfp/x86lib/libzkfp.lib")
-#endif
+//#ifdef _WIN64
+//#pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
+//#else
+//#pragma comment(lib, "libxzkfp/x86lib/libzkfp.lib")
+//#endif
 
 #define ENROLLCNT 3
 #define MAX_TEMPLATE_SIZE 2048
-
-#define FP_THRESHOLD_CODE 1
-#define FP_MTHRESHOLD_CODE 2
 
 extern HANDLE m_hDevice;    //设备操作实例句柄
 extern bool m_bIdentify;

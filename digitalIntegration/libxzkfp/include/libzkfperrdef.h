@@ -4,45 +4,45 @@
 
 /**
 *	@file		libzkfperrdef.h
-*	@brief		´íÎóÂë¶¨Òå
+*	@brief		é”™è¯¯ç å®šä¹‰
 *	@author		scar chen
 *	@date		2016-04-12
 *	@version	5.0
-*	@par	°æÈ¨£º
+*	@par	ç‰ˆæƒï¼š
 *				ZKTeco
-*	@par	ÀúÊ·°æ±¾			
+*	@par	å†å²ç‰ˆæœ¬			
 *
 *	@note
 *
 */
 
 
-#define ZKFP_ERR_ALREADY_INIT	1	/**<	ÒÑ¾­³õÊ¼»¯ */
-#define ZKFP_ERR_OK			0	/**<	²Ù×÷³É¹¦ */
-#define ZKFP_ERR_INITLIB	-1	/**<	³õÊ¼»¯Ëã·¨¿âÊ§°Ü */
-#define ZKFP_ERR_INIT		-2	/**<	³õÊ¼»¯²É¼¯¿âÊ§°Ü */
-#define ZKFP_ERR_NO_DEVICE	-3	/**<	ÎŞÉè±¸Á¬½Ó */
-#define ZKFP_ERR_NOT_SUPPORT	-4	/**<	½Ó¿ÚÔİ²»Ö§³Ö */
-#define ZKFP_ERR_INVALID_PARAM	-5	/**<	ÎŞĞ§²ÎÊı */
-#define ZKFP_ERR_OPEN			-6	/**<	´ò¿ªÉè±¸Ê§°Ü */
-#define ZKFP_ERR_INVALID_HANDLE	-7	/**<	ÎŞĞ§¾ä±ú */
-#define ZKFP_ERR_CAPTURE		-8	/**<	È¡ÏñÊ§°Ü */
-#define ZKFP_ERR_EXTRACT_FP		-9	/**<	ÌáÈ¡Ö¸ÎÆÄ£°åÊ§°Ü */
-#define ZKFP_ERR_ABSORT			-10	/**<	ÖĞ¶Ï */
-#define ZKFP_ERR_MEMORY_NOT_ENOUGH			-11	/**<	ÄÚ´æ²»×ã */
-#define ZKFP_ERR_BUSY			-12	/**<	µ±Ç°ÕıÔÚ²É¼¯ */
-#define ZKFP_ERR_ADD_FINGER		-13	/**<	Ìí¼ÓÖ¸ÎÆÄ£°åÊ§°Ü */
-#define ZKFP_ERR_DEL_FINGER		-14	/**<	É¾³ıÖ¸ÎÆÊ§°Ü */
-#define ZKFP_ERR_FAIL			-17	/**<	²Ù×÷Ê§°Ü */
-#define ZKFP_ERR_CANCEL			-18	/**<	È¡Ïû²É¼¯ */
-#define ZKFP_ERR_VERIFY_FP		-20 /**<	±È¶ÔÖ¸ÎÆÊ§°Ü */
-#define ZKFP_ERR_MERGE			-22 /**<	ºÏ²¢µÇ¼ÇÖ¸ÎÆÄ£°åÊ§°Ü	*/
-#define ZKFP_ERR_NOT_OPENED		-23; /**<	Éè±¸Î´´ò¿ª	*/
-#define ZKFP_ERR_NOT_INIT		-24; /**<	Î´³õÊ¼»¯	*/
-#define ZKFP_ERR_ALREADY_OPENED	-25; /**<	Éè±¸ÒÑ´ò¿ª	*/
-#define ZKFP_ERR_LOADIMAGE		-26	/**<	ÎÄ¼ş´ò¿ªÊ§°Ü			*/
-#define ZKFP_ERR_ANALYSE_IMG	-27	/**<	´¦ÀíÍ¼ÏñÊ§°Ü			*/
-#define ZKFP_ERR_TIMEOUT		-28	/**<	³¬Ê±					*/
+#define ZKFP_ERR_ALREADY_INIT	1	 /**<	å·²ç»åˆå§‹åŒ– */
+#define ZKFP_ERR_OK			    0	 /**<	æ“ä½œæˆåŠŸ */
+#define ZKFP_ERR_INITLIB	    -1	 /**<	åˆå§‹åŒ–ç®—æ³•åº“å¤±è´¥ */
+#define ZKFP_ERR_INIT		    -2	 /**<	åˆå§‹åŒ–é‡‡é›†åº“å¤±è´¥ */
+#define ZKFP_ERR_NO_DEVICE	    -3	 /**<	æ— è®¾å¤‡è¿æ¥ */
+#define ZKFP_ERR_NOT_SUPPORT	-4	 /**<	æ¥å£æš‚ä¸æ”¯æŒ */
+#define ZKFP_ERR_INVALID_PARAM	-5	 /**<	æ— æ•ˆå‚æ•° */
+#define ZKFP_ERR_OPEN			-6	 /**<	æ‰“å¼€è®¾å¤‡å¤±è´¥ */
+#define ZKFP_ERR_INVALID_HANDLE	-7	 /**<	æ— æ•ˆå¥æŸ„ */
+#define ZKFP_ERR_CAPTURE		-8	 /**<	å–åƒå¤±è´¥ */
+#define ZKFP_ERR_EXTRACT_FP		-9	 /**<	æå–æŒ‡çº¹æ¨¡æ¿å¤±è´¥ */
+#define ZKFP_ERR_ABSORT			-10	 /**<	ä¸­æ–­ */
+#define ZKFP_ERR_MEMORY_NOT_ENOUGH  -11	/**<	å†…å­˜ä¸è¶³ */
+#define ZKFP_ERR_BUSY			-12	 /**<	å½“å‰æ­£åœ¨é‡‡é›† */
+#define ZKFP_ERR_ADD_FINGER		-13	 /**<	æ·»åŠ æŒ‡çº¹æ¨¡æ¿å¤±è´¥ */
+#define ZKFP_ERR_DEL_FINGER		-14	 /**<	åˆ é™¤æŒ‡çº¹å¤±è´¥ */
+#define ZKFP_ERR_FAIL			-17	 /**<	æ“ä½œå¤±è´¥ */
+#define ZKFP_ERR_CANCEL			-18	 /**<	å–æ¶ˆé‡‡é›† */
+#define ZKFP_ERR_VERIFY_FP		-20  /**<	æ¯”å¯¹æŒ‡çº¹å¤±è´¥ */
+#define ZKFP_ERR_MERGE			-22  /**<	åˆå¹¶ç™»è®°æŒ‡çº¹æ¨¡æ¿å¤±è´¥	*/
+#define ZKFP_ERR_NOT_OPENED		-23  /**<	è®¾å¤‡æœªæ‰“å¼€	*/
+#define ZKFP_ERR_NOT_INIT		-24  /**<	æœªåˆå§‹åŒ–	*/
+#define ZKFP_ERR_ALREADY_OPENED	-25  /**<	è®¾å¤‡å·²æ‰“å¼€	*/
+#define ZKFP_ERR_LOADIMAGE		-26	 /**<	æ–‡ä»¶æ‰“å¼€å¤±è´¥			*/
+#define ZKFP_ERR_ANALYSE_IMG	-27	 /**<	å¤„ç†å›¾åƒå¤±è´¥			*/
+#define ZKFP_ERR_TIMEOUT		-28	 /**<	è¶…æ—¶					*/
 
 
 #endif	//_libzkfperrdef_h
