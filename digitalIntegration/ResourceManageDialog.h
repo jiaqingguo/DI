@@ -15,7 +15,8 @@ class QStandardItem;
 typedef struct _Message
 {
     QString host_name = 0;
-    QString host_ip = 0;
+    QString host_ip1 = 0;
+	QString host_ip2 = 0;
     double CPU_Message = 0;
     double Memory_Message = 0;
     double Disk_Message = 0;
