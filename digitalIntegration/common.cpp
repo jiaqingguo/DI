@@ -52,32 +52,32 @@
 #include "common.h"
 namespace common
 {
-    int                     tableViewRowHeight = 28; 
+    int                     tableViewRowHeight = 28;
     int                     tableViewHeight = 344;
     int                     tableViewPageRows = 12;
     unsigned long           dwLastIn = 0;               //上一秒钟的接收字节数
     unsigned long           dwLastOut = 0;              //上一秒钟的发送字节数
-    int                     onePageRows=12;             // 每页显示的行数;
+    int                     onePageRows = 12;             // 每页显示的行数;
     QString                 strFtpIp = "127.0.0.1";     // ftp的ip
     int                     iFtpPort = 5555;
     QString                 strDbIp = "127.0.0.1";
     QString                 strDbUser = "root";
     QString                 strDbPassword = "123456";
 
-    int				        iUserID=-1;                 //数据库用户id
+    int				        iUserID = -1;                 //数据库用户id
     bool                    bAdministrator = false;     // 是否是管理员;
 
     int				        iLoginNum = 1;              // 登录顺序; 123456;
     int                     iSoftStartHostNum = 1;      // 模块234软件 启动的所在主机标志;
    // std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
-      std::vector<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+    std::vector<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
-     //  std::map<std::string, table_ip_configure>  setHostData;// 每个用户分配的三个主机网卡ip;包括Gpu信息;
+   //  std::map<std::string, table_ip_configure>  setHostData;// 每个用户分配的三个主机网卡ip;包括Gpu信息;
 
     QString                 strCopyPath;                  // 复制的远程路径;
     QString                 strVipPath;				  //   普通用户不能操作的路径;
-	table_user              stUser;
-	int                     index = 0;                       //一键加载时，点击不同模块
+    table_user              stUser;
+    int                     index = 0;                       //一键加载时，点击不同模块
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
@@ -129,7 +129,7 @@ namespace common
         GlobalMemoryStatusEx(&statex);
         allPhysicsMem = statex.ullTotalPhys * 1.0 / 1024.0 / 1024.0;
         freePhysicsMem = statex.ullAvailPhys * 1.0 / 1024.0 / 1024.0;
-        
+
     }
     double getMemUseRate()
     {
@@ -163,7 +163,7 @@ namespace common
 
                 double dTepFree = iFreeBytes.QuadPart / (1024.0 * 1024.0 * 1024.0);
                 double dTepToal = iTotalBytes.QuadPart / (1024.0 * 1024.0 * 1024.0);
-              
+
                 lFreeAll += dTepFree;
                 lToalAll += dTepToal;
             }
@@ -176,18 +176,18 @@ namespace common
         PIP_ADAPTER_INFO pAdapterInfo = (PIP_ADAPTER_INFO)malloc(outBufLen);
         if (pAdapterInfo == NULL) {
             printf("Error allocating memory needed to call GetAdaptersinfo\n");
-            return ;
+            return;
         }
 
         DWORD dwRetVal = GetAdaptersInfo(pAdapterInfo, &outBufLen);
-        while (dwRetVal == ERROR_BUFFER_OVERFLOW) 
+        while (dwRetVal == ERROR_BUFFER_OVERFLOW)
         {
             free(pAdapterInfo);
             pAdapterInfo = (PIP_ADAPTER_INFO)malloc(outBufLen);
-            if (pAdapterInfo == NULL) 
+            if (pAdapterInfo == NULL)
             {
                 printf("Error allocating memory needed to call GetAdaptersinfo\n");
-                return ;
+                return;
             }
             dwRetVal = GetAdaptersInfo(pAdapterInfo, &outBufLen);
         }
@@ -195,7 +195,7 @@ namespace common
         if (dwRetVal == ERROR_SUCCESS)
         {
             PIP_ADAPTER_INFO pAdapter = pAdapterInfo;
-            do 
+            do
             {
                 printf("\nAdapter Name: %s\n", pAdapter->AdapterName);
                 printf("Adapter Desc: %s\n", pAdapter->Description);
@@ -218,7 +218,7 @@ namespace common
         }
 
         free(pAdapterInfo);
-        return ;
+        return;
     }
 
     void getNetSpeed()
@@ -350,69 +350,69 @@ namespace common
             m_pTable = (PMIB_IFTABLE)new BYTE[65535];   //假设端口数不超过65535个
         }
 
-         //DWORD   dwLastIn = 0;           //上一秒钟的接收字节数
-         //DWORD   dwLastOut = 0;          //上一秒钟的发送字节数
-         DWORD   dwBandIn = 0;           //下载速度
-         DWORD   dwBandOut = 0;          //上传速度
+        //DWORD   dwLastIn = 0;           //上一秒钟的接收字节数
+        //DWORD   dwLastOut = 0;          //上一秒钟的发送字节数
+        DWORD   dwBandIn = 0;           //下载速度
+        DWORD   dwBandOut = 0;          //上传速度
 
-        
-            NetSpeedInfo.clear();
-            GetIfTable(m_pTable, &m_dwAdapters, TRUE);
-            DWORD   dwInOctets = 0;
-            DWORD   dwOutOctets = 0;
 
-            //将所有端口的流量进行统计
-            for (UINT i = 0; i < m_pTable->dwNumEntries; i++)
-            {
-               
-                MIB_IFROW   Row = m_pTable->table[i];
-                dwInOctets += Row.dwInOctets;
-                dwOutOctets += Row.dwOutOctets;
-            }
+        NetSpeedInfo.clear();
+        GetIfTable(m_pTable, &m_dwAdapters, TRUE);
+        DWORD   dwInOctets = 0;
+        DWORD   dwOutOctets = 0;
 
-            dwBandIn = dwInOctets - dwLastIn;       //下载速度
-            dwBandOut = dwOutOctets - dwLastOut;    //上床速速
-            if (dwLastIn <= 0)
-            {
-                dwBandIn = 0;
-            }
-            else
-            {
-                dwBandIn = dwBandIn / 1024; //b转换成kb
-            }
+        //将所有端口的流量进行统计
+        for (UINT i = 0; i < m_pTable->dwNumEntries; i++)
+        {
 
-            if (dwLastOut <= 0)
-            {
-                dwBandOut = 0;
-            }
-            else
-            {
-                dwBandOut = dwBandOut / 1024;   //b转换成kb
-            }
+            MIB_IFROW   Row = m_pTable->table[i];
+            dwInOctets += Row.dwInOctets;
+            dwOutOctets += Row.dwOutOctets;
+        }
 
-            dwLastIn = dwInOctets;
-            dwLastOut = dwOutOctets;
+        dwBandIn = dwInOctets - dwLastIn;       //下载速度
+        dwBandOut = dwOutOctets - dwLastOut;    //上床速速
+        if (dwLastIn <= 0)
+        {
+            dwBandIn = 0;
+        }
+        else
+        {
+            dwBandIn = dwBandIn / 1024; //b转换成kb
+        }
 
-            //        printf("收到字节: %u bytes\n", dwLastIn);
-            //        printf("发送字节: %u bytes\n", dwLastOut);
-            //        printf("下行速度: %u KB\n", dwBandIn);
-            //        printf("上行速度: %u KB\n", dwBandOut);
-            //        printf("--------------------------\n");
-            NetSpeedInfo = QString("收到字节: %1 bytes\r\n"
-                "发送字节： %2 bytes\r\n"
-                "下行速度: %3 Kb\r\n"
-                "上行速度: %4 kb\r\n")
-                .arg(dwLastIn)
-                .arg(dwLastOut)
-                .arg(dwBandIn)
-                .arg(dwBandOut);
-           // emit netspeedResult(NetSpeedInfo);
-            //sleep(1);       //休眠一秒钟
-        
+        if (dwLastOut <= 0)
+        {
+            dwBandOut = 0;
+        }
+        else
+        {
+            dwBandOut = dwBandOut / 1024;   //b转换成kb
+        }
+
+        dwLastIn = dwInOctets;
+        dwLastOut = dwOutOctets;
+
+        //        printf("收到字节: %u bytes\n", dwLastIn);
+        //        printf("发送字节: %u bytes\n", dwLastOut);
+        //        printf("下行速度: %u KB\n", dwBandIn);
+        //        printf("上行速度: %u KB\n", dwBandOut);
+        //        printf("--------------------------\n");
+        NetSpeedInfo = QString("收到字节: %1 bytes\r\n"
+            "发送字节： %2 bytes\r\n"
+            "下行速度: %3 Kb\r\n"
+            "上行速度: %4 kb\r\n")
+            .arg(dwLastIn)
+            .arg(dwLastOut)
+            .arg(dwBandIn)
+            .arg(dwBandOut);
+        // emit netspeedResult(NetSpeedInfo);
+         //sleep(1);       //休眠一秒钟
+
         delete[] m_pTable;
         unsigned long throughput = dwBandIn + dwBandOut;
         return throughput;
-       
+
     }
 
     void clearLayout(QLayout* layout)
@@ -427,17 +427,17 @@ namespace common
     }
     HWND FindWindowByProcessId(DWORD processID) {
         HWND hwnd = NULL;
-        EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL 
-        {
-            DWORD wndProcessId;
-            GetWindowThreadProcessId(hwnd, &wndProcessId);
+        EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL
+            {
+                DWORD wndProcessId;
+                GetWindowThreadProcessId(hwnd, &wndProcessId);
 
-            if (wndProcessId == lParam && IsWindowVisible(hwnd)) {
-                *(HWND*)lParam = hwnd;
-                return FALSE; // 找到目标窗口后停止枚举
-            }
-            return TRUE; // 继续枚举
-        }, (LPARAM)&hwnd);
+                if (wndProcessId == lParam && IsWindowVisible(hwnd)) {
+                    *(HWND*)lParam = hwnd;
+                    return FALSE; // 找到目标窗口后停止枚举
+                }
+                return TRUE; // 继续枚举
+            }, (LPARAM)&hwnd);
 
         return hwnd;
     }
@@ -472,7 +472,7 @@ namespace common
         // 使用 PROCESS_ALL_ACCESS 权限打开进程
         HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
         if (hProcess == NULL) {
-           // qDebug() << "Could not open process. Error:" << GetLastError();
+            // qDebug() << "Could not open process. Error:" << GetLastError();
         }
         return hProcess;
     }
@@ -481,7 +481,7 @@ namespace common
         std::vector<HWND> windowHandles; // 用于存储窗口句柄
         DWORD processID;                  // 目标进程 ID
     };
-    std::vector<HWND> getWindowHandlesByProcessId(DWORD processID) 
+    std::vector<HWND> getWindowHandlesByProcessId(DWORD processID)
     {
         EnumWindowData data = { {}, processID }; // 初始化数据结构
 
@@ -537,10 +537,10 @@ namespace common
             std::cout << "Failed to start process. Error: " << GetLastError() << std::endl;
             return HWND();
         }
-       
+
     }
 
-   
+
 
     //BOOL CALLBACK SEnumProc(HWND hWnd, LPARAM Param) 
     //{
@@ -555,7 +555,7 @@ namespace common
     //        }
     //        return bRet;
     //    }
-        
+
 
     struct handle_data {
         unsigned long process_id;
@@ -587,7 +587,7 @@ namespace common
         return data.best_handle;
     }
 
-   
+
 
 
 
@@ -673,32 +673,33 @@ namespace common
     }
     void StoreCredential(const std::wstring& target, const std::wstring& username, const std::wstring& password) {
         CREDENTIALW cred = { 0 };
-      //  cred.Type = CRED_TYPE_GENERIC;
-      ////  cred.Target = const_cast<LPWSTR>(target.c_str());
-      //  cred.UserName = const_cast<LPWSTR>(username.c_str());
-      //  cred.CredentialBlob = const_cast<LPWSTR>(password.c_str());
-      //  cred.CredentialBlobSize = static_cast<DWORD>((password.size() + 1) * sizeof(wchar_t));
-      //  cred.Persist = CRED_PERSIST_SESSION;
+        //  cred.Type = CRED_TYPE_GENERIC;
+        ////  cred.Target = const_cast<LPWSTR>(target.c_str());
+        //  cred.UserName = const_cast<LPWSTR>(username.c_str());
+        //  cred.CredentialBlob = const_cast<LPWSTR>(password.c_str());
+        //  cred.CredentialBlobSize = static_cast<DWORD>((password.size() + 1) * sizeof(wchar_t));
+        //  cred.Persist = CRED_PERSIST_SESSION;
 
-      //  if (CredWriteW(&cred, 0)) {
-      //      std::wcout << L"Credentials saved successfully." << std::endl;
-      //  }
-      //  else {
-      //      std::wcerr << L"Failed to save credentials. Error: " << GetLastError() << std::endl;
-      //  }
+        //  if (CredWriteW(&cred, 0)) {
+        //      std::wcout << L"Credentials saved successfully." << std::endl;
+        //  }
+        //  else {
+        //      std::wcerr << L"Failed to save credentials. Error: " << GetLastError() << std::endl;
+        //  }
     }
 
     void getScreenCenterPos(int& x, int& y, const int& dialgX, const int& dialgY)
     {
 
-            // 获取当前活动窗口
-        QWidget *activeWindow = QApplication::activeWindow();
-        QScreen *screen = nullptr;
+        // 获取当前活动窗口
+        QWidget* activeWindow = QApplication::activeWindow();
+        QScreen* screen = nullptr;
 
         if (activeWindow) {
             // 使用活动窗口
             screen = activeWindow->screen();
-        } else {
+        }
+        else {
             // 如果没有活动窗口，使用主屏幕
             screen = QApplication::primaryScreen();
         }
@@ -709,13 +710,13 @@ namespace common
         x = screenGeometry.x() + (screenGeometry.width() - dialgX) / 2;
         y = screenGeometry.y() + (screenGeometry.height() - dialgY) / 2;
 
-   
+
     }
 
     void startDspExe(QString& strPath)
     {
 
-       
+
         //DWORD bufferSize = MAX_PATH;
         char currentDirectory[MAX_PATH];
         QByteArray byteArray = strPath.toUtf8(); // 转换为 UTF-8 编码
@@ -723,17 +724,17 @@ namespace common
         LPCSTR applicationPath = byteArray.constData();//= "E:\Visual Studio 2017.rdp";// "C:\\Path\\To\\Your\\Application.exe"; // 替换为实际路径
 
             // 调用 ShellExecuteA 来打开应用程序
-            HINSTANCE result = ShellExecuteA(NULL, "open", applicationPath, NULL, currentDirectory, SW_SHOW);
+        HINSTANCE result = ShellExecuteA(NULL, "open", applicationPath, NULL, currentDirectory, SW_SHOW);
 
-            // 检查返回值
-            if ((int)result > 32) {
-                std::cout << "Application opened successfully." << std::endl;
-            }
-            else {
-                std::cerr << "Failed to open application. Error code: " << (int)result << std::endl;
-            }
-        
-       
+        // 检查返回值
+        if ((int)result > 32) {
+            std::cout << "Application opened successfully." << std::endl;
+        }
+        else {
+            std::cerr << "Failed to open application. Error code: " << (int)result << std::endl;
+        }
+
+
     }
 
     void UnInitResource()
@@ -763,7 +764,7 @@ namespace common
         // 取消已有连接
         WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 
-      
+
     }
     void delAllModelRow(QStandardItemModel* model)
     {
@@ -776,25 +777,28 @@ namespace common
 
     void findIpWithGpuMinValue(table_ip_configure& stHost)
     {
-        double minCpuUsage = 0;// td::numeric_limits<double>::max(); // 初始化为最大值
+        double minCpuUsage = 100;// td::numeric_limits<double>::max(); // 初始化为最大值
       //  std::string minIpAddress; // 存储最小 CPU 使用率对应的 IP 地址
-
-        // 遍历 set
-        for (const auto& item : setHostData) 
+        int index = -1;
+        for (int i = 0; i < setHostData.size(); i++)
         {
-            if (item.dGpuUsage < minCpuUsage) 
+            if (setHostData[i].dGpuUsage < minCpuUsage)
             {
-                minCpuUsage = item.dGpuUsage; // 更新最小 CPU 使用率
-              //  minIpAddress = item.dGpuUsage; // 更新对应的 IP 地址
-                stHost.ip = item.ip;
-                stHost.hostname = item.hostname;
-                stHost.id = item.id;
-                stHost.number = item.number;
+                minCpuUsage = setHostData[i].dGpuUsage;
+                index = i;
             }
         }
-
-      //  return minIpAddress; // 返回具有最小 GPU 使用率的 IP 地址
+        if (index != -1)
+        {
+            stHost.ip = setHostData[index].ip;
+            stHost.hostname = setHostData[index].hostname;
+            stHost.id = setHostData[index].id;
+            stHost.number = setHostData[index].number;
+            setHostData[index].dGpuUsage++;
+        }
     }
+
+    
     void hideMidelRowsbyColumnValue(QStandardItemModel* model, const int& Column, const QString& strValue)
     {
       
