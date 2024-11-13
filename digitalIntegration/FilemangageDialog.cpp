@@ -464,6 +464,7 @@ int FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& 
 	
 		
 		m_FtpClientClass->execute_getFile(ftpFilePath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
+		
 	}
 
 	

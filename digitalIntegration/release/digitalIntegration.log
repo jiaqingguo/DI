@@ -1,11 +1,17 @@
-﻿  ResourceManageDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(458): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(482): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(506): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(530): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(554): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(574): warning C4100: “text”: 未引用的形参
+﻿  common.cpp
+e:\git_file\dii\di\digitalintegration\common.cpp(158): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+e:\git_file\dii\di\digitalintegration\common.cpp(428): warning C4100: “processID”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(457): warning C4100: “processID”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(674): warning C4100: “password”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(674): warning C4100: “username”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(674): warning C4100: “target”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(730): warning C4311: “类型强制转换”: 从“HINSTANCE”到“int”的指针截断
+e:\git_file\dii\di\digitalintegration\common.cpp(730): warning C4302: “类型强制转换”: 从“HINSTANCE”到“int”截断
+e:\git_file\dii\di\digitalintegration\common.cpp(734): warning C4311: “类型强制转换”: 从“HINSTANCE”到“int”的指针截断
+e:\git_file\dii\di\digitalintegration\common.cpp(734): warning C4302: “类型强制转换”: 从“HINSTANCE”到“int”截断
+e:\git_file\dii\di\digitalintegration\common.cpp(802): warning C4100: “strValue”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(802): warning C4100: “Column”: 未引用的形参
+e:\git_file\dii\di\digitalintegration\common.cpp(802): warning C4100: “model”: 未引用的形参
 Qt5AxContainer.lib(qaxbase.obj) : warning LNK4099: 未找到 PDB“Qt5AxContainer.pdb”(使用“Qt5AxContainer.lib(qaxbase.obj)”或在“E:\Git_file\DIi\DI\digitalIntegration\release\Qt5AxContainer.pdb”中寻找)；正在链接对象，如同没有调试信息一样
 Qt5AxContainer.lib(qaxwidget.obj) : warning LNK4099: 未找到 PDB“Qt5AxContainer.pdb”(使用“Qt5AxContainer.lib(qaxwidget.obj)”或在“E:\Git_file\DIi\DI\digitalIntegration\release\Qt5AxContainer.pdb”中寻找)；正在链接对象，如同没有调试信息一样
 Qt5AxContainer.lib(qaxobject.obj) : warning LNK4099: 未找到 PDB“Qt5AxContainer.pdb”(使用“Qt5AxContainer.lib(qaxobject.obj)”或在“E:\Git_file\DIi\DI\digitalIntegration\release\Qt5AxContainer.pdb”中寻找)；正在链接对象，如同没有调试信息一样

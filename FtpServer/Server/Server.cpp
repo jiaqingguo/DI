@@ -319,8 +319,10 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 		}
 
 		// 发送数据大小（int 类型）和实际数据
-		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
-		send(datatcps, buffer, data_size, 0);
+		int sendSize=send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
+		cout << "send int value  " << data_size <<" "<< sendSize <<endl;
+		sendSize =send(datatcps, buffer, data_size, 0);
+		cout << "send buffer value  " << strlen(buffer) << " " << sendSize << endl;
 
 	}
 	cout << "文件数据读取完成，发送结束0" << endl;
