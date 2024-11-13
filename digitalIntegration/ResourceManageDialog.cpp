@@ -556,7 +556,7 @@ void ResourceManageDialog::updateGpuWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("Gpu使用率"));
+	jsonData.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
 	//用到js中init() 函数
@@ -744,7 +744,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			addHostNetElemnet(infor->host_name, infor->Net_Message);
 			addHostGpuElemnet(infor->host_name, infor->Gpu_Message);
 
-			for (auto myset : common::setHostData)
+			for (auto &myset : common::setHostData)
 			{
 				if (infor->host_ip1.toStdString() == myset.ip)
 				{

@@ -70,7 +70,7 @@ namespace common
     int				        iLoginNum = 1;              // 登录顺序; 123456;
     int                     iSoftStartHostNum = 1;      // 模块234软件 启动的所在主机标志;
    // std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
-       std::set<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
+      std::vector<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
 
      //  std::map<std::string, table_ip_configure>  setHostData;// 每个用户分配的三个主机网卡ip;包括Gpu信息;
 

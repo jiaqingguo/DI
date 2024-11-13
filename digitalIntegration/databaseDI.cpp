@@ -785,7 +785,7 @@ namespace db
 	//	return true;
 	//}
 
-	bool databaseDI::get_ip_data_by_number(const int& number,std::set<table_ip_configure>& vecIpData)
+	bool databaseDI::get_ip_data_by_number(const int& number,std::vector<table_ip_configure>& vecIpData)
 	{
 		vecIpData.clear();
 
@@ -808,7 +808,7 @@ namespace db
 			stData.hostname = sql_row[2];
 			stData.number = std::atoi(sql_row[3]);
 
-			vecIpData.insert(stData);
+			vecIpData.push_back(stData);
 		}
 		return true;
 		
