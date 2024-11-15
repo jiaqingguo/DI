@@ -318,9 +318,9 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 			data_size = 10240;
 		}
 
-			// 发送数据大小（int 类型）和实际数据
-		send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
-		send(datatcps, buffer, data_size, 0);
+		//	// 发送数据大小（int 类型）和实际数据
+		//send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
+		//send(datatcps, buffer, data_size, 0);
 	
 		char intbuffer[4];     // 创建一个字符数组，大小为 4 字节
 
@@ -336,15 +336,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 		cout << "send buffer value  " << strlen(buffer) << " " << sendSize << endl;
 
 	}
-	cout << "文件数据读取完成，发送结束0" << endl;
-	// 发送结束信号
-	int end_signal = 0; // 0 作为结束信号
-	send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
-	//send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
-	send(datatcps, (char*)&end_signal, sizeof(end_signal), 0);
-	return 1;
 
-	}
 	cout << "文件数据读取完成，发送结束0" << endl;
 	// 发送结束信号
 	int end_signal = 0; // 0 作为结束信号
