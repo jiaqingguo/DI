@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>351</width>
-    <height>335</height>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,99 +17,96 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>工具名称:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="1">
         <widget class="QLineEdit" name="lineEditToolName"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="lineEditIP1"/>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="lineEditIP4"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lineEditIconPath"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label">
+         <property name="text">
+          <string>工具名称：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEditToolPath"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="lineEditIP2"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="lineEditIP3"/>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="lineEditIP5"/>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="lineEditIP6"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
           <string>工具路径：</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEditToolPath"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_4">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>图标路径:</string>
+          <string>图标路径：</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEditIconPath"/>
-       </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="labelIP1">
          <property name="text">
           <string>IP1：</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lineEditIP1"/>
-       </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="labelIP2">
          <property name="text">
-          <string>IP2:</string>
+          <string>IP2：</string>
          </property>
         </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="lineEditIP2"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelIP3">
-         <property name="text">
-          <string>IP3:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="lineEditIP3"/>
        </item>
        <item row="7" column="0">
-        <widget class="QLabel" name="labelIP4">
+        <widget class="QLabel" name="labelIP3">
          <property name="text">
-          <string>IP4:</string>
+          <string>IP3：</string>
          </property>
         </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="lineEditIP4"/>
        </item>
        <item row="8" column="0">
-        <widget class="QLabel" name="labelIP5">
+        <widget class="QLabel" name="labelIP4">
          <property name="text">
-          <string>IP5:</string>
+          <string>IP4：</string>
          </property>
         </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="lineEditIP5"/>
        </item>
        <item row="9" column="0">
-        <widget class="QLabel" name="labelIP6">
+        <widget class="QLabel" name="labelIP5">
          <property name="text">
-          <string>IP6:</string>
+          <string>IP5：</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="lineEditIP6"/>
-       </item>
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelIP6">
+         <property name="text">
+          <string>IP6：</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

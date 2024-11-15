@@ -675,7 +675,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::del_tools(const std::string &software, const int &name)
+	bool databaseDI::del_tools(const std::string &software, const int &module)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -683,7 +683,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "delete from t_ip where software = (\'%s\') and number = (\'%d\')", software.c_str(),name);
+		sprintf_s(sql, "delete from t_ip where software = (\'%s\') and module = (\'%d\')", software.c_str(), module);
 
 		if (!exec_sql(sql))
 		{

@@ -682,10 +682,9 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		// 接收数据大小（int 类型）
 		int data_size=0;
 
-		size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
-		int data_size = 0;
+		//size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
 		char *char_int = new char[4];
-		int s = sizeof(data_size);
+		//int s = sizeof(data_size);
 		size_t bytes_received = 0;
 		//bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), 4, 0);
 		bytes_received = recv(sockClient, char_int, 4, 0);
