@@ -12,6 +12,9 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include <fstream> // 用于 std::ifstream
+
+
 
 InformationConfihurationDialog::InformationConfihurationDialog(QWidget *parent) :
 	QDialog(parent),
@@ -365,6 +368,11 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	if (addToolInfoDialog.exec() == QDialog::Accepted)
 	{
 		addToolInfoDialog.getToolsData(stIp, ipData);
+
+		// 读取图片文件
+		std::ifstream file(stIp.icoPath, std::ios::binary);
+		stIp.imageData.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
 		db::databaseDI::Instance().get_all_ip(listData);
 		if (db::databaseDI::Instance().select_same_name_software(stIp.software, moduleNumber))
 		{
@@ -385,9 +393,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.module = moduleNumber;
 				stIp.used = 0;
 				stIp.username = std::to_string(common::iUserID);
+				
 				//stIp.number = soft_ip.number;
 				// 插入数据库;
-				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
@@ -412,7 +421,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.number = soft_ip.number;
 				//stIp.number = common::iLoginNum;
 				// 插入数据库;
-				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
@@ -435,7 +444,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.username = std::to_string(common::iUserID);
 				stIp.number = soft_ip.number;
 				// 插入数据库;
-				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}
@@ -458,7 +467,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.username = std::to_string(common::iUserID);
 				stIp.number = soft_ip.number;
 				// 插入数据库;
-				if (!db::databaseDI::Instance().add_ip_tools(stIp))
+				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
 				}

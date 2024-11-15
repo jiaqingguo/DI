@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 namespace db
 {
@@ -645,7 +646,7 @@ namespace db
 
 		uint32_t last_id = 0;
 		// 执行SQL语句;
-		char sql[1024] = { 0 };
+		char sql[10240] = { 0 };
 
 		sprintf_s(sql, R"(insert into t_ip(ip,host,software,module,used,userName,iconPath,number,toolPath) values('%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%s'))",
 			stIp.ip.c_str(),
@@ -672,6 +673,91 @@ namespace db
 			return false;
 
 		stIp.id = last_id;
+		return true;
+	}
+
+	bool databaseDI::add_ip_tool(table_ip& stIp)
+	{
+		// 启动事务
+		if (!startup_transaction())
+			return false;
+
+		// 准备 SQL 语句
+		const char* query = "INSERT INTO t_ip (ip, host, software, module, used, userName, iconPath, number, toolPath, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		MYSQL_STMT* stmt = mysql_stmt_init(mysql_);
+		if (!stmt) {
+			std::cerr << "mysql_stmt_init() failed\n";
+			return false;
+		}
+
+		if (mysql_stmt_prepare(stmt, query, strlen(query)) != 0) {
+			std::cerr << "mysql_stmt_prepare() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		// 绑定参数
+		MYSQL_BIND bind[10] = { 0 }; // 使用零初始化
+		bind[0].buffer_type = MYSQL_TYPE_STRING;
+		bind[0].buffer = (char*)stIp.ip.c_str();
+		bind[0].buffer_length = stIp.ip.length();
+
+		bind[1].buffer_type = MYSQL_TYPE_STRING;
+		bind[1].buffer = (char*)stIp.host.c_str();
+		bind[1].buffer_length = stIp.host.length();
+
+		bind[2].buffer_type = MYSQL_TYPE_STRING;
+		bind[2].buffer = (char*)stIp.software.c_str();
+		bind[2].buffer_length = stIp.software.length();
+
+		bind[3].buffer_type = MYSQL_TYPE_LONG;
+		bind[3].buffer = (char*)&stIp.module;
+
+		bind[4].buffer_type = MYSQL_TYPE_LONG;
+		bind[4].buffer = (char*)&stIp.used;
+
+		bind[5].buffer_type = MYSQL_TYPE_STRING;
+		bind[5].buffer = (char*)stIp.username.c_str();
+		bind[5].buffer_length = stIp.username.length();
+
+		bind[6].buffer_type = MYSQL_TYPE_STRING;
+		bind[6].buffer = (char*)stIp.icoPath.c_str();
+		bind[6].buffer_length = stIp.icoPath.length();
+
+		bind[7].buffer_type = MYSQL_TYPE_LONG;
+		bind[7].buffer = (char*)&stIp.number;
+
+		bind[8].buffer_type = MYSQL_TYPE_STRING;
+		bind[8].buffer = (char*)stIp.toolPath.c_str();
+		bind[8].buffer_length = stIp.toolPath.length();
+
+		// 绑定图片数据
+		bind[9].buffer_type = MYSQL_TYPE_BLOB;
+		bind[9].buffer = (char*)stIp.imageData.data();
+		bind[9].buffer_length = stIp.imageData.size();
+
+		// 绑定参数
+		if (mysql_stmt_bind_param(stmt, bind) != 0) {
+			std::cerr << "mysql_stmt_bind_param() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		// 执行插入
+		if (mysql_stmt_execute(stmt) != 0) {
+			std::cerr << "mysql_stmt_execute() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			rollback_transaction(); // 尝试回滚事务
+			mysql_stmt_close(stmt); // 确保句柄被关闭
+			return false;
+		}
+
+		// 提交事务
+		if (!commit_transaction()) {
+			mysql_stmt_close(stmt); // 确保句柄被关闭
+			return false;
+		}
+
+		mysql_stmt_close(stmt); // 确保句柄被关闭
 		return true;
 	}
 
@@ -755,9 +841,168 @@ namespace db
 			stData.icoPath = sql_row[7];
 			stData.number = std::atoi(sql_row[8]);
 			stData.toolPath = sql_row[9];
+			// 处理 BLOB 数据
+			if (sql_row[10]) {
+				unsigned long imageDataLength = 0;
+				// 获取 BLOB 数据长度
+				unsigned long* length = mysql_fetch_lengths(result);
+				if (length)
+				{
+					imageDataLength = length[10]; // 这里获取 BLOB 数据的长度
+					stData.imageData.resize(imageDataLength);
+					memcpy(stData.imageData.data(), sql_row[10], imageDataLength); // 复制 BLOB 数据
+				}
+			}
 			softMap[software] = stData;
 		}
 		return true;
+	}
+
+	bool databaseDI::get_ip_datas(std::map<std::string, table_ip>& softMap, const int& module, const int& number)
+	{
+		softMap.clear();
+
+		const char* query = "SELECT id,ip,host,software,module,used,userName,iconPath,number,toolPath FROM t_ip WHERE module = ? AND number = ?";
+		MYSQL_STMT* stmt = mysql_stmt_init(mysql_);
+		if (!stmt) {
+			std::cerr << "mysql_stmt_init() failed\n";
+			return false;
+		}
+
+		if (mysql_stmt_prepare(stmt, query, strlen(query)) != 0) {
+			std::cerr << "mysql_stmt_prepare() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		MYSQL_BIND bind[2];
+		memset(bind, 0, sizeof(bind));
+
+		bind[0].buffer_type = MYSQL_TYPE_LONG;
+		bind[0].buffer = (char*)&module;
+
+		bind[1].buffer_type = MYSQL_TYPE_LONG;
+		bind[1].buffer = (char*)&number;
+
+		if (mysql_stmt_bind_param(stmt, bind) != 0) {
+			std::cerr << "mysql_stmt_bind_param() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		if (mysql_stmt_execute(stmt) != 0) {
+			std::cerr << "mysql_stmt_execute() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		// Store the result to enable fetching
+		if (mysql_stmt_store_result(stmt) != 0) {
+			std::cerr << "mysql_stmt_store_result() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		MYSQL_BIND resultBind[11]; // Assuming we have 10 columns
+		memset(resultBind, 0, sizeof(resultBind));
+
+		table_ip stIp;
+
+		// 这里使用合适的大小来存储字符串数据
+		char ipBuffer[256], hostBuffer[256], softwareBuffer[256], usernameBuffer[256], icoPathBuffer[256], toolPathBuffer[256];
+		unsigned long imageDataLength = 0; // 初始化 BLOB 数据长度
+		std::vector<char> imageDataBuffer; // 用于存储 BLOB 数据
+
+
+		unsigned long ipLength, hostLength, softwareLength, usernameLength, icoPathLength, toolPathLength, blobLength;
+
+		resultBind[0].buffer_type = MYSQL_TYPE_LONG;
+		resultBind[0].buffer = (char*)&stIp.id;
+
+		resultBind[1].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[1].buffer = ipBuffer;
+		resultBind[1].buffer_length = sizeof(ipBuffer);
+
+		resultBind[2].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[2].buffer = hostBuffer;
+		resultBind[2].buffer_length = sizeof(hostBuffer);
+
+		resultBind[3].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[3].buffer = softwareBuffer;
+		resultBind[3].buffer_length = sizeof(softwareBuffer);
+
+		resultBind[4].buffer_type = MYSQL_TYPE_LONG;
+		resultBind[4].buffer = (char*)&stIp.module;
+
+		resultBind[5].buffer_type = MYSQL_TYPE_LONG;
+		resultBind[5].buffer = (char*)&stIp.used;
+
+		resultBind[6].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[6].buffer = usernameBuffer;
+		resultBind[6].buffer_length = sizeof(usernameBuffer);
+
+		resultBind[7].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[7].buffer = icoPathBuffer;
+		resultBind[7].buffer_length = sizeof(icoPathBuffer);
+
+		resultBind[8].buffer_type = MYSQL_TYPE_LONG;
+		resultBind[8].buffer = (char*)&stIp.number;
+
+		resultBind[9].buffer_type = MYSQL_TYPE_STRING;
+		resultBind[9].buffer = toolPathBuffer;
+		resultBind[9].buffer_length = sizeof(toolPathBuffer);
+
+		// 处理 BLOB 数据
+			// 处理 BLOB 数据
+		resultBind[10].buffer_type = MYSQL_TYPE_BLOB;
+		resultBind[10].buffer = nullptr; // BLOB 初始化为空
+	//	resultBind[10].buffer_length = &imageDataLength; // 为 BLOB 数据分配长度的地址
+		unsigned long blobBufferLength = 0; // 用于存储 BLOB 数据的长度
+		//resultBind[10].buffer_length= &blobLength; // 指向 BLOB 长度的指针
+		if (mysql_stmt_bind_result(stmt, resultBind) != 0) {
+			std::cerr << "mysql_stmt_bind_result() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+			mysql_stmt_close(stmt);
+			return false;
+		}
+
+		// 获取结果
+		while (true) {
+			int status = mysql_stmt_fetch(stmt);
+			if (status == 1) { // 1表示有错误
+				std::cerr << "mysql_stmt_fetch() failed. Error: " << mysql_stmt_error(stmt) << std::endl;
+				break; // 停止循环
+			}
+			else if (status == MYSQL_NO_DATA) {
+				break; // 没有更多数据
+			}
+			else {
+				// 成功获取数据
+				//stIp.id = id;
+				stIp.ip = ipBuffer;
+				stIp.host = hostBuffer;
+				stIp.software = softwareBuffer;
+				stIp.username = usernameBuffer;
+				stIp.icoPath = icoPathBuffer;
+				stIp.toolPath = toolPathBuffer;
+
+				 // 处理 BLOB 数据（如果有）
+            if (resultBind[10].buffer_length > 0) {
+                imageDataBuffer.resize(imageDataLength);
+                resultBind[10].buffer = imageDataBuffer.data(); // 将 BLOB 数据的指针赋给绑定
+                stIp.imageData = imageDataBuffer; // 存储到 stIp
+            }
+
+
+				// 将数据添加到 map
+				softMap[stIp.software] = stIp;
+
+				// 重新初始化 stIp 以便下一个数据的填充
+				stIp = table_ip();
+			}
+		}
+
+		mysql_stmt_close(stmt); // 关闭语句
+		return true; // 返回读取的数据
 	}
 
 	//bool databaseDI::get_ip_data_by_number(std::set<std::string> &setIpData, const int& number)

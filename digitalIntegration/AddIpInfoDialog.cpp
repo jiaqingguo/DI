@@ -1,3 +1,4 @@
+
 #include "AddIpInfoDialog.h"
 #include "ui_AddIpInfoDialog.h"
 #include "globel.h"
@@ -23,6 +24,8 @@ void AddIpInfoDialog::getIpData(table_ip& stIp)
     stIp.ip = ui->lineEditIp->text().toStdString();
 
 }
+
+
 
 void AddIpInfoDialog::slot_btnOk()
 {

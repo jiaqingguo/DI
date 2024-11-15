@@ -23,8 +23,6 @@
 #include "globel.h"
 
 
-
-
 FilemangageDialog::FilemangageDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilemangageDialog)

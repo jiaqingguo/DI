@@ -3,6 +3,7 @@
 #include <string>
 #include <time.h>
 #include <mysql.h>
+#include <vector>
 //namespace tinyxml2
 //{
 //	class XMLElement;
@@ -50,6 +51,9 @@ namespace db
 		std::string datetime_to_string(const time_t& tm);
 
 		uint64_t datetime_to_uint64(const time_t&tm);
+
+		// 将二进制数据转换为十六进制字符串
+		std::string toHexString(const std::vector<char>& data);
 	protected:
 		MYSQL*					mysql_						= nullptr;					// mysql句柄;
 		

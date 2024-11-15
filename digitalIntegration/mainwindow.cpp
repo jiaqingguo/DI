@@ -1039,7 +1039,14 @@ void MainWindow::updateModuleToolIcon(int module)
 			{
 				QToolButton* pBtn = new QToolButton();
 				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-				pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
+				//pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
+
+				QImage img;
+				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+				// 将 QImage 转换为 QIcon
+				QIcon icon(QPixmap::fromImage(img));
+				// 设置 QToolButton 的图标
+				pBtn->setIcon(icon);
 				pBtn->setIconSize(QSize(50, 46));
 				pBtn->setText(QString::fromStdString(software));
 				pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);

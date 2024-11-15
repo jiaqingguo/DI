@@ -196,9 +196,9 @@ void LoginDialog::slot_btnFingerprintClicked()
 		m_bIdentify = TRUE;
 
 	}
-	/*int i = 1;
+	int i = 1;
 	db::databaseDI::Instance().get_ip_data_by_number(i, common::setHostData);
-	this->accept();*/
+	this->accept();
 
 
 }

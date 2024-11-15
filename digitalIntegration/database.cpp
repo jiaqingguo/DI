@@ -367,5 +367,16 @@ namespace db
 		std::chrono::system_clock::time_point  time_stamp = std::chrono::system_clock::from_time_t(tm);
 	     return std::chrono::time_point_cast<std::chrono::milliseconds>(time_stamp).time_since_epoch().count();
 	}
+	// 将二进制数据转换为十六进制字符串
+	std::string database::toHexString(const std::vector<char>& data)
+	{
+		
+		std::ostringstream oss;
+		for (unsigned char c : data) {
+			oss << std::hex << std::setw(2) << std::setfill('0') << (int)c;
+		}
+		return oss.str();
+		
+	}
 
 }

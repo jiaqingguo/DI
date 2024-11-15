@@ -761,7 +761,6 @@ void FtpClientClass::execute_putFile(string sendfileName)
 	memset(rbuff, 0, sizeof(rbuff));
 	memset(sbuff, 0, sizeof(sbuff));
 
-
 	string str_name = sendfileName;
 	strcpy(name, str_name.c_str());
 	//将指令整合进order，并存放进buff
@@ -784,12 +783,11 @@ void FtpClientClass::execute_putFile(string sendfileName)
 			if (!sendFile(sockClient, fd2))
 			{
 				cout << "发送失败" << endl;
-
 			}
-
 			fclose(fd2);
 		}
-		else {
+		else 
+		{
 			strcpy(sbuff, "无法打开文件\n");
 			if (send(sockClient, sbuff, sizeof(sbuff), 0)) {
 

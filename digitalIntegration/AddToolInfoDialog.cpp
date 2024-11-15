@@ -1,4 +1,7 @@
-#include<QMessageBox>
+#include <QMessageBox>
+#include <QFileDialog>
+
+
 #include "AddToolInfoDialog.h"
 #include "ui_AddToolInfoDialog.h"
 
@@ -22,7 +25,8 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->lineEditIP5->setMaxLength(15);
 	ui->lineEditIP6->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
-
+	connect(ui->btnChooseImage, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnChooseImage);
+	
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -96,6 +100,19 @@ void AddToolInfoDialog::slot_btnOk()
 	
     this->accept();
  
+}
+
+void AddToolInfoDialog::slot_btnChooseImage()
+{
+	// 弹出文件选择对话框，过滤条件为PNG和JPG文件
+	QString fileName = QFileDialog::getOpenFileName(this, "选择图片", "", "Images (*.png *.jpg *.jpeg)");
+
+	// 检查用户是否选择了文件
+	if (!fileName.isEmpty()) {
+		// 在此处理所选文件（例如，显示文件路径）
+	   // QMessageBox::information(this, "选择的文件", "您选择的文件: " + fileName);
+		ui->lineEditIconPath->setText(fileName);
+	}
 }
 
 QLineEdit* AddToolInfoDialog::getlineEditIP1()

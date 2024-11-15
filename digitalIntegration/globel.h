@@ -59,6 +59,7 @@ struct table_ip
 	std::string		icoPath;
 	uint32_t        number = 0;
 	std::string     toolPath;
+	std::vector<char> imageData;  // 用于存储图片数据;
 	
 };
 

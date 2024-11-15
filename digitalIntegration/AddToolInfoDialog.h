@@ -39,6 +39,7 @@ public:
 	QLabel* getlabelIP6();
 private slots:
     void slot_btnOk();
+	void slot_btnChooseImage();
 private:
     Ui::AddToolInfoDialog *ui;
 	int m_iModule = 0;
