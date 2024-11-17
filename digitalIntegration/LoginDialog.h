@@ -62,7 +62,7 @@ private slots:
 
 
 	void slot_btnExitClicked();
-
+	void slot_btnForgetPassClicked();
 	void slot_btnFingerprintClicked();
 
 	

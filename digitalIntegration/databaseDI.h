@@ -89,7 +89,7 @@ namespace db
 		//退出时，t_ip的username字段置0
 		bool updata_ipusername(const std::string& u_name);
 		bool select_same_name_software(const std::string &software, const int& module);
-		bool del_tools(const std::string &software,const int &name);
+		bool del_tools(const std::string &software,const int &module);
 
 
 

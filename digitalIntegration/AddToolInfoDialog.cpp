@@ -17,7 +17,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
     //ui->lineEditHost->setMaxLength(15);
     ui->lineEditToolName->setMaxLength(20);
     //ui->lineEditToolPath->setMaxLength(15);
-    ui->lineEditIconPath->setMaxLength(100);
+    ui->lineEdit->setMaxLength(100);
 	ui->lineEditIP1->setMaxLength(15);
 	ui->lineEditIP2->setMaxLength(15);
 	ui->lineEditIP3->setMaxLength(15);
@@ -52,7 +52,7 @@ void AddToolInfoDialog::getToolsData(table_ip& toolsData,std::string ipdata[6])
 	//strPath.replace("\\","\\\\");
 	//toolData.path = strPath.toStdString();
 	toolsData.toolPath = ui->lineEditToolPath->text().replace("\\", "\\\\").toStdString();
-	toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
+	toolsData.icoPath = ui->lineEdit->text().replace("\\", "\\\\").toStdString();
 	ipdata[0] = ui->lineEditIP1->text().toStdString();
 	ipdata[1] = ui->lineEditIP2->text().toStdString();
 	ipdata[2] = ui->lineEditIP3->text().toStdString();
@@ -76,12 +76,12 @@ void AddToolInfoDialog::slot_btnOk()
         return;
     }
 
-   /* if (ui->lineEditToolPath->text().toStdString().empty())
+    if (ui->lineEditToolPath->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具路径不能为空!"));
         return;
-    }*/
-    if (ui->lineEditIconPath->text().toStdString().empty())
+    }
+    if (ui->lineEdit->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("图标路径不能为空!"));
         return;
@@ -111,7 +111,7 @@ void AddToolInfoDialog::slot_btnChooseImage()
 	if (!fileName.isEmpty()) {
 		// 在此处理所选文件（例如，显示文件路径）
 	   // QMessageBox::information(this, "选择的文件", "您选择的文件: " + fileName);
-		ui->lineEditIconPath->setText(fileName);
+		ui->lineEdit->setText(fileName);
 	}
 }
 

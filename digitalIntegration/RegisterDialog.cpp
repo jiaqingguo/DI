@@ -22,10 +22,10 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui->labelName->setText(QString::fromLocal8Bit("<font color='red'>*</font><font color='black'>使用人</font>"));
 
 
-	ui->lineEditUserName->setMaxLength(10); // 限制最多输入10个字符
-
-	QRegExp rx("[0-9a-zA-Z]{19}");
-	ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
+	ui->lineEditUserName->setMaxLength(20); // 限制最多输入20个字符
+	ui->lineEditPassword->setMaxLength(20);
+	//QRegExp rx("[0-9a-zA-Z]{19}");
+	//ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
 
 	QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
 	//connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);

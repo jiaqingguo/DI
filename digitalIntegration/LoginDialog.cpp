@@ -23,9 +23,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	setWindowTitle(("欢迎使用数字样机硬件一体化平台"));
 	ui->stackedWidget->setCurrentIndex(0);
 	//setWindowTitle(GBK_STRING("欢迎使用数字样机硬件一体化平台"));
-	QRegExp rx("[0-9a-zA-Z]{19}");
-	ui->leUser->setValidator(new QRegExpValidator(rx));
-	ui->lePassword->setValidator(new QRegExpValidator(rx));
+	//QRegExp rx("[0-9a-zA-Z]{19}");
+	//ui->leUser->setValidator(new QRegExpValidator(rx));
+	//ui->lePassword->setValidator(new QRegExpValidator(rx));
+	ui->leUser->setMaxLength(20);
+	ui->lePassword->setMaxLength(20);
 	ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
 	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
@@ -33,6 +35,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
+	connect(ui->btnForgetPassword, &QPushButton::clicked, this, &LoginDialog::slot_btnForgetPassClicked);
 	connect(ui->leUser, &QLineEdit::textChanged, this, &LoginDialog::slot_leUserTextChanged);
 	connect(ui->leUser, &QLineEdit::editingFinished, this, &LoginDialog::slot_leUserEditingFinished);
 	connect(ui->lePassword, &QLineEdit::textChanged, this, &LoginDialog::slot_lePwdTextChanged);
@@ -181,6 +184,11 @@ void LoginDialog::slot_btnExitClicked()
 	registerDialog->init();
 	registerDialog->exec();
 	
+}
+
+void LoginDialog::slot_btnForgetPassClicked()
+{
+
 }
 
 void LoginDialog::slot_btnFingerprintClicked()

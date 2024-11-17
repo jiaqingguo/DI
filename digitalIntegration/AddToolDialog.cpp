@@ -24,6 +24,10 @@ void AddToolDialog::init()
 	ui->groupBox->hide();
 	//ui->allocationAllocation->setChecked(true);
 
+	ui->lineEditTabName->setPlaceholderText(GBK_STRING("默认值"));
+	ui->lineEditTabName->setReadOnly(false);
+
+
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(3);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
@@ -59,7 +63,11 @@ void AddToolDialog::init()
 			ui->comboBoxToolNames->addItem(QString::fromStdString(software), QVariant(QString::fromStdString(data.toolPath))); // 添加 "Item 3"，设置数据为 3
 		}
 	}
-
+	if (m_iModule != 1)
+	{
+		ui->label_4->setHidden(true);
+		ui->lineEditIP->setHidden(true);
+	}
 	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this,&AddToolDialog::slot_display_lineEditIP);
 	// 手动触发槽函数以显示初始 IP 地址
 	if (ui->comboBoxToolNames->count() > 0) 
@@ -179,6 +187,10 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
 void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode)
 {
 	tabName = ui->lineEditTabName->text();
+	if (tabName.isEmpty())
+	{
+		tabName = ui->lineEditTabName->placeholderText();
+	}
 	toolName = ui->comboBoxToolNames->currentText();
 	toolPath = ui->comboBoxToolNames->currentData(Qt::UserRole).toString();
 	model = ui->comboBoxDisplayMode->currentIndex();
@@ -209,16 +221,16 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 			ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
 		}
 	}
-	else
-	{
-		int i = common::iSoftStartHostNum % 3;
-		if (common::setHostData.size() >= i)
-		{
-			auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
-			std::string strValue = it->ip;
-			ui->lineEditIP->setText(QString::fromStdString(strValue));
-			common::iSoftStartHostNum++;
-		}
-	}
+	//else
+	//{
+	//	int i = common::iSoftStartHostNum % 3;
+	//	if (common::setHostData.size() >= i)
+	//	{
+	//		auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
+	//		std::string strValue = it->ip;
+	//		ui->lineEditIP->setText(QString::fromStdString(strValue));
+	//		common::iSoftStartHostNum++;
+	//	}
+	//}
 }
 

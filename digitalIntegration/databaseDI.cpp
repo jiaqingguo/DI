@@ -646,7 +646,9 @@ namespace db
 
 		uint32_t last_id = 0;
 		// 执行SQL语句;
-		char sql[10240] = { 0 };
+		
+		// 执行SQL语句;
+		char sql[1024] = { 0 };
 
 		sprintf_s(sql, R"(insert into t_ip(ip,host,software,module,used,userName,iconPath,number,toolPath) values('%s', '%s', '%s', '%d', '%d', '%s', '%s', '%d', '%s'))",
 			stIp.ip.c_str(),
@@ -675,7 +677,6 @@ namespace db
 		stIp.id = last_id;
 		return true;
 	}
-
 	bool databaseDI::add_ip_tool(table_ip& stIp)
 	{
 		// 启动事务
@@ -761,7 +762,7 @@ namespace db
 		return true;
 	}
 
-	bool databaseDI::del_tools(const std::string &software, const int &name)
+	bool databaseDI::del_tools(const std::string& software, const int& module)
 	{
 		// 启动事务;
 		if (!startup_transaction())
@@ -769,7 +770,8 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "delete from t_ip where software = (\'%s\') and number = (\'%d\')", software.c_str(),name);
+	
+		sprintf_s(sql, "delete from t_ip where software = (\'%s\') and module = (\'%d\')", software.c_str(), module);
 
 		if (!exec_sql(sql))
 		{

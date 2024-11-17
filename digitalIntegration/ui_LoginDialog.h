@@ -47,6 +47,7 @@ public:
     QSpacerItem *horizontalSpacer_5;
     QWidget *widget;
     QHBoxLayout *horizontalLayout_5;
+    QPushButton *btnForgetPassword;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *btnRegister;
     QWidget *page_2;
@@ -164,6 +165,11 @@ public:
         horizontalLayout_5 = new QHBoxLayout(widget);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(-1, 0, 0, 0);
+        btnForgetPassword = new QPushButton(widget);
+        btnForgetPassword->setObjectName(QString::fromUtf8("btnForgetPassword"));
+
+        horizontalLayout_5->addWidget(btnForgetPassword);
+
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_5->addItem(horizontalSpacer_6);
@@ -264,6 +270,7 @@ public:
         lblPwd->setText(QString());
         lePassword->setPlaceholderText(QCoreApplication::translate("LoginDialog", "\350\257\267\350\276\223\345\205\245\346\202\250\347\232\204\345\257\206\347\240\201", nullptr));
         btnLogin->setText(QCoreApplication::translate("LoginDialog", "\347\231\273\345\275\225", nullptr));
+        btnForgetPassword->setText(QCoreApplication::translate("LoginDialog", "\345\277\230\350\256\260\345\257\206\347\240\201\357\274\237", nullptr));
         btnRegister->setText(QCoreApplication::translate("LoginDialog", "\346\263\250\345\206\214", nullptr));
         label->setText(QCoreApplication::translate("LoginDialog", "\346\214\207\347\272\271\351\252\214\350\257\201", nullptr));
         labelFingerprint->setText(QString());

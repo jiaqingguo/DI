@@ -309,7 +309,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 		std::streamsize bytes_read = file.gcount();
 
 		// 计算要发送的实际大小
-		 int data_size = static_cast<int>(bytes_read);
+		int data_size = static_cast<int>(bytes_read);
 		if (data_size == 0) {
 			break; // 文件已读完
 		}
@@ -318,31 +318,9 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 			data_size = 10240;
 		}
 
-		//	// 发送数据大小（int 类型）和实际数据
-		//send(datatcps, reinterpret_cast<const char*>(&data_size), sizeof(data_size), 0);
-		//send(datatcps, buffer, data_size, 0);
-	
-		char intbuffer[4];     // 创建一个字符数组，大小为 4 字节
-
-
-
-
-   // 使用 memcpy 将 int 的字节复制到 char 数组
-		memcpy(intbuffer, &data_size, sizeof(data_size));
-		int sendSize = send(datatcps, intbuffer, 4, 0);
-		cout << "send int value  " << intbuffer << " " << sendSize << endl;
-
-		sendSize = send(datatcps, buffer, data_size, 0);
 		cout << "send buffer value  " << strlen(buffer) << " " << sendSize << endl;
 
 	}
-
-	cout << "文件数据读取完成，发送结束0" << endl;
-	// 发送结束信号
-	int end_signal = 0; // 0 作为结束信号
-	//send(datatcps, reinterpret_cast<const char*>(&end_signal), sizeof(end_signal), 0);
-	send(datatcps, (char*)&end_signal, sizeof(end_signal), 0);
-	return 1;
 }
 int Server::sendFileList(SOCKET datatcps) {
 	HANDLE hff;								//建立一个线程

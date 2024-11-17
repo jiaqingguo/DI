@@ -591,12 +591,17 @@ void InformationConfihurationDialog::slot_btnToolDel()
 
 	//int id = pModelTool->data(firstColumnIndex, Qt::UserRole).toInt();
 	//qDebug() << "First column data of current row   id: " << id;
-	QVariant dataVariant = pModelTool->item(currentIndex.row(), currentIndex.column())->text();
-	QString qstr = dataVariant.toString();
+	/*QVariant dataVariant = pModelTool->item(currentIndex.row(), currentIndex.column())->text();
+	QString qstr = dataVariant.toString();*/
+	// 获取当前选中单元格同一行的第1列的单元格
+	QModelIndex indexFirst = pModelTool->index(currentIndex.row(), 0, currentIndex.parent()); 
+	//获取要删除的单元格
+	QVariant soft_name = pModelTool->data(indexFirst);
+	QString qstr = soft_name.toString();
 	std::string software = qstr.toStdString();
 	qDebug() << "First column data of current row  software: " << software.c_str();
 
-	if (db::databaseDI::Instance().del_tools(software,common::iLoginNum))
+	if (db::databaseDI::Instance().del_tools(software,moduleNumber))
 	{
 		pModelTool->removeRow(currentIndex.row());
 		emit  signal_updateToolIcon(moduleNumber);

@@ -603,7 +603,11 @@ void MainWindow::slot_btnAddToolTab()
 			return;
 		}
 
-
+		//判断Tab页的名称是否为“默认值”
+		if (tabName == QString::fromLocal8Bit("默认值"))
+		{
+			tabName = toolName;
+		}
 		if (moduleNumber == 1)
 		{
 
