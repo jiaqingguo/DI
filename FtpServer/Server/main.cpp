@@ -14,6 +14,8 @@
 
 #pragma comment(lib, "Mpr.lib")
 
+
+
 void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath) {
 	NETRESOURCE net_Resource;
 
@@ -61,60 +63,60 @@ void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* loc
 		break;
 	}
 }
-void InitResource(/*const TCHAR* szUserName, const TCHAR* szPasswd*/) {
-
-	TCHAR szPasswd[] = TEXT("Share123");          //共享资源授权用户的密码
-	TCHAR szUserName[] = TEXT("share");        //共享资源授权的用户
-	NETRESOURCE net_Resource;
-
-	// 初始化NETRESOURCE结构
-	net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
-	net_Resource.dwScope = RESOURCE_CONNECTED;
-	net_Resource.dwType = RESOURCETYPE_DISK;
-	net_Resource.dwUsage = 0;
-	net_Resource.lpComment = NULL; // 可以设为NULL
-	TCHAR localName[] = TEXT("Y:");  // 映射成本地驱动器 Z:
-	net_Resource.lpLocalName = localName;
-	net_Resource.lpProvider = NULL;
-	TCHAR lpRemoteName[] = TEXT("\\\\192.168.0.250\\share");  // 共享资源的路径
-
-	net_Resource.lpRemoteName = lpRemoteName; // 共享资源的路径
-
-	DWORD dwFlags = CONNECT_UPDATE_PROFILE;
-
-	// 取消已有连接
-	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
-
-	// 添加新连接
-	DWORD dw = WNetAddConnection2(&net_Resource, szPasswd, szUserName, 0);
-	switch (dw) {
-	case ERROR_SUCCESS:
-		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
-		break;
-	case ERROR_ACCESS_DENIED:
-		printf(TEXT("没有权限访问！\n"));
-		break;
-	case ERROR_ALREADY_ASSIGNED:
-		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
-		break;
-	case ERROR_INVALID_ADDRESS:
-		printf(TEXT("IP地址无效\n"));
-		break;
-	case ERROR_NO_NETWORK:
-		printf(TEXT("网络不可达!\n"));
-		break;
-	case ERROR_NO_TOKEN:
-		printf(TEXT("没有有效的凭据！请检查用户名和密码。\n"));
-		break;
-	case ERROR_SESSION_CREDENTIAL_CONFLICT:
-		printf(TEXT("ERROR_SESSION_CREDENTIAL_CONFLICT。\n"));
-		break;
-	default:
-		printf(TEXT("发生错误，错误代码: %lu\n"), dw);
-
-		break;
-	}
-}
+//void InitResource(/*const TCHAR* szUserName, const TCHAR* szPasswd*/) {
+//
+//	TCHAR szPasswd[] = TEXT("Share123");          //共享资源授权用户的密码
+//	TCHAR szUserName[] = TEXT("share");        //共享资源授权的用户
+//	NETRESOURCE net_Resource;
+//
+//	// 初始化NETRESOURCE结构
+//	net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
+//	net_Resource.dwScope = RESOURCE_CONNECTED;
+//	net_Resource.dwType = RESOURCETYPE_DISK;
+//	net_Resource.dwUsage = 0;
+//	net_Resource.lpComment = NULL; // 可以设为NULL
+//	TCHAR localName[] = TEXT("Y:");  // 映射成本地驱动器 Z:
+//	net_Resource.lpLocalName = localName;
+//	net_Resource.lpProvider = NULL;
+//	TCHAR lpRemoteName[] = TEXT("\\\\192.168.0.250\\share");  // 共享资源的路径
+//
+//	net_Resource.lpRemoteName = lpRemoteName; // 共享资源的路径
+//
+//	DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+//
+//	// 取消已有连接
+//	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
+//
+//	// 添加新连接
+//	DWORD dw = WNetAddConnection2(&net_Resource, szPasswd, szUserName, 0);
+//	switch (dw) {
+//	case ERROR_SUCCESS:
+//		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+//		break;
+//	case ERROR_ACCESS_DENIED:
+//		printf(TEXT("没有权限访问！\n"));
+//		break;
+//	case ERROR_ALREADY_ASSIGNED:
+//		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+//		break;
+//	case ERROR_INVALID_ADDRESS:
+//		printf(TEXT("IP地址无效\n"));
+//		break;
+//	case ERROR_NO_NETWORK:
+//		printf(TEXT("网络不可达!\n"));
+//		break;
+//	case ERROR_NO_TOKEN:
+//		printf(TEXT("没有有效的凭据！请检查用户名和密码。\n"));
+//		break;
+//	case ERROR_SESSION_CREDENTIAL_CONFLICT:
+//		printf(TEXT("ERROR_SESSION_CREDENTIAL_CONFLICT。\n"));
+//		break;
+//	default:
+//		printf(TEXT("发生错误，错误代码: %lu\n"), dw);
+//
+//		break;
+//	}
+//}
 
 
 void main()
