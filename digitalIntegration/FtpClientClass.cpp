@@ -682,23 +682,15 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		// 接收数据大小（int 类型）
 		int data_size=0;
 
-		//size_t bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), sizeof(data_size), 0);
-		//int data_size = 0;
 		char *char_int = new char[4];
-		//int s = sizeof(data_size);
-		//int s = sizeof(data_size);
+
+		unsigned char ReceiveSize[2];
+
 		size_t bytes_received = 0;
-		//bytes_received = recv(sockClient, reinterpret_cast<char*>(&data_size), 4, 0);
-		bytes_received = recv(sockClient, char_int, 4, 0);
-		memcpy(&data_size, char_int, 4);
-		/*char buf[4] = { 0 };
-		buf[0] = char_int[3];
-		buf[1] = char_int[2];
-		buf[2] = char_int[1];
-		buf[3] = char_int[0];
-		memcpy(&data_size, buf, 4);*/
-		
-		//cout << "char_int : " << char_int << endl;
+		//bytes_received = recv(sockClient, char_int, 4, 0);
+		//memcpy(&data_size, char_int, 4);
+		bytes_received = recv(sockClient, (char*)ReceiveSize, 2, 0);
+		data_size = (static_cast<int>(ReceiveSize[1]) << 8) | static_cast<int>(ReceiveSize[0]);
 		cout << "data_size: " << data_size << endl;
 		if (bytes_received <= 0 || data_size == 0) {
 			break; // 如果接收失败或数据大小为 0，则退出循环
@@ -713,11 +705,7 @@ int FtpClientClass::execute_getFile(string filePath, string NewFilePath)
 		{
 			// 接收实际数据
 			memset(buffer, 0, sizeof(buffer));
-			///*if (recv_size > 10240)
-			//{
-			//	
-			//	cout << "---------------------- recv_size : " << recv_size << " : " << recv_size << endl;
-			//}*/
+	
 			int bytes_received = 0;
 			bytes_received = recv(sockClient, buffer, recv_size, 0);
 			cout << "bytes_received and recv_size : " << bytes_received << " : " << recv_size << endl;
