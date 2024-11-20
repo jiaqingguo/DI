@@ -303,7 +303,7 @@ int Server::sendFileData(SOCKET datatcps, std::ifstream& file)
 	while (file)
 	{
 
-		memset(buffer, 0, sizeof(buffer));
+		memset(buffer, '\0', sizeof(buffer));
 		file.read(buffer, sizeof(buffer));
 		std::streamsize bytes_read = file.gcount();
 
@@ -393,22 +393,30 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 
 	SYSTEMTIME lastWriteTime;
 	FileTimeToSystemTime(&ft, &lastWriteTime);
-	memset(fileRecord1, 0, sizeof(fileRecord1));
-	memset(&m_FileInformation, 0, sizeof(m_FileInformation));
-	const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "DIR" : "File";
+	memset(fileRecord1, '\0', sizeof(fileRecord1));
+	memset(&m_FileInformation, '\0', sizeof(m_FileInformation));
+	//const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "DIR" : " ";
 	m_FileInformation.fileYear = lastWriteTime.wYear;
 	m_FileInformation.fileMonth = lastWriteTime.wMonth;
 	//m_FileInformation.fileDay = lastWriteTime.wDay;
 	//m_FileInformation.fileHour = lastWriteTime.wHour;
 	//m_FileInformation.fileMinute = lastWriteTime.wMinute;
 	//m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
-	//memset(m_FileInformation.fileName, 0, sizeof(m_FileInformation.fileName));
+	//memset(m_FileInformation.fileName, '\0', sizeof(m_FileInformation.fileName));
 	memcpy(m_FileInformation.fileName, pfd->cFileName, sizeof(pfd->cFileName));
-	//memset(m_FileInformation.fileDir, 0, sizeof(m_FileInformation.fileDir));
-	memcpy(m_FileInformation.fileDir, dir, 5);
+	//memset(m_FileInformation.fileDir, '\0', sizeof(m_FileInformation.fileDir));
+	//memcpy(m_FileInformation.fileDir, dir, 5);
+	if (pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+	{
+		sprintf(m_FileInformation.fileDir, "DIR");
+	}
+	else
+	{
+		sprintf(m_FileInformation.fileDir, "File");
+	}
+	
 
-
-	memset(fileRecord1, 0, sizeof(fileRecord1));
+	memset(fileRecord1, '\0', sizeof(fileRecord1));
 	memcpy(fileRecord1, &m_FileInformation, sizeof(m_FileInformation));
 
 	cout << m_FileInformation.fileName << "    FileType:" << m_FileInformation.fileDir << endl;
@@ -500,8 +508,8 @@ void Server::running()
 
 	while (1)
 	{
-		memset(rbuff, 0, sizeof(rbuff));
-		memset(sbuff, 0, sizeof(sbuff));
+		memset(rbuff, '\0', sizeof(rbuff));
+		memset(sbuff, '\0', sizeof(sbuff));
 
 		int ret = recv(sockServer, rbuff, sizeof(rbuff), 0);
 		//int ret = recvTcpOneAll();
@@ -615,7 +623,7 @@ void Server::running()
 				while (1)
 				{
 					
-					memset(buffer, 0, sizeof(buffer));
+					memset(buffer, '\0', sizeof(buffer));
 					bytes_received = recv(sockServer, buffer, recv_size, 0);
 					if (bytes_received == -1)
 					{
@@ -651,7 +659,7 @@ void Server::running()
 			//strcpy(sbuff, path);
 			//int size = strlen(sbuff);
 			//send(sockServer, sbuff, size, 0);
-			memset(m_sendOneAllData, 0, sizeof(m_sendOneAllData));
+			memset(m_sendOneAllData, '\0', sizeof(m_sendOneAllData));
 			//strcpy(sbuff, "T:\\¼ÖÇì¹ú\\CS");//ÎÒ×Ô¼ºÑ¡ÔñµÄ¾ø¶ÔÂ·¾¶
 			GetCurrentDirectory(sizeof(m_sendOneAllData), m_sendOneAllData);//ÕÒµ½µ±Ç°½ø³ÌµÄµ±Ç°Ä¿Â¼
 
@@ -663,7 +671,7 @@ void Server::running()
 		}//pwd
 		else if (strncmp(rbuff, "ls", 2) == 0) {
 			char m_path[256];
-			memset(m_path, 0, sizeof(m_path));
+			memset(m_path, '\0', sizeof(m_path));
 			strcpy(m_path, rbuff + 3);
 
 			strcpy(sbuff, rbuff);
@@ -827,7 +835,7 @@ void Server::running()
 			char buffer[1024];
 			while (1)
 			{
-				memset(buffer, 0, sizeof(buffer));
+				memset(buffer, '\0', sizeof(buffer));
 				int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
 				if (recvSize == -1)
 				{
@@ -846,7 +854,7 @@ void Server::running()
 				paths.push_back(buffer);
 			}
 
-			memset(sbuff, 0, sizeof(sbuff));
+			memset(sbuff, '\0', sizeof(sbuff));
 			if (CompressMult2Zip(paths, strZipPath))
 			{
 				sprintf(sbuff, "compress-ok");
@@ -867,7 +875,7 @@ void Server::running()
 			char buffer[1024];
 			while (1)
 			{
-				memset(buffer, 0, sizeof(buffer));
+				memset(buffer, '\0', sizeof(buffer));
 				int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
 				if (recvSize == -1)
 				{
@@ -900,7 +908,7 @@ void Server::running()
 
 			}
 
-			memset(sbuff, 0, sizeof(sbuff));
+			memset(sbuff, '\0', sizeof(sbuff));
 			sprintf(sbuff, "uncompress-ok");
 			send(sockServer, sbuff, strlen(sbuff), 0);
 			cout << "uncompress Ö´ÐÐ½áÊø" << endl;
@@ -977,7 +985,7 @@ int Server::sendTcpOneAll()
 }
 int Server::recvTcpOneAll()
 {
-	memset(m_recvOneAllData, 0, sizeof(m_recvOneAllData));
+	memset(m_recvOneAllData, '\0', sizeof(m_recvOneAllData));
 	// ½ÓÊÕÊý¾Ý´óÐ¡£¨int ÀàÐÍ£©
 	int iAllDataSize = 0;
 	size_t bytes_received = recv(sockServer, reinterpret_cast<char*>(&iAllDataSize), sizeof(iAllDataSize), 0);
@@ -986,14 +994,14 @@ int Server::recvTcpOneAll()
 	}
 	int recv_size = iAllDataSize;
 	char combinedBuf[sizeof(m_recvOneAllData)];// ÓÃÓÚ×éºÏÍêÕûÊý¾Ý
-	memset(combinedBuf, 0, sizeof(m_recvOneAllData));
+	memset(combinedBuf, '\0', sizeof(m_recvOneAllData));
 	int combinedBufstart = 0;
 	int iCurRecvSize = 0;
 	char recvBuf[1024];
 	while (1)
 	{
-		//memset(rbuff, 0, sizeof(rbuff));
-		memset(recvBuf, 0, sizeof(recvBuf));
+		//memset(rbuff, '\0', sizeof(rbuff));
+		memset(recvBuf, '\0', sizeof(recvBuf));
 		//iRecvSize = recv(sockServer, recvBuf, sizeof(m_FileInformation), 0);
 		iCurRecvSize = recv(sockServer, recvBuf, recv_size, 0);
 		if (iCurRecvSize == SOCKET_ERROR) {
@@ -1037,7 +1045,7 @@ bool Server::receiveFile(std::string filename)
 	}
 
 	//ÏÈ½ÓÊÕÎÄ¼þ´óÐ¡ÐÅÏ¢
-	memset(buf, 0, maxSize);
+	memset(buf, '\0', maxSize);
 	int recvSize = recv(sockServer, buf, 1024, 0);
 	if (recvSize == -1)
 	{
@@ -1052,7 +1060,7 @@ bool Server::receiveFile(std::string filename)
 	//Í³¼ÆÎÄ¼þ´«ÊäÊ£ÏÂµÄ´óÐ¡
 	int remain = fileSize;
 	while (true) {
-		memset(buf, 0, maxSize);
+		memset(buf, '\0', maxSize);
 		len = recv(sockServer, buf, 1024, 0);
 		if (len = -1)
 		{

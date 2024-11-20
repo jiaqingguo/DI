@@ -192,7 +192,7 @@ int FtpClientClass::list(SOCKET sockfd)
 			}
 
 		}
-		memset(&m_FileInformation, 0, sizeof(m_FileInformation));
+		memset(&m_FileInformation, '\0', sizeof(m_FileInformation));
 		memcpy(&m_FileInformation, combinedBuf, sizeof(m_FileInformation));
 		//显示数据
 		//rbuff[iCurRecvSize] = '\0';
