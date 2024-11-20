@@ -15,10 +15,10 @@ struct FileInformation
 {
 	int fileYear;
 	int fileMonth;
-	WORD fileDay;
+	/*WORD fileDay;
 	WORD fileHour;
 	WORD fileMinute;
-	DWORD FileSizeLow;
+	DWORD FileSizeLow;*/
 	char fileDir[260];
 	char fileName[260];
 };

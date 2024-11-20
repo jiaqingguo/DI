@@ -199,8 +199,8 @@ int FtpClientClass::list(SOCKET sockfd)
 		//cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
 		string name(m_FileInformation.fileName);
 		string fileDir(m_FileInformation.fileDir);
-		sprintf(time, "%04d-%02d-%02d %02d:%02d", m_FileInformation.fileYear, m_FileInformation.fileMonth, m_FileInformation.fileDay,
-			m_FileInformation.fileHour, m_FileInformation.fileMinute);
+		/*sprintf(time, "%04d-%02d-%02d %02d:%02d", m_FileInformation.fileYear, m_FileInformation.fileMonth, m_FileInformation.fileDay,
+			m_FileInformation.fileHour, m_FileInformation.fileMinute);*/
 		string str_time(time);
 		if (name == "." || name == "..")
 		{

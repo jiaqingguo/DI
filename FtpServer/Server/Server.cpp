@@ -42,10 +42,10 @@ struct FileInformation
 {
 	int fileYear;
 	int fileMonth;
-	WORD fileDay;
-	WORD fileHour;
-	WORD fileMinute;
-	DWORD FileSizeLow;
+	//WORD fileDay;
+	//WORD fileHour;
+	//WORD fileMinute;
+	//DWORD FileSizeLow;
 	char fileDir[260];
 	char fileName[260];
 };
@@ -260,8 +260,7 @@ int Server::sendFileList(SOCKET datatcps, char dirPath[])
 			return 0;
 		}
 		flag = FindNextFile(hff, &fd);//²éÕÒÏÂÒ»¸öÎÄ¼þ
-		// ¹Ø±Õ¾ä±ú
-		//FindClose(hff);
+		
 	}
 	// ¹Ø±Õ¾ä±ú
 	FindClose(hff);
@@ -395,35 +394,21 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 	SYSTEMTIME lastWriteTime;
 	FileTimeToSystemTime(&ft, &lastWriteTime);
 	memset(fileRecord1, 0, sizeof(fileRecord1));
-	/*
-	//const char *dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "<DIR>" : " ";
-	//sprintf(fileRecord, "%04d-%02d-%02d %02d:%02d %5s %10d   %-20s\n",
-	//	lastWriteTime.wYear,
-	//	lastWriteTime.wMonth,
-	//	lastWriteTime.wDay,
-	//	lastWriteTime.wHour,
-	//	lastWriteTime.wMinute,
-	//	dir,
-	//	pfd->nFileSizeLow,
-	//	pfd->cFileName
-	//);
-	//if (send(datatcps, fileRecord, strlen(fileRecord), 0) == SOCKET_ERROR)
-	//{
-	//	//Í¨¹ýdatatcps½Ó¿Ú·¢ËÍfileRecordÊý¾Ý£¬³É¹¦·µ»Ø·¢ËÍµÄ×Ö½ÚÊý
-	//	cout << "·¢ËÍÊ§°Ü" << endl;
-	//	return 0;
-	//}
-	*/
+	
 	const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "<DIR>" : " ";
 	m_FileInformation.fileYear = lastWriteTime.wYear;
 	m_FileInformation.fileMonth = lastWriteTime.wMonth;
-	m_FileInformation.fileDay = lastWriteTime.wDay;
-	m_FileInformation.fileHour = lastWriteTime.wHour;
-	m_FileInformation.fileMinute = lastWriteTime.wMinute;
-	m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
+	//m_FileInformation.fileDay = lastWriteTime.wDay;
+	//m_FileInformation.fileHour = lastWriteTime.wHour;
+	//m_FileInformation.fileMinute = lastWriteTime.wMinute;
+	//m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
+	memset(m_FileInformation.fileName, 0, sizeof(m_FileInformation.fileName));
 	memcpy(m_FileInformation.fileName, pfd->cFileName, sizeof(pfd->cFileName));
+	memset(m_FileInformation.fileDir, 0, sizeof(m_FileInformation.fileDir));
 	memcpy(m_FileInformation.fileDir, dir, 5);
 
+
+	memset(fileRecord1, 0, sizeof(fileRecord1));
 	memcpy(fileRecord1, &m_FileInformation, sizeof(m_FileInformation));
 
 	cout << m_FileInformation.fileName << "    FileType:" << m_FileInformation.fileDir << endl;
