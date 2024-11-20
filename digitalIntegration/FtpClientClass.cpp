@@ -197,6 +197,8 @@ int FtpClientClass::list(SOCKET sockfd)
 		//显示数据
 		//rbuff[iCurRecvSize] = '\0';
 		//cout << "list=====m_FileInformation.fileName: " << m_FileInformation.fileName << endl;
+
+		cout << m_FileInformation.fileName << "----------------" << m_FileInformation.fileDir << "----------------" << endl;
 		string name(m_FileInformation.fileName);
 		string fileDir(m_FileInformation.fileDir);
 		/*sprintf(time, "%04d-%02d-%02d %02d:%02d", m_FileInformation.fileYear, m_FileInformation.fileMonth, m_FileInformation.fileDay,
@@ -208,14 +210,18 @@ int FtpClientClass::list(SOCKET sockfd)
 		}
 		else
 		{
-			if (fileDir == "<DIR>")
+			//strncmp(fileDir, "DIR", 3)
+			//if (fileDir == "<DIR>")
+
+			//if (strncmp(m_FileInformation.fileDir, "DIR", 3))
+			if (fileDir == "DIR")
 			{
 				eachDirData.clear();
 				eachDirData.push_back(name);
 				eachDirData.push_back(str_time);
 				vecDirName.push_back(eachDirData);
 				//vecDirName.push_back(name);
-				cout << "< DIR > " << name << endl;
+			//	cout << "< DIR > " << name << endl;
 			}
 			else
 			{
@@ -223,13 +229,13 @@ int FtpClientClass::list(SOCKET sockfd)
 				eachFile.push_back(name);
 				eachFile.push_back(str_time);
 				vecFileName.push_back(eachFile);
-				cout << "< FILE > " << name << endl;
+				//cout << "< FILE > " << name << endl;
 			}
 
 
 		}
 
-		cout << name << fileDir << "----------------" << endl;
+		
 	}
 	return 1;
 }

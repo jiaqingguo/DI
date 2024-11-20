@@ -394,17 +394,17 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 	SYSTEMTIME lastWriteTime;
 	FileTimeToSystemTime(&ft, &lastWriteTime);
 	memset(fileRecord1, 0, sizeof(fileRecord1));
-	
-	const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "<DIR>" : " ";
+	memset(&m_FileInformation, 0, sizeof(m_FileInformation));
+	const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "DIR" : "File";
 	m_FileInformation.fileYear = lastWriteTime.wYear;
 	m_FileInformation.fileMonth = lastWriteTime.wMonth;
 	//m_FileInformation.fileDay = lastWriteTime.wDay;
 	//m_FileInformation.fileHour = lastWriteTime.wHour;
 	//m_FileInformation.fileMinute = lastWriteTime.wMinute;
 	//m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
-	memset(m_FileInformation.fileName, 0, sizeof(m_FileInformation.fileName));
+	//memset(m_FileInformation.fileName, 0, sizeof(m_FileInformation.fileName));
 	memcpy(m_FileInformation.fileName, pfd->cFileName, sizeof(pfd->cFileName));
-	memset(m_FileInformation.fileDir, 0, sizeof(m_FileInformation.fileDir));
+	//memset(m_FileInformation.fileDir, 0, sizeof(m_FileInformation.fileDir));
 	memcpy(m_FileInformation.fileDir, dir, 5);
 
 
