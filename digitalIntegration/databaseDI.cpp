@@ -501,6 +501,66 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::get_user_by_condition(table_user& stData, const std::string& userName, const int& approval)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_user where UserName = \'%s\' AND approval=\'%d\'", userName.c_str(), approval);
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.PKID = std::atoi(sql_row[0]);
+			stData.UserName = sql_row[1];
+			stData.Password = sql_row[2];
+			stData.name = sql_row[3];
+			stData.department = sql_row[4];
+			stData.JobTitle = sql_row[5];
+			stData.PhoneNumber = sql_row[6];
+			stData.Pop = std::atoi(sql_row[7]);
+			stData.CreateTime = string_to_datetime(sql_row[8]);
+			stData.approval = std::atoi(sql_row[9]);
+			stData.loginStatus = std::atoi(sql_row[10]);
+
+		}
+		return true;
+	}
+
+	bool databaseDI::update_user_pwd(const int& id, const std::string& strPwd)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "update t_user set Password=\'%s\' where PKID=\'%d\'",
+			strPwd.c_str(),
+			id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
 	bool databaseDI::get_tools(std::list<table_tools>& listTools, const int& module)
 	{
 		listTools.clear();

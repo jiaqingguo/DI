@@ -24,6 +24,7 @@ SOURCES += \
     CLineEdit.cpp \
     CTableView.cpp \
     CWidget.cpp \
+    ChangePwdDialog.cpp \
     CtrlNetwork.cpp \
     DataManageDialog.cpp \
     FilemangageDialog.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     CPagedTableModel.h \
     CTableView.h \
     CWidget.h \
+    ChangePwdDialog.h \
     CtrlNetwork.h \
     DataManageDialog.h \
     FilemangageDialog.h \
@@ -80,6 +82,7 @@ FORMS += \
     AddToolDialog.ui \
     AddToolInfoDialog.ui \
     ApprovalProgressDialog.ui \
+    ChangePwdDialog.ui \
     DataManageDialog.ui \
     FilemangageDialog.ui \
     GifDialog.ui \

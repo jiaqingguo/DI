@@ -257,9 +257,9 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="btnForgetPassword">
+              <widget class="QPushButton" name="btnChangePassword">
                <property name="text">
-                <string>忘记密码？</string>
+                <string>修改密码</string>
                </property>
               </widget>
              </item>

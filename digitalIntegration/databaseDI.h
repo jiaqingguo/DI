@@ -50,6 +50,10 @@ namespace db
 		bool update_user_LoginStatus(const int& id, int& status);
 		bool del_user(const int& id);
 
+
+		bool get_user_by_condition(table_user& stData, const std::string& userName, const int& approval = 1);
+		bool update_user_pwd(const int& id, const std::string& strPwd);
+
 		//指纹表
 		bool add_user_finger(unsigned char *tempdata, int &templen, const int &id);
 		bool get_user_finger2(unsigned char *temp, int &templen, int &userid);

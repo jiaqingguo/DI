@@ -1,19 +1,18 @@
-#include "fingerDlg.h"
 
 #include <QValidator>
 #include <QMessageBox>
-
 #include <set>
 
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
-
 #include "globel.h"
 #include "mainwindow.h"
 #include "databaseDI.h"
 #include "RegisterDialog.h"
 #include "common.h"
 
+#include "fingerDlg.h"
+#include "ChangePwdDialog.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
 	QDialog(parent),
@@ -35,7 +34,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
-	connect(ui->btnForgetPassword, &QPushButton::clicked, this, &LoginDialog::slot_btnForgetPassClicked);
+	connect(ui->btnChangePassword, &QPushButton::clicked, this, &LoginDialog::slot_btnChangePassword);
 	connect(ui->leUser, &QLineEdit::textChanged, this, &LoginDialog::slot_leUserTextChanged);
 	connect(ui->leUser, &QLineEdit::editingFinished, this, &LoginDialog::slot_leUserEditingFinished);
 	connect(ui->lePassword, &QLineEdit::textChanged, this, &LoginDialog::slot_lePwdTextChanged);
@@ -186,9 +185,10 @@ void LoginDialog::slot_btnExitClicked()
 	
 }
 
-void LoginDialog::slot_btnForgetPassClicked()
+void LoginDialog::slot_btnChangePassword()
 {
-
+	ChangePwdDialog changePwdDialog;
+	changePwdDialog.exec();
 }
 
 void LoginDialog::slot_btnFingerprintClicked()
