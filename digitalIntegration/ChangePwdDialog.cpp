@@ -32,7 +32,7 @@ void ChangePwdDialog::slot_btnModify()
     QString strOriginalpwd = ui->lineEditPassword->text();
     QString strNewPwd = ui->lineEditNewPwd->text();
     table_user stData;
-    if (db::databaseDI::Instance().get_user_by_condition(stData, strOriginalpwd.toStdString()))
+    if (db::databaseDI::Instance().get_user_by_condition(stData, strUserName.toStdString()))
     {
         if (stData.UserName.empty())
         {

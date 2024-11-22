@@ -27,8 +27,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
 	ui->leUser->setMaxLength(20);
 	ui->lePassword->setMaxLength(20);
-	ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
-	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
+	//ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
+	//ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
 
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
@@ -42,7 +42,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	//connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
 	this->m_fingerDlg = new fingerDlg();
-	/*this->m_fingerDlg->finger_init();*/
+	this->m_fingerDlg->finger_init();
 	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
 	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
 	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);
@@ -126,7 +126,7 @@ void LoginDialog::slot_btnLoginClicked()
 
 	if (stData.approval == 0)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对管理员进行审核"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请联系管理员尽快对该用户进行审核"));
 		return;
 	}
 	else if (stData.approval == 2)
@@ -156,7 +156,7 @@ void LoginDialog::slot_btnLoginClicked()
 	db::databaseDI::Instance().get_pop(pop, m_sUser.toStdString(), sPassword.toStdString());*/
 	if (stData.Pop == 0)
 	{
-		this->m_fingerDlg->finger_init();
+		//this->m_fingerDlg->finger_init();
 
 		m_pop = 0;
 		common::bAdministrator = true;
@@ -179,7 +179,7 @@ void LoginDialog::slot_btnLoginClicked()
 
 void LoginDialog::slot_btnExitClicked()
 {
-	this->m_fingerDlg->finger_init();
+	//this->m_fingerDlg->finger_init();
 	registerDialog->init();
 	registerDialog->exec();
 	
@@ -204,9 +204,9 @@ void LoginDialog::slot_btnFingerprintClicked()
 		m_bIdentify = TRUE;
 
 	}
-	int i = 1;
+	/*int i = 1;
 	db::databaseDI::Instance().get_ip_data_by_number(i, common::setHostData);
-	this->accept();
+	this->accept();*/
 
 
 }

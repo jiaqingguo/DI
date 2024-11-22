@@ -515,7 +515,7 @@ int FtpClientClass::execute_ls(const std::string strDirPath)
 		return 0;
 	}
 	//int size =recv(sockClient, rbuff, sizeof(rbuff), 0);		//接收信息
-	//cout << rbuff << endl;	
+	cout <<"ls  "<< strDirPath << endl;
 	//if(ls - falied)
 
 	return list(sockClient);
