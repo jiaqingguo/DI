@@ -342,7 +342,7 @@ void FilemangageDialog::flushTableViewDownload()
 			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 			item->setForeground(QBrush(QColor(Qt::red)));
 			m_modelDownload->setItem(newRowIndex, 7, item);
-			buttonD->setEnabled(true);
+			buttonD->setEnabled(false);
 
 		}
 		i++;
