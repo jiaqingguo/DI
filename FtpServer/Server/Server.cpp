@@ -42,10 +42,10 @@ struct FileInformation
 {
 	int fileYear;
 	int fileMonth;
-	//WORD fileDay;
-	//WORD fileHour;
-	//WORD fileMinute;
-	//DWORD FileSizeLow;
+	WORD fileDay;
+	WORD fileHour;
+	WORD fileMinute;
+	DWORD FileSizeLow;
 	char fileDir[260];
 	char fileName[260];
 };
@@ -398,13 +398,13 @@ int Server::sendFileRecord(SOCKET datatcps, WIN32_FIND_DATA* pfd) {//·¢ËÍµ±Ç°µÄÎ
 	//const char* dir = pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? "DIR" : " ";
 	m_FileInformation.fileYear = lastWriteTime.wYear;
 	m_FileInformation.fileMonth = lastWriteTime.wMonth;
-	//m_FileInformation.fileDay = lastWriteTime.wDay;
-	//m_FileInformation.fileHour = lastWriteTime.wHour;
-	//m_FileInformation.fileMinute = lastWriteTime.wMinute;
-	//m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
-	//memset(m_FileInformation.fileName, '\0', sizeof(m_FileInformation.fileName));
+	m_FileInformation.fileDay = lastWriteTime.wDay;
+	m_FileInformation.fileHour = lastWriteTime.wHour;
+	m_FileInformation.fileMinute = lastWriteTime.wMinute;
+	m_FileInformation.FileSizeLow = pfd->nFileSizeLow;
+	
 	memcpy(m_FileInformation.fileName, pfd->cFileName, sizeof(pfd->cFileName));
-	//memset(m_FileInformation.fileDir, '\0', sizeof(m_FileInformation.fileDir));
+	
 	//memcpy(m_FileInformation.fileDir, dir, 5);
 	if (pfd->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 	{
