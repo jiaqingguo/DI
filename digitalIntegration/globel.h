@@ -71,6 +71,7 @@ struct table_ip_configure
 	uint32_t        number = 0;
 
 	double         dGpuUsage = 0; // 不在数据库表的字段，
+	double         dCpuUsage = 0; // 不在数据库表的字段，
 	bool operator<(const table_ip_configure& other) const
 	{
 		return id <other.id; // 定义相等比较

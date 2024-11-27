@@ -155,8 +155,8 @@ public:
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
         widgetModules = new QWidget(centralwidget);
         widgetModules->setObjectName(QString::fromUtf8("widgetModules"));
-        widgetModules->setMinimumSize(QSize(0, 25));
-        widgetModules->setMaximumSize(QSize(16777215, 25));
+        widgetModules->setMinimumSize(QSize(0, 40));
+        widgetModules->setMaximumSize(QSize(16777215, 40));
         horizontalLayout = new QHBoxLayout(widgetModules);
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -166,13 +166,13 @@ public:
         buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
         buttonGroup->addButton(btnFunction);
         btnFunction->setObjectName(QString::fromUtf8("btnFunction"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(btnFunction->sizePolicy().hasHeightForWidth());
         btnFunction->setSizePolicy(sizePolicy);
-        btnFunction->setMinimumSize(QSize(90, 25));
-        btnFunction->setMaximumSize(QSize(16777215, 25));
+        btnFunction->setMinimumSize(QSize(150, 25));
+        btnFunction->setMaximumSize(QSize(150, 30));
 
         horizontalLayout->addWidget(btnFunction);
 
@@ -181,8 +181,8 @@ public:
         btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
         sizePolicy.setHeightForWidth(btnModule1->sizePolicy().hasHeightForWidth());
         btnModule1->setSizePolicy(sizePolicy);
-        btnModule1->setMinimumSize(QSize(90, 25));
-        btnModule1->setMaximumSize(QSize(16777215, 25));
+        btnModule1->setMinimumSize(QSize(150, 25));
+        btnModule1->setMaximumSize(QSize(150, 30));
 
         horizontalLayout->addWidget(btnModule1);
 
@@ -191,8 +191,8 @@ public:
         btnModule2->setObjectName(QString::fromUtf8("btnModule2"));
         sizePolicy.setHeightForWidth(btnModule2->sizePolicy().hasHeightForWidth());
         btnModule2->setSizePolicy(sizePolicy);
-        btnModule2->setMinimumSize(QSize(90, 25));
-        btnModule2->setMaximumSize(QSize(16777215, 25));
+        btnModule2->setMinimumSize(QSize(150, 25));
+        btnModule2->setMaximumSize(QSize(150, 30));
 
         horizontalLayout->addWidget(btnModule2);
 
@@ -201,8 +201,8 @@ public:
         btnModule3->setObjectName(QString::fromUtf8("btnModule3"));
         sizePolicy.setHeightForWidth(btnModule3->sizePolicy().hasHeightForWidth());
         btnModule3->setSizePolicy(sizePolicy);
-        btnModule3->setMinimumSize(QSize(90, 25));
-        btnModule3->setMaximumSize(QSize(16777215, 25));
+        btnModule3->setMinimumSize(QSize(150, 25));
+        btnModule3->setMaximumSize(QSize(150, 30));
 
         horizontalLayout->addWidget(btnModule3);
 
@@ -211,8 +211,8 @@ public:
         btnModule4->setObjectName(QString::fromUtf8("btnModule4"));
         sizePolicy.setHeightForWidth(btnModule4->sizePolicy().hasHeightForWidth());
         btnModule4->setSizePolicy(sizePolicy);
-        btnModule4->setMinimumSize(QSize(90, 25));
-        btnModule4->setMaximumSize(QSize(16777215, 25));
+        btnModule4->setMinimumSize(QSize(150, 25));
+        btnModule4->setMaximumSize(QSize(150, 30));
 
         horizontalLayout->addWidget(btnModule4);
 

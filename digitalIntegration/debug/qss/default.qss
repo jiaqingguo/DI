@@ -61,8 +61,8 @@ QStackedWidget#stackedWidget {
 
 /* 普通状态 */
 QWidget#widgetModules QPushButton {
-    min-width:43px;
-	max-width:43px;
+    min-width:90px;
+	max-width:90px;
 	border-style: solid;
     border-width: 1px;
     border-radius: 0px; /* 圆角边框 */

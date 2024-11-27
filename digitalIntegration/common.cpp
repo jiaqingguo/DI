@@ -71,13 +71,11 @@ namespace common
     int                     iSoftStartHostNum = 1;      // 模块234软件 启动的所在主机标志;
    // std::set<std::string>   setHostIps;                 // 每个用户分配的三个主机网卡ip;
     std::vector<table_ip_configure>    setHostData;    // 每个用户分配的三个主机网卡ip;;         // 每个用户分配的三个主机网卡ip;
-
-   //  std::map<std::string, table_ip_configure>  setHostData;// 每个用户分配的三个主机网卡ip;包括Gpu信息;
-
     QString                 strCopyPath;                  // 复制的远程路径;
     QString                 strVipPath;				  //   普通用户不能操作的路径;
     table_user              stUser;
     int                     index = 0;                       //一键加载时，点击不同模块
+    const double            dBladeComputerCpuUsageLimits = 60;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
@@ -782,19 +780,40 @@ namespace common
         int index = -1;
         for (int i = 0; i < setHostData.size(); i++)
         {
-            if (setHostData[i].dGpuUsage < minCpuUsage)
+            if (setHostData[i].dCpuUsage < dBladeComputerCpuUsageLimits)
             {
-                minCpuUsage = setHostData[i].dGpuUsage;
+                minCpuUsage = setHostData[i].dCpuUsage;
                 index = i;
             }
         }
+    
         if (index != -1)
         {
             stHost.ip = setHostData[index].ip;
             stHost.hostname = setHostData[index].hostname;
             stHost.id = setHostData[index].id;
             stHost.number = setHostData[index].number;
-            setHostData[index].dGpuUsage++;
+            setHostData[index].dCpuUsage++;
+        }
+        else  // 没有CPu使用率小于 指定值的再比较GPU
+        {
+            double minGpuUsage = 100;
+            for (int i = 0; i < setHostData.size(); i++)
+            {
+                if (setHostData[i].dGpuUsage < dBladeComputerCpuUsageLimits)
+                {
+                    minGpuUsage = setHostData[i].dGpuUsage;
+                    index = i;
+                }
+            }
+            if (index != -1)
+            {
+                stHost.ip = setHostData[index].ip;
+                stHost.hostname = setHostData[index].hostname;
+                stHost.id = setHostData[index].id;
+                stHost.number = setHostData[index].number;
+                setHostData[index].dGpuUsage++;
+            }
         }
     }
 

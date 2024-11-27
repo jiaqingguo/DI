@@ -140,6 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
 	//QString password = "Share123"; // 实际密码
 
 	//common::addNetworkCredential(target, username, password);
+	getBladeComputerData(common::setHostData);
 	initAccount();
 
 }
@@ -1483,6 +1484,27 @@ bool MainWindow::isHardwareAccelerator(const std::string str)
 	 }*/
 
 	return false;
+}
+
+// 获取所有刀片机信息;
+void MainWindow::getBladeComputerData(std::vector<table_ip_configure>& vecHostData)
+{
+	vecHostData.clear();
+	std::list<table_ip_configure> listHostData;
+	db::databaseDI::Instance().get_all_ip(listHostData);
+
+	QString strprefix = QString::fromLocal8Bit("加速机");
+
+	for (const auto& st : listHostData)
+	{
+		QString  value = QString::fromStdString(st.hostname);
+		if (value.contains(strprefix))
+		{
+			vecHostData.push_back(st);
+		}
+	}
+
+
 }
 
 

@@ -30,6 +30,7 @@ class CCtrlNetwork;
 class CWidget;
 
 struct st_account_data;
+struct table_ip_configure;
 //class fingerDlg;
 
 class EmbeddedWidget : public QWidget {
@@ -175,6 +176,8 @@ private:
 	int getBtnLoadIndex(QPushButton *btn);
 	bool isHardwareAccelerator(const std::string str);
 	
+	// 获取刀片机信息
+	void getBladeComputerData(std::vector<table_ip_configure>& setHostData);
 private:
     Ui::MainWindow *ui;
 
