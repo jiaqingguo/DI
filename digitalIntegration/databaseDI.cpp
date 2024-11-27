@@ -1196,14 +1196,14 @@ namespace db
 		return true;
 	}
 	
-	bool databaseDI::get_ip_by_software(std::string &ip, std::string software,int &number)
+	bool databaseDI::get_ip_by_software(table_ip& stData, std::string software,int &number,int &module)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select ip from t_ip where software = \'%s\' and number = \'%d\'", software.c_str(),number);
+		sprintf_s(sql, "select * from t_ip where software = \'%s\' and number = \'%d\' and module =  \'%d\'", software.c_str(),number,module);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -1211,7 +1211,16 @@ namespace db
 
 		while (sql_row = mysql_fetch_row(result))
 		{
-			ip = sql_row[0];
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.host = sql_row[2];
+			stData.software = (sql_row[3]);
+			stData.module = std::atoi(sql_row[4]);
+			stData.used = std::atoi(sql_row[5]);
+			stData.username = (sql_row[6]);
+			stData.icoPath = (sql_row[7]);
+			stData.number = std::atoi(sql_row[8]);
+			stData.toolPath = (sql_row[9]);
 		}
 		return true;
 	}
@@ -1403,7 +1412,7 @@ namespace db
 			stData.username = (sql_row[6]);
 			stData.icoPath = (sql_row[7]);
 			stData.number= std::atoi(sql_row[8]);
-			stData.toolPath = (sql_row[9]);;
+			stData.toolPath = (sql_row[9]);
 		}
 		return true;
 	}

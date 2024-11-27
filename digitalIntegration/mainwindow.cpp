@@ -570,7 +570,8 @@ void MainWindow::slot_btnAddToolTab()
 
 
 		table_ip stipToolData;
-		if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, toolName.toStdString(), common::iLoginNum, moduleNumber))
 		{
 			return;
 		}
@@ -607,7 +608,16 @@ void MainWindow::slot_btnAddToolTab()
 		//判断Tab页的名称是否为“默认值”
 		if (tabName == QString::fromLocal8Bit("默认值"))
 		{
-			tabName = toolName;
+			if (moduleNumber == 1)
+			{
+				QString hostname = QString::fromStdString(stipToolData.host);
+				tabName = toolName + " " + hostname;
+			}
+			else
+			{
+				QString hostname = QString::fromStdString(st.hostname);
+				tabName = toolName + " " + hostname;
+			}
 		}
 		if (moduleNumber == 1)
 		{
@@ -1513,7 +1523,8 @@ void MainWindow::getBladeComputerData(std::vector<table_ip_configure>& vecHostDa
 void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 {
 	table_ip stipToolData;
-	if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
+	//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolsName.toStdString(), common::iLoginNum))
+	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, toolsName.toStdString(), common::iLoginNum, moduleNum))
 	{
 		return;
 	}
@@ -1541,14 +1552,14 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 	{
 		axTabWidget->m_account = strAccount;
 		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
-		axTabWidget->m_softwareName = toolsName;
+		axTabWidget->m_softwareName = toolsName ;
 		if (isHardwareAccelerator(stipToolData.host))
 		{
-			startLongDistanceHost(toolsName, common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+			startLongDistanceHost(toolsName + " " + QString::fromStdString(stipToolData.host), common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
 		}
 		else
 		{
-			startLongDistanceSoftware(toolsName, common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+			startLongDistanceSoftware(toolsName + " " + QString::fromStdString(stipToolData.host), common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
 
 		}
 	}
@@ -1561,11 +1572,11 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 
 		if (isHardwareAccelerator(st.hostname))
 		{
-			startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+			startLongDistanceHost(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
 		}
 		else
 		{
-			startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+			startLongDistanceSoftware(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
 		}
 
 	}
@@ -1577,12 +1588,12 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 
 		if (isHardwareAccelerator(st.hostname))
 		{
-			startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+			startLongDistanceHost(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
 
 		}
 		else
 		{
-			startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+			startLongDistanceSoftware(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
 		}
 
 	}
@@ -1593,11 +1604,11 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 		axTabWidget->m_softwareName = toolsName;
 		if (isHardwareAccelerator(st.hostname))
 		{
-			startLongDistanceHost(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+			startLongDistanceHost(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
 		}
 		else
 		{
-			startLongDistanceSoftware(toolsName, common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+			startLongDistanceSoftware(toolsName + " " + QString::fromStdString(st.hostname), common::index, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
 		}
 	}
 }

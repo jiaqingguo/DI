@@ -211,10 +211,10 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 {
 	if (m_iModule == 1)
 	{
-		std::string ip;
-		if (db::databaseDI::Instance().get_ip_by_software(ip, text.toStdString(), common::iLoginNum))
+		table_ip stipToolData;
+		if (db::databaseDI::Instance().get_ip_by_software(stipToolData, text.toStdString(), common::iLoginNum, m_iModule))
 		{
-			ui->lineEditIP->setText(ip.c_str());
+			ui->lineEditIP->setText(stipToolData.ip.c_str());
 		}
 		else
 		{

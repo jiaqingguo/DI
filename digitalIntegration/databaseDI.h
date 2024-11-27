@@ -103,7 +103,7 @@ namespace db
 		bool get_ip_data_by_number(const int& number, std::map<std::string,table_ip_configure>& vecIpData);
 		bool get_all_ip(std::list<table_ip_configure>& listData);
 		bool get_host(std::string &hostname,unsigned int &number,std::string &ip);
-		bool get_ip_by_software(std::string &ip,std::string software,int &number);
+		bool get_ip_by_software(table_ip& stData,std::string software,int &number,int &module);
 
 
 
