@@ -179,26 +179,25 @@ void OneClickLoadDialog::slot_btnOK()
 					}
 				}
 			}
-			else
+		}
+		else
+		{
+			if (item_software)
 			{
-				if (item_software)
-				{
-					emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
+				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
 
-					//插入数据库
-					table_one_load_software stData;
-					stData.projectPath = item_software->text().toStdString();
-					stData.userID = common::iUserID;
-					stData.module = item_module->data(Qt::DisplayRole).toInt();
-					if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				//插入数据库
+				table_one_load_software stData;
+				stData.projectPath = item_software->text().toStdString();
+				stData.userID = common::iUserID;
+				stData.module = item_module->data(Qt::DisplayRole).toInt();
+				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				{
+					if (!db::databaseDI::Instance().add_load_software(stData))
 					{
-						if (!db::databaseDI::Instance().add_load_software(stData))
-						{
-							return;
-						}
+						return;
 					}
 				}
-
 			}
 		}
 	}

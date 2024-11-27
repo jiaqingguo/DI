@@ -81,11 +81,11 @@ void AddToolInfoDialog::slot_btnOk()
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具路径不能为空!"));
         return;
     }
-    if (ui->lineEdit->text().toStdString().empty())
+    /*if (ui->lineEdit->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("图标路径不能为空!"));
         return;
-    }
+    }*/
 	if ((ui->lineEditIP1->text().toStdString().empty() 
 		|| ui->lineEditIP2->text().toStdString().empty() 
 		|| ui->lineEditIP3->text().toStdString().empty()

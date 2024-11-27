@@ -847,6 +847,8 @@ namespace common
             // 设置多选
             // ui->tableView->setSelectionMode(QAbstractItemView::MultiSelection);
             tableView->horizontalHeader()->setSectionsMovable(true);
+			//设置可以拖拽控制列宽
+			//tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
         }
     }
  /*   wchar_t* QString2wchar_t(QString str)
