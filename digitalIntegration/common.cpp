@@ -90,6 +90,7 @@ namespace common
     {
         return Filetime2Int64(nowTime) - Filetime2Int64(preTime);
     }
+    // 获取cpu使用率
     double getCpuUsage()
     {
         double nCpuRate = -1;
@@ -117,11 +118,9 @@ namespace common
         __int64 user = CompareFileTimeEx(preUserTime, userTime);
 
         nCpuRate = ceil(100.0 * (kernel + user - idle) / (kernel + user));
-        //qDebug() << "windows: CPU user rate: " << nCpurate << "%";
-
         return nCpuRate;
     }
-
+    //获取物理内存
     void getPhysicsMem(long& allPhysicsMem, long& freePhysicsMem)
     {
         MEMORYSTATUSEX statex;
@@ -131,6 +130,7 @@ namespace common
         freePhysicsMem = statex.ullAvailPhys * 1.0 / 1024.0 / 1024.0;
 
     }
+    // 获取内存使用率
     double getMemUseRate()
     {
         MEMORYSTATUSEX statex;

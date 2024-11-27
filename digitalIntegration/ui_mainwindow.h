@@ -171,7 +171,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(btnFunction->sizePolicy().hasHeightForWidth());
         btnFunction->setSizePolicy(sizePolicy);
-        btnFunction->setMinimumSize(QSize(0, 25));
+        btnFunction->setMinimumSize(QSize(90, 25));
         btnFunction->setMaximumSize(QSize(16777215, 25));
 
         horizontalLayout->addWidget(btnFunction);
@@ -181,7 +181,7 @@ public:
         btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
         sizePolicy.setHeightForWidth(btnModule1->sizePolicy().hasHeightForWidth());
         btnModule1->setSizePolicy(sizePolicy);
-        btnModule1->setMinimumSize(QSize(0, 25));
+        btnModule1->setMinimumSize(QSize(90, 25));
         btnModule1->setMaximumSize(QSize(16777215, 25));
 
         horizontalLayout->addWidget(btnModule1);
@@ -191,7 +191,7 @@ public:
         btnModule2->setObjectName(QString::fromUtf8("btnModule2"));
         sizePolicy.setHeightForWidth(btnModule2->sizePolicy().hasHeightForWidth());
         btnModule2->setSizePolicy(sizePolicy);
-        btnModule2->setMinimumSize(QSize(0, 25));
+        btnModule2->setMinimumSize(QSize(90, 25));
         btnModule2->setMaximumSize(QSize(16777215, 25));
 
         horizontalLayout->addWidget(btnModule2);
@@ -201,7 +201,7 @@ public:
         btnModule3->setObjectName(QString::fromUtf8("btnModule3"));
         sizePolicy.setHeightForWidth(btnModule3->sizePolicy().hasHeightForWidth());
         btnModule3->setSizePolicy(sizePolicy);
-        btnModule3->setMinimumSize(QSize(0, 25));
+        btnModule3->setMinimumSize(QSize(90, 25));
         btnModule3->setMaximumSize(QSize(16777215, 25));
 
         horizontalLayout->addWidget(btnModule3);
@@ -211,7 +211,7 @@ public:
         btnModule4->setObjectName(QString::fromUtf8("btnModule4"));
         sizePolicy.setHeightForWidth(btnModule4->sizePolicy().hasHeightForWidth());
         btnModule4->setSizePolicy(sizePolicy);
-        btnModule4->setMinimumSize(QSize(0, 25));
+        btnModule4->setMinimumSize(QSize(90, 25));
         btnModule4->setMaximumSize(QSize(16777215, 25));
 
         horizontalLayout->addWidget(btnModule4);
@@ -744,7 +744,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 942, 26));
+        menubar->setGeometry(QRect(0, 0, 942, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -765,10 +765,10 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         btnFunction->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275", nullptr));
-        btnModule1->setText(QCoreApplication::translate("MainWindow", "\346\250\241\345\235\2271", nullptr));
-        btnModule2->setText(QCoreApplication::translate("MainWindow", "\346\250\241\345\235\2272", nullptr));
-        btnModule3->setText(QCoreApplication::translate("MainWindow", "\346\250\241\345\235\2273", nullptr));
-        btnModule4->setText(QCoreApplication::translate("MainWindow", "\346\250\241\345\235\2274", nullptr));
+        btnModule1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
+        btnModule2->setText(QCoreApplication::translate("MainWindow", "\345\207\240\344\275\225\346\240\267\346\234\272", nullptr));
+        btnModule3->setText(QCoreApplication::translate("MainWindow", "\346\200\247\350\203\275\346\240\267\346\234\272", nullptr));
+        btnModule4->setText(QCoreApplication::translate("MainWindow", "\347\224\237\344\272\247\346\240\267\346\234\272", nullptr));
         labelUserIcon->setText(QString());
         labelUserName->setText(QCoreApplication::translate("MainWindow", "\347\224\250\346\210\2671", nullptr));
         btnResourceManage->setText(QCoreApplication::translate("MainWindow", "\350\265\204\346\272\220\347\256\241\347\220\206", nullptr));

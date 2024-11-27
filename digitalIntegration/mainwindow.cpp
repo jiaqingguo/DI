@@ -1297,6 +1297,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	}
 }
 
+
 void MainWindow::startLongDistanceHost(const QString tabName, const int& module, const std::string strIp, const std::string strAccaunt, const std::string pwd, CWidget* widget, QTabWidget* tabWidget)
 {
 	connect(widget, &CWidget::signal_softwareClose, this, &MainWindow::slot_widgetAboutToQuit);

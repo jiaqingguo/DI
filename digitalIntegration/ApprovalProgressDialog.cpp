@@ -602,7 +602,7 @@ void ApprovalProgressDialog::slot_btnLast()
 	ui->lineEditUserPage->setText(QString::number(curPage));
 	ui->labelUserPage->setText(QString("%1/%2").arg(curPage).arg(m_UserTotalpage));
 }
-
+// 下一页
 void ApprovalProgressDialog::slot_btnNext()
 {
 	int curPage = ui->lineEditUserPage->text().toInt();
@@ -618,13 +618,10 @@ void ApprovalProgressDialog::slot_btnNext()
 	ui->lineEditUserPage->setText(QString::number(curPage));
 	ui->labelUserPage->setText(QString("%1/%2").arg(curPage).arg(m_UserTotalpage));
 }
-
+//跳转页面
 void ApprovalProgressDialog::slot_pageTo()
 {
-	//  ui->stackedWidget->setCurrentIndex(1);
-	//  ui->lineEditUserPage->setFocus();
 	if (ui->lineEditUserPage->text().isEmpty()) return;
-
 	int curPage = ui->lineEditUserPage->text().toInt();
 	if (curPage <= 0)
 	{
@@ -647,7 +644,6 @@ void ApprovalProgressDialog::slot_pageTo()
 		db::databaseDI::Instance().get_user_list(m_listUser);
 		auto listData = processList(m_listUser, common::onePageRows, offsetRows);
 		flushUserTableShow(listData);
-
 	}
 	else
 	{
