@@ -617,7 +617,7 @@ void ResourceManageDialog::slot_timerTimeout()
 	 //加载列表页面的四个数据
 	// updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
 	if (message.host_name != 0) {
-		updateHostTableShow(message.host_name, message.CPU_Message, message.Memory_Message, message.Disk_Message, message.Net_Message, message.Gpu_Message);
+		updateHostTableShow(message.host_name, message.Cpu_Message, message.Memory_Message, message.Disk_Message, message.Net_Message, message.Gpu_Message);
 	}
 	// 检查comboBox中是否已经存在该项
 	int index = ui->comboBox->findText(message.host_name);
@@ -626,7 +626,7 @@ void ResourceManageDialog::slot_timerTimeout()
 		ui->comboBox->addItem(message.host_name);
 	}
 	if (CPU_init == true && message.host_name == ui->comboBox->currentText()) {
-		//addHostCpuElemnet(message.host_name, message.CPU_Message);
+		//addHostCpuElemnet(message.host_name, message.Cpu_Message);
 		updateCpuWebViewShow(message.host_name);
 	}
 	else if (memory_init == true && message.host_name == ui->comboBox->currentText()) {
@@ -730,7 +730,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			stream >> infor->host_name;
 			stream >> infor->host_ip1;
 			stream >> infor->host_ip2;
-			stream >> infor->CPU_Message;
+			stream >> infor->Cpu_Message;
 			stream >> infor->Memory_Message;
 			stream >> infor->Disk_Message;
 			quint32 temp;
@@ -738,7 +738,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			infor->Net_Message = static_cast<unsigned long>(temp);
 			stream >> infor->Gpu_Message;
 
-			addHostCpuElemnet(infor->host_name, infor->CPU_Message);
+			addHostCpuElemnet(infor->host_name, infor->Cpu_Message);
 			addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
 			addHostDiskElemnet(infor->host_name, infor->Disk_Message);
 			addHostNetElemnet(infor->host_name, infor->Net_Message);
@@ -749,10 +749,12 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 				if (infor->host_ip1.toStdString() == myset.ip)
 				{
 					myset.dGpuUsage = infor->Gpu_Message;
+					myset.dCpuUsage = infor->Cpu_Message;
 				}
 				else if (infor->host_ip2.toStdString() == myset.ip)
 				{
 					myset.dGpuUsage = infor->Gpu_Message;
+					myset.dCpuUsage = infor->Cpu_Message;
 				}
 			}
 
