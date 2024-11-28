@@ -24,10 +24,6 @@ void AddToolDialog::init()
 	ui->groupBox->hide();
 	//ui->allocationAllocation->setChecked(true);
 
-	ui->lineEditTabName->setPlaceholderText(GBK_STRING("默认值"));
-	ui->lineEditTabName->setReadOnly(false);
-
-
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(3);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
@@ -209,9 +205,9 @@ void AddToolDialog::slot_btnAddClicked()
 
 void AddToolDialog::slot_display_lineEditIP(QString text)
 {
+	table_ip stipToolData;
 	if (m_iModule == 1)
 	{
-		table_ip stipToolData;
 		if (db::databaseDI::Instance().get_ip_by_software(stipToolData, text.toStdString(), common::iLoginNum, m_iModule))
 		{
 			ui->lineEditIP->setText(stipToolData.ip.c_str());
@@ -220,6 +216,19 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		{
 			ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
 		}
+
+		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(stipToolData.host));
+		ui->lineEditTabName->setPlaceholderText(text);
+		ui->lineEditTabName->setReadOnly(false);
+	}
+	else
+	{
+		table_ip_configure st;
+		common::findIpWithGpuMinValue(st);
+
+		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(st.hostname));
+		ui->lineEditTabName->setPlaceholderText(text);
+		ui->lineEditTabName->setReadOnly(false);
 	}
 	//else
 	//{

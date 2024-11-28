@@ -605,20 +605,18 @@ void MainWindow::slot_btnAddToolTab()
 			return;
 		}
 
-		//判断Tab页的名称是否为“默认值”
-		if (tabName == QString::fromLocal8Bit("默认值"))
+
+		if (moduleNumber == 1)
 		{
-			if (moduleNumber == 1)
-			{
-				QString hostname = QString::fromStdString(stipToolData.host);
-				tabName = toolName + " " + hostname;
-			}
-			else
-			{
-				QString hostname = QString::fromStdString(st.hostname);
-				tabName = toolName + " " + hostname;
-			}
+			QString hostname = QString::fromStdString(stipToolData.host);
+			tabName = toolName + " " + hostname;
 		}
+		else
+		{
+			QString hostname = QString::fromStdString(st.hostname);
+			tabName = toolName + " " + hostname;
+		}
+
 		if (moduleNumber == 1)
 		{
 
@@ -1508,7 +1506,7 @@ void MainWindow::getBladeComputerData(std::vector<table_ip_configure>& vecHostDa
 	for (const auto& st : listHostData)
 	{
 		QString  value = QString::fromStdString(st.hostname);
-		if (value.contains(strprefix))
+		if (!value.contains(strprefix))
 		{
 			vecHostData.push_back(st);
 		}
@@ -1552,7 +1550,7 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 	{
 		axTabWidget->m_account = strAccount;
 		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
-		axTabWidget->m_softwareName = toolsName ;
+		axTabWidget->m_softwareName = toolsName;
 		if (isHardwareAccelerator(stipToolData.host))
 		{
 			startLongDistanceHost(toolsName + " " + QString::fromStdString(stipToolData.host), common::index, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
