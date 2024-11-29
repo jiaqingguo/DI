@@ -555,6 +555,8 @@ void MainWindow::slot_btnAddToolTab()
 	int moduleNumber = pButton->property("module").toInt();
 
 
+	QString strAssignIP="";// 指定ip 主机;
+	QString strAssignHostName = "";
 	AddToolDialog addToooDialog(moduleNumber);
 	if (addToooDialog.exec() == QDialog::Accepted)
 	{
@@ -563,60 +565,70 @@ void MainWindow::slot_btnAddToolTab()
 		int mode = -1;
 		int displayMode = 0;
 		QString  toolPath = -1;
-		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode);
-		//QWidget* pWidget = new QWidget;
-		//table_tools stTool;
-	  //  db::databaseDI::Instance().get_tool(stTool, toolID);
 
 
+		
+		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+		
 		table_ip stipToolData;
-		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
 		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, toolName.toStdString(), common::iLoginNum, moduleNumber))
 		{
 			return;
 		}
-		QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolName);
-		if (strAccount.isEmpty())
+		if (moduleNumber == 1)
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
-			return;
+			
+			strAssignIP = QString::fromStdString(stipToolData.ip);
+			strAssignHostName = QString::fromStdString(stipToolData.host);
+
+
+			QString hostname = QString::fromStdString(stipToolData.host);
+			tabName = toolName + " " + hostname;
 		}
+		else
+		{
+			//QString hostname = QString::fromStdString(strAssignHostName);
+			
 
-		QString strPwd = "123456";
-		CWidget* axTabWidget = new CWidget();
+			if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+			{
+				table_ip_configure st;
+				common::findIpWithGpuMinValue(st);
 
-
-		//int i = common::iSoftStartHostNum % 3;
-		//if (common::setHostData.size() < i)
-		//{
-		//    QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
-		//    return;
-		//}
-		//auto it = std::next(common::setHostData.begin(), i); // 移动到第i个元素
-		//std::string strIP = it->ip;
-		//common::iSoftStartHostNum++;
-
-		table_ip_configure st;
-		common::findIpWithGpuMinValue(st);
-		std::string strIP = st.ip;
+				strAssignIP = QString::fromStdString(st.ip);
+				strAssignHostName = QString::fromStdString(st.hostname);
+			}
+			tabName = toolName + " " + strAssignHostName;
+			//else
+			//{
+			//	//st.ip = strAssignIP.toStdString();
+			//	//st.hostname = strAssignHostName.toStdString();
+			//}
+		}
+		
+		
+		std::string strIP = strAssignIP.toStdString();
 		if (strIP.empty())
 		{
 			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
 			return;
 		}
 
+		
 
-		if (moduleNumber == 1)
-		{
-			QString hostname = QString::fromStdString(stipToolData.host);
-			tabName = toolName + " " + hostname;
-		}
-		else
-		{
-			QString hostname = QString::fromStdString(st.hostname);
-			tabName = toolName + " " + hostname;
-		}
+		QString strPwd = "123456";
+		CWidget* axTabWidget = new CWidget();
 
+	
+		
+		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+		
+		QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
+		if (strAccount.isEmpty())
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+			return;
+		}
 		if (moduleNumber == 1)
 		{
 
@@ -624,32 +636,32 @@ void MainWindow::slot_btnAddToolTab()
 			{
 
 				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+				axTabWidget->m_ip = strAssignIP;
 				axTabWidget->m_softwareName = toolName;
 
-				if (isHardwareAccelerator(stipToolData.host))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
-					startLongDistanceHost(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
 				}
 				else
 				{
-					startLongDistanceSoftware(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
 				}
 
 			}
 			else
 			{
 				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
 
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
-					startLongDistanceHost(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
 				}
 				else
 				{
-					startLongDistanceSoftware(tabName, moduleNumber, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
 				}
 
 			}
@@ -665,7 +677,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
 
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
 				}
@@ -680,7 +692,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_account = strAccount;
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
 				}
@@ -705,7 +717,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_account = strAccount;
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
 				}
@@ -720,7 +732,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_account = strAccount;
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
 				}
@@ -740,7 +752,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_account = strAccount;
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
 				}
@@ -755,7 +767,7 @@ void MainWindow::slot_btnAddToolTab()
 				axTabWidget->m_account = strAccount;
 				axTabWidget->m_ip = QString::fromStdString(strIP);
 				axTabWidget->m_softwareName = toolName;
-				if (isHardwareAccelerator(st.hostname))
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
 				{
 					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
 				}

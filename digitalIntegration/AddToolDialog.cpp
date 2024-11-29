@@ -63,6 +63,19 @@ void AddToolDialog::init()
 	{
 		ui->label_4->setHidden(true);
 		ui->lineEditIP->setHidden(true);
+		
+		ui->label_5->setHidden(false);
+		ui->comboBoxHost->setHidden(false);
+		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
+		for (const auto& stIP : common::setHostData)
+		{
+			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
+		}
+	}
+	else  
+	{
+		ui->label_5->setHidden(true);
+		ui->comboBoxHost->setHidden(true);
 	}
 	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this,&AddToolDialog::slot_display_lineEditIP);
 	// 手动触发槽函数以显示初始 IP 地址
@@ -180,7 +193,7 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
 	}
 }
 
-void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode)
+void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode, QString& strIp, QString& strHostName)
 {
 	tabName = ui->lineEditTabName->text();
 	if (tabName.isEmpty())
@@ -191,6 +204,21 @@ void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& to
 	toolPath = ui->comboBoxToolNames->currentData(Qt::UserRole).toString();
 	model = ui->comboBoxDisplayMode->currentIndex();
 	iDisplayMode = ui->comboBoxDisplayMode->currentIndex();
+	if (m_iModule != 1)
+	{
+		if (ui->comboBoxHost->currentIndex() != 0)
+		{
+			QStringList list = ui->comboBoxHost->currentText().split("-");
+			if (list.size() == 2)
+			{
+				strIp = list.at(1);
+				strHostName = list.at(0);
+			}
+			
+
+		}
+	}
+
 }
 
 void AddToolDialog::slot_ipCheckBoxClicked()

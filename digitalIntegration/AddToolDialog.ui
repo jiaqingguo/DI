@@ -16,25 +16,6 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="minimumSize">
-        <size>
-         <width>65</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>65</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>展示方式：</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="minimumSize">
@@ -51,6 +32,25 @@
        </property>
        <property name="text">
         <string>工具名称：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="minimumSize">
+        <size>
+         <width>65</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>65</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>展示方式：</string>
        </property>
       </widget>
      </item>
@@ -76,6 +76,9 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="1" colspan="3">
+      <widget class="QLineEdit" name="lineEditIP"/>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -100,8 +103,15 @@
      <item row="2" column="1" colspan="3">
       <widget class="QComboBox" name="comboBoxToolNames"/>
      </item>
-     <item row="3" column="1" colspan="3">
-      <widget class="QLineEdit" name="lineEditIP"/>
+     <item row="4" column="1" colspan="3">
+      <widget class="QComboBox" name="comboBoxHost"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>启动主机:</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
