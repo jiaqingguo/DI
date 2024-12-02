@@ -17,13 +17,14 @@ public:
     explicit OneClickLoadDialog(QWidget *parent = nullptr);
     ~OneClickLoadDialog();
 	QStandardItemModel* m_model = nullptr;
-private:
+//private:
     Ui::OneClickLoadDialog *ui;
 	
 private slots:
 	void slot_btnAdd();
 	void slot_btnDel();
 	void slot_btnOK();
+	void slot_keep_soft(QString text);
 
 signals:
 	void one_load_tools(int module,const QString &toolsName);

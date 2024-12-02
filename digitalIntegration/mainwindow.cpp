@@ -21,6 +21,7 @@
 #include "CtrlNetwork.h"
 #include "CWidget.h"
 #include "CAxWidget.h"
+#include "ui_OneClickLoadDialog.h"
 
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -195,8 +196,8 @@ void MainWindow::initInitface()
 
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
-	m_OneClickLoadDialog = new OneClickLoadDialog(this);
-	connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
+	//m_OneClickLoadDialog = new OneClickLoadDialog(this);
+	//connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
 	m_OneClickSaveDialog = new OneClickSaveDialog(this);
 
@@ -605,7 +606,7 @@ void MainWindow::slot_btnAddToolTab()
 			return;
 		}
 
-
+		//标签页名称：工具名+刀片机名
 		if (moduleNumber == 1)
 		{
 			QString hostname = QString::fromStdString(stipToolData.host);
@@ -773,9 +774,14 @@ void MainWindow::slot_btnAddToolTab()
 
 void MainWindow::slot_btnOneClickLoad()
 {
-	QPushButton* pButton1 = (QPushButton*)sender();
+	m_OneClickLoadDialog = new OneClickLoadDialog(this);
+	connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
-	common::index = getBtnLoadIndex(pButton1);
+	QPushButton* pButton = (QPushButton*)sender();
+
+	common::index = getBtnLoadIndex(pButton);
+
+	
 
 	if (!m_OneClickLoadDialog->m_model->rowCount())
 	{
@@ -784,26 +790,42 @@ void MainWindow::slot_btnOneClickLoad()
 		{
 			for (auto &stData : listData)
 			{
-				if (stData.userID == common::iUserID)
+				if (stData.userID == common::iUserID && stData.module == common::index)
 				{
 					int newRowIndex = m_OneClickLoadDialog->m_model->rowCount(); // 获取当前行数
 					m_OneClickLoadDialog->m_model->insertRow(newRowIndex); // 插入新行
 
 					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
+					//m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
+					//QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
+					
 					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
-					QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
-					// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-					//m_model->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+					item->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
+					// 创建QComboBox并设置模型数据
+					QComboBox *comboBox = new QComboBox();
+					//comboBox->addItems(QString::fromStdString(stData.projectPath).split(' '));
+					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, item);
 
-					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stData.projectPath)));
-					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 2, new QStandardItem(QString::number(stData.module)));
+					std::map<std::string, table_ip> ipMap;
+					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
+					{
+						for (const auto& stTool : ipMap)
+						{
+							const std::string& software = stTool.first;
+							const table_ip& data = stTool.second;
+							comboBox->addItems(QString::fromStdString(software).split(' '));
+						}
+					}
+					comboBox->setCurrentText(QString::fromStdString(stData.projectPath));
+					m_OneClickLoadDialog->ui->tableView->setIndexWidget(m_OneClickLoadDialog->m_model->index(newRowIndex, 1), comboBox);
+					
 				}
 			}
 		}
 	}
 
 	m_OneClickLoadDialog->exec();
-	QPushButton* pButton = (QPushButton*)sender();
+	//QPushButton* pButton = (QPushButton*)sender();
 	int module = pButton->property("module").toInt();
 	if (module == 1)
 	{

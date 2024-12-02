@@ -74,7 +74,7 @@ namespace db
 
 		// ip表;
 		bool get_ip_data(std::list<table_ip>& listData);
-		//bool get_ip_data(std::list<table_ip>& listData, const int& module);
+		bool get_ip_data(std::map<std::string,table_ip>& listData, const int& module);
 		bool get_ip_data(std::map<std::string,table_ip>& softMap, const int& module,const int &number);
 		bool get_ip_datas(std::map<std::string, table_ip>& softMap, const int& module, const int& number);
 		

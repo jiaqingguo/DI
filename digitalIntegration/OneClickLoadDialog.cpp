@@ -1,7 +1,7 @@
 
 
 #include <QStandardItemModel>
-#include <QCheckBox>
+#include <QComboBox>
 #include <QDebug>
 #include <QtWidgets/QApplication>
 #include <QApplication>
@@ -21,10 +21,10 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	m_model = new QStandardItemModel();
-	m_model->setColumnCount(3);
+	m_model->setColumnCount(2);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
 	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("软件"));
-	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("模块"));
+	//m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("模块"));
 	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("选择"));
 
 	/* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
@@ -70,17 +70,45 @@ OneClickLoadDialog::~OneClickLoadDialog()
 
 void OneClickLoadDialog::slot_btnAdd()
 {
-	int newRowIndex = m_model->rowCount(); // 获取当前行数
-	m_model->insertRow(newRowIndex); // 插入新行
+	//int newRowIndex = m_model->rowCount(); // 获取当前行数
+	//m_model->insertRow(newRowIndex); // 插入新行
 
-	QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
-	m_model->setItem(newRowIndex, 0, item);
-	QModelIndex index = m_model->index(newRowIndex, 0);
-	// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	//m_model->setData(index, stIp.id, Qt::UserRole);  // 设置id;
+	//QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
+	//m_model->setItem(newRowIndex, 0, item);
+	//QModelIndex index = m_model->index(newRowIndex, 0);
+	//// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	////m_model->setData(index, stIp.id, Qt::UserRole);  // 设置id;
 
-	m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString("")));
-	m_model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString("")));
+	//m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString("")));
+	//m_model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString("")));
+
+	// 创建QComboBox并设置模型数据
+	QComboBox *comboBox = new QComboBox();
+	comboBox->setEditable(false);
+	std::map<std::string, table_ip> ipMap;
+	std::string software;
+	table_ip data;
+	if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
+	{
+		for (const auto& stTool : ipMap)
+		{
+			software = stTool.first;
+			data = stTool.second;
+			comboBox->addItems(QString::fromStdString(software).split(' '));
+		}
+	}
+	// 设置占位符项为选中
+	comboBox->setCurrentIndex(-1);
+
+	int newRowIndex = m_model->rowCount();
+	QStandardItem *item2 = new QStandardItem(QString::number(newRowIndex + 1));
+	m_model->setItem(newRowIndex, 0, item2);
+	item2->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
+	m_model->setItem(newRowIndex, 1, item2);
+	ui->tableView->setIndexWidget(ui->tableView->model()->index(newRowIndex, 1), comboBox);
+	//ui->tableView->show();
+	
+	connect(comboBox, &QComboBox::currentTextChanged, this, &OneClickLoadDialog::slot_keep_soft);
 }
 void OneClickLoadDialog::slot_btnDel()
 {
@@ -88,15 +116,17 @@ void OneClickLoadDialog::slot_btnDel()
 	if (index.isValid())
 	{
 		// 获取当前选中单元格同一行的第2列的单元格
-		QModelIndex indexSecond = index.sibling(index.row(), 1); // 第2列的索引为1
+		//QModelIndex indexSecond = index.sibling(index.row(), 1); // 第2列的索引为1
 		//获取要删除的单元格
-		QVariant name_data = m_model->data(indexSecond, Qt::DisplayRole);
+		//QVariant name_data = m_model->data(indexSecond, Qt::DisplayRole);
+		// 获取第二列的QComboBox控件
+		int row = index.row();
+		QWidget *comboBoxWidget = ui->tableView->indexWidget(ui->tableView->model()->index(row, 1));
+		QComboBox *comboBox = qobject_cast<QComboBox*>(comboBoxWidget);
+		// 获取QComboBox中的文本
+		QString comboBoxText = comboBox->currentText();
 
-		QModelIndex indexThird = index.sibling(index.row(), 2);
-		QVariant module_data = m_model->data(indexThird, Qt::DisplayRole);
-		// 打印或者处理数据
-		//qDebug() << "要删除的数据是：" << data.toString();
-		if (!db::databaseDI::Instance().del_load_software(name_data.toString().toStdString(), common::iUserID, module_data.toUInt()))
+		if (!db::databaseDI::Instance().del_load_software(comboBoxText.toStdString(), common::iUserID, common::index))
 			return;
 
 		m_model->removeRow(index.row()); // 删除第2行（索引从0开始）
@@ -114,92 +144,119 @@ void OneClickLoadDialog::slot_btnDel()
 void OneClickLoadDialog::slot_btnOK()
 {
 	//std::vector<std::string> vecStrSoftware;
-	QString exeDir = QCoreApplication::applicationDirPath();
+	//QString exeDir = QCoreApplication::applicationDirPath();
 	for (int row = 0; row < m_model->rowCount(); ++row)
 	{
-		QStandardItem* item_software = m_model->item(row, 1); // 获取当前行的第2列项
-		QStandardItem* item_module = m_model->item(row, 2);
+		//QStandardItem* item_software = m_model->item(row, 1); // 获取当前行的第2列项
+		//QStandardItem* item_module = m_model->item(row, 2);
 
-		if (item_module->data(Qt::DisplayRole).toInt() == 1)
+		//if (item_module->data(Qt::DisplayRole).toInt() == 1)
+		// 获取单元格的小部件
+		QWidget *widget = ui->tableView->indexWidget(m_model->index(row, 1));
+		if (widget)
 		{
-			if (item_software)
-			{
-				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
+			// 将小部件转换为QComboBox
+			QComboBox *comboBox = qobject_cast<QComboBox *>(widget);
 
-				//插入数据库
-				table_one_load_software stData;
-				stData.projectPath = item_software->text().toStdString();
-				stData.module = item_module->data(Qt::DisplayRole).toInt();
-				stData.userID = common::iUserID;
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+			// 获取当前选中的文本
+			QString currentText = comboBox->currentText();
+
+			if (common::index == 1)
+			{
+				//if (item_software)
 				{
-					if (!db::databaseDI::Instance().add_load_software(stData))
-					{
-						return;
-					}
+					//emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
+					emit one_load_tools(common::index, currentText);
+					////插入数据库
+					//table_one_load_software stData;
+					//stData.projectPath = currentText.toStdString();
+					////stData.module = item_module->data(Qt::DisplayRole).toInt();
+					//stData.module = common::index;
+					//stData.userID = common::iUserID;
+					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+					//{
+					//	if (!db::databaseDI::Instance().add_load_software(stData))
+					//	{
+					//		return;
+					//	}
+					//}
 				}
 			}
-		}
-		else if (item_module->data(Qt::DisplayRole).toInt() == 2)
-		{
-			if (item_software)
+			else if (common::index == 2)
 			{
-				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
-
-				//插入数据库
-				table_one_load_software stData;
-				stData.projectPath = item_software->text().toStdString();
-				stData.userID = common::iUserID;
-				stData.module = item_module->data(Qt::DisplayRole).toInt();
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				//if (item_software)
 				{
-					if (!db::databaseDI::Instance().add_load_software(stData))
-					{
-						return;
-					}
+					emit one_load_tools(common::index, currentText);
+
+					////插入数据库
+					//table_one_load_software stData;
+					//stData.projectPath = currentText.toStdString();
+					//stData.userID = common::iUserID;
+					//stData.module = common::index;
+					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+					//{
+					//	if (!db::databaseDI::Instance().add_load_software(stData))
+					//	{
+					//		return;
+					//	}
+					//}
 				}
 			}
-		}
-		else if (item_module->data(Qt::DisplayRole).toInt() == 3)
-		{
-			if (item_software)
+			else if (common::index == 3)
 			{
-				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
-
-				//插入数据库
-				table_one_load_software stData;
-				stData.projectPath = item_software->text().toStdString();
-				stData.userID = common::iUserID;
-				stData.module = item_module->data(Qt::DisplayRole).toInt();
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				//if (item_software)
 				{
-					if (!db::databaseDI::Instance().add_load_software(stData))
-					{
-						return;
-					}
+					emit one_load_tools(common::index, currentText);
+
+					////插入数据库
+					//table_one_load_software stData;
+					//stData.projectPath = currentText.toStdString();
+					//stData.userID = common::iUserID;
+					//stData.module = common::index;
+					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+					//{
+					//	if (!db::databaseDI::Instance().add_load_software(stData))
+					//	{
+					//		return;
+					//	}
+					//}
 				}
 			}
-		}
-		else
-		{
-			if (item_software)
+			else
 			{
-				emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
-
-				//插入数据库
-				table_one_load_software stData;
-				stData.projectPath = item_software->text().toStdString();
-				stData.userID = common::iUserID;
-				stData.module = item_module->data(Qt::DisplayRole).toInt();
-				if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+				//if (item_software)
 				{
-					if (!db::databaseDI::Instance().add_load_software(stData))
-					{
-						return;
-					}
+					emit one_load_tools(common::index, currentText);
+
+					////插入数据库
+					//table_one_load_software stData;
+					//stData.projectPath = currentText.toStdString();
+					//stData.userID = common::iUserID;
+					//stData.module = common::index;
+					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
+					//{
+					//	if (!db::databaseDI::Instance().add_load_software(stData))
+					//	{
+					//		return;
+					//	}
+					//}
 				}
 			}
 		}
 	}
 	this->close();
+}
+
+void OneClickLoadDialog::slot_keep_soft(QString text)
+{
+	//插入数据库
+	table_one_load_software stData;
+	stData.projectPath = text.toStdString();
+	//stData.module = item_module->data(Qt::DisplayRole).toInt();
+	stData.module = common::index;
+	stData.userID = common::iUserID;
+	if (!db::databaseDI::Instance().add_load_software(stData))
+	{
+		return;
+	}
 }

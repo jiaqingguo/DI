@@ -21,6 +21,7 @@ AddToolDialog::~AddToolDialog()
 
 void AddToolDialog::init()
 {
+	ui->lineEditIP->setReadOnly(true);
 	ui->groupBox->hide();
 	//ui->allocationAllocation->setChecked(true);
 
