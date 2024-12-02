@@ -15,6 +15,7 @@ Widget::Widget(QWidget *parent)
 
 Widget::~Widget()
 {
+    delete m_pListen;
     delete ui;
 }
 
@@ -25,7 +26,12 @@ void Widget::StartProgram(const std::string& strPath)
 
 void Widget::HwndListen()
 {
-    m_pListen->hwndListen();
+   // m_pListen->hwndListen();
+    //  使用 std::bind 创建可调用对象
+    auto boundFunction = std::bind(&Listen::hwndListen, m_pListen);
+    std::thread t(boundFunction);
+    t.detach(); // 分离线程，主线程不阻塞
+
 }
 
 void Widget::slot_btnOpenExplorer()
