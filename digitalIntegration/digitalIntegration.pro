@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets multimedia axcontainer
+QT       += core gui webengine webenginewidgets multimedia axcontainer network winextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 
@@ -29,8 +29,11 @@ SOURCES += \
     DataManageDialog.cpp \
     FilemangageDialog.cpp \
     FtpClientClass.cpp \
+    FtpClientWidget.cpp \
+    FtpDialog.cpp \
     GifDialog.cpp \
     GifThread.cpp \
+    Global.cpp \
     InformationConfihurationDialog.cpp \
     LoginDialog.cpp \
     OneClickLoadDialog.cpp \
@@ -60,8 +63,11 @@ HEADERS += \
     DataManageDialog.h \
     FilemangageDialog.h \
     FtpClientClass.h \
+    FtpClientWidget.h \
+    FtpDialog.h \
     GifDialog.h \
     GifThread.h \
+    Global.h \
     InformationConfihurationDialog.h \
     LoginDialog.h \
     OneClickLoadDialog.h \
@@ -85,6 +91,8 @@ FORMS += \
     ChangePwdDialog.ui \
     DataManageDialog.ui \
     FilemangageDialog.ui \
+    FtpClientWidget.ui \
+    FtpDialog.ui \
     GifDialog.ui \
     InformationConfihurationDialog.ui \
     LoginDialog.ui \
@@ -125,3 +133,11 @@ else:unix: LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
 
 INCLUDEPATH += $$PWD/libxzkfp/include
 DEPENDPATH += $$PWD/libxzkfp/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libFtp/Release/ -lQt5Ftp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libFtp/Debug/ -lQt5Ftpd
+else:unix: LIBS += -L$$PWD/libFtp/unix/ -lQt5Ftp
+
+INCLUDEPATH += $$PWD/libFtp/include
+DEPENDPATH += $$PWD/libFtp/include
+

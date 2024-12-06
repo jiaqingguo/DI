@@ -10,6 +10,7 @@
 #include "InformationConfihurationDialog.h"
 #include "DataManageDialog.h"
 #include "FilemangageDialog.h"
+#include "FtpDialog.h"
 #include "ApprovalProgressDialog.h"
 #include "AddToolDialog.h"
 #include "OneClickSaveDialog.h"
@@ -193,6 +194,8 @@ void MainWindow::initInitface()
 	m_DataManageDialog = new DataManageDialog(this);
 
 	m_FilemangageDialog = new FilemangageDialog(this);
+	m_FtpDialog = new FtpDialog();
+	m_FtpDialog->initConnectFtp();
 
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
@@ -530,13 +533,17 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 
 void MainWindow::slot_btnDataManageClicked()
 {
+	
 	//m_DataManageDialog->exec();
 	int  x = 0;
 	int  y = 0;
 	common::getScreenCenterPos(x, y, m_FilemangageDialog->width(), m_FilemangageDialog->height());
 	m_FilemangageDialog->move(x, y);
-	m_FilemangageDialog->exec();
+	m_FilemangageDialog->show();
 	ui->btnDataManage->setChecked(false);
+
+	
+	m_FtpDialog->exec();
 }
 
 void MainWindow::slot_btnApprovalProgressClicked()

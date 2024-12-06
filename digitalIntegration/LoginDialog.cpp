@@ -204,8 +204,8 @@ void LoginDialog::slot_btnFingerprintClicked()
 		m_bIdentify = TRUE;
 
 	}
-	//int i = 1;
-	//this->accept();
+
+	this->accept();
 
 
 }

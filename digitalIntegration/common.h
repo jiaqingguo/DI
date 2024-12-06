@@ -110,7 +110,7 @@ namespace common
 
 	void addNetworkCredential(const QString& target, const QString& username, const QString& password);
 	
-
+	std::string  string_To_UTF8(const std::string& str);
 }
 
 

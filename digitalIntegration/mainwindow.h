@@ -28,6 +28,7 @@ class FilemangageDialog;
 class GifDialog;
 class CCtrlNetwork;
 class CWidget;
+class FtpDialog;
 
 struct st_account_data;
 struct table_ip_configure;
@@ -198,6 +199,7 @@ private:
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
 
 	FilemangageDialog* m_FilemangageDialog = nullptr; // 文件管理界面;
+	FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
 
 	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
 
