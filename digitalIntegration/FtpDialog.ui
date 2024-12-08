@@ -60,8 +60,13 @@
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="FtpClientWidget" name="page0"/>
      <widget class="FtpClientWidget" name="page1"/>
      <widget class="FtpClientWidget" name="page2"/>
+     <widget class="FtpClientWidget" name="page3"/>
+     <widget class="FtpClientWidget" name="page4"/>
+     <widget class="FtpClientWidget" name="page5"/>
+     <widget class="FtpClientWidget" name="page6"/>
     </widget>
    </item>
   </layout>

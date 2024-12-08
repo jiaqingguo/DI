@@ -48,6 +48,7 @@
 #include <QByteArray>
 
 #include <set>
+#include <unordered_set>
 
 #include "common.h"
 namespace common
@@ -76,6 +77,7 @@ namespace common
     table_user              stUser;
     int                     index = 0;                       //一键加载时，点击不同模块
     const double            dBladeComputerCpuUsageLimits = 60;
+    std::vector<table_ip_configure>    setHostName;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
@@ -821,7 +823,25 @@ namespace common
             }
         }
     }
+    void getHostNameData()
+    {
+        // 用于存储唯一 name 的新 vector
+      //  std::vector<table_ip_configure> uniqueNameData;
+        // 用于跟踪已遇到的 name
+        std::unordered_set<std::string> encounteredNames;
 
+        // 遍历原始数据
+        for (const auto& item : setHostData) {
+            // 如果 name 尚未遇到
+            if (encounteredNames.find(item.hostname) == encounteredNames.end())
+            {
+                // 添加到新 vector
+                setHostName.push_back(item);
+                // 在已遇到 name 的集合中记录
+                encounteredNames.insert(item.hostname);
+            }
+        }
+    }
     
     void hideMidelRowsbyColumnValue(QStandardItemModel* model, const int& Column, const QString& strValue)
     {

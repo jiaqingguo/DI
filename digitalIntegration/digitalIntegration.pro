@@ -46,7 +46,8 @@ SOURCES += \
     databaseDI.cpp \
     fingerDlg.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    progressDialog.cpp
 
 HEADERS += \
     AddIpInfoDialog.h \
@@ -81,7 +82,8 @@ HEADERS += \
     databaseDI.h \
     fingerDlg.h \
     globel.h \
-    mainwindow.h
+    mainwindow.h \
+    progressDialog.h
 
 FORMS += \
     AddIpInfoDialog.ui \
@@ -101,7 +103,8 @@ FORMS += \
     RegisterDialog.ui \
     ResourceManageDialog.ui \
     SoftwareWindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    progressDialog.ui
 
 
 RC_FILE = icon.rc

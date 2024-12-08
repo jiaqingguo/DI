@@ -15,6 +15,7 @@
 class QLabel;
 class QTableWidgetItem;
 class QUrlInfo;
+class GifDialog;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FtpClientWidget; }
@@ -42,8 +43,10 @@ public:
 private:
     void createDir(const QString& strDirPath);
     void uploadDirectory(const QString& localDirPath, const QString& remoteDirPath);
-    void downloadDirectory(const QUrlInfo& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
+   // void downloadDirectory(const QUrlInfo& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
     void downloadDirectory( QVector<QUrlInfo>& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
+    void setDisableUI();
+    void setAbleUI();
 public slots:
     void on_tbConnent_clicked();
     void on_tbDisconnent_clicked();
@@ -51,7 +54,8 @@ public slots:
     void on_tableWidget_doubleClicked(const QModelIndex &index);
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
     void contextMenuEvent(QContextMenuEvent *event);
-
+   // void con(QContextMenuEvent* event);
+    void slot_customContextMenuRequested(const QPoint& pos);
     void onUpload();
     void slot_UploadDir();
     
@@ -89,6 +93,8 @@ private:
 
     //  上传目录相关数据;
     QMap<int, QFile*>  m_mapFileUpload;
+    bool m_bUploadDir = false;
+    int m_iUploadDirCommandTotal = 0;
 
     //  下载目录相关数据;
     bool m_bDownloadDir = false;
@@ -100,6 +106,12 @@ private:
     QMap<int,QString>  m_mapLoaclDownloadDirPath;
     QMap<int, QString>  m_mapRemoteDownloadDirPath;
     QMap<int, QFile*>  m_mapFileDownload;
+    int m_iDoloadDirCommandTotal = 0;
+
+
+
+    GifDialog* m_pGifDialog = nullptr;
+
 private:
     Ui::FtpClientWidget *ui;
 };

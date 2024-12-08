@@ -195,7 +195,7 @@ void MainWindow::initInitface()
 
 	m_FilemangageDialog = new FilemangageDialog(this);
 	m_FtpDialog = new FtpDialog();
-	m_FtpDialog->initConnectFtp();
+	
 
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
@@ -396,6 +396,8 @@ bool MainWindow::showLoginDialog()
 
 		m_FilemangageDialog->initTableViewDownload();
 		connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
+		common::getHostNameData();
+		m_FtpDialog->initConnectFtp();
 		return true;
 	}
 	else
