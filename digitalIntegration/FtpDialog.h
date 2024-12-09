@@ -16,8 +16,11 @@ public:
     ~FtpDialog();
 
     void initConnectFtp();
+
+   
 private slots:
     void slot_comboBoxChanged(int index);
+    void slot_ableUI(bool b);
 private:
     Ui::FtpDialog *ui;
 };

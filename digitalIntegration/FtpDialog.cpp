@@ -38,6 +38,13 @@ void FtpDialog::initConnectFtp()
     ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), "N BPC", "jh123456");
     ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), "N BPC", "jh123456");
     ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), "N BPC", "jh123456");
+
+    connect(ui->page0, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+}
+
+void FtpDialog::slot_ableUI(bool b)
+{
+    ui->comboBox->setEnabled(b);
 }
 void FtpDialog::slot_comboBoxChanged(int index)
 {

@@ -39,7 +39,8 @@ public:
     QString createFolderName();
 
     void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd,const int &port =21);
-
+    QString toFtpCodec(const QString& strLocal);
+    QString  fromFtpCodec(const QString& str);
 private:
     void createDir(const QString& strDirPath);
     void uploadDirectory(const QString& localDirPath, const QString& remoteDirPath);
@@ -51,9 +52,9 @@ public slots:
     void on_tbConnent_clicked();
     void on_tbDisconnent_clicked();
 
-    void on_tableWidget_doubleClicked(const QModelIndex &index);
-    void on_tableWidget_itemClicked(QTableWidgetItem *item);
-    void contextMenuEvent(QContextMenuEvent *event);
+    void slot_tableWidget_doubleClicked(const QModelIndex &index);
+    void slot_tableWidget_itemClicked(QTableWidgetItem *item);
+    //void contextMenuEvent(QContextMenuEvent *event);
    // void con(QContextMenuEvent* event);
     void slot_customContextMenuRequested(const QPoint& pos);
     void onUpload();
@@ -72,9 +73,13 @@ public slots:
     void commandFinished(int id, bool err);
     void dataTransferProgress(qint64 readBytes, qint64 totalBytes);
 
-    
+signals:
+    void signal_ableUI(bool b);
 private:
-
+    QString m_strAccount;
+    QString m_strPwd;
+    QString m_strAddr;
+    int   m_iPort;
     QProgressBar progress;
 
     int editRow;
@@ -90,6 +95,14 @@ private:
     QString currentPath;
     QHash<QString, bool> listPath;
     QHash<QString, QString> listType;
+
+
+    //上传文件
+    int m_iPutFileCommandID = -1;
+
+    //下载文件
+    int m_iGetFileCommandID = -1;
+   
 
     //  上传目录相关数据;
     QMap<int, QFile*>  m_mapFileUpload;
