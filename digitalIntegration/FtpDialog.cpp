@@ -11,6 +11,7 @@ FtpDialog::FtpDialog(QWidget *parent) :
   
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FtpDialog::slot_comboBoxChanged);
+   
 }
 
 FtpDialog::~FtpDialog()
@@ -21,7 +22,7 @@ FtpDialog::~FtpDialog()
 void FtpDialog::initConnectFtp()
 {
     ui->comboBox->clear();
-    ui->comboBox->addItem(QString::fromLocal8Bit("存储服务器"), "192.168.0.132");
+    ui->comboBox->addItem(QString::fromLocal8Bit("存储服务器"), "192.168.10.240");
     int i = 1;
     for (auto st : common::setHostName)
     {
@@ -32,9 +33,9 @@ void FtpDialog::initConnectFtp()
     {
         return;
     }
-    ui->page0->connectToFtpServer(ui->comboBox->itemData(0,Qt::UserRole).toString(), "N BPC", "jh123456");
-    ui->page1->connectToFtpServer(ui->comboBox->itemData(1,Qt::UserRole).toString(), "N BPC", "jh123456");
-    ui->page2->connectToFtpServer(ui->comboBox->itemData(2, Qt::UserRole).toString(), "N BPC", "jh123456");
+    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), "user1", "123456");
+    ui->page1->connectToFtpServer("192.168.10.101", "user1", "123456");
+    ui->page2->connectToFtpServer("192.168.10.174", "user2", "123456");
     ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), "N BPC", "jh123456");
     ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), "N BPC", "jh123456");
     ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), "N BPC", "jh123456");

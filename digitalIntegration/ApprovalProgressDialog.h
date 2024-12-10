@@ -39,6 +39,8 @@ private:
     std::list<table_dataApproval> processList(const std::list<table_dataApproval>& listUser, const int& num, const int& offsetRows);*/
     template<typename T>
     std::list<T> processList(const std::list<T>& listData, const int& num, const int& offsetRows);
+signals:
+    void signal_createFtpUserDir(const QString strDirName);
 private slots:
 
     void slot_btnDataShow();

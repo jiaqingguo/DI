@@ -16,6 +16,7 @@ class QLabel;
 class QTableWidgetItem;
 class QUrlInfo;
 class GifDialog;
+class CCtrlNetwork;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FtpClientWidget; }
@@ -63,7 +64,9 @@ public slots:
     void onDownload();
     void slot_downloadDirectory();
     void onCreateFolder();
+    void slot_newDir();
     void onRename();
+    void slot_rename();
     void onRemove();
     void onRefresh();
     void onInsertRow();
@@ -72,7 +75,7 @@ public slots:
     void listInfo(QUrlInfo url);
     void commandFinished(int id, bool err);
     void dataTransferProgress(qint64 readBytes, qint64 totalBytes);
-
+    void slot_stateChanged(int state);
 signals:
     void signal_ableUI(bool b);
 private:
@@ -95,6 +98,10 @@ private:
     QString currentPath;
     QHash<QString, bool> listPath;
     QHash<QString, QString> listType;
+
+    // 重命名;
+    int m_iRenameRow = -1;
+    QString m_strRename;
 
 
     //上传文件
@@ -122,7 +129,7 @@ private:
     int m_iDoloadDirCommandTotal = 0;
 
 
-
+    CCtrlNetwork* m_pUdp = nullptr;
     GifDialog* m_pGifDialog = nullptr;
 
 private:

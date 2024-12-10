@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+class FtpClientClass;
 namespace Ui {
 class FtpDialog;
 }
@@ -17,12 +18,13 @@ public:
 
     void initConnectFtp();
 
-   
+
 private slots:
     void slot_comboBoxChanged(int index);
     void slot_ableUI(bool b);
 private:
     Ui::FtpDialog *ui;
+   
 };
 
 #endif // FTPDIALOG_H

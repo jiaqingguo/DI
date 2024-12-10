@@ -1308,8 +1308,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 
 	bool securedSettingsEnabled = rdp->property("SecuredSettingsEnabled").value<bool>();
 	QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
-	// QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
-	QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
+	// QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
+	QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartApp.exe ");
 	//   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
 	//QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
 
@@ -1318,12 +1318,12 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	if (pSecuredmObject)
 	{
 		b = pSecuredmObject->setProperty("Fullscreen", true);
-		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
-		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
+		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
+		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
 		b = pSecuredmObject->setProperty("StartProgram", strArguments);
-		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
-		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
-		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe"));
+		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
+		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
+		//b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe"));
 		b = pSecuredmObject->setProperty("AudioRedirectionMode", true);
 		b = pSecuredmObject->setProperty("KeyboardHookMode", true);
 		//b = pSecuredmObject->setProperty("PCB", "2013");
@@ -1460,8 +1460,8 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 
 	bool securedSettingsEnabled = rdp->property("SecuredSettingsEnabled").value<bool>();
 	QAxObject* pSecuredmObject = rdp->querySubObject("SecuredSettings3");
-	// QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
-   // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe ");
+	// QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"");
+   // QString strArguments1 = QString::fromUtf8("C:\\StartApp\\StartApp.exe ");
 	//   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
 	//QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
 
@@ -1470,12 +1470,12 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	//if (pSecuredmObject)
 	//{
 	//    b = pSecuredmObject->setProperty("Fullscreen", true);
-	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
-	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
+	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files\\Polyspace\\R2021a\\bin\\win64\\MATLAB.exe\""));
+	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\Program Files (x86)\\National Instruments\\Circuit Design Suite 14.0\\multisim.exe\""));
 	//    b = pSecuredmObject->setProperty("StartProgram", strArguments);
-	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
-	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
-	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartAppUdp.exe"));
+	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\viewdraw.exe\""));
+	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe \"C:\\MentorGraphics\\EEVX.2.8\\SDD_HOME\\common\\win64\\bin\\systemvision.bat\""));
+	//    //b = pSecuredmObject->setProperty("StartProgram", QString::fromUtf8("C:\\StartApp\\StartApp.exe"));
 	//    b = pSecuredmObject->setProperty("AudioRedirectionMode", true);
 	//    b = pSecuredmObject->setProperty("KeyboardHookMode", true);
 	//    //b = pSecuredmObject->setProperty("PCB", "2013");
