@@ -122,19 +122,19 @@ void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* loc
 void main()
 {
 	// 示例：调用 InitResource 进行网络驱动器映射
-	TCHAR userName[] = TEXT("share");
-	TCHAR password[] = TEXT("Share123");
-	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-	//TCHAR remotePath[] = TEXT("\\\\192.168.0.250\\share");  // 共享资源的路径
-	InitResource(userName, password, localDrive, remotePath);
+	//TCHAR userName[] = TEXT("share");
+	//TCHAR password[] = TEXT("Share123");
+	//TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
+	////TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
+	//TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
+	//InitResource(userName, password, localDrive, remotePath);
 
-	////TCHAR userName[] = TEXT("test");
-	////TCHAR password[] = TEXT("Ate123");
-	////TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-	//////TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-	////TCHAR remotePath[] = TEXT("\\\\192.168.10.3\\admin 共享给我");  // 共享资源的路径
-	////InitResource(userName, password, localDrive, remotePath);
+	TCHAR userName[] = TEXT("user1");
+	TCHAR password[] = TEXT("123456");
+	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
+	TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
+	//TCHAR remotePath[] = TEXT("\\\\192.168.10.3\\admin 共享给我");  // 共享资源的路径
+	InitResource(userName, password, localDrive, remotePath);
 	
 	char chInput[512];
 

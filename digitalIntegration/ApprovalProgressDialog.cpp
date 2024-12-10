@@ -1579,7 +1579,7 @@ void ApprovalProgressDialog::slot_ItemBtnClicked()
 		item->setText(QString::fromLocal8Bit("ÒÑÍ¨¹ý"));
 		item->setForeground(QBrush(QColor(Qt::green)));
 
-		auto itemName = m_modelUser->item(row, 1);
+		auto itemName = m_modelUser->item(row, 3);
 		QString strDir = itemName->text();
 		emit signal_createFtpUserDir(strDir);
 	}

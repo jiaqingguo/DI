@@ -55,6 +55,9 @@ FtpClientWidget::FtpClientWidget(QWidget *parent)
    connect(ui->tableWidget, &QTableWidget::doubleClicked, this,&FtpClientWidget::slot_tableWidget_doubleClicked);
    connect(ui->tableWidget, &QTableWidget::itemClicked, this,&FtpClientWidget::slot_tableWidget_itemClicked);
    connect(ui->tableWidget, &QTableWidget::customContextMenuRequested,this, &FtpClientWidget::slot_customContextMenuRequested);
+
+  
+   connect(&m_ftpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
 }
 
 FtpClientWidget::~FtpClientWidget()
@@ -161,13 +164,30 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
         ftp.login(m_strAccount, m_strPwd);
     }
 
+
+    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    {
+        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
+        m_ftpAdmin.login("shareadmin", "123456");
+    }
     // 保存到配置文件
   //  saveToIni();
 }
 
+void FtpClientWidget::createUserDir(const QString& strDirName)
+{
+    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    {
+        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
+        m_ftpAdmin.login("shareadmin", "123456");
+    }
+
+    m_ftpAdmin.mkdir(QString::fromLatin1(strDirName.toUtf8()));
+}
+
 QString FtpClientWidget::fromFtpCodec(const QString& str)
 {
-    return QString();
+    return QString::fromUtf8(str.toUtf8()).toLatin1();
 }
 
 QString FtpClientWidget::toFtpCodec(const QString& strLocal)
@@ -181,30 +201,7 @@ void FtpClientWidget::createDir(const QString& strDirPath)
 
 }
 
-//void FtpClientWidget::downloadDirectory(const QUrlInfo& urlInfo, const QString& localPath, const QString& remotePath)
-//{
-// 
-//    if (urlInfo.isFile()) 
-//    {
-//        m_bDownloadDir = true;
-//        // 下载文件
-//        qDebug() << "Downloading file:" << localPath << "to" << localPath;
-//        m_downloadDirCommandID= ftp.get(remotePath, new QFile(localPath));
-//
-//
-//    }
-//    else if (urlInfo.isDir()) 
-//    {
-//        // 创建本地目录
-//        QDir dir;
-//        //QString newLocalDirPath = dir.absoluteFilePath(urlInfo.fileName());
-//        dir.mkpath(localPath);
-//        m_bDownloadDir = true;
-//        // 继续列出目录
-//        m_downloadDirCommandID = ftp.list(remotePath); // 列出子目录内容
-//    }
-//
-//}
+
 
 void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QString& m_loaclDownloadDirPath, const QString& m_remoteDownloadDirPath)
 {
@@ -1001,6 +998,8 @@ void FtpClientWidget::commandFinished(int id, bool err)
         break;
 
     case QFtp::Rename:
+    {
+
         if (m_iRenameRow >= 0)
         {
             ui->tableWidget->item(m_iRenameRow, 0)->setText(m_strRename);
@@ -1009,12 +1008,15 @@ void FtpClientWidget::commandFinished(int id, bool err)
            
         createFolder = false;
         break;
-
+    }
     case QFtp::Remove:
-        if (!err) ui->tableWidget->removeRow(removeRow);
-        
+    {
+        if (!err)
+        {
+            ui->tableWidget->removeRow(removeRow);
+        }
         break;
-
+    }
     case QFtp::Mkdir:
     {
         if (m_bUploadDir)
@@ -1038,6 +1040,22 @@ void FtpClientWidget::commandFinished(int id, bool err)
     }
    
 
+}
+
+void FtpClientWidget::slot_ftpAdminCommandFinished(int id, bool err)
+{
+    int cmd = m_ftpAdmin.currentCommand();
+    switch (cmd)
+    {
+    case QFtp::Mkdir:
+    {
+        if (!err)
+        {
+            int  a = 0;
+        }
+        break;
+    }
+    }
 }
 
 void FtpClientWidget::dataTransferProgress(qint64 readBytes, qint64 totalBytes)

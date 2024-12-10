@@ -40,6 +40,7 @@ public:
     QString createFolderName();
 
     void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd,const int &port =21);
+    void createUserDir(const QString& strDirName);
     QString toFtpCodec(const QString& strLocal);
     QString  fromFtpCodec(const QString& str);
 private:
@@ -74,6 +75,7 @@ public slots:
 
     void listInfo(QUrlInfo url);
     void commandFinished(int id, bool err);
+    void slot_ftpAdminCommandFinished(int id, bool err);
     void dataTransferProgress(qint64 readBytes, qint64 totalBytes);
     void slot_stateChanged(int state);
 signals:
@@ -94,6 +96,7 @@ private:
     QString uploadPath;
 
     QFtp ftp;
+    QFtp m_ftpAdmin;
    // QFile file;
     QString currentPath;
     QHash<QString, bool> listPath;
