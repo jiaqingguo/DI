@@ -11,7 +11,7 @@
 #include "RegisterDialog.h"
 #include "common.h"
 
-#include "fingerDlg.h"
+//#include "fingerDlg.h"
 #include "ChangePwdDialog.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
@@ -41,13 +41,13 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(ui->lePassword, &QLineEdit::editingFinished, this, &LoginDialog::slot_lePwdEditingFinished);
 	//connect(ui->btnFingerprint, &QPushButton::clicked, this, &LoginDialog::slot_btnFingerprintClicked);
 
-	this->m_fingerDlg = new fingerDlg();
+	/*this->m_fingerDlg = new fingerDlg();
 	this->m_fingerDlg->finger_init();
 	connect(this->m_fingerDlg, &fingerDlg::login_succ, this, &LoginDialog::slot_login_succ);
 	connect(this->m_fingerDlg, &fingerDlg::regist_succ, this, &LoginDialog::slot_regist_succ);
-	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);
+	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);*/
 
-	this->registerDialog = new RegisterDialog();
+	//this->registerDialog = new RegisterDialog();
 }
 
 LoginDialog::~LoginDialog()
@@ -160,9 +160,11 @@ void LoginDialog::slot_btnLoginClicked()
 
 		m_pop = 0;
 		common::bAdministrator = true;
-		ui->btnFingerprint->hide();
-		ui->stackedWidget->setCurrentIndex(1);
-		this->slot_btnFingerprintClicked();
+		//ui->btnFingerprint->hide();
+		//ui->stackedWidget->setCurrentIndex(1);
+		//this->slot_btnFingerprintClicked();
+
+		this->accept();
 	}
 	else
 	{
@@ -179,9 +181,10 @@ void LoginDialog::slot_btnLoginClicked()
 
 void LoginDialog::slot_btnExitClicked()
 {
+	RegisterDialog registerDialog;
 	//this->m_fingerDlg->finger_init();
-	registerDialog->init();
-	registerDialog->exec();
+	//registerDialog->init();
+	registerDialog.exec();
 	
 }
 
@@ -193,17 +196,17 @@ void LoginDialog::slot_btnChangePassword()
 
 void LoginDialog::slot_btnFingerprintClicked()
 {
-	if (NULL != m_hDevice)
-	{
-		if (m_bRegister)
-		{
-			m_bRegister = FALSE;
-			//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Start verify last register template"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Start verify last register template"));
-		}
-		m_bIdentify = TRUE;
+	//if (NULL != m_hDevice)
+	//{
+	//	if (m_bRegister)
+	//	{
+	//		m_bRegister = FALSE;
+	//		//QMessageBox::information(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("Start verify last register template"));
+	//		//SetDlgItemText(IDC_EDIT_RESULT, _T("Start verify last register template"));
+	//	}
+	//	m_bIdentify = TRUE;
 
-	}
+	//}
 
 	this->accept();
 
@@ -254,26 +257,26 @@ void LoginDialog::slot_lePwdEditingFinished()
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png);");
 }
 
-void LoginDialog::slot_login_succ()
-{
-	int loginStatus = 1;
-	db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+//void LoginDialog::slot_login_succ()
+//{
+//	int loginStatus = 1;
+//	db::databaseDI::Instance().update_user_LoginStatus(common::iUserID, loginStatus);
+//
+//	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
+//
+//
+//	this->accept();
+//
+//	if (m_fingerDlg != nullptr)
+//		delete m_fingerDlg;
+//}
 
-	db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
-
-
-	this->accept();
-
-	if (m_fingerDlg != nullptr)
-		delete m_fingerDlg;
-}
-
-void LoginDialog::slot_regist_succ()
-{
-	registerDialog->close();
-}
-
-void LoginDialog::slot_no_regist_finger()
-{
-	ui->stackedWidget->setCurrentIndex(0);
-}
+//void LoginDialog::slot_regist_succ()
+//{
+//	registerDialog->close();
+//}
+//
+//void LoginDialog::slot_no_regist_finger()
+//{
+//	ui->stackedWidget->setCurrentIndex(0);
+//}

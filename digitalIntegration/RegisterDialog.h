@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QTimer>
-#include "fingerDlg.h"
+//#include "fingerDlg.h"
 
 
 namespace Ui {
@@ -25,13 +25,13 @@ public:
 	
 private slots:
     void slot_btnRegister();
-    void slot_btnFingerprintInput();
-	void slot_updateLabelText();
+    //void slot_btnFingerprintInput();
+	//void slot_updateLabelText();
 
 
 private:
     Ui::RegisterDialog *ui;
-	QTimer* timer = new QTimer(this); // 'this' 是指向当前对象的指针
+	//QTimer* timer = new QTimer(this); // 'this' 是指向当前对象的指针
 
 
 };

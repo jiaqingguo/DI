@@ -1,4 +1,4 @@
-#include "fingerDlg.h"
+//#include "fingerDlg.h"
 
 #include "RegisterDialog.h"
 #include "ui_RegisterDialog.h"
@@ -26,6 +26,8 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui->lineEditPassword->setMaxLength(20);
 	//QRegExp rx("[0-9a-zA-Z]{19}");
 	//ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
+	//聚焦
+	setTabOrder(ui->lineEditUserName,ui->lineEditPassword);
 
 	QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
 	//connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);
@@ -63,13 +65,16 @@ void RegisterDialog::slot_btnRegister()
 		{
 			common::stUser.Pop = 0;
 
-			/*if (!db::databaseDI::Instance().add_user_info(registerDialog->stUser))
+			if (!db::databaseDI::Instance().add_user_info(common::stUser))
 			{
 				QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
 				return;
-			}*/
+			}
+			MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+			
+			this->accept();
 
-			ui->stackedWidget->setCurrentIndex(1);
+			//ui->stackedWidget->setCurrentIndex(1);
 			
 		}
 		else
@@ -82,6 +87,7 @@ void RegisterDialog::slot_btnRegister()
 				return;
 			}
 			MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+			
 			this->accept();
 		}
 	}
@@ -103,13 +109,15 @@ void RegisterDialog::slot_btnRegister()
 			{
 				common::stUser.Pop = 0;
 
-		/*		if (!db::databaseDI::Instance().add_user_info(stUser))
+				if (!db::databaseDI::Instance().add_user_info(common::stUser))
 				{
 					QMessageBox::warning(this, QString::fromLocal8Bit("数据库"), QString::fromLocal8Bit("用户注册失败!"));
 					return;
-				}*/
-
-				ui->stackedWidget->setCurrentIndex(1);
+				}
+				MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+				
+				this->accept();
+				//ui->stackedWidget->setCurrentIndex(1);
 			}
 			else
 			{
@@ -121,6 +129,7 @@ void RegisterDialog::slot_btnRegister()
 					return;
 				}
 				MessageBox(NULL, TEXT("注册完成，请等待管理员审核!"), TEXT("提示"), 0);
+				
 				this->accept();
 			}
 		}
@@ -128,43 +137,43 @@ void RegisterDialog::slot_btnRegister()
 
 }
 
-void RegisterDialog::slot_btnFingerprintInput()
-{
+//void RegisterDialog::slot_btnFingerprintInput()
+//{
 	//this->accept();
 	//close();
 	//g_pMainWindow->show();
 
-	if (NULL != m_hDevice)
-	{
-		if (!m_bRegister)
-		{
-			m_bRegister = TRUE;
-			m_enrollIdx = 0;
-			//ui->label_7->setText(QString::fromLocal8Bit("注册指纹，请按3次手指"));
+	//if (NULL != m_hDevice)
+	//{
+	//	if (!m_bRegister)
+	//	{
+	//		m_bRegister = TRUE;
+	//		m_enrollIdx = 0;
+	//		//ui->label_7->setText(QString::fromLocal8Bit("注册指纹，请按3次手指"));
 
 
-			connect(timer, &QTimer::timeout, this, &RegisterDialog::slot_updateLabelText);
-			timer->start(500);
-		}
-	}
+	//		connect(timer, &QTimer::timeout, this, &RegisterDialog::slot_updateLabelText);
+	//		timer->start(500);
+	//	}
+	//}
 	//QMessageBox::information(this, QString::fromLocal8Bit("注册"), QString::fromLocal8Bit("注册完成，请等待管理员审核!"));
 	//close();
 
-}
-void RegisterDialog::slot_updateLabelText()
-{
-	static QString texts[] = { QString::fromLocal8Bit("开始指纹登记, 请按压手指3次"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
-	if (m_enrollIdx < 3) {
-		ui->label_7->setText(texts[m_enrollIdx]);
-		///++m_enrollIdx;
-	}
-	else {
-		// 当文本变化三次后，可以停止定时器
-		// 假设timer是定时器的成员变量
-		timer->stop();
-		m_enrollIdx = 0; // 重置计数器，以便可以重复使用
-	}
-}
+//}
+//void RegisterDialog::slot_updateLabelText()
+//{
+//	static QString texts[] = { QString::fromLocal8Bit("开始指纹登记, 请按压手指3次"), QString::fromLocal8Bit("您仍需要按2次"), QString::fromLocal8Bit("您仍需要按1次") };
+//	if (m_enrollIdx < 3) {
+//		ui->label_7->setText(texts[m_enrollIdx]);
+//		///++m_enrollIdx;
+//	}
+//	else {
+//		// 当文本变化三次后，可以停止定时器
+//		// 假设timer是定时器的成员变量
+//		timer->stop();
+//		m_enrollIdx = 0; // 重置计数器，以便可以重复使用
+//	}
+//}
 void RegisterDialog::init()
 {
 	ui->btnFingerprintInput->hide();
@@ -178,5 +187,5 @@ void RegisterDialog::init()
 	ui->stackedWidget->setCurrentIndex(0);
 	//ui->label_7->setText(QString::fromLocal8Bit("注册指纹，请按3次手指"));
 	//m_enrollIdx = 3;
-	this->slot_btnFingerprintInput();
+	//this->slot_btnFingerprintInput();
 }

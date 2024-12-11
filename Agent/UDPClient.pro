@@ -23,6 +23,7 @@ SOURCES += gethostinformation.cpp \
     Win32Utils/CDeviceHelper.cpp \
     Win32Utils/CStrUtils.cpp \
     Win32Utils/CWmiQueryHelper.cpp \
+    ZipFunction.cpp \
     main.cpp \
     widget.cpp
 
@@ -31,7 +32,10 @@ HEADERS += gethostinformation.h \
     Win32Utils/CDeviceHelper.h \
     Win32Utils/CStrUtils.h \
     Win32Utils/CWmiQueryHelper.h \
-    widget.h
+    ZipFunction.h \
+    widget.h \
+    zip.h \
+    zipconf.h
 
 FORMS += \
     widget.ui

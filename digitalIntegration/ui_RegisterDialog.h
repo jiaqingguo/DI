@@ -68,7 +68,7 @@ public:
     {
         if (RegisterDialog->objectName().isEmpty())
             RegisterDialog->setObjectName(QString::fromUtf8("RegisterDialog"));
-        RegisterDialog->resize(283, 338);
+        RegisterDialog->resize(283, 299);
         gridLayout = new QGridLayout(RegisterDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         stackedWidget = new QStackedWidget(RegisterDialog);

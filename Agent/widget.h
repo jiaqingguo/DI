@@ -19,11 +19,12 @@ namespace Ui { class Widget; }
 QT_END_NAMESPACE
 
 
-//用于UDP之间通信
+//发送刀片机信息
 typedef struct _Message
 {
     QString host_name;
-    QString host_ip;
+    QString host_ip1;
+	QString host_ip2;
     double CPU_Message;
     double Memory_Message;
     double Disk_Message;
@@ -38,8 +39,16 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
+	//取消映射
+	void cancel_mapping();
     //获取主机信息
     void get_file_information();
+	//接收消息
+	void receive_mess();
+	//压缩
+	void compress_file(char buffer[1024]);
+	//解压
+	void uncompress_file(char buffer[1024]);
 
     void initGpu();
     double getGpuUsage();
@@ -52,6 +61,9 @@ private:
     QUdpSocket *UDPSocket = nullptr;
     CPerformHelper *perfmon= nullptr;
     PDH_FMT_COUNTERVALUE m_SystemValue = { 0 };
+
+	char rbuff[1024];	//接收缓冲区
+	char sbuff[1024];	//发送缓冲区
 private slots:
     void slot_useUdp();
 
