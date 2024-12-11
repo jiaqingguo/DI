@@ -51,6 +51,7 @@ namespace common
 	extern QString          strVipPath;				 //   普通用户不能操作的路径;
 	extern table_user       stUser;
 	extern int              index;                //一键加载时，点击不同模块
+	extern QString                  strLoginUserName;        // 已登录的用户名;
 
 	extern std::vector<table_ip_configure>    setHostName;
 

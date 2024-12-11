@@ -78,6 +78,7 @@ namespace common
     int                     index = 0;                       //一键加载时，点击不同模块
     const double            dBladeComputerCpuUsageLimits = 60;
     std::vector<table_ip_configure>    setHostName;
+    QString                  strLoginUserName;        // 已登录的用户名;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {

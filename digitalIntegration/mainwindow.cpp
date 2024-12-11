@@ -387,6 +387,7 @@ bool MainWindow::showLoginDialog()
 	if (m_LoginDialog->exec() == QDialog::Accepted)
 	{
 		ui->labelUserName->setText(m_LoginDialog->GetUser());
+		common::strLoginUserName = m_LoginDialog->GetUser();
 		if (m_LoginDialog->GetPop())
 		{
 			ui->btnApprovalProgress->hide();

@@ -56,12 +56,14 @@ void FtpDialog::initConnectFtp()
     {
         return;
     }
-    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), "user1", "123456");
-    ui->page1->connectToFtpServer("192.168.10.101", "user1", "123456");
-    ui->page2->connectToFtpServer("192.168.10.174", "user1", "123456");
-    ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), "user1", "123456");
-    ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), "user1", "123456");
-    ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), "user1", "jh123456");
+   // QString strUser =QString::fromStdString( common::stUser.UserName);
+    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page1->connectToFtpServer(ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page2->connectToFtpServer(ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page4->connectToFtpServer(ui->comboBox->itemData(5, Qt::UserRole).toString(), common::strLoginUserName, "123456");
+    ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), common::strLoginUserName, "123456");
 
     connect(ui->page0, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
 

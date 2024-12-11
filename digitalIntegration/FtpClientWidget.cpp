@@ -833,9 +833,6 @@ void FtpClientWidget::listInfo(QUrlInfo url)
        
         return;
     }
-
-    // 清除表格
-    clear();
     QString str11111 = url.name();
     QString name = QString::fromUtf8(str11111.toUtf8()).toLatin1();
  
