@@ -315,7 +315,6 @@ void Listen::run()
 
 void Listen::startProgram(const std::string& strPath)
 {
-
 	if (isExistProcess(_dwProcessId))//当时为了解决登录黑屏问题添加 好像是没啥用了
 	{
 		std::cerr<<"PID:" << _dwProcessId << "Already started" << "......" << std::endl;

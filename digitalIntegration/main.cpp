@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         }
         else if (section == "DB")
         {
-            common::strDbIp = settings.value("ip").toString();
+            common::strDbIp = settings.value("serverIp").toString();
             common::strDbUser = settings.value("user").toString();
             common::strDbPassword = settings.value("password").toString();
         }
