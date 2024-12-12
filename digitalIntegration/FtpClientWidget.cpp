@@ -395,28 +395,6 @@ void FtpClientWidget::slot_tableWidget_itemClicked(QTableWidgetItem *item)
     closePersistentEditor();
 }
 
-//void FtpClientWidget::contextMenuEvent(QContextMenuEvent *event)
-//{
-//    Q_UNUSED(event);
-//    if (ui->tableWidget->rowCount() <= 0) return;
-//
-//    // 如果有未关闭的编辑项则先关闭
-//    closePersistentEditor();
-//
-//    QMenu menu;
-//    menu.addAction(QString::fromLocal8Bit("上传文件"), this, &FtpClientWidget::onUpload);
-//    menu.addAction(QString::fromLocal8Bit("上传文件夹"), this, &FtpClientWidget::slot_UploadDir);
-//    menu.addAction(QString::fromLocal8Bit("下载文件"), this, &FtpClientWidget::onDownload);
-//    menu.addAction(QString::fromLocal8Bit("下载文件夹"), this, &FtpClientWidget::slot_downloadDirectory);
-//    menu.addSeparator();
-//    menu.addAction(/*folderIcon(),*/ QString::fromLocal8Bit("新建文件夹"), this, &FtpClientWidget::onCreateFolder);
-// //   menu.addSeparator();
-//    menu.addAction(QString::fromLocal8Bit("重命名"), this, &FtpClientWidget::slot_rename);
-//    menu.addAction(QString::fromLocal8Bit("删除文件"), this, &FtpClientWidget::onRemove);
-//    menu.addAction(QString::fromLocal8Bit("刷新"), this, &FtpClientWidget::onRefresh);
-//
-//    menu.exec(QCursor::pos());
-//}
 
 void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
 {

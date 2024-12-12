@@ -56,8 +56,7 @@ public slots:
 
     void slot_tableWidget_doubleClicked(const QModelIndex &index);
     void slot_tableWidget_itemClicked(QTableWidgetItem *item);
-    //void contextMenuEvent(QContextMenuEvent *event);
-   // void con(QContextMenuEvent* event);
+
     void slot_customContextMenuRequested(const QPoint& pos);
     void onUpload();
     void slot_UploadDir();
