@@ -173,8 +173,8 @@ MainWindow::~MainWindow()
 		delete m_InforConfihurationDialog;
 	if (m_ApprovalProgressDialog != nullptr)
 		delete m_ApprovalProgressDialog;
-	if (m_FilemangageDialog != nullptr)
-		delete m_FilemangageDialog;
+	/*if (m_FilemangageDialog != nullptr)
+		delete m_FilemangageDialog;*/
 	delete ui;
 }
 
@@ -193,7 +193,7 @@ void MainWindow::initInitface()
 
 	m_DataManageDialog = new DataManageDialog(this);
 
-	m_FilemangageDialog = new FilemangageDialog(this);
+	//m_FilemangageDialog = new FilemangageDialog(this);
 	m_FtpDialog = new FtpDialog();
 	
 
@@ -397,8 +397,8 @@ bool MainWindow::showLoginDialog()
 		//ui->stackedWidget->setCurrentIndex(1);
 		//ui->stackedWidget->setCurrentIndex(0);
 
-		m_FilemangageDialog->initTableViewDownload();
-		connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
+		//m_FilemangageDialog->initTableViewDownload();
+		//connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
 		common::getHostNameData();
 		m_FtpDialog->initConnectFtp();
 		return true;
@@ -542,13 +542,14 @@ void MainWindow::slot_btnDataManageClicked()
 	//m_DataManageDialog->exec();
 	int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, m_FilemangageDialog->width(), m_FilemangageDialog->height());
-	m_FilemangageDialog->move(x, y);
-	m_FilemangageDialog->show();
-	ui->btnDataManage->setChecked(false);
+	//common::getScreenCenterPos(x, y, m_FilemangageDialog->width(), m_FilemangageDialog->height());
+	//m_FilemangageDialog->move(x, y);
+	//m_FilemangageDialog->show();
+	//
 
 	
 	m_FtpDialog->exec();
+	ui->btnDataManage->setChecked(false);
 }
 
 void MainWindow::slot_btnApprovalProgressClicked()

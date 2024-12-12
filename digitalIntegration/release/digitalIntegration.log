@@ -1,19 +1,13 @@
-﻿  UIC FtpDialog.ui
+﻿  MOC FtpClientWidget.h
+  FtpClientWidget.cpp
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(198): warning C4100: “strDirPath”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(399): warning C4100: “pos”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(517): warning C4189: “success”: 局部变量已初始化但不引用
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(786): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(855): warning C4189: “a”: 局部变量已初始化但不引用
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(1021): warning C4100: “id”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(1030): warning C4189: “a”: 局部变量已初始化但不引用
   FtpDialog.cpp
-  mainwindow.cpp
-d:\1_project\z_project\gitproject\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\1_project\z_project\gitproject\di\digitalintegration\libxzkfp\include\libzkfp.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\1_project\z_project\gitproject\di\digitalintegration\libxzkfp\include\libzkfptype.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(334): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(829): warning C4189: “data”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(908): warning C4189: “button3”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(950): warning C4189: “button3”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(990): warning C4189: “button3”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1030): warning C4189: “button3”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1094): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1304): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1456): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1457): warning C4189: “pSecuredmObject”: 局部变量已初始化但不引用
+  moc_FtpClientWidget.cpp
   正在生成代码...
-d:\1_project\z_project\gitproject\di\digitalintegration\mainwindow.cpp(1515): warning C4715: “MainWindow::getBtnLoadIndex”: 不是所有的控件路径都返回值
   digitalIntegration.vcxproj -> D:\1_project\Z_project\GitProject\DI\digitalIntegration\release\digitalIntegration.exe
