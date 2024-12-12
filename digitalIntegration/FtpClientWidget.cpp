@@ -6,6 +6,7 @@
 #include <QContextMenuEvent>
 #include <QTextCodec>
 #include <QInputDialog>
+#include <qmessagebox.h>
 
 #include "FtpClientWidget.h"
 #include "ui_FtpClientWidget.h"
@@ -172,6 +173,31 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
     }
     // 保存到配置文件
   //  saveToIni();
+}
+
+void FtpClientWidget::Flush()
+{
+    if (ftp.state() != QFtp::LoggedIn)
+    {
+        ftp.connectToHost(m_strAddr, m_iPort);
+        ftp.login(m_strAccount, m_strPwd);
+    }
+    else
+    {
+        // 清除表格
+        clear();
+
+        // 如果当前目录不是根目录，则先插入一行用来双击返回上一级
+        if (currentPath.indexOf("/") >= 0)
+        {
+            ui->tableWidget->insertRow(0);
+            ui->tableWidget->setItem(0, 0, new QTableWidgetItem(folderIcon(), "..."));
+            listType["..."] = folderType();
+        }
+
+        ftp.list();
+    }
+    
 }
 
 void FtpClientWidget::createUserDir(const QString& strDirName)
@@ -862,17 +888,26 @@ void FtpClientWidget::commandFinished(int id, bool err)
     case QFtp::Login:
         if (!err)
         {
+           
             ftp.list();   // 成功则显示列表
         }
        // statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("服务器连接成功!"), 2000);
         break;
 
     case QFtp::Close:
-        if (!err) 
-        { clear(); currentPath.clear(); }     // 清除列表
-        //statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("断开服务器连接!"), 2000);
+    {
+        if (!err)
+        {
+            QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ftp断开连接"));
+            clear(); 
+            //currentPath.clear();
+            ftp.list(currentPath);
+        }     // 清除列表
+
         break;
 
+    }
+       
     case QFtp::Get:
     {
         /*if (file.isOpen())
@@ -1047,8 +1082,12 @@ void FtpClientWidget::slot_stateChanged(int state)
     {
         if (ftp.state() != QFtp::LoggedIn)
         {
+            // 清除表格
+            clear();
+
             ftp.connectToHost(m_strAddr, m_iPort);
             ftp.login(m_strAccount, m_strPwd);
+
         }
     }
 }
