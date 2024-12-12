@@ -1316,8 +1316,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	//   stipToolData.toolPath="\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\"";
 	//QString path2 = QString::fromUtf8("C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe");
 
-	QString strArguments = strArguments1 + " \"" + QString::fromStdString(path) + "\"";
-
+	//QString strArguments = strArguments1 + " \"" + QString::fromStdString(path) + "\"" +"|" +common::strLoginUserName;
+	QString strArguments = strArguments1 + " \"" + QString::fromStdString(path) + " |" + common::strLoginUserName + "\"";
 	if (pSecuredmObject)
 	{
 		b = pSecuredmObject->setProperty("Fullscreen", true);

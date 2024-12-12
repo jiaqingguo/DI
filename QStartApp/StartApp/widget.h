@@ -19,6 +19,8 @@ public:
     void StartProgram(const std::string& strPath);
 
     void HwndListen();
+
+    void InitResource(const std::string& str);
 private slots:
     void slot_btnOpenExplorer();
 private:

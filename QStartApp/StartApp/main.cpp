@@ -1,6 +1,7 @@
 #include "widget.h"
 
 #include <QApplication>
+#include <qdebug.h>
 
 int main(int argc, char *argv[])
 {
@@ -15,9 +16,19 @@ int main(int argc, char *argv[])
 	{
 		/*l->startProgram(argv[1]);
 		l->hwndListen();*/
+		QString input = argv[1];
+		qDebug() << "argc:"<<argv[1];
+		QStringList parts = input.split('|');
+		qDebug() << parts.at(0);
+		qDebug() << parts.at(1);
+		if (parts.size() == 2)
+		{
+			w.InitResource(parts.at(1).toStdString());
+			w.StartProgram(parts.at(0).toStdString());
+			w.HwndListen();
 
-		w.StartProgram(argv[1]);
-		w.HwndListen();
+		}
+		
 	}
     return a.exec();
 }

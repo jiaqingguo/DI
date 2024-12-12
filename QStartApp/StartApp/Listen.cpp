@@ -2,6 +2,11 @@
 
 #include "Listen.h"
 
+#include <windows.h>
+#include <winnetwk.h>
+
+#pragma comment(lib, "Mpr.lib")
+
 
 HWND g_CurrentHWND = 0;
 int Pnum = 0;//父窗口数量
@@ -426,5 +431,68 @@ void Listen::closeProgram()
 		_dwProcessId = -1;
 		_currentHWND = 0;
 		_static = 0;
+	}
+}
+
+void Listen::InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath)
+{
+//	NETRESOURCE net_Resource;
+
+	// 初始化NETRESOURCE结构
+	net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
+	net_Resource.dwScope = RESOURCE_CONNECTED;
+	net_Resource.dwType = RESOURCETYPE_DISK;
+	net_Resource.dwUsage = 0;
+	net_Resource.lpComment = NULL;
+	net_Resource.lpLocalName = const_cast<TCHAR*>(localDrive); // 映射到本地驱动器
+	net_Resource.lpProvider = NULL;
+	net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // 共享资源的路径
+
+	DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+
+	// 取消已有连接
+	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
+
+	// 添加新连接
+	DWORD dw = WNetAddConnection2(&net_Resource, password, userName, 0);
+	switch (dw) {
+	case ERROR_SUCCESS:
+		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+		break;
+	case ERROR_ACCESS_DENIED:
+		std::wcout << TEXT("没有权限访问！\n");
+		break;
+	case ERROR_ALREADY_ASSIGNED:
+		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+		break;
+	case ERROR_INVALID_ADDRESS:
+		std::wcout << TEXT("IP地址无效\n");
+		break;
+	case ERROR_NO_NETWORK:
+		std::wcout << TEXT("网络不可达!\n");
+		break;
+	case ERROR_NO_TOKEN:
+		std::wcout << TEXT("没有有效的凭据！请检查用户名和密码。\n");
+		break;
+	case ERROR_SESSION_CREDENTIAL_CONFLICT:
+		std::wcout << TEXT("ERROR_SESSION_CREDENTIAL_CONFLICT。\n");
+		break;
+	default:
+		std::wcout << TEXT("发生错误，错误代码: ") << dw << TEXT("\n");
+		break;
+	}
+}
+
+void Listen::CancleResource()
+{
+	// 取消已有连接
+	DWORD result=WNetCancelConnection2("Y:", CONNECT_UPDATE_PROFILE, TRUE);
+
+	// 检查返回值并打印结果
+	if (result == NO_ERROR) {
+		std::wcout << L"成功断开连接: " << net_Resource.lpLocalName << std::endl;
+	}
+	else {
+		std::wcout << L"断开连接失败。错误代码: " << result << std::endl;
 	}
 }

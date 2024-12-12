@@ -31,8 +31,11 @@ public:
 	* 关闭当前启动的程序
 	*/
 	void closeProgram();
-protected:
 
+	void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath);
+	void CancleResource();
+protected:
+	NETRESOURCE net_Resource;
 	int _len = 0;
 
 	int _static = 0;
