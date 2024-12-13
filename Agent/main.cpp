@@ -29,7 +29,7 @@ void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* loc
 	DWORD dw = WNetAddConnection2(&net_Resource, password, userName, 0);
 	switch (dw) {
 	case ERROR_SUCCESS:
-		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case ERROR_ACCESS_DENIED:
 		std::wcout << TEXT("没有权限访问！\n");
