@@ -23,6 +23,14 @@
   MOC fingerDlg.h
   MOC mainwindow.h
   MOC progressDialog.h
+  FtpClientWidget.cpp
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(225): warning C4100: “strDirPath”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(426): warning C4100: “pos”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(544): warning C4189: “success”: 局部变量已初始化但不引用
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(813): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(882): warning C4189: “a”: 局部变量已初始化但不引用
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(1069): warning C4100: “id”: 未引用的形参
+d:\1_project\z_project\gitproject\di\digitalintegration\ftpclientwidget.cpp(1078): warning C4189: “a”: 局部变量已初始化但不引用
   moc_AddIpInfoDialog.cpp
   moc_AddToolDialog.cpp
   moc_AddToolInfoDialog.cpp
@@ -45,9 +53,9 @@ d:\1_project\z_project\gitproject\di\digitalintegration\cpagedtablemodel.h(50): 
   moc_OneClickLoadDialog.cpp
   moc_OneClickSaveDialog.cpp
   moc_RegisterDialog.cpp
-  moc_ResourceManageDialog.cpp
   正在生成代码...
   正在编译...
+  moc_ResourceManageDialog.cpp
   moc_SoftwareWindow.cpp
   moc_fingerDlg.cpp
 d:\1_project\z_project\gitproject\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失

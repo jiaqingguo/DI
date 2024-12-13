@@ -1097,7 +1097,7 @@ void FtpClientWidget::slot_stateChanged(int state)
         {
             // 清除表格
             clear();
-
+            currentPath = "";
             ftp.connectToHost(m_strAddr, m_iPort);
             ftp.login(m_strAccount, m_strPwd);
 
