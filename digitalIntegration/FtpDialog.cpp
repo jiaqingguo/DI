@@ -59,7 +59,7 @@ void FtpDialog::initConnectFtp()
         return;
     }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
-    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
    ui->page1->connectToFtpServer(ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page2->connectToFtpServer(ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);

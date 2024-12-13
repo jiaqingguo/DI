@@ -50,7 +50,7 @@ FtpClientWidget::FtpClientWidget(QWidget *parent)
     // 信号槽
     connect(&ftp, SIGNAL(listInfo(QUrlInfo)), SLOT(listInfo(QUrlInfo)));
     connect(&ftp, SIGNAL(commandFinished(int,bool)), SLOT(commandFinished(int,bool)));
-    connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+  //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
     connect(&ftp, &QFtp::stateChanged, this,&FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
