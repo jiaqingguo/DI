@@ -192,13 +192,13 @@ void Widget::slot_useUdp()
 	 // 检查是否是IPv4地址
 	 //if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) 
 	{
-		message->host_ip1 = listAdress[0].toString();
-		message->host_ip2 = listAdress[1].toString();
-		//message->host_ip1 = listAdress[2].toString();
-		//message->host_ip2 = listAdress[3].toString();
+		//message->host_ip1 = listAdress[0].toString();
+		//message->host_ip2 = listAdress[1].toString();
+		message->host_ip1 = listAdress[2].toString();
+		message->host_ip2 = listAdress[3].toString();
 
-		//ui->textEdit->append(listAdress[1].toString());
-		//ui->textEdit->append(listAdress[2].toString());
+		ui->textEdit->append(listAdress[2].toString());
+		ui->textEdit->append(listAdress[3].toString());
 	}
 	// }
 	 //qDebug()<<message->host_ip;
