@@ -58,6 +58,7 @@ namespace common
 	extern QString                  strLinuxFtpIp;
 	extern QString                  strFtpAccount;
 	extern QString                  strFtpPwd;
+	extern QString                  strFtpAdminPwd;
 
 	void findIpWithGpuMinValue(table_ip_configure &stHost);
 

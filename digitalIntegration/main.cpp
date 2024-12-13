@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
             common::strLinuxFtpIp= settings.value("serverIp").toString();
             common::strFtpAccount = settings.value("account").toString();
             common::strFtpPwd = settings.value("password").toString();
+            common::strFtpAdminPwd = settings.value("adminpassword").toString();
         }
         else 
         {

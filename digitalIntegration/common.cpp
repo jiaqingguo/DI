@@ -83,6 +83,7 @@ namespace common
     QString                  strLinuxFtpIp;
     QString                  strFtpAccount;
     QString                  strFtpPwd;
+     QString                  strFtpAdminPwd;
 
     __int64 Filetime2Int64(const FILETIME& ftime)
     {

@@ -1,132 +1,59 @@
-﻿  MOC FtpClientWidget.h
+﻿  Generate moc_predefs.h
+  MOC AddIpInfoDialog.h
+  MOC AddToolDialog.h
+  MOC AddToolInfoDialog.h
+  MOC ApprovalProgressDialog.h
+  MOC CPagedTableModel.h
+  MOC CTableView.h
+  MOC CWidget.h
+  MOC ChangePwdDialog.h
+  MOC DataManageDialog.h
+  MOC FilemangageDialog.h
+  MOC FtpClientWidget.h
+  MOC FtpDialog.h
+  MOC GifDialog.h
+  MOC GifThread.h
+  MOC InformationConfihurationDialog.h
+  MOC LoginDialog.h
+  MOC OneClickLoadDialog.h
+  MOC OneClickSaveDialog.h
+  MOC RegisterDialog.h
+  MOC ResourceManageDialog.h
+  MOC SoftwareWindow.h
+  MOC fingerDlg.h
   MOC mainwindow.h
-  AddIpInfoDialog.cpp
-  AddToolDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  AddToolInfoDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  ApprovalProgressDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(147): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(169): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(198): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(231): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(667): warning C4100: “value”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(675): warning C4100: “index”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(1032): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(1470): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(1508): warning C4189: “column”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\approvalprogressdialog.cpp(1564): warning C4189: “column”: 局部变量已初始化但不引用
-  ChangePwdDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  DataManageDialog.cpp
-e:\git_file\dii\di\digitalintegration\cpagedtablemodel.h(22): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\cpagedtablemodel.h(29): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\cpagedtablemodel.h(50): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h(24): warning C4100: “index”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h(24): warning C4100: “editor”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h(28): warning C4100: “index”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h(28): warning C4100: “model”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\cbuttonitemdelegate.h(28): warning C4100: “editor”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\datamanagedialog.cpp(104): warning C4189: “row”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\datamanagedialog.cpp(106): warning C4189: “col”: 局部变量已初始化但不引用
-  FilemangageDialog.cpp
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(347): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(354): warning C4189: “sheet”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(428): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(435): warning C4189: “sheet”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(520): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(603): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(679): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(851): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(854): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(905): warning C4189: “i”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(983): warning C4100: “spilt_char”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(987): warning C4189: “i”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1134): warning C4189: “j”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1133): warning C4189: “i”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1207): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1356): warning C4477: “wscanf”: 格式字符串“%d”需要类型“int *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1356): warning C4474: wscanf: 格式字符串中传递的参数太多
-  e:\git_file\dii\di\digitalintegration\util\utiltool.h(1356): note: 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1361): warning C4477: “wscanf”: 格式字符串“%lf”需要类型“double *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1361): warning C4474: wscanf: 格式字符串中传递的参数太多
-  e:\git_file\dii\di\digitalintegration\util\utiltool.h(1361): note: 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1365): warning C4100: “title_string”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1723): warning C4101: “ch”: 未引用的局部变量
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1752): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1778): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1799): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\util\utiltool.h(1885): warning C4189: “dwCPUid”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\filemangagedialog.cpp(854): warning C4189: “approval”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\filemangagedialog.cpp(853): warning C4189: “column”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\filemangagedialog.cpp(857): warning C4189: “id”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\filemangagedialog.cpp(1262): warning C4100: “column”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\filemangagedialog.cpp(1262): warning C4100: “item”: 未引用的形参
-  FtpClientWidget.cpp
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(198): warning C4100: “strDirPath”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(399): warning C4100: “pos”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(517): warning C4189: “success”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(786): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(855): warning C4189: “a”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(1021): warning C4100: “id”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\ftpclientwidget.cpp(1030): warning C4189: “a”: 局部变量已初始化但不引用
-  FtpDialog.cpp
-  GifDialog.cpp
-  InformationConfihurationDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  LoginDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\logindialog.cpp(58): warning C4100: “bClearPwd”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\logindialog.cpp(84): warning C4100: “iRes”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\logindialog.cpp(239): warning C4100: “text”: 未引用的形参
-e:\git_file\dii\di\digitalintegration\logindialog.cpp(251): warning C4100: “text”: 未引用的形参
-  OneClickLoadDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  OneClickSaveDialog.cpp
-e:\git_file\dii\di\digitalintegration\oneclicksavedialog.cpp(88): warning C4189: “pButton”: 局部变量已初始化但不引用
-  RegisterDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  ResourceManageDialog.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(458): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(482): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(506): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(530): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(554): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\resourcemanagedialog.cpp(574): warning C4100: “text”: 未引用的形参
-  SoftwareWindow.cpp
-  fingerDlg.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\libxzkfp\include\libzkfp.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\libxzkfp\include\libzkfptype.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\fingerdlg.cpp(16): warning C4100: “pParent”: 未引用的形参
-  main.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  mainwindow.cpp
-e:\git_file\dii\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\libxzkfp\include\libzkfp.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\libxzkfp\include\libzkfptype.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(336): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(544): warning C4189: “y”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(543): warning C4189: “x”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(839): warning C4189: “data”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(918): warning C4189: “button3”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(960): warning C4189: “button3”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1000): warning C4189: “button3”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1040): warning C4189: “button3”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1104): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1314): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1466): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1467): warning C4189: “pSecuredmObject”: 局部变量已初始化但不引用
-  正在生成代码...
-e:\git_file\dii\di\digitalintegration\mainwindow.cpp(1525): warning C4715: “MainWindow::getBtnLoadIndex”: 不是所有的控件路径都返回值
-  正在编译...
-  progressDialog.cpp
+  MOC progressDialog.h
+  moc_AddIpInfoDialog.cpp
+  moc_AddToolDialog.cpp
+  moc_AddToolInfoDialog.cpp
+  moc_ApprovalProgressDialog.cpp
+  moc_CPagedTableModel.cpp
+d:\1_project\z_project\gitproject\di\digitalintegration\cpagedtablemodel.h(22): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\1_project\z_project\gitproject\di\digitalintegration\cpagedtablemodel.h(29): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\1_project\z_project\gitproject\di\digitalintegration\cpagedtablemodel.h(50): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  moc_CTableView.cpp
+  moc_CWidget.cpp
+  moc_ChangePwdDialog.cpp
+  moc_DataManageDialog.cpp
+  moc_FilemangageDialog.cpp
   moc_FtpClientWidget.cpp
-  moc_mainwindow.cpp
+  moc_FtpDialog.cpp
+  moc_GifDialog.cpp
+  moc_GifThread.cpp
+  moc_InformationConfihurationDialog.cpp
+  moc_LoginDialog.cpp
+  moc_OneClickLoadDialog.cpp
+  moc_OneClickSaveDialog.cpp
+  moc_RegisterDialog.cpp
+  moc_ResourceManageDialog.cpp
   正在生成代码...
-  digitalIntegration.vcxproj -> E:\Git_file\DIi\DI\digitalIntegration\release\digitalIntegration.exe
+  正在编译...
+  moc_SoftwareWindow.cpp
+  moc_fingerDlg.cpp
+d:\1_project\z_project\gitproject\di\digitalintegration\databasedi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+d:\1_project\z_project\gitproject\di\digitalintegration\libxzkfp\include\libzkfp.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+d:\1_project\z_project\gitproject\di\digitalintegration\libxzkfp\include\libzkfptype.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  moc_mainwindow.cpp
+  moc_progressDialog.cpp
+  正在生成代码...
+  digitalIntegration.vcxproj -> D:\1_project\Z_project\GitProject\DI\digitalIntegration\release\digitalIntegration.exe
