@@ -163,14 +163,14 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
     if (ftp.state() != QFtp::LoggedIn)
     {
         ftp.connectToHost(m_strAddr, m_iPort);
-        ftp.login(m_strAccount, m_strPwd);
+        ftp.login(m_strAccount, "123456");
     }
 
 
     if (m_ftpAdmin.state() != QFtp::LoggedIn)
     {
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login(common::strFtpAccount, "Ate123");
+        m_ftpAdmin.login(common::strFtpAccount, m_strPwd);
     }
     // 保存到配置文件
   //  saveToIni();
