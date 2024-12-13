@@ -24,10 +24,15 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 
 	ui->lineEditUserName->setMaxLength(20); // 限制最多输入20个字符
 	ui->lineEditPassword->setMaxLength(20);
-	//QRegExp rx("[0-9a-zA-Z]{19}");
+	QRegExp rx("[0-9a-zA-Z]{19}");
+	ui->lineEditUserName->setValidator(new QRegExpValidator(rx));
 	//ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
 	//聚焦
 	setTabOrder(ui->lineEditUserName,ui->lineEditPassword);
+	setTabOrder(ui->lineEditPassword,ui->lineEditName);
+	setTabOrder(ui->lineEditName,ui->lineEditDepartment);
+	setTabOrder(ui->lineEditDepartment,ui->lineEditJobTtile);
+	setTabOrder(ui->lineEditJobTtile,ui->lineEditPhoneNumber);
 
 	QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
 	//connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);

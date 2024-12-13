@@ -636,7 +636,8 @@ void MainWindow::slot_btnAddToolTab()
 		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
 		
 		//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
-		QString strAccount = common::strLoginUserName;
+		QString str = "app\\";
+		QString strAccount = str + common::strLoginUserName;
 		if (strAccount.isEmpty())
 		{
 			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
@@ -1573,7 +1574,8 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 		return;
 	}
 	//QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolsName);
-	QString strAccount = common::strLoginUserName;
+	QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));

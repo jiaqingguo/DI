@@ -22,13 +22,13 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	setWindowTitle(("欢迎使用数字样机硬件一体化平台"));
 	ui->stackedWidget->setCurrentIndex(0);
 	//setWindowTitle(GBK_STRING("欢迎使用数字样机硬件一体化平台"));
-	//QRegExp rx("[0-9a-zA-Z]{19}");
-	//ui->leUser->setValidator(new QRegExpValidator(rx));
+	QRegExp rx("[0-9a-zA-Z]{19}");
+	ui->leUser->setValidator(new QRegExpValidator(rx));
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
 	ui->leUser->setMaxLength(20);
 	ui->lePassword->setMaxLength(20);
 	//ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
-	//ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
+	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
 
 	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");

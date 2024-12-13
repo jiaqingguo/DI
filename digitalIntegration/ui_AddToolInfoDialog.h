@@ -54,7 +54,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(310, 300);
+        AddToolInfoDialog->resize(310, 282);
         gridLayout = new QGridLayout(AddToolInfoDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         labelIP1 = new QLabel(AddToolInfoDialog);

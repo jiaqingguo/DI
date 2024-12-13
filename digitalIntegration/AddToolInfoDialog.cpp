@@ -26,6 +26,16 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->lineEditIP6->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
 	connect(ui->btnChooseImage, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnChooseImage);
+
+	//¾Û½¹
+	setTabOrder(ui->lineEditToolName, ui->lineEditToolPath);
+	setTabOrder(ui->lineEditToolPath,ui->lineEdit);
+	setTabOrder(ui->lineEdit,ui->lineEditIP1);
+	setTabOrder(ui->lineEditIP1,ui->lineEditIP2);
+	setTabOrder(ui->lineEditIP2,ui->lineEditIP3);
+	setTabOrder(ui->lineEditIP3,ui->lineEditIP4);
+	setTabOrder(ui->lineEditIP4,ui->lineEditIP5);
+	setTabOrder(ui->lineEditIP5,ui->lineEditIP6);
 	
 }
 
