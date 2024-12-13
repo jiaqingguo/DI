@@ -39,7 +39,8 @@ public:
     void clear();
     QString createFolderName();
 
-    void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd,const int &port =21);
+    void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); \
+    void Flush();
     void createUserDir(const QString& strDirName);
     QString toFtpCodec(const QString& strLocal);
     QString  fromFtpCodec(const QString& str);
