@@ -27,7 +27,7 @@ private slots:
     void slot_comboBoxChanged(int index);
     void slot_ableUI(bool b);
 
-    
+    void slot_btnFlush();
 
 private:
     Ui::FtpDialog *ui;

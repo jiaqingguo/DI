@@ -55,6 +55,9 @@ namespace common
 
 	extern std::vector<table_ip_configure>    setHostName;
 
+	extern QString                  strLinuxFtpIp;
+	extern QString                  strFtpAccount;
+	extern QString                  strFtpPwd;
 
 	void findIpWithGpuMinValue(table_ip_configure &stHost);
 

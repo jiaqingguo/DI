@@ -46,6 +46,12 @@ int main(int argc, char* argv[])
             common::strDbUser = settings.value("user").toString();
             common::strDbPassword = settings.value("password").toString();
         }
+        else if (section == "FTP")
+        {
+            common::strLinuxFtpIp= settings.value("serverIp").toString();
+            common::strFtpAccount = settings.value("account").toString();
+            common::strFtpPwd = settings.value("password").toString();
+        }
         else 
         {
             common::strVipPath = settings.value("vipPath").toString();

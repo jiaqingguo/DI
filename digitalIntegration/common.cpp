@@ -80,6 +80,10 @@ namespace common
     std::vector<table_ip_configure>    setHostName;
     QString                  strLoginUserName;        // 已登录的用户名;
 
+    QString                  strLinuxFtpIp;
+    QString                  strFtpAccount;
+    QString                  strFtpPwd;
+
     __int64 Filetime2Int64(const FILETIME& ftime)
     {
         LARGE_INTEGER li;

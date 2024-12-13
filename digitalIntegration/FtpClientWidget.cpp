@@ -16,6 +16,7 @@
 #include "common.h"
 #include "GifDialog.h"
 #include "CtrlNetwork.h"
+#include "common.h"
 //#include "qftp.h"
 
 FtpClientWidget::FtpClientWidget(QWidget *parent)
@@ -169,7 +170,7 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
     if (m_ftpAdmin.state() != QFtp::LoggedIn)
     {
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login("shareadmin", "123456");
+        m_ftpAdmin.login(common::strFtpAccount, "Ate123");
     }
     // 保存到配置文件
   //  saveToIni();
@@ -888,20 +889,32 @@ void FtpClientWidget::commandFinished(int id, bool err)
     case QFtp::Login:
         if (!err)
         {
-           
-            ftp.list();   // 成功则显示列表
+            //if (currentPath!="")
+            //{
+            //    // 如果当前目录不是根目录，则先插入一行用来双击返回上一级
+            //    ui->tableWidget->insertRow(0);
+            //    ui->tableWidget->setItem(0, 0, new QTableWidgetItem(folderIcon(), "..."));
+            //    listType["..."] = folderType();
+            //    ftp.list(toFtpCodec(currentPath));   // 成功则显示列表
+            //}
+            //else
+            {
+                ftp.list();
+            }
+            
         }
        // statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("服务器连接成功!"), 2000);
         break;
 
     case QFtp::Close:
     {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ftp断开连接"));
         if (!err)
         {
-            QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ftp断开连接"));
-            clear(); 
+           
+           // clear(); 
             //currentPath.clear();
-            ftp.list(currentPath);
+          //  ftp.list(currentPath);
         }     // 清除列表
 
         break;

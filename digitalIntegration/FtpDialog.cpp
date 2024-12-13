@@ -11,7 +11,8 @@ FtpDialog::FtpDialog(QWidget *parent) :
     ui->setupUi(this);
   
     ui->stackedWidget->setCurrentIndex(0);
-    connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FtpDialog::slot_comboBoxChanged);
+   
+    connect(ui->pushButton, &QPushButton::clicked, this, &FtpDialog::slot_btnFlush);
     m_mapAdminFtp.clear();
 }
 
@@ -25,7 +26,8 @@ void FtpDialog::initConnectFtp()
     m_mapAdminFtp.clear();
     ui->comboBox->clear();
 
-    QString strLinuxFtpIp = "192.168.10.240";
+   // QString strLinuxFtpIp = "192.168.10.240";
+    QString strLinuxFtpIp = common::strLinuxFtpIp;
     ui->comboBox->addItem(QString::fromLocal8Bit("存储服务器"), strLinuxFtpIp);
     
  /*   QFtp* pFtp = new QFtp;
@@ -57,27 +59,43 @@ void FtpDialog::initConnectFtp()
         return;
     }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
-    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-  /*  ui->page1->connectToFtpServer(ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-    ui->page2->connectToFtpServer(ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-    ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-    ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-    ui->page4->connectToFtpServer(ui->comboBox->itemData(5, Qt::UserRole).toString(), common::strLoginUserName, "123456");
-    ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), common::strLoginUserName, "123456");*/
+    ui->page0->connectToFtpServer(ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+   ui->page1->connectToFtpServer(ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page2->connectToFtpServer(ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page3->connectToFtpServer(ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page4->connectToFtpServer(ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page5->connectToFtpServer(ui->comboBox->itemData(5, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page6->connectToFtpServer(ui->comboBox->itemData(6, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
 
     connect(ui->page0, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
-
+    connect(ui->page1, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+    connect(ui->page2, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+    connect(ui->page3, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+    connect(ui->page4, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+    connect(ui->page5, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+    connect(ui->page6, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
+  
 
     // 初始化管理员ftp;
 
     
-
+    connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FtpDialog::slot_comboBoxChanged);
 
 }
 
 void FtpDialog::slot_ableUI(bool b)
 {
     ui->comboBox->setEnabled(b);
+}
+
+void FtpDialog::slot_btnFlush()
+{
+    QWidget* pwiget = ui->stackedWidget->currentWidget();
+    FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
+    if (p)
+    {
+        p->Flush();
+    }
 }
 
 void FtpDialog::slot_createUserDir(const QString strDirName)
@@ -101,9 +119,17 @@ void FtpDialog::slot_createUserDir(const QString strDirName)
     ui->page2->createUserDir(strDirName);
     ui->page3->createUserDir(strDirName);
     ui->page4->createUserDir(strDirName);
+    ui->page5->createUserDir(strDirName);
     ui->page6->createUserDir(strDirName);
 
-
+  /*  ui->page0->Flush();
+    ui->page1->Flush();
+    ui->page2->Flush();
+    ui->page3->Flush();
+    ui->page4->Flush();
+    ui->page5->Flush();
+    ui->page6->Flush();*/
+    
 }
 void FtpDialog::slot_comboBoxChanged(int index)
 {
@@ -111,5 +137,8 @@ void FtpDialog::slot_comboBoxChanged(int index)
     ui->stackedWidget->setCurrentIndex(index);
     QWidget *pwiget =ui->stackedWidget->currentWidget();
     FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
-    
+    if (p)
+    {
+        p->Flush();
+    }
 }
