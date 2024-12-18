@@ -603,6 +603,7 @@ void FtpClientWidget::slot_UploadDir()
 
 void FtpClientWidget::onDownload()
 {
+    m_pMenu->close();
     int row = ui->tableWidget->currentRow();
     if (row < 0) return;
 
@@ -786,11 +787,11 @@ void FtpClientWidget::slot_newDir()
     // 创建目录 解决中文乱码问题
 
     createFolder = true;
-    ftp.mkdir(QString::fromLatin1(oldName.toUtf8()));
-    // ftp.mkdir(QString::fromLatin1(oldName.toLocal8Bit()));
+    ftp.mkdir(QString::fromLatin1(name.toUtf8()));
+    // ftp.mkdir(QString::fromLatin1(name.toLocal8Bit()));
 
-    listPath[oldName] = true;
-    listType[oldName] = type;
+    listPath[name] = true;
+    listType[name] = type;
 }
 
 void FtpClientWidget::onRename()

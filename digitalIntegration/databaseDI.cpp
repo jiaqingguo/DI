@@ -1735,7 +1735,7 @@ namespace db
 			stData.applicationTime = string_to_datetime(sql_row[2]);
 			stData.filePath = sql_row[3];
 			stData.fileType = sql_row[4];
-			stData.fileTime = string_to_datetime(sql_row[5]);
+			stData.fileTime = (sql_row[5]);
 			stData.status = std::atoi(sql_row[6]);
 			listData.push_back(stData);
 		}

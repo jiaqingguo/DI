@@ -34,6 +34,7 @@ private slots:
     void slot_btnFlush();
 
     void slot_ItemDownloadBtnClicked();
+    void slot_tableViewDownloadContextMenu(const QPoint& pos);
 
 private:
     Ui::FtpDialog *ui;

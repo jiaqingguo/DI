@@ -1,5 +1,6 @@
 #include<QStandardItemModel>
 #include <QFileInfo>
+#include <QMenu>
 #include <QDebug>
 
 #include <Ws2tcpip.h>
@@ -42,28 +43,13 @@ void FtpDialog::initConnectFtp()
     QString strLinuxFtpIp = common::strLinuxFtpIp;
     ui->comboBox->addItem(QString::fromLocal8Bit("存储服务器"), strLinuxFtpIp);
     
- /*   QFtp* pFtp = new QFtp;
-    if (pFtp->state() != QFtp::LoggedIn)
-    {
-        pFtp->connectToHost(strLinuxFtpIp, 21);
-        pFtp->login("shareadmin", "123456");
-    }
-
-    m_mapAdminFtp[strLinuxFtpIp]= pFtp;*/
 
     int i = 1;
     for (auto st : common::setHostName)
     {
         QString  strFtpIP = QString::fromStdString(st.ip);
         ui->comboBox->addItem(QString::fromStdString(st.hostname), QString::fromStdString(st.ip));
-       
-       /* QFtp* pFtp = new QFtp;
-        if (pFtp->state() != QFtp::LoggedIn)
-        {
-            pFtp->connectToHost(strFtpIP, 21);
-            pFtp->login("shareadmin", "123456");
-        }
-        m_mapAdminFtp[strLinuxFtpIp] = pFtp;*/
+ 
         i++;
     }
     if (i != 7)
@@ -127,7 +113,7 @@ void FtpDialog::initConnectFtp()
         m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
         m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
         m_modelDownload->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("状态"));
-        m_modelDownload->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+        m_modelDownload->setHeaderData(10,Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
         ui->tableViewDownload->setModel(m_modelDownload);
         common::setTableViewBasicConfiguration(ui->tableViewDownload);
@@ -137,6 +123,15 @@ void FtpDialog::initConnectFtp()
         ui->tableViewDownload->setContextMenuPolicy(Qt::CustomContextMenu);
         //connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
         flushTableViewDownload();
+        ui->tableViewDownload->setContextMenuPolicy(Qt::CustomContextMenu);
+      //  connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
+        connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
+            if (index == 1)
+            {
+                flushTableViewDownload();
+            }
+           
+            });
     }
 
 }
@@ -357,6 +352,22 @@ void FtpDialog::slot_ItemDownloadBtnClicked()
         ui->page6->ApprovalDownload(strFileName, strFilaPath, bDir);
     }
 
+}
+
+void FtpDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
+{
+    QMenu menu(this);
+
+    // 添加菜单项
+    QAction* flushAction = menu.addAction(QString::fromLocal8Bit("刷新"));
+
+
+    // 执行菜单并获取所选操作
+    QAction* selectedAction = menu.exec(ui->tableViewDownload->mapToGlobal(pos));
+
+    if (selectedAction == flushAction) {
+        flushTableViewDownload();
+    }
 }
 
 void FtpDialog::slot_createUserDir(const QString strDirName)
