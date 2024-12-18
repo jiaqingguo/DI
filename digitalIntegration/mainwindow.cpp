@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
 	g_pMainWindow = this;
 
 	setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
-	setWindowIcon(QIcon(":/image/tubiao.png"));
+	setWindowIcon(QIcon(":/image/CASC.png"));
 	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
 	//// 创建 QProcess 对象

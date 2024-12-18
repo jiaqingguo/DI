@@ -19,48 +19,52 @@
 #include "common.h"
 //#include "qftp.h"
 
-FtpClientWidget::FtpClientWidget(QWidget *parent)
+FtpClientWidget::FtpClientWidget(QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::FtpClientWidget)
 {
     ui->setupUi(this);
     initVar();
- //   loadFmIni();
+    //   loadFmIni();
 
     m_pGifDialog = new GifDialog();
     m_pUdp = new CCtrlNetwork;
-   // m_pGifDialog->show();
-  //  QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+    // m_pGifDialog->show();
+   //  QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 
-    // 设置表格列宽
+     // 设置表格列宽
     ui->tableWidget->setColumnWidth(0, 140);
     ui->tableWidget->setColumnWidth(1, 120);
     ui->tableWidget->setColumnWidth(2, 90);
     ui->tableWidget->setColumnWidth(3, 70);
 
     // 去除选中的虚线框
-    ui->tableWidget->setItemDelegate((QStyledItemDelegate *)new MyStyledItemDelegate);
+    ui->tableWidget->setItemDelegate((QStyledItemDelegate*)new MyStyledItemDelegate);
 
     // 设置进度条
     progress.hide();
     progress.setFixedHeight(10);
     progress.setAlignment(Qt::AlignCenter);
- //   statusBar()->addWidget(&progress, width());
+    //   statusBar()->addWidget(&progress, width());
 
-    // 信号槽
+       // 信号槽
     connect(&ftp, SIGNAL(listInfo(QUrlInfo)), SLOT(listInfo(QUrlInfo)));
-    connect(&ftp, SIGNAL(commandFinished(int,bool)), SLOT(commandFinished(int,bool)));
-  //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-    connect(&ftp, &QFtp::stateChanged, this,&FtpClientWidget::slot_stateChanged);
+    connect(&ftp, SIGNAL(commandFinished(int, bool)), SLOT(commandFinished(int, bool)));
+    //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+    connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-   connect(ui->tableWidget, &QTableWidget::doubleClicked, this,&FtpClientWidget::slot_tableWidget_doubleClicked);
-   connect(ui->tableWidget, &QTableWidget::itemClicked, this,&FtpClientWidget::slot_tableWidget_itemClicked);
-   connect(ui->tableWidget, &QTableWidget::customContextMenuRequested,this, &FtpClientWidget::slot_customContextMenuRequested);
+    connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
+    connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
+    connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
+
+    connect(&m_ftpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+
 
   
-   connect(&m_ftpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+
 }
+  
 
 FtpClientWidget::~FtpClientWidget()
 {
@@ -172,8 +176,40 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
         m_ftpAdmin.login(common::strFtpAccount,common::strFtpAdminPwd );
     }
-    // 保存到配置文件
-  //  saveToIni();
+    if (common::bAdministrator) // 管理员;
+    {
+        // 隐藏第二个标签页
+      // 移除 Tab 2
+        m_strDolwnloadText = QString::fromLocal8Bit("下载");
+    }
+
+    m_pMenu = new QMenu;
+    m_actionPutFile = m_pMenu->addAction(QString::fromLocal8Bit("上传文件"));
+    m_actionPutDir = m_pMenu->addAction(QString::fromLocal8Bit("上传文件夹"));
+    m_actionGetFile = m_pMenu->addAction(QString::fromLocal8Bit("下载文件"));
+    m_actionGetDir = m_pMenu->addAction(QString::fromLocal8Bit("下载文件夹"));
+    m_pMenu->addSeparator();
+    m_actionMkdir = m_pMenu->addAction(QString::fromLocal8Bit("新建文件夹"));
+    m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除文件"));
+    // m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
+    m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
+    m_actionCompress = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
+    m_actionUnCompress = m_pMenu->addAction(QString::fromLocal8Bit("解压"));
+    // m_actionCopyPath = m_pMenu->addAction(QString::fromLocal8Bit("复制路径"));
+    m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("刷新界面"));
+    connect(m_actionPutFile, &QAction::triggered, this, &FtpClientWidget::onUpload);
+    connect(m_actionPutDir, &QAction::triggered, this, &FtpClientWidget::slot_UploadDir);
+    connect(m_actionGetFile, &QAction::triggered, this, &FtpClientWidget::onDownload);
+    connect(m_actionGetDir, &QAction::triggered, this, &FtpClientWidget::slot_downloadDirectory);
+
+    connect(m_actionMkdir, &QAction::triggered, this, &FtpClientWidget::slot_newDir);
+    connect(m_actionDel, &QAction::triggered, this, &FtpClientWidget::onRemove);
+    //  connect(m_actionDownload, &QAction::triggered, this, &FtpClientWidget::slot_actionDownload);
+    connect(m_actionRename, &QAction::triggered, this, &FtpClientWidget::slot_rename);
+    connect(m_actionCompress, &QAction::triggered, this, &FtpClientWidget::slot_actionCompress);
+    connect(m_actionUnCompress, &QAction::triggered, this, &FtpClientWidget::slot_actionUnCompress);
+    //  connect(m_actionCopyPath, &QAction::triggered, this, &FtpClientWidget::slot_actionCopyPath);
+    connect(m_actionFlush, &QAction::triggered, this, &FtpClientWidget::onRefresh);
 }
 
 void FtpClientWidget::Flush()
@@ -210,6 +246,11 @@ void FtpClientWidget::createUserDir(const QString& strDirName)
     }
 
     m_ftpAdmin.mkdir(QString::fromLatin1(strDirName.toUtf8()));
+}
+
+void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
+{
+    m_bLinuxFtpServer = b;
 }
 
 QString FtpClientWidget::fromFtpCodec(const QString& str)
@@ -327,35 +368,7 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
     }
 }
 
-void FtpClientWidget::on_tbConnent_clicked()
-{
-    //QString serverAddress = ui->leServerAddress->text();
-    //if (serverAddress.isEmpty())
-    //{
-    //    //statusBar()->showMessage(QString::fromLocal8Bit("服务器地址为空!"), 2000);
-    //    return;
-    //}
 
-    //QString port = ui->lePort->text();
-    //if (port.isEmpty())
-    //{
-    //   // statusBar()->showMessage(QString::fromLocal8Bit("端口号为空!"), 2000);
-    //    return;
-    //}
-
-    //QString account = ui->leAccount->text();
-    //QString password = ui->lePassword->text();
-    //int commandID = -1;
-    //// 如果已经登录了就不需要重复登录
-    //if (ftp.state() != QFtp::LoggedIn)
-    //{
-    //    commandID = ftp.connectToHost(serverAddress, port.toInt());
-    //    commandID = ftp.login(account, password);
-    //}
-
-    //// 保存到配置文件
-    //saveToIni();
-}
 
 void FtpClientWidget::on_tbDisconnent_clicked()
 {
@@ -398,6 +411,13 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
     // 如果双击的是其他行，并且是目录行，表示进入下一级
     else if (listPath[name])
     {
+        if (currentPath == "")
+        {
+            if (name != common::strLoginUserName)
+            {
+                return;
+            }
+        }
         // 当前目录进入下一级
         currentPath += QString("/%1").arg(name);
 
@@ -428,22 +448,29 @@ void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
    
     if (ui->tableWidget->rowCount() <= 0) return;
 
+
+    m_pMenu->exec(QCursor::pos());
+
     // 如果有未关闭的编辑项则先关闭
-    closePersistentEditor();
+    //closePersistentEditor();
 
-    QMenu menu;
-    menu.addAction(QString::fromLocal8Bit("上传文件"), this, &FtpClientWidget::onUpload);
-    menu.addAction(QString::fromLocal8Bit("上传文件夹"), this, &FtpClientWidget::slot_UploadDir);
-    menu.addAction(QString::fromLocal8Bit("下载文件"), this, &FtpClientWidget::onDownload);
-    menu.addAction(QString::fromLocal8Bit("下载文件夹"), this, &FtpClientWidget::slot_downloadDirectory);
-    menu.addSeparator();
-    menu.addAction(/*folderIcon(),*/ QString::fromLocal8Bit("新建文件夹"), this, &FtpClientWidget::slot_newDir);
-    //   menu.addSeparator();
-   // menu.addAction(QString::fromLocal8Bit("重命名"), this, &FtpClientWidget::slot_rename);
-    menu.addAction(QString::fromLocal8Bit("删除文件"), this, &FtpClientWidget::onRemove);
-    menu.addAction(QString::fromLocal8Bit("刷新"), this, &FtpClientWidget::onRefresh);
+    //QMenu menu;
+    //menu.addAction(QString::fromLocal8Bit("上传文件"), this, &FtpClientWidget::onUpload);
+    //menu.addAction(QString::fromLocal8Bit("上传文件夹"), this, &FtpClientWidget::slot_UploadDir);
+    //menu.addAction(QString::fromLocal8Bit("下载文件"), this, &FtpClientWidget::onDownload);
+    //menu.addAction(QString::fromLocal8Bit("下载文件夹"), this, &FtpClientWidget::slot_downloadDirectory);
+    //menu.addSeparator();
+    //menu.addAction(/*folderIcon(),*/ QString::fromLocal8Bit("新建文件夹"), this, &FtpClientWidget::slot_newDir);
+    //menu.addAction(QString::fromLocal8Bit("重命名"), this, &FtpClientWidget::slot_rename);
+    //menu.addAction(QString::fromLocal8Bit("删除文件"), this, &FtpClientWidget::onRemove);
+    ////   menu.addSeparator();
+    //menu.addSeparator();
+    //menu.addAction(QString::fromLocal8Bit("压缩"), this, &FtpClientWidget::slot_actionCompress);
+    //menu.addAction(QString::fromLocal8Bit("解压"), this, &FtpClientWidget::slot_actionUnCompress);
+  
+    //menu.addAction(QString::fromLocal8Bit("刷新"), this, &FtpClientWidget::onRefresh);
 
-    menu.exec(QCursor::pos());
+    //menu.exec(QCursor::pos());
 
 }
 
@@ -563,55 +590,60 @@ void FtpClientWidget::slot_downloadDirectory()
         m_mapRemoteDownloadDirPath[m_downloadDirCommandID] = remoteDownloadDirPath;
        
     }
-    //else     // 文件
-    //{
-    //    QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
-    //    if (path.isEmpty()) return;
+    else     // 文件
+    {
+        QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
+        if (path.isEmpty()) return;
+        QFile* file = new QFile;
+        file->setFileName(path);
+        if (!file->open(QIODevice::WriteOnly))
+        {
+            return;
+        }
 
-    //    file.setFileName(path);
-    //    if (!file.open(QIODevice::WriteOnly)) return;
+        // 解决中文乱码问题
+        path = QString("%1/%2").arg(currentPath).arg(name);
+        m_bDownloadDir = false;
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+        m_pGifDialog->show();
 
-    //    // 解决中文乱码问题
-    //    path = QString("%1/%2").arg(currentPath).arg(name);
-    //    ftp.get(QString::fromLatin1(path.toLocal8Bit()), &file);
-    //}
+        int id = ftp.get(QString::fromLatin1(path.toLocal8Bit()), file);
+
+
+        m_mapFileDownload[id] = file;
+    }
 }
 
 void FtpClientWidget::onCreateFolder()
 {
-    QString name = createFolderName();
+   // QString name = createFolderName();
+   // // 在底部插入
+   // int row = ui->tableWidget->rowCount();
+   // // 插入新的一行
+   // ui->tableWidget->insertRow(row);
+   // // 名称
+   // ui->tableWidget->setItem(row, 0, new QTableWidgetItem(folderIcon(), name));
+   // // 日期
+   // ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm")));
+   // // 类型
+   // QString type = folderType();
+   // ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
 
-    // 在底部插入
-    int row = ui->tableWidget->rowCount();
+   // // 创建目录 解决中文乱码问题
+   // oldName = name;
+   // createFolder = true;
+   // ftp.mkdir(QString::fromLatin1(oldName.toUtf8()));
+   //// ftp.mkdir(QString::fromLatin1(oldName.toLocal8Bit()));
 
-    // 插入新的一行
-    ui->tableWidget->insertRow(row);
+   // editRow = row;
+   // listPath[oldName] = true;
+   // listType[oldName] = type;
 
-    // 名称
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(folderIcon(), name));
-
-    // 日期
-    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm")));
-
-    // 类型
-    QString type = folderType();
-    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
-
-    // 创建目录 解决中文乱码问题
-    oldName = name;
-    createFolder = true;
-    ftp.mkdir(QString::fromLatin1(oldName.toUtf8()));
-   // ftp.mkdir(QString::fromLatin1(oldName.toLocal8Bit()));
-
-    editRow = row;
-    listPath[oldName] = true;
-    listType[oldName] = type;
-
-    // 打开编辑
-    QTableWidgetItem *item = ui->tableWidget->item(row, 0);
-    ui->tableWidget->setCurrentCell(row, 0);
-    ui->tableWidget->openPersistentEditor(item);    // 打开编辑
-    ui->tableWidget->editItem(item);
+   // // 打开编辑
+   // QTableWidgetItem *item = ui->tableWidget->item(row, 0);
+   // ui->tableWidget->setCurrentCell(row, 0);
+   // ui->tableWidget->openPersistentEditor(item);    // 打开编辑
+   // ui->tableWidget->editItem(item);
 }
 
 void FtpClientWidget::slot_newDir()
@@ -638,40 +670,24 @@ void FtpClientWidget::slot_newDir()
     ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
 
     // 创建目录 解决中文乱码问题
-    oldName = name;
+
     createFolder = true;
     ftp.mkdir(QString::fromLatin1(oldName.toUtf8()));
     // ftp.mkdir(QString::fromLatin1(oldName.toLocal8Bit()));
 
-    editRow = row;
     listPath[oldName] = true;
     listType[oldName] = type;
-
-    //// 打开编辑
-    //QTableWidgetItem* item = ui->tableWidget->item(row, 0);
-    //ui->tableWidget->setCurrentCell(row, 0);
-    //ui->tableWidget->openPersistentEditor(item);    // 打开编辑
-    //ui->tableWidget->editItem(item);
 }
 
 void FtpClientWidget::onRename()
 {
-    // 如果是多级目录，则选中的第一级就不给重命名
-    int row = ui->tableWidget->currentIndex().row();
-    if (currentPath.indexOf("/") >= 0 && row <= 0) return;
 
-    editRow = row;
-    oldName = ui->tableWidget->item(row, 0)->text();
-
-    QTableWidgetItem *item = ui->tableWidget->item(row, 0);
-    ui->tableWidget->setCurrentCell(row, 0);
-    ui->tableWidget->openPersistentEditor(item);    // 打开编辑
-    ui->tableWidget->editItem(item);
 }
 
 void FtpClientWidget::slot_rename()
 {
     // 如果是多级目录，则选中的第一级就不给重命名
+    auto index = ui->tableWidget->currentIndex();
     int row = ui->tableWidget->currentIndex().row();
     if (currentPath.indexOf("/") >= 0 && row <= 0) return;
 
@@ -681,18 +697,14 @@ void FtpClientWidget::slot_rename()
         return;
     }
 
-    editRow = row;
-    oldName = ui->tableWidget->item(row, 0)->text();
+    m_oldName = ui->tableWidget->item(row, 0)->text();
 
     m_iRenameRow = row;
     //m_strRename = ui->tableWidget->item(row, 0)->text();
 
-    ftp.rename(QString::fromLatin1(oldName.toUtf8()), QString::fromLatin1(m_strRename.toLocal8Bit()));
+    ftp.rename(QString::fromLatin1(m_oldName.toUtf8()), QString::fromLatin1(m_strRename.toLocal8Bit()));
 
-    listPath[m_strRename] = listPath[oldName];
-    listPath.remove(oldName);
-    listType[m_strRename] = listType[oldName];
-    listType.remove(oldName);
+   
 
 }
 
@@ -770,37 +782,77 @@ void FtpClientWidget::onInsertRow()
 
 void FtpClientWidget::closePersistentEditor()
 {
-    if (editRow < 0 || editRow >= ui->tableWidget->rowCount()) return;
+  //  if (editRow < 0 || editRow >= ui->tableWidget->rowCount()) return;
 
-    QTableWidgetItem *item = ui->tableWidget->item(editRow, 0);
-    ui->tableWidget->closePersistentEditor(item);   // 关闭编辑
+  //  QTableWidgetItem *item = ui->tableWidget->item(editRow, 0);
+  //  ui->tableWidget->closePersistentEditor(item);   // 关闭编辑
 
-    // 重命名
-    QString newname = ui->tableWidget->item(editRow, 0)->text();
-    for (int i = 0; i < ui->tableWidget->rowCount(); i++)
+  //  // 重命名
+  //  QString newname = ui->tableWidget->item(editRow, 0)->text();
+  //  for (int i = 0; i < ui->tableWidget->rowCount(); i++)
+  //  {
+  //      QString name = ui->tableWidget->item(i, 0)->text();
+  //      if ((name == newname) && (listType[oldName] == listType[newname]))
+  //      {
+  //          if (!createFolder)
+  //              //statusBar()->showMessage(QString::fromLocal8Bit("文件名已存在!"), 2000);
+
+  //          ui->tableWidget->item(editRow, 0)->setText(oldName);
+  //          editRow = -1;
+  //          createFolder = false;
+  //          return;
+  //      }
+  //  }
+
+  //  editRow = -1;
+  //  //QString::fromLatin1(oldName.toUtf8())
+  ////  ftp.rename(QString::fromLatin1(oldName.toLocal8Bit()),QString::fromLatin1(newname.toLocal8Bit()));
+  //  ftp.rename(QString::fromLatin1(oldName.toUtf8()), QString::fromLatin1(newname.toLocal8Bit()));
+
+  //  listPath[newname] = listPath[oldName];
+  //  listPath.remove(oldName);
+  //  listType[newname] = listType[oldName];
+  //  listType.remove(oldName);
+}
+
+void FtpClientWidget::slot_actionCompress()
+{
+    // 如果是多级目录，则选中的第一级就不给删
+    int row = ui->tableWidget->currentIndex().row();
+    if (currentPath.indexOf("/") >= 0 && row <= 0) return;
+
+
+    QString name = ui->tableWidget->item(row, 0)->text();
+    QString strPath = currentPath + "/" + name;
+
+    QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("压缩"), QString::fromLocal8Bit("压缩包名称："));
+    if (NewZipName.isEmpty())
+        return;
+    if (!NewZipName.endsWith(".zip", Qt::CaseInsensitive))
     {
-        QString name = ui->tableWidget->item(i, 0)->text();
-        if ((name == newname) && (listType[oldName] == listType[newname]))
-        {
-            if (!createFolder)
-                //statusBar()->showMessage(QString::fromLocal8Bit("文件名已存在!"), 2000);
-
-            ui->tableWidget->item(editRow, 0)->setText(oldName);
-            editRow = -1;
-            createFolder = false;
-            return;
-        }
+        NewZipName = NewZipName + ".zip";  // 添加 .zip 后缀
     }
+    QString  newZipPath = currentPath + "/" + NewZipName; 
+ 
+  
+    QString strOrder = "compress "+ strPath + " "+ newZipPath;
+    emit signal_compress(m_bLinuxFtpServer,m_strAddr, strOrder);
+}
 
-    editRow = -1;
-    //QString::fromLatin1(oldName.toUtf8())
-  //  ftp.rename(QString::fromLatin1(oldName.toLocal8Bit()),QString::fromLatin1(newname.toLocal8Bit()));
-    ftp.rename(QString::fromLatin1(oldName.toUtf8()), QString::fromLatin1(newname.toLocal8Bit()));
-
-    listPath[newname] = listPath[oldName];
-    listPath.remove(oldName);
-    listType[newname] = listType[oldName];
-    listType.remove(oldName);
+void FtpClientWidget::slot_actionUnCompress()
+{
+    // 如果是多级目录，则选中的第一级就不给删
+    int row = ui->tableWidget->currentIndex().row();
+    if (currentPath.indexOf("/") >= 0 && row <= 0) return;
+    QString name = ui->tableWidget->item(row, 0)->text();
+    if (!name.endsWith(".zip", Qt::CaseInsensitive))
+    {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请选择.zip文件"));
+        return;
+    }
+    QString strPath = currentPath + "/" + name;
+    QString strOrder = "unCompress " + strPath ;
+    emit signal_compress(m_bLinuxFtpServer, m_strAddr, strOrder);
 }
 
 std::string string_To_UTF82(const std::string& str)
@@ -1023,12 +1075,20 @@ void FtpClientWidget::commandFinished(int id, bool err)
 
     case QFtp::Rename:
     {
-
-        if (m_iRenameRow >= 0)
+        if (!err)
         {
-            ui->tableWidget->item(m_iRenameRow, 0)->setText(m_strRename);
-            m_iRenameRow = -1;
+            if (m_iRenameRow >= 0)
+            {
+                ui->tableWidget->item(m_iRenameRow, 0)->setText(m_strRename);
+                m_iRenameRow = -1;
+
+                listPath[m_strRename] = listPath[m_oldName];
+                listPath.remove(m_oldName);
+                listType[m_strRename] = listType[m_oldName];
+                listType.remove(m_oldName);
+            }
         }
+       
            
         createFolder = false;
         break;
@@ -1105,3 +1165,32 @@ void FtpClientWidget::slot_stateChanged(int state)
     }
 }
 
+void FtpClientWidget::on_tbConnent_clicked()
+{
+    //QString serverAddress = ui->leServerAddress->text();
+    //if (serverAddress.isEmpty())
+    //{
+    //    //statusBar()->showMessage(QString::fromLocal8Bit("服务器地址为空!"), 2000);
+    //    return;
+    //}
+
+    //QString port = ui->lePort->text();
+    //if (port.isEmpty())
+    //{
+    //   // statusBar()->showMessage(QString::fromLocal8Bit("端口号为空!"), 2000);
+    //    return;
+    //}
+
+    //QString account = ui->leAccount->text();
+    //QString password = ui->lePassword->text();
+    //int commandID = -1;
+    //// 如果已经登录了就不需要重复登录
+    //if (ftp.state() != QFtp::LoggedIn)
+    //{
+    //    commandID = ftp.connectToHost(serverAddress, port.toInt());
+    //    commandID = ftp.login(account, password);
+    //}
+
+    //// 保存到配置文件
+    //saveToIni();
+}

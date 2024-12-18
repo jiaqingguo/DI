@@ -1,5 +1,6 @@
 #include <iostream>
 #include <WinSock2.h>
+#include <Ws2tcpip.h>
 #include "CtrlNetwork.h"
 
 #pragma comment(lib, "Ws2_32.lib")
@@ -70,5 +71,16 @@ int CCtrlNetwork::recvData(char* recvbuf, int size)
 int CCtrlNetwork::sendDataTo(const char* sendbuf, int size, const struct sockaddr* to)
 {
 	int nSendLen = sendto(m_socket, sendbuf, size, 0, to, sizeof(sockaddr));
+	return nSendLen;
+}
+
+int CCtrlNetwork::sendDataTo(const char* sendbuf, int size, const std::string addr, const int port)
+{
+	struct sockaddr_in m_r_addr;
+	m_r_addr.sin_family = AF_INET;
+	m_r_addr.sin_port = htons(10023);
+
+	  inet_pton(AF_INET, addr.c_str(), &m_r_addr.sin_addr.s_addr);
+	int nSendLen = sendto(m_socket, sendbuf, size, 0, (sockaddr*)&m_r_addr, sizeof(sockaddr));
 	return nSendLen;
 }

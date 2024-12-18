@@ -19,6 +19,7 @@ public:
 	int init(int nLocalPort);
 	int recvData(char* recvbuf, int size);
 	int sendDataTo(const char* sendbuf, int size, const struct sockaddr* to);
+	int sendDataTo(const char* sendbuf, int size, const std::string addr,const int port);
 protected:
 	unsigned __int64 m_socket;
 private:

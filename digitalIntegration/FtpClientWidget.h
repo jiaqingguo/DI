@@ -17,6 +17,7 @@ class QTableWidgetItem;
 class QUrlInfo;
 class GifDialog;
 class CCtrlNetwork;
+class QMenu;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FtpClientWidget; }
@@ -42,6 +43,7 @@ public:
     void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); \
     void Flush();
     void createUserDir(const QString& strDirName);
+    void setIsLinuxFtpServer(const bool &b);
     QString toFtpCodec(const QString& strLocal);
     QString  fromFtpCodec(const QString& str);
 private:
@@ -73,6 +75,9 @@ public slots:
     void onInsertRow();
     void closePersistentEditor();
 
+    void slot_actionCompress(); // 压缩
+    void slot_actionUnCompress(); // 解压
+
     void listInfo(QUrlInfo url);
     void commandFinished(int id, bool err);
     void slot_ftpAdminCommandFinished(int id, bool err);
@@ -80,18 +85,22 @@ public slots:
     void slot_stateChanged(int state);
 signals:
     void signal_ableUI(bool b);
+    void signal_compress(bool bLinuxServer, QString strIp, QString order);
+    void signal_unCompress(bool bLinuxServer, QString strIp, QString order);
 private:
+    bool m_bLinuxFtpServer = false;
     QString m_strAccount;
     QString m_strPwd;
     QString m_strAddr;
     int   m_iPort;
     QProgressBar progress;
 
-    int editRow;
+   
     int renameRow;
     int removeRow;
     bool createFolder;
 
+    int editRow;
     QString oldName;
     QString uploadPath;
 
@@ -105,7 +114,8 @@ private:
     // 重命名;
     int m_iRenameRow = -1;
     QString m_strRename;
-
+    int m_curEditRow = -1;;
+    QString m_oldName;
 
     //上传文件
     int m_iPutFileCommandID = -1;
@@ -131,10 +141,22 @@ private:
     QMap<int, QFile*>  m_mapFileDownload;
     int m_iDoloadDirCommandTotal = 0;
 
-
+    QString m_strDolwnloadText = "申请下载";
     CCtrlNetwork* m_pUdp = nullptr;
     GifDialog* m_pGifDialog = nullptr;
-
+    QMenu   * m_pMenu = nullptr;
+    QAction* m_actionPutFile = nullptr;
+    QAction* m_actionGetFile = nullptr;
+    QAction* m_actionPutDir = nullptr;
+    QAction* m_actionGetDir = nullptr;
+    QAction* m_actionMkdir = nullptr;
+    QAction* m_actionDel = nullptr;
+    QAction* m_actionDownload = nullptr;
+    QAction* m_actionRename = nullptr;
+    QAction* m_actionCompress = nullptr;
+    QAction* m_actionUnCompress = nullptr;
+    QAction* m_actionCopyPath = nullptr;
+    QAction* m_actionFlush = nullptr;
 private:
     Ui::FtpClientWidget *ui;
 };

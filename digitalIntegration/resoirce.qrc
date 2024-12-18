@@ -41,5 +41,6 @@
         <file>image/loading.gif</file>
         <file>image/loading2.gif</file>
         <file>image/waiting.png</file>
+        <file>image/CASC.png</file>
     </qresource>
 </RCC>
