@@ -14,6 +14,8 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
     setWindowTitle(QString::fromLocal8Bit("ÐÞ¸ÄÃÜÂë"));
     setWindowIcon(QIcon(":/image/Register.png"));
     connect(ui->btnModify, &QPushButton::clicked, this, &ChangePwdDialog::slot_btnModify);
+	ui->lineEditPassword->setEchoMode(QLineEdit::Password);
+	ui->lineEditNewPwd->setEchoMode(QLineEdit::Password);
 }
 
 ChangePwdDialog::~ChangePwdDialog()

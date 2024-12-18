@@ -197,14 +197,19 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
 void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode, QString& strIp, QString& strHostName)
 {
 	tabName = ui->lineEditTabName->text();
-	if (tabName.isEmpty())
-	{
-		tabName = ui->lineEditTabName->placeholderText();
-	}
 	toolName = ui->comboBoxToolNames->currentText();
 	toolPath = ui->comboBoxToolNames->currentData(Qt::UserRole).toString();
 	model = ui->comboBoxDisplayMode->currentIndex();
 	iDisplayMode = ui->comboBoxDisplayMode->currentIndex();
+	if (tabName.isEmpty())
+	{
+		tabName = ui->lineEditTabName->placeholderText();
+	}
+	else
+	{
+		tabName = ui->lineEditTabName->text();
+	}
+	
 	if (m_iModule != 1)
 	{
 		if (ui->comboBoxHost->currentIndex() != 0)
