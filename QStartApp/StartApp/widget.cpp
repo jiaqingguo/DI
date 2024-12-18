@@ -24,6 +24,10 @@ Widget::~Widget()
 void Widget::StartProgram(const std::string& strPath)
 {
     m_pListen->startProgram(strPath);
+
+    //auto boundFunction = std::bind(&Listen::startProgram, strPath,m_pListen);
+    //std::thread t(boundFunction);
+    //t.detach(); // 分离线程，主线程不阻塞
 }
 
 void Widget::HwndListen()
@@ -55,9 +59,10 @@ void Widget::InitResource(const std::string& str)
     TCHAR password[] = TEXT("Share123");
     TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
     TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-    //TCHAR remotePath[] = TEXT("\\\\192.168.10.3\\admin 共享给我");  // 共享资源的路径
-  //  InitResource(userName, password, localDrive, remotePath);
+  
     m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
+
+   
 }
 
 void Widget::slot_btnOpenExplorer()

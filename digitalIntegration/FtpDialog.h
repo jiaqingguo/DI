@@ -33,6 +33,8 @@ private slots:
 
     void slot_btnFlush();
 
+    void slot_ItemDownloadBtnClicked();
+
 private:
     Ui::FtpDialog *ui;
 

@@ -17,7 +17,7 @@
 #include "GifDialog.h"
 #include "CtrlNetwork.h"
 #include "common.h"
-//#include "qftp.h"
+#include "databaseDI.h"
 
 FtpClientWidget::FtpClientWidget(QWidget* parent)
     : QWidget(parent)
@@ -150,8 +150,9 @@ QString FtpClientWidget::createFolderName()
     return QString::fromLocal8Bit("新建文件夹") + (count ? QString("(%1)").arg(count + 1) : "");
 }
 
-void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& strAccount, const QString& strPwd, const int& port)
+void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QString& strAddr, const QString& strAccount, const QString& strPwd, const int& port)
 {
+    m_strHostName = strHostName;
    // ftp.setAutoTimeout(-1);
     m_strAccount = strAccount;
     m_strPwd = strPwd;
@@ -170,7 +171,6 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
         ftp.login(m_strAccount, m_strPwd);
     }
 
-
     if (m_ftpAdmin.state() != QFtp::LoggedIn)
     {
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
@@ -186,8 +186,17 @@ void FtpClientWidget::connectToFtpServer(const QString& strAddr, const QString& 
     m_pMenu = new QMenu;
     m_actionPutFile = m_pMenu->addAction(QString::fromLocal8Bit("上传文件"));
     m_actionPutDir = m_pMenu->addAction(QString::fromLocal8Bit("上传文件夹"));
-    m_actionGetFile = m_pMenu->addAction(QString::fromLocal8Bit("下载文件"));
-    m_actionGetDir = m_pMenu->addAction(QString::fromLocal8Bit("下载文件夹"));
+    
+    if (common::bAdministrator) // 管理员;
+    {
+        m_actionGetFile = m_pMenu->addAction(QString::fromLocal8Bit("下载文件"));
+        m_actionGetDir = m_pMenu->addAction(QString::fromLocal8Bit("下载文件夹"));
+    }
+    else 
+    {
+        m_actionGetFile = m_pMenu->addAction(QString::fromLocal8Bit("申请下载文件"));
+        m_actionGetDir = m_pMenu->addAction(QString::fromLocal8Bit("申请下载文件夹"));
+    }
     m_pMenu->addSeparator();
     m_actionMkdir = m_pMenu->addAction(QString::fromLocal8Bit("新建文件夹"));
     m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除文件"));
@@ -255,12 +264,88 @@ void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
 
 QString FtpClientWidget::fromFtpCodec(const QString& str)
 {
-    return QString::fromUtf8(str.toUtf8()).toLatin1();
+    if (m_bLinuxFtpServer)
+    {
+        return QString::fromUtf8(str.toUtf8()).toLatin1();
+    }
+    else
+    {
+        QByteArray data = str.toLatin1();
+        QTextCodec* codec = QTextCodec::codecForName("GBK");
+        QString name = codec->toUnicode(data);
+        return name;
+    }
+   
+   // 
 }
 
 QString FtpClientWidget::toFtpCodec(const QString& strLocal)
 {
-    return QString::fromLatin1(strLocal.toUtf8());
+    if (m_bLinuxFtpServer)
+    {
+        return QString::fromLatin1(strLocal.toUtf8());
+    }
+    else
+    {
+
+    }
+}
+
+void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& strPath, const bool& bDir)
+{
+    if (bDir)  // 目录;
+    {
+        // 显示选择下载目录的对话框
+        QString  loaclDownloadDirPath = QFileDialog::getExistingDirectory(nullptr, "选择下载目录", QDir::homePath());
+        if (loaclDownloadDirPath.isEmpty())
+        {
+            return;
+        }
+        loaclDownloadDirPath = loaclDownloadDirPath + "/" + strName;  //cs/chat
+        // 创建本地目录
+        QDir directory;
+        bool success = directory.mkpath(loaclDownloadDirPath);
+
+
+        QString  remoteDownloadDirPath = strPath; // jqg/chat
+        // 列出远程目录内容
+
+        //m_downloadDirPath= 
+        m_vecListInfo.clear();
+
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
+        m_pGifDialog->show();
+
+        m_bDownloadDir = true;
+        setDisableUI();
+        m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
+        m_iDoloadDirCommandTotal++;
+
+        m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
+        m_mapRemoteDownloadDirPath[m_downloadDirCommandID] = remoteDownloadDirPath;
+
+    }
+    else     // 文件
+    {
+        QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(strName));
+        if (path.isEmpty()) return;
+        QFile* file = new QFile;
+        file->setFileName(path);
+        if (!file->open(QIODevice::WriteOnly))
+        {
+            return;
+        }
+
+        // 解决中文乱码问题
+        QString  remoteDownloadDirPath = strPath;
+        m_bDownloadDir = false;
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+        m_pGifDialog->show();
+
+        int id = ftp.get(QString::fromLatin1(remoteDownloadDirPath.toLocal8Bit()), file);
+
+        m_mapFileDownload[id] = file;
+    }
 }
 
 void FtpClientWidget::createDir(const QString& strDirPath)
@@ -268,8 +353,6 @@ void FtpClientWidget::createDir(const QString& strDirPath)
    
 
 }
-
-
 
 void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QString& m_loaclDownloadDirPath, const QString& m_remoteDownloadDirPath)
 {
@@ -557,61 +640,92 @@ void FtpClientWidget::slot_downloadDirectory()
     if (row < 0) return;
 
     QString name = ui->tableWidget->item(row, 0)->text();
-    if (listPath[name])  // 目录;
-    {
-        // 显示选择下载目录的对话框
-        QString  loaclDownloadDirPath = QFileDialog::getExistingDirectory(nullptr, "选择下载目录", QDir::homePath());
-        if (loaclDownloadDirPath.isEmpty())
-        {
-            return;
-        }
-        loaclDownloadDirPath = loaclDownloadDirPath + "/" + name;  //cs/chat
-        // 创建本地目录
-        QDir directory;
-        bool success = directory.mkpath(loaclDownloadDirPath);
 
-  
+    if (common::bAdministrator)
+    {
+        if (listPath[name])  // 目录;
+        {
+            // 显示选择下载目录的对话框
+            QString  loaclDownloadDirPath = QFileDialog::getExistingDirectory(nullptr, "选择下载目录", QDir::homePath());
+            if (loaclDownloadDirPath.isEmpty())
+            {
+                return;
+            }
+            loaclDownloadDirPath = loaclDownloadDirPath + "/" + name;  //cs/chat
+            // 创建本地目录
+            QDir directory;
+            bool success = directory.mkpath(loaclDownloadDirPath);
+
+
+            QString  remoteDownloadDirPath = QString("%1/%2").arg(currentPath).arg(name); // jqg/chat
+            // 列出远程目录内容
+
+            //m_downloadDirPath= 
+            m_vecListInfo.clear();
+
+
+            m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
+            m_pGifDialog->show();
+
+            m_bDownloadDir = true;
+            setDisableUI();
+            m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
+            m_iDoloadDirCommandTotal++;
+
+            m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
+            m_mapRemoteDownloadDirPath[m_downloadDirCommandID] = remoteDownloadDirPath;
+
+        }
+        else     // 文件
+        {
+            QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
+            if (path.isEmpty()) return;
+            QFile* file = new QFile;
+            file->setFileName(path);
+            if (!file->open(QIODevice::WriteOnly))
+            {
+                return;
+            }
+
+            // 解决中文乱码问题
+            path = QString("%1/%2").arg(currentPath).arg(name);
+            m_bDownloadDir = false;
+            m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+            m_pGifDialog->show();
+
+            int id = ftp.get(QString::fromLatin1(path.toLocal8Bit()), file);
+
+
+            m_mapFileDownload[id] = file;
+        }
+    }
+    else
+    {
         QString  remoteDownloadDirPath = QString("%1/%2").arg(currentPath).arg(name); // jqg/chat
-        // 列出远程目录内容
-       
-        //m_downloadDirPath= 
-        m_vecListInfo.clear();
 
-      
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
-        m_pGifDialog->show();
-
-        m_bDownloadDir = true;
-        setDisableUI();
-        m_downloadDirCommandID =ftp.list(remoteDownloadDirPath);
-        m_iDoloadDirCommandTotal++;
-       
-        m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
-        m_mapRemoteDownloadDirPath[m_downloadDirCommandID] = remoteDownloadDirPath;
-       
-    }
-    else     // 文件
-    {
-        QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
-        if (path.isEmpty()) return;
-        QFile* file = new QFile;
-        file->setFileName(path);
-        if (!file->open(QIODevice::WriteOnly))
+        table_DownloadApproval stDownloadApproval;
+        stDownloadApproval.userID = common::iUserID;
+        //stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+        stDownloadApproval.filePath = remoteDownloadDirPath.toStdString();
+        if (listPath[name])
         {
-            return;
+            stDownloadApproval.fileType = "dir";
         }
+        else
+        {
+            stDownloadApproval.fileType = name.mid(name.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
+        }
+       
+        stDownloadApproval.fileTime = ui->tableWidget->item(row, 1)->text().toStdString();
 
-        // 解决中文乱码问题
-        path = QString("%1/%2").arg(currentPath).arg(name);
-        m_bDownloadDir = false;
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
-        m_pGifDialog->show();
+        stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        stDownloadApproval.status = 0;
 
-        int id = ftp.get(QString::fromLatin1(path.toLocal8Bit()), file);
-
-
-        m_mapFileDownload[id] = file;
+        stDownloadApproval.ftpIp = m_strAddr.toStdString();
+        stDownloadApproval.ftpName = m_strHostName.toStdString();
+        db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
     }
+   
 }
 
 void FtpClientWidget::onCreateFolder()
@@ -891,11 +1005,9 @@ void FtpClientWidget::listInfo(QUrlInfo url)
         return;
     }
     QString str11111 = url.name();
-    QString name = QString::fromUtf8(str11111.toUtf8()).toLatin1();
+   // QString name = QString::fromUtf8(str11111.toUtf8()).toLatin1();
+    QString name = fromFtpCodec(url.name());
  
- //  QString name= QString::fromLocal8Bit(url.name().toUtf8());
-     // 假设服务器使用 UTF-8 编码，转换为本地环境的编码
-   /* QString name = QTextCodec::codecForName("UTF-8")->toUnicode(url.name().toUtf8());*/
     QString type = url.isDir() ? folderType() : fileType(name);
 
     // 记录是否为目录

@@ -301,7 +301,8 @@ void FilemangageDialog::flushTableViewDownload()
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelDownload->setItem(newRowIndex, 5, item);
 
-		item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
+		//item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
+		item = new QStandardItem(QString::fromStdString(stData.fileTime));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelDownload->setItem(newRowIndex, 6, item);
 

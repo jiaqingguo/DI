@@ -1685,13 +1685,15 @@ namespace db
 		// 执行SQL语句;
 		char sql[1024] = { 0 };
 
-		sprintf_s(sql, "insert into t_download_approval(userID,applicationTime,filePath,fileType,fileTime,status) values(\'%d\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\')",
+		sprintf_s(sql, "insert into t_download_approval(userID,applicationTime,filePath,fileType,fileTime,status,ftpName,ftpIp) values(\'%d\',\'%s\',\'%s\',\'%s\',\'%s\',\'%d\',\'%s\',\'%s\')",
 			stData.userID,
 			datetime_to_string(stData.applicationTime).c_str(),
 			stData.filePath.c_str(),
 			stData.fileType.c_str(),
-			datetime_to_string(stData.fileTime).c_str(),
-			stData.status);
+			stData.fileTime.c_str()/*datetime_to_string(stData.fileTime).c_str()*/,
+			stData.status,
+			stData.ftpName.c_str(),
+			stData.ftpIp.c_str());
 
 		if (!exec_sql(last_id, sql))
 		{
@@ -1763,8 +1765,10 @@ namespace db
 			stData.applicationTime = string_to_datetime(sql_row[2]);
 			stData.filePath = sql_row[3];
 			stData.fileType = sql_row[4];
-			stData.fileTime = string_to_datetime(sql_row[5]);
+			stData.fileTime = (sql_row[5]);
 			stData.status = std::atoi(sql_row[6]);
+			stData.ftpName = sql_row[7];
+			stData.ftpIp = sql_row[8];
 			listData.push_back(stData);
 		}
 		return true;

@@ -102,8 +102,11 @@ struct table_DownloadApproval
 	
 	std::string		filePath;
 	std::string		fileType;
-	time_t			fileTime;
+	std::string			fileTime;
 	uint32_t        status = 0;
+
+	std::string		ftpName;
+	std::string		ftpIp;
 
 	// 关联的表外数据
 	std::string    userName;

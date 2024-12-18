@@ -40,12 +40,15 @@ public:
     void clear();
     QString createFolderName();
 
-    void connectToFtpServer(const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); \
+    void connectToFtpServer(const QString& strHostName, const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); \
     void Flush();
     void createUserDir(const QString& strDirName);
     void setIsLinuxFtpServer(const bool &b);
     QString toFtpCodec(const QString& strLocal);
     QString  fromFtpCodec(const QString& str);
+
+
+    void ApprovalDownload(const QString &strName,const QString& strPath ,const bool &bDir);
 private:
     void createDir(const QString& strDirPath);
     void uploadDirectory(const QString& localDirPath, const QString& remoteDirPath);
@@ -89,6 +92,7 @@ signals:
     void signal_unCompress(bool bLinuxServer, QString strIp, QString order);
 private:
     bool m_bLinuxFtpServer = false;
+    QString m_strHostName;
     QString m_strAccount;
     QString m_strPwd;
     QString m_strAddr;
