@@ -26,6 +26,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui->lineEditPassword->setMaxLength(20);
 	QRegExp rx("[0-9a-zA-Z]{19}");
 	ui->lineEditUserName->setValidator(new QRegExpValidator(rx));
+	ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 	//ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
 	//¾Û½¹
 	setTabOrder(ui->lineEditUserName,ui->lineEditPassword);

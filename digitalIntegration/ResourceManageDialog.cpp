@@ -757,8 +757,17 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 					myset.dCpuUsage = infor->Cpu_Message;
 				}
 			}
-
-		//this->UdpSocket->writeDatagram("send to daili information", addr, port);
+			/*Command_t command;
+			command.str1 = "Wuncompress";
+			command.str2 = "user1//back.zip";
+			command.str3 = "over";
+			QByteArray dataGram;
+			QDataStream stream2(&dataGram, QIODevice::WriteOnly);
+			stream2 << command.str1;
+			stream2 << command.str2;
+			stream2 << command.str3;
+			int ret = 0;
+			ret = this->UdpSocket->writeDatagram(dataGram, addr, port);*/
 		// ²åÈëÊý¾Ý¿â;
 	   /* table_ip stIp;
 		stIp.ip = infor->host_ip.toStdString();

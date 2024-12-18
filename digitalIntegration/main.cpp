@@ -1,4 +1,4 @@
-
+ï»¿
 #include <QApplication>
 #include <QSettings>
 #include <QMessageBox>
@@ -7,6 +7,8 @@
 #include "databaseDI.h"
 #include "LoginDialog.h"
 #include "common.h"
+#include <QTextCodec>
+
 
 
 int main(int argc, char* argv[])
@@ -15,19 +17,19 @@ int main(int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QString exeDir = QCoreApplication::applicationDirPath();
     QString strIniPath = exeDir + "/software.ini";
-    // ´´½¨QSettings¶ÔÏó²¢Ö¸¶¨INIÎÄ¼şÂ·¾¶
+    // åˆ›å»ºQSettingså¯¹è±¡å¹¶æŒ‡å®šINIæ–‡ä»¶è·¯å¾„
     QSettings settings(strIniPath, QSettings::IniFormat);
 
-    // »ñÈ¡INIÎÄ¼şÖĞµÄËùÓĞ½Ú
+    // è·å–INIæ–‡ä»¶ä¸­çš„æ‰€æœ‰èŠ‚
     QStringList sections = settings.childGroups();
 
-    // ±éÀú½ÚÁĞ±í
+    // éå†èŠ‚åˆ—è¡¨
     foreach(const QString & section, sections)
     {
-        // ÇĞ»»µ½Ö¸¶¨µÄ½Ú
+        // åˆ‡æ¢åˆ°æŒ‡å®šçš„èŠ‚
         settings.beginGroup(section);
 
-        // »ñÈ¡¸Ã½ÚÏÂµÄËùÓĞ¼ü
+        // è·å–è¯¥èŠ‚ä¸‹çš„æ‰€æœ‰é”®
         QStringList keys = settings.allKeys();
 
         if (section == "TCP")
@@ -57,7 +59,7 @@ int main(int argc, char* argv[])
         {
             common::strVipPath = settings.value("vipPath").toString();
         }
-          // ½áÊøµ±Ç°½ÚµÄÇĞ»»
+          // ç»“æŸå½“å‰èŠ‚çš„åˆ‡æ¢
         settings.endGroup();
     }
 
@@ -66,7 +68,7 @@ int main(int argc, char* argv[])
     db::databaseDI::Instance().setDbLoginData(common::strDbIp.toStdString(), common::strDbUser.toStdString(), common::strDbPassword.toStdString());
     if (!db::databaseDI::Instance().open())
     {
-        QMessageBox::warning(nullptr, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Êı¾İ¿âÁ¬½ÓÊ§°Ü"));
+        QMessageBox::warning(nullptr, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æ•°æ®åº“è¿æ¥å¤±è´¥"));
         return 0;
     }
     MainWindow w;

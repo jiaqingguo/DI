@@ -246,6 +246,14 @@ void MainWindow::initInitface()
 
 
 	// 初始化模块1-4界面;
+	ui->btnM2Load->hide();
+	ui->btnM3Load->hide();
+	ui->btnM4Load->hide();
+	ui->btnM1Save->hide();
+	ui->btnM2Save->hide();
+	ui->btnM3Save->hide();
+	ui->btnM4Save->hide();
+
 	ui->tabWidgetModulel1->removeTab(1);
 	ui->tabWidgetModulel2->removeTab(1);
 	ui->tabWidgetModulel3->removeTab(1);
@@ -597,7 +605,7 @@ void MainWindow::slot_btnAddToolTab()
 
 
 			QString hostname = QString::fromStdString(stipToolData.host);
-			tabName = toolName + " " + hostname;
+			tabName = tabName + " " + hostname;
 		}
 		else
 		{
@@ -612,7 +620,7 @@ void MainWindow::slot_btnAddToolTab()
 				strAssignIP = QString::fromStdString(st.ip);
 				strAssignHostName = QString::fromStdString(st.hostname);
 			}
-			tabName = toolName + " " + strAssignHostName;
+			tabName = tabName + " " + strAssignHostName;
 			//else
 			//{
 			//	//st.ip = strAssignIP.toStdString();

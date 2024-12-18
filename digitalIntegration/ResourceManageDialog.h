@@ -23,6 +23,13 @@ typedef struct _Message
     unsigned long Net_Message = 0;
 	double Gpu_Message = 0;
 }Message_t;
+//½ÓÊÕ½âÑ¹ËõÃüÁî
+typedef struct _Com
+{
+	QString str1;
+	QString str2;
+	QString str3;
+}Command_t;
 
 namespace Ui {
 class ResourceManageDialog;
