@@ -129,10 +129,10 @@ void main()
 	//TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
 	//InitResource(userName, password, localDrive, remotePath);
 
-	TCHAR userName[] = TEXT("user1");
-	TCHAR password[] = TEXT("123456");
+	TCHAR userName[] = TEXT("share");
+	TCHAR password[] = TEXT("Share123");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-	TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
+	TCHAR remotePath[] = TEXT("\\\\192.168.0.250\\share");  // 共享资源的路径
 	//TCHAR remotePath[] = TEXT("\\\\192.168.10.3\\admin 共享给我");  // 共享资源的路径
 	InitResource(userName, password, localDrive, remotePath);
 	

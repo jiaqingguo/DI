@@ -49,10 +49,10 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     //   statusBar()->addWidget(&progress, width());
 
        // 信号槽
-    //connect(&ftp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
-    //connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
-    ////  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-    //connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+    connect(&ftp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+    connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+    //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+    connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
@@ -361,7 +361,7 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
 void FtpClientWidget::Connect()
 {
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
-        connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
+     connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
         connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
 }
 
