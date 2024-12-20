@@ -967,8 +967,8 @@ void FtpClientWidget::slot_actionUnCompress()
         return;
     }
     QString strPath = currentPath + "/" + name;
-    QString strOrder = "unCompress " + strPath ;
-    emit signal_unCompress(m_bLinuxFtpServer, m_strAddr, strOrder);
+    
+    emit signal_unCompress(m_bLinuxFtpServer, m_strAddr, strPath);
 }
 
 void FtpClientWidget::listInfo(QUrlInfo url)

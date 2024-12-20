@@ -200,6 +200,7 @@ void MainWindow::initInitface()
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
 	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, m_FtpDialog, &FtpDialog::slot_createUserDir);
+	connect(m_ResourceManageDialog, &ResourceManageDialog::signal_udpOrderFinsh, m_FtpDialog, &FtpDialog::slot_orderFinsh);
 
 	//m_OneClickLoadDialog = new OneClickLoadDialog(this);
 	//connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);

@@ -5,6 +5,8 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
+#include"common.h"
+
 #define SOCKET_LENGTH 1024*1024
 CCtrlNetwork::CCtrlNetwork()
 {

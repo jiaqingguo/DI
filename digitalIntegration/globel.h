@@ -2,6 +2,8 @@
 #define GLOBEL_H
 
 #include <QString>
+#include <QDataStream>
+
 
 #define GBK_STRING(str) QString::fromLocal8Bit(str)
 
@@ -199,8 +201,7 @@ const QString strQssGray = R"(
 
 struct st_udp
 {
-
-	QString strl;//Lcompress\Wcompress\Luncompress\Wuncompress
+	QString str1;//Lcompress\Wcompress\Luncompress\Wuncompress
 	QString str2;//要压缩的文件的路径\解压时的压缩包的路径
 	QString str3;//压缩包的路径
 };

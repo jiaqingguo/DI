@@ -23,8 +23,9 @@ FtpDialog::FtpDialog(QWidget *parent) :
     ui->setupUi(this);
     m_pGifDialog = new GifDialog();
     m_pUDP = new CCtrlNetwork();
-    m_pUDP->init(54321);
+    m_pUDP->init(54110);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->tabWidget->setCurrentIndex(0);
    
     connect(ui->pushButton, &QPushButton::clicked, this, &FtpDialog::slot_btnFlush);
    // m_mapAdminFtp.clear();
@@ -59,7 +60,7 @@ void FtpDialog::initConnectFtp()
     }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
     ui->page0->connectToFtpServer(ui->comboBox->itemText(0),ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
-    ui->page0->setIsLinuxFtpServer(true);
+   // ui->page0->setIsLinuxFtpServer(true);
 
     ui->page1->connectToFtpServer(ui->comboBox->itemText(1), ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
@@ -83,32 +84,32 @@ void FtpDialog::initConnectFtp()
     connect(ui->page4, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_compress);
     connect(ui->page5, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_compress);
     connect(ui->page6, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_compress);
-    connect(ui->page0, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page1, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page2, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page3, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page4, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page5, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
-    connect(ui->page6, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page0, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page1, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page2, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page3, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page4, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page5, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
+    connect(ui->page6, &FtpClientWidget::signal_unCompress, this, &FtpDialog::slot_unCompress);
 
-    connect(ui->page0, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page1, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page2, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page3, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page4, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page5, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
-    connect(ui->page6, &FtpClientWidget::signal_compress, this, &FtpDialog::slot_del);
+    connect(ui->page0, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page1, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page2, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page3, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page4, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page5, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
+    connect(ui->page6, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
 
     // 初始化管理员ftp;
 
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FtpDialog::slot_comboBoxChanged);
-    //if (common::bAdministrator) // 管理员;
-    //{
-    //    // 隐藏第二个标签页
-    //    ui->tabWidget->removeTab(1); // 移除 Tab 2
-    //  //  m_strDolwnloadText = QString::fromLocal8Bit("下载");
-    //}
-    //else
+    if (common::bAdministrator) // 管理员;
+    {
+        // 隐藏第二个标签页
+        ui->tabWidget->removeTab(1); // 移除 Tab 2
+      //  m_strDolwnloadText = QString::fromLocal8Bit("下载");
+    }
+    else
     {
         m_modelDownload = new QStandardItemModel();
         m_modelDownload->setColumnCount(11);
@@ -256,6 +257,16 @@ void FtpDialog::flushTableViewDownload()
     }
 }
 
+
+
+QByteArray  FtpDialog::serializeFtpUdpData(const st_udp& data)
+{
+    QByteArray byteArray;
+    QDataStream stream(&byteArray, QIODevice::WriteOnly);
+    stream << data.str1 << data.str2 << data.str3;
+    return byteArray;
+}
+
 void FtpDialog::slot_orderFinsh(int iFlag)
 {
     m_pGifDialog->close();
@@ -290,24 +301,26 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
 {
     struct sockaddr_in m_r_addr;
     m_r_addr.sin_family = AF_INET;
-    m_r_addr.sin_port = htons(10023);
+    m_r_addr.sin_port = htons(6667);
+   // inet_pton(AF_INET, "192.168.0.147", &m_r_addr.sin_addr.s_addr);
+
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
-
-
     st_udp stUdpData;
 
     if (bLinuxServer)
     {
-        stUdpData.strl = "Lcompress";
+        stUdpData.str1 = "Luncompress";
     }
     else
     {
-        stUdpData.strl = "Wcompress";
+        stUdpData.str1 = "Wcompress";
     }
     stUdpData.str2 = strArg1;
     stUdpData.str3 = strArg2;
+
+    QByteArray byteArray= serializeFtpUdpData(stUdpData);
   //  const char* sendData = order.toStdString().c_str();
-    int sendSize = m_pUDP->sendDataTo((const char*)&stUdpData, sizeof(stUdpData), (sockaddr*)&m_r_addr);
+    int sendSize = m_pUDP->sendDataTo(byteArray, byteArray.size(), (sockaddr*)&m_r_addr);
     if (sendSize <= 0)
     {
         qDebug() << " send compress order faleid";
@@ -321,10 +334,13 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->disconnect();
+            p->DisConnect();
         }
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);
+
+
+        slot_orderFinsh(1);
     }
 }
 
@@ -332,7 +348,7 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
 {
     struct sockaddr_in m_r_addr;
     m_r_addr.sin_family = AF_INET;
-    m_r_addr.sin_port = htons(10023);
+    m_r_addr.sin_port = htons(6667);
 
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
 
@@ -340,15 +356,16 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
 
     if (bLinuxServer)
     {
-        stUdpData.strl = "Luncompress";
+        stUdpData.str1 = "Luncompress";
     }
     else
     {
-        stUdpData.strl = "Wuncompress";
+        stUdpData.str1 = "Wuncompress";
     }
     stUdpData.str2 = strArg1;
- 
-    int sendSize = m_pUDP->sendDataTo((const char*)&stUdpData, sizeof(stUdpData), (sockaddr*)&m_r_addr);
+    QByteArray byteArray = serializeFtpUdpData(stUdpData);
+    //  const char* sendData = order.toStdString().c_str();
+    int sendSize = m_pUDP->sendDataTo(byteArray, byteArray.size(), (sockaddr*)&m_r_addr);
     if (sendSize <= 0)
     {
         qDebug() << " send uncompress order faleid";
@@ -362,11 +379,14 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->disconnect();
+            p->DisConnect();
            
         }
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);
+
+
+        slot_orderFinsh(1);
     }
    
 }
@@ -375,7 +395,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
 {
     struct sockaddr_in m_r_addr;
     m_r_addr.sin_family = AF_INET;
-    m_r_addr.sin_port = htons(10023);
+    m_r_addr.sin_port = htons(6667);
 
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
 
@@ -383,15 +403,17 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
 
     if (bLinuxServer)
     {
-        stUdpData.strl = "Ldel";
+        stUdpData.str1 = "Ldel";
     }
     else
     {
-        stUdpData.strl = "Wdel";
+        stUdpData.str1 = "Wdel";
     }
     stUdpData.str2 = strArg1;
 
-    int sendSize = m_pUDP->sendDataTo((const char*)&stUdpData, sizeof(stUdpData), (sockaddr*)&m_r_addr);
+    QByteArray byteArray = serializeFtpUdpData(stUdpData);
+    //  const char* sendData = order.toStdString().c_str();
+    int sendSize = m_pUDP->sendDataTo(byteArray, byteArray.size(), (sockaddr*)&m_r_addr);
     if (sendSize <= 0)
     {
         qDebug() << " send uncompress order faleid";
@@ -405,10 +427,12 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->disconnect();
+            p->DisConnect();
         }
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);
+
+        slot_orderFinsh(1);
     }
 }
 

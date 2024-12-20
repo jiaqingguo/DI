@@ -9,6 +9,7 @@ class QFtp;
 class CCtrlNetwork;
 class QStandardItemModel;
 class GifDialog;
+struct st_udp;
 
 namespace Ui {
 class FtpDialog;
@@ -24,6 +25,9 @@ public:
 
     void initConnectFtp();
     void flushTableViewDownload();
+
+    // ÐòÁÐ»¯º¯Êý
+    QByteArray serializeFtpUdpData(const st_udp& data);
 public slots:
     void slot_createUserDir(const QString strDirName);
     void slot_orderFinsh(int iFlag);

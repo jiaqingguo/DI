@@ -68,6 +68,8 @@ public:
     void updateNetWebViewShow(const QString& host);
 	void updateGpuWebViewShow(const QString& host);
     void getUdpData(Message_t* infor);
+signals:
+    void signal_udpOrderFinsh(int flag);
 private slots:
     void slot_modelItemChanged(QStandardItem* item);
     void slot_hostComboxChanged(const QString& text);

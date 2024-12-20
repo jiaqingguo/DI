@@ -720,10 +720,7 @@ namespace common
 
     }
 
-    std::string string_To_UTF8(const std::string& str)
-    {
-        return std::string();
-    }
+  
 
     void startDspExe(QString& strPath)
     {
