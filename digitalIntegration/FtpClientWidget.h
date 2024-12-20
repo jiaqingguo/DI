@@ -15,7 +15,7 @@
 class QLabel;
 class QTableWidgetItem;
 class QUrlInfo;
-class GifDialog;
+
 class CCtrlNetwork;
 class QMenu;
 
@@ -49,12 +49,14 @@ public:
 
 
     void ApprovalDownload(const QString &strName,const QString& strPath ,const bool &bDir);
+    void Connect();
+    void DisConnect();
 private:
     void createDir(const QString& strDirPath);
     void uploadDirectory(const QString& localDirPath, const QString& remoteDirPath);
    // void downloadDirectory(const QUrlInfo& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
     void downloadDirectory( QVector<QUrlInfo>& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
-    void setDisableUI();
+    void setDisableUI(const QString& str);
     void setAbleUI();
 public slots:
     void on_tbConnent_clicked();
@@ -87,9 +89,10 @@ public slots:
     void dataTransferProgress(qint64 readBytes, qint64 totalBytes);
     void slot_stateChanged(int state);
 signals:
-    void signal_ableUI(bool b);
-    void signal_compress(bool bLinuxServer, QString strIp, QString order);
-    void signal_unCompress(bool bLinuxServer, QString strIp, QString order);
+    void signal_ableUI(bool b,QString strMsg);
+    void signal_compress(bool bLinuxServer, QString strIp, QString strArg1, QString strArg2);
+    void signal_unCompress(bool bLinuxServer, QString strIp, QString strArg1);
+    void signal_del(bool bLinuxServer, QString strIp, QString strArg1);
 private:
     bool m_bLinuxFtpServer = false;
     QString m_strHostName;
@@ -147,7 +150,7 @@ private:
 
     QString m_strDolwnloadText = "…Í«Îœ¬‘ÿ";
     CCtrlNetwork* m_pUdp = nullptr;
-    GifDialog* m_pGifDialog = nullptr;
+   // GifDialog* m_pGifDialog = nullptr;
     QMenu   * m_pMenu = nullptr;
     QAction* m_actionPutFile = nullptr;
     QAction* m_actionGetFile = nullptr;

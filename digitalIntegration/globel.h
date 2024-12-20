@@ -197,6 +197,14 @@ const QString strQssGray = R"(
         }
     )";
 
+struct st_udp
+{
+
+	QString strl;//Lcompress\Wcompress\Luncompress\Wuncompress
+	QString str2;//要压缩的文件的路径\解压时的压缩包的路径
+	QString str3;//压缩包的路径
+};
+
 
 
 #define IDM_ABOUTBOX                    0x0010

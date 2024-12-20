@@ -14,10 +14,11 @@
 
 #include "Global.h"
 #include "common.h"
-#include "GifDialog.h"
+//#include "GifDialog.h"
 #include "CtrlNetwork.h"
 #include "common.h"
 #include "databaseDI.h"
+#include "qftp.h"
 
 FtpClientWidget::FtpClientWidget(QWidget* parent)
     : QWidget(parent)
@@ -27,7 +28,7 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     initVar();
     //   loadFmIni();
 
-    m_pGifDialog = new GifDialog();
+//    m_pGifDialog = new GifDialog();
     m_pUdp = new CCtrlNetwork;
     // m_pGifDialog->show();
    //  QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
@@ -48,10 +49,10 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     //   statusBar()->addWidget(&progress, width());
 
        // 信号槽
-    connect(&ftp, SIGNAL(listInfo(QUrlInfo)), SLOT(listInfo(QUrlInfo)));
-    connect(&ftp, SIGNAL(commandFinished(int, bool)), SLOT(commandFinished(int, bool)));
-    //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-    connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+    //connect(&ftp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+    //connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+    ////  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+    //connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
@@ -254,7 +255,7 @@ void FtpClientWidget::createUserDir(const QString& strDirName)
         m_ftpAdmin.login("shareadmin", "123456");
     }
 
-    m_ftpAdmin.mkdir(QString::fromLatin1(strDirName.toUtf8()));
+    m_ftpAdmin.mkdir(toFtpCodec(strDirName));
 }
 
 void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
@@ -264,11 +265,11 @@ void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
 
 QString FtpClientWidget::fromFtpCodec(const QString& str)
 {
-    if (m_bLinuxFtpServer)
+  /*  if (m_bLinuxFtpServer)
     {
-        return QString::fromUtf8(str.toUtf8()).toLatin1();
+        return QString::fromUtf8(str.()).toLatin1();
     }
-    else
+    else*/
     {
         QByteArray data = str.toLatin1();
         QTextCodec* codec = QTextCodec::codecForName("GBK");
@@ -281,14 +282,22 @@ QString FtpClientWidget::fromFtpCodec(const QString& str)
 
 QString FtpClientWidget::toFtpCodec(const QString& strLocal)
 {
-    if (m_bLinuxFtpServer)
+ /*   if (m_bLinuxFtpServer)
     {
-        return QString::fromLatin1(strLocal.toUtf8());
+        return toFtpCodec(strLocal.toUtf8());
     }
     else
     {
 
-    }
+    }*/
+    // 使用 GBK 编码器将 QString 转换为 GBK 编码的 QByteArray
+    QTextCodec* codec = QTextCodec::codecForName("GBK");
+    QByteArray gbkData = codec->fromUnicode(strLocal);
+
+    // 将 GBK 编码的 QByteArray 转换为 Latin1 编码的 QString
+    QString latin1String = QString::fromLatin1(gbkData);
+
+    return latin1String;
 }
 
 void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& strPath, const bool& bDir)
@@ -313,11 +322,11 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
         //m_downloadDirPath= 
         m_vecListInfo.clear();
 
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
-        m_pGifDialog->show();
+        //m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
+        //m_pGifDialog->show();
 
         m_bDownloadDir = true;
-        setDisableUI();
+        setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
         m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
         m_iDoloadDirCommandTotal++;
 
@@ -339,19 +348,36 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
         // 解决中文乱码问题
         QString  remoteDownloadDirPath = strPath;
         m_bDownloadDir = false;
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
-        m_pGifDialog->show();
+        setDisableUI(QString::fromLocal8Bit("正在下载文件"));
+      /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+        m_pGifDialog->show();*/
 
-        int id = ftp.get(QString::fromLatin1(remoteDownloadDirPath.toLocal8Bit()), file);
+        int id = ftp.get(toFtpCodec(remoteDownloadDirPath), file);
 
         m_mapFileDownload[id] = file;
     }
 }
 
+void FtpClientWidget::Connect()
+{
+    connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
+        connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
+        connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
+}
+
+void FtpClientWidget::DisConnect()
+{
+    disconnect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
+    disconnect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
+    disconnect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
+}
+
+
+
 void FtpClientWidget::createDir(const QString& strDirPath)
 {
    
-
+    
 }
 
 void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QString& m_loaclDownloadDirPath, const QString& m_remoteDownloadDirPath)
@@ -403,13 +429,13 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
     vecurlInfo.clear();
 }
 
-void FtpClientWidget::setDisableUI()
+void FtpClientWidget::setDisableUI(const QString& str)
 {
     disconnect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
     disconnect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
     disconnect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
 
-    emit signal_ableUI(false);
+    emit signal_ableUI(false, str);
 }
 
 void FtpClientWidget::setAbleUI()
@@ -417,7 +443,7 @@ void FtpClientWidget::setAbleUI()
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
     connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
     connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
-    emit signal_ableUI(true);
+    emit signal_ableUI(true, "");
 }
 
 void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString& remoteDirPath) 
@@ -427,7 +453,7 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
     // 创建远程目录
     QString remoteDir = remoteDirPath + "//" + localDir.dirName();
   //  ftp.mkdir(remoteDir); // 在 FTP 服务器上创建目录
-    ftp.mkdir(QString::fromLatin1(remoteDir.toUtf8()));
+    ftp.mkdir(toFtpCodec(remoteDir));
     m_iUploadDirCommandTotal++;
 
     // 上传所有文件
@@ -438,7 +464,7 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
         qDebug() << "Uploading file:" << filePath << "to" << remoteFilePath;
         QFile * pfile = new QFile(filePath);
 
-        int id=ftp.put(pfile, remoteFilePath); // 上传文件
+        int id=ftp.put(pfile, toFtpCodec(remoteFilePath)); // 上传文件
         m_iUploadDirCommandTotal++;
         m_mapFileUpload[id] = pfile;
     }
@@ -513,7 +539,7 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         listType["..."] = folderType();
 
         // 发送命令进入下一级，然后列出所有项
-        //ftp.cd(QString::fromLatin1(currentPath.toLocal8Bit()));
+        //ftp.cd(toFtpCodec(currentPath.()));
         ftp.cd(toFtpCodec(currentPath));
         ftp.list();
     }
@@ -571,9 +597,10 @@ void FtpClientWidget::onUpload()
     QString name = path.mid(path.lastIndexOf("/") + 1);
     path = QString("%1/%2").arg(currentPath).arg(name);
     m_bUploadDir = false;
-    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
-    m_pGifDialog->show();
-    int id= ftp.put(pfile, QString::fromLatin1(path.toUtf8()));
+    setDisableUI(QString::fromLocal8Bit("正在上传文件"));
+  /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
+    m_pGifDialog->show();*/
+    int id= ftp.put(pfile, toFtpCodec(path));
    
     m_mapFileUpload[id] = pfile;
 }
@@ -592,12 +619,12 @@ void FtpClientWidget::slot_UploadDir()
     }
   
     m_bUploadDir = true;
-    setDisableUI();
+    setDisableUI(QString::fromLocal8Bit("正在上传文件夹"));
     uploadPath = directory;
     uploadDirectory(directory,currentPath);
 
-    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件夹"));
-    m_pGifDialog->show();
+    //m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件夹"));
+  //  m_pGifDialog->show();
 
 }
 
@@ -625,10 +652,11 @@ void FtpClientWidget::onDownload()
         // 解决中文乱码问题
        path = QString("%1/%2").arg(currentPath).arg(name);
        m_bDownloadDir = false;
-       m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
-       m_pGifDialog->show();
+       setDisableUI(QString::fromLocal8Bit("正在下载文件"));
+   /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+       m_pGifDialog->show();*/
        
-       int id= ftp.get(QString::fromLatin1(path.toLocal8Bit()), file);
+       int id= ftp.get(toFtpCodec(path), file);
 
       
        m_mapFileDownload[id] = file;
@@ -665,11 +693,11 @@ void FtpClientWidget::slot_downloadDirectory()
             m_vecListInfo.clear();
 
 
-            m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
-            m_pGifDialog->show();
+           // m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件夹"));
+            //m_pGifDialog->show();
 
             m_bDownloadDir = true;
-            setDisableUI();
+            setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
             m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
             m_iDoloadDirCommandTotal++;
 
@@ -691,10 +719,11 @@ void FtpClientWidget::slot_downloadDirectory()
             // 解决中文乱码问题
             path = QString("%1/%2").arg(currentPath).arg(name);
             m_bDownloadDir = false;
-            m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
-            m_pGifDialog->show();
+            setDisableUI(QString::fromLocal8Bit("正在下载文件"));
+          /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+            m_pGifDialog->show();*/
 
-            int id = ftp.get(QString::fromLatin1(path.toLocal8Bit()), file);
+            int id = ftp.get(toFtpCodec(path), file);
 
 
             m_mapFileDownload[id] = file;
@@ -706,7 +735,7 @@ void FtpClientWidget::slot_downloadDirectory()
 
         table_DownloadApproval stDownloadApproval;
         stDownloadApproval.userID = common::iUserID;
-        //stDownloadApproval.filePath = dirPath.toLocal8Bit().toStdString();
+        //stDownloadApproval.filePath = dirPath.().toStdString();
         stDownloadApproval.filePath = remoteDownloadDirPath.toStdString();
         if (listPath[name])
         {
@@ -747,8 +776,8 @@ void FtpClientWidget::onCreateFolder()
    // // 创建目录 解决中文乱码问题
    // oldName = name;
    // createFolder = true;
-   // ftp.mkdir(QString::fromLatin1(oldName.toUtf8()));
-   //// ftp.mkdir(QString::fromLatin1(oldName.toLocal8Bit()));
+   // ftp.mkdir(toFtpCodec(oldName.()));
+   //// ftp.mkdir(toFtpCodec(oldName.()));
 
    // editRow = row;
    // listPath[oldName] = true;
@@ -787,8 +816,8 @@ void FtpClientWidget::slot_newDir()
     // 创建目录 解决中文乱码问题
 
     createFolder = true;
-    ftp.mkdir(QString::fromLatin1(name.toUtf8()));
-    // ftp.mkdir(QString::fromLatin1(name.toLocal8Bit()));
+   // ftp.mkdir(toFtpCodec(name.())); toFtpCodec
+    ftp.mkdir(toFtpCodec(name));
 
     listPath[name] = true;
     listType[name] = type;
@@ -817,7 +846,7 @@ void FtpClientWidget::slot_rename()
     m_iRenameRow = row;
     //m_strRename = ui->tableWidget->item(row, 0)->text();
 
-    ftp.rename(QString::fromLatin1(m_oldName.toUtf8()), QString::fromLatin1(m_strRename.toLocal8Bit()));
+    ftp.rename(toFtpCodec(m_oldName), toFtpCodec(m_strRename));
 
    
 
@@ -842,10 +871,14 @@ void FtpClientWidget::onRemove()
     {
         ftp.remove(toFtpCodec(name));
     }
+    QString strArg1 = currentPath + "/" + name;
+    emit signal_del(m_bLinuxFtpServer, m_strAddr, strArg1);
+   
 }
 
 void FtpClientWidget::onRefresh()
 {
+    m_pMenu->close();
     // 清除表格
     clear();
 
@@ -897,37 +930,7 @@ void FtpClientWidget::onInsertRow()
 
 void FtpClientWidget::closePersistentEditor()
 {
-  //  if (editRow < 0 || editRow >= ui->tableWidget->rowCount()) return;
-
-  //  QTableWidgetItem *item = ui->tableWidget->item(editRow, 0);
-  //  ui->tableWidget->closePersistentEditor(item);   // 关闭编辑
-
-  //  // 重命名
-  //  QString newname = ui->tableWidget->item(editRow, 0)->text();
-  //  for (int i = 0; i < ui->tableWidget->rowCount(); i++)
-  //  {
-  //      QString name = ui->tableWidget->item(i, 0)->text();
-  //      if ((name == newname) && (listType[oldName] == listType[newname]))
-  //      {
-  //          if (!createFolder)
-  //              //statusBar()->showMessage(QString::fromLocal8Bit("文件名已存在!"), 2000);
-
-  //          ui->tableWidget->item(editRow, 0)->setText(oldName);
-  //          editRow = -1;
-  //          createFolder = false;
-  //          return;
-  //      }
-  //  }
-
-  //  editRow = -1;
-  //  //QString::fromLatin1(oldName.toUtf8())
-  ////  ftp.rename(QString::fromLatin1(oldName.toLocal8Bit()),QString::fromLatin1(newname.toLocal8Bit()));
-  //  ftp.rename(QString::fromLatin1(oldName.toUtf8()), QString::fromLatin1(newname.toLocal8Bit()));
-
-  //  listPath[newname] = listPath[oldName];
-  //  listPath.remove(oldName);
-  //  listType[newname] = listType[oldName];
-  //  listType.remove(oldName);
+ 
 }
 
 void FtpClientWidget::slot_actionCompress()
@@ -938,7 +941,7 @@ void FtpClientWidget::slot_actionCompress()
 
 
     QString name = ui->tableWidget->item(row, 0)->text();
-    QString strPath = currentPath + "/" + name;
+    QString strArg1 = currentPath + "/" + name;
 
     QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("压缩"), QString::fromLocal8Bit("压缩包名称："));
     if (NewZipName.isEmpty())
@@ -947,11 +950,9 @@ void FtpClientWidget::slot_actionCompress()
     {
         NewZipName = NewZipName + ".zip";  // 添加 .zip 后缀
     }
-    QString  newZipPath = currentPath + "/" + NewZipName; 
- 
-  
-    QString strOrder = "compress "+ strPath + " "+ newZipPath;
-    emit signal_compress(m_bLinuxFtpServer,m_strAddr, strOrder);
+    QString  strArg2 = currentPath + "/" + NewZipName; 
+
+    emit signal_compress(m_bLinuxFtpServer, m_strAddr,strArg1, strArg2);
 }
 
 void FtpClientWidget::slot_actionUnCompress()
@@ -967,35 +968,9 @@ void FtpClientWidget::slot_actionUnCompress()
     }
     QString strPath = currentPath + "/" + name;
     QString strOrder = "unCompress " + strPath ;
-    emit signal_compress(m_bLinuxFtpServer, m_strAddr, strOrder);
+    emit signal_unCompress(m_bLinuxFtpServer, m_strAddr, strOrder);
 }
 
-std::string string_To_UTF82(const std::string& str)
-{
-    int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
-
-    wchar_t* pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴 
-    ZeroMemory(pwBuf, nwLen * 2 + 2);
-
-    ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);
-
-    int nLen = ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, -1, NULL, NULL, NULL, NULL);
-
-    char* pBuf = new char[nLen + 1];
-    ZeroMemory(pBuf, nLen + 1);
-
-    ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
-
-    std::string retStr(pBuf);
-
-    delete[]pwBuf;
-    delete[]pBuf;
-
-    pwBuf = NULL;
-    pBuf = NULL;
-
-    return retStr;
-}
 void FtpClientWidget::listInfo(QUrlInfo url)
 {
     if (m_bDownloadDir)
@@ -1005,8 +980,8 @@ void FtpClientWidget::listInfo(QUrlInfo url)
        
         return;
     }
-    QString str11111 = url.name();
-   // QString name = QString::fromUtf8(str11111.toUtf8()).toLatin1();
+  //  QString str11111 = url.name();
+
     QString name = fromFtpCodec(url.name());
  
     QString type = url.isDir() ? folderType() : fileType(name);
@@ -1110,13 +1085,14 @@ void FtpClientWidget::commandFinished(int id, bool err)
             if (m_iDoloadDirCommandTotal == 0)
             {
                 m_bDownloadDir = false;
-                m_pGifDialog->close();
+                onRefresh();
+                //m_pGifDialog->close();
                 setAbleUI();
             }
         }
         else // 下载文件
         {
-            m_pGifDialog->close();
+            //m_pGifDialog->close();
             setAbleUI();
         }
             //  statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("文件下载成功!"), 2000);
@@ -1136,7 +1112,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
                 if (m_iDoloadDirCommandTotal == 0) // 判断是否下载文件夹完成
                 {
                     m_bDownloadDir = false;
-                    m_pGifDialog->close();
+                  //  m_pGifDialog->close();
                     setAbleUI();
                 }
             }
@@ -1169,13 +1145,14 @@ void FtpClientWidget::commandFinished(int id, bool err)
             if (m_iUploadDirCommandTotal == 0) // 判断是否下载文件夹完成
             {
                 m_bUploadDir = false;
-                m_pGifDialog->close();
+                onRefresh();
+            //    m_pGifDialog->close();
                 setAbleUI();
             }
         }
         else  // 上传文件完成
         {
-            m_pGifDialog->close();
+         //   m_pGifDialog->close();
             setAbleUI();
         }
         if (!err)
@@ -1222,7 +1199,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
             if (m_iUploadDirCommandTotal == 0) // 判断是否上传文件夹完成
             {
                 m_bUploadDir = false;
-                m_pGifDialog->close();
+            //    m_pGifDialog->close();
                 setAbleUI();
             }
         }

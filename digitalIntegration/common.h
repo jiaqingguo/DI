@@ -59,6 +59,7 @@ namespace common
 	extern QString                  strFtpAccount;
 	extern QString                  strFtpPwd;
 	extern QString                  strFtpAdminPwd;
+	extern QString                  strAxCLSID;
 
 	void findIpWithGpuMinValue(table_ip_configure &stHost);
 
