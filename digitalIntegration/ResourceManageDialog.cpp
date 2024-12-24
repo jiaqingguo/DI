@@ -727,36 +727,57 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 
 			QDataStream stream(&datagram, QIODevice::ReadOnly);
 
+		
+
 			stream >> infor->host_name;
-			stream >> infor->host_ip1;
-			stream >> infor->host_ip2;
-			stream >> infor->Cpu_Message;
-			stream >> infor->Memory_Message;
-			stream >> infor->Disk_Message;
-			quint32 temp;
-			stream >> temp;
-			infor->Net_Message = static_cast<unsigned long>(temp);
-			stream >> infor->Gpu_Message;
 
-			addHostCpuElemnet(infor->host_name, infor->Cpu_Message);
-			addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
-			addHostDiskElemnet(infor->host_name, infor->Disk_Message);
-			addHostNetElemnet(infor->host_name, infor->Net_Message);
-			addHostGpuElemnet(infor->host_name, infor->Gpu_Message);
-
-			for (auto &myset : common::setHostData)
+			if (infor->host_name == "success" || infor->host_name == "false")
 			{
-				if (infor->host_ip1.toStdString() == myset.ip)
+				if(infor->host_name == "success")
 				{
-					myset.dGpuUsage = infor->Gpu_Message;
-					myset.dCpuUsage = infor->Cpu_Message;
+					emit  signal_udpOrderFinsh(1);
 				}
-				else if (infor->host_ip2.toStdString() == myset.ip)
+				else
 				{
-					myset.dGpuUsage = infor->Gpu_Message;
-					myset.dCpuUsage = infor->Cpu_Message;
+					emit  signal_udpOrderFinsh(0);
 				}
 			}
+			else
+			{
+				stream >> infor->host_ip1;
+				stream >> infor->host_ip2;
+				stream >> infor->Cpu_Message;
+				stream >> infor->Memory_Message;
+				stream >> infor->Disk_Message;
+				quint32 temp;
+				stream >> temp;
+				infor->Net_Message = static_cast<unsigned long>(temp);
+				stream >> infor->Gpu_Message;
+
+				addHostCpuElemnet(infor->host_name, infor->Cpu_Message);
+				addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
+				addHostDiskElemnet(infor->host_name, infor->Disk_Message);
+				addHostNetElemnet(infor->host_name, infor->Net_Message);
+				addHostGpuElemnet(infor->host_name, infor->Gpu_Message);
+
+				for (auto& myset : common::setHostData)
+				{
+					if (infor->host_ip1.toStdString() == myset.ip)
+					{
+						myset.dGpuUsage = infor->Gpu_Message;
+						myset.dCpuUsage = infor->Cpu_Message;
+					}
+					else if (infor->host_ip2.toStdString() == myset.ip)
+					{
+						myset.dGpuUsage = infor->Gpu_Message;
+						myset.dCpuUsage = infor->Cpu_Message;
+					}
+				}
+			}
+
+
+
+			
 			/*Command_t command;
 			command.str1 = "Wuncompress";
 			command.str2 = "user1//back.zip";

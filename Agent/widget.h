@@ -1,4 +1,4 @@
-#ifndef WIDGET_H
+﻿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
@@ -32,6 +32,14 @@ typedef struct _Message
     double Gpu_Message;
 }Message_t;
 
+//接收解压缩命令
+typedef struct _Com
+{
+	QString str1;//Lcompress\Wcompress\Luncompress\Wuncompress
+	QString str2;//要压缩的文件的路径\解压时的压缩包的路径
+	QString str3;//压缩包的路径
+}Command_t;
+
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -46,12 +54,16 @@ public:
 	//接收消息
 	void receive_mess();
 	//压缩
-	void compress_file(char buffer[1024]);
+	void compress_file(char buffer[1024],char buffer2[1024]);
 	//解压
-	void uncompress_file(char buffer[1024]);
-
+	void uncompress_file(char buffer[1024], char buffer2[1024]);
+	void delete_listFiles(std::string dir);
+	DWORD delete_dir(char fileName[]);
     void initGpu();
     double getGpuUsage();
+
+    // 发送指令结果;
+    void sendOrderResult(const bool &b, const QHostAddress& host,const quint16 & port);
 	QList<QPair<QHostAddress, quint16>> m_serverList;
 
 private:
@@ -61,6 +73,8 @@ private:
     QUdpSocket *UDPSocket = nullptr;
     CPerformHelper *perfmon= nullptr;
     PDH_FMT_COUNTERVALUE m_SystemValue = { 0 };
+	QHostAddress serverReplyAddress;
+	quint16 serverReplyPort = 8888;
 
 	char rbuff[1024];	//接收缓冲区
 	char sbuff[1024];	//发送缓冲区

@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	TCHAR password[] = TEXT("123456");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
 	TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
-	InitResource(userName, password, localDrive, remotePath);
+	//InitResource(userName, password, localDrive, remotePath);
 
     QApplication a(argc, argv);
     Widget w;

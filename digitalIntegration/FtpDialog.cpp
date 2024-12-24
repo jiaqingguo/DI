@@ -59,7 +59,7 @@ void FtpDialog::initConnectFtp()
         return;
     }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
-    ui->page0->connectToFtpServer(ui->comboBox->itemText(0),ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page0->connectToFtpServer(ui->comboBox->itemText(0),"192.168.1.101", common::strLoginUserName, common::strFtpPwd);
    // ui->page0->setIsLinuxFtpServer(true);
 
     ui->page1->connectToFtpServer(ui->comboBox->itemText(1), ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);

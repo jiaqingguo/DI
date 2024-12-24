@@ -21,8 +21,12 @@ public:
     void HwndListen();
 
     void InitResource(const std::string& str);
+
 private slots:
     void slot_btnOpenExplorer();
+    void slot_btnAppShow();
+    
+
 private:
     Ui::Widget *ui;
 

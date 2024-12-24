@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 LIBS += -liphlpapi
 LIBS += -lPdh
@@ -34,13 +34,29 @@ HEADERS += gethostinformation.h \
     Win32Utils/CWmiQueryHelper.h \
     ZipFunction.h \
     widget.h \
-    zip.h \
-    zipconf.h
+
 
 FORMS += \
     widget.ui
+
+
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libzip/lib/ -lzip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libzip/lib/ -lzip
+else:unix: LIBS += -L$$PWD/libzip/lib/ -lzip
+
+INCLUDEPATH += $$PWD/libzip/include
+DEPENDPATH += $$PWD/libzip/include
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/libzip/lib/zip.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/libzip/lib/zip.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/libzip/lib/zip.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/libzip/lib/zip.lib
+else:unix: PRE_TARGETDEPS += $$PWD/libzip/lib/zip.a

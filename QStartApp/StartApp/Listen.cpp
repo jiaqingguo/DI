@@ -2,6 +2,8 @@
 
 #include "Listen.h"
 
+#include <vector>
+
 #include <windows.h>
 #include <winnetwk.h>
 
@@ -127,6 +129,26 @@ BOOL CloseProcessByID(DWORD dwProcessId) {
 
 	CloseHandle(hProcess);
 	return bRet;
+}
+
+//获取子线程
+std::vector<DWORD> getChildProcesses(DWORD processId)
+{
+	std::vector<DWORD> out;
+	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	PROCESSENTRY32 pe32;
+	pe32.dwSize = sizeof(PROCESSENTRY32);
+
+	if (Process32First(hSnapShot, &pe32)) {
+		do {
+			if (pe32.th32ParentProcessID == processId) {
+				std::cout << "子进程ID: " << pe32.th32ProcessID << L", 进程名: " << pe32.szExeFile << std::endl;
+				out.push_back(pe32.th32ProcessID);
+			}
+		} while (Process32Next(hSnapShot, &pe32));
+	}
+	CloseHandle(hSnapShot);
+	return out;
 }
 
 //获取子进程 这里我直接把关闭进程函数放进去了 获取完直接关闭
@@ -268,7 +290,6 @@ bool Listen::init()
 	}
 
 	//3.接受或者发送数据recvfrom, sendto ,不同于TCP的 recv与 send
-	int   ret = -1;
 	memset(&_addrClient, 0, sizeof(_addrClient));
 	return 1;
 }
@@ -358,6 +379,60 @@ void Listen::startProgram(const std::string& strPath)
 
 }
 
+void Listen::startProgramFromBat(const std::string& strPath)
+{
+
+	int index = strPath.rfind("\\");
+	if(index==-1)
+		index = strPath.rfind("/");
+
+	std::string directory = strPath.substr(0, index+1);
+
+	// 定义并初始化SHELLEXECUTEINFO结构体
+	SHELLEXECUTEINFO sei = { 0 };
+	sei.cbSize = sizeof(SHELLEXECUTEINFO);
+	sei.fMask = SEE_MASK_NOCLOSEPROCESS;  // 设置该标志位以获取进程句柄
+	sei.lpFile = TEXT(strPath.c_str());  // 要打开的应用程序路径
+	sei.lpDirectory = directory.c_str();
+	// 使用ShellExecuteEx函数打开应用程序
+	if (ShellExecuteEx(&sei))
+	{
+		// 获取进程ID
+		DWORD pid = GetProcessId(sei.hProcess);
+		
+		std::vector<DWORD> dwProcessIds = getChildProcesses(pid);
+		if (dwProcessIds.size()>0)
+		{
+			Sleep(2000);//给时间启动窗口
+			DWORD tmpId = dwProcessIds[0];//第一次拿倒的ID不是启动程序的ID
+			while (!::isExistProcess(tmpId))
+			{
+				dwProcessIds = getChildProcesses(pid);
+				if (tmpId != dwProcessIds[0])//当ID发生改变获取ID并跳出循环
+				{
+					tmpId = dwProcessIds[0];
+					std::cout << "_dwProcessId ID: " << tmpId  << std::endl;
+					break;
+				}
+				tmpId = dwProcessIds[0];
+			}
+
+			_dwProcessId = tmpId;
+		}
+		
+		// 输出进程ID
+		std::cout << "Process ID: " << pid << std::endl;
+		// 关闭进程句柄
+		//CloseHandle(sei.hProcess);
+	}
+	else
+	{
+		// 打开应用程序失败
+		std::cout << "Failed to open application." << std::endl;
+	}
+
+}
+
 void Listen::hwndListen()
 {
 	bool isWindow = false;//应用程序是否在启动时已经打开窗口
@@ -422,6 +497,12 @@ void Listen::hwndListen()
 	::exit(0);
 }
 
+void Listen::showProgram()
+{
+	if (_currentHWND != 0)
+		ShowWindow(_currentHWND, SW_SHOWNORMAL);
+}
+
 void Listen::closeProgram()
 {
 	if (_currentHWND != 0)
@@ -448,7 +529,7 @@ void Listen::InitResource(const TCHAR* userName, const TCHAR* password, const TC
 	net_Resource.lpProvider = NULL;
 	net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // 共享资源的路径
 
-	DWORD dwFlags = CONNECT_UPDATE_PROFILE;
+	//DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
 	// 取消已有连接
 	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);

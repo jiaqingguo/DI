@@ -23,6 +23,11 @@ public:
 	void startProgram(const std::string& strPath);
 
 	/*
+	* 通过脚本启动程序
+	*/
+	void startProgramFromBat(const std::string& strPath);
+
+	/*
 	* 监听启动程序主窗口变化（例如：VS启动时首先启动的程序的启动页，所以获取的窗口句柄是启动页句柄）
 	*/
 	void hwndListen();
@@ -31,6 +36,12 @@ public:
 	* 关闭当前启动的程序
 	*/
 	void closeProgram();
+
+
+	/*
+	* 显示当前启动的程序
+	*/
+	void showProgram();
 
 	void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath);
 	void CancleResource();

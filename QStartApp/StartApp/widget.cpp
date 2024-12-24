@@ -7,9 +7,11 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // 移除最大最小化按钮
     ui->setupUi(this);
     m_pListen = new Listen;
     connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
+    connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
   
 
 }
@@ -23,7 +25,17 @@ Widget::~Widget()
 
 void Widget::StartProgram(const std::string& strPath)
 {
-    m_pListen->startProgram(strPath);
+    int index = strPath.rfind(".");
+    std::string suffix = strPath.substr(index+1, strPath.size());
+    if (suffix == "exe")
+    {
+        m_pListen->startProgram(strPath);
+    }
+    else if (suffix == "bat")
+    {
+        m_pListen->startProgramFromBat(strPath);
+    }
+    
 
     //auto boundFunction = std::bind(&Listen::startProgram, strPath,m_pListen);
     //std::thread t(boundFunction);
@@ -72,4 +84,9 @@ void Widget::slot_btnOpenExplorer()
 
     // 打开文件资源管理器，显示C盘根目录
    // ShellExecute(NULL, "open", "explorer.exe", "C:\\", NULL, SW_SHOW);
+}
+
+void Widget::slot_btnAppShow()
+{
+    m_pListen->showProgram();
 }

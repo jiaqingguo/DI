@@ -1,8 +1,9 @@
-#include "widget.h"
+﻿#include "widget.h"
 #include "ui_widget.h"
 #include <cmath>
 
 #include <qdebug.h>
+#include <QFileInfo>
 
 #include "Win32Utils/CDeviceHelper.h"
 #include "Win32Utils/CWmiQueryHelper.h"
@@ -10,6 +11,21 @@
 #include "Win32Utils/CStrUtils.h"
 #include "CPerformHelper.h"
 #include "ZipFunction.h"
+
+#pragma warning(disable : 4996) 
+#include "Winsock.h"
+#undef  UNICODE
+#include "windows.h"
+#include <iostream>
+#include <string>
+
+#include <io.h>
+#include <direct.h>
+#include <string>
+#include <tchar.h>
+#include <WinNetWk.h>
+#include <stdio.h>
+
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -19,7 +35,7 @@ Widget::Widget(QWidget *parent)
 	, ui(new Ui::Widget)
 {
 	ui->setupUi(this);
-	setWindowTitle("代理");
+	setWindowTitle(QString::fromLocal8Bit("代理"));
 
 	//用于获取主机的信息
 	this->my_timer = new QTimer();
@@ -131,6 +147,31 @@ double Widget::getGpuUsage()
 	return 0.0;
 }
 
+void Widget::sendOrderResult(const bool& b, const QHostAddress& host, const quint16& port)
+{
+	if (!b)
+	{
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("false", host, port);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
+	//	cout << "删除文件夹：" << buff << "失败" << endl;
+
+	}
+	else
+	{
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("success", host, port);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
+	//	cout << "删除文件夹：" << buff << "成功" << endl;
+	}
+}
+
 
 void Widget::get_file_information()
 {
@@ -192,13 +233,13 @@ void Widget::slot_useUdp()
 	 // 检查是否是IPv4地址
 	 //if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) 
 	{
-		//message->host_ip1 = listAdress[0].toString();
-		//message->host_ip2 = listAdress[1].toString();
-		message->host_ip1 = listAdress[2].toString();
+		message->host_ip1 = listAdress[0].toString();
+		message->host_ip2 = listAdress[1].toString();
+		/*message->host_ip1 = listAdress[2].toString();
 		message->host_ip2 = listAdress[3].toString();
 
 		ui->textEdit->append(listAdress[2].toString());
-		ui->textEdit->append(listAdress[3].toString());
+		ui->textEdit->append(listAdress[3].toString());*/
 	}
 	// }
 	 //qDebug()<<message->host_ip;
@@ -241,11 +282,6 @@ void Widget::slot_useUdp()
 
 
 	qint64 ret;
-	//bool result = UDPSocket->bind(QHostAddress::AnyIPv4,8888,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-	//if(!result)
-	{
-		//qDebug() << "Failed to bind port" << UDPSocket->errorString();
-	}
 	for (const auto &server : m_serverList)
 	{
 		ret = UDPSocket->writeDatagram(dataGram, server.first, server.second);
@@ -257,7 +293,7 @@ void Widget::slot_useUdp()
 		}
 		else {
 			// 发送成功
-			qDebug() << "Bytes sent:" << ret;
+			//qDebug() << "Bytes sent:" << ret;
 			ui->textEdit->append(QString::number(ret));
 		}
 
@@ -279,34 +315,129 @@ void Widget::slot_useUdp()
 
 void Widget::receive_mess()
 {
-
+	
 	connect(UDPSocket, &QUdpSocket::readyRead, [this]() {
 		while (UDPSocket->hasPendingDatagrams())
 		{
 			QByteArray receivedDatagram;
 			receivedDatagram.resize(UDPSocket->pendingDatagramSize());
-			QHostAddress serverReplyAddress;
-			quint16 serverReplyPort;
-
+			//serverReplyAddress.setAddress("192.168.0.129");
+			//bool result = UDPSocket->bind(, serverReplyPort,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+			/*if(!result)
+			{
+				qDebug() << "Failed to bind port" << UDPSocket->errorString();
+			}*/
+			 
+			//char *buffer = nullptr;
 			qint64 bytesReceived = UDPSocket->readDatagram(receivedDatagram.data(), receivedDatagram.size(), &serverReplyAddress, &serverReplyPort);
 			if (bytesReceived > 0)
 			{
-				qDebug() << receivedDatagram.data();
-
 				QDataStream stream(&receivedDatagram, QIODevice::ReadOnly);
-				//stream >>
-
-				QString message = QString::fromLocal8Bit(receivedDatagram);
-				QByteArray byteArray = message.toLocal8Bit();
+				Command_t command;
+				stream >> command.str1;
+				stream >> command.str2;
+				stream >> command.str3;
+				qDebug() << "000" << receivedDatagram.size();
+				qDebug() << "111111111111111 :" << command.str1;
+				qDebug() << "22222 :" << command.str2;
+				qDebug() << "333333 :" << command.str3;
+				//QString message = QString::fromLocal8Bit(receivedDatagram);
+				QByteArray byteArray = command.str1.toLocal8Bit();
 				char cstrCopy[1024];
 				strcpy(cstrCopy, byteArray.data());
-				if (strncmp(cstrCopy, "compress", 8) == 0)
+				if (strcmp(cstrCopy, "Lcompress") == 0)
 				{
-					compress_file(cstrCopy + 9);
+					QString str1 = "Y:/share/" + command.str2 ;
+					QString str2 = "Y:/share/" + command.str3;
+					QByteArray byte1 = str1.toLocal8Bit();
+					QByteArray byte2 = str2.toLocal8Bit();
+					char cstr1[1024];
+					char cstr2[1024];
+					strcpy(cstr1, byte1.data());
+					strcpy(cstr2, byte2.data());
+					compress_file(cstr1,cstr2);
 				}
-				else if (strncmp(cstrCopy, "uncompress", 10) == 0)
+				else if (strcmp(cstrCopy, "Wcompress") == 0)
 				{
-					uncompress_file(cstrCopy + 11);
+					QString str1 = "D:" + command.str2;
+					QString str2 = "D:" + command.str3;
+					QByteArray byte1 = str1.toLocal8Bit();
+					QByteArray byte2 = str2.toLocal8Bit();
+					char cstr1[1024];
+					char cstr2[1024];
+					strcpy(cstr1, byte1.data());
+					strcpy(cstr2, byte2.data());
+					compress_file(cstr1,cstr2);
+					
+				}
+				else if (strcmp(cstrCopy, "Luncompress") == 0)
+				{
+					QString str1 = "Y:/share/" + command.str2;
+					QString str2 = "Y:/share/" + command.str3;
+					QByteArray byte1 = str1.toLocal8Bit();
+					QByteArray byte2 = str2.toLocal8Bit();
+					char cstr1[1024];
+					char cstr2[1024];
+					strcpy(cstr1, byte1.data());
+					strcpy(cstr2, byte2.data());
+					uncompress_file(cstr1,cstr2);
+					
+				}
+				else if (strcmp(cstrCopy, "Wuncompress") == 0)
+				{
+					QString str1 = "D:" + command.str2;
+					QString str2 = "D:" + command.str3;
+					QByteArray byte1 = str1.toLocal8Bit();
+					QByteArray byte2 = str2.toLocal8Bit();
+					char cstr1[1024];
+					char cstr2[1024];
+					strcpy(cstr1, byte1.data());
+					strcpy(cstr2, byte2.data());
+					uncompress_file(cstr1,cstr2);
+					
+				}
+				else if (strcmp(cstrCopy, "Ldel") == 0)
+				{
+					QString str1 = "Y:" + command.str2;
+				}
+				else if (strcmp(cstrCopy, "Wdel") == 0)
+				{
+					QString str1 = "D:" + command.str2;
+					QFileInfo fileInfo(str1);
+					if (fileInfo.isFile())
+					{
+						char buff[260];
+						strcpy(buff, str1.toStdString().c_str());
+						delete_dir(buff);
+					}
+					else if (fileInfo.isDir())
+					{
+						char buff[260]; 
+						strcpy(buff,str1.toStdString().c_str());
+						delete_listFiles(buff);
+						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
+						if (!flag)
+						{
+							int ret = 0;
+							ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+							if (ret == -1)
+							{
+								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+							}
+							cout << "删除文件夹：" << buff << "失败" << endl;
+
+						}
+						else
+						{
+							int ret = 0;
+							ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+							if (ret == -1)
+							{
+								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+							}
+							cout << "删除文件夹：" << buff << "成功" << endl;
+						}
+					}
 				}
 			}
 			else
@@ -318,25 +449,25 @@ void Widget::receive_mess()
 	});
 }
 
-void Widget::compress_file(char buffer[1024])
+void Widget::compress_file(char buffer[1024],char buffer2[1024])
 {
 	std::vector<fs::path> paths;
 	std::string strZipPath;
-	char* ptr = buffer;
+	//char* ptr = buffer;
 	// 创建一个空的字符串来存储结果
-	std::string result;
-	while (*ptr != ' ')
-	{
-		result += *ptr; // 将字符添加到结果字符串
-		++ptr; // 移动指针到下一个字符	
-	}
-	paths.push_back(result);
-	ptr++;
-	if (strncmp(ptr, "compress-zipname", 16) == 0)
+	//std::string result;
+	//while (*ptr != ' ')
+	//{
+		//result += *ptr; // 将字符添加到结果字符串
+		//++ptr; // 移动指针到下一个字符	
+	//}
+	paths.push_back(buffer);
+	//ptr++;
+	//if (strncmp(ptr, "compress-zipname", 16) == 0)
 	{
 		char zipPath[1024] = { 0 };
 
-		strcpy(zipPath, ptr + 17);
+		strcpy(zipPath, buffer2);
 		strZipPath = zipPath;
 	}
 
@@ -347,37 +478,49 @@ void Widget::compress_file(char buffer[1024])
 	{
 		sprintf(sbuff, "compress-ok");
 		//send(sockServer, sbuff, strlen(sbuff), 0);
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
 	}
 	else
 	{
 		sprintf(sbuff, "compress-false");
 		//send(sockServer, sbuff, strlen(sbuff), 0);
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
 	}
 	cout << "compress 执行结束" << endl;
 }
 
-void Widget::uncompress_file(char buffer[1024])
+void Widget::uncompress_file(char buffer[1024],char buffer2[1024])
 {
 	std::vector<fs::path> paths;
 	//std::string strZipPath;
 	//char buffer[1024];
-	while (1)
+	//while (buffer != '\0')
 	{
-		memset(buffer, '\0', sizeof(buffer));
+		//memset(buffer, '\0', sizeof(buffer));
 		//int recvSize = recv(sockServer, buffer, sizeof(buffer), 0);
 		//if (recvSize == -1)
-		{
+		//{
 			//std::cout << "客户端已退出 ！！！！！！！！！\n";
 			//return;
-		}
-		if (strncmp(buffer, "uncompress-paths-end", 20) == 0)
-		{
+		//}
+		//if (strcmp(buffer2, "over") == 0)
+		//{
 			/*char zipPath[1024] = { 0 };
 
 			strcpy(zipPath, buffer + 17);
 			strZipPath = zipPath;*/
-			break;
-		}
+			//break;
+		//}
 		//std::string  strPath(buffer);
 		paths.push_back(buffer);
 	}
@@ -396,9 +539,15 @@ void Widget::uncompress_file(char buffer[1024])
 
 	}
 
-	memset(sbuff, '\0', sizeof(sbuff));
-	sprintf(sbuff, "uncompress-ok");
+	//memset(sbuff, '\0', sizeof(sbuff));
+	//sprintf(sbuff, "uncompress-ok");
 	//send(sockServer, sbuff, strlen(sbuff), 0);
+	int ret = 0;
+	ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+	if (ret == -1)
+	{
+		qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+	}
 	cout << "uncompress 执行结束" << endl;
 }
 
@@ -415,4 +564,80 @@ void Widget::cancel_mapping()
 	net_Resource.lpProvider = NULL;
 	net_Resource.lpRemoteName = const_cast<TCHAR*>(TEXT("\\\\192.168.10.240\\share")); // 共享资源的路径
 	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
+}
+
+void Widget::delete_listFiles(std::string dir)
+{
+	//在目录后面加上"\\*.*"进行第一次搜索
+	string newDir = dir + "\\*.*";
+	//用于查找的句柄
+	intptr_t handle;
+	struct _finddata_t fileinfo;
+	//第一次查找
+	handle = _findfirst(newDir.c_str(), &fileinfo);
+
+	if (handle == -1) {
+		cout << "无文件" << endl;
+		//	system("pause");
+		return;
+	}
+
+	do
+	{
+		if (fileinfo.attrib & _A_SUBDIR) {//如果为文件夹，加上文件夹路径，再次遍历
+			if (strcmp(fileinfo.name, ".") == 0 || strcmp(fileinfo.name, "..") == 0)
+				continue;
+
+			// 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
+			newDir = dir + "\\" + fileinfo.name;
+			delete_listFiles(newDir.c_str());//先遍历删除文件夹下的文件，再删除空的文件夹
+			cout << newDir.c_str() << endl;
+			if (_rmdir(newDir.c_str()) == 0) {//删除空文件夹
+				cout << "delete empty dir success" << endl;
+			}
+			else {
+				cout << "delete empty dir error" << endl;
+			}
+		}
+		else {
+			string file_path = dir + "\\" + fileinfo.name;
+			cout << file_path.c_str() << endl;
+			if (remove(file_path.c_str()) == 0) //删除文件
+			{
+				cout << "delete file success" << endl;
+			}
+			else 
+			{
+				cout << "delete file error" << endl;
+			}
+		}
+	} while (!_findnext(handle, &fileinfo));
+
+	_findclose(handle);
+	return;
+}
+DWORD Widget::delete_dir(char fileName[])
+{
+	if (remove(fileName) == 0)
+	{
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
+		cout << "删除成功" << endl;
+		return 1;
+	}
+	else
+	{
+		int ret = 0;
+		ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+		if (ret == -1)
+		{
+			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+		}
+		cout << "删除失败" << endl;
+		return 0;
+	}
 }
