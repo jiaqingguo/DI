@@ -1,6 +1,8 @@
 #pragma once
 #include "pch.h"
 
+#define ServerName "AppStartServer"
+
 class Listen
 {
 public:

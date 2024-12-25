@@ -22,14 +22,16 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 		char WindowTitle[100] = { 0 };
 		//wchar_t WindowTitle[100] = { 0 };
 		::GetWindowText(hWnd, WindowTitle, 100);
-		//printf("-------------------------------------------\n");
-		//printf("%d: %s\n", Pnum, WindowTitle);
 
+		std::string strTitle = WindowTitle;
 		DWORD lpdwProcessId;
 		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
-		if (lpdwProcessId == lParam)
+		if (lpdwProcessId == lParam && (strTitle!=""&& strTitle != ServerName))//可能会造成窗口句柄错误或者获取冲突
 		{
 			g_CurrentHWND = hWnd;
+			printf("-------------------------------------------\n");
+			printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
+			return false;
 		}
 	}
 	return true;
@@ -193,7 +195,7 @@ HWND getMainHWND(DWORD dword)
 {
 	g_CurrentHWND = 0;
 	::EnumWindows(EnumWindowsProc, dword);
-	std::cerr << "EnumWindows:" << std::endl;
+	std::cerr << "EnumWindows:" << g_CurrentHWND<< std::endl;
 	return g_CurrentHWND;
 }
 
@@ -372,6 +374,8 @@ void Listen::startProgram(const std::string& strPath)
 			std::cerr << "Failed to start application......" << std::endl;
 		}
 		CLOSE_HANDLE(pi)
+
+		_currentHWND = getMainHWND(_dwProcessId);
 	}
 
 	if (!isStart)
@@ -421,6 +425,7 @@ void Listen::startProgramFromBat(const std::string& strPath)
 			}
 		}
 		
+
 		// 输出进程ID
 		std::cout << "Process ID: " << _dwProcessId << std::endl;
 		// 关闭进程句柄
@@ -460,7 +465,7 @@ void Listen::hwndListen()
 				{
 					time = 0;
 					::Sleep(100);
-					//::ShowWindow(_currentHWND, SW_MAXIMIZE);
+					::ShowWindow(_currentHWND, SW_SHOWMAXIMIZED);
 					std::cerr << "Window HWND:" << _currentHWND <<  "  " << _dwProcessId << std::endl;
 				}
 				else
@@ -500,20 +505,13 @@ void Listen::hwndListen()
 
 void Listen::showProgram()
 {
-	HWND currentHWND = getMainHWND(_dwProcessId);
-	if (currentHWND != 0)
-	{
-		if (::ShowWindow(currentHWND, SW_RESTORE))
-		{
-			std::cerr << "Sub Window HWND:" << currentHWND << " " << _dwProcessId << " Success_1" << std::endl;
 
-		}
-		else
+	if (_currentHWND != 0)
+	{
+		if (::ShowWindow(_currentHWND, SW_SHOWMAXIMIZED))
 		{
-			std::cerr << "Sub Window HWND:" << currentHWND << " " << _dwProcessId << " Failed_1" << std::endl;
+			printf("Sub Window HWND:%d \n", _currentHWND);
 		}
-		//RedrawWindow(currentHWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
-		//UpdateWindow(currentHWND);
 	}
 	else
 	{
@@ -522,22 +520,15 @@ void Listen::showProgram()
 		{
 			for (size_t i = 0; i < dwProcessIds.size(); i++)
 			{
-				_currentHWND = getMainHWND(dwProcessIds[i]);
-				if (_currentHWND != 0) 
+				HWND currentHWND = getMainHWND(dwProcessIds[i]);
+				if (currentHWND != 0)
 				{
-					//if (::ShowWindow(currentHWND, SW_RESTORE))
-					if(PostMessage(_currentHWND, WM_SYSCOMMAND, SC_RESTORE, 0))
+					if (::ShowWindow(currentHWND, SW_SHOWMAXIMIZED))
 					{
-						std::cerr << "Sub Window HWND:" << _currentHWND << " " << dwProcessIds[i] << " Success_2" << std::endl;
-					}
-					else
-					{
-						std::cerr << "Sub Window HWND:" << _currentHWND << " " << dwProcessIds[i] << " Failed_2" << std::endl;
+						printf("Sub Window HWND:%d \n", _currentHWND);
 					}
 				}
 			}
-			//RedrawWindow(_currentHWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
-			//UpdateWindow(_currentHWND);
 		}
 	}
 }
