@@ -265,11 +265,11 @@ void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
 
 QString FtpClientWidget::fromFtpCodec(const QString& str)
 {
-  /*  if (m_bLinuxFtpServer)
+    if (m_bLinuxFtpServer)
     {
         return QString::fromUtf8(str.()).toLatin1();
     }
-    else*/
+    else
     {
         QByteArray data = str.toLatin1();
         QTextCodec* codec = QTextCodec::codecForName("GBK");
@@ -282,22 +282,22 @@ QString FtpClientWidget::fromFtpCodec(const QString& str)
 
 QString FtpClientWidget::toFtpCodec(const QString& strLocal)
 {
- /*   if (m_bLinuxFtpServer)
+    if (m_bLinuxFtpServer)
     {
         return toFtpCodec(strLocal.toUtf8());
     }
     else
     {
+       // 使用 GBK 编码器将 QString 转换为 GBK 编码的 QByteArray
+       QTextCodec* codec = QTextCodec::codecForName("GBK");
+       QByteArray gbkData = codec->fromUnicode(strLocal);
 
-    }*/
-    // 使用 GBK 编码器将 QString 转换为 GBK 编码的 QByteArray
-    QTextCodec* codec = QTextCodec::codecForName("GBK");
-    QByteArray gbkData = codec->fromUnicode(strLocal);
+       // 将 GBK 编码的 QByteArray 转换为 Latin1 编码的 QString
+       QString latin1String = QString::fromLatin1(gbkData);
 
-    // 将 GBK 编码的 QByteArray 转换为 Latin1 编码的 QString
-    QString latin1String = QString::fromLatin1(gbkData);
-
-    return latin1String;
+       return latin1String;
+    }
+   
 }
 
 void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& strPath, const bool& bDir)

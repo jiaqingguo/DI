@@ -454,7 +454,7 @@ void Widget::receive_mess()
 					if (fileInfo.isDir())
 					{
 						char buff[260]; 
-						strcpy(buff,str1.toStdString().c_str());
+						strcpy(buff, str1.toLocal8Bit().toStdString().c_str());
 						delete_listFiles(buff);
 						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
 						if (!flag)
