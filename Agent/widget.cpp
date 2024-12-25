@@ -401,16 +401,11 @@ void Widget::receive_mess()
 				{
 					QString str1 = "Y:/share" + command.str2;
 					QFileInfo fileInfo(str1);
-					if (fileInfo.isFile())
+
+					if (fileInfo.isDir())
 					{
 						char buff[260];
-						strcpy(buff, str1.toStdString().c_str());
-						delete_file(buff);
-					}
-					else if (fileInfo.isDir())
-					{
-						char buff[260];
-						strcpy(buff, str1.toStdString().c_str());
+						strcpy(buff, str1.toLocal8Bit().toStdString().c_str());
 						delete_listFiles(buff);
 						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
 						if (!flag)
@@ -443,18 +438,24 @@ void Widget::receive_mess()
 							cout << "删除文件夹：" << buff << "成功" << endl;
 						}
 					}
+					else
+					{
+						char buff[260];
+						strcpy(buff, str1.toStdString().c_str());
+						delete_file(buff);
+					}
 				
 				}
 				else if (strcmp(cstrCopy, "Wdel") == 0)
 				{
 					QString str1 = "D:/share" + command.str2;
-					cout << "删除的文件的路径：" << str1.toStdString();
+					//cout << "删除的文件的路径：" << str1.toStdString();
 					QFileInfo fileInfo(str1);
 					
 					if (fileInfo.isDir())
 					{
 						char buff[260]; 
-						strcpy(buff, str1.toLocal8Bit().toStdString().c_str());
+						strcpy(buff,str1.toLocal8Bit().toStdString().c_str());
 						delete_listFiles(buff);
 						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
 						if (!flag)
@@ -493,6 +494,7 @@ void Widget::receive_mess()
 						strcpy(buff, str1.toStdString().c_str());
 						delete_file(buff);
 					}
+
 				}
 
 			}
@@ -665,12 +667,12 @@ void Widget::delete_listFiles(std::string dir)
 			delete_listFiles(newDir.c_str());//先遍历删除文件夹下的文件，再删除空的文件夹
 			cout << newDir.c_str() << endl;
 			if (_rmdir(newDir.c_str()) == 0) {//删除空文件夹
-				QString data = "success";
+				/*QString data = "success";
 				QByteArray dataGram;
 				QDataStream stream(&dataGram, QIODevice::WriteOnly);
 				stream << data;
 				int ret = 0;
-				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);*/
 				cout << "delete empty dir success" << endl;
 			}
 			else {
