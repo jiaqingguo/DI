@@ -58,7 +58,7 @@ public:
 	//解压
 	void uncompress_file(char buffer[1024], char buffer2[1024]);
 	void delete_listFiles(std::string dir);
-	DWORD delete_dir(char fileName[]);
+	DWORD delete_file(char fileName[]);
     void initGpu();
     double getGpuUsage();
 
@@ -71,10 +71,11 @@ private:
 
     QTimer *my_timer = nullptr;
     QUdpSocket *UDPSocket = nullptr;
+	Message_t *message = nullptr;
     CPerformHelper *perfmon= nullptr;
     PDH_FMT_COUNTERVALUE m_SystemValue = { 0 };
 	QHostAddress serverReplyAddress;
-	quint16 serverReplyPort = 8888;
+	quint16 serverReplyPort;
 
 	char rbuff[1024];	//接收缓冲区
 	char sbuff[1024];	//发送缓冲区
