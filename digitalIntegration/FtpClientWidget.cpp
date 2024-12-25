@@ -284,7 +284,7 @@ QString FtpClientWidget::toFtpCodec(const QString& strLocal)
 {
     if (m_bLinuxFtpServer)
     {
-        return toFtpCodec(strLocal.toUtf8());
+        return QString::fromLatin1(strLocal.toUtf8());
     }
     else
     {
@@ -449,7 +449,7 @@ void FtpClientWidget::setAbleUI()
 void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString& remoteDirPath) 
 {
     QDir localDir(localDirPath);
-
+   
     // 创建远程目录
     QString remoteDir = remoteDirPath + "//" + localDir.dirName();
   //  ftp.mkdir(remoteDir); // 在 FTP 服务器上创建目录
@@ -596,6 +596,12 @@ void FtpClientWidget::onUpload()
     // 解决中文乱码问题
     QString name = path.mid(path.lastIndexOf("/") + 1);
     path = QString("%1/%2").arg(currentPath).arg(name);
+
+    if (listPath.contains(name))
+    {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("文件已存在，请先删除"));
+        return;
+    }
     m_bUploadDir = false;
     setDisableUI(QString::fromLocal8Bit("正在上传文件"));
   /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
@@ -618,6 +624,14 @@ void FtpClientWidget::slot_UploadDir()
         return;
     }
   
+
+    QDir localDir(directory);
+    if (listPath.contains(localDir.dirName()))
+    {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("目录已存在，请先删除"));
+        return;
+    }
+
     m_bUploadDir = true;
     setDisableUI(QString::fromLocal8Bit("正在上传文件夹"));
     uploadPath = directory;
@@ -1157,11 +1171,12 @@ void FtpClientWidget::commandFinished(int id, bool err)
         {
          //   m_pGifDialog->close();
             setAbleUI();
+            onRefresh();
         }
-        if (!err)
+        /*if (!err)
         {
             onInsertRow();
-        }
+        }*/
     }
        
         break;
