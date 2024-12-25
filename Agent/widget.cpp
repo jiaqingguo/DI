@@ -40,6 +40,7 @@ Widget::Widget(QWidget *parent)
 	//用于获取主机的信息
 	this->my_timer = new QTimer();
 	this->UDPSocket = new QUdpSocket();
+	message = new Message_t();
 
 	qint64 ret;
 	bool result = UDPSocket->bind(QHostAddress::AnyIPv4, 6667, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
@@ -218,7 +219,7 @@ void Widget::slot_useUdp()
 
 	//qDebug() << "GPU 利用率: " << getGpuUsage() << "%%";
 
-	Message_t *message = new Message_t();
+	
 
 	//qDebug() << "111111111111111111111111111";
 
@@ -284,7 +285,7 @@ void Widget::slot_useUdp()
 	qint64 ret;
 	for (const auto &server : m_serverList)
 	{
-		ret = UDPSocket->writeDatagram(dataGram, server.first, server.second);
+		ret = UDPSocket->writeDatagram(dataGram, server.first, 54321);
 		if (ret == -1) {
 			// 发送失败
 			qDebug() << "Error sending datagram:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -305,8 +306,8 @@ void Widget::slot_useUdp()
 		//UDPSocket->waitForBytesWritten();
 
 	}
-	delete message;
-	message = nullptr;
+	//delete message;
+	//message = nullptr;
 
 	//接收
 	//QString command;
@@ -347,8 +348,8 @@ void Widget::receive_mess()
 				strcpy(cstrCopy, byteArray.data());
 				if (strcmp(cstrCopy, "Lcompress") == 0)
 				{
-					QString str1 = "Y:/share/" + command.str2 ;
-					QString str2 = "Y:/share/" + command.str3;
+					QString str1 = "Y:/share" + command.str2 ;
+					QString str2 = "Y:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -359,8 +360,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wcompress") == 0)
 				{
-					QString str1 = "D:" + command.str2;
-					QString str2 = "D:" + command.str3;
+					QString str1 = "D:/share" + command.str2;
+					QString str2 = "D:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -372,8 +373,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Luncompress") == 0)
 				{
-					QString str1 = "Y:/share/" + command.str2;
-					QString str2 = "Y:/share/" + command.str3;
+					QString str1 = "Y:/share" + command.str2;
+					QString str2 = "Y:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -385,8 +386,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wuncompress") == 0)
 				{
-					QString str1 = "D:" + command.str2;
-					QString str2 = "D:" + command.str3;
+					QString str1 = "D:/share" + command.str2;
+					QString str2 = "D:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -398,17 +399,17 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Ldel") == 0)
 				{
-					QString str1 = "Y:" + command.str2;
+					QString str1 = "Y:/share" + command.str2;
 				}
 				else if (strcmp(cstrCopy, "Wdel") == 0)
 				{
-					QString str1 = "D:" + command.str2;
+					QString str1 = "D:/share" + command.str2;
 					QFileInfo fileInfo(str1);
 					if (fileInfo.isFile())
 					{
 						char buff[260];
 						strcpy(buff, str1.toStdString().c_str());
-						delete_dir(buff);
+						delete_file(buff);
 					}
 					else if (fileInfo.isDir())
 					{
@@ -418,8 +419,12 @@ void Widget::receive_mess()
 						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
 						if (!flag)
 						{
+							QString data = "false";
+							QByteArray dataGram;
+							QDataStream stream(&dataGram, QIODevice::WriteOnly);
+							stream << data;
 							int ret = 0;
-							ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+							ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 							if (ret == -1)
 							{
 								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -429,8 +434,12 @@ void Widget::receive_mess()
 						}
 						else
 						{
+							QString data = "success";
+							QByteArray dataGram;
+							QDataStream stream(&dataGram, QIODevice::WriteOnly);
+							stream << data;
 							int ret = 0;
-							ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+							ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 							if (ret == -1)
 							{
 								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -473,24 +482,35 @@ void Widget::compress_file(char buffer[1024],char buffer2[1024])
 
 
 
-	memset(sbuff, '\0', sizeof(sbuff));
+	//memset(sbuff, '\0', sizeof(sbuff));
 	if (CompressMult2Zip(paths, strZipPath))
 	{
-		sprintf(sbuff, "compress-ok");
-		//send(sockServer, sbuff, strlen(sbuff), 0);
+		
+		cout << "compress 成功" << endl;
+		QString data = "success";
+		QByteArray dataGram;
+		QDataStream stream(&dataGram, QIODevice::WriteOnly);
+		stream << data;
 		int ret = 0;
-		ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+		ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 		if (ret == -1)
 		{
-			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+			std::cout << "write  false:" << UDPSocket->error();
+		}
+		else
+		{
+			cout << "write  成功";
 		}
 	}
 	else
 	{
-		sprintf(sbuff, "compress-false");
-		//send(sockServer, sbuff, strlen(sbuff), 0);
+		cout << "compress 失败" << endl;
+		QString data = "false";
+		QByteArray dataGram;
+		QDataStream stream(&dataGram, QIODevice::WriteOnly);
+		stream << data;
 		int ret = 0;
-		ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+		ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 		if (ret == -1)
 		{
 			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -542,8 +562,13 @@ void Widget::uncompress_file(char buffer[1024],char buffer2[1024])
 	//memset(sbuff, '\0', sizeof(sbuff));
 	//sprintf(sbuff, "uncompress-ok");
 	//send(sockServer, sbuff, strlen(sbuff), 0);
+	cout << "uncompress 成功" << endl;
+	QString data = "success";
+	QByteArray dataGram;
+	QDataStream stream(&dataGram, QIODevice::WriteOnly);
+	stream << data;
 	int ret = 0;
-	ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+	ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 	if (ret == -1)
 	{
 		qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -593,9 +618,21 @@ void Widget::delete_listFiles(std::string dir)
 			delete_listFiles(newDir.c_str());//先遍历删除文件夹下的文件，再删除空的文件夹
 			cout << newDir.c_str() << endl;
 			if (_rmdir(newDir.c_str()) == 0) {//删除空文件夹
+				QString data = "success";
+				QByteArray dataGram;
+				QDataStream stream(&dataGram, QIODevice::WriteOnly);
+				stream << data;
+				int ret = 0;
+				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 				cout << "delete empty dir success" << endl;
 			}
 			else {
+				QString data = "false";
+				QByteArray dataGram;
+				QDataStream stream(&dataGram, QIODevice::WriteOnly);
+				stream << data;
+				int ret = 0;
+				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 				cout << "delete empty dir error" << endl;
 			}
 		}
@@ -604,10 +641,22 @@ void Widget::delete_listFiles(std::string dir)
 			cout << file_path.c_str() << endl;
 			if (remove(file_path.c_str()) == 0) //删除文件
 			{
+				QString data = "success";
+				QByteArray dataGram;
+				QDataStream stream(&dataGram, QIODevice::WriteOnly);
+				stream << data;
+				int ret = 0;
+				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 				cout << "delete file success" << endl;
 			}
 			else 
 			{
+				QString data = "false";
+				QByteArray dataGram;
+				QDataStream stream(&dataGram, QIODevice::WriteOnly);
+				stream << data;
+				int ret = 0;
+				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 				cout << "delete file error" << endl;
 			}
 		}
@@ -616,12 +665,17 @@ void Widget::delete_listFiles(std::string dir)
 	_findclose(handle);
 	return;
 }
-DWORD Widget::delete_dir(char fileName[])
+DWORD Widget::delete_file(char fileName[])
 {
 	if (remove(fileName) == 0)
 	{
+		cout << "delete 成功" << endl;
+		QString data = "success";
+		QByteArray dataGram;
+		QDataStream stream(&dataGram, QIODevice::WriteOnly);
+		stream << data;
 		int ret = 0;
-		ret = UDPSocket->writeDatagram("success", serverReplyAddress, serverReplyPort);
+		ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 		if (ret == -1)
 		{
 			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
@@ -631,8 +685,12 @@ DWORD Widget::delete_dir(char fileName[])
 	}
 	else
 	{
+		QString data = "false";
+		QByteArray dataGram;
+		QDataStream stream(&dataGram, QIODevice::WriteOnly);
+		stream << data;
 		int ret = 0;
-		ret = UDPSocket->writeDatagram("false", serverReplyAddress, serverReplyPort);
+		ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 		if (ret == -1)
 		{
 			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
