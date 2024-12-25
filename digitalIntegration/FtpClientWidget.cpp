@@ -200,13 +200,13 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
     }
     m_pMenu->addSeparator();
     m_actionMkdir = m_pMenu->addAction(QString::fromLocal8Bit("新建文件夹"));
-    m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除文件"));
+    m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("删除"));
     // m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
     m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("重命名"));
     m_actionCompress = m_pMenu->addAction(QString::fromLocal8Bit("压缩"));
     m_actionUnCompress = m_pMenu->addAction(QString::fromLocal8Bit("解压"));
     // m_actionCopyPath = m_pMenu->addAction(QString::fromLocal8Bit("复制路径"));
-    m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("刷新界面"));
+    m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("刷新"));
     connect(m_actionPutFile, &QAction::triggered, this, &FtpClientWidget::onUpload);
     connect(m_actionPutDir, &QAction::triggered, this, &FtpClientWidget::slot_UploadDir);
     connect(m_actionGetFile, &QAction::triggered, this, &FtpClientWidget::onDownload);
@@ -863,16 +863,19 @@ void FtpClientWidget::onRemove()
     // 解决中文乱码问题
     QString name = ui->tableWidget->item(row, 0)->text();
 
-    if (listPath[name])
+   if (listPath[name]) // 目录
     {
-        ftp.rmdir(toFtpCodec(name));
+       // ftp.rmdir(toFtpCodec(name));
+        QString strArg1 = currentPath + "/" + name;
+        emit signal_del(m_bLinuxFtpServer, m_strAddr, strArg1);
     }
-    else
+    else  // 文件
     {
         ftp.remove(toFtpCodec(name));
+       
     }
-    QString strArg1 = currentPath + "/" + name;
-    emit signal_del(m_bLinuxFtpServer, m_strAddr, strArg1);
+   /* QString strArg1 = currentPath + "/" + name;
+    emit signal_del(m_bLinuxFtpServer, m_strAddr, strArg1);*/
    
 }
 
@@ -1188,6 +1191,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
         if (!err)
         {
             ui->tableWidget->removeRow(removeRow);
+            removeRow = -1;
         }
         break;
     }
