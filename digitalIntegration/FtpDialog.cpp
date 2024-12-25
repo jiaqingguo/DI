@@ -340,7 +340,7 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
         ui->pushButton->setEnabled(false);
 
 
-        slot_orderFinsh(1);
+       // slot_orderFinsh(1);
     }
 }
 
@@ -386,7 +386,7 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
         ui->pushButton->setEnabled(false);
 
 
-        slot_orderFinsh(1);
+       // slot_orderFinsh(1);
     }
    
 }
@@ -432,7 +432,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);
 
-        slot_orderFinsh(1);
+        //slot_orderFinsh(1);
     }
 }
 

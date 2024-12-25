@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
             common::strFtpPwd = settings.value("password").toString();
             common::strFtpAdminPwd = settings.value("adminpassword").toString();
         }
-        else if (section == "AX")
+        else if (section == "Ax")
         {
             common::strAxCLSID = settings.value("CLSID","{8B918B82-7985-4C24-89DF-C33AD2BBFBCD}").toString();
           

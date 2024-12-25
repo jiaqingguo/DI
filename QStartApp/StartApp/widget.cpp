@@ -7,13 +7,13 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
+    setMaximumWidth(600);
+    setMaximumHeight(400);
     setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // 移除最大最小化按钮
     ui->setupUi(this);
     m_pListen = new Listen;
     connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
     connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
-  
-
 }
 
 Widget::~Widget()

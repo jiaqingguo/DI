@@ -403,25 +403,26 @@ void Listen::startProgramFromBat(const std::string& strPath)
 		std::vector<DWORD> dwProcessIds = getChildProcesses(pid);
 		if (dwProcessIds.size()>0)
 		{
-			Sleep(2000);//给时间启动窗口
+			//Sleep(2000);//给时间启动窗口
 			DWORD tmpId = dwProcessIds[0];//第一次拿倒的ID不是启动程序的ID
-			while (!::isExistProcess(tmpId))
+			//while (!::isExistProcess(tmpId))
+			while (tmpId == dwProcessIds[0])
 			{
 				dwProcessIds = getChildProcesses(pid);
 				if (tmpId != dwProcessIds[0])//当ID发生改变获取ID并跳出循环
 				{
-					tmpId = dwProcessIds[0];
-					std::cout << "_dwProcessId ID: " << tmpId  << std::endl;
+
+					_dwProcessId = dwProcessIds[dwProcessIds.size() - 1];
+					std::cout << "id num: " << dwProcessIds.size() << std::endl;
 					break;
+
 				}
 				tmpId = dwProcessIds[0];
 			}
-
-			_dwProcessId = tmpId;
 		}
 		
 		// 输出进程ID
-		std::cout << "Process ID: " << pid << std::endl;
+		std::cout << "Process ID: " << _dwProcessId << std::endl;
 		// 关闭进程句柄
 		//CloseHandle(sei.hProcess);
 	}
@@ -459,7 +460,7 @@ void Listen::hwndListen()
 				{
 					time = 0;
 					::Sleep(100);
-					::ShowWindow(_currentHWND, SW_MAXIMIZE);
+					//::ShowWindow(_currentHWND, SW_MAXIMIZE);
 					std::cerr << "Window HWND:" << _currentHWND <<  "  " << _dwProcessId << std::endl;
 				}
 				else
@@ -499,8 +500,46 @@ void Listen::hwndListen()
 
 void Listen::showProgram()
 {
-	if (_currentHWND != 0)
-		ShowWindow(_currentHWND, SW_SHOWNORMAL);
+	HWND currentHWND = getMainHWND(_dwProcessId);
+	if (currentHWND != 0)
+	{
+		if (::ShowWindow(currentHWND, SW_RESTORE))
+		{
+			std::cerr << "Sub Window HWND:" << currentHWND << " " << _dwProcessId << " Success_1" << std::endl;
+
+		}
+		else
+		{
+			std::cerr << "Sub Window HWND:" << currentHWND << " " << _dwProcessId << " Failed_1" << std::endl;
+		}
+		//RedrawWindow(currentHWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
+		//UpdateWindow(currentHWND);
+	}
+	else
+	{
+		std::vector<DWORD> dwProcessIds = getChildProcesses(_dwProcessId);
+		if (dwProcessIds.size()>0)
+		{
+			for (size_t i = 0; i < dwProcessIds.size(); i++)
+			{
+				_currentHWND = getMainHWND(dwProcessIds[i]);
+				if (_currentHWND != 0) 
+				{
+					//if (::ShowWindow(currentHWND, SW_RESTORE))
+					if(PostMessage(_currentHWND, WM_SYSCOMMAND, SC_RESTORE, 0))
+					{
+						std::cerr << "Sub Window HWND:" << _currentHWND << " " << dwProcessIds[i] << " Success_2" << std::endl;
+					}
+					else
+					{
+						std::cerr << "Sub Window HWND:" << _currentHWND << " " << dwProcessIds[i] << " Failed_2" << std::endl;
+					}
+				}
+			}
+			//RedrawWindow(_currentHWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
+			//UpdateWindow(_currentHWND);
+		}
+	}
 }
 
 void Listen::closeProgram()

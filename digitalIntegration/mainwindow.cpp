@@ -1135,7 +1135,8 @@ void MainWindow::updateModuleToolIcon(int module)
 void MainWindow::startUdpRdp(const QString ip)
 {
 	QAxWidget* rdp = new QAxWidget;
-	rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // 对应于RDP的CLSID
 	bool b = rdp->setProperty("Server", "192.168.1.248"); // 远程桌面的IP地址
 	b = rdp->setProperty("UserName", "Administrator"); // 用户名
 	b = rdp->setProperty("Password", "Ate123"); // 密码
@@ -1220,7 +1221,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	// 嵌入远端界面;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
-	rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // 对应于RDP的CLSID
 
 	bool b = rdp->setProperty("Server", strIp.c_str()); // 远程桌面的IP地址
 	b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
@@ -1372,7 +1374,8 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	// 嵌入远端界面;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
-	rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // 对应于RDP的CLSID
 
 	bool b = rdp->setProperty("Server", strIp.c_str()); // 远程桌面的IP地址
 	b = rdp->setProperty("UserName", strAccaunt.c_str()); // 用户名
