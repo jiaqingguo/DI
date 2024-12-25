@@ -313,7 +313,7 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
         loaclDownloadDirPath = loaclDownloadDirPath + "/" + strName;  //cs/chat
         // 创建本地目录
         QDir directory;
-        bool success = directory.mkpath(loaclDownloadDirPath);
+        bool success = directory.mkpath(toFtpCodec(loaclDownloadDirPath));
 
 
         QString  remoteDownloadDirPath = strPath; // jqg/chat
@@ -327,7 +327,7 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
 
         m_bDownloadDir = true;
         setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
-        m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
+        m_downloadDirCommandID = ftp.list(toFtpCodec(remoteDownloadDirPath));
         m_iDoloadDirCommandTotal++;
 
         m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
@@ -404,7 +404,7 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
             {
                 return;
             }
-            int id = ftp.get(newRemote, file);
+            int id = ftp.get(toFtpCodec(newRemote), file);
             m_iDoloadDirCommandTotal++;
             m_mapFileDownload[id] = file;
 
@@ -418,7 +418,7 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
          
             m_bDownloadDir = true;
             // 继续列出目录
-            m_downloadDirCommandID = ftp.list(newRemote); // 列出子目录内容
+            m_downloadDirCommandID = ftp.list(toFtpCodec(newRemote)); // 列出子目录内容
             m_iDoloadDirCommandTotal++;
            
             m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = newLoacl;
@@ -712,7 +712,7 @@ void FtpClientWidget::slot_downloadDirectory()
 
             m_bDownloadDir = true;
             setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
-            m_downloadDirCommandID = ftp.list(remoteDownloadDirPath);
+            m_downloadDirCommandID = ftp.list(toFtpCodec(remoteDownloadDirPath));
             m_iDoloadDirCommandTotal++;
 
             m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
