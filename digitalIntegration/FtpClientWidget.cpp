@@ -386,12 +386,12 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
     for (auto urlInfo : vecurlInfo)
     {
 
-         QString newRemote = QString("%1/%2").arg(m_remoteDownloadDirPath).arg(urlInfo.name());
+         QString newRemote = QString("%1/%2").arg(m_remoteDownloadDirPath).arg(fromFtpCodec(urlInfo.name()));
         //QString  path
 
         // 使用远程路径的文件名构建本地路径
         /*QString localPath = m_loaclDownloadDirPath + m_remoteDownloadDirPath;*/
-         QString newLoacl = QString("%1/%2").arg(m_loaclDownloadDirPath).arg(urlInfo.name());
+         QString newLoacl = QString("%1/%2").arg(m_loaclDownloadDirPath).arg(fromFtpCodec(urlInfo.name()));
 
         if (urlInfo.isFile())
         {
