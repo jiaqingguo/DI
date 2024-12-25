@@ -134,7 +134,7 @@ void FtpDialog::initConnectFtp()
         //connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
         flushTableViewDownload();
         ui->tableViewDownload->setContextMenuPolicy(Qt::CustomContextMenu);
-      //  connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
+       connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
         connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
             if (index == 1)
             {
