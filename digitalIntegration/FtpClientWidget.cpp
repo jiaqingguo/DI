@@ -267,7 +267,7 @@ QString FtpClientWidget::fromFtpCodec(const QString& str)
 {
     if (m_bLinuxFtpServer)
     {
-        return QString::fromUtf8(str.()).toLatin1();
+        return QString::fromUtf8(str.toUtf8()).toLatin1();
     }
     else
     {
