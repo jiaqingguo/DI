@@ -400,10 +400,6 @@ void Widget::receive_mess()
 				else if (strcmp(cstrCopy, "Ldel") == 0)
 				{
 					QString str1 = "Y:/share" + command.str2;
-				}
-				else if (strcmp(cstrCopy, "Wdel") == 0)
-				{
-					QString str1 = "D:/share" + command.str2;
 					QFileInfo fileInfo(str1);
 					if (fileInfo.isFile())
 					{
@@ -412,6 +408,50 @@ void Widget::receive_mess()
 						delete_file(buff);
 					}
 					else if (fileInfo.isDir())
+					{
+						char buff[260];
+						strcpy(buff, str1.toStdString().c_str());
+						delete_listFiles(buff);
+						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
+						if (!flag)
+						{
+							QString data = "false";
+							QByteArray dataGram;
+							QDataStream stream(&dataGram, QIODevice::WriteOnly);
+							stream << data;
+							int ret = 0;
+							ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+							if (ret == -1)
+							{
+								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+							}
+							cout << "删除文件夹：" << buff << "失败" << endl;
+
+						}
+						else
+						{
+							QString data = "success";
+							QByteArray dataGram;
+							QDataStream stream(&dataGram, QIODevice::WriteOnly);
+							stream << data;
+							int ret = 0;
+							ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+							if (ret == -1)
+							{
+								qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+							}
+							cout << "删除文件夹：" << buff << "成功" << endl;
+						}
+					}
+				
+				}
+				else if (strcmp(cstrCopy, "Wdel") == 0)
+				{
+					QString str1 = "D:/share" + command.str2;
+					cout << "删除的文件的路径：" << str1.toStdString();
+					QFileInfo fileInfo(str1);
+					
+					if (fileInfo.isDir())
 					{
 						char buff[260]; 
 						strcpy(buff,str1.toStdString().c_str());
@@ -447,7 +487,14 @@ void Widget::receive_mess()
 							cout << "删除文件夹：" << buff << "成功" << endl;
 						}
 					}
+					else 
+					{
+						char buff[260];
+						strcpy(buff, str1.toStdString().c_str());
+						delete_file(buff);
+					}
 				}
+
 			}
 			else
 			{
@@ -641,12 +688,6 @@ void Widget::delete_listFiles(std::string dir)
 			cout << file_path.c_str() << endl;
 			if (remove(file_path.c_str()) == 0) //删除文件
 			{
-				QString data = "success";
-				QByteArray dataGram;
-				QDataStream stream(&dataGram, QIODevice::WriteOnly);
-				stream << data;
-				int ret = 0;
-				ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
 				cout << "delete file success" << endl;
 			}
 			else 
