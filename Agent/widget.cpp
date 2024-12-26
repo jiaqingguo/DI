@@ -360,8 +360,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wcompress") == 0)
 				{
-					QString str1 = "D:/share" + command.str2;
-					QString str2 = "D:/share" + command.str3;
+					QString str1 = "E:/share" + command.str2;
+					QString str2 = "E:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -386,8 +386,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wuncompress") == 0)
 				{
-					QString str1 = "D:/share" + command.str2;
-					QString str2 = "D:/share" + command.str3;
+					QString str1 = "E:/share" + command.str2;
+					QString str2 = "E:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -448,7 +448,7 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wdel") == 0)
 				{
-					QString str1 = "D:/share" + command.str2;
+					QString str1 = "E:/share" + command.str2;
 					//cout << "删除的文件的路径：" << str1.toStdString();
 					QFileInfo fileInfo(str1);
 					
@@ -636,7 +636,7 @@ void Widget::cancel_mapping()
 	net_Resource.lpComment = NULL;
 	net_Resource.lpLocalName = const_cast<TCHAR*>(TEXT("Y:")); // 映射到本地驱动器
 	net_Resource.lpProvider = NULL;
-	net_Resource.lpRemoteName = const_cast<TCHAR*>(TEXT("\\\\192.168.10.240\\share")); // 共享资源的路径
+	net_Resource.lpRemoteName = const_cast<TCHAR*>(TEXT("\\\\192.168.1.253\\share")); // 共享资源的路径
 	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 }
 
