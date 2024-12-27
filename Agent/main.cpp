@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 {
 	// 示例：调用 InitResource 进行网络驱动器映射
 	TCHAR userName[] = TEXT("administrator");
-	TCHAR password[] = TEXT("Ate123");
+	TCHAR password[] = TEXT("Atexcel_123");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
 	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
 	InitResource(userName, password, localDrive, remotePath);
