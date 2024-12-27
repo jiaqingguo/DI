@@ -59,10 +59,10 @@ void FtpDialog::initConnectFtp()
         return;
     }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
-    ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", "jh123456");
     ui->page0->setIsLinuxFtpServer(true);
 
-    ui->page1->connectToFtpServer(ui->comboBox->itemText(1), ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", "N BPC", "jh123456");
     ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
@@ -303,13 +303,16 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
     m_r_addr.sin_family = AF_INET;
     m_r_addr.sin_port = htons(6667);
    // inet_pton(AF_INET, "192.168.0.147", &m_r_addr.sin_addr.s_addr);
-
+    if (bLinuxServer)
+    {
+        strIp = ui->comboBox->currentData(0).toString();
+    }
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
     st_udp stUdpData;
 
     if (bLinuxServer)
     {
-        stUdpData.str1 = "Luncompress";
+        stUdpData.str1 = "Lcompress";
     }
     else
     {
@@ -349,7 +352,10 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
     struct sockaddr_in m_r_addr;
     m_r_addr.sin_family = AF_INET;
     m_r_addr.sin_port = htons(6667);
-
+    if (bLinuxServer)
+    {
+        strIp = ui->comboBox->currentData(0).toString();
+    }
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
 
     st_udp stUdpData;
@@ -396,7 +402,10 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
     struct sockaddr_in m_r_addr;
     m_r_addr.sin_family = AF_INET;
     m_r_addr.sin_port = htons(6667);
-
+    if (bLinuxServer)
+    {
+        strIp = ui->comboBox->currentData(0).toString();
+    }
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
 
     st_udp stUdpData;

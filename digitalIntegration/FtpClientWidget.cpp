@@ -522,7 +522,7 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
     {
         if (currentPath == "")
         {
-            if (name != common::strLoginUserName)
+            if (name != common::strLoginUserName && name != "public")
             {
                 return;
             }
@@ -557,6 +557,14 @@ void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
    
     if (ui->tableWidget->rowCount() <= 0) return;
 
+
+    if (common::bAdministrator)
+    {
+        if (currentPath == "")
+        {
+            return;     // 普通用户禁用根目录菜单;
+        }
+    }
 
     m_pMenu->exec(QCursor::pos());
 
@@ -649,32 +657,40 @@ void FtpClientWidget::onDownload()
     if (row < 0) return;
 
     QString name = ui->tableWidget->item(row, 0)->text();
-    if (listPath[name]) {
-
-    }
-    else 
+    if (common::bAdministrator)
     {
-        QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
-        if (path.isEmpty()) return;
-        QFile* file = new QFile;
-        file->setFileName(path);
-        if (!file->open(QIODevice::WriteOnly))
-        {
-            return;
+        if (listPath[name]) {
+
         }
+        else
+        {
+            QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
+            if (path.isEmpty()) return;
+            QFile* file = new QFile;
+            file->setFileName(path);
+            if (!file->open(QIODevice::WriteOnly))
+            {
+                return;
+            }
 
-        // 解决中文乱码问题
-       path = QString("%1/%2").arg(currentPath).arg(name);
-       m_bDownloadDir = false;
-       setDisableUI(QString::fromLocal8Bit("正在下载文件"));
-   /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
-       m_pGifDialog->show();*/
-       
-       int id= ftp.get(toFtpCodec(path), file);
+            // 解决中文乱码问题
+            path = QString("%1/%2").arg(currentPath).arg(name);
+            m_bDownloadDir = false;
+            setDisableUI(QString::fromLocal8Bit("正在下载文件"));
+            /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+                m_pGifDialog->show();*/
 
-      
-       m_mapFileDownload[id] = file;
+            int id = ftp.get(toFtpCodec(path), file);
+
+
+            m_mapFileDownload[id] = file;
+        }
     }
+    else
+    {
+
+    }
+   
 }
 
 void FtpClientWidget::slot_downloadDirectory()
