@@ -30,17 +30,20 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	ui->lineEditUserPage->setValidator(validator);
 
 	m_modelDataApproval = new QStandardItemModel();
-	m_modelDataApproval->setColumnCount(10);
+	m_modelDataApproval->setColumnCount(13);
 	m_modelDataApproval->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
 	m_modelDataApproval->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("申请人"));
 	m_modelDataApproval->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("所在部门"));
 	m_modelDataApproval->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("申请时间"));
-	m_modelDataApproval->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("文件名"));
-	m_modelDataApproval->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
-	m_modelDataApproval->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
-	m_modelDataApproval->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("状态"));
-	m_modelDataApproval->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("操作"));
-	m_modelDataApproval->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+	m_modelDataApproval->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("存储名称"));
+	m_modelDataApproval->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("存储ip"));
+	m_modelDataApproval->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("文件名"));
+	m_modelDataApproval->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("文件类型"));
+	m_modelDataApproval->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
+	m_modelDataApproval->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("状态"));
+	m_modelDataApproval->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+	m_modelDataApproval->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("操作"));
+	m_modelDataApproval->setHeaderData(12, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
 
 	/* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
@@ -297,23 +300,32 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelDataApproval->setItem(newRowIndex, 3, item);
 
+		item = new QStandardItem(QString::fromStdString(stData.ftpName));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDataApproval->setItem(newRowIndex, 4, item);
+
+
+		item = new QStandardItem(QString::fromStdString(stData.ftpIp));
+		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+		m_modelDataApproval->setItem(newRowIndex, 5, item);
+
 
 		QString filePath = QString::fromStdString(stData.filePath);
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-		m_modelDataApproval->setItem(newRowIndex, 4, item);
+		m_modelDataApproval->setItem(newRowIndex, 6, item);
 
 
 		item = new QStandardItem(QString::fromStdString(stData.fileType));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-		m_modelDataApproval->setItem(newRowIndex, 5, item);
+		m_modelDataApproval->setItem(newRowIndex, 7, item);
 
 		//item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
 		item = new QStandardItem(QString::fromStdString(stData.fileTime));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-		m_modelDataApproval->setItem(newRowIndex, 6, item);
+		m_modelDataApproval->setItem(newRowIndex, 8, item);
 
 
 
@@ -322,25 +334,35 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("同意"));
 		buttonYes->setObjectName("itemBtnYes");
 		buttonYes->setProperty("row", newRowIndex); // set custom property
-		buttonYes->setProperty("column", 8);
+		buttonYes->setProperty("column", 10);
 		buttonYes->setProperty("approval", 1);
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_DataItemBtnClicked()));
-		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 8), buttonYes);
+		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 10), buttonYes);
 
 		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("驳回"));
 		buttonNo->setObjectName("itemBtnNo");
 		buttonNo->setProperty("row", newRowIndex); // set custom property
-		buttonNo->setProperty("column", 9);
+		buttonNo->setProperty("column", 11);
 		buttonNo->setProperty("approval", 2);
 
 		connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_DataItemBtnClicked()));
-		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 9), buttonNo);
+		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 11), buttonNo);
+
+
+		QPushButton* buttonDownload = new QPushButton(QString::fromLocal8Bit("下载"));
+		buttonDownload->setObjectName("itemBtnDownload");
+		buttonDownload->setProperty("row", newRowIndex); // set custom property
+		buttonDownload->setProperty("column", 12);
+		buttonDownload->setProperty("approval", 2);
+		connect(buttonDownload, SIGNAL(clicked()), this, SLOT(slot_DataItemDownloadBtnClicked()));
+		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 12), buttonDownload);
+
 		if (stData.status == 1)
 		{
 			item = new QStandardItem(QString::fromLocal8Bit("已通过"));
 			item->setForeground(QBrush(QColor(Qt::green)));
 			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-			m_modelDataApproval->setItem(newRowIndex, 7, item);
+			m_modelDataApproval->setItem(newRowIndex, 9, item);
 			buttonNo->setEnabled(false);
 			buttonYes->setEnabled(false);
 		}
@@ -349,14 +371,14 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 			item = new QStandardItem(QString::fromLocal8Bit("待审核"));
 			item->setForeground(QBrush(QColor("#33C1FF")));
 			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-			m_modelDataApproval->setItem(newRowIndex, 7, item);
+			m_modelDataApproval->setItem(newRowIndex, 9, item);
 		}
 		else if (stData.status == 2)
 		{
 			item = new QStandardItem(QString::fromLocal8Bit("已驳回"));
 			item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 			item->setForeground(QBrush(QColor(Qt::red)));
-			m_modelDataApproval->setItem(newRowIndex, 7, item);
+			m_modelDataApproval->setItem(newRowIndex, 9, item);
 			buttonNo->setEnabled(false);
 			buttonYes->setEnabled(false);
 
@@ -1520,20 +1542,20 @@ void ApprovalProgressDialog::slot_DataItemBtnClicked()
 
 	if (approval == 1)
 	{
-		auto item = m_modelDataApproval->item(row, 7);
+		auto item = m_modelDataApproval->item(row, 9);
 		item->setText(QString::fromLocal8Bit("已通过"));
 		item->setForeground(QBrush(QColor(Qt::green)));
 	}
 	else if (approval == 2)
 	{
-		auto item = m_modelDataApproval->item(row, 7);
+		auto item = m_modelDataApproval->item(row, 9);
 		item->setText(QString::fromLocal8Bit("已驳回"));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		item->setForeground(QBrush(QColor(Qt::red)));
 	}
 
 	// 获取按钮指针
-	index = m_modelDataApproval->index(row, 8);
+	index = m_modelDataApproval->index(row, 10);
 	QWidget* widget = ui->tableView->indexWidget(index);
 	if (widget)
 	{
@@ -1543,7 +1565,7 @@ void ApprovalProgressDialog::slot_DataItemBtnClicked()
 			pButtonYes->setEnabled(false);
 		}
 	}
-	index = m_modelDataApproval->index(row, 9);
+	index = m_modelDataApproval->index(row, 11);
 	widget = ui->tableView->indexWidget(index);
 	if (widget)
 	{
@@ -1556,6 +1578,17 @@ void ApprovalProgressDialog::slot_DataItemBtnClicked()
 
 	ui->tableView->setCurrentIndex(index);
 	getDownloadData(m_listDataApproval);
+}
+
+void ApprovalProgressDialog::slot_DataItemDownloadBtnClicked()
+{
+	QPushButton* pButton = (QPushButton*)sender();
+	int row = pButton->property("row").toInt();
+	int column = pButton->property("column").toInt();
+	int approval = pButton->property("approval").toInt();
+
+
+
 }
 
 void ApprovalProgressDialog::slot_ItemBtnClicked()

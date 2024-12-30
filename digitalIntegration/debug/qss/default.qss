@@ -115,7 +115,18 @@ QDialog#ApprovalProgressDialog QPushButton#itemBtnYes {
 }
 QDialog#ApprovalProgressDialog QPushButton#itemBtnYes:disabled {
     background-color:gray; 
-   
+}
+QDialog#ApprovalProgressDialog QPushButton#itemBtnDownload {
+    background-color:green; 
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0px; /* 圆角边框 */
+    border-color: #1F4E79;
+    padding: 6px;
+	color: white; /* 将按钮文字颜色设置为白色 */
+}
+QDialog#ApprovalProgressDialog QPushButton#itemBtnDownload:disabled {
+    background-color:gray; 
 }
 QDialog#ApprovalProgressDialog QPushButton#itemBtnNo {
     background-color: red; 

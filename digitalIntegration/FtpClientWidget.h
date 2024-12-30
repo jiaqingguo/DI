@@ -58,6 +58,8 @@ private:
     void downloadDirectory( QVector<QUrlInfo>& urlInfo, const QString& localDirPath, const QString& remoteDirPath);
     void setDisableUI(const QString& str);
     void setAbleUI();
+    void downloadFile(const QString& name,const QString& strFtpPath);
+    void downloadDir(const QString& name, const QString& strFtpPath);
 public slots:
     void on_tbConnent_clicked();
     void on_tbDisconnent_clicked();

@@ -38,6 +38,8 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
 	//connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);
 
+	ui->comboBox->setCurrentIndex(1);
+	ui->comboBox->setEnabled(false);
 }
 
 RegisterDialog::~RegisterDialog()

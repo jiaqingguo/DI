@@ -446,6 +446,36 @@ void FtpClientWidget::setAbleUI()
     emit signal_ableUI(true, "");
 }
 
+void FtpClientWidget::downloadFile(const QString& name, const QString& strFtpPath)
+{
+
+    QString path = QFileDialog::getSaveFileName(NULL, "", QString("C:/Users/Pangs/Desktop/%1").arg(name));
+    if (path.isEmpty()) return;
+    QFile* file = new QFile;
+    file->setFileName(path);
+    if (!file->open(QIODevice::WriteOnly))
+    {
+        return;
+    }
+
+    // 解决中文乱码问题
+   // path = QString("%1/%2").arg(currentPath).arg(name);
+    m_bDownloadDir = false;
+    setDisableUI(QString::fromLocal8Bit("正在下载文件"));
+    /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
+        m_pGifDialog->show();*/
+
+    int id = ftp.get(toFtpCodec(strFtpPath), file);
+
+
+    m_mapFileDownload[id] = file;
+}
+
+void FtpClientWidget::downloadDir(const QString& name, const QString& strFtpPath)
+{
+
+}
+
 void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString& remoteDirPath) 
 {
     QDir localDir(localDirPath);
@@ -558,7 +588,7 @@ void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
     if (ui->tableWidget->rowCount() <= 0) return;
 
 
-    if (common::bAdministrator)
+    if (!common::bAdministrator)
     {
         if (currentPath == "")
         {
@@ -688,7 +718,29 @@ void FtpClientWidget::onDownload()
     }
     else
     {
+        QString  remoteDownloadDirPath = QString("%1/%2").arg(currentPath).arg(name); // jqg/chat
 
+        table_DownloadApproval stDownloadApproval;
+        stDownloadApproval.userID = common::iUserID;
+        //stDownloadApproval.filePath = dirPath.().toStdString();
+        stDownloadApproval.filePath = remoteDownloadDirPath.toStdString();
+        if (listPath[name])
+        {
+            stDownloadApproval.fileType = "dir";
+        }
+        else
+        {
+            stDownloadApproval.fileType = name.mid(name.lastIndexOf(".") + 1).toStdString();  // 返回点之后的部分
+        }
+
+        stDownloadApproval.fileTime = ui->tableWidget->item(row, 1)->text().toStdString();
+
+        stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        stDownloadApproval.status = 0;
+
+        stDownloadApproval.ftpIp = m_strAddr.toStdString();
+        stDownloadApproval.ftpName = m_strHostName.toStdString();
+        db::databaseDI::Instance().add_download_approval_info(stDownloadApproval);
     }
    
 }

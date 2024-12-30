@@ -41,6 +41,7 @@ private:
     std::list<T> processList(const std::list<T>& listData, const int& num, const int& offsetRows);
 signals:
     void signal_createFtpUserDir(const QString strDirName);
+    void signal_ftpDownlaod(const QString strPath, const QString strFtpIP);
 private slots:
 
     void slot_btnDataShow();
@@ -48,6 +49,7 @@ private slots:
 
 
     void slot_DataItemBtnClicked();
+    void slot_DataItemDownloadBtnClicked();
     void slot_ItemBtnClicked();
 
 

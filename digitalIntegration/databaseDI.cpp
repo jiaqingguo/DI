@@ -334,6 +334,7 @@ namespace db
 			userInfo.CreateTime = string_to_datetime(sql_row[8]);
 			userInfo.approval = std::atoi(sql_row[9]);
 			userInfo.loginStatus = std::atoi(sql_row[10]);
+			
 			listData.push_back(userInfo);
 		}
 		return true;
@@ -1737,6 +1738,8 @@ namespace db
 			stData.fileType = sql_row[4];
 			stData.fileTime = (sql_row[5]);
 			stData.status = std::atoi(sql_row[6]);
+			stData.ftpName = sql_row[7];
+			stData.ftpIp = (sql_row[8]);
 			listData.push_back(stData);
 		}
 		return true;
