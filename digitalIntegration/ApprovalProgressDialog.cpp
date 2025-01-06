@@ -49,7 +49,14 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	/* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
 	 model->setHorizontalHeaderLabels(labels);*/
 	ui->tableView->setModel(m_modelDataApproval);
-	common::setTableViewBasicConfiguration(ui->tableView);
+	//common::setTableViewBasicConfiguration(ui->tableView);
+
+	// 设置列宽充满表格，且可拖动
+	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	// 设置列宽可拖动
+	  // 设置表格填满父窗口
+	ui->tableView->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // 允许用户交互式调整列宽
 	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	//ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // 选择整行
 	//ui->tableView->verticalHeader()->setDefaultSectionSize(28);
@@ -317,6 +324,9 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 		m_modelDataApproval->setItem(newRowIndex, 6, item);
 
+		index = m_modelDataApproval->index(newRowIndex, 6);
+		m_modelDataApproval->setData(index, QString::fromStdString( stData.filePath), Qt::UserRole);  // ;
+		
 
 		item = new QStandardItem(QString::fromStdString(stData.fileType));
 		item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
@@ -1588,7 +1598,12 @@ void ApprovalProgressDialog::slot_DataItemDownloadBtnClicked()
 	int approval = pButton->property("approval").toInt();
 
 
+	QModelIndex index = m_modelDataApproval->index(row, 6);
+	QString strPath  = m_modelDataApproval->data(index, Qt::UserRole).toString();
 
+	QString strIp = m_modelDataApproval->item(row, 5)->text();
+
+	emit signal_ftpDownlaod(strPath, strIp);
 }
 
 void ApprovalProgressDialog::slot_ItemBtnClicked()

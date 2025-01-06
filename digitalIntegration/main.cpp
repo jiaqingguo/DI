@@ -1,4 +1,4 @@
-﻿
+﻿#include <QTextCodec>
 #include <QApplication>
 #include <QSettings>
 #include <QMessageBox>
@@ -7,8 +7,7 @@
 #include "databaseDI.h"
 #include "LoginDialog.h"
 #include "common.h"
-#include <QTextCodec>
-
+#include "globel.h"
 
 
 int main(int argc, char* argv[])
@@ -46,15 +45,15 @@ int main(int argc, char* argv[])
         {
             common::strDbIp = settings.value("serverIp").toString();
             common::strDbUser = settings.value("user").toString();
-            common::strDbPassword = settings.value("password").toString();
+           // common::strDbPassword = settings.value("password").toString();
         }
-        else if (section == "FTP")
+      /*  else if (section == "FTP")
         {
             common::strLinuxFtpIp= settings.value("serverIp").toString();
             common::strFtpAccount = settings.value("account").toString();
             common::strFtpPwd = settings.value("password").toString();
             common::strFtpAdminPwd = settings.value("adminpassword").toString();
-        }
+        }*/
         else if (section == "Ax")
         {
             common::strAxCLSID = settings.value("CLSID","{8B918B82-7985-4C24-89DF-C33AD2BBFBCD}").toString();
@@ -70,12 +69,21 @@ int main(int argc, char* argv[])
 
 
 
-    db::databaseDI::Instance().setDbLoginData(common::strDbIp.toStdString(), common::strDbUser.toStdString(), common::strDbPassword.toStdString());
+    db::databaseDI::Instance().setDbLoginData(common::strDbIp.toStdString(), common::strDbUser.toStdString(), "123456");
     if (!db::databaseDI::Instance().open())
     {
         QMessageBox::warning(nullptr, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("数据库连接失败"));
         return 0;
     }
+    table_configuration stData;
+    if (db::databaseDI::Instance().get_configuration(stData))
+    {
+        common::strLinuxFtpIp = QString::fromStdString(stData.ftpServerIp);
+        common::strFtpAccount = QString::fromStdString(stData.ftpServerAccount);
+        common::strFtpPwd = QString::fromStdString(stData.ftpPwd);
+        common::strFtpAdminPwd = QString::fromStdString(stData.ftpServerPwd);
+    }
+
     MainWindow w;
     if (!w.showLoginDialog())
     {

@@ -84,8 +84,9 @@ public:
     {
         if (ApprovalProgressDialog->objectName().isEmpty())
             ApprovalProgressDialog->setObjectName(QString::fromUtf8("ApprovalProgressDialog"));
-        ApprovalProgressDialog->resize(889, 525);
-        ApprovalProgressDialog->setMinimumSize(QSize(0, 525));
+        ApprovalProgressDialog->resize(1300, 625);
+        ApprovalProgressDialog->setMinimumSize(QSize(1300, 625));
+        ApprovalProgressDialog->setMaximumSize(QSize(1300, 625));
         verticalLayout_2 = new QVBoxLayout(ApprovalProgressDialog);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         horizontalLayout = new QHBoxLayout();

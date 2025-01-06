@@ -139,6 +139,15 @@ struct st_account_data
 	QString     software = "";
 };
 
+
+struct table_configuration
+{
+	std::string     ftpServerIp;
+	std::string     ftpServerAccount;
+	std::string     ftpServerPwd;
+	std::string     ftpPwd;
+};
+
 enum EUserTable : uint32_t
 {
 	EUT_NAME,

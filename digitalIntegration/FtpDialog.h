@@ -31,6 +31,9 @@ public:
 public slots:
     void slot_createUserDir(const QString strDirName);
     void slot_orderFinsh(int iFlag);
+
+
+    void slot_signalFtpDownlaod(const QString strPath, const QString strFtpIP);
 private slots:
     void slot_comboBoxChanged(int index);
     void slot_ableUI(bool b, QString str);

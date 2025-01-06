@@ -20,6 +20,24 @@
 #include "databaseDI.h"
 #include "qftp.h"
 
+QString formatFileSize(qint64 size) {
+    if (size < 0) {
+        return "无效的文件大小"; // 处理负值的情况
+    }
+    else if (size < 1024) {
+        return QString("%1 B").arg(size);
+    }
+    else if (size < 1024 * 1024) {
+        return QString("%1 KB").arg(static_cast<double>(size) / 1024, 0, 'f', 2);
+    }
+    else if (size < 1024 * 1024 * 1024) {
+        return QString("%1 MB").arg(static_cast<double>(size) / (1024 * 1024), 0, 'f', 2);
+    }
+    else {
+        return QString("%1 GB").arg(static_cast<double>(size) / (1024 * 1024 * 1024), 0, 'f', 2);
+    }
+}
+
 FtpClientWidget::FtpClientWidget(QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::FtpClientWidget)
@@ -550,13 +568,17 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
     // 如果双击的是其他行，并且是目录行，表示进入下一级
     else if (listPath[name])
     {
-        if (currentPath == "")
+        if (!common::bAdministrator)
         {
-            if (name != common::strLoginUserName && name != "public")
+            if (currentPath == "")
             {
-                return;
+                if (name != common::strLoginUserName && name != "public")
+                {
+                    return;
+                }
             }
         }
+        
         // 当前目录进入下一级
         currentPath += QString("/%1").arg(name);
 
@@ -1009,8 +1031,14 @@ void FtpClientWidget::onInsertRow()
     ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
 
     // 大小
-    if (fileInfo.isDir()) return;
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(fileInfo.size() / 1000), 1))));
+    if (fileInfo.isDir())
+    {
+        return;
+    }
+  //  ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(fileInfo.size() / 1000), 1))));
+   // ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(fileInfo.size() / 1000), 1))));
+
+    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(formatFileSize(fileInfo.size()), 1));
 }
 
 void FtpClientWidget::closePersistentEditor()
@@ -1091,7 +1119,7 @@ void FtpClientWidget::listInfo(QUrlInfo url)
 
     // 大小
     if (url.isDir()) return;
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(url.size() / 1000), 1))));
+    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(formatFileSize(url.size()), 1));
 }
 
 void FtpClientWidget::commandFinished(int id, bool err)

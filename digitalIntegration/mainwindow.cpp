@@ -201,7 +201,7 @@ void MainWindow::initInitface()
 
 	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, m_FtpDialog, &FtpDialog::slot_createUserDir);
 	connect(m_ResourceManageDialog, &ResourceManageDialog::signal_udpOrderFinsh, m_FtpDialog, &FtpDialog::slot_orderFinsh);
-
+	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_ftpDownlaod, m_FtpDialog, &FtpDialog::slot_signalFtpDownlaod);
 	//m_OneClickLoadDialog = new OneClickLoadDialog(this);
 	//connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
@@ -322,9 +322,6 @@ void MainWindow::initInitface()
 //    this->close();
 //    //exit(1);
 //}
-
-
-
 
 }
 
@@ -637,7 +634,15 @@ void MainWindow::slot_btnAddToolTab()
 			return;
 		}
 
-		QString strPwd = "123456";
+		QString strPwd ;
+		if (common::bAdministrator)
+		{
+			strPwd = common::strFtpAdminPwd;
+		}
+		else
+		{
+			strPwd = common::strFtpPwd;
+		}
 		CWidget* axTabWidget = new CWidget();
 
 	

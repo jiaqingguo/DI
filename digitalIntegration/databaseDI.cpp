@@ -2146,6 +2146,30 @@ namespace db
 
 		return true;
 	}
+
+	bool databaseDI::get_configuration(table_configuration& stData)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select * from t_configuration");
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			stData.ftpServerIp = (sql_row[0]);
+			stData.ftpServerAccount = (sql_row[1]);
+			stData.ftpServerPwd = (sql_row[2]);
+			stData.ftpPwd = (sql_row[3]);
+		}
+		return true;
+	}
 }
 
 

@@ -58,7 +58,7 @@ namespace common
     int                     tableViewPageRows = 12;
     unsigned long           dwLastIn = 0;               //上一秒钟的接收字节数
     unsigned long           dwLastOut = 0;              //上一秒钟的发送字节数
-    int                     onePageRows = 12;             // 每页显示的行数;
+    int                     onePageRows = 15;             // 每页显示的行数;
     QString                 strFtpIp = "127.0.0.1";     // ftp的ip
     int                     iFtpPort = 5555;
     QString                 strDbIp = "127.0.0.1";

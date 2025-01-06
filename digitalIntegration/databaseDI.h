@@ -130,5 +130,7 @@ namespace db
 		// 远程账户密码表;
 		bool get_account_password(table_account_password& stAccount);
 		bool update_account_use_state(const int& id, int& approval);
+
+		bool get_configuration(table_configuration& stData);
 	};
 }
