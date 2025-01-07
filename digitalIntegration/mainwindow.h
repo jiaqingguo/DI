@@ -29,6 +29,7 @@ class GifDialog;
 class CCtrlNetwork;
 class CWidget;
 class FtpDialog;
+class C7Zip;
 
 struct st_account_data;
 struct table_ip_configure;
@@ -226,6 +227,7 @@ private:
 	  // <module   <tabIndex,userName>
 	QMap<int , QMap<int , st_account_data>> m_usedAccaunt;
 
+	C7Zip *m_pC7Zip = nullptr;
 };
 
 extern MainWindow* g_pMainWindow;

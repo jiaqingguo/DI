@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets multimedia axcontainer network winextras
+QT       += core gui webengine webenginewidgets multimedia axcontainer network winextras 3dcore 3drender 3dinput 3dextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 
@@ -20,6 +20,7 @@ SOURCES += \
     AddToolDialog.cpp \
     AddToolInfoDialog.cpp \
     ApprovalProgressDialog.cpp \
+    C7Zip.cpp \
     CAxWidget.cpp \
     CLineEdit.cpp \
     CTableView.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     AddToolDialog.h \
     AddToolInfoDialog.h \
     ApprovalProgressDialog.h \
+    C7Zip.h \
     CAxWidget.h \
     CLineEdit.h \
     CPagedTableModel.h \
