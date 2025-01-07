@@ -1,4 +1,4 @@
-
+ï»¿
 #include <iostream>
 
 #pragma comment(lib, "Kernel32.lib")
@@ -56,29 +56,30 @@ namespace common
     int                     tableViewRowHeight = 28;
     int                     tableViewHeight = 344;
     int                     tableViewPageRows = 12;
-    unsigned long           dwLastIn = 0;               //ÉÏÒ»ÃëÖÓµÄ½ÓÊÕ×Ö½ÚÊı
-    unsigned long           dwLastOut = 0;              //ÉÏÒ»ÃëÖÓµÄ·¢ËÍ×Ö½ÚÊı
-    int                     onePageRows = 15;             // Ã¿Ò³ÏÔÊ¾µÄĞĞÊı;
-    QString                 strFtpIp = "127.0.0.1";     // ftpµÄip
+    unsigned long           dwLastIn = 0;               //ä¸Šä¸€ç§’é’Ÿçš„æ¥æ”¶å­—èŠ‚æ•°
+    unsigned long           dwLastOut = 0;              //ä¸Šä¸€ç§’é’Ÿçš„å‘é€å­—èŠ‚æ•°
+    int                     onePageRows = 15;             // æ¯é¡µæ˜¾ç¤ºçš„è¡Œæ•°;
+    QString                 strFtpIp = "127.0.0.1";     // ftpçš„ip
     int                     iFtpPort = 5555;
     QString                 strDbIp = "127.0.0.1";
     QString                 strDbUser = "root";
     QString                 strDbPassword = "123456";
 
-    int				        iUserID = -1;                 //Êı¾İ¿âÓÃ»§id
-    bool                    bAdministrator = false;     // ÊÇ·ñÊÇ¹ÜÀíÔ±;
+    int				        iUserID = -1;                 //æ•°æ®åº“ç”¨æˆ·id
+    bool                    bAdministrator = false;     // æ˜¯å¦æ˜¯ç®¡ç†å‘˜;
 
-    int				        iLoginNum = 1;              // µÇÂ¼Ë³Ğò; 123456;
-    int                     iSoftStartHostNum = 1;      // Ä£¿é234Èí¼ş Æô¶¯µÄËùÔÚÖ÷»ú±êÖ¾;
-   // std::set<std::string>   setHostIps;                 // Ã¿¸öÓÃ»§·ÖÅäµÄÈı¸öÖ÷»úÍø¿¨ip;
-    std::vector<table_ip_configure>    setHostData;    // Ã¿¸öÓÃ»§·ÖÅäµÄÈı¸öÖ÷»úÍø¿¨ip;;         // Ã¿¸öÓÃ»§·ÖÅäµÄÈı¸öÖ÷»úÍø¿¨ip;
-    QString                 strCopyPath;                  // ¸´ÖÆµÄÔ¶³ÌÂ·¾¶;
-    QString                 strVipPath;				  //   ÆÕÍ¨ÓÃ»§²»ÄÜ²Ù×÷µÄÂ·¾¶;
+    int				        iLoginNum = 1;              // ç™»å½•é¡ºåº; 123456;
+    int                     iSoftStartHostNum = 1;      // æ¨¡å—234è½¯ä»¶ å¯åŠ¨çš„æ‰€åœ¨ä¸»æœºæ ‡å¿—;
+   // std::set<std::string>   setHostIps;                 // æ¯ä¸ªç”¨æˆ·åˆ†é…çš„ä¸‰ä¸ªä¸»æœºç½‘å¡ip;
+    std::vector<table_ip_configure>    setHostData;    // æ¯ä¸ªç”¨æˆ·åˆ†é…çš„ä¸‰ä¸ªä¸»æœºç½‘å¡ip;;         // æ¯ä¸ªç”¨æˆ·åˆ†é…çš„ä¸‰ä¸ªä¸»æœºç½‘å¡ip;
+    QString                 strCopyPath;                  // å¤åˆ¶çš„è¿œç¨‹è·¯å¾„;
+    QString                 strVipPath;				  //   æ™®é€šç”¨æˆ·ä¸èƒ½æ“ä½œçš„è·¯å¾„;
     table_user              stUser;
-    int                     index = 0;                       //Ò»¼ü¼ÓÔØÊ±£¬µã»÷²»Í¬Ä£¿é
+    int                     index = 0;                       //ä¸€é”®åŠ è½½æ—¶ï¼Œç‚¹å‡»ä¸åŒæ¨¡å—
+	int                     indexNum = 0;             //é¼ æ ‡åŒå‡»å“ªä¸€ä¸ªæ¨¡å—
     const double            dBladeComputerCpuUsageLimits = 60;
     std::vector<table_ip_configure>    setHostName;
-    QString                  strLoginUserName;        // ÒÑµÇÂ¼µÄÓÃ»§Ãû;
+    QString                  strLoginUserName;        // å·²ç™»å½•çš„ç”¨æˆ·å;
 
     QString                  strLinuxFtpIp;
     QString                  strFtpAccount;
@@ -97,7 +98,7 @@ namespace common
     {
         return Filetime2Int64(nowTime) - Filetime2Int64(preTime);
     }
-    // »ñÈ¡cpuÊ¹ÓÃÂÊ
+    // è·å–cpuä½¿ç”¨ç‡
     double getCpuUsage()
     {
         double nCpuRate = -1;
@@ -114,9 +115,9 @@ namespace common
         preIdleTime = idleTime;
         preKernelTime = kernelTime;
         preUserTime = userTime;
-        // ³õÊ¼ÖµÎªnonsignaled
+        // åˆå§‹å€¼ä¸ºnonsignaled
         hEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
-        // µÈ´ı500ms
+        // ç­‰å¾…500ms
         WaitForSingleObject(hEvent, 500);
 
         bRes = GetSystemTimes(&idleTime, &kernelTime, &userTime);
@@ -127,7 +128,7 @@ namespace common
         nCpuRate = ceil(100.0 * (kernel + user - idle) / (kernel + user));
         return nCpuRate;
     }
-    //»ñÈ¡ÎïÀíÄÚ´æ
+    //è·å–ç‰©ç†å†…å­˜
     void getPhysicsMem(long& allPhysicsMem, long& freePhysicsMem)
     {
         MEMORYSTATUSEX statex;
@@ -137,7 +138,7 @@ namespace common
         freePhysicsMem = statex.ullAvailPhys * 1.0 / 1024.0 / 1024.0;
 
     }
-    // »ñÈ¡ÄÚ´æÊ¹ÓÃÂÊ
+    // è·å–å†…å­˜ä½¿ç”¨ç‡
     double getMemUseRate()
     {
         MEMORYSTATUSEX statex;
@@ -149,7 +150,7 @@ namespace common
     }
     void getAllDisSpace(double& lFreeAll, double& lToalAll)
     {
-        // ´æ´¢µ±Ç°ÏµÍ³´æÔÚµÄÅÌ·û
+        // å­˜å‚¨å½“å‰ç³»ç»Ÿå­˜åœ¨çš„ç›˜ç¬¦
         static char path[_MAX_PATH];
         int iCurdrive = _getdrive();
         for (int iDrive = 1; iDrive <= iCurdrive; iDrive++)
@@ -157,8 +158,8 @@ namespace common
             if (!_chdrive(iDrive))
             {
                 sprintf(path, "%c:\\", iDrive + 'A' - 1);
-                ULARGE_INTEGER iTotalBytes;//´ÅÅÌ×ÜÈİÁ¿   
-                ULARGE_INTEGER iFreeBytesToCaller;//´ÅÅÌÊ£ÓàÈİÁ¿   
+                ULARGE_INTEGER iTotalBytes;//ç£ç›˜æ€»å®¹é‡   
+                ULARGE_INTEGER iFreeBytesToCaller;//ç£ç›˜å‰©ä½™å®¹é‡   
                 ULARGE_INTEGER iFreeBytes;
                 WCHAR wszClassName[_MAX_PATH];
                 memset(wszClassName, 0, sizeof(wszClassName));
@@ -233,7 +234,7 @@ namespace common
         //MIB_IFTABLE* pIfTable = nullptr;
         //DWORD dwSize = 0;
 
-        //// »ñÈ¡ËùĞè»º³åÇø´óĞ¡
+        //// è·å–æ‰€éœ€ç¼“å†²åŒºå¤§å°
         //if (GetIfTable(nullptr, &dwSize, TRUE) == ERROR_INSUFFICIENT_BUFFER) 
         //{
         //    pIfTable = (MIB_IFTABLE*)malloc(dwSize);
@@ -255,7 +256,7 @@ namespace common
     void getNetworkInterfaceStatistics() {
         PMIB_IFTABLE pIfTable;
         DWORD dwSize = 0;
-        GetIfTable(NULL, &dwSize, TRUE); // »ñÈ¡ËùĞè»º³åÇø´óĞ¡
+        GetIfTable(NULL, &dwSize, TRUE); // è·å–æ‰€éœ€ç¼“å†²åŒºå¤§å°
 
         pIfTable = (MIB_IFTABLE*)malloc(dwSize);
         if (pIfTable == NULL) {
@@ -267,7 +268,7 @@ namespace common
             for (DWORD i = 0; i < pIfTable->dwNumEntries; i++) {
                 MIB_IFROW row = pIfTable->table[i];
 
-                // ¼ì²é½Ó¿ÚÊÇ·ñÎªÒÔÌ«Íø»ò WiFi
+                // æ£€æŸ¥æ¥å£æ˜¯å¦ä¸ºä»¥å¤ªç½‘æˆ– WiFi
                 if (row.dwType == IF_TYPE_ETHERNET_CSMACD || row.dwType == IF_TYPE_IEEE80211) {
                     printf("Interface Name: %ws\n", row.wszName);
                     printf("Interface Index: %lu\n", row.dwIndex);
@@ -298,7 +299,7 @@ namespace common
         PIP_ADAPTER_INFO pAdapterInfo = NULL;
         ULONG ulOutBufLen = 0;
 
-        // Ê×ÏÈµ÷ÓÃ GetAdaptersInfo »ñÈ¡ËùĞèµÄ»º³åÇø´óĞ¡
+        // é¦–å…ˆè°ƒç”¨ GetAdaptersInfo è·å–æ‰€éœ€çš„ç¼“å†²åŒºå¤§å°
         if (GetAdaptersInfo(NULL, &ulOutBufLen) == ERROR_BUFFER_OVERFLOW) {
             pAdapterInfo = (PIP_ADAPTER_INFO)malloc(ulOutBufLen);
         }
@@ -319,7 +320,7 @@ namespace common
                 printf("Index: %u\n", pAdapter->Index);
                 printf("Type: %u\n", pAdapter->Type);
 
-                // Êä³ö IP µØÖ·ĞÅÏ¢
+                // è¾“å‡º IP åœ°å€ä¿¡æ¯
                 IP_ADDR_STRING* pAddr = &pAdapter->IpAddressList;
                 while (pAddr) {
                     printf("IP Address: %s\n", pAddr->IpAddress.String);
@@ -327,7 +328,7 @@ namespace common
                     pAddr = pAddr->Next;
                 }
 
-                // Êä³öÄ¬ÈÏÍø¹Ø
+                // è¾“å‡ºé»˜è®¤ç½‘å…³
                 if (pAdapter->GatewayList.IpAddress.String[0]) {
                     printf("Default Gateway: %s\n", pAdapter->GatewayList.IpAddress.String);
                 }
@@ -354,13 +355,13 @@ namespace common
 
         if (uRetCode == ERROR_INSUFFICIENT_BUFFER)
         {
-            m_pTable = (PMIB_IFTABLE)new BYTE[65535];   //¼ÙÉè¶Ë¿ÚÊı²»³¬¹ı65535¸ö
+            m_pTable = (PMIB_IFTABLE)new BYTE[65535];   //å‡è®¾ç«¯å£æ•°ä¸è¶…è¿‡65535ä¸ª
         }
 
-        //DWORD   dwLastIn = 0;           //ÉÏÒ»ÃëÖÓµÄ½ÓÊÕ×Ö½ÚÊı
-        //DWORD   dwLastOut = 0;          //ÉÏÒ»ÃëÖÓµÄ·¢ËÍ×Ö½ÚÊı
-        DWORD   dwBandIn = 0;           //ÏÂÔØËÙ¶È
-        DWORD   dwBandOut = 0;          //ÉÏ´«ËÙ¶È
+        //DWORD   dwLastIn = 0;           //ä¸Šä¸€ç§’é’Ÿçš„æ¥æ”¶å­—èŠ‚æ•°
+        //DWORD   dwLastOut = 0;          //ä¸Šä¸€ç§’é’Ÿçš„å‘é€å­—èŠ‚æ•°
+        DWORD   dwBandIn = 0;           //ä¸‹è½½é€Ÿåº¦
+        DWORD   dwBandOut = 0;          //ä¸Šä¼ é€Ÿåº¦
 
 
         NetSpeedInfo.clear();
@@ -368,7 +369,7 @@ namespace common
         DWORD   dwInOctets = 0;
         DWORD   dwOutOctets = 0;
 
-        //½«ËùÓĞ¶Ë¿ÚµÄÁ÷Á¿½øĞĞÍ³¼Æ
+        //å°†æ‰€æœ‰ç«¯å£çš„æµé‡è¿›è¡Œç»Ÿè®¡
         for (UINT i = 0; i < m_pTable->dwNumEntries; i++)
         {
 
@@ -377,15 +378,15 @@ namespace common
             dwOutOctets += Row.dwOutOctets;
         }
 
-        dwBandIn = dwInOctets - dwLastIn;       //ÏÂÔØËÙ¶È
-        dwBandOut = dwOutOctets - dwLastOut;    //ÉÏ´²ËÙËÙ
+        dwBandIn = dwInOctets - dwLastIn;       //ä¸‹è½½é€Ÿåº¦
+        dwBandOut = dwOutOctets - dwLastOut;    //ä¸ŠåºŠé€Ÿé€Ÿ
         if (dwLastIn <= 0)
         {
             dwBandIn = 0;
         }
         else
         {
-            dwBandIn = dwBandIn / 1024; //b×ª»»³Ékb
+            dwBandIn = dwBandIn / 1024; //bè½¬æ¢æˆkb
         }
 
         if (dwLastOut <= 0)
@@ -394,27 +395,27 @@ namespace common
         }
         else
         {
-            dwBandOut = dwBandOut / 1024;   //b×ª»»³Ékb
+            dwBandOut = dwBandOut / 1024;   //bè½¬æ¢æˆkb
         }
 
         dwLastIn = dwInOctets;
         dwLastOut = dwOutOctets;
 
-        //        printf("ÊÕµ½×Ö½Ú: %u bytes\n", dwLastIn);
-        //        printf("·¢ËÍ×Ö½Ú: %u bytes\n", dwLastOut);
-        //        printf("ÏÂĞĞËÙ¶È: %u KB\n", dwBandIn);
-        //        printf("ÉÏĞĞËÙ¶È: %u KB\n", dwBandOut);
+        //        printf("æ”¶åˆ°å­—èŠ‚: %u bytes\n", dwLastIn);
+        //        printf("å‘é€å­—èŠ‚: %u bytes\n", dwLastOut);
+        //        printf("ä¸‹è¡Œé€Ÿåº¦: %u KB\n", dwBandIn);
+        //        printf("ä¸Šè¡Œé€Ÿåº¦: %u KB\n", dwBandOut);
         //        printf("--------------------------\n");
-        NetSpeedInfo = QString("ÊÕµ½×Ö½Ú: %1 bytes\r\n"
-            "·¢ËÍ×Ö½Ú£º %2 bytes\r\n"
-            "ÏÂĞĞËÙ¶È: %3 Kb\r\n"
-            "ÉÏĞĞËÙ¶È: %4 kb\r\n")
+        NetSpeedInfo = QString("æ”¶åˆ°å­—èŠ‚: %1 bytes\r\n"
+            "å‘é€å­—èŠ‚ï¼š %2 bytes\r\n"
+            "ä¸‹è¡Œé€Ÿåº¦: %3 Kb\r\n"
+            "ä¸Šè¡Œé€Ÿåº¦: %4 kb\r\n")
             .arg(dwLastIn)
             .arg(dwLastOut)
             .arg(dwBandIn)
             .arg(dwBandOut);
         // emit netspeedResult(NetSpeedInfo);
-         //sleep(1);       //ĞİÃßÒ»ÃëÖÓ
+         //sleep(1);       //ä¼‘çœ ä¸€ç§’é’Ÿ
 
         delete[] m_pTable;
         unsigned long throughput = dwBandIn + dwBandOut;
@@ -441,9 +442,9 @@ namespace common
 
                 if (wndProcessId == lParam && IsWindowVisible(hwnd)) {
                     *(HWND*)lParam = hwnd;
-                    return FALSE; // ÕÒµ½Ä¿±ê´°¿ÚºóÍ£Ö¹Ã¶¾Ù
+                    return FALSE; // æ‰¾åˆ°ç›®æ ‡çª—å£ååœæ­¢æšä¸¾
                 }
-                return TRUE; // ¼ÌĞøÃ¶¾Ù
+                return TRUE; // ç»§ç»­æšä¸¾
             }, (LPARAM)&hwnd);
 
         return hwnd;
@@ -454,9 +455,9 @@ namespace common
         if (hwnd) {
             const int length = GetWindowTextLength(hwnd) + 1;
             TCHAR* title = new TCHAR[length];
-            GetWindowText(hwnd, title, length); // »ñÈ¡´°¿Ú±êÌâ
+            GetWindowText(hwnd, title, length); // è·å–çª—å£æ ‡é¢˜
             QString windowTitle = QString::fromWCharArray(title);
-            delete[] title; // ÊÍ·ÅÄÚ´æ
+            delete[] title; // é‡Šæ”¾å†…å­˜
             return windowTitle;
         }
         return QString();
@@ -468,15 +469,15 @@ namespace common
             GetWindowThreadProcessId(hwnd, &windowProcessId);
             if (windowProcessId == (DWORD)lParam) {
                 *(HWND*)lParam = hwnd;
-                return FALSE; // ÕÒµ½ºóÍ£Ö¹
+                return FALSE; // æ‰¾åˆ°ååœæ­¢
             }
-            return TRUE; // ¼ÌĞøÃ¶¾Ù
+            return TRUE; // ç»§ç»­æšä¸¾
             }, (LPARAM)&hwnd);
 
         return hwnd;
     }
     HANDLE getProcessHandle(DWORD processID) {
-        // Ê¹ÓÃ PROCESS_ALL_ACCESS È¨ÏŞ´ò¿ª½ø³Ì
+        // ä½¿ç”¨ PROCESS_ALL_ACCESS æƒé™æ‰“å¼€è¿›ç¨‹
         HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
         if (hProcess == NULL) {
             // qDebug() << "Could not open process. Error:" << GetLastError();
@@ -485,27 +486,27 @@ namespace common
     }
 
     struct EnumWindowData {
-        std::vector<HWND> windowHandles; // ÓÃÓÚ´æ´¢´°¿Ú¾ä±ú
-        DWORD processID;                  // Ä¿±ê½ø³Ì ID
+        std::vector<HWND> windowHandles; // ç”¨äºå­˜å‚¨çª—å£å¥æŸ„
+        DWORD processID;                  // ç›®æ ‡è¿›ç¨‹ ID
     };
     std::vector<HWND> getWindowHandlesByProcessId(DWORD processID)
     {
-        EnumWindowData data = { {}, processID }; // ³õÊ¼»¯Êı¾İ½á¹¹
+        EnumWindowData data = { {}, processID }; // åˆå§‹åŒ–æ•°æ®ç»“æ„
 
         EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL {
             EnumWindowData* pData = reinterpret_cast<EnumWindowData*>(lParam);
             DWORD windowProcessId;
             GetWindowThreadProcessId(hwnd, &windowProcessId);
 
-            // ¼ì²é½ø³Ì ID ÊÇ·ñÆ¥Åä
+            // æ£€æŸ¥è¿›ç¨‹ ID æ˜¯å¦åŒ¹é…
             if (windowProcessId == pData->processID) {
-                pData->windowHandles.push_back(hwnd); // Ìí¼Ó´°¿Ú¾ä±ú
+                pData->windowHandles.push_back(hwnd); // æ·»åŠ çª—å£å¥æŸ„
             }
 
-            return TRUE; // ¼ÌĞøÃ¶¾Ù´°¿Ú
-            }, reinterpret_cast<LPARAM>(&data)); // ´«µİÊı¾İ½á¹¹µÄÖ¸Õë
+            return TRUE; // ç»§ç»­æšä¸¾çª—å£
+            }, reinterpret_cast<LPARAM>(&data)); // ä¼ é€’æ•°æ®ç»“æ„çš„æŒ‡é’ˆ
 
-        return data.windowHandles; // ·µ»ØÕÒµ½µÄ´°¿Ú¾ä±ú
+        return data.windowHandles; // è¿”å›æ‰¾åˆ°çš„çª—å£å¥æŸ„
     }
 
 
@@ -514,19 +515,19 @@ namespace common
     {
         std::wstring wStr = strPath.toStdWString();
 
-        // ´Óstd::wstring»ñÈ¡LPCWSTR
+        // ä»std::wstringè·å–LPCWSTR
         LPCWSTR lpwstr = wStr.c_str();
-        // Æô¶¯½ø³Ì
+        // å¯åŠ¨è¿›ç¨‹
         STARTUPINFO si = { sizeof(si) };
         PROCESS_INFORMATION pi;
 
         if (CreateProcess(lpwstr, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
             std::cout << "Process started!" << std::endl;
 
-            // µÈ´ıÒ»¶ÎÊ±¼ä£¬ÈÃ´°¿Ú´´½¨
-            Sleep(1000); // ÊÓÇé¿ö¶ø¶¨£¬¿ÉÄÜĞèÒªµ÷Õû
+            // ç­‰å¾…ä¸€æ®µæ—¶é—´ï¼Œè®©çª—å£åˆ›å»º
+            Sleep(1000); // è§†æƒ…å†µè€Œå®šï¼Œå¯èƒ½éœ€è¦è°ƒæ•´
 
-            // »ñÈ¡´°¿Ú¾ä±ú
+            // è·å–çª—å£å¥æŸ„
             HWND hwnd = FindWindowByProcessId(pi.dwProcessId);
             if (hwnd) {
                 std::cout << "Window handle: " << hwnd << std::endl;
@@ -535,7 +536,7 @@ namespace common
                 std::cout << "No top-level window found for the process." << std::endl;
             }
 
-            // ¹Ø±Õ½ø³Ì¾ä±ú
+            // å…³é—­è¿›ç¨‹å¥æŸ„
             CloseHandle(pi.hProcess);
             CloseHandle(pi.hThread);
             return hwnd;
@@ -554,7 +555,7 @@ namespace common
     //    BOOL bRet = TRUE;
     //    TCHAR szClassName[256] = { 0 };
     //    GetC1assName(hWnd, szC1assName, 255);
-    //    if (1strcmpi(_T("MainWnd")£¬ szClassName) == 0) {
+    //    if (1strcmpi(_T("MainWnd")ï¼Œ szClassName) == 0) {
     //        DWORD dwProcessId = 0;
     //        GetWindowThreadProcessId(hWnd, &dwProcessId);
     //        if (dwProcessId == GetProcessIdByName(_T("BDWa11Paper_d. exe"))) {
@@ -602,18 +603,18 @@ namespace common
     {
         std::wstring wStr = strClassName.toStdWString();
 
-        // ´Óstd::wstring»ñÈ¡LPCWSTR
+        // ä»std::wstringè·å–LPCWSTR
         LPCWSTR lpwstr = wStr.c_str();
 
         HWND WNID;
         HWND temp = NULL;
-        // ±éÀúÏàÍ¬ÀàÃûµÄËùÓĞ´°¿Ú
+        // éå†ç›¸åŒç±»åçš„æ‰€æœ‰çª—å£
         int i = 0;
         do {
             temp = FindWindowEx(nullptr, temp, lpwstr, nullptr);
             if (temp != nullptr)
             {
-                // »ñÈ¡´°¿Ú±êÌâ£¬×÷ÎªÇø·ÖÒÀ¾İ
+                // è·å–çª—å£æ ‡é¢˜ï¼Œä½œä¸ºåŒºåˆ†ä¾æ®
                 char title[256];
                 GetWindowTextA(temp, title, sizeof(title));
                 if (i == number)
@@ -634,47 +635,47 @@ namespace common
 
     void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath) {
         NETRESOURCE net_Resource;
-        // ³õÊ¼»¯NETRESOURCE½á¹¹
+        // åˆå§‹åŒ–NETRESOURCEç»“æ„
         net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
         net_Resource.dwScope = RESOURCE_CONNECTED;
         net_Resource.dwType = RESOURCETYPE_DISK;
         net_Resource.dwUsage = 0;
         net_Resource.lpComment = NULL;
-        net_Resource.lpLocalName = const_cast<TCHAR*>(localDrive); // Ó³Éäµ½±¾µØÇı¶¯Æ÷
+        net_Resource.lpLocalName = const_cast<TCHAR*>(localDrive); // æ˜ å°„åˆ°æœ¬åœ°é©±åŠ¨å™¨
         net_Resource.lpProvider = NULL;
-        net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // ¹²Ïí×ÊÔ´µÄÂ·¾¶
+        net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // å…±äº«èµ„æºçš„è·¯å¾„
 
         //DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
-        // È¡ÏûÒÑÓĞÁ¬½Ó
+        // å–æ¶ˆå·²æœ‰è¿æ¥
         WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 
-        // Ìí¼ÓĞÂÁ¬½Ó
+        // æ·»åŠ æ–°è¿æ¥
         DWORD dw = WNetAddConnection2(&net_Resource, password, userName, 0);
         switch (dw) {
         case ERROR_SUCCESS:
             ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
             break;
         case ERROR_ACCESS_DENIED:
-            std::wcout << TEXT("Ã»ÓĞÈ¨ÏŞ·ÃÎÊ£¡\n");
+            std::wcout << TEXT("æ²¡æœ‰æƒé™è®¿é—®ï¼\n");
             break;
         case ERROR_ALREADY_ASSIGNED:
             ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
             break;
         case ERROR_INVALID_ADDRESS:
-            std::wcout << TEXT("IPµØÖ·ÎŞĞ§\n");
+            std::wcout << TEXT("IPåœ°å€æ— æ•ˆ\n");
             break;
         case ERROR_NO_NETWORK:
-            std::wcout << TEXT("ÍøÂç²»¿É´ï!\n");
+            std::wcout << TEXT("ç½‘ç»œä¸å¯è¾¾!\n");
             break;
         case ERROR_NO_TOKEN:
-            std::wcout << TEXT("Ã»ÓĞÓĞĞ§µÄÆ¾¾İ£¡Çë¼ì²éÓÃ»§ÃûºÍÃÜÂë¡£\n");
+            std::wcout << TEXT("æ²¡æœ‰æœ‰æ•ˆçš„å‡­æ®ï¼è¯·æ£€æŸ¥ç”¨æˆ·åå’Œå¯†ç ã€‚\n");
             break;
         case ERROR_SESSION_CREDENTIAL_CONFLICT:
-            std::wcout << TEXT("ERROR_SESSION_CREDENTIAL_CONFLICT¡£\n");
+            std::wcout << TEXT("ERROR_SESSION_CREDENTIAL_CONFLICTã€‚\n");
             break;
         default:
-            std::wcout << TEXT("·¢Éú´íÎó£¬´íÎó´úÂë: ") << dw << TEXT("\n");
+            std::wcout << TEXT("å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç : ") << dw << TEXT("\n");
             break;
         }
     }
@@ -698,22 +699,22 @@ namespace common
     void getScreenCenterPos(int& x, int& y, const int& dialgX, const int& dialgY)
     {
 
-        // »ñÈ¡µ±Ç°»î¶¯´°¿Ú
+        // è·å–å½“å‰æ´»åŠ¨çª—å£
         QWidget* activeWindow = QApplication::activeWindow();
         QScreen* screen = nullptr;
 
         if (activeWindow) {
-            // Ê¹ÓÃ»î¶¯´°¿Ú
+            // ä½¿ç”¨æ´»åŠ¨çª—å£
             screen = activeWindow->screen();
         }
         else {
-            // Èç¹ûÃ»ÓĞ»î¶¯´°¿Ú£¬Ê¹ÓÃÖ÷ÆÁÄ»
+            // å¦‚æœæ²¡æœ‰æ´»åŠ¨çª—å£ï¼Œä½¿ç”¨ä¸»å±å¹•
             screen = QApplication::primaryScreen();
         }
 
         QRect screenGeometry = screen->geometry();
 
-        // »ñÈ¡¶Ô»°¿òµÄ´óĞ¡
+        // è·å–å¯¹è¯æ¡†çš„å¤§å°
         x = screenGeometry.x() + (screenGeometry.width() - dialgX) / 2;
         y = screenGeometry.y() + (screenGeometry.height() - dialgY) / 2;
 
@@ -728,14 +729,14 @@ namespace common
 
         //DWORD bufferSize = MAX_PATH;
         char currentDirectory[MAX_PATH];
-        QByteArray byteArray = strPath.toUtf8(); // ×ª»»Îª UTF-8 ±àÂë
-            // Ó¦ÓÃ³ÌĞòÂ·¾¶
-        LPCSTR applicationPath = byteArray.constData();//= "E:\Visual Studio 2017.rdp";// "C:\\Path\\To\\Your\\Application.exe"; // Ìæ»»ÎªÊµ¼ÊÂ·¾¶
+        QByteArray byteArray = strPath.toUtf8(); // è½¬æ¢ä¸º UTF-8 ç¼–ç 
+            // åº”ç”¨ç¨‹åºè·¯å¾„
+        LPCSTR applicationPath = byteArray.constData();//= "E:\Visual Studio 2017.rdp";// "C:\\Path\\To\\Your\\Application.exe"; // æ›¿æ¢ä¸ºå®é™…è·¯å¾„
 
-            // µ÷ÓÃ ShellExecuteA À´´ò¿ªÓ¦ÓÃ³ÌĞò
+            // è°ƒç”¨ ShellExecuteA æ¥æ‰“å¼€åº”ç”¨ç¨‹åº
         HINSTANCE result = ShellExecuteA(NULL, "open", applicationPath, NULL, currentDirectory, SW_SHOW);
 
-        // ¼ì²é·µ»ØÖµ
+        // æ£€æŸ¥è¿”å›å€¼
         if ((int)result > 32) {
             std::cout << "Application opened successfully." << std::endl;
         }
@@ -748,29 +749,29 @@ namespace common
 
     void UnInitResource()
     {
-        //TCHAR szPasswd[] = TEXT("administrataor");          //¹²Ïí×ÊÔ´ÊÚÈ¨ÓÃ»§µÄÃÜÂë
-        //TCHAR szUserName[] = TEXT("Ate123");        //¹²Ïí×ÊÔ´ÊÚÈ¨µÄÓÃ»§
+        //TCHAR szPasswd[] = TEXT("administrataor");          //å…±äº«èµ„æºæˆæƒç”¨æˆ·çš„å¯†ç 
+        //TCHAR szUserName[] = TEXT("Ate123");        //å…±äº«èµ„æºæˆæƒçš„ç”¨æˆ·
 
-        //TCHAR szPasswd[] = TEXT("Share123");          //¹²Ïí×ÊÔ´ÊÚÈ¨ÓÃ»§µÄÃÜÂë
-        //TCHAR szUserName[] = TEXT("share");        //¹²Ïí×ÊÔ´ÊÚÈ¨µÄÓÃ»§
+        //TCHAR szPasswd[] = TEXT("Share123");          //å…±äº«èµ„æºæˆæƒç”¨æˆ·çš„å¯†ç 
+        //TCHAR szUserName[] = TEXT("share");        //å…±äº«èµ„æºæˆæƒçš„ç”¨æˆ·
         NETRESOURCE net_Resource;
 
-        // ³õÊ¼»¯NETRESOURCE½á¹¹
+        // åˆå§‹åŒ–NETRESOURCEç»“æ„
         net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
         net_Resource.dwScope = RESOURCE_CONNECTED;
         net_Resource.dwType = RESOURCETYPE_DISK;
         net_Resource.dwUsage = 0;
-        net_Resource.lpComment = NULL; // ¿ÉÒÔÉèÎªNULL
-        TCHAR localName[] = TEXT("Y:");  // Ó³Éä³É±¾µØÇı¶¯Æ÷ Z:
+        net_Resource.lpComment = NULL; // å¯ä»¥è®¾ä¸ºNULL
+        TCHAR localName[] = TEXT("Y:");  // æ˜ å°„æˆæœ¬åœ°é©±åŠ¨å™¨ Z:
         net_Resource.lpLocalName = localName;
         net_Resource.lpProvider = NULL;
-        TCHAR lpRemoteName[] = TEXT("\\\\192.168.1.247");  // ¹²Ïí×ÊÔ´µÄÂ·¾¶
+        TCHAR lpRemoteName[] = TEXT("\\\\192.168.1.247");  // å…±äº«èµ„æºçš„è·¯å¾„
 
-        net_Resource.lpRemoteName = lpRemoteName; // ¹²Ïí×ÊÔ´µÄÂ·¾¶
+        net_Resource.lpRemoteName = lpRemoteName; // å…±äº«èµ„æºçš„è·¯å¾„
 
         //DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
-        // È¡ÏûÒÑÓĞÁ¬½Ó
+        // å–æ¶ˆå·²æœ‰è¿æ¥
         WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 
 
@@ -786,8 +787,8 @@ namespace common
 
     void findIpWithGpuMinValue(table_ip_configure& stHost)
     {
-        double minCpuUsage = 100;// td::numeric_limits<double>::max(); // ³õÊ¼»¯Îª×î´óÖµ
-      //  std::string minIpAddress; // ´æ´¢×îĞ¡ CPU Ê¹ÓÃÂÊ¶ÔÓ¦µÄ IP µØÖ·
+        double minCpuUsage = 100;// td::numeric_limits<double>::max(); // åˆå§‹åŒ–ä¸ºæœ€å¤§å€¼
+      //  std::string minIpAddress; // å­˜å‚¨æœ€å° CPU ä½¿ç”¨ç‡å¯¹åº”çš„ IP åœ°å€
         int index = -1;
         for (int i = 0; i < setHostData.size(); i++)
         {
@@ -806,7 +807,7 @@ namespace common
             stHost.number = setHostData[index].number;
             setHostData[index].dCpuUsage++;
         }
-        else  // Ã»ÓĞCPuÊ¹ÓÃÂÊĞ¡ÓÚ Ö¸¶¨ÖµµÄÔÙ±È½ÏGPU
+        else  // æ²¡æœ‰CPuä½¿ç”¨ç‡å°äº æŒ‡å®šå€¼çš„å†æ¯”è¾ƒGPU
         {
             double minGpuUsage = 100;
             for (int i = 0; i < setHostData.size(); i++)
@@ -829,19 +830,19 @@ namespace common
     }
     void getHostNameData()
     {
-        // ÓÃÓÚ´æ´¢Î¨Ò» name µÄĞÂ vector
+        // ç”¨äºå­˜å‚¨å”¯ä¸€ name çš„æ–° vector
       //  std::vector<table_ip_configure> uniqueNameData;
-        // ÓÃÓÚ¸ú×ÙÒÑÓöµ½µÄ name
+        // ç”¨äºè·Ÿè¸ªå·²é‡åˆ°çš„ name
         std::unordered_set<std::string> encounteredNames;
 
-        // ±éÀúÔ­Ê¼Êı¾İ
+        // éå†åŸå§‹æ•°æ®
         for (const auto& item : setHostData) {
-            // Èç¹û name ÉĞÎ´Óöµ½
+            // å¦‚æœ name å°šæœªé‡åˆ°
             if (encounteredNames.find(item.hostname) == encounteredNames.end())
             {
-                // Ìí¼Óµ½ĞÂ vector
+                // æ·»åŠ åˆ°æ–° vector
                 setHostName.push_back(item);
-                // ÔÚÒÑÓöµ½ name µÄ¼¯ºÏÖĞ¼ÇÂ¼
+                // åœ¨å·²é‡åˆ° name çš„é›†åˆä¸­è®°å½•
                 encounteredNames.insert(item.hostname);
             }
         }
@@ -877,25 +878,25 @@ namespace common
     {
         if (tableView)
         {
-            //±íÍ·ĞÅÏ¢ÏÔÊ¾¾Ó×ó 
+            //è¡¨å¤´ä¿¡æ¯æ˜¾ç¤ºå±…å·¦ 
             // ui->tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
             tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-            // ÉèÖÃÁĞ¿í¶È¿ÉÒÔÀ­Éì
+            // è®¾ç½®åˆ—å®½åº¦å¯ä»¥æ‹‰ä¼¸
             // tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-            tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // Ñ¡ÔñÕûĞĞ
-            // ÉèÖÃĞĞ¸ß
+            tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // é€‰æ‹©æ•´è¡Œ
+            // è®¾ç½®è¡Œé«˜
             tableView->horizontalHeader()->setDefaultSectionSize(28);
-            // ÉèÖÃ±êÌâÀ¸µÄ¹Ì¶¨¸ß¶È£¬
+            // è®¾ç½®æ ‡é¢˜æ çš„å›ºå®šé«˜åº¦ï¼Œ
             tableView->horizontalHeader()->setFixedHeight(28);
             tableView->verticalHeader()->setVisible(false);
-            // ÉèÖÃ±í¸ñµÄµ¥ÔªÎªÖ»¶ÁÊôĞÔ£¬²»ÄÜ±à¼­
+            // è®¾ç½®è¡¨æ ¼çš„å•å…ƒä¸ºåªè¯»å±æ€§ï¼Œä¸èƒ½ç¼–è¾‘
             tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-            // ÉèÖÃµ¥Ñ¡
+            // è®¾ç½®å•é€‰
             tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-            // ÉèÖÃ¶àÑ¡
+            // è®¾ç½®å¤šé€‰
             // ui->tableView->setSelectionMode(QAbstractItemView::MultiSelection);
             tableView->horizontalHeader()->setSectionsMovable(true);
-			//ÉèÖÃ¿ÉÒÔÍÏ×§¿ØÖÆÁĞ¿í
+			//è®¾ç½®å¯ä»¥æ‹–æ‹½æ§åˆ¶åˆ—å®½
 			//tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
         }
     }
@@ -907,23 +908,23 @@ namespace common
     }*/
     //std::string Wchar2string(WCHAR wChar[])
     //{
-    //    // »ñÈ¡ĞèÒªµÄ¶à×Ö½Ú×Ö·û»º³åÇø´óĞ¡
+    //    // è·å–éœ€è¦çš„å¤šå­—èŠ‚å­—ç¬¦ç¼“å†²åŒºå¤§å°
     //    int bufferSize = WideCharToMultiByte(CP_UTF8, 0, wChar, -1, nullptr, 0, nullptr, nullptr);
-    //    // ´´½¨¶à×Ö½Ú×Ö·û»º³åÇø
+    //    // åˆ›å»ºå¤šå­—èŠ‚å­—ç¬¦ç¼“å†²åŒº
     //    char* charBuffer = new char[bufferSize];
-    //    // ½øĞĞ×Ö·û´®×ª»»
+    //    // è¿›è¡Œå­—ç¬¦ä¸²è½¬æ¢
     //    WideCharToMultiByte(CP_UTF8, 0, wChar, -1, charBuffer, bufferSize, nullptr, nullptr);
-    //    // ½«¶à×Ö½Ú×Ö·û´®×ª»»Îªstd::string
+    //    // å°†å¤šå­—èŠ‚å­—ç¬¦ä¸²è½¬æ¢ä¸ºstd::string
     //    return std::string(charBuffer);
     //}
 
     //wchar_t* String2Wchar(const std::string strTag)
     //{
-    //    // »ñÈ¡ĞèÒªµÄ¿í×Ö·û»º³åÇø´óĞ¡
+    //    // è·å–éœ€è¦çš„å®½å­—ç¬¦ç¼“å†²åŒºå¤§å°
     //    int bufferSize = MultiByteToWideChar(CP_UTF8, 0, strTag.c_str(), -1, nullptr, 0);
-    //    // ´´½¨¿í×Ö·û»º³åÇø
+    //    // åˆ›å»ºå®½å­—ç¬¦ç¼“å†²åŒº
     //    wchar_t* tagBuffer = new wchar_t[bufferSize];
-    //    // ½øĞĞ×Ö·û´®×ª»»
+    //    // è¿›è¡Œå­—ç¬¦ä¸²è½¬æ¢
     //    MultiByteToWideChar(CP_UTF8, 0, strTag.c_str(), -1, tagBuffer, bufferSize);
     //    return tagBuffer;
     //}
@@ -941,19 +942,19 @@ namespace common
         // Create a vector to hold the password
         std::vector<wchar_t> passwordBlob(password.length() + 1);
 
-        // Ê¹ÓÃ std::copy ½« QString ×ª»»Îª wchar_t
+        // ä½¿ç”¨ std::copy å°† QString è½¬æ¢ä¸º wchar_t
         std::copy(password.utf16(), password.utf16() + password.length() + 1, passwordBlob.data());
 
         cred.CredentialBlob = reinterpret_cast<LPBYTE>(passwordBlob.data());
       //  cred.CredentialBlob = const_cast<LPWSTR>(reinterpret_cast<const wchar_t*>(password.utf16()));
         cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
 
-        // ±£´æÆ¾¾İ
+        // ä¿å­˜å‡­æ®
         if (CredWrite(&cred, 0)) {
-            std::cout << "Æ¾¾İÒÑ³É¹¦±£´æ¡£" << std::endl;
+            std::cout << "å‡­æ®å·²æˆåŠŸä¿å­˜ã€‚" << std::endl;
         }
         else {
-            std::cerr << "±£´æÆ¾¾İÊ§°Ü£¬´íÎó´úÂë£º" << GetLastError() << std::endl;
+            std::cerr << "ä¿å­˜å‡­æ®å¤±è´¥ï¼Œé”™è¯¯ä»£ç ï¼š" << GetLastError() << std::endl;
         }
     }
    
@@ -964,7 +965,7 @@ std::string  string_To_UTF8(const std::string& str)
 {
     int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 
-    wchar_t* pwBuf = new wchar_t[nwLen + 1];//Ò»¶¨Òª¼Ó1£¬²»È»»á³öÏÖÎ²°Í 
+    wchar_t* pwBuf = new wchar_t[nwLen + 1];//ä¸€å®šè¦åŠ 1ï¼Œä¸ç„¶ä¼šå‡ºç°å°¾å·´ 
     ZeroMemory(pwBuf, nwLen * 2 + 2);
 
     ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);

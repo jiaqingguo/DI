@@ -1,4 +1,4 @@
-#include <QStandardItemModel>
+ï»¿#include <QStandardItemModel>
 
 #include "AddToolDialog.h"
 #include "ui_AddToolDialog.h"
@@ -27,12 +27,12 @@ void AddToolDialog::init()
 
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(3);
-	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ÐòºÅ"));
-	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ipÁÐ±í"));
-	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Õ¼ÓÃ×´Ì¬"));
-	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
-	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»úÃû"));
-	//m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ÓÃ»§Ãû"));
+	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ipåˆ—è¡¨"));
+	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å ç”¨çŠ¶æ€"));
+	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
+	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœºå"));
+	//m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ç”¨æˆ·å"));
 	ui->tableViewIpSet->setModel(m_model);
 	common::setTableViewBasicConfiguration(ui->tableViewIpSet);
 
@@ -41,9 +41,9 @@ void AddToolDialog::init()
 	connect(ui->btnAdd, SIGNAL(clicked()), this, SLOT(slot_btnAddClicked()));
 
 
-	// 2.³õÊ¼»¯½çÃæÊý¾Ý;
+	// 2.åˆå§‹åŒ–ç•Œé¢æ•°æ®;
 
-	//2.1 combox Èí¼þÊý¾Ý;
+	//2.1 combox è½¯ä»¶æ•°æ®;
 
 	ui->comboBoxToolNames->clear();
 	std::map<std::string, table_ip> ipMap;
@@ -57,7 +57,7 @@ void AddToolDialog::init()
 			const table_ip& data = stTool.second;
 			//ui->comboBoxToolNames->addItem(QString::fromStdString(software));
 
-			ui->comboBoxToolNames->addItem(QString::fromStdString(software), QVariant(QString::fromStdString(data.toolPath))); // Ìí¼Ó "Item 3"£¬ÉèÖÃÊý¾ÝÎª 3
+			ui->comboBoxToolNames->addItem(QString::fromStdString(software), QVariant(QString::fromStdString(data.toolPath))); // æ·»åŠ  "Item 3"ï¼Œè®¾ç½®æ•°æ®ä¸º 3
 		}
 	}
 	if (m_iModule != 1)
@@ -67,7 +67,7 @@ void AddToolDialog::init()
 		
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
-		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("Ê¹ÓÃÂÊÆô¶¯"));// Ä£¿é234 µÄÂß¼­
+		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("ä½¿ç”¨çŽ‡å¯åŠ¨"));// æ¨¡å—234 çš„é€»è¾‘
 		for (const auto& stIP : common::setHostData)
 		{
 			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
@@ -79,7 +79,7 @@ void AddToolDialog::init()
 		ui->comboBoxHost->setHidden(true);
 	}
 	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this,&AddToolDialog::slot_display_lineEditIP);
-	// ÊÖ¶¯´¥·¢²Ûº¯ÊýÒÔÏÔÊ¾³õÊ¼ IP µØÖ·
+	// æ‰‹åŠ¨è§¦å‘æ§½å‡½æ•°ä»¥æ˜¾ç¤ºåˆå§‹ IP åœ°å€
 	if (ui->comboBoxToolNames->count() > 0) 
 	{
 		slot_display_lineEditIP(ui->comboBoxToolNames->itemText(0));
@@ -93,42 +93,42 @@ void AddToolDialog::init()
 		int i = 1;
 		for (auto& stData : listData)
 		{
-			int newRowIndex = m_model->rowCount(); // »ñÈ¡µ±Ç°ÐÐÊý
-			m_model->insertRow(newRowIndex); // ²åÈëÐÂÐÐ
+			int newRowIndex = m_model->rowCount(); // èŽ·å–å½“å‰è¡Œæ•°
+			m_model->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 			QStandardItem* item = new QStandardItem(QString::number(i));
-			item->setTextAlignment(Qt::AlignCenter);   // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);   // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
 			m_model->setItem(newRowIndex, 0, item);
 
 			QModelIndex index = m_model->index(newRowIndex, 0);
-			m_model->setData(index, stData.id, Qt::UserRole);  // ÉèÖÃid;
+			m_model->setData(index, stData.id, Qt::UserRole);  // è®¾ç½®id;
 
 
 			item = new QStandardItem(QString::fromStdString(stData.ip));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_model->setItem(newRowIndex, 1, item);
 
 			//item = new QStandardItem(QString::fromStdString(stData.host));
-			//item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+			//item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			//m_model->setItem(newRowIndex, 3, item);
 
 			//item = new QStandardItem(QString::fromStdString(stData.username));
-			//item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+			//item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			//m_model->setItem(newRowIndex, 4, item);
 
 
-			QWidget* widget = new QWidget(); // ´´½¨Ò»¸öÈÝÆ÷WidgetÀ´´æ·ÅCheckBox
-			QCheckBox* checkBox = new QCheckBox(); // ´´½¨CheckBox
+			QWidget* widget = new QWidget(); // åˆ›å»ºä¸€ä¸ªå®¹å™¨Widgetæ¥å­˜æ”¾CheckBox
+			QCheckBox* checkBox = new QCheckBox(); // åˆ›å»ºCheckBox
 			checkBox->setProperty("row", newRowIndex); // set custom property
 			//checkBox->setProperty("column", 3);
 
-			//checkBoxList.append(checkBox); // ½«checkBoxÌí¼Óµ½ÁÐ±íÖÐ
+			//checkBoxList.append(checkBox); // å°†checkBoxæ·»åŠ åˆ°åˆ—è¡¨ä¸­
 
-			QHBoxLayout* layout = new QHBoxLayout(widget); // ÎªÈÝÆ÷WidgetÉèÖÃË®Æ½²¼¾Ö
-			layout->addWidget(checkBox); // ½«CheckBoxÌí¼Óµ½²¼¾ÖÖÐ
-			layout->setAlignment(Qt::AlignCenter); // ÉèÖÃ²¼¾ÖÖÐµÄ¿Ø¼þ¾ÓÖÐ¶ÔÆë
-			layout->setContentsMargins(0, 0, 0, 0); // ÒÆ³ý²¼¾Ö±ß¾à
+			QHBoxLayout* layout = new QHBoxLayout(widget); // ä¸ºå®¹å™¨Widgetè®¾ç½®æ°´å¹³å¸ƒå±€
+			layout->addWidget(checkBox); // å°†CheckBoxæ·»åŠ åˆ°å¸ƒå±€ä¸­
+			layout->setAlignment(Qt::AlignCenter); // è®¾ç½®å¸ƒå±€ä¸­çš„æŽ§ä»¶å±…ä¸­å¯¹é½
+			layout->setContentsMargins(0, 0, 0, 0); // ç§»é™¤å¸ƒå±€è¾¹è·
 			//ui->tableViewIpSet->setIndexWidget(m_model->index(newRowIndex, 3), widget);
    //         connect(checkBox, &QCheckBox::clicked, [=](bool checked) 
 			//{
@@ -163,8 +163,8 @@ void AddToolDialog::init()
    //             });
 			//if (stData.used == 0)
 			{
-				item = new QStandardItem(QString::fromLocal8Bit("Î´Õ¼ÓÃ"));
-				item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+				item = new QStandardItem(QString::fromLocal8Bit("æœªå ç”¨"));
+				item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 				m_model->setItem(newRowIndex, 2, item);
 				connect(checkBox, &QCheckBox::clicked, this, &AddToolDialog::slot_ipCheckBoxClicked);
 			}
@@ -172,8 +172,8 @@ void AddToolDialog::init()
 			{
 				checkBox->setChecked(true);
 				checkBox->setDisabled(true);
-				item = new QStandardItem(QString::fromLocal8Bit("ÒÑÕ¼ÓÃ"));
-				item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+				item = new QStandardItem(QString::fromLocal8Bit("å·²å ç”¨"));
+				item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 				m_model->setItem(newRowIndex, 2, item);
 			}
 
@@ -248,7 +248,7 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		}
 		else
 		{
-			ui->lineEditIP->clear(); // Èç¹ûÃ»ÓÐÕÒµ½ IP£¬Çå³ý QLineEdit
+			ui->lineEditIP->clear(); // å¦‚æžœæ²¡æœ‰æ‰¾åˆ° IPï¼Œæ¸…é™¤ QLineEdit
 		}
 
 		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(stipToolData.host));
@@ -269,11 +269,16 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 	//	int i = common::iSoftStartHostNum % 3;
 	//	if (common::setHostData.size() >= i)
 	//	{
-	//		auto it = std::next(common::setHostData.begin(), i); // ÒÆ¶¯µ½µÚi¸öÔªËØ
+	//		auto it = std::next(common::setHostData.begin(), i); // ç§»åŠ¨åˆ°ç¬¬iä¸ªå…ƒç´ 
 	//		std::string strValue = it->ip;
 	//		ui->lineEditIP->setText(QString::fromStdString(strValue));
 	//		common::iSoftStartHostNum++;
 	//	}
 	//}
+}
+
+QComboBox* AddToolDialog::getComboBox()
+{
+	return ui->comboBoxToolNames;
 }
 

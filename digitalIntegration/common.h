@@ -1,4 +1,4 @@
-#ifndef COMMON_H
+ï»¿#ifndef COMMON_H
 #define COMMON_H
 #include <vector>
 #include <string>
@@ -31,27 +31,28 @@ namespace common
 	extern int				tableViewRowHeight;
 	extern int				tableViewHeight;
 	extern int				tableViewPageRows;
-	extern unsigned long	dwLastIn;				//ÉÏÒ»ÃëÖÓµÄ½ÓÊÕ×Ö½ÚÊı
-	extern unsigned long	dwLastOut;				//ÉÏÒ»ÃëÖÓµÄ·¢ËÍ×Ö½ÚÊı
-	extern QString			strFtpIp;				// ftpµÄip
+	extern unsigned long	dwLastIn;				//ä¸Šä¸€ç§’é’Ÿçš„æ¥æ”¶å­—èŠ‚æ•°
+	extern unsigned long	dwLastOut;				//ä¸Šä¸€ç§’é’Ÿçš„å‘é€å­—èŠ‚æ•°
+	extern QString			strFtpIp;				// ftpçš„ip
 	extern int				iFtpPort;
 	extern QString          strDbIp;
 	extern QString          strDbUser;
 	extern QString          strDbPassword;
 
 	extern int				iUserID;
-	extern bool             bAdministrator;			 // ÊÇ·ñÊÇ¹ÜÀíÔ±;
-	extern int				onePageRows;			 // Ã¿Ò³ÏÔÊ¾µÄĞĞÊı;
+	extern bool             bAdministrator;			 // æ˜¯å¦æ˜¯ç®¡ç†å‘˜;
+	extern int				onePageRows;			 // æ¯é¡µæ˜¾ç¤ºçš„è¡Œæ•°;
 
-	extern int				iLoginNum;				 // µÇÂ¼Ë³Ğò; 123456;
-	extern int              iSoftStartHostNum;		 // Ä£¿é234Èí¼ş Æô¶¯µÄËùÔÚÖ÷»ú±êÖ¾;
-	extern   std::vector<table_ip_configure>    setHostData;    // Ã¿¸öÓÃ»§·ÖÅäµÄÈı¸öÖ÷»úÍø¿¨ip;;         // Ã¿¸öÓÃ»§·ÖÅäµÄÈı¸öÖ÷»úÍø¿¨ip;
+	extern int				iLoginNum;				 // ç™»å½•é¡ºåº; 123456;
+	extern int              iSoftStartHostNum;		 // æ¨¡å—234è½¯ä»¶ å¯åŠ¨çš„æ‰€åœ¨ä¸»æœºæ ‡å¿—;
+	extern   std::vector<table_ip_configure>    setHostData;    // æ¯ä¸ªç”¨æˆ·åˆ†é…çš„ä¸‰ä¸ªä¸»æœºç½‘å¡ip;;         // æ¯ä¸ªç”¨æˆ·åˆ†é…çš„ä¸‰ä¸ªä¸»æœºç½‘å¡ip;
 
-	extern QString          strCopyPath;			 // ¸´ÖÆµÄÔ¶³ÌÂ·¾¶;
-	extern QString          strVipPath;				 //   ÆÕÍ¨ÓÃ»§²»ÄÜ²Ù×÷µÄÂ·¾¶;
+	extern QString          strCopyPath;			 // å¤åˆ¶çš„è¿œç¨‹è·¯å¾„;
+	extern QString          strVipPath;				 //   æ™®é€šç”¨æˆ·ä¸èƒ½æ“ä½œçš„è·¯å¾„;
 	extern table_user       stUser;
-	extern int              index;                //Ò»¼ü¼ÓÔØÊ±£¬µã»÷²»Í¬Ä£¿é
-	extern QString                  strLoginUserName;        // ÒÑµÇÂ¼µÄÓÃ»§Ãû;
+	extern int              index;                //ä¸€é”®åŠ è½½æ—¶ï¼Œç‚¹å‡»ä¸åŒæ¨¡å—
+	extern int              indexNum ;            //é¼ æ ‡åŒå‡»å“ªä¸€ä¸ªæ¨¡å—
+	extern QString                  strLoginUserName;        // å·²ç™»å½•çš„ç”¨æˆ·å;
 
 	extern std::vector<table_ip_configure>    setHostName;
 
@@ -99,12 +100,12 @@ namespace common
 	void StoreCredential(const std::wstring& target, const std::wstring& username, const std::wstring& password);
 	void startDspExe(QString& strPath);
 
-	// ---------ÀàĞÍ×ª»»-----------
-	// string×ªtime_t;
+	// ---------ç±»å‹è½¬æ¢-----------
+	// stringè½¬time_t;
 	time_t string_to_datetime(const std::string& str);
 
-	//QtÏà¹Øº¯Êı----------------------------;
-	 // É¾³ıËùÓĞĞĞ ±£Áô±êÌâ;
+	//Qtç›¸å…³å‡½æ•°----------------------------;
+	 // åˆ é™¤æ‰€æœ‰è¡Œ ä¿ç•™æ ‡é¢˜;
 	void delAllModelRow(QStandardItemModel* model);
 
 	void hideMidelRowsbyColumnValue(QStandardItemModel* model,const int & Column, const QString& strValue);

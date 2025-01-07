@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+ï»¿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -7,6 +7,9 @@
 #include <QFileSystemWatcher>
 #include <QApplication>
 #include <QPushButton>
+
+#include <QMouseEvent>
+#include <QToolButton>
 
 
 QT_BEGIN_NAMESPACE
@@ -35,21 +38,21 @@ struct table_ip_configure;
 //class fingerDlg;
 
 class EmbeddedWidget : public QWidget {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-	EmbeddedWidget(HWND hwnd, QWidget* parent = nullptr) ;
+	EmbeddedWidget(HWND hwnd, QWidget* parent = nullptr);
 
-    // µ÷ÕûÇ¶Èë´°¿ÚµÄ´óĞ¡Îª QWidget µÄ´óĞ¡
+	// è°ƒæ•´åµŒå…¥çª—å£çš„å¤§å°ä¸º QWidget çš„å¤§å°
 	void adjustEmbeddedWindowSize();
 
 protected:
-    // ÖØĞ´ resizeEvent£¬ÒÔ·À QWidget µÄ´óĞ¡¸Ä±äÊ±ĞèÒªÖØĞÂµ÷ÕûÍâ²¿´°¿ÚµÄ´óĞ¡
+	// é‡å†™ resizeEventï¼Œä»¥é˜² QWidget çš„å¤§å°æ”¹å˜æ—¶éœ€è¦é‡æ–°è°ƒæ•´å¤–éƒ¨çª—å£çš„å¤§å°
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
-    HWND m_hwnd;                   // Íâ²¿´°¿Ú¾ä±ú
-    QWidget *m_windowContainer;     // ÓÃÓÚ·â×°Ô­Éú´°¿ÚµÄ QWidget
+	HWND m_hwnd;                   // å¤–éƒ¨çª—å£å¥æŸ„
+	QWidget *m_windowContainer;     // ç”¨äºå°è£…åŸç”Ÿçª—å£çš„ QWidget
 };
 
 //class CWidget : public QWidget
@@ -60,12 +63,12 @@ private:
 //protected:
 //	void mousePressEvent(QMouseEvent* event) override;
 //private:
-//	HWND m_hwnd;                   // Íâ²¿´°¿Ú¾ä±ú
-//	QWidget* m_windowContainer;     // ÓÃÓÚ·â×°Ô­Éú´°¿ÚµÄ QWidget
+//	HWND m_hwnd;                   // å¤–éƒ¨çª—å£å¥æŸ„
+//	QWidget* m_windowContainer;     // ç”¨äºå°è£…åŸç”Ÿçª—å£çš„ QWidget
 //};
 /*!
 * \class	QssAutoLoader
-* \brief	ĞŞ¸ÄqssÎÄ¼şÊ± Ê¹³ÌĞòÁ¢¿ÌÉúĞ§ÏÔÊ¾.
+* \brief	ä¿®æ”¹qssæ–‡ä»¶æ—¶ ä½¿ç¨‹åºç«‹åˆ»ç”Ÿæ•ˆæ˜¾ç¤º.
 * \author	Jiaqg
 * \date		2021/1/21
 */
@@ -81,7 +84,7 @@ public:
 
 	/*!
 	* \fn	void QssAutoLoader::setAutoloadQss(const QString &strQssPath)
-	* \brief	¼ÓÔØqssÎÄ¼ş.
+	* \brief	åŠ è½½qssæ–‡ä»¶.
 	* \author	Jiaqg
 	* \date	2021/1/21
 	* \param	strQssPath	Full pathname of the qss file.
@@ -97,7 +100,7 @@ protected slots:
 
 	/*!
 	* \fn	void QssAutoLoader::slot_autoLoad(const QString &strQssPath)
-	* \brief	¶¯Ì¬¼àÊÓ£¬ÎÄ¼şĞŞ¸ÄÁ¢¿ÌÉúĞ§.
+	* \brief	åŠ¨æ€ç›‘è§†ï¼Œæ–‡ä»¶ä¿®æ”¹ç«‹åˆ»ç”Ÿæ•ˆ.
 	* \author	Jiaqg
 	* \date	2021/1/21
 	* \param	strQssPath	Full pathname of the qss file.
@@ -125,29 +128,29 @@ private:
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+	MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
 	void initInitface();
 	void initUdp();
-	void udpStartExeThread(const QString strData,const QString strIp,const int port);
+	void udpStartExeThread(const QString strData, const QString strIp, const int port);
 	void showRegisterDialog();
 	void setUserNameText(const QString& userName);
-	
+
 	void showGif();
 	void closeGif();
 
 	bool showLoginDialog();
 
 	void initAccount();
-	QString  getAccaunt(const QString& strIP,const QString strSoft);
-	void     addAccaunt(const QString& strIP, const QString & strSoft, const QString& strAcc); // »Ö¸´¹Ø±ÕÈí¼şÒÑ¾­Ê¹ÓÃµÄÕË»§;
+	QString  getAccaunt(const QString& strIP, const QString strSoft);
+	void     addAccaunt(const QString& strIP, const QString & strSoft, const QString& strAcc); // æ¢å¤å…³é—­è½¯ä»¶å·²ç»ä½¿ç”¨çš„è´¦æˆ·;
 private slots:
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
-	void slot_btnDataManageClicked(); 
+	void slot_btnDataManageClicked();
 	void slot_btnApprovalProgressClicked();
 
 	void slot_btnAddToolTab();
@@ -156,7 +159,7 @@ private slots:
 
 	void slot_btnOneClickSave();
 
-	// ¸üĞÂÄ£¿é¹¤¾ßÍ¼±ê;
+	// æ›´æ–°æ¨¡å—å·¥å…·å›¾æ ‡;
 	void slot_updateModuleToolIcon(int module);
 
 	void slot_downlaodFinsh();
@@ -166,48 +169,51 @@ private slots:
 	void slot_tabModule3closeTab(int index);
 	void slot_tabModule4closeTab(int index);
 
-	void slot_one_load_tools(int moduleNum,const QString &toolsName);//Ò»¼ü¼ÓÔØµÄ²Ûº¯Êı
+	void slot_one_load_tools(int moduleNum, const QString &toolsName);//ä¸€é”®åŠ è½½çš„æ§½å‡½æ•°
 	void slot_widgetAboutToQuit();
+
+	void onDoubleClicked(const QString &buttonText);//é¼ æ ‡åŒå‡»äº‹ä»¶
+	void onRightClicked(QString &buttonText);//é¼ æ ‡å³å‡»äº‹ä»¶
 private:
 	void updateModuleToolIcon(int module);
 	void startUdpRdp(const QString ip);
-	void startLongDistanceSoftware(const QString tabName ,const int &module,const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path,CWidget *widget,QTabWidget* tabWidget=nullptr);
+	void startLongDistanceSoftware(const QString tabName, const int &module, const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path, CWidget *widget, QTabWidget* tabWidget = nullptr);
 	void startLongDistanceHost(const QString tabName, const int& module, const std::string strIp, const std::string strAccaunt, const std::string pwd, CWidget* widget, QTabWidget* tabWidget = nullptr);
 
 	int getBtnLoadIndex(QPushButton *btn);
 	bool isHardwareAccelerator(const std::string str);
-	
-	// »ñÈ¡µ¶Æ¬»úĞÅÏ¢
+
+	// è·å–åˆ€ç‰‡æœºä¿¡æ¯
 	void getBladeComputerData(std::vector<table_ip_configure>& setHostData);
 private:
-    Ui::MainWindow *ui;
+	Ui::MainWindow *ui;
 
-    QJsonObject _jsonData;
-    QWebEngineView* _view;
+	QJsonObject _jsonData;
+	QWebEngineView* _view;
 
-	// ×Ô¶¯¼à¿ØqssÎÄ¼şÀà
+	// è‡ªåŠ¨ç›‘æ§qssæ–‡ä»¶ç±»
 	QssAutoLoader* m_pQssAutoLoader;
-    LoginDialog* m_LoginDialog = nullptr;   // µÇÂ¼½çÃæ;
+	LoginDialog* m_LoginDialog = nullptr;   // ç™»å½•ç•Œé¢;
 
-	RegisterDialog* m_RegisterDialog = nullptr; // ×¢²á½çÃæ;
+	RegisterDialog* m_RegisterDialog = nullptr; // æ³¨å†Œç•Œé¢;
 
-	ResourceManageDialog* m_ResourceManageDialog = nullptr; // ×ÊÔ´¹ÜÀí½çÃæ;
+	ResourceManageDialog* m_ResourceManageDialog = nullptr; // èµ„æºç®¡ç†ç•Œé¢;
 
-	InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// ĞÅÏ¢ÅäÖÃ½çÃæ;
+	InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// ä¿¡æ¯é…ç½®ç•Œé¢;
 	//InformationConfihurationDialog* m_inforConfihurationDialog = nullptr;
 
-	DataManageDialog* m_DataManageDialog = nullptr; // Êı¾İ¹ÜÀí½çÃæ;
+	DataManageDialog* m_DataManageDialog = nullptr; // æ•°æ®ç®¡ç†ç•Œé¢;
 
-	//FilemangageDialog* m_FilemangageDialog = nullptr; // ÎÄ¼ş¹ÜÀí½çÃæ;
-	FtpDialog* m_FtpDialog = nullptr; // ÎÄ¼ş¹ÜÀí½çÃæ;
+	//FilemangageDialog* m_FilemangageDialog = nullptr; // æ–‡ä»¶ç®¡ç†ç•Œé¢;
+	FtpDialog* m_FtpDialog = nullptr; // æ–‡ä»¶ç®¡ç†ç•Œé¢;
 
-	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // ÉóÅú½ø¶ÈÒ³Ãæ;
+	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // å®¡æ‰¹è¿›åº¦é¡µé¢;
 
 
-//	AddToolDialog* m_AddToolDialog = nullptr; // Ôö¼Ó¹¤¾ß±êÇ©½çÃæ;
+	//AddToolDialog* m_AddToolDialog = nullptr; // å¢åŠ å·¥å…·æ ‡ç­¾ç•Œé¢;
 
-	OneClickSaveDialog* m_OneClickSaveDialog = nullptr;// Ò»¼ü±£´æ½çÃæ;
-	OneClickLoadDialog* m_OneClickLoadDialog = nullptr; // Ò»¼ü¼ÓÔØ½çÃæ;
+	OneClickSaveDialog* m_OneClickSaveDialog = nullptr;// ä¸€é”®ä¿å­˜ç•Œé¢;
+	OneClickLoadDialog* m_OneClickLoadDialog = nullptr; // ä¸€é”®åŠ è½½ç•Œé¢;
 
 	QWindow* windowQQ = nullptr;
 	QWidget * widgetQQ = nullptr;
@@ -218,15 +224,59 @@ private:
 	bool bUserIp = true;
 	CCtrlNetwork* m_udp;
 	//fingerDlg *m_fingerDlg = nullptr;
- //  <ip,<Èí¼ş £¬ÓÃ»§Ãûint
+ //  <ip,<è½¯ä»¶ ï¼Œç”¨æˆ·åint
 	//QMap<QString, QMap<QString, int>> m_mapAccaunt;
-//	<ip, < Èí¼ş £¬ÓÃ»§Ãû>
+//	<ip, < è½¯ä»¶ ï¼Œç”¨æˆ·å>
 	QMap<QString, QMap<QString, QVector<QString>>> m_mapAccauntData;
-	QVector<QString> m_vecAccount; //user 1 2 3»ò4 5 6
+	QVector<QString> m_vecAccount; //user 1 2 3æˆ–4 5 6
 	  // <module   <tabIndex,userName>
-	QMap<int , QMap<int , st_account_data>> m_usedAccaunt;
+	QMap<int, QMap<int, st_account_data>> m_usedAccaunt;
 
 };
 
+class DoubleClickInterceptor : public QObject {
+	Q_OBJECT
+protected:
+	bool eventFilter(QObject *obj, QEvent *event) override {
+		if (event->type() == QEvent::MouseButtonDblClick)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+			if (mouseEvent->button() == Qt::LeftButton)
+			{
+				// è·å–è¢«ç‚¹å‡»çš„ QToolButton
+				QToolButton *button = qobject_cast<QToolButton*>(obj);
+				QString buttonText = button->text();
+
+				emit doubleClicked(buttonText);
+				return true; // äº‹ä»¶å·²å¤„ç†
+			}
+		}
+		return QObject::eventFilter(obj, event);
+	}
+signals:
+	void doubleClicked(const QString &buttonText);
+};
+class RightClickEvent : public QObject {
+	Q_OBJECT
+		//public:
+		//	RightClickEvent(QObject *parent = nullptr) : QObject(parent) {}
+protected:
+	bool eventFilter(QObject *obj, QEvent *event) override {
+		if (event->type() == QEvent::MouseButtonRelease) {
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+			if (mouseEvent->button() == Qt::RightButton)
+			{
+				QToolButton *button = qobject_cast<QToolButton*>(obj);
+				QString buttonText = button->text();
+				emit rightClicked(buttonText);
+				return true; // äº‹ä»¶å·²å¤„ç†
+			}
+		}
+		return QObject::eventFilter(obj, event);
+	}
+
+signals:
+	void rightClicked(QString &buttonText);
+};
 extern MainWindow* g_pMainWindow;
 #endif // MAINWINDOW_H

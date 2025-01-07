@@ -1,4 +1,4 @@
-#pragma comment  (lib, "User32.lib")
+ï»¿#pragma comment  (lib, "User32.lib")
 #include "fingerDlg.h"
 
 #include "mainwindow.h"
@@ -38,42 +38,42 @@
 #include <functional>
 
 EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-	// ½«Ô­Éú´°¿ÚÇ¶Èëµ½ Qt µÄ QWidget ÖĞ
+	// å°†åŸç”Ÿçª—å£åµŒå…¥åˆ° Qt çš„ QWidget ä¸­
 	m_windowContainer = QWidget::createWindowContainer(QWindow::fromWinId((WId)m_hwnd), this);
-	m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // È·±£Ç¶Èë´°¿Ú¿ÉÒÔ»ñÈ¡½¹µã
+	m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // ç¡®ä¿åµŒå…¥çª—å£å¯ä»¥è·å–ç„¦ç‚¹
 
-	// µ÷ÕûÔ­Éú´°¿Ú´óĞ¡£¬Ê¹ÆäÆÌÂú QWidget
+	// è°ƒæ•´åŸç”Ÿçª—å£å¤§å°ï¼Œä½¿å…¶é“ºæ»¡ QWidget
 	adjustEmbeddedWindowSize();
 }
 
-// µ÷ÕûÇ¶Èë´°¿ÚµÄ´óĞ¡Îª QWidget µÄ´óĞ¡
+// è°ƒæ•´åµŒå…¥çª—å£çš„å¤§å°ä¸º QWidget çš„å¤§å°
 void EmbeddedWidget::adjustEmbeddedWindowSize()
 {
 	if (m_hwnd) {
-		// »ñÈ¡ QWidget µÄ´óĞ¡
+		// è·å– QWidget çš„å¤§å°
 		QRect geometry = this->geometry();
 		int width = geometry.width();
 		int height = geometry.height();
 
-		// µ÷ÕûÍâ²¿´°¿ÚµÄ´óĞ¡ºÍÎ»ÖÃ
+		// è°ƒæ•´å¤–éƒ¨çª—å£çš„å¤§å°å’Œä½ç½®
 		SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
 	}
 }
 
 
-// ÖØĞ´ resizeEvent£¬ÒÔ·À QWidget µÄ´óĞ¡¸Ä±äÊ±ĞèÒªÖØĞÂµ÷ÕûÍâ²¿´°¿ÚµÄ´óĞ¡
+// é‡å†™ resizeEventï¼Œä»¥é˜² QWidget çš„å¤§å°æ”¹å˜æ—¶éœ€è¦é‡æ–°è°ƒæ•´å¤–éƒ¨çª—å£çš„å¤§å°
 void EmbeddedWidget::resizeEvent(QResizeEvent* event) {
 	QWidget::resizeEvent(event);
 	adjustEmbeddedWindowSize();
 }
 
 //CWidget::CWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-//    // ½«Ô­Éú´°¿ÚÇ¶Èëµ½ Qt µÄ QWidget ÖĞ
+//    // å°†åŸç”Ÿçª—å£åµŒå…¥åˆ° Qt çš„ QWidget ä¸­
 //   QWindow *window= QWindow::fromWinId((WId)m_hwnd);
 //
 //   this->resize(window->width(), window->height());
 //    m_windowContainer = QWidget::createWindowContainer(window);
-//    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // È·±£Ç¶Èë´°¿Ú¿ÉÒÔ»ñÈ¡½¹µã
+//    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // ç¡®ä¿åµŒå…¥çª—å£å¯ä»¥è·å–ç„¦ç‚¹
 //    
 //    QGridLayout* layout = new QGridLayout;
 //    layout->addWidget(m_windowContainer);
@@ -83,13 +83,13 @@ void EmbeddedWidget::resizeEvent(QResizeEvent* event) {
 //void CWidget::mousePressEvent(QMouseEvent* event)
 //{
 //   
-//        // ½«Êó±êµã»÷µÄÊÂ¼şÎ»ÖÃ×ª»»ÎªÈ«¾Ö×ø±ê
+//        // å°†é¼ æ ‡ç‚¹å‡»çš„äº‹ä»¶ä½ç½®è½¬æ¢ä¸ºå…¨å±€åæ ‡
 //        QPoint globalPos = event->globalPos();
 //
-//        // ½«È«¾Ö×ø±ê×ª»»ÎªÈİÆ÷ÄÚµÄ×ø±ê
+//        // å°†å…¨å±€åæ ‡è½¬æ¢ä¸ºå®¹å™¨å†…çš„åæ ‡
 //        QPoint localPos = this->mapFromGlobal(globalPos);
 //
-//        // ·¢ËÍÏûÏ¢µ½Ô­Éú´°¿Ú, ÕâÀïÊ¹ÓÃ SendMessage º¯Êı
+//        // å‘é€æ¶ˆæ¯åˆ°åŸç”Ÿçª—å£, è¿™é‡Œä½¿ç”¨ SendMessage å‡½æ•°
 //        SendMessage((HWND)this->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
 //    
 //    QWidget::mousePressEvent(event);
@@ -104,24 +104,24 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	g_pMainWindow = this;
 
-	setWindowTitle(GBK_STRING("Êı×ÖÑù»úÓ²¼şÒ»Ìå»¯Æ½Ì¨"));
+	setWindowTitle(GBK_STRING("æ•°å­—æ ·æœºç¡¬ä»¶ä¸€ä½“åŒ–å¹³å°"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
-	//// ´´½¨ QProcess ¶ÔÏó
+	//// åˆ›å»º QProcess å¯¹è±¡
 	//QProcess process;
 
-	//// Æô¶¯ cmd ½ø³Ì²¢Ö´ĞĞÃüÁî
+	//// å¯åŠ¨ cmd è¿›ç¨‹å¹¶æ‰§è¡Œå‘½ä»¤
 	//process.start("cmd.exe", QStringList() << "/C" << command);
 
-	//// µÈ´ıÃüÁîÖ´ĞĞÍê³É
+	//// ç­‰å¾…å‘½ä»¤æ‰§è¡Œå®Œæˆ
 	//if (process.waitForFinished())
 	//{
-	//    // »ñÈ¡ÃüÁîÊä³ö£¨ÓÃÓÚµ÷ÊÔ»ò²é¿´½á¹û£©
+	//    // è·å–å‘½ä»¤è¾“å‡ºï¼ˆç”¨äºè°ƒè¯•æˆ–æŸ¥çœ‹ç»“æœï¼‰
 	//    QString output = process.readAllStandardOutput();
 	//    QString error = process.readAllStandardError();
 
-	//    // ´òÓ¡Êä³öµ½¿ØÖÆÌ¨
+	//    // æ‰“å°è¾“å‡ºåˆ°æ§åˆ¶å°
 	//    qDebug() << "Output:" << output;
 	//    qDebug() << "Error:" << error;
 	//}
@@ -129,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
 	//{
 	//    qDebug() << "Process failed to start or execute.";
 	//}
-	// qssÎÄ¼ş¼à¿ØÀà
+	// qssæ–‡ä»¶ç›‘æ§ç±»
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
 	strQssPath.replace("/", "\\\\");
@@ -137,9 +137,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 	initInitface();
 
-	//QString target = "\\\\192.168.0.250\\"; // Êµ¼ÊÂ·¾¶
-	//QString username = "share"; // Êµ¼ÊÓÃ»§Ãû
-	//QString password = "Share123"; // Êµ¼ÊÃÜÂë
+	//QString target = "\\\\192.168.0.250\\"; // å®é™…è·¯å¾„
+	//QString username = "share"; // å®é™…ç”¨æˆ·å
+	//QString password = "Share123"; // å®é™…å¯†ç 
 
 	//common::addNetworkCredential(target, username, password);
 	getBladeComputerData(common::setHostData);
@@ -195,7 +195,6 @@ void MainWindow::initInitface()
 
 	//m_FilemangageDialog = new FilemangageDialog(this);
 	m_FtpDialog = new FtpDialog();
-	
 
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
@@ -222,18 +221,22 @@ void MainWindow::initInitface()
 	connect(ui->btnModule1, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(1);
 		updateModuleToolIcon(1);
+		common::indexNum = 1;
 	});
 	connect(ui->btnModule2, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(2);
 		updateModuleToolIcon(2);
+		common::indexNum = 2;
 	});
 	connect(ui->btnModule3, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(3);
 		updateModuleToolIcon(3);
+		common::indexNum = 3;
 	});
 	connect(ui->btnModule4, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(4);
 		updateModuleToolIcon(4);
+		common::indexNum = 4;
 	});
 
 	ui->btnResourceManage->setCheckable(true);
@@ -246,7 +249,7 @@ void MainWindow::initInitface()
 	connect(ui->btnApprovalProgress, &QPushButton::clicked, this, &MainWindow::slot_btnApprovalProgressClicked);
 
 
-	// ³õÊ¼»¯Ä£¿é1-4½çÃæ;
+	// åˆå§‹åŒ–æ¨¡å—1-4ç•Œé¢;
 	ui->btnM2Load->hide();
 	ui->btnM3Load->hide();
 	ui->btnM4Load->hide();
@@ -297,7 +300,7 @@ void MainWindow::initInitface()
 	ui->tabWidgetModulel2->setTabsClosable(true);
 	ui->tabWidgetModulel3->setTabsClosable(true);
 	ui->tabWidgetModulel4->setTabsClosable(true);
-	// Á¬½Ó¹Ø±ÕÇëÇóĞÅºÅµ½²Ûº¯Êı
+	// è¿æ¥å…³é—­è¯·æ±‚ä¿¡å·åˆ°æ§½å‡½æ•°
 	connect(ui->tabWidgetModulel1, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule1closeTab);
 	connect(ui->tabWidgetModulel2, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule2closeTab);
 	connect(ui->tabWidgetModulel3, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule3closeTab);
@@ -348,7 +351,7 @@ void MainWindow::udpStartExeThread(const QString strData, const QString strIp, c
 		std::cout << " sendData: " << sendData << std::endl;
 	}
 
-	// ½ÓÊÕÊı¾İ;
+	// æ¥æ”¶æ•°æ®;
 	if (!m_udp) return;
 	const int BUF_LEN = 1024 * 100;
 	static char s_buf[BUF_LEN];
@@ -575,7 +578,7 @@ void MainWindow::slot_btnAddToolTab()
 	int moduleNumber = pButton->property("module").toInt();
 
 
-	QString strAssignIP="";// Ö¸¶¨ip Ö÷»ú;
+	QString strAssignIP="";// æŒ‡å®šip ä¸»æœº;
 	QString strAssignHostName = "";
 	AddToolDialog addToooDialog(moduleNumber);
 	if (addToooDialog.exec() == QDialog::Accepted)
@@ -610,7 +613,7 @@ void MainWindow::slot_btnAddToolTab()
 			//QString hostname = QString::fromStdString(strAssignHostName);
 			
 
-			if (strAssignIP == "") // Ä£¿é234 ÏÂÊÇÖ¸¶¨»¹ÊÇCPuËæ»ú
+			if (strAssignIP == "") // æ¨¡å—234 ä¸‹æ˜¯æŒ‡å®šè¿˜æ˜¯CPuéšæœº
 			{
 				table_ip_configure st;
 				common::findIpWithGpuMinValue(st);
@@ -630,7 +633,7 @@ void MainWindow::slot_btnAddToolTab()
 		std::string strIP = strAssignIP.toStdString();
 		if (strIP.empty())
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ip´íÎó Çë¼ì²é´úÂë£¡"));
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ipé”™è¯¯ è¯·æ£€æŸ¥ä»£ç ï¼"));
 			return;
 		}
 
@@ -654,7 +657,7 @@ void MainWindow::slot_btnAddToolTab()
 		QString strAccount = str + common::strLoginUserName;
 		if (strAccount.isEmpty())
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Ô¶³ÌÈí¼şÓÃ»§ÊıÁ¿²»×ã£¡"));
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¿œç¨‹è½¯ä»¶ç”¨æˆ·æ•°é‡ä¸è¶³ï¼"));
 			return;
 		}
 		if (moduleNumber == 1)
@@ -831,16 +834,16 @@ void MainWindow::slot_btnOneClickLoad()
 			{
 				if (stData.userID == common::iUserID && stData.module == common::index)
 				{
-					int newRowIndex = m_OneClickLoadDialog->m_model->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-					m_OneClickLoadDialog->m_model->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+					int newRowIndex = m_OneClickLoadDialog->m_model->rowCount(); // è·å–å½“å‰è¡Œæ•°
+					m_OneClickLoadDialog->m_model->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
 					//m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
 					//QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
 					
 					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
-					item->setEditable(false); // Ê¹Ïî²»¿É±à¼­£¬ÒÔ±ãÔÚ±à¼­Ä£Ê½ÏÂÏÔÊ¾QComboBox
-					// ´´½¨QComboBox²¢ÉèÖÃÄ£ĞÍÊı¾İ
+					item->setEditable(false); // ä½¿é¡¹ä¸å¯ç¼–è¾‘ï¼Œä»¥ä¾¿åœ¨ç¼–è¾‘æ¨¡å¼ä¸‹æ˜¾ç¤ºQComboBox
+					// åˆ›å»ºQComboBoxå¹¶è®¾ç½®æ¨¡å‹æ•°æ®
 					QComboBox *comboBox = new QComboBox();
 					//comboBox->addItems(QString::fromStdString(stData.projectPath).split(' '));
 					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, item);
@@ -924,24 +927,24 @@ void MainWindow::slot_tabModule1closeTab(int index)
 	{
 		return;
 	}
-	// ´´½¨ÏûÏ¢¿ò
+	// åˆ›å»ºæ¶ˆæ¯æ¡†
 	QMessageBox msgBox;
-	// ÉèÖÃÏûÏ¢¿òµÄÄÚÈİ
-	msgBox.setText(QString::fromLocal8Bit("ÇëÈ·ÈÏ±£´æ¹¤³ÌÖ®ºóÔÙ¹Ø±ÕTabÒ³:"));
-	// ´´½¨×Ô¶¨Òå°´Å¥
-	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("¼á³Ö¹Ø±Õ"), QMessageBox::ActionRole);
-	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("È¡Ïû¹Ø±Õ"), QMessageBox::RejectRole);
-	// ÉèÖÃÏûÏ¢¿òµÄÍ¼±ê
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å†…å®¹
+	msgBox.setText(QString::fromLocal8Bit("è¯·ç¡®è®¤ä¿å­˜å·¥ç¨‹ä¹‹åå†å…³é—­Tabé¡µ:"));
+	// åˆ›å»ºè‡ªå®šä¹‰æŒ‰é’®
+	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("åšæŒå…³é—­"), QMessageBox::ActionRole);
+	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("å–æ¶ˆå…³é—­"), QMessageBox::RejectRole);
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å›¾æ ‡
 	msgBox.setIcon(QMessageBox::Information);
-	// ÏÔÊ¾ÏûÏ¢¿ò
+	// æ˜¾ç¤ºæ¶ˆæ¯æ¡†
 	msgBox.exec();
-	// ÅĞ¶Ï°´ÏÂµÄÊÇÄÄ¸ö°´Å¥
+	// åˆ¤æ–­æŒ‰ä¸‹çš„æ˜¯å“ªä¸ªæŒ‰é’®
 	if (msgBox.clickedButton() != button1) {
-		//qDebug() << "ÓÃ»§Ñ¡ÔñÁË Ñ¡Ïî 1";
+		//qDebug() << "ç”¨æˆ·é€‰æ‹©äº† é€‰é¡¹ 1";
 		return;
 	}
 
-	// Í¨¹ı axTabWidget »ñÈ¡ rdp µÄÖ¸Õë
+	// é€šè¿‡ axTabWidget è·å– rdp çš„æŒ‡é’ˆ
 	CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel1->widget(index);
 	if (!axTabWidget)
 	{
@@ -951,13 +954,13 @@ void MainWindow::slot_tabModule1closeTab(int index)
 	if (axTabWidget->m_pAxWidget)
 	{
 		axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
-		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//¹Ø±Õ²å¼ş
+		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//å…³é—­æ’ä»¶
 	}
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
 
-	ui->tabWidgetModulel1->removeTab(index); // ÒÆ³ı±êÇ©
+	ui->tabWidgetModulel1->removeTab(index); // ç§»é™¤æ ‡ç­¾
 }
 
 void MainWindow::slot_tabModule2closeTab(int index)
@@ -966,24 +969,24 @@ void MainWindow::slot_tabModule2closeTab(int index)
 	{
 		return;
 	}
-	// ´´½¨ÏûÏ¢¿ò
+	// åˆ›å»ºæ¶ˆæ¯æ¡†
 	QMessageBox msgBox;
-	// ÉèÖÃÏûÏ¢¿òµÄÄÚÈİ
-	msgBox.setText(QString::fromLocal8Bit("ÇëÈ·ÈÏ±£´æ¹¤³ÌÖ®ºóÔÙ¹Ø±ÕTabÒ³:"));
-	// ´´½¨×Ô¶¨Òå°´Å¥
-	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("¼á³Ö¹Ø±Õ"), QMessageBox::ActionRole);
-	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("È¡Ïû¹Ø±Õ"), QMessageBox::RejectRole);
-	// ÉèÖÃÏûÏ¢¿òµÄÍ¼±ê
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å†…å®¹
+	msgBox.setText(QString::fromLocal8Bit("è¯·ç¡®è®¤ä¿å­˜å·¥ç¨‹ä¹‹åå†å…³é—­Tabé¡µ:"));
+	// åˆ›å»ºè‡ªå®šä¹‰æŒ‰é’®
+	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("åšæŒå…³é—­"), QMessageBox::ActionRole);
+	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("å–æ¶ˆå…³é—­"), QMessageBox::RejectRole);
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å›¾æ ‡
 	msgBox.setIcon(QMessageBox::Information);
-	// ÏÔÊ¾ÏûÏ¢¿ò
+	// æ˜¾ç¤ºæ¶ˆæ¯æ¡†
 	msgBox.exec();
-	// ÅĞ¶Ï°´ÏÂµÄÊÇÄÄ¸ö°´Å¥
+	// åˆ¤æ–­æŒ‰ä¸‹çš„æ˜¯å“ªä¸ªæŒ‰é’®
 	if (msgBox.clickedButton() != button1) {
-		//qDebug() << "ÓÃ»§Ñ¡ÔñÁË Ñ¡Ïî 1";
+		//qDebug() << "ç”¨æˆ·é€‰æ‹©äº† é€‰é¡¹ 1";
 		return;
 	}
 
-	// Í¨¹ı axTabWidget »ñÈ¡ rdp µÄÖ¸Õë
+	// é€šè¿‡ axTabWidget è·å– rdp çš„æŒ‡é’ˆ
 	CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel2->widget(index);
 	if (!axTabWidget)
 	{
@@ -992,12 +995,12 @@ void MainWindow::slot_tabModule2closeTab(int index)
 	if (axTabWidget->m_pAxWidget)
 	{
 		axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
-		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//¹Ø±Õ²å¼ş
+		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//å…³é—­æ’ä»¶
 	}
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel2->removeTab(index); // ÒÆ³ı±êÇ©
+	ui->tabWidgetModulel2->removeTab(index); // ç§»é™¤æ ‡ç­¾
 }
 
 void MainWindow::slot_tabModule3closeTab(int index)
@@ -1006,24 +1009,24 @@ void MainWindow::slot_tabModule3closeTab(int index)
 	{
 		return;
 	}
-	// ´´½¨ÏûÏ¢¿ò
+	// åˆ›å»ºæ¶ˆæ¯æ¡†
 	QMessageBox msgBox;
-	// ÉèÖÃÏûÏ¢¿òµÄÄÚÈİ
-	msgBox.setText(QString::fromLocal8Bit("ÇëÈ·ÈÏ±£´æ¹¤³ÌÖ®ºóÔÙ¹Ø±ÕTabÒ³:"));
-	// ´´½¨×Ô¶¨Òå°´Å¥
-	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("¼á³Ö¹Ø±Õ"), QMessageBox::ActionRole);
-	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("È¡Ïû¹Ø±Õ"), QMessageBox::RejectRole);
-	// ÉèÖÃÏûÏ¢¿òµÄÍ¼±ê
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å†…å®¹
+	msgBox.setText(QString::fromLocal8Bit("è¯·ç¡®è®¤ä¿å­˜å·¥ç¨‹ä¹‹åå†å…³é—­Tabé¡µ:"));
+	// åˆ›å»ºè‡ªå®šä¹‰æŒ‰é’®
+	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("åšæŒå…³é—­"), QMessageBox::ActionRole);
+	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("å–æ¶ˆå…³é—­"), QMessageBox::RejectRole);
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å›¾æ ‡
 	msgBox.setIcon(QMessageBox::Information);
-	// ÏÔÊ¾ÏûÏ¢¿ò
+	// æ˜¾ç¤ºæ¶ˆæ¯æ¡†
 	msgBox.exec();
-	// ÅĞ¶Ï°´ÏÂµÄÊÇÄÄ¸ö°´Å¥
+	// åˆ¤æ–­æŒ‰ä¸‹çš„æ˜¯å“ªä¸ªæŒ‰é’®
 	if (msgBox.clickedButton() != button1) {
 
 		return;
 	}
 
-	// Í¨¹ı axTabWidget »ñÈ¡ rdp µÄÖ¸Õë
+	// é€šè¿‡ axTabWidget è·å– rdp çš„æŒ‡é’ˆ
 	CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel3->widget(index);
 	if (!axTabWidget)
 	{
@@ -1032,12 +1035,12 @@ void MainWindow::slot_tabModule3closeTab(int index)
 	if (axTabWidget->m_pAxWidget)
 	{
 		axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
-		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//¹Ø±Õ²å¼ş
+		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//å…³é—­æ’ä»¶
 	}
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel3->removeTab(index); // ÒÆ³ı±êÇ©   
+	ui->tabWidgetModulel3->removeTab(index); // ç§»é™¤æ ‡ç­¾   
 }
 
 void MainWindow::slot_tabModule4closeTab(int index)
@@ -1046,24 +1049,24 @@ void MainWindow::slot_tabModule4closeTab(int index)
 	{
 		return;
 	}
-	// ´´½¨ÏûÏ¢¿ò
+	// åˆ›å»ºæ¶ˆæ¯æ¡†
 	QMessageBox msgBox;
-	// ÉèÖÃÏûÏ¢¿òµÄÄÚÈİ
-	msgBox.setText(QString::fromLocal8Bit("ÇëÈ·ÈÏ±£´æ¹¤³ÌÖ®ºóÔÙ¹Ø±ÕTabÒ³:"));
-	// ´´½¨×Ô¶¨Òå°´Å¥
-	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("¼á³Ö¹Ø±Õ"), QMessageBox::ActionRole);
-	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("È¡Ïû¹Ø±Õ"), QMessageBox::RejectRole);
-	// ÉèÖÃÏûÏ¢¿òµÄÍ¼±ê
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å†…å®¹
+	msgBox.setText(QString::fromLocal8Bit("è¯·ç¡®è®¤ä¿å­˜å·¥ç¨‹ä¹‹åå†å…³é—­Tabé¡µ:"));
+	// åˆ›å»ºè‡ªå®šä¹‰æŒ‰é’®
+	QPushButton* button1 = msgBox.addButton(QString::fromLocal8Bit("åšæŒå…³é—­"), QMessageBox::ActionRole);
+	QPushButton* button3 = msgBox.addButton(QString::fromLocal8Bit("å–æ¶ˆå…³é—­"), QMessageBox::RejectRole);
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å›¾æ ‡
 	msgBox.setIcon(QMessageBox::Information);
-	// ÏÔÊ¾ÏûÏ¢¿ò
+	// æ˜¾ç¤ºæ¶ˆæ¯æ¡†
 	msgBox.exec();
-	// ÅĞ¶Ï°´ÏÂµÄÊÇÄÄ¸ö°´Å¥
+	// åˆ¤æ–­æŒ‰ä¸‹çš„æ˜¯å“ªä¸ªæŒ‰é’®
 	if (msgBox.clickedButton() != button1) {
-		//qDebug() << "ÓÃ»§Ñ¡ÔñÁË Ñ¡Ïî 1";
+		//qDebug() << "ç”¨æˆ·é€‰æ‹©äº† é€‰é¡¹ 1";
 		return;
 	}
 
-	// Í¨¹ı axTabWidget »ñÈ¡ rdp µÄÖ¸Õë
+	// é€šè¿‡ axTabWidget è·å– rdp çš„æŒ‡é’ˆ
 	CWidget* axTabWidget = (CWidget*)ui->tabWidgetModulel4->widget(index);
 	if (!axTabWidget)
 	{
@@ -1072,12 +1075,12 @@ void MainWindow::slot_tabModule4closeTab(int index)
 	if (axTabWidget->m_pAxWidget)
 	{
 		axTabWidget->m_pAxWidget->dynamicCall("Disconnect()");
-		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//¹Ø±Õ²å¼ş
+		axTabWidget->m_pAxWidget->dynamicCall("RequestClose()");//å…³é—­æ’ä»¶
 	}
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel4->removeTab(index); // ÒÆ³ı±êÇ©    
+	ui->tabWidgetModulel4->removeTab(index); // ç§»é™¤æ ‡ç­¾    
 }
 
 void MainWindow::updateModuleToolIcon(int module)
@@ -1112,14 +1115,14 @@ void MainWindow::updateModuleToolIcon(int module)
 			//if (stTool.username == std::to_string(common::iUserID))
 			{
 				QToolButton* pBtn = new QToolButton();
-				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("²âÊÔ"));
+				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("æµ‹è¯•"));
 				//pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
 
 				QImage img;
 				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
-				// ½« QImage ×ª»»Îª QIcon
+				// å°† QImage è½¬æ¢ä¸º QIcon
 				QIcon icon(QPixmap::fromImage(img));
-				// ÉèÖÃ QToolButton µÄÍ¼±ê
+				// è®¾ç½® QToolButton çš„å›¾æ ‡
 				pBtn->setIcon(icon);
 				pBtn->setIconSize(QSize(50, 46));
 				pBtn->setText(QString::fromStdString(software));
@@ -1127,11 +1130,20 @@ void MainWindow::updateModuleToolIcon(int module)
 				pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
 				pBtn->setFocusPolicy(Qt::NoFocus);
 				pBtn->setFixedSize(55, 64);
-				//   pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // ÉèÖÃ°´Å¥µÄ´óĞ¡²ßÂÔ
-
+				//pBtn->setMinimumSize(55, 64);
+				//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // è®¾ç½®æŒ‰é’®çš„å¤§å°ç­–ç•¥
 				pBtn->setEnabled(true);
 
 				pLayout->addWidget(pBtn);
+				
+				//é¼ æ ‡å³å‡»äº‹ä»¶
+				RightClickEvent *rightclick = new RightClickEvent;
+				pBtn->installEventFilter(rightclick);
+				connect(rightclick, &RightClickEvent::rightClicked, this, &MainWindow::onRightClicked);
+				//é¼ æ ‡åŒå‡»äº‹ä»¶
+				DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
+				pBtn->installEventFilter(interceptor);
+				connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
 			}
 		}
 	}
@@ -1140,36 +1152,36 @@ void MainWindow::updateModuleToolIcon(int module)
 void MainWindow::startUdpRdp(const QString ip)
 {
 	QAxWidget* rdp = new QAxWidget;
-	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // ¶ÔÓ¦ÓÚRDPµÄCLSID
-	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // ¶ÔÓ¦ÓÚRDPµÄCLSID
-	bool b = rdp->setProperty("Server", "192.168.1.248"); // Ô¶³Ì×ÀÃæµÄIPµØÖ·
-	b = rdp->setProperty("UserName", "Administrator"); // ÓÃ»§Ãû
-	b = rdp->setProperty("Password", "Ate123"); // ÃÜÂë
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // å¯¹åº”äºRDPçš„CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // å¯¹åº”äºRDPçš„CLSID
+	bool b = rdp->setProperty("Server", "192.168.1.248"); // è¿œç¨‹æ¡Œé¢çš„IPåœ°å€
+	b = rdp->setProperty("UserName", "Administrator"); // ç”¨æˆ·å
+	b = rdp->setProperty("Password", "Ate123"); // å¯†ç 
 
-	b = rdp->setProperty("DesktopWidth", this->width());         //Ö¸¶¨¿í¶È
-	b = rdp->setProperty("DesktopHeight", this->height());        //Ö¸¶¨¸ß¶È
+	b = rdp->setProperty("DesktopWidth", this->width());         //æŒ‡å®šå®½åº¦
+	b = rdp->setProperty("DesktopHeight", this->height());        //æŒ‡å®šé«˜åº¦
 	b = rdp->setProperty("ConnectingText", QString::fromUtf8("MATLAB"));
-	b = rdp->setProperty("DisconnectedText", QString::fromUtf8("Æô¶¯Ê§°Ü"));
+	b = rdp->setProperty("DisconnectedText", QString::fromUtf8("å¯åŠ¨å¤±è´¥"));
 
-	//ÆÕÍ¨²ÎÊı,¿ÉÑ¡Ïî
-	rdp->setFocusPolicy(Qt::StrongFocus);        //ÉèÖÃ¿Ø¼ş½ÓÊÕ¼üÅÌ½¹µãµÄ·½Ê½£ºÊó±êµ¥»÷¡¢Tab¼ü
-	b = rdp->setProperty("DisplayAlerts", false);    //²»ÏÔÊ¾ÈÎºÎ¾¯¸æĞÅÏ¢
-	b = rdp->setProperty("DisplayScrollBars", true); //ÏÔÊ¾¹ö¶¯Ìõ
-	b = rdp->setProperty("ColorDepth", 32);          //»­ÖÊ/Î»Éî,32/24/16/15/8
+	//æ™®é€šå‚æ•°,å¯é€‰é¡¹
+	rdp->setFocusPolicy(Qt::StrongFocus);        //è®¾ç½®æ§ä»¶æ¥æ”¶é”®ç›˜ç„¦ç‚¹çš„æ–¹å¼ï¼šé¼ æ ‡å•å‡»ã€Tabé”®
+	b = rdp->setProperty("DisplayAlerts", false);    //ä¸æ˜¾ç¤ºä»»ä½•è­¦å‘Šä¿¡æ¯
+	b = rdp->setProperty("DisplayScrollBars", true); //æ˜¾ç¤ºæ»šåŠ¨æ¡
+	b = rdp->setProperty("ColorDepth", 32);          //ç”»è´¨/ä½æ·±,32/24/16/15/8
 
 
-	//¸ß¼¶²ÎÊı
+	//é«˜çº§å‚æ•°
 	QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings7");
 	if (pAdvancedObject)
 	{
-		b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //ÓÃ»§ÃÜÂë(ÕâÖÖ·½Ê½Ã¿´Î¶¼²»ĞèÒªÊÖ¶¯ÊäÈëÃÜÂë)
-		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //±ØĞëÉèÖÃ,·ñÔòÔ¶³ÌÁ¬½ÓÊ§°Ü
+		b = pAdvancedObject->setProperty("ClearTextPassword", "Ate123");     //ç”¨æˆ·å¯†ç (è¿™ç§æ–¹å¼æ¯æ¬¡éƒ½ä¸éœ€è¦æ‰‹åŠ¨è¾“å…¥å¯†ç )
+		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //å¿…é¡»è®¾ç½®,å¦åˆ™è¿œç¨‹è¿æ¥å¤±è´¥
 
 		b = pAdvancedObject->setProperty("PublicMode", false);
-		//¸ß¼¶²ÎÊı,¿ÉÑ¡Ïî
-		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //Î»Í¼»º´æ
-		b = pAdvancedObject->setProperty("Compress", 1);                 //ÆôÓÃÑ¹Ëõ,¼õĞ¡´ø¿í
-		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //³¬Ê±Ê±¼ä,s
+		//é«˜çº§å‚æ•°,å¯é€‰é¡¹
+		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //ä½å›¾ç¼“å­˜
+		b = pAdvancedObject->setProperty("Compress", 1);                 //å¯ç”¨å‹ç¼©,å‡å°å¸¦å®½
+		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //è¶…æ—¶æ—¶é—´,s
 
 
 	}
@@ -1223,18 +1235,18 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 
 
 
-	// Ç¶ÈëÔ¶¶Ë½çÃæ;
+	// åµŒå…¥è¿œç«¯ç•Œé¢;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
-	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // ¶ÔÓ¦ÓÚRDPµÄCLSID
-	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // ¶ÔÓ¦ÓÚRDPµÄCLSID
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // å¯¹åº”äºRDPçš„CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // å¯¹åº”äºRDPçš„CLSID
 
-	bool b = rdp->setProperty("Server", strIp.c_str()); // Ô¶³Ì×ÀÃæµÄIPµØÖ·
-	b = rdp->setProperty("UserName", strAccaunt.c_str()); // ÓÃ»§Ãû
-	b = rdp->setProperty("Password", pwd.c_str()); // ÃÜÂë
-	//b = rdp->setProperty("FullScreen", true); // ÊÇ·ñÈ«ÆÁ
-	//b = rdp->setProperty("DesktopWidth", this->width()-29);         //Ö¸¶¨¿í¶È
-	//b = rdp->setProperty("DesktopHeight", this->height()-29);        //Ö¸¶¨¸ß¶È
+	bool b = rdp->setProperty("Server", strIp.c_str()); // è¿œç¨‹æ¡Œé¢çš„IPåœ°å€
+	b = rdp->setProperty("UserName", strAccaunt.c_str()); // ç”¨æˆ·å
+	b = rdp->setProperty("Password", pwd.c_str()); // å¯†ç 
+	//b = rdp->setProperty("FullScreen", true); // æ˜¯å¦å…¨å±
+	//b = rdp->setProperty("DesktopWidth", this->width()-29);         //æŒ‡å®šå®½åº¦
+	//b = rdp->setProperty("DesktopHeight", this->height()-29);        //æŒ‡å®šé«˜åº¦
 	int height = this->width() - 29;
 	int width = this->height() - 29;
 
@@ -1281,37 +1293,37 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 				width = TabWidget->width();
 			}
 		}
-		b = rdp->setProperty("DesktopWidth", width);         //Ö¸¶¨¿í¶È
-		b = rdp->setProperty("DesktopHeight", height);        //Ö¸¶¨¸ß¶È
+		b = rdp->setProperty("DesktopWidth", width);         //æŒ‡å®šå®½åº¦
+		b = rdp->setProperty("DesktopHeight", height);        //æŒ‡å®šé«˜åº¦
 		qDebug() << "1111" << "width :" << width << "height : " << height;
 	}
 	else
 	{
-		b = rdp->setProperty("DesktopWidth", this->width() - 29);         //Ö¸¶¨¿í¶È
-		b = rdp->setProperty("DesktopHeight", this->height() - 29);        //Ö¸¶¨¸ß¶È
+		b = rdp->setProperty("DesktopWidth", this->width() - 29);         //æŒ‡å®šå®½åº¦
+		b = rdp->setProperty("DesktopHeight", this->height() - 29);        //æŒ‡å®šé«˜åº¦
 	}
 
 	//b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
-	b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("Ô¶³ÌÁ¬½ÓÒÑ¶Ï¿ª£¬Çë¹Ø±Õ±êÇ©Ò³"));
+	b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("è¿œç¨‹è¿æ¥å·²æ–­å¼€ï¼Œè¯·å…³é—­æ ‡ç­¾é¡µ"));
 	//b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
 	b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
 	//b = rdp->setProperty("LaunchedViaClientShellInterface", true);
 
-	//ÆÕÍ¨²ÎÊı,¿ÉÑ¡Ïî
-	rdp->setFocusPolicy(Qt::StrongFocus);        //ÉèÖÃ¿Ø¼ş½ÓÊÕ¼üÅÌ½¹µãµÄ·½Ê½£ºÊó±êµ¥»÷¡¢Tab¼ü
-	b = rdp->setProperty("ColorDepth", 32);          //»­ÖÊ/Î»Éî,32/24/16/15/8
+	//æ™®é€šå‚æ•°,å¯é€‰é¡¹
+	rdp->setFocusPolicy(Qt::StrongFocus);        //è®¾ç½®æ§ä»¶æ¥æ”¶é”®ç›˜ç„¦ç‚¹çš„æ–¹å¼ï¼šé¼ æ ‡å•å‡»ã€Tabé”®
+	b = rdp->setProperty("ColorDepth", 32);          //ç”»è´¨/ä½æ·±,32/24/16/15/8
 
-	//¸ß¼¶²ÎÊı
+	//é«˜çº§å‚æ•°
 	QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
 	if (pAdvancedObject)
 	{
-		b = pAdvancedObject->setProperty("ClearTextPassword", pwd.c_str());     //ÓÃ»§ÃÜÂë(ÕâÖÖ·½Ê½Ã¿´Î¶¼²»ĞèÒªÊÖ¶¯ÊäÈëÃÜÂë)
-		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //±ØĞëÉèÖÃ,·ñÔòÔ¶³ÌÁ¬½ÓÊ§°Ü
+		b = pAdvancedObject->setProperty("ClearTextPassword", pwd.c_str());     //ç”¨æˆ·å¯†ç (è¿™ç§æ–¹å¼æ¯æ¬¡éƒ½ä¸éœ€è¦æ‰‹åŠ¨è¾“å…¥å¯†ç )
+		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //å¿…é¡»è®¾ç½®,å¦åˆ™è¿œç¨‹è¿æ¥å¤±è´¥
 
-		//¸ß¼¶²ÎÊı,¿ÉÑ¡Ïî
-		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //Î»Í¼»º´æ
-		b = pAdvancedObject->setProperty("Compress", 1);                 //ÆôÓÃÑ¹Ëõ,¼õĞ¡´ø¿í
-		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //³¬Ê±Ê±¼ä,s
+		//é«˜çº§å‚æ•°,å¯é€‰é¡¹
+		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //ä½å›¾ç¼“å­˜
+		b = pAdvancedObject->setProperty("Compress", 1);                 //å¯ç”¨å‹ç¼©,å‡å°å¸¦å®½
+		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //è¶…æ—¶æ—¶é—´,s
 		b = pAdvancedObject->setProperty("RedirectDrives", true);
 		//b = pAdvancedObject->setProperty("keepAliveInterval", 30000); 
 		//b = pAdvancedObject->setProperty("MaximizeShell", 0); 
@@ -1350,7 +1362,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 		b = pSecuredmObject->setProperty("KeyboardHookMode", true);
 		//b = pSecuredmObject->setProperty("PCB", "2013");
 	}
-	QVariant v2 = rdp->dynamicCall("Connect()"); //Á¬½Ó
+	QVariant v2 = rdp->dynamicCall("Connect()"); //è¿æ¥
 
 	QVBoxLayout* layout = new QVBoxLayout(widget);
 	layout->addWidget(rdp);
@@ -1376,18 +1388,18 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 
 
 
-	// Ç¶ÈëÔ¶¶Ë½çÃæ;
+	// åµŒå…¥è¿œç«¯ç•Œé¢;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
-	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // ¶ÔÓ¦ÓÚRDPµÄCLSID
-	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // ¶ÔÓ¦ÓÚRDPµÄCLSID
+	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // å¯¹åº”äºRDPçš„CLSID
+	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // å¯¹åº”äºRDPçš„CLSID
 
-	bool b = rdp->setProperty("Server", strIp.c_str()); // Ô¶³Ì×ÀÃæµÄIPµØÖ·
-	b = rdp->setProperty("UserName", strAccaunt.c_str()); // ÓÃ»§Ãû
-	b = rdp->setProperty("Password", pwd.c_str()); // ÃÜÂë
-	//b = rdp->setProperty("FullScreen", true); // ÊÇ·ñÈ«ÆÁ
-	//b = rdp->setProperty("DesktopWidth", this->width()-29);         //Ö¸¶¨¿í¶È
-	//b = rdp->setProperty("DesktopHeight", this->height()-29);        //Ö¸¶¨¸ß¶È
+	bool b = rdp->setProperty("Server", strIp.c_str()); // è¿œç¨‹æ¡Œé¢çš„IPåœ°å€
+	b = rdp->setProperty("UserName", strAccaunt.c_str()); // ç”¨æˆ·å
+	b = rdp->setProperty("Password", pwd.c_str()); // å¯†ç 
+	//b = rdp->setProperty("FullScreen", true); // æ˜¯å¦å…¨å±
+	//b = rdp->setProperty("DesktopWidth", this->width()-29);         //æŒ‡å®šå®½åº¦
+	//b = rdp->setProperty("DesktopHeight", this->height()-29);        //æŒ‡å®šé«˜åº¦
 	int height = this->width() - 29;
 	int width = this->height() - 29;
 
@@ -1434,37 +1446,37 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 				width = TabWidget->width();
 			}
 		}
-		b = rdp->setProperty("DesktopWidth", width);         //Ö¸¶¨¿í¶È
-		b = rdp->setProperty("DesktopHeight", height);        //Ö¸¶¨¸ß¶È
+		b = rdp->setProperty("DesktopWidth", width);         //æŒ‡å®šå®½åº¦
+		b = rdp->setProperty("DesktopHeight", height);        //æŒ‡å®šé«˜åº¦
 		qDebug() << "1111" << "width :" << width << "height : " << height;
 	}
 	else
 	{
-		b = rdp->setProperty("DesktopWidth", this->width() - 29);         //Ö¸¶¨¿í¶È
-		b = rdp->setProperty("DesktopHeight", this->height() - 29);        //Ö¸¶¨¸ß¶È
+		b = rdp->setProperty("DesktopWidth", this->width() - 29);         //æŒ‡å®šå®½åº¦
+		b = rdp->setProperty("DesktopHeight", this->height() - 29);        //æŒ‡å®šé«˜åº¦
 	}
 
 	//b = rdp->setProperty("ConnectingText", QString::fromUtf8("Visual Studio 2017"));
-	b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("Ô¶³ÌÁ¬½ÓÒÑ¶Ï¿ª£¬Çë¹Ø±Õ±êÇ©Ò³"));
+	b = rdp->setProperty("DisconnectedText", QString::fromLocal8Bit("è¿œç¨‹è¿æ¥å·²æ–­å¼€ï¼Œè¯·å…³é—­æ ‡ç­¾é¡µ"));
 	//b = rdp->setProperty("Domain", QString::fromUtf8("AD.jhapp.com"));
 	b = rdp->setProperty("LoadBalanceInfo", QString::fromUtf8("tsv://MS Terminal Services Plugin.1.RDAPP"));
 	//b = rdp->setProperty("LaunchedViaClientShellInterface", true);
 
-	//ÆÕÍ¨²ÎÊı,¿ÉÑ¡Ïî
-	rdp->setFocusPolicy(Qt::StrongFocus);        //ÉèÖÃ¿Ø¼ş½ÓÊÕ¼üÅÌ½¹µãµÄ·½Ê½£ºÊó±êµ¥»÷¡¢Tab¼ü
-	b = rdp->setProperty("ColorDepth", 32);          //»­ÖÊ/Î»Éî,32/24/16/15/8
+	//æ™®é€šå‚æ•°,å¯é€‰é¡¹
+	rdp->setFocusPolicy(Qt::StrongFocus);        //è®¾ç½®æ§ä»¶æ¥æ”¶é”®ç›˜ç„¦ç‚¹çš„æ–¹å¼ï¼šé¼ æ ‡å•å‡»ã€Tabé”®
+	b = rdp->setProperty("ColorDepth", 32);          //ç”»è´¨/ä½æ·±,32/24/16/15/8
 
-	//¸ß¼¶²ÎÊı
+	//é«˜çº§å‚æ•°
 	QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
 	if (pAdvancedObject)
 	{
-		b = pAdvancedObject->setProperty("ClearTextPassword", pwd.c_str());     //ÓÃ»§ÃÜÂë(ÕâÖÖ·½Ê½Ã¿´Î¶¼²»ĞèÒªÊÖ¶¯ÊäÈëÃÜÂë)
-		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //±ØĞëÉèÖÃ,·ñÔòÔ¶³ÌÁ¬½ÓÊ§°Ü
+		b = pAdvancedObject->setProperty("ClearTextPassword", pwd.c_str());     //ç”¨æˆ·å¯†ç (è¿™ç§æ–¹å¼æ¯æ¬¡éƒ½ä¸éœ€è¦æ‰‹åŠ¨è¾“å…¥å¯†ç )
+		b = pAdvancedObject->setProperty("EnableCredSspSupport", true); //å¿…é¡»è®¾ç½®,å¦åˆ™è¿œç¨‹è¿æ¥å¤±è´¥
 
-		//¸ß¼¶²ÎÊı,¿ÉÑ¡Ïî
-		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //Î»Í¼»º´æ
-		b = pAdvancedObject->setProperty("Compress", 1);                 //ÆôÓÃÑ¹Ëõ,¼õĞ¡´ø¿í
-		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //³¬Ê±Ê±¼ä,s
+		//é«˜çº§å‚æ•°,å¯é€‰é¡¹
+		b = pAdvancedObject->setProperty("BitmapPeristence", 1);         //ä½å›¾ç¼“å­˜
+		b = pAdvancedObject->setProperty("Compress", 1);                 //å¯ç”¨å‹ç¼©,å‡å°å¸¦å®½
+		b = pAdvancedObject->setProperty("singleConnectionTimeout", 10); //è¶…æ—¶æ—¶é—´,s
 		b = pAdvancedObject->setProperty("RedirectDrives", true);
 		//b = pAdvancedObject->setProperty("keepAliveInterval", 30000); 
 		//b = pAdvancedObject->setProperty("MaximizeShell", 0); 
@@ -1503,7 +1515,7 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	//    b = pSecuredmObject->setProperty("KeyboardHookMode", true);
 	//    //b = pSecuredmObject->setProperty("PCB", "2013");
 	//}
-	QVariant v2 = rdp->dynamicCall("Connect()"); //Á¬½Ó
+	QVariant v2 = rdp->dynamicCall("Connect()"); //è¿æ¥
 
 	QVBoxLayout* layout = new QVBoxLayout(widget);
 	layout->addWidget(rdp);
@@ -1544,8 +1556,8 @@ int MainWindow::getBtnLoadIndex(QPushButton *btn)
 
 bool MainWindow::isHardwareAccelerator(const std::string str)
 {
-	std::string  prefix = "¼ÓËÙ»ú";
-	QString strprefix = QString::fromLocal8Bit("¼ÓËÙ»ú");
+	std::string  prefix = "åŠ é€Ÿæœº";
+	QString strprefix = QString::fromLocal8Bit("åŠ é€Ÿæœº");
 	QString  value = QString::fromStdString(str);
 	if (value.contains(strprefix))
 	{
@@ -1558,14 +1570,14 @@ bool MainWindow::isHardwareAccelerator(const std::string str)
 	return false;
 }
 
-// »ñÈ¡ËùÓĞµ¶Æ¬»úĞÅÏ¢;
+// è·å–æ‰€æœ‰åˆ€ç‰‡æœºä¿¡æ¯;
 void MainWindow::getBladeComputerData(std::vector<table_ip_configure>& vecHostData)
 {
 	vecHostData.clear();
 	std::list<table_ip_configure> listHostData;
 	db::databaseDI::Instance().get_all_ip(listHostData);
 
-	QString strprefix = QString::fromLocal8Bit("¼ÓËÙ»ú");
+	QString strprefix = QString::fromLocal8Bit("åŠ é€Ÿæœº");
 
 	for (const auto& st : listHostData)
 	{
@@ -1595,7 +1607,7 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 	QString strAccount = str + common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Ô¶³ÌÈí¼şÓÃ»§ÊıÁ¿²»×ã£¡"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¿œç¨‹è½¯ä»¶ç”¨æˆ·æ•°é‡ä¸è¶³ï¼"));
 		return;
 	}
 
@@ -1608,7 +1620,7 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 	std::string strIP = st.ip;
 	if (strIP.empty())
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ip´íÎó Çë¼ì²é´úÂë£¡"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ipé”™è¯¯ è¯·æ£€æŸ¥ä»£ç ï¼"));
 		return;
 	}
 
@@ -1688,4 +1700,341 @@ void MainWindow::slot_widgetAboutToQuit()
 		addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
 	}
 }
+
+void MainWindow::onDoubleClicked(const QString &buttonText)
+{
+	table_ip stipToolData;
+	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData,buttonText.toStdString(), common::iLoginNum, common::indexNum))
+	{
+		return;
+	}
+	QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;
+	if (strAccount.isEmpty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¿œç¨‹è½¯ä»¶ç”¨æˆ·æ•°é‡ä¸è¶³ï¼"));
+		return;
+	}
+
+	QString strPwd = "123456";
+
+	CWidget* axTabWidget = new CWidget();
+
+	table_ip_configure st;
+	common::findIpWithGpuMinValue(st);
+	std::string strIP = st.ip;
+	if (strIP.empty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ipé”™è¯¯ è¯·æ£€æŸ¥ä»£ç ï¼"));
+		return;
+	}
+
+	if (common::indexNum == 1)
+	{
+		axTabWidget->m_account = strAccount;
+		axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+		axTabWidget->m_softwareName = buttonText;
+		if (isHardwareAccelerator(stipToolData.host))
+		{
+			startLongDistanceHost(buttonText + " " + QString::fromStdString(stipToolData.host), common::indexNum, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+		}
+		else
+		{
+			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(stipToolData.host), common::indexNum, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+
+		}
+	}
+	else if (common::indexNum == 2)
+	{
+		QString exeDir = QCoreApplication::applicationDirPath();
+		axTabWidget->m_account = strAccount;
+		axTabWidget->m_ip = QString::fromStdString(strIP);
+		axTabWidget->m_softwareName = buttonText;
+
+		if (isHardwareAccelerator(st.hostname))
+		{
+			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+		}
+		else
+		{
+			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+		}
+
+	}
+	else if (common::indexNum == 3)
+	{
+		axTabWidget->m_account = strAccount;
+		axTabWidget->m_ip = QString::fromStdString(strIP);
+		axTabWidget->m_softwareName = buttonText;
+
+		if (isHardwareAccelerator(st.hostname))
+		{
+			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+
+		}
+		else
+		{
+			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+		}
+
+	}
+	else if (common::indexNum == 4)
+	{
+		axTabWidget->m_account = strAccount;
+		axTabWidget->m_ip = QString::fromStdString(strIP);
+		axTabWidget->m_softwareName = buttonText;
+		if (isHardwareAccelerator(st.hostname))
+		{
+			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+		}
+		else
+		{
+			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+		}
+	}
+
+}
+void MainWindow::onRightClicked(QString &buttonText)
+{
+	QString strAssignIP = "";// æŒ‡å®šip ä¸»æœº;
+	QString strAssignHostName = "";
+
+	AddToolDialog addToooDialog(common::indexNum);
+	QComboBox *toolComboBox = addToooDialog.getComboBox();
+	toolComboBox->setEnabled(false);
+	toolComboBox->setCurrentText(buttonText);
+	if (addToooDialog.exec() == QDialog::Accepted)
+	{
+		QString toolName;
+		QString tabName;
+		int mode = -1;
+		int displayMode = 0;
+		QString  toolPath = -1;
+
+
+
+		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+
+		table_ip stipToolData;
+		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+		{
+			return;
+		}
+		if (common::indexNum == 1)
+		{
+
+			strAssignIP = QString::fromStdString(stipToolData.ip);
+			strAssignHostName = QString::fromStdString(stipToolData.host);
+
+
+			QString hostname = QString::fromStdString(stipToolData.host);
+			tabName = tabName + " " + hostname;
+		}
+		else
+		{
+			//QString hostname = QString::fromStdString(strAssignHostName);
+
+
+			if (strAssignIP == "") // æ¨¡å—234 ä¸‹æ˜¯æŒ‡å®šè¿˜æ˜¯CPuéšæœº
+			{
+				table_ip_configure st;
+				common::findIpWithGpuMinValue(st);
+
+				strAssignIP = QString::fromStdString(st.ip);
+				strAssignHostName = QString::fromStdString(st.hostname);
+			}
+			tabName = tabName + " " + strAssignHostName;
+			//else
+			//{
+			//	//st.ip = strAssignIP.toStdString();
+			//	//st.hostname = strAssignHostName.toStdString();
+			//}
+		}
+
+
+		std::string strIP = strAssignIP.toStdString();
+		if (strIP.empty())
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ipé”™è¯¯ è¯·æ£€æŸ¥ä»£ç ï¼"));
+			return;
+		}
+
+		QString strPwd;
+		if (common::bAdministrator)
+		{
+			strPwd = common::strFtpAdminPwd;
+		}
+		else
+		{
+			strPwd = common::strFtpPwd;
+		}
+		CWidget* axTabWidget = new CWidget();
+
+
+
+		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+
+		//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
+		QString str = "app\\";
+		QString strAccount = str + common::strLoginUserName;
+		if (strAccount.isEmpty())
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¿œç¨‹è½¯ä»¶ç”¨æˆ·æ•°é‡ä¸è¶³ï¼"));
+			return;
+		}
+		if (common::indexNum == 1)
+		{
+
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = strAssignIP;
+				axTabWidget->m_softwareName = buttonText;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+				}
+
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+
+			}
+
+
+		}
+		else if (common::indexNum == 2)
+		{
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+				}
+
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+
+			}
+
+
+
+
+
+		}
+		else if (common::indexNum == 3)
+		{
+
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
+				}
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+
+			}
+		}
+		else if (common::indexNum == 4)
+		{
+
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+				}
+
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = buttonText;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+
+			}
+
+		}
+	}
+}
+
+
+
 
