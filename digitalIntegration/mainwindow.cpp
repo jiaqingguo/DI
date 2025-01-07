@@ -109,8 +109,8 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 	m_pC7Zip = new C7Zip;
-//	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
-//	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
+//	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
+//	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
 	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
 	//// 创建 QProcess 对象
