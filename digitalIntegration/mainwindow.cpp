@@ -22,6 +22,7 @@
 #include "CtrlNetwork.h"
 #include "CWidget.h"
 #include "CAxWidget.h"
+#include "C7Zip.h"
 #include "ui_OneClickLoadDialog.h"
 
 #include <QtWidgets/QApplication>
@@ -33,6 +34,7 @@
 #include <QAxWidget>
 #include <QAxObject>
 #include "windows.h"
+
 
 #include <thread>
 #include <functional>
@@ -106,6 +108,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 	setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
+	m_pC7Zip = new C7Zip;
+//	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
+//	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
 	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
 	//// 创建 QProcess 对象
@@ -1090,6 +1095,7 @@ void MainWindow::updateModuleToolIcon(int module)
 	if (module == 1)
 	{
 		pLayout = ui->layoutM1ToolIcon;
+		//ui->widgetM1->setHidden(!ui->widgetM1->isHidden());
 	}
 	else if (module == 2)
 	{

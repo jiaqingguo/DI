@@ -10,12 +10,14 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -30,6 +32,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionshowM1;
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
     QWidget *widgetModules;
@@ -138,6 +141,7 @@ public:
     QPushButton *btnAddTab4;
     QWidget *tab_8;
     QMenuBar *menubar;
+    QMenu *menu;
     QStatusBar *statusbar;
     QButtonGroup *buttonGroup;
 
@@ -147,6 +151,9 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(942, 790);
         MainWindow->setMinimumSize(QSize(710, 437));
+        actionshowM1 = new QAction(MainWindow);
+        actionshowM1->setObjectName(QString::fromUtf8("actionshowM1"));
+        actionshowM1->setCheckable(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
@@ -745,14 +752,19 @@ public:
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 942, 23));
+        menu = new QMenu(menubar);
+        menu->setObjectName(QString::fromUtf8("menu"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
+        menubar->addAction(menu->menuAction());
+        menu->addAction(actionshowM1);
+
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
@@ -764,6 +776,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        actionshowM1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
         btnFunction->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275", nullptr));
         btnModule1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
         btnModule2->setText(QCoreApplication::translate("MainWindow", "\345\207\240\344\275\225\346\240\267\346\234\272", nullptr));
@@ -819,6 +832,7 @@ public:
         btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_8), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
+        menu->setTitle(QCoreApplication::translate("MainWindow", "\350\247\206\345\233\276", nullptr));
     } // retranslateUi
 
 };
