@@ -58,6 +58,12 @@ void FtpDialog::initConnectFtp()
     {
         return;
     }
+
+    if (common::bAdministrator)
+    {
+        common::strLoginUserName = common::strFtpAccount;// 所有管理元 都使用数据库 administrator字符;
+        common::strFtpPwd = common::strFtpAdminPwd;
+    }
    // QString strUser =QString::fromStdString( common::stUser.UserName);
     ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page0->setIsLinuxFtpServer(true);

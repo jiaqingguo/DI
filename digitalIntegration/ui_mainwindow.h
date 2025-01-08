@@ -159,6 +159,7 @@ public:
         actionM1->setCheckable(true);
         actionM2 = new QAction(MainWindow);
         actionM2->setObjectName(QString::fromUtf8("actionM2"));
+        actionM2->setCheckable(true);
         actionM3 = new QAction(MainWindow);
         actionM3->setObjectName(QString::fromUtf8("actionM3"));
         actionM3->setCheckable(true);
