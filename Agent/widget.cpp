@@ -12,6 +12,7 @@
 #include "CPerformHelper.h"
 #include "ZipFunction.h"
 
+
 #pragma warning(disable : 4996) 
 #include "Winsock.h"
 #undef  UNICODE
@@ -158,7 +159,7 @@ void Widget::sendOrderResult(const bool& b, const QHostAddress& host, const quin
 		{
 			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
 		}
-	//	cout << "删除文件夹：" << buff << "失败" << endl;
+		//	cout << "删除文件夹：" << buff << "失败" << endl;
 
 	}
 	else
@@ -169,7 +170,7 @@ void Widget::sendOrderResult(const bool& b, const QHostAddress& host, const quin
 		{
 			qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
 		}
-	//	cout << "删除文件夹：" << buff << "成功" << endl;
+		//	cout << "删除文件夹：" << buff << "成功" << endl;
 	}
 }
 
@@ -219,7 +220,7 @@ void Widget::slot_useUdp()
 
 	//qDebug() << "GPU 利用率: " << getGpuUsage() << "%%";
 
-	
+
 
 	//qDebug() << "111111111111111111111111111";
 
@@ -316,7 +317,8 @@ void Widget::slot_useUdp()
 
 void Widget::receive_mess()
 {
-	
+	m_pC7Zip = new C7Zip();
+
 	connect(UDPSocket, &QUdpSocket::readyRead, [this]() {
 		while (UDPSocket->hasPendingDatagrams())
 		{
@@ -328,7 +330,7 @@ void Widget::receive_mess()
 			{
 				qDebug() << "Failed to bind port" << UDPSocket->errorString();
 			}*/
-			 
+
 			//char *buffer = nullptr;
 			qint64 bytesReceived = UDPSocket->readDatagram(receivedDatagram.data(), receivedDatagram.size(), &serverReplyAddress, &serverReplyPort);
 			if (bytesReceived > 0)
@@ -348,7 +350,7 @@ void Widget::receive_mess()
 				strcpy(cstrCopy, byteArray.data());
 				if (strcmp(cstrCopy, "Lcompress") == 0)
 				{
-					QString str1 = "Y:/share" + command.str2 ;
+					QString str1 = "Y:/share" + command.str2;
 					QString str2 = "Y:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
@@ -356,7 +358,7 @@ void Widget::receive_mess()
 					char cstr2[1024];
 					strcpy(cstr1, byte1.data());
 					strcpy(cstr2, byte2.data());
-					compress_file(cstr1,cstr2);
+					compress_file(cstr1, cstr2);
 				}
 				else if (strcmp(cstrCopy, "Wcompress") == 0)
 				{
@@ -368,8 +370,8 @@ void Widget::receive_mess()
 					char cstr2[1024];
 					strcpy(cstr1, byte1.data());
 					strcpy(cstr2, byte2.data());
-					compress_file(cstr1,cstr2);
-					
+					compress_file(cstr1, cstr2);
+
 				}
 				else if (strcmp(cstrCopy, "Luncompress") == 0)
 				{
@@ -381,21 +383,112 @@ void Widget::receive_mess()
 					char cstr2[1024];
 					strcpy(cstr1, byte1.data());
 					strcpy(cstr2, byte2.data());
-					uncompress_file(cstr1,cstr2);
-					
+					//uncompress_file(cstr1,cstr2);
+					/*int dotIndex = str1.lastIndexOf('.');
+					if (dotIndex != -1)
+					{
+						QString dataPath = str1.mid(dotIndex);
+						if (dataPath == ".zip" || dataPath == ".rar" || dataPath == ".7z" || dataPath == ".tar"
+							|| dataPath == ".gz" || dataPath == ".bz2" || dataPath == ".xz" || dataPath == "jar"
+							|| dataPath == ".war" || dataPath == "ear")
+						{*/
+					std::vector<fs::path> paths;
+					paths.push_back(cstr1);
+					int ret = 0;
+					for (auto& path : paths)
+					{
+						// 检查文件路径是否以 .zip 结尾
+						if (path.extension() == ".zip" || path.extension() == ".rar" || path.extension() == ".7z" || path.extension() == ".tar"
+							|| path.extension() == ".gz" || path.extension() == ".bz2" || path.extension() == ".xz" || path.extension() == "jar"
+							|| path.extension() == ".war" || path.extension() == "ear")
+						{
+							// 返回不带 .zip 后缀的新路径
+							fs::path newDir = path.parent_path() / path.stem();
+							std::string strDir = newDir.string();
+							std::cout << "解压 " << path << "   " << strDir << std::endl;
+							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromStdString(strDir));
+						}
+					}
+					if (ret == 0)
+					{
+						QString data = "success";
+						QByteArray dataGram;
+						QDataStream stream(&dataGram, QIODevice::WriteOnly);
+						stream << data;
+						int ret = 0;
+						ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+						if (ret == -1)
+						{
+							qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+						}
+					}
+					else
+					{
+						QString data = "false";
+						QByteArray dataGram;
+						QDataStream stream(&dataGram, QIODevice::WriteOnly);
+						stream << data;
+						int ret = 0;
+						ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+						if (ret == -1)
+						{
+							qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+						}
+					}
 				}
 				else if (strcmp(cstrCopy, "Wuncompress") == 0)
 				{
-					QString str1 = "E:/share" + command.str2;
-					QString str2 = "E:/share" + command.str3;
+					QString str1 = "D:/share" + command.str2;
+					QString str2 = "D:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
 					char cstr2[1024];
 					strcpy(cstr1, byte1.data());
 					strcpy(cstr2, byte2.data());
-					uncompress_file(cstr1,cstr2);
-					
+					std::vector<fs::path> paths;
+					paths.push_back(cstr1);
+					int ret = 0;
+					for (auto& path : paths)
+					{
+						// 检查文件路径是否以 .zip 结尾
+						if (path.extension() == ".zip" || path.extension() == ".rar" || path.extension() == ".7z" || path.extension() == ".tar"
+							|| path.extension() == ".gz" || path.extension() == ".bz2" || path.extension() == ".xz" || path.extension() == "jar"
+							|| path.extension() == ".war" || path.extension() == "ear")
+						{
+							// 返回不带 .zip 后缀的新路径
+							fs::path newDir = path.parent_path() / path.stem();
+							std::string strDir = newDir.string();
+							std::cout << "解压 " << path << "   " << strDir << std::endl;
+							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromStdString(strDir));
+						}
+					}
+					if (ret == 0)
+					{
+						QString data = "success";
+						QByteArray dataGram;
+						QDataStream stream(&dataGram, QIODevice::WriteOnly);
+						stream << data;
+						int ret = 0;
+						ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+						if (ret == -1)
+						{
+							qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+						}
+					}
+					else
+					{
+						QString data = "false";
+						QByteArray dataGram;
+						QDataStream stream(&dataGram, QIODevice::WriteOnly);
+						stream << data;
+						int ret = 0;
+						ret = UDPSocket->writeDatagram(dataGram, serverReplyAddress, 54321);
+						if (ret == -1)
+						{
+							qDebug() << "wirte  false:" << UDPSocket->errorString() << "  " << UDPSocket->error();
+						}
+					}
 				}
 				else if (strcmp(cstrCopy, "Ldel") == 0)
 				{
@@ -444,18 +537,18 @@ void Widget::receive_mess()
 						strcpy(buff, str1.toStdString().c_str());
 						delete_file(buff);
 					}
-				
+
 				}
 				else if (strcmp(cstrCopy, "Wdel") == 0)
 				{
 					QString str1 = "E:/share" + command.str2;
 					//cout << "删除的文件的路径：" << str1.toStdString();
 					QFileInfo fileInfo(str1);
-					
+
 					if (fileInfo.isDir())
 					{
-						char buff[260]; 
-						strcpy(buff,str1.toLocal8Bit().toStdString().c_str());
+						char buff[260];
+						strcpy(buff, str1.toLocal8Bit().toStdString().c_str());
 						delete_listFiles(buff);
 						bool flag = RemoveDirectoryA(buff); // 删除文件夹本身;
 						if (!flag)
@@ -488,7 +581,7 @@ void Widget::receive_mess()
 							cout << "删除文件夹：" << buff << "成功" << endl;
 						}
 					}
-					else 
+					else
 					{
 						char buff[260];
 						strcpy(buff, str1.toStdString().c_str());
@@ -507,7 +600,7 @@ void Widget::receive_mess()
 	});
 }
 
-void Widget::compress_file(char buffer[1024],char buffer2[1024])
+void Widget::compress_file(char buffer[1024], char buffer2[1024])
 {
 	std::vector<fs::path> paths;
 	std::string strZipPath;
@@ -534,7 +627,7 @@ void Widget::compress_file(char buffer[1024],char buffer2[1024])
 	//memset(sbuff, '\0', sizeof(sbuff));
 	if (CompressMult2Zip(paths, strZipPath))
 	{
-		
+
 		cout << "compress 成功" << endl;
 		QString data = "success";
 		QByteArray dataGram;
@@ -568,7 +661,7 @@ void Widget::compress_file(char buffer[1024],char buffer2[1024])
 	cout << "compress 执行结束" << endl;
 }
 
-void Widget::uncompress_file(char buffer[1024],char buffer2[1024])
+void Widget::uncompress_file(char buffer[1024], char buffer2[1024])
 {
 	std::vector<fs::path> paths;
 	//std::string strZipPath;
@@ -692,7 +785,7 @@ void Widget::delete_listFiles(std::string dir)
 			{
 				cout << "delete file success" << endl;
 			}
-			else 
+			else
 			{
 				QString data = "false";
 				QByteArray dataGram;

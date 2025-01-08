@@ -1,4 +1,4 @@
-#include "InformationConfihurationDialog.h"
+ï»¿#include "InformationConfihurationDialog.h"
 #include "ui_InformationConfihurationDialog.h"
 #include "databaseDI.h"
 //#include "globel.h"
@@ -12,7 +12,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#include <fstream> // ÓÃÓÚ std::ifstream
+#include <fstream> // ç”¨äº std::ifstream
 
 
 
@@ -40,10 +40,10 @@ void InformationConfihurationDialog::init()
 
 	m_modelTool1 = new QStandardItemModel();
 	m_modelTool1->setColumnCount(2);
-	//m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÃû³Æ"));
-	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÂ·¾¶"));
-	//m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÍ¼±ê"));
+	//m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·åç§°"));
+	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·è·¯å¾„"));
+	//m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·å›¾æ ‡"));
 	
 	ui->tableViewTool1->setModel(m_modelTool1);
 	common::setTableViewBasicConfiguration(ui->tableViewTool1);
@@ -68,56 +68,56 @@ void InformationConfihurationDialog::init()
 
 	m_modelTool2 = new QStandardItemModel();
 	m_modelTool2->setColumnCount(2);
-	//m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-	m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÃû³Æ"));
-	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÂ·¾¶"));
-	//m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÍ¼±ê"));
+	//m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+	m_modelTool2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·åç§°"));
+	m_modelTool2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·è·¯å¾„"));
+	//m_modelTool2->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·å›¾æ ‡"));
 	ui->tableViewTool2->setModel(m_modelTool2);
 	common::setTableViewBasicConfiguration(ui->tableViewTool2);
 
 	m_modelTool3 = new QStandardItemModel();
 	m_modelTool3->setColumnCount(2);
-	//m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-	m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÃû³Æ"));
-	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÂ·¾¶"));
-	//m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÍ¼±ê"));
+	//m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+	m_modelTool3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·åç§°"));
+	m_modelTool3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·è·¯å¾„"));
+	//m_modelTool3->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·å›¾æ ‡"));
 	ui->tableViewTool3->setModel(m_modelTool3);
 	common::setTableViewBasicConfiguration(ui->tableViewTool3);
 
 	m_modelTool4 = new QStandardItemModel();
 	m_modelTool4->setColumnCount(2);
-	//m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-	m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÃû³Æ"));
-	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÂ·¾¶"));
-	//m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("¹¤¾ßÍ¼±ê"));
+	//m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+	m_modelTool4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·åç§°"));
+	m_modelTool4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·è·¯å¾„"));
+	//m_modelTool4->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å·¥å…·å›¾æ ‡"));
 	ui->tableViewTool4->setModel(m_modelTool4);
 	common::setTableViewBasicConfiguration(ui->tableViewTool4);
 
 	m_modelIP1 = new QStandardItemModel();
-	m_modelIP1->setColumnCount(3);
+	m_modelIP1->setColumnCount(2);
 	m_modelIP1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ip"));
-	m_modelIP1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-	m_modelIP1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Èí¼ş"));
+	m_modelIP1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+	//m_modelIP1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("è½¯ä»¶"));
 	ui->tableViewIP1->setModel(m_modelIP1);
 	common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
 	/*   m_modelIP2 = new QStandardItemModel();
 	   m_modelIP2->setColumnCount(2);
-	   m_modelIP2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
+	   m_modelIP2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
 	   m_modelIP2->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
 	   ui->tableViewIP2->setModel(m_modelIP2);
 	   common::setTableViewBasicConfiguration(ui->tableViewIP2);
 
 	   m_modelIP3 = new QStandardItemModel();
 	   m_modelIP3->setColumnCount(2);
-	   m_modelIP3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
+	   m_modelIP3->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
 	   m_modelIP3->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
 	   ui->tableViewIP3->setModel(m_modelIP3);
 	   common::setTableViewBasicConfiguration(ui->tableViewIP3);
 
 	   m_modelIP4 = new QStandardItemModel();
 	   m_modelIP4->setColumnCount(2);
-	   m_modelIP4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
+	   m_modelIP4->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
 	   m_modelIP4->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ip"));
 	   ui->tableViewIP4->setModel(m_modelIP4);
 	   common::setTableViewBasicConfiguration(ui->tableViewIP4);*/
@@ -207,16 +207,16 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 				   << new QStandardItem(QString::fromStdString(stTool.path))
 				   << new QStandardItem(QString::fromStdString(stTool.icoPath)));*/
 				   //if (data.username == std::to_string(common::iUserID))
-				   //if (data.number == common::iLoginNum)// &&²»ÏÔÊ¾ÆäËûÓÃ»§Ìí¼ÓµÄÈí¼ş
+				   //if (data.number == common::iLoginNum)// &&ä¸æ˜¾ç¤ºå…¶ä»–ç”¨æˆ·æ·»åŠ çš„è½¯ä»¶
 			{
-				int newRowIndex = model->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-				model->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+				int newRowIndex = model->rowCount(); // è·å–å½“å‰è¡Œæ•°
+				model->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 				//QStandardItem* item = new QStandardItem(QString::fromStdString(stTool.host));
-				// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+				// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 				//model->setItem(newRowIndex, 0, item);
 				//QModelIndex index = model->index(newRowIndex, 0);
-				//model->setData(index, QString::fromStdString(stTool.first), Qt::UserRole);  // ÉèÖÃid;
+				//model->setData(index, QString::fromStdString(stTool.first), Qt::UserRole);  // è®¾ç½®id;
 				model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
 				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.toolPath)));
 				//model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(data.icoPath)));
@@ -231,26 +231,28 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel)
 {
 	delAllModelRow(pModel);
-	std::list<table_ip> listData;
-	if (db::databaseDI::Instance().get_ip_data(listData))
+	//std::list<table_ip> listData;
+	//if (db::databaseDI::Instance().get_ip_data(listData))
+	std::list<table_ip_configure> listData;
+	if (db::databaseDI::Instance().get_all_ip(listData))
 	{
 		for (const auto& stIp : listData)
 		{
 			//if (stIp.number == common::iLoginNum && stIp.username == std::to_string(common::iUserID))
-			if (stIp.number == common::iLoginNum)
+			//if (stIp.number == common::iLoginNum)
 			{
-				int newRowIndex = pModel->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-				pModel->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+				int newRowIndex = pModel->rowCount(); // è·å–å½“å‰è¡Œæ•°
+				pModel->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 				QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.ip));
-				// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+				// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 				pModel->setItem(newRowIndex, 0, item);
 				//QModelIndex index = pModel->index(newRowIndex, 0);
-				//pModel->setData(index, QString::fromStdString(stIp.software), Qt::UserRole);  // ÉèÖÃid;
+				//pModel->setData(index, QString::fromStdString(stIp.software), Qt::UserRole);  // è®¾ç½®id;
 
 				//pModel->setItem(newRowIndex, 0, item);
-				pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.host)));
-				pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
+				pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.hostname)));
+				//pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
 			}
 		}
 	}
@@ -269,14 +271,14 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 //			//    << new QStandardItem(QString::fromStdString(stData.host))
 //			//    << new QStandardItem(QString::fromStdString(stData.ip)));
 //
-//			int newRowIndex = pModel->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-//			pModel->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+//			int newRowIndex = pModel->rowCount(); // è·å–å½“å‰è¡Œæ•°
+//			pModel->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 //
 //			QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
-//			// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+//			// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 //			pModel->setItem(newRowIndex, 0, item);
 //			QModelIndex index = pModel->index(newRowIndex, 0);
-//			pModel->setData(index, stIp.id, Qt::UserRole);  // ÉèÖÃid;
+//			pModel->setData(index, stIp.id, Qt::UserRole);  // è®¾ç½®id;
 //
 //			pModel->setItem(newRowIndex, 0, item);
 //			pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.ip)));
@@ -288,7 +290,7 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 
 void InformationConfihurationDialog::clearModelData(QStandardItemModel* model)
 {
-	// ÇåÀíËùÓĞÊı¾İÏî£¬µ«±£ÁôÁĞ±êÌâ
+	// æ¸…ç†æ‰€æœ‰æ•°æ®é¡¹ï¼Œä½†ä¿ç•™åˆ—æ ‡é¢˜
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
 		for (int column = 0; column < model->columnCount(); ++column)
@@ -300,7 +302,7 @@ void InformationConfihurationDialog::clearModelData(QStandardItemModel* model)
 
 void InformationConfihurationDialog::delAllModelRow(QStandardItemModel* model)
 {
-	// É¾³ıËùÓĞĞĞ
+	// åˆ é™¤æ‰€æœ‰è¡Œ
 	int rowCount = model->rowCount();
 	for (int row = rowCount - 1; row >= 0; --row)
 	{
@@ -369,14 +371,14 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	{
 		addToolInfoDialog.getToolsData(stIp, ipData);
 
-		// ¶ÁÈ¡Í¼Æ¬ÎÄ¼ş
+		// è¯»å–å›¾ç‰‡æ–‡ä»¶
 		std::ifstream file(stIp.icoPath, std::ios::binary);
 		stIp.imageData.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
 		db::databaseDI::Instance().get_all_ip(listData);
 		if (db::databaseDI::Instance().select_same_name_software(stIp.software, moduleNumber))
 		{
-			QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("¸ÃÄ£¿éÏÂÒÑ´æÔÚ¸ÃÈí¼ş,Ìí¼ÓÊ§°Ü£¡"));
+			QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è¯¥æ¨¡å—ä¸‹å·²å­˜åœ¨è¯¥è½¯ä»¶,æ·»åŠ å¤±è´¥ï¼"));
 			return;
 		}
 		QStandardItemModel* pModel = nullptr;
@@ -384,7 +386,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		{
 			pModel = m_modelTool1;
 
-			//Ä£¿é1ÖĞÌí¼ÓÈí¼şµÄÂß¼­
+			//æ¨¡å—1ä¸­æ·»åŠ è½¯ä»¶çš„é€»è¾‘
 			for (int i = 0; i < 6; i++)
 			{
 				stIp.ip = ipData[i];
@@ -395,7 +397,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.username = std::to_string(common::iUserID);
 				
 				//stIp.number = soft_ip.number;
-				// ²åÈëÊı¾İ¿â;
+				// æ’å…¥æ•°æ®åº“;
 				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
@@ -420,7 +422,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.username = std::to_string(common::iUserID);
 				stIp.number = soft_ip.number;
 				//stIp.number = common::iLoginNum;
-				// ²åÈëÊı¾İ¿â;
+				// æ’å…¥æ•°æ®åº“;
 				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
@@ -443,7 +445,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.used = 0;
 				stIp.username = std::to_string(common::iUserID);
 				stIp.number = soft_ip.number;
-				// ²åÈëÊı¾İ¿â;
+				// æ’å…¥æ•°æ®åº“;
 				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
@@ -466,7 +468,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				stIp.used = 0;
 				stIp.username = std::to_string(common::iUserID);
 				stIp.number = soft_ip.number;
-				// ²åÈëÊı¾İ¿â;
+				// æ’å…¥æ•°æ®åº“;
 				if (!db::databaseDI::Instance().add_ip_tool(stIp))
 				{
 					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
@@ -479,10 +481,10 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		}
 		if (pModel == nullptr)
 			return;
-		//int newRowIndex = pModel->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		//pModel->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		//int newRowIndex = pModel->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		//pModel->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 		//QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
-		//// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		//// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		//pModel->setItem(newRowIndex, 0, item);
 
 		//pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.software)));
@@ -490,9 +492,9 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		emit  signal_updateToolIcon(moduleNumber);
 	}
 
-	// Ê¹ÓÃ setData ÉèÖÃÌØ¶¨µ¥Ôª¸ñµÄÊı¾İ
+	// ä½¿ç”¨ setData è®¾ç½®ç‰¹å®šå•å…ƒæ ¼çš„æ•°æ®
 
-	// ¹ö¶¯µ½×îÏÂ·½
+	// æ»šåŠ¨åˆ°æœ€ä¸‹æ–¹
 	ui->tableViewTool1->scrollToBottom();
 }
 
@@ -528,18 +530,18 @@ void InformationConfihurationDialog::slot_btnIpAdd()
 		if (pModel == nullptr)
 			return;
 
-		int newRowIndex = pModel->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		pModel->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = pModel->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		pModel->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
-		QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
-		// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
-		pModel->setItem(newRowIndex, 0, item);
-		QModelIndex index = pModel->index(newRowIndex, 0);
-		pModel->setData(index, stIp.id, Qt::UserRole);  // ÉèÖÃid;
+		//QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.host));
+		// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
+		//pModel->setItem(newRowIndex, 0, item);
+		//QModelIndex index = pModel->index(newRowIndex, 0);
+		//pModel->setData(index, stIp.id, Qt::UserRole);  // è®¾ç½®id;
 
-		pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.ip)));
+		pModel->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(stIp.ip)));
 
-		// ²åÈëÊı¾İ¿â;
+		// æ’å…¥æ•°æ®åº“;
 		if (!db::databaseDI::Instance().add_ip(stIp))
 		{
 			qDebug() << "db::databaseDI::Instance().add_ip   error!";
@@ -547,9 +549,9 @@ void InformationConfihurationDialog::slot_btnIpAdd()
 
 	}
 
-	// Ê¹ÓÃ setData ÉèÖÃÌØ¶¨µ¥Ôª¸ñµÄÊı¾İ
+	// ä½¿ç”¨ setData è®¾ç½®ç‰¹å®šå•å…ƒæ ¼çš„æ•°æ®
 
-	// ¹ö¶¯µ½×îÏÂ·½
+	// æ»šåŠ¨åˆ°æœ€ä¸‹æ–¹
 	ui->tableViewTool1->scrollToBottom();
 }
 
@@ -593,9 +595,9 @@ void InformationConfihurationDialog::slot_btnToolDel()
 	//qDebug() << "First column data of current row   id: " << id;
 	/*QVariant dataVariant = pModelTool->item(currentIndex.row(), currentIndex.column())->text();
 	QString qstr = dataVariant.toString();*/
-	// »ñÈ¡µ±Ç°Ñ¡ÖĞµ¥Ôª¸ñÍ¬Ò»ĞĞµÄµÚ1ÁĞµÄµ¥Ôª¸ñ
+	// è·å–å½“å‰é€‰ä¸­å•å…ƒæ ¼åŒä¸€è¡Œçš„ç¬¬1åˆ—çš„å•å…ƒæ ¼
 	QModelIndex indexFirst = pModelTool->index(currentIndex.row(), 0, currentIndex.parent()); 
-	//»ñÈ¡ÒªÉ¾³ıµÄµ¥Ôª¸ñ
+	//è·å–è¦åˆ é™¤çš„å•å…ƒæ ¼
 	QVariant soft_name = pModelTool->data(indexFirst);
 	QString qstr = soft_name.toString();
 	std::string software = qstr.toStdString();
