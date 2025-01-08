@@ -1511,17 +1511,41 @@
     <property name="title">
      <string>视图</string>
     </property>
-    <addaction name="actionshowM1"/>
+    <addaction name="actionM1"/>
+    <addaction name="actionM2"/>
+    <addaction name="actionM3"/>
+    <addaction name="actionM4"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionshowM1">
+  <action name="actionM1">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>功能样机</string>
+   </property>
+  </action>
+  <action name="actionM2">
+   <property name="text">
+    <string>几何样机</string>
+   </property>
+  </action>
+  <action name="actionM3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>性能样机</string>
+   </property>
+  </action>
+  <action name="actionM4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>生产样机</string>
    </property>
   </action>
  </widget>

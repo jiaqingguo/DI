@@ -32,7 +32,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionshowM1;
+    QAction *actionM1;
+    QAction *actionM2;
+    QAction *actionM3;
+    QAction *actionM4;
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
     QWidget *widgetModules;
@@ -151,9 +154,17 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(942, 790);
         MainWindow->setMinimumSize(QSize(710, 437));
-        actionshowM1 = new QAction(MainWindow);
-        actionshowM1->setObjectName(QString::fromUtf8("actionshowM1"));
-        actionshowM1->setCheckable(true);
+        actionM1 = new QAction(MainWindow);
+        actionM1->setObjectName(QString::fromUtf8("actionM1"));
+        actionM1->setCheckable(true);
+        actionM2 = new QAction(MainWindow);
+        actionM2->setObjectName(QString::fromUtf8("actionM2"));
+        actionM3 = new QAction(MainWindow);
+        actionM3->setObjectName(QString::fromUtf8("actionM3"));
+        actionM3->setCheckable(true);
+        actionM4 = new QAction(MainWindow);
+        actionM4->setObjectName(QString::fromUtf8("actionM4"));
+        actionM4->setCheckable(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
@@ -760,7 +771,10 @@ public:
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menu->menuAction());
-        menu->addAction(actionshowM1);
+        menu->addAction(actionM1);
+        menu->addAction(actionM2);
+        menu->addAction(actionM3);
+        menu->addAction(actionM4);
 
         retranslateUi(MainWindow);
 
@@ -776,7 +790,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        actionshowM1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
+        actionM1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
+        actionM2->setText(QCoreApplication::translate("MainWindow", "\345\207\240\344\275\225\346\240\267\346\234\272", nullptr));
+        actionM3->setText(QCoreApplication::translate("MainWindow", "\346\200\247\350\203\275\346\240\267\346\234\272", nullptr));
+        actionM4->setText(QCoreApplication::translate("MainWindow", "\347\224\237\344\272\247\346\240\267\346\234\272", nullptr));
         btnFunction->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275", nullptr));
         btnModule1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
         btnModule2->setText(QCoreApplication::translate("MainWindow", "\345\207\240\344\275\225\346\240\267\346\234\272", nullptr));

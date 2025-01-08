@@ -22,7 +22,7 @@
 #include "CtrlNetwork.h"
 #include "CWidget.h"
 #include "CAxWidget.h"
-#include "C7Zip.h"
+
 #include "ui_OneClickLoadDialog.h"
 
 #include <QtWidgets/QApplication>
@@ -106,9 +106,9 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	g_pMainWindow = this;
 
-	setWindowTitle(GBK_STRING("数字样机硬件一体化平台"));
+	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
-	m_pC7Zip = new C7Zip;
+	//m_pC7Zip = new C7Zip;
 //	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
 //	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
 	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
@@ -139,6 +139,16 @@ MainWindow::MainWindow(QWidget *parent)
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
 	strQssPath.replace("/", "\\\\");
 	m_pQssAutoLoader->setAutoloadQss(strQssPath);
+	ui->actionM1->setChecked(true);
+	ui->actionM2->setChecked(true);
+	ui->actionM3->setChecked(true);
+	ui->actionM4->setChecked(true);
+
+	connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
+	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
+	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
+	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);
+
 
 	initInitface();
 

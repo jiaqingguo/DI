@@ -26,6 +26,17 @@ void C7Zip::Compress(const QString arg1, const QString arg2)
         qWarning() << "Failed to extract archive:" << process.errorString();
         return;
     }
+    // 获取返回码
+    int exitCode = process.exitCode();
+    if (exitCode == 0) {
+        qDebug() << "Extraction completed successfully!";
+    }
+    else if (exitCode == 1) {
+        qDebug() << "Extraction finished with warnings.";
+    }
+    else {
+        qDebug() << "Extraction failed with error code:" << exitCode;
+    }
 
     // 输出 7zip 的输出信息
     QByteArray output = process.readAllStandardOutput();

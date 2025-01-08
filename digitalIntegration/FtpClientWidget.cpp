@@ -1074,14 +1074,18 @@ void FtpClientWidget::slot_actionUnCompress()
     int row = ui->tableWidget->currentIndex().row();
     if (currentPath.indexOf("/") >= 0 && row <= 0) return;
     QString name = ui->tableWidget->item(row, 0)->text();
-    if (!name.endsWith(".zip", Qt::CaseInsensitive))
+    if (name.endsWith(".zip", Qt::CaseInsensitive) || name.endsWith(".rar", Qt::CaseInsensitive) || name.endsWith(".7z", Qt::CaseInsensitive))
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请选择.zip文件"));
-        return;
+        QString strPath = currentPath + "/" + name;
+
+        emit signal_unCompress(m_bLinuxFtpServer, m_strAddr, strPath);
     }
-    QString strPath = currentPath + "/" + name;
-    
-    emit signal_unCompress(m_bLinuxFtpServer, m_strAddr, strPath);
+    else
+    {
+        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("请选择压缩包文件"));
+            return;
+    }
+   
 }
 
 void FtpClientWidget::listInfo(QUrlInfo url)

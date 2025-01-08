@@ -45,6 +45,11 @@ public:
 	*/
 	void showProgram();
 
+	/*
+	* 通过进程获取窗口句柄
+	*/
+	HWND getMainWin(DWORD);
+
 	void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* localDrive, const TCHAR* remotePath);
 	void CancleResource();
 protected:
@@ -58,7 +63,7 @@ protected:
 	sockaddr_in  _addrClient;
 
 	DWORD _dwProcessId = -1;//
-	HWND _currentHWND;
+	HWND _currentHWND = 0;
 
 	std::string _userName = "";
 

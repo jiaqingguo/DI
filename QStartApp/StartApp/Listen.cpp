@@ -403,33 +403,57 @@ void Listen::startProgramFromBat(const std::string& strPath)
 	{
 		// 获取进程ID
 		DWORD pid = GetProcessId(sei.hProcess);
-		
 		std::vector<DWORD> dwProcessIds = getChildProcesses(pid);
+
+		std::cout << "success to start bat pid:" << pid <<" "<<"dwProcessIds:"<< dwProcessIds[0]<<std::endl;
+
 		if (dwProcessIds.size()>0)
 		{
-			//Sleep(2000);//给时间启动窗口
-			DWORD tmpId = dwProcessIds[0];//第一次拿倒的ID不是启动程序的ID
-			//while (!::isExistProcess(tmpId))
+			/*DWORD tmpId = dwProcessIds[0];//第一次拿倒的ID不是启动程序的ID
 			while (tmpId == dwProcessIds[0])
 			{
 				dwProcessIds = getChildProcesses(pid);
 				if (tmpId != dwProcessIds[0])//当ID发生改变获取ID并跳出循环
 				{
-
 					_dwProcessId = dwProcessIds[dwProcessIds.size() - 1];
 					std::cout << "id num: " << dwProcessIds.size() << std::endl;
 					break;
-
 				}
 				tmpId = dwProcessIds[0];
+				std::cout << "ProcessId:" << tmpId <<" "<<"Num:" << dwProcessIds.size() <<std::endl;
+			}*/
+
+			//auto startTime = std::chrono::system_clock::now();
+			//auto pre_us = std::chrono::duration_cast<std::chrono::microseconds>(startTime.time_since_epoch());
+			while (_currentHWND == 0)
+			{
+				/*auto now = std::chrono::system_clock::now();
+				auto now_us = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch());
+				float diff = 0.0001 * (now_us.count() - pre_us.count());
+
+				if (diff<=60000)
+				{*/
+					dwProcessIds = getChildProcesses(pid);
+					for (size_t i = 0; i < dwProcessIds.size(); i++)
+					{
+						HWND hWnd = getMainWin(dwProcessIds[i]);
+						if (hWnd != 0)
+						{
+							_currentHWND = hWnd;
+							_dwProcessId = dwProcessIds[i];
+							break;
+						}
+					}
+				/*}
+				else
+				{
+					::exit(0);
+				}*/
 			}
 		}
-		
 
 		// 输出进程ID
-		std::cout << "Process ID: " << _dwProcessId << std::endl;
-		// 关闭进程句柄
-		//CloseHandle(sei.hProcess);
+		std::cout << "获取 Process ID: " << _dwProcessId << std::endl;
 	}
 	else
 	{
@@ -437,6 +461,37 @@ void Listen::startProgramFromBat(const std::string& strPath)
 		std::cout << "Failed to open application." << std::endl;
 	}
 
+}
+
+HWND Listen::getMainWin(DWORD id)
+{
+	HWND currentHWND = getMainHWND(id);
+	if (currentHWND != 0)
+		return currentHWND;
+
+	std::vector<DWORD> dwProcessIds = getChildProcesses(id);
+	if (dwProcessIds.size() > 0)
+	{
+		for (size_t i = 0; i < dwProcessIds.size(); i++)
+		{
+			currentHWND = getMainHWND(dwProcessIds[i]);
+			if (currentHWND != 0)
+			{
+				std::cout << "获取窗口ID: " << currentHWND << std::endl;
+				break;
+			}
+			else
+			{
+				currentHWND = getMainWin(dwProcessIds[i]);
+				if (currentHWND != 0)
+				{
+					std::cout << "获取窗口ID: " << currentHWND << std::endl;
+					break;
+				}
+			}
+		}
+	}
+	return currentHWND;
 }
 
 void Listen::hwndListen()
