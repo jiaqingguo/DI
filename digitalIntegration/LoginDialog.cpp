@@ -19,7 +19,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui(new Ui::LoginDialog)
 {
 	ui->setupUi(this);
-	setWindowTitle(("欢迎使用数字样机硬件一体化平台"));
+	setWindowTitle(("欢迎使用数字样机一体化平台"));
 	ui->stackedWidget->setCurrentIndex(0);
 	//setWindowTitle(GBK_STRING("欢迎使用数字样机硬件一体化平台"));
 	QRegExp rx("[0-9a-zA-Z]{19}");

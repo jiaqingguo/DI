@@ -145,12 +145,12 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->actionM3->setChecked(true);
 	ui->actionM4->setChecked(true);
 
-	connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
+	/*connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
 	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
 	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
-	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);
+	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
-
+	
 	initInitface();
 
 	//QString target = "\\\\192.168.0.250\\"; // 实际路径
@@ -254,6 +254,12 @@ void MainWindow::initInitface()
 		updateModuleToolIcon(4);
 		common::indexNum = 4;
 	});
+
+
+	connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
+	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
+	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
+	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);
 
 	ui->btnResourceManage->setCheckable(true);
 	ui->btnInformationConfihuration->setCheckable(true);

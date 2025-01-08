@@ -17,7 +17,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -144,7 +143,6 @@ public:
     QPushButton *btnAddTab4;
     QWidget *tab_8;
     QMenuBar *menubar;
-    QMenu *menu;
     QStatusBar *statusbar;
     QButtonGroup *buttonGroup;
 
@@ -764,18 +762,10 @@ public:
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 942, 23));
-        menu = new QMenu(menubar);
-        menu->setObjectName(QString::fromUtf8("menu"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
-
-        menubar->addAction(menu->menuAction());
-        menu->addAction(actionM1);
-        menu->addAction(actionM2);
-        menu->addAction(actionM3);
-        menu->addAction(actionM4);
 
         retranslateUi(MainWindow);
 
@@ -850,7 +840,6 @@ public:
         btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_8), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
-        menu->setTitle(QCoreApplication::translate("MainWindow", "\350\247\206\345\233\276", nullptr));
     } // retranslateUi
 
 };

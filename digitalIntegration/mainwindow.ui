@@ -1507,16 +1507,6 @@
      <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>视图</string>
-    </property>
-    <addaction name="actionM1"/>
-    <addaction name="actionM2"/>
-    <addaction name="actionM3"/>
-    <addaction name="actionM4"/>
-   </widget>
-   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionM1">

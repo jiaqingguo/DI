@@ -22,6 +22,7 @@ SOURCES += \
     ApprovalProgressDialog.cpp \
     C7Zip.cpp \
     CAxWidget.cpp \
+    CDoublePushButton.cpp \
     CLineEdit.cpp \
     CTableView.cpp \
     CWidget.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     ApprovalProgressDialog.h \
     C7Zip.h \
     CAxWidget.h \
+    CDoublePushButton.h \
     CLineEdit.h \
     CPagedTableModel.h \
     CTableView.h \
