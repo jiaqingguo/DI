@@ -108,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
-	
+
 	//m_pC7Zip = new C7Zip;
 //	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
 //	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
@@ -150,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
 	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
-	
+
 	initInitface();
 
 	//QString target = "\\\\192.168.0.250\\"; // 实际路径
@@ -256,19 +256,19 @@ void MainWindow::initInitface()
 	});
 
 
-	
+
 	connect(ui->btnModule1, &CDoublePushButton::signal_doubleClicked, [this]() {
 		ui->widgetM1->setVisible(!ui->widgetM1->isVisible());
-		});
+	});
 	connect(ui->btnModule2, &CDoublePushButton::signal_doubleClicked, [this]() {
 		ui->widgetM2->setVisible(!ui->widgetM2->isVisible());
-		});
+	});
 	connect(ui->btnModule3, &CDoublePushButton::signal_doubleClicked, [this]() {
 		ui->widgetM3->setVisible(!ui->widgetM3->isVisible());
-		});
+	});
 	connect(ui->btnModule4, &CDoublePushButton::signal_doubleClicked, [this]() {
 		ui->widgetM4->setVisible(!ui->widgetM4->isVisible());
-		});
+	});
 
 	/*connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
 	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
@@ -438,7 +438,7 @@ bool MainWindow::showLoginDialog()
 			ui->btnApprovalProgress->hide();
 		}
 		this->showMaximized();
-		
+
 		//ui->stackedWidget->setCurrentIndex(1);
 		//ui->stackedWidget->setCurrentIndex(0);
 
@@ -583,7 +583,7 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 
 void MainWindow::slot_btnDataManageClicked()
 {
-	
+
 	//m_DataManageDialog->exec();
 	int  x = 0;
 	int  y = 0;
@@ -592,7 +592,7 @@ void MainWindow::slot_btnDataManageClicked()
 	//m_FilemangageDialog->show();
 	//
 
-	
+
 	m_FtpDialog->exec();
 	ui->btnDataManage->setChecked(false);
 }
@@ -614,7 +614,7 @@ void MainWindow::slot_btnAddToolTab()
 	int moduleNumber = pButton->property("module").toInt();
 
 
-	QString strAssignIP="";// 指定ip 主机;
+	QString strAssignIP = "";// 指定ip 主机;
 	QString strAssignHostName = "";
 	AddToolDialog addToooDialog(moduleNumber);
 	if (addToooDialog.exec() == QDialog::Accepted)
@@ -626,9 +626,9 @@ void MainWindow::slot_btnAddToolTab()
 		QString  toolPath = -1;
 
 
-		
+
 		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
-		
+
 		table_ip stipToolData;
 		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, toolName.toStdString(), common::iLoginNum, moduleNumber))
 		{
@@ -636,7 +636,7 @@ void MainWindow::slot_btnAddToolTab()
 		}
 		if (moduleNumber == 1)
 		{
-			
+
 			strAssignIP = QString::fromStdString(stipToolData.ip);
 			strAssignHostName = QString::fromStdString(stipToolData.host);
 
@@ -647,7 +647,7 @@ void MainWindow::slot_btnAddToolTab()
 		else
 		{
 			//QString hostname = QString::fromStdString(strAssignHostName);
-			
+
 
 			if (strAssignIP == "") // 模块234 下是指定还是CPu随机
 			{
@@ -664,8 +664,8 @@ void MainWindow::slot_btnAddToolTab()
 			//	//st.hostname = strAssignHostName.toStdString();
 			//}
 		}
-		
-		
+
+
 		std::string strIP = strAssignIP.toStdString();
 		if (strIP.empty())
 		{
@@ -673,7 +673,7 @@ void MainWindow::slot_btnAddToolTab()
 			return;
 		}
 
-		QString strPwd ;
+		QString strPwd;
 		if (common::bAdministrator)
 		{
 			strPwd = common::strFtpAdminPwd;
@@ -684,10 +684,10 @@ void MainWindow::slot_btnAddToolTab()
 		}
 		CWidget* axTabWidget = new CWidget();
 
-	
-		
+
+
 		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
-		
+
 		//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
 		QString str = "app\\";
 		QString strAccount = str + common::strLoginUserName;
@@ -859,7 +859,7 @@ void MainWindow::slot_btnOneClickLoad()
 
 	common::index = getBtnLoadIndex(pButton);
 
-	
+
 
 	if (!m_OneClickLoadDialog->m_model->rowCount())
 	{
@@ -876,7 +876,7 @@ void MainWindow::slot_btnOneClickLoad()
 					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
 					//m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
 					//QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
-					
+
 					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
 					item->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
 					// 创建QComboBox并设置模型数据
@@ -896,7 +896,7 @@ void MainWindow::slot_btnOneClickLoad()
 					}
 					comboBox->setCurrentText(QString::fromStdString(stData.projectPath));
 					m_OneClickLoadDialog->ui->tableView->setIndexWidget(m_OneClickLoadDialog->m_model->index(newRowIndex, 1), comboBox);
-					
+
 				}
 			}
 		}
@@ -1172,11 +1172,11 @@ void MainWindow::updateModuleToolIcon(int module)
 				pBtn->setEnabled(true);
 
 				pLayout->addWidget(pBtn);
-				
+
 				//鼠标右击事件
-				RightClickEvent *rightclick = new RightClickEvent;
-				pBtn->installEventFilter(rightclick);
-				connect(rightclick, &RightClickEvent::rightClicked, this, &MainWindow::onRightClicked);
+				//RightClickEvent *rightclick = new RightClickEvent;
+				//pBtn->installEventFilter(rightclick);
+				//connect(rightclick, &RightClickEvent::rightClicked, this, &MainWindow::onRightClicked);
 				//鼠标双击事件
 				DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
 				pBtn->installEventFilter(interceptor);
@@ -1648,7 +1648,7 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 		return;
 	}
 
-	QString strPwd = "123456";
+	QString strPwd = "Atexcel@123";
 
 	CWidget* axTabWidget = new CWidget();
 
@@ -1741,7 +1741,7 @@ void MainWindow::slot_widgetAboutToQuit()
 void MainWindow::onDoubleClicked(const QString &buttonText)
 {
 	table_ip stipToolData;
-	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData,buttonText.toStdString(), common::iLoginNum, common::indexNum))
+	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
 	{
 		return;
 	}
@@ -1753,7 +1753,7 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 		return;
 	}
 
-	QString strPwd = "123456";
+	QString strPwd = "Atexcel@123";
 
 	CWidget* axTabWidget = new CWidget();
 
@@ -1781,55 +1781,189 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 
 		}
 	}
-	else if (common::indexNum == 2)
+	else
 	{
-		QString exeDir = QCoreApplication::applicationDirPath();
-		axTabWidget->m_account = strAccount;
-		axTabWidget->m_ip = QString::fromStdString(strIP);
-		axTabWidget->m_softwareName = buttonText;
+		QString strAssignIP = "";// 指定ip 主机;
+		QString strAssignHostName = "";
 
-		if (isHardwareAccelerator(st.hostname))
+		AddToolDialog addToooDialog(common::indexNum);
+		QComboBox *toolComboBox = addToooDialog.getComboBox();
+		toolComboBox->setEnabled(false);
+		toolComboBox->setCurrentText(buttonText);
+		if (addToooDialog.exec() == QDialog::Accepted)
 		{
-			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
-		}
-		else
-		{
-			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
-		}
+			QString toolName;
+			QString tabName;
+			int mode = -1;
+			int displayMode = 0;
+			QString  toolPath = -1;
 
+
+
+			addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+
+			table_ip stipToolData;
+			if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+			{
+				return;
+			}
+			if (common::indexNum == 1)
+			{
+
+				strAssignIP = QString::fromStdString(stipToolData.ip);
+				strAssignHostName = QString::fromStdString(stipToolData.host);
+
+
+				QString hostname = QString::fromStdString(stipToolData.host);
+				tabName = tabName + " " + hostname;
+			}
+			else
+			{
+				if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+				{
+					table_ip_configure st;
+					common::findIpWithGpuMinValue(st);
+
+					strAssignIP = QString::fromStdString(st.ip);
+					strAssignHostName = QString::fromStdString(st.hostname);
+				}
+				tabName = tabName + " " + strAssignHostName;
+			}
+
+			std::string strIP = strAssignIP.toStdString();
+			if (strIP.empty())
+			{
+				QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+				return;
+			}
+
+			QString strPwd;
+			if (common::bAdministrator)
+			{
+				strPwd = common::strFtpAdminPwd;
+			}
+			else
+			{
+				strPwd = common::strFtpPwd;
+			}
+			CWidget* axTabWidget = new CWidget();
+			QString str = "app\\";
+			QString strAccount = str + common::strLoginUserName;
+			if (strAccount.isEmpty())
+			{
+				QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+				return;
+			}
+
+			if (common::indexNum == 2)
+			{
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+					}
+
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+
+			}
+			else if (common::indexNum == 3)
+			{
+
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
+					}
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+			}
+			else if (common::indexNum == 4)
+			{
+
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+					}
+
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+
+			}
+		}
 	}
-	else if (common::indexNum == 3)
-	{
-		axTabWidget->m_account = strAccount;
-		axTabWidget->m_ip = QString::fromStdString(strIP);
-		axTabWidget->m_softwareName = buttonText;
-
-		if (isHardwareAccelerator(st.hostname))
-		{
-			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
-
-		}
-		else
-		{
-			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
-		}
-
-	}
-	else if (common::indexNum == 4)
-	{
-		axTabWidget->m_account = strAccount;
-		axTabWidget->m_ip = QString::fromStdString(strIP);
-		axTabWidget->m_softwareName = buttonText;
-		if (isHardwareAccelerator(st.hostname))
-		{
-			startLongDistanceHost(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
-		}
-		else
-		{
-			startLongDistanceSoftware(buttonText + " " + QString::fromStdString(st.hostname), common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
-		}
-	}
-
 }
 void MainWindow::onRightClicked(QString &buttonText)
 {
@@ -1992,10 +2126,6 @@ void MainWindow::onRightClicked(QString &buttonText)
 				}
 
 			}
-
-
-
-
 
 		}
 		else if (common::indexNum == 3)
