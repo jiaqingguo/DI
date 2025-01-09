@@ -23,8 +23,9 @@ int main(int argc, char *argv[])
 		qDebug() << parts.at(1);
 		if (parts.size() == 2)
 		{
-			w.InitResource(parts.at(1).toStdString());
+			
 			w.StartProgram(parts.at(0).toStdString());
+			w.InitResource(parts.at(1).toStdString());
 			w.HwndListen();
 
 		}

@@ -423,16 +423,16 @@ void Listen::startProgramFromBat(const std::string& strPath)
 				std::cout << "ProcessId:" << tmpId <<" "<<"Num:" << dwProcessIds.size() <<std::endl;
 			}*/
 
-			//auto startTime = std::chrono::system_clock::now();
-			//auto pre_us = std::chrono::duration_cast<std::chrono::microseconds>(startTime.time_since_epoch());
+			auto startTime = std::chrono::system_clock::now();
+			auto pre_us = std::chrono::duration_cast<std::chrono::microseconds>(startTime.time_since_epoch());
 			while (_currentHWND == 0)
 			{
-				/*auto now = std::chrono::system_clock::now();
+				auto now = std::chrono::system_clock::now();
 				auto now_us = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch());
 				float diff = 0.0001 * (now_us.count() - pre_us.count());
 
 				if (diff<=60000)
-				{*/
+				{
 					dwProcessIds = getChildProcesses(pid);
 					for (size_t i = 0; i < dwProcessIds.size(); i++)
 					{
@@ -444,11 +444,11 @@ void Listen::startProgramFromBat(const std::string& strPath)
 							break;
 						}
 					}
-				/*}
+				}
 				else
 				{
 					::exit(0);
-				}*/
+				}
 			}
 		}
 
