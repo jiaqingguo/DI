@@ -256,10 +256,24 @@ void MainWindow::initInitface()
 	});
 
 
-	connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
+	
+	connect(ui->btnModule1, &CDoublePushButton::signal_doubleClicked, [this]() {
+		ui->widgetM1->setVisible(!ui->widgetM1->isVisible());
+		});
+	connect(ui->btnModule2, &CDoublePushButton::signal_doubleClicked, [this]() {
+		ui->widgetM2->setVisible(!ui->widgetM2->isVisible());
+		});
+	connect(ui->btnModule3, &CDoublePushButton::signal_doubleClicked, [this]() {
+		ui->widgetM3->setVisible(!ui->widgetM3->isVisible());
+		});
+	connect(ui->btnModule4, &CDoublePushButton::signal_doubleClicked, [this]() {
+		ui->widgetM4->setVisible(!ui->widgetM4->isVisible());
+		});
+
+	/*connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
 	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
 	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
-	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);
+	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
 	ui->btnResourceManage->setCheckable(true);
 	ui->btnInformationConfihuration->setCheckable(true);

@@ -25,6 +25,7 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "CDoublePushButton.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -40,10 +41,10 @@ public:
     QWidget *widgetModules;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnFunction;
-    QPushButton *btnModule1;
-    QPushButton *btnModule2;
-    QPushButton *btnModule3;
-    QPushButton *btnModule4;
+    CDoublePushButton *btnModule1;
+    CDoublePushButton *btnModule2;
+    CDoublePushButton *btnModule3;
+    CDoublePushButton *btnModule4;
     QSpacerItem *horizontalSpacer;
     QLabel *labelUserIcon;
     QLabel *labelUserName;
@@ -193,7 +194,7 @@ public:
 
         horizontalLayout->addWidget(btnFunction);
 
-        btnModule1 = new QPushButton(widgetModules);
+        btnModule1 = new CDoublePushButton(widgetModules);
         buttonGroup->addButton(btnModule1);
         btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
         sizePolicy.setHeightForWidth(btnModule1->sizePolicy().hasHeightForWidth());
@@ -203,7 +204,7 @@ public:
 
         horizontalLayout->addWidget(btnModule1);
 
-        btnModule2 = new QPushButton(widgetModules);
+        btnModule2 = new CDoublePushButton(widgetModules);
         buttonGroup->addButton(btnModule2);
         btnModule2->setObjectName(QString::fromUtf8("btnModule2"));
         sizePolicy.setHeightForWidth(btnModule2->sizePolicy().hasHeightForWidth());
@@ -213,7 +214,7 @@ public:
 
         horizontalLayout->addWidget(btnModule2);
 
-        btnModule3 = new QPushButton(widgetModules);
+        btnModule3 = new CDoublePushButton(widgetModules);
         buttonGroup->addButton(btnModule3);
         btnModule3->setObjectName(QString::fromUtf8("btnModule3"));
         sizePolicy.setHeightForWidth(btnModule3->sizePolicy().hasHeightForWidth());
@@ -223,7 +224,7 @@ public:
 
         horizontalLayout->addWidget(btnModule3);
 
-        btnModule4 = new QPushButton(widgetModules);
+        btnModule4 = new CDoublePushButton(widgetModules);
         buttonGroup->addButton(btnModule4);
         btnModule4->setObjectName(QString::fromUtf8("btnModule4"));
         sizePolicy.setHeightForWidth(btnModule4->sizePolicy().hasHeightForWidth());

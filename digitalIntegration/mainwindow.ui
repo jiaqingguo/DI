@@ -95,7 +95,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnModule1">
+        <widget class="CDoublePushButton" name="btnModule1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -123,7 +123,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnModule2">
+        <widget class="CDoublePushButton" name="btnModule2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -151,7 +151,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnModule3">
+        <widget class="CDoublePushButton" name="btnModule3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -179,7 +179,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnModule4">
+        <widget class="CDoublePushButton" name="btnModule4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -1542,6 +1542,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CDoublePushButton</class>
+   <extends>QPushButton</extends>
+   <header>CDoublePushButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>

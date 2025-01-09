@@ -22,6 +22,8 @@ InformationConfihurationDialog::InformationConfihurationDialog(QWidget *parent) 
 {
 	ui->setupUi(this);
 	setWindowIcon(QIcon(":/image/InformationConfihuration.png"));
+	// 移除帮助按钮
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	init();
 	initFaceData();
 
