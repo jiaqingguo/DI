@@ -58,7 +58,7 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     ui->tableWidget->setColumnWidth(3, 70);
 
     // 去除选中的虚线框
-    ui->tableWidget->setItemDelegate((QStyledItemDelegate*)new MyStyledItemDelegate);
+  //  ui->tableWidget->setItemDelegate((QStyledItemDelegate*)new MyStyledItemDelegate);
 
     // 设置进度条
     progress.hide();
