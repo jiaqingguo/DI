@@ -612,7 +612,7 @@ void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
 
     if (!common::bAdministrator)
     {
-        if (currentPath == "")
+        if (currentPath == ""  || currentPath.contains("public"))
         {
             return;     // 普通用户禁用根目录菜单;
         }
@@ -1305,8 +1305,9 @@ void FtpClientWidget::commandFinished(int id, bool err)
     {
         if (!err)
         {
-            ui->tableWidget->removeRow(removeRow);
+          /*  ui->tableWidget->removeRow(removeRow);*/
             removeRow = -1;
+            onRefresh();
         }
         break;
     }

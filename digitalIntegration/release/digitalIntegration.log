@@ -1,178 +1,7 @@
-﻿  Generate moc_predefs.h
-  UIC FtpDialog.ui
-  RCC resoirce.qrc
-  MOC AddIpInfoDialog.h
-  MOC AddToolDialog.h
-  MOC AddToolInfoDialog.h
-  MOC ApprovalProgressDialog.h
-  MOC C7Zip.h
-  MOC CDoublePushButton.h
-  MOC CPagedTableModel.h
-  MOC CTableView.h
-  MOC CWidget.h
-  MOC ChangePwdDialog.h
-  MOC DataManageDialog.h
-  MOC FilemangageDialog.h
+﻿  MOC CDoublePushButton.h
   MOC FtpClientWidget.h
-  MOC FtpDialog.h
-  MOC GifDialog.h
-  MOC GifThread.h
-  MOC InformationConfihurationDialog.h
-  MOC LoginDialog.h
-  MOC OneClickLoadDialog.h
-  MOC OneClickSaveDialog.h
-  MOC RegisterDialog.h
-  MOC ResourceManageDialog.h
-  MOC SoftwareWindow.h
-  MOC fingerDlg.h
-  MOC mainwindow.h
-  MOC progressDialog.h
-  AddIpInfoDialog.cpp
-  AddToolDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  AddToolInfoDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  ApprovalProgressDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(157,53): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(179,37): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(208,53): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(241,37): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(700,50): warning C4100: “value”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(708,69): warning C4100: “index”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1065,53): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1503,37): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1541,6): warning C4189: “column”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1598,6): warning C4189: “approval”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1597,6): warning C4189: “column”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ApprovalProgressDialog.cpp(1613,6): warning C4189: “column”: 局部变量已初始化但不引用
-  C7Zip.cpp
-  CAxWidget.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CAxWidget.cpp(2,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
   CDoublePushButton.cpp
-  CLineEdit.cpp
-  CTableView.cpp
-  CWidget.cpp
-  ChangePwdDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  CtrlNetwork.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CtrlNetwork.cpp(79,95): warning C4100: “port”: 未引用的形参
-  DataManageDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(22,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(29,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(50,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(24,60): warning C4100: “index”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(24,33): warning C4100: “editor”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(28,86): warning C4100: “index”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(28,60): warning C4100: “model”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CButtonItemDelegate.h(28,32): warning C4100: “editor”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\DataManageDialog.cpp(104,9): warning C4189: “row”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\DataManageDialog.cpp(106,9): warning C4189: “col”: 局部变量已初始化但不引用
-  FilemangageDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(347,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(354,11): warning C4189: “sheet”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(428,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(435,11): warning C4189: “sheet”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(520,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(603,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(679,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(851,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(854,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(905,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(983,54): warning C4100: “spilt_char”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(987,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1134,7): warning C4189: “j”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1133,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1207,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,10): warning C4477: “wscanf”: 格式字符串“%d”需要类型“int *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,28): warning C4474: wscanf: 格式字符串中传递的参数太多
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,28): message : 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,11): warning C4477: “wscanf”: 格式字符串“%lf”需要类型“double *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,28): warning C4474: wscanf: 格式字符串中传递的参数太多
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,28): message : 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1365,169): warning C4100: “title_string”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1723,8): warning C4101: “ch”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1752,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1778,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1799,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1885,9): warning C4189: “dwCPUid”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FilemangageDialog.cpp(855,6): warning C4189: “approval”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FilemangageDialog.cpp(854,6): warning C4189: “column”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FilemangageDialog.cpp(858,6): warning C4189: “id”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FilemangageDialog.cpp(1263,85): warning C4100: “column”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FilemangageDialog.cpp(1263,75): warning C4100: “item”: 未引用的形参
-  FtpClientClass.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(347,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(354,11): warning C4189: “sheet”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(428,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(435,11): warning C4189: “sheet”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(520,44): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(603,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(679,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(851,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(854,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(905,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(983,54): warning C4100: “spilt_char”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(987,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1134,7): warning C4189: “j”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1133,7): warning C4189: “i”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1207,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,10): warning C4477: “wscanf”: 格式字符串“%d”需要类型“int *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,28): warning C4474: wscanf: 格式字符串中传递的参数太多
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1356,28): message : 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,11): warning C4477: “wscanf”: 格式字符串“%lf”需要类型“double *”的参数，但可变参数 1 拥有了类型“LPCSTR”
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,28): warning C4474: wscanf: 格式字符串中传递的参数太多
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1361,28): message : 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1365,169): warning C4100: “title_string”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1723,8): warning C4101: “ch”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1752,1): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1778,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1799,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1885,17): warning C4244: “初始化”: 从“DWORD_PTR”转换到“DWORD”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\Util\UtilTool.h(1885,9): warning C4189: “dwCPUid”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(93,7): warning C4189: “errorCode”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(100,34): warning C4100: “fileName”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(147,33): warning C4100: “sockfd”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(246,53): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(273,41): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(384,49): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(394,30): warning C4474: sprintf: 格式字符串中传递的参数太多
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(394,30): message : 占位符和其参数预计 0 可变参数，但提供的却是 1 参数
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(495,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(495,22): warning C4101: “name”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(563,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(563,22): warning C4101: “name”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(605,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(602,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(691,9): warning C4189: “char_int”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(707,8): warning C4189: “a”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(749,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(753,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(752,8): warning C4101: “fd1”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(850,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(939,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(936,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(940,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(939,8): warning C4101: “fd1”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(976,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(973,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(977,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(976,8): warning C4101: “fd1”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1014,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1011,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1015,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1014,8): warning C4101: “fd1”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1053,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1050,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1054,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1053,8): warning C4101: “fd1”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1091,14): warning C4101: “fd2”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1088,7): warning C4101: “operation”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1092,6): warning C4101: “cnt”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(1091,8): warning C4101: “fd1”: 未引用的局部变量
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\CDoublePushButton.h(10,33): warning C4100: “parent”: 未引用的形参
   FtpClientWidget.cpp
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(334,14): warning C4189: “success”: 局部变量已初始化但不引用
@@ -182,140 +11,37 @@ D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(492,
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(607,69): warning C4100: “pos”: 未引用的形参
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(790,18): warning C4189: “success”: 局部变量已初始化但不引用
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(1139,15): warning C4189: “a”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(1338,56): warning C4100: “id”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(1347,18): warning C4189: “a”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(1339,56): warning C4100: “id”: 未引用的形参
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientWidget.cpp(1348,18): warning C4189: “a”: 局部变量已初始化但不引用
   FtpDialog.cpp
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(276,37): warning C4100: “iFlag”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(516,9): warning C4189: “approval”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(515,9): warning C4189: “column”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(519,9): warning C4189: “id”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(278,37): warning C4100: “iFlag”: 未引用的形参
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(518,9): warning C4189: “approval”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(517,9): warning C4189: “column”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpDialog.cpp(521,9): warning C4189: “id”: 局部变量已初始化但不引用
   GifDialog.cpp
-  GifThread.cpp
-  Global.cpp
-  正在生成代码...
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\FtpClientClass.cpp(598): warning C4715: “FtpClientClass::Gets_CurrentPath”: 不是所有的控件路径都返回值
-  正在编译...
   InformationConfihurationDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  LoginDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\LoginDialog.cpp(58,29): warning C4100: “bClearPwd”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\LoginDialog.cpp(84,43): warning C4100: “iRes”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\LoginDialog.cpp(239,57): warning C4100: “text”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\LoginDialog.cpp(251,56): warning C4100: “text”: 未引用的形参
-  OneClickLoadDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  OneClickSaveDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\OneClickSaveDialog.cpp(88,18): warning C4189: “pButton”: 局部变量已初始化但不引用
-  RegisterDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  ResourceManageDialog.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(458,44): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(482,44): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(506,44): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(530,44): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(554,44): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\ResourceManageDialog.cpp(574,66): warning C4100: “text”: 未引用的形参
-  SoftwareWindow.cpp
-  common.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(166,132): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(436,38): warning C4100: “processID”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(465,38): warning C4100: “processID”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(682,104): warning C4100: “password”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(682,74): warning C4100: “username”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(682,46): warning C4100: “target”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(740,12): warning C4311: “类型强制转换”: 从“HINSTANCE”到“int”的指针截断
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(740,12): warning C4302: “类型强制转换”: 从“HINSTANCE”到“int”截断
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(744,84): warning C4311: “类型强制转换”: 从“HINSTANCE”到“int”的指针截断
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(744,84): warning C4302: “类型强制转换”: 从“HINSTANCE”到“int”截断
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(851,98): warning C4100: “strValue”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(851,75): warning C4100: “Column”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(851,57): warning C4100: “model”: 未引用的形参
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\common.cpp(971,77): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-  database.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\database.cpp(307,43): warning C4100: “filepath”: 未引用的形参
-  databaseDI.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(755,6): warning C4267: “参数”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(765,43): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(769,45): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(773,49): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(783,49): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(787,48): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(794,49): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(799,48): warning C4267: “=”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(966,6): warning C4267: “参数”: 从“size_t”转换到“unsigned long”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,71): warning C4101: “icoPathLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,55): warning C4101: “usernameLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,102): warning C4101: “blobLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,27): warning C4101: “hostLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,17): warning C4101: “ipLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,86): warning C4101: “toolPathLength”: 未引用的局部变量
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1054,17): warning C4189: “blobBufferLength”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.cpp(1011,39): warning C4101: “softwareLength”: 未引用的局部变量
-  fingerDlg.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfp.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfptype.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\fingerDlg.cpp(16,31): warning C4100: “pParent”: 未引用的形参
-  main.cpp
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
   mainwindow.cpp
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfp.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfptype.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(367,88): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(575,7): warning C4189: “y”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(574,7): warning C4189: “x”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(879,24): warning C4189: “data”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(958,15): warning C4189: “button3”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1000,15): warning C4189: “button3”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1040,15): warning C4189: “button3”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1080,15): warning C4189: “button3”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1145,98): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1366,7): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1519,7): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1520,13): warning C4189: “pSecuredmObject”: 局部变量已初始化但不引用
-  progressDialog.cpp
-  moc_AddIpInfoDialog.cpp
-  moc_AddToolDialog.cpp
-  moc_AddToolInfoDialog.cpp
-  moc_ApprovalProgressDialog.cpp
-  moc_C7Zip.cpp
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\CDoublePushButton.h(10,33): warning C4100: “parent”: 未引用的形参
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(381,88): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(589,7): warning C4189: “y”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(588,7): warning C4189: “x”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(893,24): warning C4189: “data”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(972,15): warning C4189: “button3”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1014,15): warning C4189: “button3”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1054,15): warning C4189: “button3”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1094,15): warning C4189: “button3”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1159,98): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1380,7): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1533,7): warning C4189: “securedSettingsEnabled”: 局部变量已初始化但不引用
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1534,13): warning C4189: “pSecuredmObject”: 局部变量已初始化但不引用
   moc_CDoublePushButton.cpp
-  正在生成代码...
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1578): warning C4715: “MainWindow::getBtnLoadIndex”: 不是所有的控件路径都返回值
-  正在编译...
-  moc_CPagedTableModel.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(22,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(29,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\CPagedTableModel.h(50,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-  moc_CTableView.cpp
-  moc_CWidget.cpp
-  moc_ChangePwdDialog.cpp
-  moc_DataManageDialog.cpp
-  moc_FilemangageDialog.cpp
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\CDoublePushButton.h(10,33): warning C4100: “parent”: 未引用的形参
   moc_FtpClientWidget.cpp
-  moc_FtpDialog.cpp
-  moc_GifDialog.cpp
-  moc_GifThread.cpp
-  moc_InformationConfihurationDialog.cpp
-  moc_LoginDialog.cpp
-  moc_OneClickLoadDialog.cpp
-  moc_OneClickSaveDialog.cpp
-  moc_RegisterDialog.cpp
-  moc_ResourceManageDialog.cpp
-  moc_SoftwareWindow.cpp
-  moc_fingerDlg.cpp
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\databaseDI.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfp.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-D:\1_project\Z_project\GitProject\DI\digitalIntegration\libxzkfp\include\libzkfptype.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  moc_mainwindow.cpp
-  moc_progressDialog.cpp
   正在生成代码...
-  正在编译...
-  qrc_resoirce.cpp
-  正在生成代码...
+D:\1_project\Z_project\GitProject\DI\digitalIntegration\mainwindow.cpp(1592): warning C4715: “MainWindow::getBtnLoadIndex”: 不是所有的控件路径都返回值
   digitalIntegration.vcxproj -> D:\1_project\Z_project\GitProject\DI\digitalIntegration\release\digitalIntegration.exe

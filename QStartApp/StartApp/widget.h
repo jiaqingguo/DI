@@ -3,6 +3,7 @@
 
 #include <QWidget>
 class Listen;
+class GifDialog;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -22,6 +23,10 @@ public:
 
     void InitResource(const std::string& str);
 
+    void showGifDialog();
+
+    void closeGifDialog();
+
 private slots:
     void slot_btnOpenExplorer();
     void slot_btnAppShow();
@@ -31,5 +36,6 @@ private:
     Ui::Widget *ui;
 
     Listen* m_pListen = nullptr;// = new Listen;
+    GifDialog* m_pGifDialog = nullptr;
 };
 #endif // WIDGET_H

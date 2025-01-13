@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 
 #include "Listen.h"
+#include "GifDialog.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -11,6 +12,10 @@ Widget::Widget(QWidget *parent)
     setMaximumHeight(400);
     setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // 移除最大最小化按钮
     ui->setupUi(this);
+
+    m_pGifDialog = new GifDialog();
+    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在加载"));
+   
     m_pListen = new Listen;
     connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
     connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
@@ -30,10 +35,14 @@ void Widget::StartProgram(const std::string& strPath)
     if (suffix == "exe")
     {
         m_pListen->startProgram(strPath);
+
+      
     }
     else if (suffix == "bat")
     {
         m_pListen->startProgramFromBat(strPath);
+
+        
     }
     
 
@@ -70,11 +79,25 @@ void Widget::InitResource(const std::string& str)
     //TCHAR userName[] = TEXT("user1");
     TCHAR password[] = TEXT("Atexcel@123");
     TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-    TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
+    TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
   
     m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
 
    
+}
+
+void Widget::showGifDialog()
+{
+
+    auto boundFunction = std::bind(&QDialog::show, m_pGifDialog);
+    std::thread t(boundFunction);
+    t.detach(); // 分离线程，主线程不阻塞
+ //   m_pGifDialog->show();
+}
+
+void Widget::closeGifDialog()
+{
+    m_pGifDialog->close();
 }
 
 void Widget::slot_btnOpenExplorer()
