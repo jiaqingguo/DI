@@ -1,4 +1,4 @@
-#include <QMessageBox>
+ï»¿#include <QMessageBox>
 #include <QFileDialog>
 
 
@@ -18,25 +18,36 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
     ui->lineEditToolName->setMaxLength(20);
     //ui->lineEditToolPath->setMaxLength(15);
     ui->lineEdit->setMaxLength(100);
-	ui->lineEditIP1->setMaxLength(15);
-	ui->lineEditIP2->setMaxLength(15);
-	ui->lineEditIP3->setMaxLength(15);
-	ui->lineEditIP4->setMaxLength(15);
-	ui->lineEditIP5->setMaxLength(15);
-	ui->lineEditIP6->setMaxLength(15);
     connect(ui->btnOK, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnOk);
 	connect(ui->btnChooseImage, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnChooseImage);
+	connect(ui->accelerateRadioButton,&QRadioButton::clicked, this, &AddToolInfoDialog::slot_btnhideWidget);
+	connect(ui->nodeRadioButton, &QRadioButton::clicked, this, &AddToolInfoDialog::slot_btnhideWidget2);
+	std::vector<table_ip_configure> vecIpData;
+	if (!db::databaseDI::Instance().get_ip_data_by_number(1, vecIpData))
+	{
+		return;
+	}
+	for (const auto& value : vecIpData)
+	{
+		ui->IpcomboBox1->addItem(QString::fromStdString(value.hostname));
+	}
+	if (!db::databaseDI::Instance().get_ip_data_by_number(2, vecIpData))
+	{
+		return;
+	}
+	for (const auto& value : vecIpData)
+	{
+		ui->IpcomboBox2->addItem(QString::fromStdString(value.hostname));
+	}
+	if (!db::databaseDI::Instance().get_ip_data_by_number(3, vecIpData))
+	{
+		return;
+	}
+	for (const auto& value : vecIpData)
+	{
+		ui->IpcomboBox3->addItem(QString::fromStdString(value.hostname));
+	}
 
-	//¾Û½¹
-	setTabOrder(ui->lineEditToolName, ui->lineEditToolPath);
-	setTabOrder(ui->lineEditToolPath,ui->lineEdit);
-	setTabOrder(ui->lineEdit,ui->lineEditIP1);
-	setTabOrder(ui->lineEditIP1,ui->lineEditIP2);
-	setTabOrder(ui->lineEditIP2,ui->lineEditIP3);
-	setTabOrder(ui->lineEditIP3,ui->lineEditIP4);
-	setTabOrder(ui->lineEditIP4,ui->lineEditIP5);
-	setTabOrder(ui->lineEditIP5,ui->lineEditIP6);
-	
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -54,21 +65,14 @@ AddToolInfoDialog::~AddToolInfoDialog()
 //	toolsData.icoPath = ui->lineEditIconPath->text().replace("\\", "\\\\").toStdString();
 //	toolsData.ip = ui->lineEditIP1->text().toStdString();
 //}
-void AddToolInfoDialog::getToolsData(table_ip& toolsData,std::string ipdata[6])
+void AddToolInfoDialog::getToolsData(table_ip& toolsData)
 {
-	//toolData.host=ui->lineEditHost->text().toStdString();
 	toolsData.software = ui->lineEditToolName->text().toStdString();
 	//QString strPath = ui->lineEditToolPath->text();
 	//strPath.replace("\\","\\\\");
-	//toolData.path = strPath.toStdString();
 	toolsData.toolPath = ui->lineEditToolPath->text().replace("\\", "\\\\").toStdString();
 	toolsData.icoPath = ui->lineEdit->text().replace("\\", "\\\\").toStdString();
-	ipdata[0] = ui->lineEditIP1->text().toStdString();
-	ipdata[1] = ui->lineEditIP2->text().toStdString();
-	ipdata[2] = ui->lineEditIP3->text().toStdString();
-	ipdata[3] = ui->lineEditIP4->text().toStdString();
-	ipdata[4] = ui->lineEditIP5->text().toStdString();
-	ipdata[5] = ui->lineEditIP6->text().toStdString();
+
 }
 
 
@@ -77,26 +81,26 @@ void AddToolInfoDialog::slot_btnOk()
 
     /*if (ui->lineEditHost->text().toStdString().empty())
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Ö÷»ú²»ÄÜÎª¿Õ!"));
+        QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ä¸»æœºä¸èƒ½ä¸ºç©º!"));
         return;
     }*/
     if (ui->lineEditToolName->text().toStdString().empty())
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¹¤¾ßÃû³Æ²»ÄÜÎª¿Õ!"));
+        QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å·¥å…·åç§°ä¸èƒ½ä¸ºç©º!"));
         return;
     }
 
     if (ui->lineEditToolPath->text().toStdString().empty())
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¹¤¾ßÂ·¾¶²»ÄÜÎª¿Õ!"));
+        QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å·¥å…·è·¯å¾„ä¸èƒ½ä¸ºç©º!"));
         return;
     }
     /*if (ui->lineEdit->text().toStdString().empty())
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Í¼±êÂ·¾¶²»ÄÜÎª¿Õ!"));
+        QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å›¾æ ‡è·¯å¾„ä¸èƒ½ä¸ºç©º!"));
         return;
     }*/
-	if ((ui->lineEditIP1->text().toStdString().empty() 
+	/*if ((ui->lineEditIP1->text().toStdString().empty() 
 		|| ui->lineEditIP2->text().toStdString().empty() 
 		|| ui->lineEditIP3->text().toStdString().empty()
 		|| ui->lineEditIP4->text().toStdString().empty() 
@@ -104,9 +108,9 @@ void AddToolInfoDialog::slot_btnOk()
 		|| ui->lineEditIP6->text().toStdString().empty())
 		&& m_iModule == 1)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("IP²»ÄÜÎª¿Õ!"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("IPä¸èƒ½ä¸ºç©º!"));
 		return;
-	}
+	}*/
 	
     this->accept();
  
@@ -114,62 +118,92 @@ void AddToolInfoDialog::slot_btnOk()
 
 void AddToolInfoDialog::slot_btnChooseImage()
 {
-	// µ¯³öÎÄ¼þÑ¡Ôñ¶Ô»°¿ò£¬¹ýÂËÌõ¼þÎªPNGºÍJPGÎÄ¼þ
-	QString fileName = QFileDialog::getOpenFileName(this, "Ñ¡ÔñÍ¼Æ¬", "", "Images (*.png *.jpg *.jpeg)");
+	// å¼¹å‡ºæ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†ï¼Œè¿‡æ»¤æ¡ä»¶ä¸ºPNGå’ŒJPGæ–‡ä»¶
+	QString fileName = QFileDialog::getOpenFileName(this, "é€‰æ‹©å›¾ç‰‡", "", "Images (*.png *.jpg *.jpeg)");
 
-	// ¼ì²éÓÃ»§ÊÇ·ñÑ¡ÔñÁËÎÄ¼þ
+	// æ£€æŸ¥ç”¨æˆ·æ˜¯å¦é€‰æ‹©äº†æ–‡ä»¶
 	if (!fileName.isEmpty()) {
-		// ÔÚ´Ë´¦ÀíËùÑ¡ÎÄ¼þ£¨ÀýÈç£¬ÏÔÊ¾ÎÄ¼þÂ·¾¶£©
-	   // QMessageBox::information(this, "Ñ¡ÔñµÄÎÄ¼þ", "ÄúÑ¡ÔñµÄÎÄ¼þ: " + fileName);
+		// åœ¨æ­¤å¤„ç†æ‰€é€‰æ–‡ä»¶ï¼ˆä¾‹å¦‚ï¼Œæ˜¾ç¤ºæ–‡ä»¶è·¯å¾„ï¼‰
+	   // QMessageBox::information(this, "é€‰æ‹©çš„æ–‡ä»¶", "æ‚¨é€‰æ‹©çš„æ–‡ä»¶: " + fileName);
 		ui->lineEdit->setText(fileName);
 	}
 }
 
-QLineEdit* AddToolInfoDialog::getlineEditIP1()
+void AddToolInfoDialog::slot_btnhideWidget()
 {
-	return ui->lineEditIP1;
+	ui->label4->setVisible(false);
+	ui->label5->setVisible(false);
+	ui->label6->setVisible(false);
+	ui->IpcomboBox1->setVisible(false);
+	ui->IpcomboBox2->setVisible(false);
+	ui->IpcomboBox3->setVisible(false);
 }
-QLineEdit* AddToolInfoDialog::getlineEditIP2()
+
+void AddToolInfoDialog::slot_btnhideWidget2()
 {
-	return ui->lineEditIP2;
+	ui->label4->setVisible(true);
+	ui->label5->setVisible(true);
+	ui->label6->setVisible(true);
+	ui->IpcomboBox1->setVisible(true);
+	ui->IpcomboBox2->setVisible(true);
+	ui->IpcomboBox3->setVisible(true);
 }
-QLineEdit* AddToolInfoDialog::getlineEditIP3()
+
+QRadioButton* AddToolInfoDialog::getAccelerateRadio()
 {
-	return ui->lineEditIP3;
+	return ui->accelerateRadioButton;
 }
-QLineEdit* AddToolInfoDialog::getlineEditIP4()
+QRadioButton* AddToolInfoDialog::getnodeRadio()
 {
-	return ui->lineEditIP4;
+	return ui->nodeRadioButton;
 }
-QLineEdit* AddToolInfoDialog::getlineEditIP5()
+QLabel* AddToolInfoDialog::getlabel4()
 {
-	return ui->lineEditIP5;
+	return ui->label4;
 }
-QLineEdit* AddToolInfoDialog::getlineEditIP6()
+QLabel* AddToolInfoDialog::getlabel5()
 {
-	return ui->lineEditIP6;
+	return ui->label5;
 }
-QLabel* AddToolInfoDialog::getlabelIP1()
+QLabel* AddToolInfoDialog::getlabel6()
 {
-	return ui->labelIP1;
+	return ui->label6;
 }
-QLabel* AddToolInfoDialog::getlabelIP2()
+QComboBox* AddToolInfoDialog::getipComboBox1()
 {
-	return ui->labelIP2;
+	return ui->IpcomboBox1;
 }
-QLabel* AddToolInfoDialog::getlabelIP3()
+QComboBox* AddToolInfoDialog::getipComboBox2()
 {
-	return ui->labelIP3;
+	return ui->IpcomboBox2;
 }
-QLabel* AddToolInfoDialog::getlabelIP4()
+QComboBox* AddToolInfoDialog::getipComboBox3()
 {
-	return ui->labelIP4;
+	return ui->IpcomboBox3;
 }
-QLabel* AddToolInfoDialog::getlabelIP5()
-{
-	return ui->labelIP5;
-}
-QLabel* AddToolInfoDialog::getlabelIP6()
-{
-	return ui->labelIP6;
-}
+//QLineEdit* AddToolInfoDialog::getlineEditIP1()
+//{
+//	return ui->lineEditIP1;
+//}
+//QLineEdit* AddToolInfoDialog::getlineEditIP2()
+//{
+//	return ui->lineEditIP2;
+//}
+//QLineEdit* AddToolInfoDialog::getlineEditIP3()
+//{
+//	return ui->lineEditIP3;
+//}
+//QLineEdit* AddToolInfoDialog::getlineEditIP4()
+//{
+//	return ui->lineEditIP4;
+//}
+//QLineEdit* AddToolInfoDialog::getlineEditIP5()
+//{
+//	return ui->lineEditIP5;
+//}
+//QLineEdit* AddToolInfoDialog::getlineEditIP6()
+//{
+//	return ui->lineEditIP6;
+//}
+
+
