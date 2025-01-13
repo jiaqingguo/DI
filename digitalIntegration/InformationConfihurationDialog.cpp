@@ -321,22 +321,20 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 	QRadioButton *accelerate = addToolInfoDialog.getAccelerateRadio();
 	QRadioButton *node = addToolInfoDialog.getnodeRadio();
-	QLabel *label4 = addToolInfoDialog.getlabel4();
+	/*QLabel *label4 = addToolInfoDialog.getlabel4();
 	QLabel *label5 = addToolInfoDialog.getlabel5();
-	QLabel *label6 = addToolInfoDialog.getlabel6();
+	QLabel *label6 = addToolInfoDialog.getlabel6();*/
 	QComboBox *ipcomboBox1 = addToolInfoDialog.getipComboBox1();
 	QComboBox *ipcomboBox2 = addToolInfoDialog.getipComboBox2();
 	QComboBox *ipcomboBox3 = addToolInfoDialog.getipComboBox3();
 	if (moduleNumber != 1)
 	{
+
+		accelerate->setEnabled(false);
 		accelerate->setVisible(false);
+
+		node->setEnabled(false);
 		node->setVisible(false);
-		label4->setVisible(false);
-		label5->setVisible(false);
-		label6->setVisible(false);
-		ipcomboBox1->setVisible(false);
-		ipcomboBox2->setVisible(false);
-		ipcomboBox3->setVisible(false);
 	}
 	table_ip stIp;
 	std::list<table_ip_configure> listData;
@@ -357,7 +355,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		QStandardItemModel* pModel = nullptr;
 		if (moduleNumber == 1)
 		{
-			//模块1中添加软件,选择硬件加速机
+			//模块1中添加软件,选择指定节点
 			if (accelerate->isChecked())
 			{
 				for (auto &soft_ip : listData)
@@ -367,7 +365,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 					stIp.ip = soft_ip.ip;
 					stIp.host = soft_ip.hostname;
 					stIp.module = moduleNumber;
-					stIp.used = 1;
+					stIp.used = 0;
 					stIp.username = std::to_string(common::iUserID);
 					stIp.number = soft_ip.number;
 					//stIp.number = common::iLoginNum;
@@ -383,57 +381,99 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 				}
 
 			}
-			else if (node->isChecked())//选择节点
+			else if (node->isChecked())//计算节点
 			{
-				std::list<std::string> ipList;
-				std::string currentHostname = ipcomboBox1->currentText().toStdString();
-				if (ipcomboBox1->currentText() == "节点1")
+				std::list<table_ip_configure> list_data;
+				std::string currentHostname1 = ipcomboBox1->currentText().toStdString();
+				std::string currentHostname2 = ipcomboBox2->currentText().toStdString();
+				std::string currentHostname3 = ipcomboBox3->currentText().toStdString();
+				
+				if (!db::databaseDI::Instance().get_ip_by_hostname(list_data, currentHostname1))
 				{
-					if (!db::databaseDI::Instance().get_ip_by_hostname(ipList, currentHostname))
+					qDebug() << "db::databaseDI::Instance().get_ip_by_hostname   error!";
+				}
+				else
+				{
+					for (auto &soft_ip : list_data)
 					{
-						qDebug() << "db::databaseDI::Instance().get_ip_by_hostname   error!";
+						pModel = m_modelTool1;
+
+						stIp.ip = soft_ip.ip;
+						stIp.host = soft_ip.hostname;
+						stIp.module = moduleNumber;
+						stIp.used = 1;
+						stIp.username = std::to_string(common::iUserID);
+						stIp.number = soft_ip.number;
+						//stIp.number = common::iLoginNum;
+						// 插入数据库;
+						if (!db::databaseDI::Instance().add_ip_tool(stIp))
+						{
+							qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+						}
+						else
+						{
+							flushToolModelData(m_modelTool1, 1);
+						}
 					}
 				}
-				else if (ipcomboBox1->currentText() == "节点2")
+				
+				if (!db::databaseDI::Instance().get_ip_by_hostname(list_data, currentHostname2))
 				{
-
+					qDebug() << "db::databaseDI::Instance().get_ip_by_hostname   error!";
 				}
-				if (ipcomboBox2->currentText() == "节点3")
+				else
 				{
+					for (auto &soft_ip : list_data)
+					{
+						pModel = m_modelTool1;
 
+						stIp.ip = soft_ip.ip;
+						stIp.host = soft_ip.hostname;
+						stIp.module = moduleNumber;
+						stIp.used = 1;
+						stIp.username = std::to_string(common::iUserID);
+						stIp.number = soft_ip.number;
+						//stIp.number = common::iLoginNum;
+						// 插入数据库;
+						if (!db::databaseDI::Instance().add_ip_tool(stIp))
+						{
+							qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+						}
+						else
+						{
+							flushToolModelData(m_modelTool1, 1);
+						}
+					}
 				}
-				else if (ipcomboBox2->currentText() == "节点4")
+				if (!db::databaseDI::Instance().get_ip_by_hostname(list_data, currentHostname3))
 				{
-
+					qDebug() << "db::databaseDI::Instance().get_ip_by_hostname   error!";
 				}
-				if (ipcomboBox3->currentText() == "节点5")
+				else
 				{
+					for (auto &soft_ip : list_data)
+					{
+						pModel = m_modelTool1;
 
+						stIp.ip = soft_ip.ip;
+						stIp.host = soft_ip.hostname;
+						stIp.module = moduleNumber;
+						stIp.used = 1;
+						stIp.username = std::to_string(common::iUserID);
+						stIp.number = soft_ip.number;
+						//stIp.number = common::iLoginNum;
+						// 插入数据库;
+						if (!db::databaseDI::Instance().add_ip_tool(stIp))
+						{
+							qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+						}
+						else
+						{
+							flushToolModelData(m_modelTool1, 1);
+						}
+					}
 				}
-				else if (ipcomboBox3->currentText() == "节点6")
-				{
-
-				}
-				stIp.used = 0;
 			}
-
-			db::databaseDI::Instance().get_host(stIp.host, stIp.number, stIp.ip);
-			//stIp.host = soft_ip.hostname;
-			stIp.module = moduleNumber;
-			stIp.used = 0;
-			stIp.username = std::to_string(common::iUserID);
-
-			//stIp.number = soft_ip.number;
-			// 插入数据库;
-			if (!db::databaseDI::Instance().add_ip_tool(stIp))
-			{
-				qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
-			}
-			else
-			{
-				flushToolModelData(m_modelTool1, 1);
-			}
-
 		}
 		else if (moduleNumber == 2)
 		{

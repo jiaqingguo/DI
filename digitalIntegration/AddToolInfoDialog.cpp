@@ -22,31 +22,19 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	connect(ui->btnChooseImage, &QPushButton::clicked, this, &AddToolInfoDialog::slot_btnChooseImage);
 	connect(ui->accelerateRadioButton,&QRadioButton::clicked, this, &AddToolInfoDialog::slot_btnhideWidget);
 	connect(ui->nodeRadioButton, &QRadioButton::clicked, this, &AddToolInfoDialog::slot_btnhideWidget2);
-	std::vector<table_ip_configure> vecIpData;
-	if (!db::databaseDI::Instance().get_ip_data_by_number(1, vecIpData))
-	{
-		return;
-	}
-	for (const auto& value : vecIpData)
-	{
-		ui->IpcomboBox1->addItem(QString::fromStdString(value.hostname));
-	}
-	if (!db::databaseDI::Instance().get_ip_data_by_number(2, vecIpData))
-	{
-		return;
-	}
-	for (const auto& value : vecIpData)
-	{
-		ui->IpcomboBox2->addItem(QString::fromStdString(value.hostname));
-	}
-	if (!db::databaseDI::Instance().get_ip_data_by_number(3, vecIpData))
-	{
-		return;
-	}
-	for (const auto& value : vecIpData)
-	{
-		ui->IpcomboBox3->addItem(QString::fromStdString(value.hostname));
-	}
+
+	ui->IpcomboBox1->addItem(QString::fromLocal8Bit("节点1"));
+	ui->IpcomboBox1->addItem(QString::fromLocal8Bit("节点2"));
+	ui->IpcomboBox2->addItem(QString::fromLocal8Bit("节点3"));
+	ui->IpcomboBox2->addItem(QString::fromLocal8Bit("节点4"));
+	ui->IpcomboBox3->addItem(QString::fromLocal8Bit("节点5"));
+	ui->IpcomboBox3->addItem(QString::fromLocal8Bit("节点6"));
+	ui->label4->setVisible(false);
+	ui->label5->setVisible(false);
+	ui->label6->setVisible(false);
+	ui->IpcomboBox1->setVisible(false);
+	ui->IpcomboBox2->setVisible(false);
+	ui->IpcomboBox3->setVisible(false);
 
 }
 
@@ -72,18 +60,12 @@ void AddToolInfoDialog::getToolsData(table_ip& toolsData)
 	//strPath.replace("\\","\\\\");
 	toolsData.toolPath = ui->lineEditToolPath->text().replace("\\", "\\\\").toStdString();
 	toolsData.icoPath = ui->lineEdit->text().replace("\\", "\\\\").toStdString();
-
 }
 
 
 void AddToolInfoDialog::slot_btnOk()
 {
 
-    /*if (ui->lineEditHost->text().toStdString().empty())
-    {
-        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("主机不能为空!"));
-        return;
-    }*/
     if (ui->lineEditToolName->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具名称不能为空!"));
@@ -95,23 +77,16 @@ void AddToolInfoDialog::slot_btnOk()
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("工具路径不能为空!"));
         return;
     }
-    /*if (ui->lineEdit->text().toStdString().empty())
+    if (ui->lineEdit->text().toStdString().empty())
     {
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("图标路径不能为空!"));
         return;
-    }*/
-	/*if ((ui->lineEditIP1->text().toStdString().empty() 
-		|| ui->lineEditIP2->text().toStdString().empty() 
-		|| ui->lineEditIP3->text().toStdString().empty()
-		|| ui->lineEditIP4->text().toStdString().empty() 
-		|| ui->lineEditIP5->text().toStdString().empty() 
-		|| ui->lineEditIP6->text().toStdString().empty())
-		&& m_iModule == 1)
+    }
+	if (!(ui->accelerateRadioButton->isChecked() && ui->nodeRadioButton->isChecked()))
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("IP不能为空!"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("需选择计算节点或者指定节点!"));
 		return;
-	}*/
-	
+	}
     this->accept();
  
 }
@@ -181,29 +156,6 @@ QComboBox* AddToolInfoDialog::getipComboBox3()
 {
 	return ui->IpcomboBox3;
 }
-//QLineEdit* AddToolInfoDialog::getlineEditIP1()
-//{
-//	return ui->lineEditIP1;
-//}
-//QLineEdit* AddToolInfoDialog::getlineEditIP2()
-//{
-//	return ui->lineEditIP2;
-//}
-//QLineEdit* AddToolInfoDialog::getlineEditIP3()
-//{
-//	return ui->lineEditIP3;
-//}
-//QLineEdit* AddToolInfoDialog::getlineEditIP4()
-//{
-//	return ui->lineEditIP4;
-//}
-//QLineEdit* AddToolInfoDialog::getlineEditIP5()
-//{
-//	return ui->lineEditIP5;
-//}
-//QLineEdit* AddToolInfoDialog::getlineEditIP6()
-//{
-//	return ui->lineEditIP6;
-//}
+
 
 

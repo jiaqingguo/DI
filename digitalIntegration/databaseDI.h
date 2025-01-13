@@ -104,7 +104,7 @@ namespace db
 		bool get_all_ip(std::list<table_ip_configure>& listData);
 		bool get_host(std::string &hostname,unsigned int &number,std::string &ip);
 		bool get_ip_by_software(table_ip& stData,std::string software,int &number,int &module);
-		bool get_ip_by_hostname(std::list<std::string>& ipList,std::string& hostname);
+		bool get_ip_by_hostname(std::list<table_ip_configure>& listData, std::string& hostname);
 
 
 

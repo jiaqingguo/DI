@@ -927,11 +927,21 @@ namespace db
 		if (result == nullptr)
 			return false;
 
-		
+		table_ip stData;
 		while (sql_row = mysql_fetch_row(result))
 		{
+			/*stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.host = sql_row[2];
+			stData.software = sql_row[3];
+			stData.module = std::atoi(sql_row[4]);
+			stData.used = std::atoi(sql_row[5]);
+			stData.username = sql_row[6];
+			stData.icoPath = sql_row[7];
+			stData.number = std::atoi(sql_row[8]);*/
+
 			std::string software = sql_row[3];
-			table_ip stData;
+			stData.used = std::atoi(sql_row[5]);
 			stData.icoPath = sql_row[7];
 			stData.number = std::atoi(sql_row[8]);
 			stData.toolPath = sql_row[9];
@@ -1260,24 +1270,28 @@ namespace db
 		}
 		return true;
 	}
-	bool databaseDI::get_ip_by_hostname(std::list<std::string>& ipList, std::string& hostname)
+	bool databaseDI::get_ip_by_hostname(std::list<table_ip_configure>& listData, std::string& hostname)
 	{
-
+		listData.clear();
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select ip from t_ip where hostname = \'%s\'", hostname.c_str());
+		sprintf_s(sql, "select * from t_ip_configure where hostname = \'%s\'", hostname.c_str());
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
 			return false;
-		std::string ip;
+		table_ip_configure stData;
 		while (sql_row = mysql_fetch_row(result))
 		{
-			ip = sql_row[0];
-			ipList.push_back(ip);
+			stData.id = std::atoi(sql_row[0]);
+			stData.ip = sql_row[1];
+			stData.hostname = sql_row[2];
+			stData.number = std::atoi(sql_row[3]);
+
+			listData.push_back(stData);
 		}
 		return true;
 	}

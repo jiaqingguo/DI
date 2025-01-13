@@ -438,7 +438,7 @@ public:
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
         widgetM2 = new QWidget(page3);
         widgetM2->setObjectName(QString::fromUtf8("widgetM2"));
-        widgetM2->setMinimumSize(QSize(0, 62));
+        widgetM2->setMinimumSize(QSize(0, 65));
         widgetM2->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_5 = new QHBoxLayout(widgetM2);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
@@ -656,6 +656,8 @@ public:
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         widgetM4 = new QWidget(page5);
         widgetM4->setObjectName(QString::fromUtf8("widgetM4"));
+        widgetM4->setMinimumSize(QSize(0, 65));
+        widgetM4->setMaximumSize(QSize(16777215, 65));
         horizontalLayout_9 = new QHBoxLayout(widgetM4);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
@@ -770,7 +772,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(4);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
