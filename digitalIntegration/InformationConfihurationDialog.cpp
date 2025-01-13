@@ -11,7 +11,7 @@
 #include <QModelIndex>
 #include <QDebug>
 #include <QMessageBox>
-
+#include <QComboBox>
 #include <fstream> // 用于 std::ifstream
 
 
@@ -46,7 +46,7 @@ void InformationConfihurationDialog::init()
 	m_modelTool1->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("工具名称"));
 	m_modelTool1->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("工具路径"));
 	//m_modelTool1->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("工具图标"));
-	
+
 	ui->tableViewTool1->setModel(m_modelTool1);
 	common::setTableViewBasicConfiguration(ui->tableViewTool1);
 
@@ -202,7 +202,7 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 		{
 			const std::string& software = stTool.first;
 			const table_ip& data = stTool.second;
-			
+
 			/*   model->appendRow(QList<QStandardItem*>()
 				   << new QStandardItem(QString::fromStdString(stTool.host))
 				   << new QStandardItem(QString::fromStdString(stTool.name))
@@ -319,59 +319,30 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 	AddToolInfoDialog addToolInfoDialog(moduleNumber);
 
-	QLineEdit* lineEdit1 = addToolInfoDialog.getlineEditIP1();
-	QLineEdit* lineEdit2 = addToolInfoDialog.getlineEditIP2();
-	QLineEdit* lineEdit3 = addToolInfoDialog.getlineEditIP3();
-	QLineEdit* lineEdit4 = addToolInfoDialog.getlineEditIP4();
-	QLineEdit* lineEdit5 = addToolInfoDialog.getlineEditIP5();
-	QLineEdit* lineEdit6 = addToolInfoDialog.getlineEditIP6();
-	QLabel *label1 = addToolInfoDialog.getlabelIP1();
-	QLabel *label2 = addToolInfoDialog.getlabelIP2();
-	QLabel *label3 = addToolInfoDialog.getlabelIP3();
-	QLabel *label4 = addToolInfoDialog.getlabelIP4();
-	QLabel *label5 = addToolInfoDialog.getlabelIP5();
-	QLabel *label6 = addToolInfoDialog.getlabelIP6();
+	QRadioButton *accelerate = addToolInfoDialog.getAccelerateRadio();
+	QRadioButton *node = addToolInfoDialog.getnodeRadio();
+	QLabel *label4 = addToolInfoDialog.getlabel4();
+	QLabel *label5 = addToolInfoDialog.getlabel5();
+	QLabel *label6 = addToolInfoDialog.getlabel6();
+	QComboBox *ipcomboBox1 = addToolInfoDialog.getipComboBox1();
+	QComboBox *ipcomboBox2 = addToolInfoDialog.getipComboBox2();
+	QComboBox *ipcomboBox3 = addToolInfoDialog.getipComboBox3();
 	if (moduleNumber != 1)
 	{
-		/*lineEdit1->setVisible(false);
-		lineEdit2->setVisible(false);
-		lineEdit3->setVisible(false);
-		lineEdit4->setVisible(false);
-		lineEdit5->setVisible(false);
-		lineEdit6->setVisible(false);
-		label1->setVisible(false);
-		label2->setVisible(false);
-		label3->setVisible(false);
+		accelerate->setVisible(false);
+		node->setVisible(false);
 		label4->setVisible(false);
 		label5->setVisible(false);
-		label6->setVisible(false);*/
-		lineEdit1->setHidden(true);
-		lineEdit2->setHidden(true);
-		lineEdit3->setHidden(true);
-		lineEdit4->setHidden(true);
-		lineEdit5->setHidden(true);
-		lineEdit6->setHidden(true);
-		label1->setHidden(true);
-		label2->setHidden(true);
-		label3->setHidden(true);
-		label4->setHidden(true);
-		label5->setHidden(true);
-		label6->setHidden(true);
-		
-		lineEdit1->setEnabled(false);
-		lineEdit2->setEnabled(false);
-		lineEdit3->setEnabled(false);
-		lineEdit4->setEnabled(false);
-		lineEdit5->setEnabled(false);
-		lineEdit6->setEnabled(false);
+		label6->setVisible(false);
+		ipcomboBox1->setVisible(false);
+		ipcomboBox2->setVisible(false);
+		ipcomboBox3->setVisible(false);
 	}
-
 	table_ip stIp;
 	std::list<table_ip_configure> listData;
-	std::string ipData[6];
 	if (addToolInfoDialog.exec() == QDialog::Accepted)
 	{
-		addToolInfoDialog.getToolsData(stIp, ipData);
+		addToolInfoDialog.getToolsData(stIp);
 
 		// 读取图片文件
 		std::ifstream file(stIp.icoPath, std::ios::binary);
@@ -386,28 +357,81 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 		QStandardItemModel* pModel = nullptr;
 		if (moduleNumber == 1)
 		{
-			pModel = m_modelTool1;
-
-			//模块1中添加软件的逻辑
-			for (int i = 0; i < 6; i++)
+			//模块1中添加软件,选择硬件加速机
+			if (accelerate->isChecked())
 			{
-				stIp.ip = ipData[i];
-				db::databaseDI::Instance().get_host(stIp.host, stIp.number, stIp.ip);
-				//stIp.host = soft_ip.hostname;
-				stIp.module = moduleNumber;
+				for (auto &soft_ip : listData)
+				{
+					pModel = m_modelTool1;
+
+					stIp.ip = soft_ip.ip;
+					stIp.host = soft_ip.hostname;
+					stIp.module = moduleNumber;
+					stIp.used = 1;
+					stIp.username = std::to_string(common::iUserID);
+					stIp.number = soft_ip.number;
+					//stIp.number = common::iLoginNum;
+					// 插入数据库;
+					if (!db::databaseDI::Instance().add_ip_tool(stIp))
+					{
+						qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+					}
+					else
+					{
+						flushToolModelData(m_modelTool1, 1);
+					}
+				}
+
+			}
+			else if (node->isChecked())//选择节点
+			{
+				std::list<std::string> ipList;
+				std::string currentHostname = ipcomboBox1->currentText().toStdString();
+				if (ipcomboBox1->currentText() == "节点1")
+				{
+					if (!db::databaseDI::Instance().get_ip_by_hostname(ipList, currentHostname))
+					{
+						qDebug() << "db::databaseDI::Instance().get_ip_by_hostname   error!";
+					}
+				}
+				else if (ipcomboBox1->currentText() == "节点2")
+				{
+
+				}
+				if (ipcomboBox2->currentText() == "节点3")
+				{
+
+				}
+				else if (ipcomboBox2->currentText() == "节点4")
+				{
+
+				}
+				if (ipcomboBox3->currentText() == "节点5")
+				{
+
+				}
+				else if (ipcomboBox3->currentText() == "节点6")
+				{
+
+				}
 				stIp.used = 0;
-				stIp.username = std::to_string(common::iUserID);
-				
-				//stIp.number = soft_ip.number;
-				// 插入数据库;
-				if (!db::databaseDI::Instance().add_ip_tool(stIp))
-				{
-					qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
-				}
-				else
-				{
-					flushToolModelData(m_modelTool1, 1);
-				}
+			}
+
+			db::databaseDI::Instance().get_host(stIp.host, stIp.number, stIp.ip);
+			//stIp.host = soft_ip.hostname;
+			stIp.module = moduleNumber;
+			stIp.used = 0;
+			stIp.username = std::to_string(common::iUserID);
+
+			//stIp.number = soft_ip.number;
+			// 插入数据库;
+			if (!db::databaseDI::Instance().add_ip_tool(stIp))
+			{
+				qDebug() << "db::databaseDI::Instance().add_ip_tools   error!";
+			}
+			else
+			{
+				flushToolModelData(m_modelTool1, 1);
 			}
 
 		}
@@ -598,14 +622,14 @@ void InformationConfihurationDialog::slot_btnToolDel()
 	/*QVariant dataVariant = pModelTool->item(currentIndex.row(), currentIndex.column())->text();
 	QString qstr = dataVariant.toString();*/
 	// 获取当前选中单元格同一行的第1列的单元格
-	QModelIndex indexFirst = pModelTool->index(currentIndex.row(), 0, currentIndex.parent()); 
+	QModelIndex indexFirst = pModelTool->index(currentIndex.row(), 0, currentIndex.parent());
 	//获取要删除的单元格
 	QVariant soft_name = pModelTool->data(indexFirst);
 	QString qstr = soft_name.toString();
 	std::string software = qstr.toStdString();
 	qDebug() << "First column data of current row  software: " << software.c_str();
 
-	if (db::databaseDI::Instance().del_tools(software,moduleNumber))
+	if (db::databaseDI::Instance().del_tools(software, moduleNumber))
 	{
 		pModelTool->removeRow(currentIndex.row());
 		emit  signal_updateToolIcon(moduleNumber);

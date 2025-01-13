@@ -1133,7 +1133,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select *from t_ip_configure where number=\'%d\'", number);
+		sprintf_s(sql, "select * from t_ip_configure where number=\'%d\'", number);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -1147,7 +1147,11 @@ namespace db
 			stData.hostname = sql_row[2];
 			stData.number = std::atoi(sql_row[3]);
 
-			vecIpData.push_back(stData);
+			//vecIpData.push_back(stData);
+			if (stData.hostname.find("节点") != std::string::npos) 
+			{
+				vecIpData.push_back(stData);
+			}
 		}
 		return true;
 		
@@ -1161,7 +1165,7 @@ namespace db
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select *from t_ip_configure where number=\'%d\'", number);
+		sprintf_s(sql, "select * from t_ip_configure where number=\'%d\'", number);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -1253,6 +1257,27 @@ namespace db
 			stData.icoPath = (sql_row[7]);
 			stData.number = std::atoi(sql_row[8]);
 			stData.toolPath = (sql_row[9]);
+		}
+		return true;
+	}
+	bool databaseDI::get_ip_by_hostname(std::list<std::string>& ipList, std::string& hostname)
+	{
+
+		// 结果集声明;
+		MYSQL_ROW sql_row;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select ip from t_ip where hostname = \'%s\'", hostname.c_str());
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+		std::string ip;
+		while (sql_row = mysql_fetch_row(result))
+		{
+			ip = sql_row[0];
+			ipList.push_back(ip);
 		}
 		return true;
 	}

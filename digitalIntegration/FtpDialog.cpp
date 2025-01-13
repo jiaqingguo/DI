@@ -1,4 +1,4 @@
-#include<QStandardItemModel>
+ï»¿#include<QStandardItemModel>
 #include <QFileInfo>
 #include <QMenu>
 #include <QDebug>
@@ -43,7 +43,7 @@ void FtpDialog::initConnectFtp()
 
    // QString strLinuxFtpIp = "192.168.10.240";
     QString strLinuxFtpIp = common::strLinuxFtpIp;
-    ui->comboBox->addItem(QString::fromLocal8Bit("´æ´¢·þÎñÆ÷"), strLinuxFtpIp);
+    ui->comboBox->addItem(QString::fromLocal8Bit("å­˜å‚¨æœåŠ¡å™¨"), strLinuxFtpIp);
     
 
     int i = 1;
@@ -61,16 +61,16 @@ void FtpDialog::initConnectFtp()
 
     if (common::bAdministrator)
     {
-        common::strLoginUserName = common::strFtpAccount;// ËùÓÐ¹ÜÀíÔª ¶¼Ê¹ÓÃÊý¾Ý¿â administrator×Ö·û;
+        common::strLoginUserName = common::strFtpAccount;// æ‰€æœ‰ç®¡ç†å…ƒ éƒ½ä½¿ç”¨æ•°æ®åº“ administratorå­—ç¬¦;
         common::strFtpPwd = common::strFtpAdminPwd;
     }
 
   
    // QString strUser =QString::fromStdString( common::stUser.UserName);
-    ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page0->setIsLinuxFtpServer(true);
 
-    ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", "N BPC", common::strFtpPwd);
+    ui->page1->connectToFtpServer(ui->comboBox->itemText(1), ui->comboBox->itemData(1, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
     ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
@@ -108,30 +108,30 @@ void FtpDialog::initConnectFtp()
     connect(ui->page5, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
     connect(ui->page6, &FtpClientWidget::signal_del, this, &FtpDialog::slot_del);
 
-    // ³õÊ¼»¯¹ÜÀíÔ±ftp;
+    // åˆå§‹åŒ–ç®¡ç†å‘˜ftp;
 
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FtpDialog::slot_comboBoxChanged);
-    if (common::bAdministrator) // ¹ÜÀíÔ±;
+    if (common::bAdministrator) // ç®¡ç†å‘˜;
     {
-        // Òþ²ØµÚ¶þ¸ö±êÇ©Ò³
-        ui->tabWidget->removeTab(1); // ÒÆ³ý Tab 2
-      //  m_strDolwnloadText = QString::fromLocal8Bit("ÏÂÔØ");
+        // éšè—ç¬¬äºŒä¸ªæ ‡ç­¾é¡µ
+        ui->tabWidget->removeTab(1); // ç§»é™¤ Tab 2
+      //  m_strDolwnloadText = QString::fromLocal8Bit("ä¸‹è½½");
     }
     else
     {
         m_modelDownload = new QStandardItemModel();
         m_modelDownload->setColumnCount(11);
-        m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ÐòºÅ"));
-        m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÈË"));
-        m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-        m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-        m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»ú"));
-        m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»úIP"));
-        m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼þÃû"));
-        m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼þÀàÐÍ"));
-        m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("Éú³ÉÊ±¼ä"));
-        m_modelDownload->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("×´Ì¬"));
-        m_modelDownload->setHeaderData(10,Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
+        m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+        m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·äºº"));
+        m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+        m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+        m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœº"));
+        m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœºIP"));
+        m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶å"));
+        m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶ç±»åž‹"));
+        m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("ç”Ÿæˆæ—¶é—´"));
+        m_modelDownload->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("çŠ¶æ€"));
+        m_modelDownload->setHeaderData(10,Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
 
         ui->tableViewDownload->setModel(m_modelDownload);
         common::setTableViewBasicConfiguration(ui->tableViewDownload);
@@ -170,62 +170,62 @@ void FtpDialog::flushTableViewDownload()
     int i = 0;
     for (auto& stData : listDataApproval)
     {
-        int newRowIndex = m_modelDownload->rowCount(); // »ñÈ¡µ±Ç°ÐÐÊý
-        m_modelDownload->insertRow(newRowIndex); // ²åÈëÐÂÐÐ
+        int newRowIndex = m_modelDownload->rowCount(); // èŽ·å–å½“å‰è¡Œæ•°
+        m_modelDownload->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
         QStandardItem* item = new QStandardItem(QString::number(i + 1));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 
         //item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
         m_modelDownload->setItem(newRowIndex, 0, item);
 
         QModelIndex index = m_modelDownload->index(newRowIndex, 0);
-        m_modelDownload->setData(index, stData.id, Qt::UserRole);  // ÉèÖÃid;
+        m_modelDownload->setData(index, stData.id, Qt::UserRole);  // è®¾ç½®id;
         //m_modelDownload->setData(index,QString::fromLocal8Bit(stData.filePath.c_str(), Qt::UserRole));
         //  item->setText(QString::fromStdString(stData.name));
 
         item = new QStandardItem(QString::fromStdString(stData.userName));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 1, item);
 
         item = new QStandardItem(QString::fromStdString(stData.department));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 2, item);
 
         item = new QStandardItem(QDateTime::fromTime_t(stData.applicationTime).toString("yyyy/MM/dd HH:mm:ss"));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 3, item);
 
         item = new QStandardItem(QString::fromStdString(stData.ftpName));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 4, item);
 
         item = new QStandardItem(QString::fromStdString(stData.ftpIp));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 5, item);
 
         QString filePath = QString::fromStdString(stData.filePath);
         QFileInfo fileInfo1(filePath);
         item = new QStandardItem(fileInfo1.fileName());
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 6, item);
         QModelIndex indexFilePath = m_modelDownload->index(newRowIndex, 6);
         m_modelDownload->setData(indexFilePath, filePath, Qt::UserRole);
 
 
         item = new QStandardItem(QString::fromStdString(stData.fileType));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 7, item);
 
         item = new QStandardItem(QString::fromStdString(stData.fileTime));
-        item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+        item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
         m_modelDownload->setItem(newRowIndex, 8, item);
 
 
 
 
         // add button to the last column
-        QPushButton* buttonD = new QPushButton(QString::fromLocal8Bit("ÏÂÔØ"));
+        QPushButton* buttonD = new QPushButton(QString::fromLocal8Bit("ä¸‹è½½"));
         buttonD->setObjectName("itemBtnYes");
         buttonD->setProperty("row", newRowIndex); // set custom property
         buttonD->setProperty("column", 10);
@@ -237,25 +237,25 @@ void FtpDialog::flushTableViewDownload()
 
         if (stData.status == 1)
         {
-            item = new QStandardItem(QString::fromLocal8Bit("ÒÑÍ¨¹ý"));
+            item = new QStandardItem(QString::fromLocal8Bit("å·²é€šè¿‡"));
             item->setForeground(QBrush(QColor(Qt::green)));
-            item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+            item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
             m_modelDownload->setItem(newRowIndex, 9, item);
             buttonD->setEnabled(true);
 
         }
         else if (stData.status == 0)
         {
-            item = new QStandardItem(QString::fromLocal8Bit("´ýÉóºË"));
+            item = new QStandardItem(QString::fromLocal8Bit("å¾…å®¡æ ¸"));
             item->setForeground(QBrush(QColor("#33C1FF")));
-            item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+            item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
             m_modelDownload->setItem(newRowIndex, 9, item);
             buttonD->setEnabled(false);
         }
         else if (stData.status == 2)
         {
-            item = new QStandardItem(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-            item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖÐ¶ÔÆë
+            item = new QStandardItem(QString::fromLocal8Bit("å·²é©³å›ž"));
+            item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
             item->setForeground(QBrush(QColor(Qt::red)));
             m_modelDownload->setItem(newRowIndex, 9, item);
             buttonD->setEnabled(false);
@@ -325,12 +325,12 @@ void FtpDialog::slot_signalFtpDownlaod(const QString strPath, const QString strH
     }
     else if (strHostIp == ui->comboBox->itemData(5))
     {
-        slot_ableUI(false, QString::fromLocal8Bit("ÕýÔÚÏÂÔØ"));
+        slot_ableUI(false, QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½"));
         ui->page5->ApprovalDownload(strFileName, strPath, bDir);
     }
     else if (strHostIp == ui->comboBox->itemData(6))
     {
-        slot_ableUI(false, QString::fromLocal8Bit("ÕýÔÚÏÂÔØ"));
+        slot_ableUI(false, QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½"));
         ui->page6->ApprovalDownload(strFileName, strPath, bDir);
     }
 }
@@ -383,7 +383,7 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
     }
     else
     {
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("ÕýÔÚÑ¹ËõÎÄ¼þ"));
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨åŽ‹ç¼©æ–‡ä»¶"));
         m_pGifDialog->show();
 
         QWidget* pwiget = ui->stackedWidget->currentWidget();
@@ -431,7 +431,7 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
     }
     else
     {
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("ÕýÔÚ½âÑ¹ÎÄ¼þ"));
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨è§£åŽ‹æ–‡ä»¶"));
         m_pGifDialog->show();
 
         QWidget* pwiget = ui->stackedWidget->currentWidget();
@@ -482,7 +482,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
     }
     else
     {
-        m_pGifDialog->setTitleText(QString::fromLocal8Bit("ÕýÔÚÉ¾³ý"));
+        m_pGifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨åˆ é™¤"));
         m_pGifDialog->show();
 
         QWidget* pwiget = ui->stackedWidget->currentWidget();
@@ -565,11 +565,11 @@ void FtpDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
 {
     QMenu menu(this);
 
-    // Ìí¼Ó²Ëµ¥Ïî
-    QAction* flushAction = menu.addAction(QString::fromLocal8Bit("Ë¢ÐÂ"));
+    // æ·»åŠ èœå•é¡¹
+    QAction* flushAction = menu.addAction(QString::fromLocal8Bit("åˆ·æ–°"));
 
 
-    // Ö´ÐÐ²Ëµ¥²¢»ñÈ¡ËùÑ¡²Ù×÷
+    // æ‰§è¡Œèœå•å¹¶èŽ·å–æ‰€é€‰æ“ä½œ
     QAction* selectedAction = menu.exec(ui->tableViewDownload->mapToGlobal(pos));
 
     if (selectedAction == flushAction) {
