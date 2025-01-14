@@ -332,7 +332,6 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 		accelerate->setEnabled(false);
 		accelerate->setVisible(false);
-
 		node->setEnabled(false);
 		node->setVisible(false);
 	}

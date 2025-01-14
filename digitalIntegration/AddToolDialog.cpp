@@ -47,24 +47,27 @@ void AddToolDialog::init()
 
 	ui->comboBoxToolNames->clear();
 	std::map<std::string, table_ip> ipMap;
+	std::string software;
+	table_ip data;
 	if (db::databaseDI::Instance().get_ip_data(ipMap, m_iModule, common::iLoginNum))
 	{
 		//ui->comboBoxToolNames->addItem("");
 		ui->comboBoxToolNames->clear();
 		for (const auto& stTool : ipMap)
 		{
-			const std::string& software = stTool.first;
-			const table_ip& data = stTool.second;
+			software = stTool.first;
+			data = stTool.second;
 			//ui->comboBoxToolNames->addItem(QString::fromStdString(software));
 
 			ui->comboBoxToolNames->addItem(QString::fromStdString(software), QVariant(QString::fromStdString(data.toolPath))); // 添加 "Item 3"，设置数据为 3
 		}
 	}
-	if (m_iModule != 1)
+
+	if (m_iModule != 1 || (m_iModule == 1 && data.used == 0))
 	{
 		ui->label_4->setHidden(true);
 		ui->lineEditIP->setHidden(true);
-		
+
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
 		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
@@ -73,14 +76,16 @@ void AddToolDialog::init()
 			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
 		}
 	}
-	else  
+	else  //模块1下固定ip启动工具
 	{
 		ui->label_5->setHidden(true);
 		ui->comboBoxHost->setHidden(true);
 	}
-	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this,&AddToolDialog::slot_display_lineEditIP);
+
+
+	connect(ui->comboBoxToolNames, &QComboBox::currentTextChanged, this, &AddToolDialog::slot_display_lineEditIP);
 	// 手动触发槽函数以显示初始 IP 地址
-	if (ui->comboBoxToolNames->count() > 0) 
+	if (ui->comboBoxToolNames->count() > 0)
 	{
 		slot_display_lineEditIP(ui->comboBoxToolNames->itemText(0));
 	}
@@ -194,7 +199,7 @@ void AddToolDialog::initToolData(const QVector<QString> vecNames)
 	}
 }
 
-void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath , int& model, int& iDisplayMode, QString& strIp, QString& strHostName)
+void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& toolPath, int& model, int& iDisplayMode, QString& strIp, QString& strHostName)
 {
 	tabName = ui->lineEditTabName->text();
 	toolName = ui->comboBoxToolNames->currentText();
@@ -209,8 +214,9 @@ void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& to
 	{
 		tabName = ui->lineEditTabName->text();
 	}
-	
-	if (m_iModule != 1)
+	int used;
+	db::databaseDI::Instance().get_used_by_software_and_module(used,toolName.toStdString(),m_iModule);
+	if (m_iModule != 1 || (m_iModule == 1 && used == 0))
 	{
 		if (ui->comboBoxHost->currentIndex() != 0)
 		{
@@ -220,8 +226,6 @@ void AddToolDialog::getToolData(QString& tabName, QString& toolName, QString& to
 				strIp = list.at(1);
 				strHostName = list.at(0);
 			}
-			
-
 		}
 	}
 
@@ -240,20 +244,18 @@ void AddToolDialog::slot_btnAddClicked()
 void AddToolDialog::slot_display_lineEditIP(QString text)
 {
 	table_ip stipToolData;
-	if (m_iModule == 1)
+	db::databaseDI::Instance().get_ip_by_software(stipToolData, text.toStdString(), common::iLoginNum, m_iModule);
+	if (m_iModule == 1 && stipToolData.used == 1)
 	{
-		if (db::databaseDI::Instance().get_ip_by_software(stipToolData, text.toStdString(), common::iLoginNum, m_iModule))
-		{
-			ui->lineEditIP->setText(stipToolData.ip.c_str());
-		}
-		else
-		{
-			ui->lineEditIP->clear(); // 如果没有找到 IP，清除 QLineEdit
-		}
-
+		ui->label_4->setHidden(false);
+		ui->lineEditIP->setHidden(false);
+		ui->lineEditIP->setText(stipToolData.ip.c_str());
 		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(stipToolData.host));
 		ui->lineEditTabName->setPlaceholderText(text);
 		ui->lineEditTabName->setReadOnly(false);
+
+		ui->label_5->setHidden(true);
+		ui->comboBoxHost->setHidden(true);
 	}
 	else
 	{
@@ -263,6 +265,17 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(st.hostname));
 		ui->lineEditTabName->setPlaceholderText(text);
 		ui->lineEditTabName->setReadOnly(false);
+
+		ui->label_4->setHidden(true);
+		ui->lineEditIP->setHidden(true);
+
+		ui->label_5->setHidden(false);
+		ui->comboBoxHost->setHidden(false);
+		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
+		for (const auto& stIP : common::setHostData)
+		{
+			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
+		}
 	}
 	//else
 	//{
