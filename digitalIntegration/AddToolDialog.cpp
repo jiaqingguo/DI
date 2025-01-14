@@ -271,11 +271,11 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
-		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
-		for (const auto& stIP : common::setHostData)
-		{
-			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
-		}
+		//ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
+		//for (const auto& stIP : common::setHostData)
+		//{
+		//	ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
+		//}
 	}
 	//else
 	//{

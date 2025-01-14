@@ -634,7 +634,7 @@ void MainWindow::slot_btnAddToolTab()
 		{
 			return;
 		}
-		if (moduleNumber == 1)
+		if (moduleNumber == 1 && stipToolData.used == 1)
 		{
 
 			strAssignIP = QString::fromStdString(stipToolData.ip);
