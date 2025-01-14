@@ -173,8 +173,8 @@ MainWindow::~MainWindow()
 	/*if (!db::databaseDI::Instance().updata_ipusername(m_LoginDialog->GetUser().toStdString()))
 		return;*/
 
-	if (!db::databaseDI::Instance().update_ip_all_status())
-		return;
+	/*if (!db::databaseDI::Instance().update_ip_all_status())
+		return;*/
 
 	if (m_LoginDialog != nullptr)
 		delete m_LoginDialog;
@@ -1408,7 +1408,9 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		tabWidget->addTab(widget, tabName);
+		//tabWidget->addTab(widget, tabName);
+		int intdex = tabWidget->addTab(widget, tabName);
+		tabWidget->setCurrentIndex(intdex);
 	}
 	else
 	{
@@ -1561,7 +1563,9 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		tabWidget->addTab(widget, tabName);
+		int intdex=tabWidget->addTab(widget, tabName);
+		tabWidget->setCurrentIndex(intdex);
+
 	}
 	else
 	{
