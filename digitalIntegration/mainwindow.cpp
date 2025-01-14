@@ -1424,7 +1424,9 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		tabWidget->addTab(widget, tabName);
+		//tabWidget->addTab(widget, tabName);
+		int intdex = tabWidget->addTab(widget, tabName);
+		tabWidget->setCurrentIndex(intdex);
 	}
 	else
 	{
@@ -1577,7 +1579,9 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		tabWidget->addTab(widget, tabName);
+		int intdex=tabWidget->addTab(widget, tabName);
+		tabWidget->setCurrentIndex(intdex);
+
 	}
 	else
 	{

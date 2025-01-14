@@ -24,7 +24,13 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     m_pListen->CancleResource();
+    
     delete m_pListen;
+    if (m_pGifDialog != nullptr)
+    {
+        delete m_pGifDialog;
+    }
+
     delete ui;
 }
 
@@ -34,21 +40,22 @@ void Widget::StartProgram(const std::string& strPath)
     std::string suffix = strPath.substr(index+1, strPath.size());
     if (suffix == "exe")
     {
-        m_pListen->startProgram(strPath);
+      //  m_pListen->startProgram(strPath);
 
-      
+        auto boundFunction = std::bind(&Listen::startProgram, m_pListen, strPath);
+        std::thread t(boundFunction);
+        t.detach(); // 分离线程，主线程不阻塞
     }
     else if (suffix == "bat")
     {
         m_pListen->startProgramFromBat(strPath);
-
-        
+        //auto boundFunction = std::bind(&Listen::startProgramFromBat, strPath,m_pListen);
+   //std::thread t(boundFunction);
+   //t.detach(); // 分离线程，主线程不阻塞
     }
     
 
-    //auto boundFunction = std::bind(&Listen::startProgram, strPath,m_pListen);
-    //std::thread t(boundFunction);
-    //t.detach(); // 分离线程，主线程不阻塞
+   
 }
 
 void Widget::HwndListen()
@@ -89,10 +96,8 @@ void Widget::InitResource(const std::string& str)
 void Widget::showGifDialog()
 {
 
-    auto boundFunction = std::bind(&QDialog::show, m_pGifDialog);
-    std::thread t(boundFunction);
-    t.detach(); // 分离线程，主线程不阻塞
- //   m_pGifDialog->show();
+    
+  m_pGifDialog->show();
 }
 
 void Widget::closeGifDialog()
