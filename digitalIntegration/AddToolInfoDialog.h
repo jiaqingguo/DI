@@ -27,12 +27,6 @@ public:
 	//void getToolsData(table_ip& toolsData);
 	void getToolsData(table_ip& toolsData);
 
-	/*QLineEdit* getlineEditIP1();
-	QLineEdit* getlineEditIP2();
-	QLineEdit* getlineEditIP3();
-	QLineEdit* getlineEditIP4();
-	QLineEdit* getlineEditIP5();
-	QLineEdit* getlineEditIP6();*/
 	QComboBox* getipComboBox1();
 	QComboBox* getipComboBox2();
 	QComboBox* getipComboBox3();

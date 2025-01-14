@@ -60,7 +60,7 @@
      <item>
       <widget class="QRadioButton" name="accelerateRadioButton">
        <property name="text">
-        <string>硬件加速机</string>
+        <string>指定节点</string>
        </property>
       </widget>
      </item>

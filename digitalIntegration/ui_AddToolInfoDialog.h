@@ -204,7 +204,7 @@ public:
         label->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\267\245\345\205\267\350\267\257\345\276\204\357\274\232", nullptr));
         label_4->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\233\276\346\240\207\350\267\257\345\276\204:", nullptr));
         btnChooseImage->setText(QCoreApplication::translate("AddToolInfoDialog", "\351\200\211\346\213\251", nullptr));
-        accelerateRadioButton->setText(QCoreApplication::translate("AddToolInfoDialog", "\347\241\254\344\273\266\345\212\240\351\200\237\346\234\272", nullptr));
+        accelerateRadioButton->setText(QCoreApplication::translate("AddToolInfoDialog", "\346\214\207\345\256\232\350\212\202\347\202\271", nullptr));
         nodeRadioButton->setText(QCoreApplication::translate("AddToolInfoDialog", "\350\256\241\347\256\227\350\212\202\347\202\271", nullptr));
         label4->setText(QCoreApplication::translate("AddToolInfoDialog", "\350\212\202\347\202\271\357\274\232", nullptr));
         label5->setText(QCoreApplication::translate("AddToolInfoDialog", "\350\212\202\347\202\271\357\274\232", nullptr));

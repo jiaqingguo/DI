@@ -281,7 +281,7 @@
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -733,7 +733,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>62</height>
+            <height>65</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -1257,6 +1257,18 @@
         </property>
         <item>
          <widget class="QWidget" name="widgetM4" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>65</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>65</height>
+           </size>
+          </property>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <property name="leftMargin">
             <number>0</number>

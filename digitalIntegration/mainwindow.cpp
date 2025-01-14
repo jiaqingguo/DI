@@ -1121,12 +1121,10 @@ void MainWindow::slot_tabModule4closeTab(int index)
 
 void MainWindow::updateModuleToolIcon(int module)
 {
-
 	QLayout* pLayout = nullptr;
 	if (module == 1)
 	{
 		pLayout = ui->layoutM1ToolIcon;
-		//ui->widgetM1->setHidden(!ui->widgetM1->isHidden());
 	}
 	else if (module == 2)
 	{
@@ -1143,13 +1141,22 @@ void MainWindow::updateModuleToolIcon(int module)
 
 	common::clearLayout(pLayout);
 	std::map<std::string, table_ip> ipMap;
+
+	//创建竖线
+	QFrame *line = new QFrame(this);
+	line->setFrameShape(QFrame::VLine);  // 设置为竖线
+	line->setFrameShadow(QFrame::Sunken);  // 设置阴影为凹陷
+	line->setLineWidth(2);  // 设置线宽
+	line->setMidLineWidth(1);  // 设置中间线宽
+	line->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);  // 设置大小策略
+
 	if (db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum))
 	{
 		for (const auto& stTool : ipMap)
 		{
 			const std::string& software = stTool.first;
 			const table_ip& data = stTool.second;
-			//if (stTool.username == std::to_string(common::iUserID))
+			if (data.used == 1)
 			{
 				QToolButton* pBtn = new QToolButton();
 				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
@@ -1167,7 +1174,6 @@ void MainWindow::updateModuleToolIcon(int module)
 				pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
 				pBtn->setFocusPolicy(Qt::NoFocus);
 				pBtn->setFixedSize(55, 64);
-				//pBtn->setMinimumSize(55, 64);
 				//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
 				pBtn->setEnabled(true);
 
@@ -1182,6 +1188,39 @@ void MainWindow::updateModuleToolIcon(int module)
 				pBtn->installEventFilter(interceptor);
 				connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
 			}
+		}
+	}
+	pLayout->addWidget(line);
+
+	db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
+	for (const auto& stTool : ipMap)
+	{
+		const std::string& software = stTool.first;
+		const table_ip& data = stTool.second;
+		if (data.used == 0)
+		{
+			QToolButton* pBtn = new QToolButton();
+			QImage img;
+			img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+			// 将 QImage 转换为 QIcon
+			QIcon icon(QPixmap::fromImage(img));
+			// 设置 QToolButton 的图标
+			pBtn->setIcon(icon);
+			pBtn->setIconSize(QSize(50, 46));
+			pBtn->setText(QString::fromStdString(software));
+			pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+			pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+			pBtn->setFocusPolicy(Qt::NoFocus);
+			pBtn->setFixedSize(55, 64);
+			//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+			pBtn->setEnabled(true);
+
+			pLayout->addWidget(pBtn);
+
+			//鼠标双击事件
+			DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
+			pBtn->installEventFilter(interceptor);
+			connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
 		}
 	}
 }
