@@ -77,6 +77,7 @@ namespace db
 		bool get_ip_data(std::map<std::string,table_ip>& listData, const int& module);
 		bool get_ip_data(std::map<std::string,table_ip>& softMap, const int& module,const int &number);
 		bool get_ip_datas(std::map<std::string, table_ip>& softMap, const int& module, const int& number);
+		bool get_used_by_software_and_module(int &used,const std::string &soft,int &module);
 		
 		bool add_ip(table_ip& stData);
 		bool del_ip(const int& id);

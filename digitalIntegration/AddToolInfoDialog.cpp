@@ -35,7 +35,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->IpcomboBox1->setVisible(false);
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
-
+	ui->accelerateRadioButton->setChecked(true);
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -82,11 +82,11 @@ void AddToolInfoDialog::slot_btnOk()
         QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("图标路径不能为空!"));
         return;
     }
-	if (!(ui->accelerateRadioButton->isChecked() && ui->nodeRadioButton->isChecked()))
+	/*if (!(ui->accelerateRadioButton->isChecked() && ui->nodeRadioButton->isChecked()))
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("需选择计算节点或者指定节点!"));
 		return;
-	}
+	}*/
     this->accept();
  
 }

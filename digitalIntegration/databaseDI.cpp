@@ -1108,7 +1108,25 @@ namespace db
 		mysql_stmt_close(stmt); // 关闭语句
 		return true; // 返回读取的数据
 	}
+	bool databaseDI::get_used_by_software_and_module(int &used, const std::string &soft, int &module)
+	{
+		// 结果集声明;
+		MYSQL_ROW sql_row;
 
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "select used from t_ip where module=\'%d\' and software = \'%s\'", module,soft.c_str());
+
+		MYSQL_RES* result = exec_sql_select(sql);
+		if (result == nullptr)
+			return false;
+
+		while (sql_row = mysql_fetch_row(result))
+		{
+			used = std::atoi(sql_row[0]);
+		}
+		return true;
+	}
 	//bool databaseDI::get_ip_data_by_number(std::set<std::string> &setIpData, const int& number)
 	//{
 	//	setIpData.clear();
