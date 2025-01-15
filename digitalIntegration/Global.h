@@ -2,15 +2,15 @@
 #define GLOBAL_H
 
 
-#include <QIcon>
-#include <QDebug>
+//#include <QIcon>
+//#include <QDebug>
 
 
 
-extern QIcon folderIcon();
-extern QIcon fileIcon(QString fileName);
-extern QString folderType();
-extern QString fileType(QString fileName);
+//extern QIcon folderIcon();
+//extern QIcon fileIcon(QString fileName);
+//extern QString folderType();
+//extern QString fileType(QString fileName);
 
 
 
