@@ -39,8 +39,12 @@ void AddToolDialog::init()
 
 
 	connect(ui->btnAdd, SIGNAL(clicked()), this, SLOT(slot_btnAddClicked()));
-
-
+	ui->comboBoxHost->clear();
+	ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
+	for (const auto& stIP : common::setHostData)
+	{
+		ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
+	}
 	// 2.初始化界面数据;
 
 	//2.1 combox 软件数据;
@@ -70,11 +74,7 @@ void AddToolDialog::init()
 
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
-		ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
-		for (const auto& stIP : common::setHostData)
-		{
-			ui->comboBoxHost->addItem(QString::fromStdString(stIP.hostname) + "-" + QString::fromStdString(stIP.ip));
-		}
+	
 	}
 	else  //模块1下固定ip启动工具
 	{
