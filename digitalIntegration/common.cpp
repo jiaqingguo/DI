@@ -942,6 +942,10 @@ namespace common
             tableView->horizontalHeader()->setSectionsMovable(true);
 			//设置可以拖拽控制列宽
 			//tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+			// 获取水平头视图
+			//QHeaderView* horizontalHeader = tableView->horizontalHeader();
+			// 设置所有列的大小模式为自适应内容
+			//horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
         }
     }
  /*   wchar_t* QString2wchar_t(QString str)

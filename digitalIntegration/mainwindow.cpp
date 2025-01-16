@@ -1,5 +1,5 @@
 ﻿#pragma comment  (lib, "User32.lib")
-#include "fingerDlg.h"
+//#include "fingerDlg.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -33,6 +33,7 @@
 #include <QtWebEngineWidgets>
 #include <QAxWidget>
 #include <QAxObject>
+#include <iostream>
 #include "windows.h"
 
 
@@ -1167,6 +1168,7 @@ void MainWindow::updateModuleToolIcon(int module)
 			}
 		}
 	}
+	if(module == 1)
 	pLayout->addWidget(line);
 
 	db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);

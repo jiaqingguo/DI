@@ -56,20 +56,25 @@ Widget::Widget(QWidget *parent)
 
 	initGpu();
 	connect(my_timer, &QTimer::timeout, this, &Widget::slot_useUdp);
-	this->my_timer->start(1000);
+	this->my_timer->start(3000);
 
 	//QString localHostName=QHostInfo::localHostName();   //获取主机名
 	//QHostInfo hostInfo=QHostInfo::fromName(localHostName);//本机的IP地址
 	//QList<QHostAddress> listAdress=hostInfo.addresses();  //IP地址列表
 	//         for(int i = 0;i<listAdress.size();i++)
 	//         {
-	//             //qDebug()<<listAdress.at(i).toString();  //如果主机的IP列表不为空，则使用其第一个IP地址
+	//       // qDebug()<<listAdress.at(i).toString();  //如果主机的IP列表不为空，则使用其第一个IP地址
 			 //	qDebug() << listAdress.at(1).toString();
 			 //	qDebug() << listAdress.at(2).toString();
 			 //}
 	 //如果主机的IP列表不为空，则显示其第8个IP地址
 	 //ui->textEdit->append(listAdress.at(7).toString());
 
+
+	Widget  myWidget;
+	auto boundFunction = std::bind(&Widget::receive_mess, myWidget);
+	std::thread t(boundFunction);
+	t.detach();//分离线程，主线程不阻塞
 }
 
 Widget::~Widget()
@@ -235,10 +240,10 @@ void Widget::slot_useUdp()
 	 // 检查是否是IPv4地址
 	 //if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) 
 	{
-		//message->host_ip1 = listAdress[0].toString();
-		//message->host_ip2 = listAdress[1].toString();
-		message->host_ip1 = listAdress[2].toString();
-		message->host_ip2 = listAdress[3].toString();
+		message->host_ip1 = listAdress[0].toString();
+		message->host_ip2 = listAdress[1].toString();
+		/*message->host_ip1 = listAdress[2].toString();
+		message->host_ip2 = listAdress[3].toString();*/
 
 		//ui->textEdit->append(listAdress[2].toString());
 		//ui->textEdit->append(listAdress[3].toString());
@@ -311,7 +316,6 @@ void Widget::slot_useUdp()
 	//message = nullptr;
 
 	//接收
-	//QString command;
 	receive_mess();
 }
 
@@ -340,18 +344,18 @@ void Widget::receive_mess()
 				stream >> command.str1;
 				stream >> command.str2;
 				stream >> command.str3;
-				qDebug() << "000" << receivedDatagram.size();
-				qDebug() << "111111111111111 :" << command.str1;
-				qDebug() << "22222 :" << command.str2;
-				qDebug() << "333333 :" << command.str3;
+				//qDebug() << "000" << receivedDatagram.size();
+				//qDebug() << "111111111111111 :" << command.str1;
+				//qDebug() << "22222 :" << command.str2;
+				//qDebug() << "333333 :" << command.str3;
 				//QString message = QString::fromLocal8Bit(receivedDatagram);
 				QByteArray byteArray = command.str1.toLocal8Bit();
 				char cstrCopy[1024];
 				strcpy(cstrCopy, byteArray.data());
 				if (strcmp(cstrCopy, "Lcompress") == 0)
 				{
-					QString str1 = "Y:/share" + command.str2;
-					QString str2 = "Y:/share" + command.str3;
+					QString str1 = "Y:" + command.str2;
+					QString str2 = "Y:" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -375,8 +379,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Luncompress") == 0)
 				{
-					QString str1 = "Y:/share" + command.str2;
-					QString str2 = "Y:/share" + command.str3;
+					QString str1 = "Y:" + command.str2;
+					QString str2 = "Y:" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -438,8 +442,8 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Wuncompress") == 0)
 				{
-					QString str1 = "D:/share" + command.str2;
-					QString str2 = "D:/share" + command.str3;
+					QString str1 = "E:/share" + command.str2;
+					QString str2 = "E:/share" + command.str3;
 					QByteArray byte1 = str1.toLocal8Bit();
 					QByteArray byte2 = str2.toLocal8Bit();
 					char cstr1[1024];
@@ -492,7 +496,7 @@ void Widget::receive_mess()
 				}
 				else if (strcmp(cstrCopy, "Ldel") == 0)
 				{
-					QString str1 = "Y:/share" + command.str2;
+					QString str1 = "Y:" + command.str2;
 					QFileInfo fileInfo(str1);
 
 					if (fileInfo.isDir())

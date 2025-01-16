@@ -33,7 +33,6 @@ namespace db
 		{
 			std::string error = mysql_error(mysql_);
 			unsigned int  ierrno = mysql_errno(mysql_);
-			qDebug()<<QString::fromStdString( sql)<<  QString::fromStdString(error);
 			return false;
 		}
 		else
@@ -60,7 +59,6 @@ namespace db
 		if (mysql_real_query(mysql_, sql.c_str(), (unsigned long)sql.size()) != 0)
 		{
 			std::string error = mysql_error(mysql_);
-			int rriD = mysql_errno(mysql_);
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return nullptr;
 		}
@@ -80,6 +78,8 @@ namespace db
 		{
 			//int erriD=mysql_errno(mysql_);
 			std::string error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -97,6 +97,8 @@ namespace db
 		if (mysql_real_query(mysql_, sql.c_str(), (unsigned long)sql.size()) != 0)
 		{
 			std::string error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -110,6 +112,8 @@ namespace db
 		if (mysql_stmt_prepare(stmt, sql.c_str(), (unsigned long)strlen(sql.c_str())))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -122,6 +126,8 @@ namespace db
 		if (mysql_stmt_bind_param(stmt, &param))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -129,6 +135,8 @@ namespace db
 		if (mysql_stmt_send_long_data(stmt, 0, (const char*)buffer, length))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -136,6 +144,8 @@ namespace db
 		if (mysql_stmt_execute(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -143,6 +153,8 @@ namespace db
 		if (mysql_stmt_close(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -156,6 +168,8 @@ namespace db
 		if (mysql_stmt_prepare(stmt, sql.c_str(), (unsigned long)strlen(sql.c_str())))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -168,6 +182,8 @@ namespace db
 		if (mysql_stmt_bind_param(stmt, &param))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -175,6 +191,8 @@ namespace db
 		if (mysql_stmt_send_long_data(stmt, 0, (const char*)buffer, length))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -182,6 +200,8 @@ namespace db
 		if (mysql_stmt_execute(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -189,6 +209,8 @@ namespace db
 		if (mysql_stmt_close(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -204,6 +226,8 @@ namespace db
 		if (mysql_stmt_prepare(stmt, sql.c_str(), (unsigned long)strlen(sql.c_str())))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -217,6 +241,8 @@ namespace db
 		if (mysql_stmt_bind_result(stmt, &result))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -224,6 +250,8 @@ namespace db
 		if (mysql_stmt_execute(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -231,6 +259,8 @@ namespace db
 		if (mysql_stmt_store_result(stmt))
 		{
 			error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return false;
 		}
@@ -266,6 +296,8 @@ namespace db
 		if (mysql_real_query(mysql_, "START TRANSACTION", (unsigned long)strlen("START TRANSACTION")))
 		{
 			std::string error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("启动事务失败!\nError: %s", error.c_str());
 			return false;
 		}
@@ -282,6 +314,8 @@ namespace db
 		if (mysql_real_query(mysql_, "COMMIT", (unsigned long)strlen("COMMIT")))
 		{
 			std::string error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("提交事务失败!\nError: %s", error.c_str());
 			return false;
 		}
@@ -298,6 +332,8 @@ namespace db
 		if (mysql_real_query(mysql_, "ROLLBACK", (unsigned long)strlen("ROLLBACK")))
 		{
 			std::string error = mysql_error(mysql_);
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("回滚事务失败!\nError: %s", error.c_str());
 			return false;
 		}

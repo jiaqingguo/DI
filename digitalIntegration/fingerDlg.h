@@ -1,80 +1,80 @@
-#ifndef FINGERDLG_H
-#define FINGERDLG_H
-
-#pragma once
-
-//#include <afxwin.h>
-//#include "Resource.h"
-#include <QDebug>
-#include <QMessagebox>
-#include <iostream>
-#include <string>
-#include <databaseDI.h>
-//#include "zkfinger.h"
-
-//#include "libxzkfp/include/zkinterface.h"
-//#include "libxzkfp/include/libzkfperrdef.h"
-//#include "libxzkfp/include/libzkfptype.h"
-#include "libxzkfp/include/libzkfp.h"
-
-
-//#ifdef _WIN64
-//#pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
-//#else
-//#pragma comment(lib, "libxzkfp/x86lib/libzkfp.lib")
+ï»¿//#ifndef FINGERDLG_H
+//#define FINGERDLG_H
+//
+//#pragma once
+//
+////#include <afxwin.h>
+////#include "Resource.h"
+//#include <QDebug>
+//#include <QMessagebox>
+//#include <iostream>
+//#include <string>
+//#include <databaseDI.h>
+////#include "zkfinger.h"
+//
+////#include "libxzkfp/include/zkinterface.h"
+////#include "libxzkfp/include/libzkfperrdef.h"
+////#include "libxzkfp/include/libzkfptype.h"
+//#include "libxzkfp/include/libzkfp.h"
+//
+//
+////#ifdef _WIN64
+////#pragma comment(lib, "libxzkfp/x64lib/libzkfp.lib")
+////#else
+////#pragma comment(lib, "libxzkfp/x86lib/libzkfp.lib")
+////#endif
+//
+//#define ENROLLCNT 3
+//#define MAX_TEMPLATE_SIZE 2048
+//
+//extern HANDLE m_hDevice;    //è®¾å¤‡æ“ä½œå®žä¾‹å¥æŸ„
+//extern bool m_bIdentify;
+//extern bool m_bRegister;
+//extern int m_enrollIdx;
+//extern int m_score;
+//
+//class fingerDlg : public QDialog
+//{
+//	Q_OBJECT
+//public:
+//	HANDLE hDBCache; //ç¼“å†²åŒºçš„å¥æŸ„
+//	HANDLE hThreadWork;
+//	unsigned char* pImgBuf;
+//	int imgFPWidth;
+//	int imgFPHeight;
+//	bool bStopThread;
+//	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   å­˜å‚¨æŒ‡çº¹
+//	unsigned int arrPreTempsLen[3];
+//	int Tid;   //æŒ‡çº¹ IDï¼ˆ>0 çš„ 32 ä½æ— ç¬¦å·æ•´æ•°ï¼‰
+//	int nFakeFunOn;
+//
+//	fingerDlg(QDialog* pParent = NULL);	// æ ‡å‡†æž„é€ å‡½æ•°
+//
+//	~fingerDlg();
+//
+//	void finger_init();
+//
+//	void DoRegister(unsigned char* temp, int len);
+//	void DoVerify(unsigned char *temp, int len);
+//
+//	static DWORD WINAPI ThreadCapture(LPVOID lParam);
+//
+//	//ZkFinger *m_zkfinger = nullptr;
+//	//void DoRegister2(unsigned char* temp, int len);
+//	//void DoVerify2(unsigned char *temp, int len);
+//	QByteArray QStringToChar(const QString& str);
+//	QString CharToQString(const unsigned char* buffer, int length);
+//
+//signals:
+//	void login_succ();
+//	void regist_succ();
+//	void no_regist_finger();
+////private slots:
+////	void onCapture();
+//
+//
+//
+//
+//
+//};
 //#endif
-
-#define ENROLLCNT 3
-#define MAX_TEMPLATE_SIZE 2048
-
-extern HANDLE m_hDevice;    //Éè±¸²Ù×÷ÊµÀý¾ä±ú
-extern bool m_bIdentify;
-extern bool m_bRegister;
-extern int m_enrollIdx;
-extern int m_score;
-
-class fingerDlg : public QDialog
-{
-	Q_OBJECT
-public:
-	HANDLE hDBCache; //»º³åÇøµÄ¾ä±ú
-	HANDLE hThreadWork;
-	unsigned char* pImgBuf;
-	int imgFPWidth;
-	int imgFPHeight;
-	bool bStopThread;
-	unsigned char arrPreRegTemps[ENROLLCNT][MAX_TEMPLATE_SIZE];  //3  2048   ´æ´¢Ö¸ÎÆ
-	unsigned int arrPreTempsLen[3];
-	int Tid;   //Ö¸ÎÆ ID£¨>0 µÄ 32 Î»ÎÞ·ûºÅÕûÊý£©
-	int nFakeFunOn;
-
-	fingerDlg(QDialog* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êý
-
-	~fingerDlg();
-
-	void finger_init();
-
-	void DoRegister(unsigned char* temp, int len);
-	void DoVerify(unsigned char *temp, int len);
-
-	static DWORD WINAPI ThreadCapture(LPVOID lParam);
-
-	//ZkFinger *m_zkfinger = nullptr;
-	//void DoRegister2(unsigned char* temp, int len);
-	//void DoVerify2(unsigned char *temp, int len);
-	QByteArray QStringToChar(const QString& str);
-	QString CharToQString(const unsigned char* buffer, int length);
-
-signals:
-	void login_succ();
-	void regist_succ();
-	void no_regist_finger();
-//private slots:
-//	void onCapture();
-
-
-
-
-
-};
-#endif

@@ -29,7 +29,7 @@ void InitResource(const TCHAR* userName, const TCHAR* password, const TCHAR* loc
 	DWORD dw = WNetAddConnection2(&net_Resource, password, userName, 0);
 	switch (dw) {
 	case ERROR_SUCCESS:
-		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case ERROR_ACCESS_DENIED:
 		std::wcout << TEXT("没有权限访问！\n");
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	TCHAR password[] = TEXT("Atexcel_123");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
 	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-	InitResource(userName, password, localDrive, remotePath);
+	//InitResource(userName, password, localDrive, remotePath);
 
     QApplication a(argc, argv);
     Widget w;
@@ -70,6 +70,6 @@ int main(int argc, char *argv[])
     //窗口的隐藏
     //w.hide();
     //窗口的最小化
-    //w.showMinimized();
+    w.showMinimized();
     return a.exec();
 }

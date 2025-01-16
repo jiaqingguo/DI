@@ -134,12 +134,12 @@ else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/my
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.lib
 else:unix: PRE_TARGETDEPS += $$PWD/mysql/lib/libmysql.a
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
-else:unix: LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
+#else:unix: LIBS += -L$$PWD/libxzkfp/x64lib/ -llibzkfp
 
-INCLUDEPATH += $$PWD/libxzkfp/include
-DEPENDPATH += $$PWD/libxzkfp/include
+#INCLUDEPATH += $$PWD/libxzkfp/include
+#DEPENDPATH += $$PWD/libxzkfp/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libFtp/Release/ -lQt5Ftp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libFtp/Debug/ -lQt5Ftpd

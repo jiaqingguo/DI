@@ -70,12 +70,13 @@ void FtpDialog::initConnectFtp()
     ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
     ui->page0->setIsLinuxFtpServer(true);
 
-    ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", "N BPC", common::strFtpPwd);
-    ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
-    ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
-    ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
-    ui->page5->connectToFtpServer(ui->comboBox->itemText(5), ui->comboBox->itemData(5, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
-    ui->page6->connectToFtpServer(ui->comboBox->itemText(6), ui->comboBox->itemData(6, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+ ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", common::strLoginUserName, common::strFtpPwd);
+    ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page5->connectToFtpServer(ui->comboBox->itemText(5), ui->comboBox->itemData(5, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+    ui->page6->connectToFtpServer(ui->comboBox->itemText(6), ui->comboBox->itemData(6, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+ 
 
     connect(ui->page0, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
     connect(ui->page1, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
