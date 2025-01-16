@@ -1,418 +1,221 @@
-//#pragma comment (lib, "User32.lib")
-
-#include "fingerDlg.h"
-#include "MainWindow.h"
-#include "common.h"
-#include <QTimer>
-
-HANDLE m_hDevice = NULL;
-bool m_bRegister = FALSE;
-bool m_bIdentify = FALSE;
-int m_enrollIdx = 0;
-int m_score = 0;
-
-
-
-fingerDlg::fingerDlg(QDialog* pParent)
-{
-	hDBCache = NULL;
-	//hDevice=NULL;
-	bStopThread = FALSE;
-	//bRegister = FALSE;
-	hThreadWork = NULL;
-	pImgBuf = NULL;
-	Tid = 1;   //Ö¸ÎÆ ID£¨>0 µÄ 32 Î»ÎŞ·ûºÅÕûÊı£©
-
-	//m_zkfinger = new ZkFinger();
-
-}
-
-fingerDlg::~fingerDlg()
-{
-	if (m_hDevice)
-	{
-		if (NULL != pImgBuf)
-		{
-			delete[] pImgBuf;
-			pImgBuf = NULL;
-		}
-		bStopThread = TRUE;
-		if (NULL != hThreadWork)
-		{
-			WaitForSingleObject(hThreadWork, INFINITE);
-			CloseHandle(hThreadWork);
-			hThreadWork = NULL;
-		}
-		if (NULL != hDBCache)
-		{
-			ZKFPM_DBFree(hDBCache);
-			hDBCache = NULL;
-		}
-		ZKFPM_CloseDevice(m_hDevice);
-		ZKFPM_Terminate();
-		m_hDevice = NULL;
-		Tid = 1;
-	}
-}
-
-void fingerDlg::finger_init()
-{
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
-
-	if (NULL == m_hDevice)
-	{
-		if (ZKFPM_Init() != 0)
-		{
-			qDebug() << "Init ZKFPM fail";
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Init ZKFPM fail"));
-			return;
-		}
-		if ((m_hDevice = ZKFPM_OpenDevice(0)) == NULL)
-		{
-			qDebug() << "Open sensor fail";
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Open sensor fail"));
-			ZKFPM_Terminate();
-			return;
-		}
-		hDBCache = ZKFPM_DBInit();   //´´½¨Ëã·¨»º³åÇø£¬·µ»ØÖµÊÇ»º³åÇøµÄ¾ä±ú
-		if (NULL == hDBCache)
-		{
-			qDebug() << "Create DBCache fail";
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Create DBCache fail"));
-			ZKFPM_CloseDevice(m_hDevice);
-			ZKFPM_Terminate();
-			return;
-		}
-		/*int nDPI = 750;
-		ZKFPM_SetParameters(m_hDevice, 3, (unsigned char*)&nDPI, sizeof(int));*/
-		//Set FakeFun On
-		nFakeFunOn = 1;
-		//ÉèÖÃ²É¼¯Æ÷²ÎÊı  2002´ú±í ¶ÁĞ´   ·À¼Ù¿ª¹Ø£¨1¿ª0¹Ø£©
-		ZKFPM_SetParameters(m_hDevice, 2002, (unsigned char*)&nFakeFunOn, sizeof(int));
-
-		/*TZKFPCapParams zkfpCapParams = {0x0};
-		ZKFPM_GetCaptureParams(m_hDevice, &zkfpCapParams);
-		m_imgFPWidth = zkfpCapParams.imgWidth;
-		m_imgFPHeight = zkfpCapParams.imgHeight;*/
-		unsigned int size = 4;
-		//»ñÈ¡²É¼¯Æ÷²ÎÊı   1´ú±í Í¼Ïñ¿í  2´ú±í Í¼Ïñ¸ß
-		ZKFPM_GetParameters(m_hDevice, 1, (unsigned char*)&imgFPWidth, &size);
-		size = 4;
-		ZKFPM_GetParameters(m_hDevice, 2, (unsigned char*)&imgFPHeight, &size);
-		pImgBuf = new unsigned char[imgFPWidth*imgFPHeight];
-		//nLastRegTempLen = 0;
-
-
-		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
-		qDebug() << "Init ZKFPM success";
-
-		Tid = 1;
-		m_enrollIdx = 0;
-		m_bRegister = FALSE;
-	}
-	else
-	{
-		qDebug() << "Already Init";
-		//SetDlgItemText(IDC_EDIT_RESULT, _T("Already Init"));
-	}
-
-
-}
-
-
-DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
-{
-	fingerDlg* pDlg = (fingerDlg*)lParam;
-	if (NULL != pDlg)
-	{
-		pDlg->bStopThread = FALSE;
-		while (!pDlg->bStopThread)
-		{
-			unsigned char szTemplate[MAX_TEMPLATE_SIZE] = { 0x0 }; //·µ»ØµÄÖ¸ÎÆÄ£°å
-			unsigned int tempLen = MAX_TEMPLATE_SIZE;    //Ô¤·ÖÅä fpTemplate ÄÚ´æ´óĞ¡2048
-
-			memset(szTemplate, 0, MAX_TEMPLATE_SIZE);
-			//²É¼¯Ö¸ÎÆ£¬Ö¸ÎÆÄ£°å
-			int ret = ZKFPM_AcquireFingerprint(m_hDevice, pDlg->pImgBuf, pDlg->imgFPWidth*pDlg->imgFPHeight, szTemplate, &tempLen);
-			if (0 == ret)
-			{
-				if (1 == pDlg->nFakeFunOn)	//FakeFinger Test¼ÙµÄ
-				{
-					int nFakeStatus = 0;
-					unsigned int retLen = sizeof(int);
-					//»ñÈ¡²É¼¯Æ÷²ÎÊı µÍÎåÎ»È«Îª 1 ±íÊ¾Õæ  ÊÖÖ¸(value & 31 == 31)
-					if (0 == ZKFPM_GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen))
-					{
-						if ((nFakeStatus & 31) != 31)
-						{
-							//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Is Fake Finger?"));
-							//pDlg->SetDlgItemText(IDC_EDIT_RESULT, _T("Is Fake Finger?"));
-							continue;
-						}
-					}
-				}
-				//pDlg->ShowImage(pDlg->m_pImgBuf);
-				if (m_bRegister)
-				{
-					pDlg->DoRegister(szTemplate, tempLen);  //×¢²á
-				}
-				else
-				{
-					pDlg->DoVerify(szTemplate, tempLen);   //ÑéÖ¤
-				}
-			}
-
-			Sleep(50);
-		}
-	}
-	return 0;
-}
-
-
-//void fingerDlg::onCapture()
+ï»¿////#pragma comment (lib, "User32.lib")
+//
+////#include "fingerDlg.h"
+//#include "MainWindow.h"
+//#include "common.h"
+//#include <QTimer>
+//
+//HANDLE m_hDevice = NULL;
+//bool m_bRegister = FALSE;
+//bool m_bIdentify = FALSE;
+//int m_enrollIdx = 0;
+//int m_score = 0;
+//
+//
+//
+//fingerDlg::fingerDlg(QDialog* pParent)
 //{
-//	if (m_zkfinger == nullptr) {
-//		return;
-//	}
+//	hDBCache = NULL;
+//	//hDevice=NULL;
+//	bStopThread = FALSE;
+//	//bRegister = FALSE;
+//	hThreadWork = NULL;
+//	pImgBuf = NULL;
+//	Tid = 1;   //æŒ‡çº¹ IDï¼ˆ>0 çš„ 32 ä½æ— ç¬¦å·æ•´æ•°ï¼‰
 //
-//	if (m_hDevice == nullptr) {
-//		return;
-//	}
+//	//m_zkfinger = new ZkFinger();
 //
-//	unsigned char szTemplate[MAX_TEMPLATE_SIZE];
-//	unsigned int tempLen = MAX_TEMPLATE_SIZE;
-//	// ²É¼¯Ö¸ÎÆÍ¼ÏñºÍÄ£°å
-//	int ret = m_zkfinger->AcquireFingerprint(m_hDevice, pImgBuf, imgFPWidth * imgFPHeight, szTemplate, &tempLen);
-//	if (ZKFP_ERR_OK == ret) {
-//		//FakeFinger Test
-//		if (1 == nFakeFunOn) {
-//			int nFakeStatus = 0;
-//			unsigned int retLen = sizeof(int);
-//			if (0 == m_zkfinger->GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen)) {
-//				if ((nFakeStatus & 0x1F) != 0x1F) {
-//					QString log = QString("ÊÖÖ¸¼ì²âÎŞĞ§, Is Fake Finger?");
-//					qWarning() << log;
-//					//emit sigMessage(LOG_MSG_TYPE, log);
-//					return;
-//				}
-//			}
-//		}
+//}
 //
-//		//ShowFpImage(m_pImgBuf, m_imgFPWidth, m_imgFPHeight);
-//		if (m_bRegister) {
-//			qInfo() << QString("¿ªÊ¼Ö¸ÎÆ×¢²á");
-//			DoRegister2(szTemplate, tempLen);
+//fingerDlg::~fingerDlg()
+//{
+//	if (m_hDevice)
+//	{
+//		if (NULL != pImgBuf)
+//		{
+//			delete[] pImgBuf;
+//			pImgBuf = NULL;
 //		}
-//		else {
-//			qDebug() << QString("¿ªÊ¼Ö¸ÎÆÑéÖ¤");
-//			DoVerify2(szTemplate, tempLen);
+//		bStopThread = TRUE;
+//		if (NULL != hThreadWork)
+//		{
+//			WaitForSingleObject(hThreadWork, INFINITE);
+//			CloseHandle(hThreadWork);
+//			hThreadWork = NULL;
 //		}
-//	}
-//	else {
-//		// qDebug() << "AcquireFingerprint failed, ret =" << ret;
+//		if (NULL != hDBCache)
+//		{
+//			ZKFPM_DBFree(hDBCache);
+//			hDBCache = NULL;
+//		}
+//		ZKFPM_CloseDevice(m_hDevice);
+//		ZKFPM_Terminate();
+//		m_hDevice = NULL;
+//		Tid = 1;
 //	}
 //}
-
-
-void fingerDlg::DoRegister(unsigned char* temp, int len)
-{
-	int id = 0;
-	//CString strLog;
-	//bool succ2 = false;
-	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE] = { 0x0 };
-	int nLastRegTempLen = MAX_TEMPLATE_SIZE;
-
-	if (m_enrollIdx >= ENROLLCNT)  //3
-	{
-		m_enrollIdx = 0;	//restart enroll
-		return;
-	}
-	if (m_enrollIdx > 0)
-	{
-		//¶Ô±ÈÁ½Ã¶Ö¸ÎÆÊÇ·ñÆ¥Åä
-		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], temp, len))
-		{
-			m_enrollIdx = 0;
-			m_bRegister = FALSE;
-			//AfxMessageBox(_T("Çë°´ÏàÍ¬µÄÊÖÖ¸"), MB_OK);
-			//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Please press the same finger while registering"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
-			return;
-		}
-	}
-	arrPreTempsLen[m_enrollIdx] = len;
-	memcpy(arrPreRegTemps[m_enrollIdx], temp, len);
-	if (++m_enrollIdx >= ENROLLCNT)
-	{
-		int ret = 0;
-		unsigned char szRegTemp[MAX_TEMPLATE_SIZE] = { 0x0 };
-		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //Ä£°å³¤¶È
-
-		//½« 3 Ã¶Ô¤µÇ¼ÇÖ¸ÎÆÄ£°åºÏ²¢ÎªÒ»Ã¶µÇ¼ÇÖ¸ÎÆ
-		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
-		//m_enrollIdx = 0;
-		m_bRegister = FALSE;
-		if (0 == ret)   //ZKFP_ERR_OK=²Ù×÷³É¹¦
-		{
-			//Ìí¼ÓµÇ¼ÇÖ¸ÎÆÄ£°åµ½»º³åÇø
-			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
-			if (0 == ret)
-			{
-				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
-
-				nLastRegTempLen = cbRegTemp;
-
-				/*delete[] szRegTemp;
-				szRegTemp = nullptr;*/
-				if (!db::databaseDI::Instance().add_user_info(common::stUser))
-				{
-					QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§×¢²áÊ§°Ü!"));
-					return;
-				}
-
-				if (!db::databaseDI::Instance().get_new_regist_user(id))
-				{
-					return;
-				}
-				QString str;
-				str = CharToQString(szLastRegTemplate, nLastRegTempLen);
-				if (db::databaseDI::Instance().add_user_finger(str, nLastRegTempLen, id))
-				//if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
-				{
-					MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
-					emit regist_succ();
-
-				}
-
-
-				//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Register success"));
-				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
-			}
-			else
-			{
-				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
-				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-				//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromWCharArray(strLog.GetString()));
-				return;
-			}
-		}
-		else
-		{
-			//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Register fail"));
-			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
-			return;
-		}
-	}
-	else
-	{
-		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
-		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-		//qDebug() << strLog;
-		//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromWCharArray(strLog.GetString()));
-		return;
-	}
-}
-
-void fingerDlg::DoVerify(unsigned char *temp, int len)
-{
-	//if (m_nLastRegTempLen > 0)	//have enroll one more template
-	//{
-	if (m_bIdentify)   //Ê¶±ğ°´Å¥±»µã»÷
-	{
-		//unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
-		int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
-
-		int ret = 0;
-
-		int approval = 0;
-		bool success = false;
-
-		QString str;
-		QByteArray date;
-
-		//std::vector<std::pair<unsigned char *, int>> vec_finger;
-
-		db::databaseDI::Instance().get_approval(approval, common::iUserID);
-
-		if (approval == 1)
-		{
-			
-			//db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
-			db::databaseDI::Instance().get_user_finger2(str, nLastLogTempLen2, common::iUserID);
-			date = QStringToChar(str);
-			
-			if (!str.isEmpty() && nLastLogTempLen2 != 0)
-			{
-				
-					//ZKFPM_DBAdd(hDBCache, Tid++, szLastLogTemplate2, nLastLogTempLen2);
-					//ret = ZKFPM_DBIdentify(hDBCache, temp, len, &tid, &score);
-
-					ret = ZKFPM_DBMatch(hDBCache, reinterpret_cast<unsigned char*>(date.data()), nLastLogTempLen2, temp, len);
-					//ret = ZKFPM_DBMatch(hDBCache, szLastLogTemplate2, nLastLogTempLen2, temp, len);
-					if (0 < ret)  //±íÊ¾²Ù×÷Ê§°Ü  0±íÊ¾³É¹¦
-					{
-						success = true;
-					}
-				if (success)
-				{
-					//MessageBox(NULL, TEXT("µÇÂ¼³É¹¦"), TEXT("ÌáÊ¾"), 0);
-					emit login_succ();
-					bStopThread = TRUE;
-
-				}
-				else
-				{
-					MessageBox(NULL, TEXT("Ö¸ÎÆÑéÖ¤Ê§°Ü,»»ÊÖÖ¸ÑéÖ¤"), TEXT("ÌáÊ¾"), 0);
-				}
-			}
-			else
-			{
-				MessageBox(NULL, TEXT("´ËÓÃ»§Ã»ÓĞ×¢²áÖ¸ÎÆ,Çë¸ü»»ÓÃ»§µÇÂ¼"), TEXT("ÌáÊ¾"), 0);
-				emit no_regist_finger();
-			}
-		}
-		else if (approval == 2)
-		{
-			//ÉóºËÎ´Í¨¹ıµÄÂß¼­£¬µ«ÊÇºÃÏñ²¢²»ĞèÒª
-		}
-	}
-	else  //ÑéÖ¤°´Å¥µã»÷
-	{//±È¶ÔÁ½Ã¶Ö¸ÎÆÊÇ·ñÆ¥Åä  Ö¸ÎÆÄ£°å1 ³¤¶È  Ö¸ÎÆÄ£°å2 ³¤¶È       ·µ»ØÖµ Èç¹û  ´óÓÚµÈÓÚ0µÄ»°£¬ÊÇ±È¶Ô·ÖÊı  Ğ¡ÓÚ0³ö´í¡£
-		//int ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate, nLastRegTempLen, temp, len);
-		//if (ZKFP_ERR_OK > ret)  //ret±íÊ¾µÄÊÇ±È¶Ô·ÖÊı
-		{
-			//strLog.Format(_T("Match finger fail, ret = %d"), ret);
-			//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-		}
-		//else
-		{
-			//strLog.Format(_T("Match succ, score=%d"), ret);
-			//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-		}
-	}
-	//}
-	//else
-	//{
-		//SetDlgItemText(IDC_EDIT_RESULT, _T("You need enroll a reg-template first!"));
-		//MessageBox(NULL, TEXT("You need enroll a reg-template first!"), TEXT("ÌáÊ¾"), 0);
-	//}
-}
-//void fingerDlg::DoRegister2(unsigned char *pTemplate, int len)
+//
+//void fingerDlg::finger_init()
 //{
-//	if (m_zkfinger == nullptr) {
-//		return;
+//	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
+//
+//	if (NULL == m_hDevice)
+//	{
+//		if (ZKFPM_Init() != 0)
+//		{
+//			qDebug() << "Init ZKFPM fail";
+//			//SetDlgItemText(IDC_EDIT_RESULT, _T("Init ZKFPM fail"));
+//			return;
+//		}
+//		if ((m_hDevice = ZKFPM_OpenDevice(0)) == NULL)
+//		{
+//			qDebug() << "Open sensor fail";
+//			//SetDlgItemText(IDC_EDIT_RESULT, _T("Open sensor fail"));
+//			ZKFPM_Terminate();
+//			return;
+//		}
+//		hDBCache = ZKFPM_DBInit();   //åˆ›å»ºç®—æ³•ç¼“å†²åŒºï¼Œè¿”å›å€¼æ˜¯ç¼“å†²åŒºçš„å¥æŸ„
+//		if (NULL == hDBCache)
+//		{
+//			qDebug() << "Create DBCache fail";
+//			//SetDlgItemText(IDC_EDIT_RESULT, _T("Create DBCache fail"));
+//			ZKFPM_CloseDevice(m_hDevice);
+//			ZKFPM_Terminate();
+//			return;
+//		}
+//		/*int nDPI = 750;
+//		ZKFPM_SetParameters(m_hDevice, 3, (unsigned char*)&nDPI, sizeof(int));*/
+//		//Set FakeFun On
+//		nFakeFunOn = 1;
+//		//è®¾ç½®é‡‡é›†å™¨å‚æ•°  2002ä»£è¡¨ è¯»å†™   é˜²å‡å¼€å…³ï¼ˆ1å¼€0å…³ï¼‰
+//		ZKFPM_SetParameters(m_hDevice, 2002, (unsigned char*)&nFakeFunOn, sizeof(int));
+//
+//		/*TZKFPCapParams zkfpCapParams = {0x0};
+//		ZKFPM_GetCaptureParams(m_hDevice, &zkfpCapParams);
+//		m_imgFPWidth = zkfpCapParams.imgWidth;
+//		m_imgFPHeight = zkfpCapParams.imgHeight;*/
+//		unsigned int size = 4;
+//		//è·å–é‡‡é›†å™¨å‚æ•°   1ä»£è¡¨ å›¾åƒå®½  2ä»£è¡¨ å›¾åƒé«˜
+//		ZKFPM_GetParameters(m_hDevice, 1, (unsigned char*)&imgFPWidth, &size);
+//		size = 4;
+//		ZKFPM_GetParameters(m_hDevice, 2, (unsigned char*)&imgFPHeight, &size);
+//		pImgBuf = new unsigned char[imgFPWidth*imgFPHeight];
+//		//nLastRegTempLen = 0;
+//
+//
+//		hThreadWork = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadCapture, this, 0, NULL);
+//		qDebug() << "Init ZKFPM success";
+//
+//		Tid = 1;
+//		m_enrollIdx = 0;
+//		m_bRegister = FALSE;
+//	}
+//	else
+//	{
+//		qDebug() << "Already Init";
+//		//SetDlgItemText(IDC_EDIT_RESULT, _T("Already Init"));
 //	}
 //
-//	unsigned int fingerId = 0;
-//	unsigned int score = 0;
-//	int ret = m_zkfinger->DBIdentify(pTemplate, len, &fingerId, &score);
-//	if (ZKFP_ERR_OK == ret) {
-//		qDebug() << QString("´íÎó£¬µ±Ç°ÊÖÖ¸ÒÑµÇ¼Ç! fingerId=%1, score=%2").arg(fingerId).arg(score);
-//		//emit sigMessage(LOG_MSG_TYPE, QString("´íÎó£¬µ±Ç°ÊÖÖ¸ÒÑµÇ¼Ç!"));
-//		//m_preRegTempList.clear();
-//		m_bRegister = false;
-//		return;
+//
+//}
+//
+//
+//DWORD WINAPI fingerDlg::ThreadCapture(LPVOID lParam)
+//{
+//	fingerDlg* pDlg = (fingerDlg*)lParam;
+//	if (NULL != pDlg)
+//	{
+//		pDlg->bStopThread = FALSE;
+//		while (!pDlg->bStopThread)
+//		{
+//			unsigned char szTemplate[MAX_TEMPLATE_SIZE] = { 0x0 }; //è¿”å›çš„æŒ‡çº¹æ¨¡æ¿
+//			unsigned int tempLen = MAX_TEMPLATE_SIZE;    //é¢„åˆ†é… fpTemplate å†…å­˜å¤§å°2048
+//
+//			memset(szTemplate, 0, MAX_TEMPLATE_SIZE);
+//			//é‡‡é›†æŒ‡çº¹ï¼ŒæŒ‡çº¹æ¨¡æ¿
+//			int ret = ZKFPM_AcquireFingerprint(m_hDevice, pDlg->pImgBuf, pDlg->imgFPWidth*pDlg->imgFPHeight, szTemplate, &tempLen);
+//			if (0 == ret)
+//			{
+//				if (1 == pDlg->nFakeFunOn)	//FakeFinger Testå‡çš„
+//				{
+//					int nFakeStatus = 0;
+//					unsigned int retLen = sizeof(int);
+//					//è·å–é‡‡é›†å™¨å‚æ•° ä½äº”ä½å…¨ä¸º 1 è¡¨ç¤ºçœŸ  æ‰‹æŒ‡(value & 31 == 31)
+//					if (0 == ZKFPM_GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen))
+//					{
+//						if ((nFakeStatus & 31) != 31)
+//						{
+//							//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Is Fake Finger?"));
+//							//pDlg->SetDlgItemText(IDC_EDIT_RESULT, _T("Is Fake Finger?"));
+//							continue;
+//						}
+//					}
+//				}
+//				//pDlg->ShowImage(pDlg->m_pImgBuf);
+//				if (m_bRegister)
+//				{
+//					pDlg->DoRegister(szTemplate, tempLen);  //æ³¨å†Œ
+//				}
+//				else
+//				{
+//					pDlg->DoVerify(szTemplate, tempLen);   //éªŒè¯
+//				}
+//			}
+//
+//			Sleep(50);
+//		}
 //	}
+//	return 0;
+//}
+//
+//
+////void fingerDlg::onCapture()
+////{
+////	if (m_zkfinger == nullptr) {
+////		return;
+////	}
+////
+////	if (m_hDevice == nullptr) {
+////		return;
+////	}
+////
+////	unsigned char szTemplate[MAX_TEMPLATE_SIZE];
+////	unsigned int tempLen = MAX_TEMPLATE_SIZE;
+////	// é‡‡é›†æŒ‡çº¹å›¾åƒå’Œæ¨¡æ¿
+////	int ret = m_zkfinger->AcquireFingerprint(m_hDevice, pImgBuf, imgFPWidth * imgFPHeight, szTemplate, &tempLen);
+////	if (ZKFP_ERR_OK == ret) {
+////		//FakeFinger Test
+////		if (1 == nFakeFunOn) {
+////			int nFakeStatus = 0;
+////			unsigned int retLen = sizeof(int);
+////			if (0 == m_zkfinger->GetParameters(m_hDevice, 2004, (unsigned char*)&nFakeStatus, &retLen)) {
+////				if ((nFakeStatus & 0x1F) != 0x1F) {
+////					QString log = QString("æ‰‹æŒ‡æ£€æµ‹æ— æ•ˆ, Is Fake Finger?");
+////					qWarning() << log;
+////					//emit sigMessage(LOG_MSG_TYPE, log);
+////					return;
+////				}
+////			}
+////		}
+////
+////		//ShowFpImage(m_pImgBuf, m_imgFPWidth, m_imgFPHeight);
+////		if (m_bRegister) {
+////			qInfo() << QString("å¼€å§‹æŒ‡çº¹æ³¨å†Œ");
+////			DoRegister2(szTemplate, tempLen);
+////		}
+////		else {
+////			qDebug() << QString("å¼€å§‹æŒ‡çº¹éªŒè¯");
+////			DoVerify2(szTemplate, tempLen);
+////		}
+////	}
+////	else {
+////		// qDebug() << "AcquireFingerprint failed, ret =" << ret;
+////	}
+////}
+//
+//
+//void fingerDlg::DoRegister(unsigned char* temp, int len)
+//{
 //	int id = 0;
 //	//CString strLog;
 //	//bool succ2 = false;
@@ -426,37 +229,34 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 //	}
 //	if (m_enrollIdx > 0)
 //	{
-//		//¶Ô±ÈÁ½Ã¶Ö¸ÎÆÊÇ·ñÆ¥Åä
-//		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], pTemplate, len))
+//		//å¯¹æ¯”ä¸¤æšæŒ‡çº¹æ˜¯å¦åŒ¹é…
+//		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], temp, len))
 //		{
 //			m_enrollIdx = 0;
 //			m_bRegister = FALSE;
-//			//AfxMessageBox(_T("Çë°´ÏàÍ¬µÄÊÖÖ¸"), MB_OK);
-//			//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Please press the same finger while registering"));
+//			//AfxMessageBox(_T("è¯·æŒ‰ç›¸åŒçš„æ‰‹æŒ‡"), MB_OK);
+//			//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Please press the same finger while registering"));
 //			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
 //			return;
 //		}
 //	}
 //	arrPreTempsLen[m_enrollIdx] = len;
-//	memcpy(arrPreRegTemps[m_enrollIdx], pTemplate, len);
+//	memcpy(arrPreRegTemps[m_enrollIdx], temp, len);
 //	if (++m_enrollIdx >= ENROLLCNT)
 //	{
 //		int ret = 0;
 //		unsigned char szRegTemp[MAX_TEMPLATE_SIZE] = { 0x0 };
-//		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //Ä£°å³¤¶È
+//		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //æ¨¡æ¿é•¿åº¦
 //
-//		//½« 3 Ã¶Ô¤µÇ¼ÇÖ¸ÎÆÄ£°åºÏ²¢ÎªÒ»Ã¶µÇ¼ÇÖ¸ÎÆ
+//		//å°† 3 æšé¢„ç™»è®°æŒ‡çº¹æ¨¡æ¿åˆå¹¶ä¸ºä¸€æšç™»è®°æŒ‡çº¹
 //		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
 //		//m_enrollIdx = 0;
 //		m_bRegister = FALSE;
-//		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=²Ù×÷³É¹¦
+//		if (0 == ret)   //ZKFP_ERR_OK=æ“ä½œæˆåŠŸ
 //		{
-//			//Çå¿Õ»º³åÇø
-//			//ret = ZKFPM_DBClear(hDBCache);
-//
-//			//Ìí¼ÓµÇ¼ÇÖ¸ÎÆÄ£°åµ½»º³åÇø
+//			//æ·»åŠ ç™»è®°æŒ‡çº¹æ¨¡æ¿åˆ°ç¼“å†²åŒº
 //			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
-//			if (ZKFP_ERR_OK == ret)
+//			if (0 == ret)
 //			{
 //				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
 //
@@ -464,36 +264,41 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 //
 //				/*delete[] szRegTemp;
 //				szRegTemp = nullptr;*/
+//				if (!db::databaseDI::Instance().add_user_info(common::stUser))
+//				{
+//					QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œå¤±è´¥!"));
+//					return;
+//				}
 //
 //				if (!db::databaseDI::Instance().get_new_regist_user(id))
 //				{
 //					return;
 //				}
-//				if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
+//				QString str;
+//				str = CharToQString(szLastRegTemplate, nLastRegTempLen);
+//				if (db::databaseDI::Instance().add_user_finger(str, nLastRegTempLen, id))
+//				//if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
 //				{
-//					MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
+//					MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
 //					emit regist_succ();
 //
-//					//delete[] szLastRegTemplate;
-//					//szLastRegTemplate = nullptr;
-//					//return;
 //				}
 //
 //
-//				//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Register success"));
+//				//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Register success"));
 //				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
 //			}
 //			else
 //			{
 //				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
 //				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
-//				//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromWCharArray(strLog.GetString()));
+//				//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromWCharArray(strLog.GetString()));
 //				return;
 //			}
 //		}
 //		else
 //		{
-//			//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Register fail"));
+//			//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Register fail"));
 //			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
 //			return;
 //		}
@@ -503,76 +308,271 @@ void fingerDlg::DoVerify(unsigned char *temp, int len)
 //		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
 //		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
 //		//qDebug() << strLog;
-//		//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromWCharArray(strLog.GetString()));
+//		//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromWCharArray(strLog.GetString()));
 //		return;
 //	}
 //}
 //
-//void fingerDlg::DoVerify2(unsigned char *pTemplate, int len)
+//void fingerDlg::DoVerify(unsigned char *temp, int len)
 //{
-//	if (m_zkfinger == nullptr) {
-//		return;
-//	}
-//
-//	//if (m_nLastRegTempLen > 0) // have enroll one more template
+//	//if (m_nLastRegTempLen > 0)	//have enroll one more template
+//	//{
+//	if (m_bIdentify)   //è¯†åˆ«æŒ‰é’®è¢«ç‚¹å‡»
 //	{
-//		if (m_bIdentify) {
+//		//unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
+//		int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
 //
-//			unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
-//			int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
+//		int ret = 0;
 //
-//			int ret = ZKFP_ERR_OK;
-//			unsigned int tid = 0;
-//			unsigned int score = 0;
+//		int approval = 0;
+//		bool success = false;
 //
-//			int approval = 0;
-//			bool success = false;
-//			db::databaseDI::Instance().get_approval(approval, common::iUserID);
-//			if (approval == 1)
+//		QString str;
+//		QByteArray date;
+//
+//		//std::vector<std::pair<unsigned char *, int>> vec_finger;
+//
+//		db::databaseDI::Instance().get_approval(approval, common::iUserID);
+//
+//		if (approval == 1)
+//		{
+//			
+//			//db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
+//			db::databaseDI::Instance().get_user_finger2(str, nLastLogTempLen2, common::iUserID);
+//			date = QStringToChar(str);
+//			
+//			if (!str.isEmpty() && nLastLogTempLen2 != 0)
 //			{
-//				db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
-//				if (szLastLogTemplate2 && nLastLogTempLen2 != 0)
-//				{
-//					//QByteArray temp = QStringToChar(QString::fromUtf8(reinterpret_cast<const char*>(szLastLogTemplate2)));
-//					//int ret = m_zkfinger->DBMatch(reinterpret_cast<unsigned char*>(temp.data()), QString::fromUtf8(reinterpret_cast<const char*>(nLastLogTempLen2)).length(), pTemplate, len);
-//					int ret = m_zkfinger->DBMatch(szLastLogTemplate2, nLastLogTempLen2, pTemplate, len);
-//					if (ZKFP_ERR_OK < ret)  //±íÊ¾²Ù×÷Ê§°Ü  0±íÊ¾³É¹¦
+//				
+//					//ZKFPM_DBAdd(hDBCache, Tid++, szLastLogTemplate2, nLastLogTempLen2);
+//					//ret = ZKFPM_DBIdentify(hDBCache, temp, len, &tid, &score);
+//
+//					ret = ZKFPM_DBMatch(hDBCache, reinterpret_cast<unsigned char*>(date.data()), nLastLogTempLen2, temp, len);
+//					//ret = ZKFPM_DBMatch(hDBCache, szLastLogTemplate2, nLastLogTempLen2, temp, len);
+//					if (0 < ret)  //è¡¨ç¤ºæ“ä½œå¤±è´¥  0è¡¨ç¤ºæˆåŠŸ
 //					{
 //						success = true;
 //					}
-//				}
-//
 //				if (success)
 //				{
+//					//MessageBox(NULL, TEXT("ç™»å½•æˆåŠŸ"), TEXT("æç¤º"), 0);
 //					emit login_succ();
 //					bStopThread = TRUE;
+//
 //				}
 //				else
 //				{
-//					MessageBox(NULL, TEXT("Ö¸ÎÆÑéÖ¤Ê§°Ü,»»ÊÖÖ¸ÑéÖ¤"), TEXT("ÌáÊ¾"), 0);
+//					MessageBox(NULL, TEXT("æŒ‡çº¹éªŒè¯å¤±è´¥,æ¢æ‰‹æŒ‡éªŒè¯"), TEXT("æç¤º"), 0);
 //				}
 //			}
 //			else
 //			{
-//				MessageBox(NULL, TEXT("´ËÓÃ»§Ã»ÓĞ×¢²áÖ¸ÎÆ"), TEXT("ÌáÊ¾"), 0);
+//				MessageBox(NULL, TEXT("æ­¤ç”¨æˆ·æ²¡æœ‰æ³¨å†ŒæŒ‡çº¹,è¯·æ›´æ¢ç”¨æˆ·ç™»å½•"), TEXT("æç¤º"), 0);
+//				emit no_regist_finger();
 //			}
 //		}
+//		else if (approval == 2)
+//		{
+//			//å®¡æ ¸æœªé€šè¿‡çš„é€»è¾‘ï¼Œä½†æ˜¯å¥½åƒå¹¶ä¸éœ€è¦
+//		}
 //	}
+//	else  //éªŒè¯æŒ‰é’®ç‚¹å‡»
+//	{//æ¯”å¯¹ä¸¤æšæŒ‡çº¹æ˜¯å¦åŒ¹é…  æŒ‡çº¹æ¨¡æ¿1 é•¿åº¦  æŒ‡çº¹æ¨¡æ¿2 é•¿åº¦       è¿”å›å€¼ å¦‚æœ  å¤§äºç­‰äº0çš„è¯ï¼Œæ˜¯æ¯”å¯¹åˆ†æ•°  å°äº0å‡ºé”™ã€‚
+//		//int ret = ZKFPM_DBMatch(hDBCache, szLastRegTemplate, nLastRegTempLen, temp, len);
+//		//if (ZKFP_ERR_OK > ret)  //retè¡¨ç¤ºçš„æ˜¯æ¯”å¯¹åˆ†æ•°
+//		{
+//			//strLog.Format(_T("Match finger fail, ret = %d"), ret);
+//			//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+//		}
+//		//else
+//		{
+//			//strLog.Format(_T("Match succ, score=%d"), ret);
+//			//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+//		}
+//	}
+//	//}
+//	//else
+//	//{
+//		//SetDlgItemText(IDC_EDIT_RESULT, _T("You need enroll a reg-template first!"));
+//		//MessageBox(NULL, TEXT("You need enroll a reg-template first!"), TEXT("æç¤º"), 0);
+//	//}
 //}
-
-// QString ×ª unsigned char Êı×é
-QByteArray fingerDlg::QStringToChar(const QString& str)
-{
-	/* ·µ»ØÖµ¿ÉÍ¨¹ıÈçÏÂ·½Ê½Ê¹ÓÃ£º reinterpret_cast<unsigned char*>(byteArray.data()) */
-	QByteArray baStr = str.toLatin1();
-	QByteArray byteArray = QByteArray::fromBase64(baStr.data());
-	return byteArray;
-}
-
-// unsigned char Êı×é×ª QString
-QString fingerDlg::CharToQString(const unsigned char* buffer, int length)
-{
-	QByteArray ba(reinterpret_cast<const char*>(buffer), length);
-	QString str = ba.toBase64();
-	return str;
-}
+////void fingerDlg::DoRegister2(unsigned char *pTemplate, int len)
+////{
+////	if (m_zkfinger == nullptr) {
+////		return;
+////	}
+////
+////	unsigned int fingerId = 0;
+////	unsigned int score = 0;
+////	int ret = m_zkfinger->DBIdentify(pTemplate, len, &fingerId, &score);
+////	if (ZKFP_ERR_OK == ret) {
+////		qDebug() << QString("é”™è¯¯ï¼Œå½“å‰æ‰‹æŒ‡å·²ç™»è®°! fingerId=%1, score=%2").arg(fingerId).arg(score);
+////		//emit sigMessage(LOG_MSG_TYPE, QString("é”™è¯¯ï¼Œå½“å‰æ‰‹æŒ‡å·²ç™»è®°!"));
+////		//m_preRegTempList.clear();
+////		m_bRegister = false;
+////		return;
+////	}
+////	int id = 0;
+////	//CString strLog;
+////	//bool succ2 = false;
+////	unsigned char szLastRegTemplate[MAX_TEMPLATE_SIZE] = { 0x0 };
+////	int nLastRegTempLen = MAX_TEMPLATE_SIZE;
+////
+////	if (m_enrollIdx >= ENROLLCNT)  //3
+////	{
+////		m_enrollIdx = 0;	//restart enroll
+////		return;
+////	}
+////	if (m_enrollIdx > 0)
+////	{
+////		//å¯¹æ¯”ä¸¤æšæŒ‡çº¹æ˜¯å¦åŒ¹é…
+////		if (0 >= ZKFPM_DBMatch(hDBCache, arrPreRegTemps[m_enrollIdx - 1], arrPreTempsLen[m_enrollIdx - 1], pTemplate, len))
+////		{
+////			m_enrollIdx = 0;
+////			m_bRegister = FALSE;
+////			//AfxMessageBox(_T("è¯·æŒ‰ç›¸åŒçš„æ‰‹æŒ‡"), MB_OK);
+////			//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Please press the same finger while registering"));
+////			//SetDlgItemText(IDC_EDIT_RESULT, _T("Please press the same finger while registering"));
+////			return;
+////		}
+////	}
+////	arrPreTempsLen[m_enrollIdx] = len;
+////	memcpy(arrPreRegTemps[m_enrollIdx], pTemplate, len);
+////	if (++m_enrollIdx >= ENROLLCNT)
+////	{
+////		int ret = 0;
+////		unsigned char szRegTemp[MAX_TEMPLATE_SIZE] = { 0x0 };
+////		unsigned int cbRegTemp = MAX_TEMPLATE_SIZE;          //æ¨¡æ¿é•¿åº¦
+////
+////		//å°† 3 æšé¢„ç™»è®°æŒ‡çº¹æ¨¡æ¿åˆå¹¶ä¸ºä¸€æšç™»è®°æŒ‡çº¹
+////		ret = ZKFPM_DBMerge(hDBCache, arrPreRegTemps[0], arrPreRegTemps[1], arrPreRegTemps[2], szRegTemp, &cbRegTemp);
+////		//m_enrollIdx = 0;
+////		m_bRegister = FALSE;
+////		if (ZKFP_ERR_OK == ret)   //ZKFP_ERR_OK=æ“ä½œæˆåŠŸ
+////		{
+////			//æ¸…ç©ºç¼“å†²åŒº
+////			//ret = ZKFPM_DBClear(hDBCache);
+////
+////			//æ·»åŠ ç™»è®°æŒ‡çº¹æ¨¡æ¿åˆ°ç¼“å†²åŒº
+////			ret = ZKFPM_DBAdd(hDBCache, Tid++, szRegTemp, cbRegTemp);
+////			if (ZKFP_ERR_OK == ret)
+////			{
+////				memcpy(szLastRegTemplate, szRegTemp, cbRegTemp);
+////
+////				nLastRegTempLen = cbRegTemp;
+////
+////				/*delete[] szRegTemp;
+////				szRegTemp = nullptr;*/
+////
+////				if (!db::databaseDI::Instance().get_new_regist_user(id))
+////				{
+////					return;
+////				}
+////				if (db::databaseDI::Instance().add_user_finger(szLastRegTemplate, nLastRegTempLen, id))
+////				{
+////					MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
+////					emit regist_succ();
+////
+////					//delete[] szLastRegTemplate;
+////					//szLastRegTemplate = nullptr;
+////					//return;
+////				}
+////
+////
+////				//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Register success"));
+////				//SetDlgItemText(IDC_EDIT_RESULT, _T("Register succ"));
+////			}
+////			else
+////			{
+////				///strLog.Format(_T("Register fail, because add to db fail, ret=%d"), ret);
+////				//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+////				//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromWCharArray(strLog.GetString()));
+////				return;
+////			}
+////		}
+////		else
+////		{
+////			//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Register fail"));
+////			//SetDlgItemText(IDC_EDIT_RESULT, _T("Register fail"));
+////			return;
+////		}
+////	}
+////	else
+////	{
+////		//strLog.Format(_T("You still need press %d times finger"), ENROLLCNT - m_enrollIdx);
+////		//SetDlgItemText(IDC_EDIT_RESULT, strLog);
+////		//qDebug() << strLog;
+////		//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromWCharArray(strLog.GetString()));
+////		return;
+////	}
+////}
+////
+////void fingerDlg::DoVerify2(unsigned char *pTemplate, int len)
+////{
+////	if (m_zkfinger == nullptr) {
+////		return;
+////	}
+////
+////	//if (m_nLastRegTempLen > 0) // have enroll one more template
+////	{
+////		if (m_bIdentify) {
+////
+////			unsigned char szLastLogTemplate2[MAX_TEMPLATE_SIZE] = { 0x0 };
+////			int nLastLogTempLen2 = MAX_TEMPLATE_SIZE;
+////
+////			int ret = ZKFP_ERR_OK;
+////			unsigned int tid = 0;
+////			unsigned int score = 0;
+////
+////			int approval = 0;
+////			bool success = false;
+////			db::databaseDI::Instance().get_approval(approval, common::iUserID);
+////			if (approval == 1)
+////			{
+////				db::databaseDI::Instance().get_user_finger2(szLastLogTemplate2, nLastLogTempLen2, common::iUserID);
+////				if (szLastLogTemplate2 && nLastLogTempLen2 != 0)
+////				{
+////					//QByteArray temp = QStringToChar(QString::fromUtf8(reinterpret_cast<const char*>(szLastLogTemplate2)));
+////					//int ret = m_zkfinger->DBMatch(reinterpret_cast<unsigned char*>(temp.data()), QString::fromUtf8(reinterpret_cast<const char*>(nLastLogTempLen2)).length(), pTemplate, len);
+////					int ret = m_zkfinger->DBMatch(szLastLogTemplate2, nLastLogTempLen2, pTemplate, len);
+////					if (ZKFP_ERR_OK < ret)  //è¡¨ç¤ºæ“ä½œå¤±è´¥  0è¡¨ç¤ºæˆåŠŸ
+////					{
+////						success = true;
+////					}
+////				}
+////
+////				if (success)
+////				{
+////					emit login_succ();
+////					bStopThread = TRUE;
+////				}
+////				else
+////				{
+////					MessageBox(NULL, TEXT("æŒ‡çº¹éªŒè¯å¤±è´¥,æ¢æ‰‹æŒ‡éªŒè¯"), TEXT("æç¤º"), 0);
+////				}
+////			}
+////			else
+////			{
+////				MessageBox(NULL, TEXT("æ­¤ç”¨æˆ·æ²¡æœ‰æ³¨å†ŒæŒ‡çº¹"), TEXT("æç¤º"), 0);
+////			}
+////		}
+////	}
+////}
+//
+//// QString è½¬ unsigned char æ•°ç»„
+//QByteArray fingerDlg::QStringToChar(const QString& str)
+//{
+//	/* è¿”å›å€¼å¯é€šè¿‡å¦‚ä¸‹æ–¹å¼ä½¿ç”¨ï¼š reinterpret_cast<unsigned char*>(byteArray.data()) */
+//	QByteArray baStr = str.toLatin1();
+//	QByteArray byteArray = QByteArray::fromBase64(baStr.data());
+//	return byteArray;
+//}
+//
+//// unsigned char æ•°ç»„è½¬ QString
+//QString fingerDlg::CharToQString(const unsigned char* buffer, int length)
+//{
+//	QByteArray ba(reinterpret_cast<const char*>(buffer), length);
+//	QString str = ba.toBase64();
+//	return str;
+//}
