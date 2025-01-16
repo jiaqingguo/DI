@@ -32,6 +32,8 @@ namespace db
 		// 连接mysql;
 		if (!mysql_real_connect(mysql_, server_.c_str(), user_.c_str(), pwd_.c_str(), m_diDatabase.c_str(), port_, NULL, 0))
 		{
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("连接失败!\n%s", mysql_error(mysql_));
 			return false;
 		}
@@ -42,6 +44,8 @@ namespace db
 		std::string char_set_name = "utf8mb4";
 		if (mysql_set_character_set(mysql_, char_set_name.c_str()) != 0)
 		{
+			unsigned int  ierrno = mysql_errno(mysql_);
+			qDebug() << "error number:" << ierrno;
 			qDebug("字符集设置失败!\n%s", mysql_error(mysql_));
 		}
 

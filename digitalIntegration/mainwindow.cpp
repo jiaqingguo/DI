@@ -1167,6 +1167,7 @@ void MainWindow::updateModuleToolIcon(int module)
 			}
 		}
 	}
+	if(module == 1)
 	pLayout->addWidget(line);
 
 	db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);

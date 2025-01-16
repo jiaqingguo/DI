@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <tchar.h>
 #include "gethostinformation.h"
+#include "C7Zip.h"
 
 class CPerformHelper;
 
@@ -76,6 +77,8 @@ private:
     PDH_FMT_COUNTERVALUE m_SystemValue = { 0 };
 	QHostAddress serverReplyAddress;
 	quint16 serverReplyPort;
+
+	C7Zip *m_pC7Zip = nullptr;
 
 	char rbuff[1024];	//接收缓冲区
 	char sbuff[1024];	//发送缓冲区
