@@ -32,7 +32,7 @@ namespace db
 		if (mysql_real_query(mysql_, sql.c_str(), (unsigned long)sql.size()) != 0)
 		{
 			std::string error = mysql_error(mysql_);
-			
+			unsigned int  ierrno = mysql_errno(mysql_);
 			qDebug()<<QString::fromStdString( sql)<<  QString::fromStdString(error);
 			return false;
 		}
@@ -60,6 +60,7 @@ namespace db
 		if (mysql_real_query(mysql_, sql.c_str(), (unsigned long)sql.size()) != 0)
 		{
 			std::string error = mysql_error(mysql_);
+			int rriD = mysql_errno(mysql_);
 			qDebug("SQL：%s\nError：%s", sql.c_str(), error.c_str());
 			return nullptr;
 		}

@@ -120,8 +120,9 @@ namespace common
 	
 	std::string  string_To_UTF8(const std::string& str);
 
+	QString folderType();
+	QString fileType(const QString& fileNames);
 	
-
 }
 
 

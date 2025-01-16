@@ -258,7 +258,7 @@ void FtpClientWidget::Flush()
         {
             ui->tableWidget->insertRow(0);
             ui->tableWidget->setItem(0, 0, new QTableWidgetItem(/*folderIcon(),*/ "..."));
-            listType["..."] = "";// folderType();
+            listType["..."] =  common::folderType();
         }
 
         ftp.list();
@@ -559,7 +559,7 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         {
             ui->tableWidget->insertRow(0);
             ui->tableWidget->setItem(0, 0, new QTableWidgetItem(/*folderIcon(), */"..."));
-            listType["..."] = "";// folderType();
+            listType["..."] = common::folderType();
         }
 
         // 发送命令返回上一级，然后列出所有项
@@ -589,7 +589,7 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         // 如果当前目录不是根目录，则先插入一行用来双击返回上一级
         ui->tableWidget->insertRow(0);
         ui->tableWidget->setItem(0, 0, new QTableWidgetItem(/*folderIcon(),*/ "..."));
-        listType["..."] = "";// folderType();
+        listType["..."] = common::folderType();
 
         // 发送命令进入下一级，然后列出所有项
         //ftp.cd(toFtpCodec(currentPath.()));
@@ -915,7 +915,7 @@ void FtpClientWidget::slot_newDir()
     ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm")));
 
     // 类型
-    QString type = "";// folderType();
+    QString type = common::folderType();
     ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
 
     // 创建目录 解决中文乱码问题
@@ -995,7 +995,7 @@ void FtpClientWidget::onRefresh()
     {
         ui->tableWidget->insertRow(0);
         ui->tableWidget->setItem(0, 0, new QTableWidgetItem(/*folderIcon(),*/ "..."));
-        listType["..."] = "";// folderType();
+        listType["..."] = common::folderType();
     }
 
     ftp.list();
@@ -1103,11 +1103,11 @@ void FtpClientWidget::listInfo(QUrlInfo url)
 
     QString name = fromFtpCodec(url.name());
     QFileInfo info(url.name());
-   /* QString type = url.isDir() ? folderType() : fileType(name);
-    QString type = url.isDir() ? folderType() : fileType(name);*/
+    QString type = url.isDir() ? common::folderType() : common::fileType(name);
+   
   
   
-    QString type = info.suffix();// (name);
+  //  QString type = info.suffix();// (name);
 
     // 记录是否为目录
     listType[name] = type;

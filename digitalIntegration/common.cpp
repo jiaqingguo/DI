@@ -721,6 +721,50 @@ namespace common
 
     }
 
+
+
+    QString folderType()
+    {
+         SHFILEINFOA info;
+         if(SHGetFileInfoA(QString("folder").toUtf8(),
+                           FILE_ATTRIBUTE_DIRECTORY,
+                           &info,
+                           sizeof(info),
+                           SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES))
+         {
+             return QString::fromLocal8Bit(info.szTypeName);
+         }
+ 
+         return QString();
+    }
+
+    QString fileType(const QString& fileName)
+    {
+        if (fileName.isEmpty())
+            return QString();
+
+        // 检查文件是否有后缀名
+        int index = fileName.lastIndexOf(".");
+        if (index == -1 || index == fileName.length() - 1) {
+            return QString("未知类型"); // 没有后缀名的情况
+        }
+
+        // 提取后缀名
+        QString suffix = fileName.mid(index);
+        std::string szSuffix = suffix.toUtf8().constData();
+
+        // 使用 SHGetFileInfo 获取文件类型
+        SHFILEINFOA info;
+        if (SHGetFileInfoA(
+            szSuffix.c_str(),
+            FILE_ATTRIBUTE_NORMAL,
+            &info,
+            sizeof(info),
+            SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES)) {
+            return QString::fromLocal8Bit(info.szTypeName); // 返回文件类型名称
+        }
+    }
+
   
 
     void startDspExe(QString& strPath)

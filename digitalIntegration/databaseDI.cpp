@@ -218,7 +218,11 @@ namespace db
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
+		{
+			unsigned int  ierrno = mysql_errno(mysql_);
 			return false;
+		}
+		
 
 		table_user userInfo;
 		while (sql_row = mysql_fetch_row(result))
