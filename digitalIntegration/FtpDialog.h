@@ -24,6 +24,7 @@ public:
     ~FtpDialog();
 
     void initConnectFtp();
+    void reConnectFtp();
     void flushTableViewDownload();
 
     // ÐòÁÐ»¯º¯Êý

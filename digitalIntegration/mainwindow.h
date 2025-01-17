@@ -38,41 +38,25 @@ struct st_account_data;
 struct table_ip_configure;
 //class fingerDlg;
 
-class EmbeddedWidget : public QWidget {
-	Q_OBJECT
-
-public:
-	EmbeddedWidget(HWND hwnd, QWidget* parent = nullptr);
-
-	// 调整嵌入窗口的大小为 QWidget 的大小
-	void adjustEmbeddedWindowSize();
-
-protected:
-	// 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
-	void resizeEvent(QResizeEvent* event) override;
-
-private:
-	HWND m_hwnd;                   // 外部窗口句柄
-	QWidget *m_windowContainer;     // 用于封装原生窗口的 QWidget
-};
-
-//class CWidget : public QWidget
-//{
+//class EmbeddedWidget : public QWidget {
 //	Q_OBJECT
+//
 //public:
-//	CWidget(HWND hwnd, QWidget* parent = nullptr);
+//	EmbeddedWidget(HWND hwnd, QWidget* parent = nullptr);
+//
+//	// 调整嵌入窗口的大小为 QWidget 的大小
+//	void adjustEmbeddedWindowSize();
+//
 //protected:
-//	void mousePressEvent(QMouseEvent* event) override;
+//	// 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
+//	void resizeEvent(QResizeEvent* event) override;
+//
 //private:
 //	HWND m_hwnd;                   // 外部窗口句柄
-//	QWidget* m_windowContainer;     // 用于封装原生窗口的 QWidget
+//	QWidget *m_windowContainer;     // 用于封装原生窗口的 QWidget
 //};
-/*!
-* \class	QssAutoLoader
-* \brief	修改qss文件时 使程序立刻生效显示.
-* \author	Jiaqg
-* \date		2021/1/21
-*/
+
+
 
 class QssAutoLoader : public QObject
 {
@@ -186,6 +170,8 @@ private:
 
 	// 获取刀片机信息
 	void getBladeComputerData(std::vector<table_ip_configure>& setHostData);
+	 // 数据库等重连定时器;
+	void slot_reconnnectTimerOut();
 private:
 	Ui::MainWindow *ui;
 
@@ -216,9 +202,9 @@ private:
 	OneClickSaveDialog* m_OneClickSaveDialog = nullptr;// 一键保存界面;
 	OneClickLoadDialog* m_OneClickLoadDialog = nullptr; // 一键加载界面;
 
-	QWindow* windowQQ = nullptr;
-	QWidget * widgetQQ = nullptr;
-	WId winIdQQ;
+	//QWindow* windowQQ = nullptr;
+	//QWidget * widgetQQ = nullptr;
+	//WId winIdQQ;
 
 	GifDialog* m_GifDialog = nullptr;
 
@@ -234,6 +220,8 @@ private:
 	QMap<int, QMap<int, st_account_data>> m_usedAccaunt;
 
 	C7Zip *m_pC7Zip = nullptr;
+	// 创建定时器对象
+	QTimer* m_reconnectTimer = nullptr; 
 };
 
 class DoubleClickInterceptor : public QObject {

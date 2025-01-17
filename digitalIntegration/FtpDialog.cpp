@@ -70,12 +70,12 @@ void FtpDialog::initConnectFtp()
     ui->page0->connectToFtpServer(ui->comboBox->itemText(0), ui->comboBox->itemData(0, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
     ui->page0->setIsLinuxFtpServer(true);
 
- ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", common::strLoginUserName, common::strFtpPwd);
-    ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
-    ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
-    ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
-    ui->page5->connectToFtpServer(ui->comboBox->itemText(5), ui->comboBox->itemData(5, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
-    ui->page6->connectToFtpServer(ui->comboBox->itemText(6), ui->comboBox->itemData(6, Qt::UserRole).toString(), "N BPC", common::strFtpPwd);
+ ui->page1->connectToFtpServer(ui->comboBox->itemText(1), "192.168.0.132", "N BPC", common::strFtpPwd);
+    ui->page2->connectToFtpServer(ui->comboBox->itemText(2), ui->comboBox->itemData(2, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page3->connectToFtpServer(ui->comboBox->itemText(3), ui->comboBox->itemData(3, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page4->connectToFtpServer(ui->comboBox->itemText(4), ui->comboBox->itemData(4, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page5->connectToFtpServer(ui->comboBox->itemText(5), ui->comboBox->itemData(5, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
+    ui->page6->connectToFtpServer(ui->comboBox->itemText(6), ui->comboBox->itemData(6, Qt::UserRole).toString(), common::strLoginUserName, common::strFtpPwd);
  
 
     connect(ui->page0, &FtpClientWidget::signal_ableUI, this, &FtpDialog::slot_ableUI);
@@ -153,6 +153,21 @@ void FtpDialog::initConnectFtp()
             });
     }
 
+}
+
+void FtpDialog::reConnectFtp()
+{
+    for (int i = 0; i < ui->comboBox->count(); i++)
+    {
+        QWidget* pwiget = ui->stackedWidget->widget(i);
+        FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
+        if (p)
+        {
+            p->reconnectFtp();
+        }
+    }
+  
+    
 }
 
 void FtpDialog::flushTableViewDownload()
@@ -283,7 +298,7 @@ void FtpDialog::slot_orderFinsh(int iFlag)
     FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
     if (p)
     {
-        p->Connect();
+        p->ConnectSlot();
         p->Flush();
     }
     ui->comboBox->setEnabled(true);
@@ -391,7 +406,7 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->DisConnect();
+            p->DisConnectSlot();
         }
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);
@@ -439,7 +454,7 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->DisConnect();
+            p->DisConnectSlot();
            
         }
         ui->comboBox->setEnabled(false);
@@ -458,7 +473,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
     m_r_addr.sin_port = htons(6667);
     if (bLinuxServer)
     {
-        strIp = ui->comboBox->itemData(1).toString();
+        strIp = ui->comboBox->itemData(1).toString(); 
     }
     inet_pton(AF_INET, strIp.toStdString().c_str(), &m_r_addr.sin_addr.s_addr);
 
@@ -490,7 +505,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
-            p->DisConnect();
+            p->DisConnectSlot();
         }
         ui->comboBox->setEnabled(false);
         ui->pushButton->setEnabled(false);

@@ -40,64 +40,37 @@
 #include <thread>
 #include <functional>
 
-EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-	// 将原生窗口嵌入到 Qt 的 QWidget 中
-	m_windowContainer = QWidget::createWindowContainer(QWindow::fromWinId((WId)m_hwnd), this);
-	m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
-
-	// 调整原生窗口大小，使其铺满 QWidget
-	adjustEmbeddedWindowSize();
-}
-
-// 调整嵌入窗口的大小为 QWidget 的大小
-void EmbeddedWidget::adjustEmbeddedWindowSize()
-{
-	if (m_hwnd) {
-		// 获取 QWidget 的大小
-		QRect geometry = this->geometry();
-		int width = geometry.width();
-		int height = geometry.height();
-
-		// 调整外部窗口的大小和位置
-		SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
-	}
-}
-
-
-// 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
-void EmbeddedWidget::resizeEvent(QResizeEvent* event) {
-	QWidget::resizeEvent(event);
-	adjustEmbeddedWindowSize();
-}
-
-//CWidget::CWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-//    // 将原生窗口嵌入到 Qt 的 QWidget 中
-//   QWindow *window= QWindow::fromWinId((WId)m_hwnd);
+//EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
+//	// 将原生窗口嵌入到 Qt 的 QWidget 中
+//	m_windowContainer = QWidget::createWindowContainer(QWindow::fromWinId((WId)m_hwnd), this);
+//	m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
 //
-//   this->resize(window->width(), window->height());
-//    m_windowContainer = QWidget::createWindowContainer(window);
-//    m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
-//    
-//    QGridLayout* layout = new QGridLayout;
-//    layout->addWidget(m_windowContainer);
-//    this->setLayout(layout);
-//    
+//	// 调整原生窗口大小，使其铺满 QWidget
+//	adjustEmbeddedWindowSize();
 //}
-//void CWidget::mousePressEvent(QMouseEvent* event)
+//
+//// 调整嵌入窗口的大小为 QWidget 的大小
+//void EmbeddedWidget::adjustEmbeddedWindowSize()
 //{
-//   
-//        // 将鼠标点击的事件位置转换为全局坐标
-//        QPoint globalPos = event->globalPos();
+//	if (m_hwnd) {
+//		// 获取 QWidget 的大小
+//		QRect geometry = this->geometry();
+//		int width = geometry.width();
+//		int height = geometry.height();
 //
-//        // 将全局坐标转换为容器内的坐标
-//        QPoint localPos = this->mapFromGlobal(globalPos);
-//
-//        // 发送消息到原生窗口, 这里使用 SendMessage 函数
-//        SendMessage((HWND)this->winId(), WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(localPos.x(), localPos.y()));
-//    
-//    QWidget::mousePressEvent(event);
-//
+//		// 调整外部窗口的大小和位置
+//		SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
+//	}
 //}
+//
+//
+//// 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
+//void EmbeddedWidget::resizeEvent(QResizeEvent* event) {
+//	QWidget::resizeEvent(event);
+//	adjustEmbeddedWindowSize();
+//}
+
+
 MainWindow* g_pMainWindow = NULL;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -160,8 +133,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 	//common::addNetworkCredential(target, username, password);
 	getBladeComputerData(common::setHostData);
-	initAccount();
+	//initAccount();
 
+	m_reconnectTimer = new QTimer(this);
+	// 将定时器的超时信号连接到槽函数
+	connect(m_reconnectTimer, &QTimer::timeout, this, &MainWindow::slot_reconnnectTimerOut);
+
+	// 设置时间间隔并启动定时器
+	//m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 }
 
 
@@ -447,6 +426,8 @@ bool MainWindow::showLoginDialog()
 		//connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
 		common::getHostNameData();
 		m_FtpDialog->initConnectFtp();
+		// 设置时间间隔并启动定时器
+		m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 		return true;
 	}
 	else
@@ -1646,6 +1627,24 @@ void MainWindow::getBladeComputerData(std::vector<table_ip_configure>& vecHostDa
 			vecHostData.push_back(st);
 		}
 	}
+}
+
+void MainWindow::slot_reconnnectTimerOut()
+{
+	if (db::databaseDI::Instance().IsConnectLost())
+	{
+		if (!db::databaseDI::Instance().open())
+		{
+			//QMessageBox::warning(nullptr, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("数据库连接失败"));
+			//return;
+		}
+	}
+	if (m_FtpDialog)
+	{
+		int a = 0;
+		m_FtpDialog->reConnectFtp();
+	}
+
 }
 
 void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)

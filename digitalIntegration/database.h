@@ -25,6 +25,7 @@ namespace db
 		virtual bool open() = 0;
 		virtual bool close() = 0;
 		void setDbLoginData(const std::string & server, const std::string& user, const std::string& password);
+		bool IsConnectLost();
 	protected:
 		// 获取SQL句柄;
 		MYSQL* get_sql_query();

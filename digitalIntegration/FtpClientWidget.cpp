@@ -266,12 +266,27 @@ void FtpClientWidget::Flush()
     
 }
 
+void FtpClientWidget::reconnectFtp()
+{
+    if (ftp.state() != QFtp::LoggedIn)
+    {
+        ftp.connectToHost(m_strAddr, m_iPort);
+        ftp.login(m_strAccount, m_strPwd);
+    }
+
+    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    {
+        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
+        m_ftpAdmin.login(common::strFtpAccount, common::strFtpAdminPwd);
+    }
+}
+
 void FtpClientWidget::createUserDir(const QString& strDirName)
 {
     if (m_ftpAdmin.state() != QFtp::LoggedIn)
     {
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login("shareadmin", "123456");
+        m_ftpAdmin.login(common::strFtpAccount, common::strFtpAdminPwd);
     }
 
     m_ftpAdmin.mkdir(toFtpCodec(strDirName));
@@ -294,9 +309,7 @@ QString FtpClientWidget::fromFtpCodec(const QString& str)
         QTextCodec* codec = QTextCodec::codecForName("GBK");
         QString name = codec->toUnicode(data);
         return name;
-    }
-   
-   // 
+    } 
 }
 
 QString FtpClientWidget::toFtpCodec(const QString& strLocal)
@@ -313,10 +326,8 @@ QString FtpClientWidget::toFtpCodec(const QString& strLocal)
 
        // 将 GBK 编码的 QByteArray 转换为 Latin1 编码的 QString
        QString latin1String = QString::fromLatin1(gbkData);
-
        return latin1String;
     }
-   
 }
 
 void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& strPath, const bool& bDir)
@@ -377,14 +388,14 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
     }
 }
 
-void FtpClientWidget::Connect()
+void FtpClientWidget::ConnectSlot()
 {
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
-     connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
-        connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
+    connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
+    connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
 }
 
-void FtpClientWidget::DisConnect()
+void FtpClientWidget::DisConnectSlot()
 {
     disconnect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
     disconnect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
@@ -511,6 +522,13 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
         QString filePath = localDir.absoluteFilePath(file);
         QString remoteFilePath = remoteDir + "/" + file;
         qDebug() << "Uploading file:" << filePath << "to" << remoteFilePath;
+
+        QFileInfo fileInfo(filePath);
+        // 检查文件是否可读和可写
+        if (!fileInfo.isReadable() || !fileInfo.isWritable())
+        {
+            int a = 0;
+        }
         QFile * pfile = new QFile(filePath);
 
         int id=ftp.put(pfile, toFtpCodec(remoteFilePath)); // 上传文件
@@ -1327,6 +1345,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
                 m_bUploadDir = false;
             //    m_pGifDialog->close();
                 setAbleUI();
+                onRefresh();
             }
         }
         break;

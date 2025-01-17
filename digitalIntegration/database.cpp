@@ -15,6 +15,19 @@ namespace db
 		user_ = user;
 		pwd_ = password;
 	}
+	bool database::IsConnectLost()
+	{
+		if (mysql_ == nullptr) {
+			return true;
+		}
+		if (mysql_ping(mysql_) != 0) {
+			//std::cerr << "MySQL connection lost: " << mysql_error(conn) << std::endl;
+			return true;
+		}
+		return false;
+
+		return false;
+	}
 	MYSQL* database::get_sql_query()
 	{
 		if (mysql_ == nullptr)

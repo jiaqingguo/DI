@@ -40,8 +40,10 @@ public:
     void clear();
     QString createFolderName();
 
-    void connectToFtpServer(const QString& strHostName, const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); \
+    void connectToFtpServer(const QString& strHostName, const QString& strAddr, const QString& strAcc, const QString& strPwd, const int& port = 21); 
+
     void Flush();
+    void reconnectFtp();
     void createUserDir(const QString& strDirName);
     void setIsLinuxFtpServer(const bool &b);
     QString toFtpCodec(const QString& strLocal);
@@ -49,8 +51,8 @@ public:
 
 
     void ApprovalDownload(const QString &strName,const QString& strPath ,const bool &bDir);
-    void Connect();
-    void DisConnect();
+    void ConnectSlot();
+    void DisConnectSlot();
 private:
     void createDir(const QString& strDirPath);
     void uploadDirectory(const QString& localDirPath, const QString& remoteDirPath);
