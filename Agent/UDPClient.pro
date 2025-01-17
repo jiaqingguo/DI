@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += gethostinformation.cpp \
+    C7Zip.cpp \
     CPerformHelper.cpp \
     Win32Utils/CDeviceHelper.cpp \
     Win32Utils/CStrUtils.cpp \
@@ -28,6 +29,7 @@ SOURCES += gethostinformation.cpp \
     widget.cpp
 
 HEADERS += gethostinformation.h \
+    C7Zip.h \
     CPerformHelper.h \
     Win32Utils/CDeviceHelper.h \
     Win32Utils/CStrUtils.h \

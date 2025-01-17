@@ -26,6 +26,7 @@
 #include <tchar.h>
 #include <WinNetWk.h>
 #include <stdio.h>
+#include "C7Zip.h"
 
 
 using namespace std;
@@ -71,10 +72,10 @@ Widget::Widget(QWidget *parent)
 	 //ui->textEdit->append(listAdress.at(7).toString());
 
 
-	Widget  myWidget;
-	auto boundFunction = std::bind(&Widget::receive_mess, myWidget);
-	std::thread t(boundFunction);
-	t.detach();//分离线程，主线程不阻塞
+//	Widget  myWidget;
+//	auto boundFunction = std::bind(&Widget::receive_mess, myWidget);
+//	std::thread t(boundFunction);
+//	t.detach();//分离线程，主线程不阻塞
 }
 
 Widget::~Widget()
