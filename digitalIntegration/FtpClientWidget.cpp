@@ -193,6 +193,7 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
 
     if (m_ftpAdmin.state() != QFtp::LoggedIn)
     {
+
         m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
         m_ftpAdmin.login(common::strFtpAccount,common::strFtpAdminPwd );
     }
@@ -270,6 +271,11 @@ void FtpClientWidget::reconnectFtp()
 {
     if (ftp.state() != QFtp::LoggedIn)
     {
+        // 信号槽
+        connect(&ftp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
+        connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+        //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+        connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
         ftp.connectToHost(m_strAddr, m_iPort);
         ftp.login(m_strAccount, m_strPwd);
     }
@@ -309,6 +315,7 @@ QString FtpClientWidget::fromFtpCodec(const QString& str)
         QTextCodec* codec = QTextCodec::codecForName("GBK");
         QString name = codec->toUnicode(data);
         return name;
+        
     } 
 }
 
@@ -513,6 +520,7 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
     // 创建远程目录
     QString remoteDir = remoteDirPath + "//" + localDir.dirName();
   //  ftp.mkdir(remoteDir); // 在 FTP 服务器上创建目录
+    remoteDir = toFtpCodec(remoteDir);
     ftp.mkdir(toFtpCodec(remoteDir));
     m_iUploadDirCommandTotal++;
 
@@ -940,6 +948,7 @@ void FtpClientWidget::slot_newDir()
 
     createFolder = true;
    // ftp.mkdir(toFtpCodec(name.())); toFtpCodec
+
     ftp.mkdir(toFtpCodec(name));
 
     listPath[name] = true;
@@ -1117,7 +1126,7 @@ void FtpClientWidget::listInfo(QUrlInfo url)
        
         return;
     }
-  //  QString str11111 = url.name();
+    QString str11111 = url.name();
 
     QString name = fromFtpCodec(url.name());
     QFileInfo info(url.name());
@@ -1393,6 +1402,11 @@ void FtpClientWidget::slot_stateChanged(int state)
             // 清除表格
             clear();
             currentPath = "";
+            // 信号槽
+            connect(&ftp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
+            connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+            //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+            connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
             ftp.connectToHost(m_strAddr, m_iPort);
             ftp.login(m_strAccount, m_strPwd);
 
