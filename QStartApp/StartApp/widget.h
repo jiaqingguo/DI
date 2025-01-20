@@ -2,6 +2,9 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QTimer>
+#include "Listen.h"
+
 class Listen;
 class GifDialog;
 
@@ -17,7 +20,7 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-    void StartProgram(const std::string& strPath);
+    void StartProgram(const std::string& strPath,LoadingProgressCallBack callBack);
 
     void HwndListen();
 
@@ -27,6 +30,8 @@ public:
 
     void closeGifDialog();
 
+    void setCloseCallBack(LoadingProgressCallBack callBack);
+
 private slots:
     void slot_btnOpenExplorer();
     void slot_btnAppShow();
@@ -34,6 +39,10 @@ private slots:
 
 private:
     Ui::Widget *ui;
+
+    QTimer* _t = nullptr;
+
+    bool _gifShow = false;
 
     Listen* m_pListen = nullptr;// = new Listen;
     GifDialog* m_pGifDialog = nullptr;

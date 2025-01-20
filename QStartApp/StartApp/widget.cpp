@@ -1,7 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
 
-#include "Listen.h"
 #include "GifDialog.h"
 
 Widget::Widget(QWidget *parent)
@@ -24,38 +23,28 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     m_pListen->CancleResource();
-    
     delete m_pListen;
-    if (m_pGifDialog != nullptr)
-    {
-        delete m_pGifDialog;
-    }
-
     delete ui;
 }
 
-void Widget::StartProgram(const std::string& strPath)
+void Widget::StartProgram(const std::string& strPath, LoadingProgressCallBack callBack)
 {
+    m_pListen->setSuccessCallBack(callBack);
     int index = strPath.rfind(".");
-    std::string suffix = strPath.substr(index+1, strPath.size());
-    if (suffix == "exe")
-    {
-      //  m_pListen->startProgram(strPath);
+    std::string suffix = strPath.substr(index + 1, strPath.size());
 
-        auto boundFunction = std::bind(&Listen::startProgram, m_pListen, strPath);
-        std::thread t(boundFunction);
-        t.detach(); // 分离线程，主线程不阻塞
-    }
-    else if (suffix == "bat")
-    {
-        m_pListen->startProgramFromBat(strPath);
-        //auto boundFunction = std::bind(&Listen::startProgramFromBat, strPath,m_pListen);
-   //std::thread t(boundFunction);
-   //t.detach(); // 分离线程，主线程不阻塞
-    }
-    
-
-   
+    auto boundFunction = std::bind([this,suffix,strPath]() {
+        if (suffix == "exe")
+        {
+            m_pListen->startProgram(strPath);
+        }
+        else if (suffix == "bat")
+        {
+            m_pListen->startProgramFromBat(strPath);
+        }
+     });
+    std::thread t(boundFunction);
+    t.detach(); // 分离线程，主线程不阻塞
 }
 
 void Widget::HwndListen()
@@ -70,39 +59,60 @@ void Widget::HwndListen()
 
 void Widget::InitResource(const std::string& str)
 {
-
-    // 根据字符集调整 userName 的初始化
+    auto boundFunction = std::bind([this,&str]() {
+        // 根据字符集调整 userName 的初始化
 #ifdef UNICODE
     // 如果使用宽字符集，将 std::string 转换为 std::wstring
-    std::wstring wUserName(str.begin(), str.end());
-    std::vector<TCHAR> userName(wUserName.begin(), wUserName.end());
-    userName.push_back(L'\0'); // 添加终止符
+        std::wstring wUserName(str.begin(), str.end());
+        std::vector<TCHAR> userName(wUserName.begin(), wUserName.end());
+        userName.push_back(L'\0'); // 添加终止符
 #else
     // 如果使用多字节字符集，直接转换为 char*
-    std::vector<TCHAR> userName(str.begin(), str.end());
-    userName.push_back('\0'); // 添加终止符
+        std::vector<TCHAR> userName(str.begin(), str.end());
+        userName.push_back('\0'); // 添加终止符
 #endif
 
-    //TCHAR userName[] = TEXT("user1");
-    TCHAR password[] = TEXT("Atexcel@123");
-    TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-    TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-  
-    m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
+        //TCHAR userName[] = TEXT("user1");
+        TCHAR password[] = TEXT("Atexcel@123");
+        TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
+        TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
 
-   
+        m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
+    });
+    std::thread t(boundFunction);
+    t.detach(); // 分离线程，主线程不阻塞
 }
 
 void Widget::showGifDialog()
 {
-
-    
-  m_pGifDialog->show();
+    if (_t == nullptr)
+    {
+        m_pGifDialog->showMaximized();
+        //m_pGifDialog->show();
+        _t = new QTimer(this);
+        _t->setTimerType(Qt::PreciseTimer);
+        _gifShow = true;
+        connect(_t, &QTimer::timeout, this, [this]() {
+            if (!_gifShow)
+            {
+                m_pGifDialog->close();
+                _t->stop();
+                delete _t;
+                _t = nullptr;
+            }
+        });
+        _t->start(100);
+    }
 }
 
 void Widget::closeGifDialog()
 {
-    m_pGifDialog->close();
+    _gifShow = false;
+}
+
+void Widget::setCloseCallBack(LoadingProgressCallBack callBack)
+{
+    m_pListen->setClosCallBack(callBack);
 }
 
 void Widget::slot_btnOpenExplorer()

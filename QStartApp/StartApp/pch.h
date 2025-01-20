@@ -11,8 +11,10 @@
 #include <tchar.h>
 #include <atlstr.h>
 #include <thread>
+#include <functional>
 #include <Lm.h>
 #include "tlhelp32.h"
+
 
 //Ìí¼Ó¶¯Ì¬¿âµÄlib
 #pragma comment(lib, "ws2_32.lib")
