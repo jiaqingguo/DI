@@ -1102,7 +1102,7 @@ void MainWindow::updateModuleToolIcon(int module)
 	std::map<std::string, table_ip> ipMap;
 
 	//创建竖线
-	QFrame *line = new QFrame(this);
+	QFrame *line = new QFrame();
 	line->setFrameShape(QFrame::VLine);  // 设置为竖线
 	line->setFrameShadow(QFrame::Sunken);  // 设置阴影为凹陷
 	line->setLineWidth(2);  // 设置线宽
