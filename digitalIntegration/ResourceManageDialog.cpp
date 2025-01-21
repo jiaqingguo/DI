@@ -1,4 +1,4 @@
-#include <QStandardItemModel>
+ï»¿#include <QStandardItemModel>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <qwidget.h>
@@ -22,16 +22,15 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	ui->tabWidget->setCurrentIndex(0);
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(6);
-	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("Ö÷»úÃû³Æ"));
-	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//ÁĞ±íÖĞµÄÏÔÊ¾
-	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ÄÚ´æ"));
-	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("´ÅÅÌ"));
-	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ÍøÂç"));
+	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ä¸»æœºåç§°"));
+	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//åˆ—è¡¨ä¸­çš„æ˜¾ç¤º
+	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("å†…å­˜"));
+	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ç£ç›˜"));
+	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ç½‘ç»œ"));
 	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
 
 	ui->tableView->setModel(m_model);
 	common::setTableViewBasicConfiguration(ui->tableView);
-
 
 	//  int newRow3 = m_model->rowCount();
 	  //m_model->setItem(0, 0, new QStandardItem("SetItem 1"));
@@ -55,26 +54,26 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 		<< new QStandardItem(" 3")
 		<< new QStandardItem(" 2")
 		<< new QStandardItem("net 2"));*/
-		//ui->comboBox->addItem(QString::fromLocal8Bit("Ö÷»ú1"));
-		//ui->comboBox->addItem(QString::fromLocal8Bit("Ö÷»ú2"));
+		//ui->comboBox->addItem(QString::fromLocal8Bit("ä¸»æœº1"));
+		//ui->comboBox->addItem(QString::fromLocal8Bit("ä¸»æœº2"));
 		//this->message = new Message_t();
 	getUdpData(&message);
-	//¸ù¾İÏÂÀ­ÁĞ±íÖĞ×î³¤ÏîµÄ³¤¶ÈÀ´µ÷Õû¿Ø¼şµÄ¿í¶È
+	//æ ¹æ®ä¸‹æ‹‰åˆ—è¡¨ä¸­æœ€é•¿é¡¹çš„é•¿åº¦æ¥è°ƒæ•´æ§ä»¶çš„å®½åº¦
 	ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	// Á¬½ÓĞÅºÅºÍ²Û
-	connect(m_model, &QStandardItemModel::itemChanged, this, &ResourceManageDialog::slot_modelItemChanged);
+	// è¿æ¥ä¿¡å·å’Œæ§½
+	//connect(m_model, &QStandardItemModel::itemChanged, this, &ResourceManageDialog::slot_modelItemChanged);
 	connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
 
 	m_timer = new QTimer(this);
 	QObject::connect(m_timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
-	//m_timer->start(1000); // Ã¿Ãë´¥·¢Ò»´Î
+	//m_timer->start(1000); // æ¯ç§’è§¦å‘ä¸€æ¬¡
 
 }
 
 ResourceManageDialog::~ResourceManageDialog()
 {
-	this->UdpSocket->close();
-	delete this->UdpSocket;
+	/*this->UdpSocket->close();
+	delete this->UdpSocket;*/
 	delete ui;
 }
 
@@ -84,20 +83,20 @@ void ResourceManageDialog::initTableWidgetCurve()
 	ui->tabWidgetCurve->removeTab(1);
 	ui->tabWidgetCurve->removeTab(0);
 
-	// ´´½¨Ò»Ğ©Ê¾Àı±êÇ©Ò³
+	// åˆ›å»ºä¸€äº›ç¤ºä¾‹æ ‡ç­¾é¡µ
 	QWidget* tab1Widget = new QWidget;
 	QWidget* tab2Widget = new QWidget;
 	QWidget* tab3Widget = new QWidget;
 	QWidget* tab4Widget = new QWidget;
 	QWidget* tab5Widget = new QWidget;
-	// Ìí¼ÓÒ»Ğ©ÄÚÈİµ½Ã¿¸ö±êÇ©Ò³
+	// æ·»åŠ ä¸€äº›å†…å®¹åˆ°æ¯ä¸ªæ ‡ç­¾é¡µ
 	tab1Widget->setLayout(new QVBoxLayout);
 	tab2Widget->setLayout(new QVBoxLayout);
 	tab3Widget->setLayout(new QVBoxLayout);
 	tab4Widget->setLayout(new QVBoxLayout);
 	tab5Widget->setLayout(new QVBoxLayout);
 
-	// ½«×Ô¶¨Òå±êÇ©Ìí¼Óµ½ QTabWidget
+	// å°†è‡ªå®šä¹‰æ ‡ç­¾æ·»åŠ åˆ° QTabWidget
 	ui->tabWidgetCurve->addTab(tab1Widget, "");
 	ui->tabWidgetCurve->addTab(tab2Widget, "");
 	ui->tabWidgetCurve->addTab(tab3Widget, "");
@@ -110,13 +109,13 @@ void ResourceManageDialog::initTableWidgetCurve()
 	ui->tabWidgetCurve->setTabEnabled(3, true);
 	ui->tabWidgetCurve->setTabEnabled(4, true);
 
-	//tabWidget->setTabIcon(0, QIcon()); // Èç¹û²»ĞèÒªÍ¼±ê£¬¿ÉÒÔÒÆ³ı´ËĞĞ
+	//tabWidget->setTabIcon(0, QIcon()); // å¦‚æœä¸éœ€è¦å›¾æ ‡ï¼Œå¯ä»¥ç§»é™¤æ­¤è¡Œ
 
-	// ´´½¨×Ô¶¨Òå±êÇ©
-	ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//ÇúÏßÖĞµÄÏÔÊ¾
-	ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("ÄÚ´æ")));
-	ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("´ÅÅÌ")));
-	ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("ÍøÂç")));
+	// åˆ›å»ºè‡ªå®šä¹‰æ ‡ç­¾
+	ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//æ›²çº¿ä¸­çš„æ˜¾ç¤º
+	ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("å†…å­˜")));
+	ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("ç£ç›˜")));
+	ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("ç½‘ç»œ")));
 	ui->tabWidgetCurve->tabBar()->setTabButton(4, QTabBar::RightSide, createCustomTab("GPU"));
 	connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked, this, &ResourceManageDialog::slot_get_data);
 
@@ -150,25 +149,25 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
 	   //  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("ÍøÂç"));
+	m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("ç½‘ç»œ"));
 	m_jsonDataNet.insert("data", _data);
-	// ÕÛÏßÍ¼£¨line£©
-	// Öù×´Í¼£¨Bar£©
-	// ±ıÍ¼£¨pie£©
-	// É¢µãÍ¼£¨scatter£©
-	// µØÍ¼£¨map£©
-	// À×´ïÍ¼£¨radar£© 
-	// ´ÊÔÆÍ¼£¨wordCloud£©
-	// Í¼Æ¬µØÍ¼£¨imageMap£©
-	// ×éºÏÍ¼£¨compose£©
-	// Â©¶·Í¼£¨funnel£©
-	// ÒÇ±íÅÌ£¨gauge£©
-	// ÁĞ±íÍ¼£¨list£©
+	// æŠ˜çº¿å›¾ï¼ˆlineï¼‰
+	// æŸ±çŠ¶å›¾ï¼ˆBarï¼‰
+	// é¥¼å›¾ï¼ˆpieï¼‰
+	// æ•£ç‚¹å›¾ï¼ˆscatterï¼‰
+	// åœ°å›¾ï¼ˆmapï¼‰
+	// é›·è¾¾å›¾ï¼ˆradarï¼‰ 
+	// è¯äº‘å›¾ï¼ˆwordCloudï¼‰
+	// å›¾ç‰‡åœ°å›¾ï¼ˆimageMapï¼‰
+	// ç»„åˆå›¾ï¼ˆcomposeï¼‰
+	// æ¼æ–—å›¾ï¼ˆfunnelï¼‰
+	// ä»ªè¡¨ç›˜ï¼ˆgaugeï¼‰
+	// åˆ—è¡¨å›¾ï¼ˆlistï¼‰
 	m_jsonDataNet.insert("type", "line");
 
 	QObject::connect(m_webEngineViewNet, &QWebEngineView::loadFinished, [&]() {
 		QString optionStr = QJsonDocument(m_jsonDataNet).toJson();
-		//ÓÃµ½jsÖĞinit() º¯Êı
+		//ç”¨åˆ°jsä¸­init() å‡½æ•°
 		QString js = QString("setData(%1)").arg(optionStr);
 		qDebug() << js;
 		m_webEngineViewNet->page()->runJavaScript(js);
@@ -206,7 +205,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 
 	QObject::connect(m_webEngineViewCpu, &QWebEngineView::loadFinished, [=]() {
 		QString optionStr = QJsonDocument(m_jsonDataCpu).toJson();
-		//ÓÃµ½jsÖĞinit() º¯Êı
+		//ç”¨åˆ°jsä¸­init() å‡½æ•°
 		QString js = QString("setData(%1)").arg(optionStr);
 		qDebug() << js;
 		m_webEngineViewCpu->page()->runJavaScript(js);
@@ -236,14 +235,14 @@ void ResourceManageDialog::initWebViewMemory(QWidget* widget)
 		//    itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("ÄÚ´æ"));
+	m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("å†…å­˜"));
 	m_jsonDataMemory.insert("data", _data);
 
 	m_jsonDataMemory.insert("type", "line");
 
 	QObject::connect(m_webEngineViewMemory, &QWebEngineView::loadFinished, [&]() {
 		QString optionStr = QJsonDocument(m_jsonDataMemory).toJson();
-		//ÓÃµ½jsÖĞinit() º¯Êı
+		//ç”¨åˆ°jsä¸­init() å‡½æ•°
 		QString js = QString("setData(%1)").arg(optionStr);
 		qDebug() << js;
 		m_webEngineViewMemory->page()->runJavaScript(js);
@@ -273,14 +272,14 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
 		//   itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("´ÅÅÌ"));
+	m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("ç£ç›˜"));
 	m_jsonDataDisk.insert("data", _data);
 
 	m_jsonDataDisk.insert("type", "line");
 
 	QObject::connect(m_webEngineViewDisk, &QWebEngineView::loadFinished, [&]() {
 		QString optionStr = QJsonDocument(m_jsonDataDisk).toJson();
-		//ÓÃµ½jsÖĞinit() º¯Êı
+		//ç”¨åˆ°jsä¸­init() å‡½æ•°
 		QString js = QString("setData(%1)").arg(optionStr);
 		qDebug() << js;
 		m_webEngineViewDisk->page()->runJavaScript(js);
@@ -319,7 +318,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 
 	QObject::connect(m_webEngineViewGpu, &QWebEngineView::loadFinished, [=]() {
 		QString optionStr = QJsonDocument(m_jsonDataGpu).toJson();
-		//ÓÃµ½jsÖĞinit() º¯Êı
+		//ç”¨åˆ°jsä¸­init() å‡½æ•°
 		QString js = QString("setData(%1)").arg(optionStr);
 		qDebug() << js;
 		m_webEngineViewGpu->page()->runJavaScript(js);
@@ -408,11 +407,11 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 {
 	for (int row = 0; row < m_model->rowCount(); row++)
 	{
-		QModelIndex index = m_model->index(row, 0, QModelIndex()); // »ñÈ¡µÚÒ»ÁĞµÄË÷Òı
-		//QStandardItem* item = m_model->itemFromIndex(index); // »ñÈ¡¸ÃË÷Òı¶ÔÓ¦µÄ QStandardItem
+		QModelIndex index = m_model->index(row, 0, QModelIndex()); // è·å–ç¬¬ä¸€åˆ—çš„ç´¢å¼•
+		//QStandardItem* item = m_model->itemFromIndex(index); // è·å–è¯¥ç´¢å¼•å¯¹åº”çš„ QStandardItem
 		QStandardItem* item = m_model->item(row, 0);
 		if (item->text() == host)
-		{ // ¼ÙÉèÎÒÃÇÏëÒª¸üĞÂÒÔ "Row" ¿ªÍ·µÄÏî
+		{ // å‡è®¾æˆ‘ä»¬æƒ³è¦æ›´æ–°ä»¥ "Row" å¼€å¤´çš„é¡¹
 			item = m_model->item(row, 1);
 			item->setText(QString::number(dCpu) + QString(" %"));
 			item = m_model->item(row, 2);
@@ -434,8 +433,8 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 		}
 	}
 
-	int newRowIndex = m_model->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-	m_model->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+	int newRowIndex = m_model->rowCount(); // è·å–å½“å‰è¡Œæ•°
+	m_model->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 	m_model->setItem(newRowIndex, 0, new QStandardItem(host));
 	m_model->setItem(newRowIndex, 1, new QStandardItem(QString::number(dCpu)));
 	m_model->setItem(newRowIndex, 2, new QStandardItem(QString::number(dMemory)));
@@ -459,10 +458,10 @@ void ResourceManageDialog::updateCpuWebViewShow(const QString& host)
 		_data.append(itemData);
 	}
 	m_jsonDataCpu.insert("data", _data);
-	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPUÊ¹ÓÃÂÊ"));
+	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPUä½¿ç”¨ç‡"));
 
 	QString optionStr = QJsonDocument(m_jsonDataCpu).toJson();
-	//ÓÃµ½jsÖĞinit() º¯Êı
+	//ç”¨åˆ°jsä¸­init() å‡½æ•°
 	QString js = QString("setData(%1)").arg(optionStr);
 	//qDebug() << js;
 	m_webEngineViewCpu->page()->runJavaScript(js);
@@ -484,10 +483,10 @@ void ResourceManageDialog::updateMemoryWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("ÄÚ´æÊ¹ÓÃÂÊ"));
+	jsonData.insert("titleName", QString::fromLocal8Bit("å†…å­˜ä½¿ç”¨ç‡"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
-	//ÓÃµ½jsÖĞinit() º¯Êı
+	//ç”¨åˆ°jsä¸­init() å‡½æ•°
 	QString js = QString("setData(%1)").arg(optionStr);
 	//qDebug() << js;
 	m_webEngineViewMemory->page()->runJavaScript(js);
@@ -508,10 +507,10 @@ void ResourceManageDialog::updateDiskWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("´ÅÅÌÊ¹ÓÃÂÊ"));
+	jsonData.insert("titleName", QString::fromLocal8Bit("ç£ç›˜ä½¿ç”¨ç‡"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
-	//ÓÃµ½jsÖĞinit() º¯Êı
+	//ç”¨åˆ°jsä¸­init() å‡½æ•°
 	QString js = QString("setData(%1)").arg(optionStr);
 	//qDebug() << js;
 	m_webEngineViewDisk->page()->runJavaScript(js);
@@ -532,10 +531,10 @@ void ResourceManageDialog::updateNetWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("ÍøÂçÍÌÍÂÁ¿"));
+	jsonData.insert("titleName", QString::fromLocal8Bit("ç½‘ç»œååé‡"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
-	//ÓÃµ½jsÖĞinit() º¯Êı
+	//ç”¨åˆ°jsä¸­init() å‡½æ•°
 	QString js = QString("setData(%1)").arg(optionStr);
 	//qDebug() << js;
 	m_webEngineViewNet->page()->runJavaScript(js);
@@ -556,10 +555,10 @@ void ResourceManageDialog::updateGpuWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("GPUÊ¹ÓÃÂÊ"));
+	jsonData.insert("titleName", QString::fromLocal8Bit("GPUä½¿ç”¨ç‡"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
-	//ÓÃµ½jsÖĞinit() º¯Êı
+	//ç”¨åˆ°jsä¸­init() å‡½æ•°
 	QString js = QString("setData(%1)").arg(optionStr);
 	//qDebug() << js;
 	m_webEngineViewGpu->page()->runJavaScript(js);
@@ -567,7 +566,7 @@ void ResourceManageDialog::updateGpuWebViewShow(const QString& host)
 
 void ResourceManageDialog::slot_modelItemChanged(QStandardItem* item)
 {
-	// ´òÓ¡ĞŞ¸ÄºóµÄÖµ
+	// æ‰“å°ä¿®æ”¹åçš„å€¼
 	qDebug() << "Item changed:" << item->text();
 }
 
@@ -593,7 +592,7 @@ void ResourceManageDialog::slot_hostComboxChanged(const QString& text)
 	//    m_jsonDataNet.insert("type", "line");
 	//
 	//    QString optionStr = QJsonDocument(m_jsonDataNet).toJson();
-	//   //ÓÃµ½jsÖĞinit() º¯Êı
+	//   //ç”¨åˆ°jsä¸­init() å‡½æ•°
 	//    QString js = QString("setData(%1)").arg(optionStr);
 	//    qDebug() << js;
 	//    m_webEngineViewNet->page()->runJavaScript(js);
@@ -614,15 +613,15 @@ void ResourceManageDialog::slot_timerTimeout()
 	 common::getNetworkInterfaceStatistics();
 	 common::PrintAdapterInfo();
 	 unsigned long netThroughput = common::GetNetworkInterfacesThroughput();*/
-	 //¼ÓÔØÁĞ±íÒ³ÃæµÄËÄ¸öÊı¾İ
+	 //åŠ è½½åˆ—è¡¨é¡µé¢çš„å››ä¸ªæ•°æ®
 	// updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
 	if (message.host_name != 0) {
 		updateHostTableShow(message.host_name, message.Cpu_Message, message.Memory_Message, message.Disk_Message, message.Net_Message, message.Gpu_Message);
 	}
-	// ¼ì²écomboBoxÖĞÊÇ·ñÒÑ¾­´æÔÚ¸ÃÏî
+	// æ£€æŸ¥comboBoxä¸­æ˜¯å¦å·²ç»å­˜åœ¨è¯¥é¡¹
 	int index = ui->comboBox->findText(message.host_name);
 	if (index == -1 && !message.host_name.isEmpty())
-	{ // Èç¹û²»´æÔÚ£¬²ÅÌí¼Ó
+	{ // å¦‚æœä¸å­˜åœ¨ï¼Œæ‰æ·»åŠ 
 		ui->comboBox->addItem(message.host_name);
 	}
 	if (CPU_init == true && message.host_name == ui->comboBox->currentText()) {
@@ -700,10 +699,8 @@ void ResourceManageDialog::slot_get_data(int index)
 
 void  ResourceManageDialog::getUdpData(Message_t * infor)
 {
-
-	// UDPµÄÁ¬½Ó
+	// UDPçš„è¿æ¥
 	this->UdpSocket = new QUdpSocket();
-
 	//this->UdpSocket->bind(QHostAddress::Any, 54321);
 	bool ret;
 	ret = this->UdpSocket->bind(QHostAddress::AnyIPv4, 54321, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
@@ -711,8 +708,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 	{
 		qDebug() << ret;
 	}
-
-
+	this->UdpSocket->joinMulticastGroup(QHostAddress("224.0.0.100"));
 	connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
 		while (this->UdpSocket->hasPendingDatagrams())
 		{
@@ -722,12 +718,10 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			//qDebug() << addr.toString();
 			if (bytesRead <= 0)
 			{
-				//Ó¦¸ÃÊÇÔÚÁĞ±íÖĞÉ¾³ıÄÇÒ»ĞĞµÄĞÅÏ¢
+				//åº”è¯¥æ˜¯åœ¨åˆ—è¡¨ä¸­åˆ é™¤é‚£ä¸€è¡Œçš„ä¿¡æ¯
 			}
 
 			QDataStream stream(&datagram, QIODevice::ReadOnly);
-
-		
 
 			stream >> infor->host_name;
 
@@ -754,6 +748,9 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 				infor->Net_Message = static_cast<unsigned long>(temp);
 				stream >> infor->Gpu_Message;
 
+				//è¾“å‡ºæ”¶åˆ°çš„æ¶ˆæ¯
+				qDebug() << infor->host_name;
+				qDebug() << addr.toString();
 				addHostCpuElemnet(infor->host_name, infor->Cpu_Message);
 				addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
 				addHostDiskElemnet(infor->host_name, infor->Disk_Message);
@@ -774,10 +771,6 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 					}
 				}
 			}
-
-
-
-			
 			/*Command_t command;
 			command.str1 = "Wuncompress";
 			command.str2 = "user1//back.zip";
@@ -789,7 +782,7 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			stream2 << command.str3;
 			int ret = 0;
 			ret = this->UdpSocket->writeDatagram(dataGram, addr, port);*/
-		// ²åÈëÊı¾İ¿â;
+		// æ’å…¥æ•°æ®åº“;
 	   /* table_ip stIp;
 		stIp.ip = infor->host_ip.toStdString();
 		stIp.host = infor->host_name.toStdString();

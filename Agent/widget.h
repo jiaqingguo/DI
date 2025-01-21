@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QUdpSocket>
 #include <QHostInfo>
+#include <QHostAddress>
 #include <QNetworkInterface>
 #include <QLineEdit>
 #include <tchar.h>

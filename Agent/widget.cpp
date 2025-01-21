@@ -39,6 +39,9 @@ Widget::Widget(QWidget *parent)
 	ui->setupUi(this);
 	setWindowTitle(QString::fromLocal8Bit("代理"));
 
+	ui->lineEdit->setHidden(true);
+	//ui->groupBox->setHidden(true);
+	//ui->textEdit->setHidden(true);
 	//用于获取主机的信息
 	this->my_timer = new QTimer();
 	this->UDPSocket = new QUdpSocket();
@@ -224,12 +227,6 @@ void Widget::get_file_information()
 void Widget::slot_useUdp()
 {
 
-	//qDebug() << "GPU 利用率: " << getGpuUsage() << "%%";
-
-
-
-	//qDebug() << "111111111111111111111111111";
-
 	QString localHostName = QHostInfo::localHostName();   //获取主机名
 	message->host_name = localHostName;
 	//获取本机的IP地址
@@ -281,28 +278,27 @@ void Widget::slot_useUdp()
 	stream << static_cast<quint32>(message->Net_Message);
 	stream << message->Gpu_Message;
 
-
-	//用于获取发送者的 IP 和端口
-	//    QHostAddress &IP,quint16 &Port
-	//    QHostAddress IP;
-	//    quint16 Port=0;
+	//读取配置文件
 	get_file_information();
 
-
 	qint64 ret;
-	for (const auto &server : m_serverList)
+	//for (const auto &server : m_serverList)
 	{
-		ret = UDPSocket->writeDatagram(dataGram, server.first, 54321);
-		if (ret == -1) {
+		//ret = UDPSocket->writeDatagram(dataGram, server.first, 54321);
+		ret = UDPSocket->writeDatagram(dataGram, QHostAddress("224.0.0.100"), 54321);
+		if (ret == -1)
+		{
 			// 发送失败
 			qDebug() << "Error sending datagram:" << UDPSocket->errorString() << "  " << UDPSocket->error();
-
 			ui->textEdit->append(UDPSocket->errorString());
 		}
-		else {
+		else
+		{
 			// 发送成功
 			//qDebug() << "Bytes sent:" << ret;
-			ui->textEdit->append(QString::number(ret));
+			//ui->textEdit->append(QString::number(ret));
+			ui->textEdit->append(message->host_name);
+			//ui->textEdit->append(server.first.toString());
 		}
 
 		//const QHostAddress &ip = server.first;
@@ -411,7 +407,7 @@ void Widget::receive_mess()
 							fs::path newDir = path.parent_path() / path.stem();
 							std::string strDir = newDir.string();
 							std::cout << "解压 " << path << "   " << strDir << std::endl;
-							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromStdString(strDir));
+							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromLocal8Bit(strDir.c_str()));
 						}
 					}
 					if (ret == 0)
@@ -465,7 +461,7 @@ void Widget::receive_mess()
 							fs::path newDir = path.parent_path() / path.stem();
 							std::string strDir = newDir.string();
 							std::cout << "解压 " << path << "   " << strDir << std::endl;
-							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromStdString(strDir));
+							ret = m_pC7Zip->ExtractFile(QString::fromStdWString(path.wstring()), QString::fromLocal8Bit(strDir.c_str()));
 						}
 					}
 					if (ret == 0)

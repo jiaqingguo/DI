@@ -70,6 +70,6 @@ int main(int argc, char *argv[])
     //窗口的隐藏
     //w.hide();
     //窗口的最小化
-    w.showMinimized();
+    //w.showMinimized();
     return a.exec();
 }
