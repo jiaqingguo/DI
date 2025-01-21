@@ -1,4 +1,4 @@
-#ifndef RESOURCEMANAGEDIALOG_H
+ï»¿#ifndef RESOURCEMANAGEDIALOG_H
 #define RESOURCEMANAGEDIALOG_H
 
 #include <QDialog>
@@ -11,7 +11,7 @@ class QWebEngineView;
 class QJsonObject;
 class QStandardItem;
 
-//ÓÃÓÚUDPÖ®¼äÍ¨ĞÅ
+//ç”¨äºUDPä¹‹é—´é€šä¿¡
 typedef struct _Message
 {
     QString host_name = 0;
@@ -23,7 +23,7 @@ typedef struct _Message
     unsigned long Net_Message = 0;
 	double Gpu_Message = 0;
 }Message_t;
-//½ÓÊÕ½âÑ¹ËõÃüÁî
+//æ¥æ”¶è§£å‹ç¼©å‘½ä»¤
 typedef struct _Com
 {
 	QString str1;
@@ -67,12 +67,12 @@ public:
     void updateDiskWebViewShow(const QString& host);
     void updateNetWebViewShow(const QString& host);
 	void updateGpuWebViewShow(const QString& host);
-    void getUdpData(Message_t* infor);
+    void getUdpData();
 signals:
     void signal_udpOrderFinsh(int flag);
 private slots:
     void slot_modelItemChanged(QStandardItem* item);
-    void slot_hostComboxChanged(const QString& text);
+    void slot_hostComboxChanged(const QString &text);
 
     void slot_timerTimeout();
 
@@ -109,8 +109,9 @@ private:
     QTimer* m_timer = nullptr;
     QUdpSocket* UdpSocket = nullptr;
     //QThread* thread = nullptr;
+	std::map<QString, Message_t> myMap;
     Message_t message;
-	//Í¨ĞÅµÄipºÍ¶Ë¿Ú£¬ÓÃÓÚ»ñÈ¡·¢ËÍÕßµÄ IP ºÍ¶Ë¿Ú
+	//é€šä¿¡çš„ipå’Œç«¯å£ï¼Œç”¨äºè·å–å‘é€è€…çš„ IP å’Œç«¯å£
 	QHostAddress addr;
 	quint16 port;
 

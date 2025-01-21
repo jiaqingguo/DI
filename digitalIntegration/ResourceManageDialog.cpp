@@ -57,7 +57,7 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 		//ui->comboBox->addItem(QString::fromLocal8Bit("主机1"));
 		//ui->comboBox->addItem(QString::fromLocal8Bit("主机2"));
 		//this->message = new Message_t();
-	getUdpData(&message);
+	getUdpData();
 	//根据下拉列表中最长项的长度来调整控件的宽度
 	ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	// 连接信号和槽
@@ -327,7 +327,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 
 void ResourceManageDialog::startWebFlushTimer()
 {
-	m_timer->start(1000);
+	m_timer->start(2000);
 }
 
 void ResourceManageDialog::stopWebFlushTimer()
@@ -615,42 +615,45 @@ void ResourceManageDialog::slot_timerTimeout()
 	 unsigned long netThroughput = common::GetNetworkInterfacesThroughput();*/
 	 //加载列表页面的四个数据
 	// updateHostTableShow("1", dCpuUse, dMemUseRate, dDiskUseRate, netThroughput);
-	if (message.host_name != 0) {
-		updateHostTableShow(message.host_name, message.Cpu_Message, message.Memory_Message, message.Disk_Message, message.Net_Message, message.Gpu_Message);
-	}
-	// 检查comboBox中是否已经存在该项
-	int index = ui->comboBox->findText(message.host_name);
-	if (index == -1 && !message.host_name.isEmpty())
-	{ // 如果不存在，才添加
-		ui->comboBox->addItem(message.host_name);
-	}
-	if (CPU_init == true && message.host_name == ui->comboBox->currentText()) {
-		//addHostCpuElemnet(message.host_name, message.Cpu_Message);
-		updateCpuWebViewShow(message.host_name);
-	}
-	else if (memory_init == true && message.host_name == ui->comboBox->currentText()) {
-		//addHostMemoryElemnet(message.host_name, message.Memory_Message);
-		updateMemoryWebViewShow(message.host_name);
-	}
-	else if (disk_init == true && message.host_name == ui->comboBox->currentText()) {
-		updateDiskWebViewShow(message.host_name);
-		//addHostDiskElemnet(message.host_name, message.Disk_Message);
-	}
-	else if (net_init == true && message.host_name == ui->comboBox->currentText()) {
-		//addHostNetElemnet(message.host_name, message.Net_Message);
-		updateNetWebViewShow(message.host_name);
-	}
-	else if (Gpu_init == true && message.host_name == ui->comboBox->currentText()) {
-		updateGpuWebViewShow(message.host_name);
-	}
-	/*if (message.host_name == ui->comboBox->currentText())
+	//if (message.host_name != 0) 
+	QString hostName;
+	Message_t hostInformation;
+	for (const auto& pair : myMap)
 	{
-		updateCpuWebViewShow(message.host_name);
-		updateMemoryWebViewShow(message.host_name);
-		updateDiskWebViewShow(message.host_name);
-		updateNetWebViewShow(message.host_name);
-	}*/
+		hostName = pair.first;
+		hostInformation = pair.second;
 
+		updateHostTableShow(hostInformation.host_name, hostInformation.Cpu_Message, hostInformation.Memory_Message, hostInformation.Disk_Message, hostInformation.Net_Message, hostInformation.Gpu_Message);
+
+		// 检查comboBox中是否已经存在该项
+		int index = ui->comboBox->findText(hostInformation.host_name);
+		if (index == -1 && !hostInformation.host_name.isEmpty())
+		{
+			// 如果不存在，才添加
+			ui->comboBox->addItem(hostInformation.host_name);
+		}
+		if (CPU_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		{
+			updateCpuWebViewShow(hostInformation.host_name);
+		}
+		else if (memory_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		{
+			updateMemoryWebViewShow(hostInformation.host_name);
+		}
+		else if (disk_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		{
+			updateDiskWebViewShow(hostInformation.host_name);
+		}
+		else if (net_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		{
+			updateNetWebViewShow(hostInformation.host_name);
+		}
+		else if (Gpu_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		{
+			updateGpuWebViewShow(hostInformation.host_name);
+		}
+	}
+	
 }
 
 void ResourceManageDialog::slot_get_data(int index)
@@ -697,7 +700,7 @@ void ResourceManageDialog::slot_get_data(int index)
 	}
 }
 
-void  ResourceManageDialog::getUdpData(Message_t * infor)
+void  ResourceManageDialog::getUdpData()
 {
 	// UDP的连接
 	this->UdpSocket = new QUdpSocket();
@@ -723,11 +726,11 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 
 			QDataStream stream(&datagram, QIODevice::ReadOnly);
 
-			stream >> infor->host_name;
+			stream >> message.host_name;
 
-			if (infor->host_name == "success" || infor->host_name == "false")
+			if (message.host_name == "success" || message.host_name == "false")
 			{
-				if(infor->host_name == "success")
+				if (message.host_name == "success")
 				{
 					emit  signal_udpOrderFinsh(1);
 				}
@@ -738,36 +741,40 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			}
 			else
 			{
-				stream >> infor->host_ip1;
-				stream >> infor->host_ip2;
-				stream >> infor->Cpu_Message;
-				stream >> infor->Memory_Message;
-				stream >> infor->Disk_Message;
+				stream >> message.host_ip1;
+				stream >> message.host_ip2;
+				stream >> message.Cpu_Message;
+				stream >> message.Memory_Message;
+				stream >> message.Disk_Message;
 				quint32 temp;
 				stream >> temp;
-				infor->Net_Message = static_cast<unsigned long>(temp);
-				stream >> infor->Gpu_Message;
+				message.Net_Message = static_cast<unsigned long>(temp);
+				stream >> message.Gpu_Message;
+
+				//将消息存入map容器中
+				myMap[message.host_name] = message;
 
 				//输出收到的消息
-				qDebug() << infor->host_name;
-				qDebug() << addr.toString();
-				addHostCpuElemnet(infor->host_name, infor->Cpu_Message);
-				addHostMemoryElemnet(infor->host_name, infor->Memory_Message);
-				addHostDiskElemnet(infor->host_name, infor->Disk_Message);
-				addHostNetElemnet(infor->host_name, infor->Net_Message);
-				addHostGpuElemnet(infor->host_name, infor->Gpu_Message);
+				qDebug() <<"send host name:"<< message.host_name;
+				qDebug() << "send host disk:" << message.host_name;
+				qDebug() << "send host ip:" << addr.toString();
+				addHostCpuElemnet(message.host_name, message.Cpu_Message);
+				addHostMemoryElemnet(message.host_name, message.Memory_Message);
+				addHostDiskElemnet(message.host_name, message.Disk_Message);
+				addHostNetElemnet(message.host_name, message.Net_Message);
+				addHostGpuElemnet(message.host_name, message.Gpu_Message);
 
 				for (auto& myset : common::setHostData)
 				{
-					if (infor->host_ip1.toStdString() == myset.ip)
+					if (message.host_ip1.toStdString() == myset.ip)
 					{
-						myset.dGpuUsage = infor->Gpu_Message;
-						myset.dCpuUsage = infor->Cpu_Message;
+						myset.dGpuUsage = message.Gpu_Message;
+						myset.dCpuUsage = message.Cpu_Message;
 					}
-					else if (infor->host_ip2.toStdString() == myset.ip)
+					else if (message.host_ip2.toStdString() == myset.ip)
 					{
-						myset.dGpuUsage = infor->Gpu_Message;
-						myset.dCpuUsage = infor->Cpu_Message;
+						myset.dGpuUsage = message.Gpu_Message;
+						myset.dCpuUsage = message.Cpu_Message;
 					}
 				}
 			}
@@ -782,22 +789,22 @@ void  ResourceManageDialog::getUdpData(Message_t * infor)
 			stream2 << command.str3;
 			int ret = 0;
 			ret = this->UdpSocket->writeDatagram(dataGram, addr, port);*/
-		// 插入数据库;
-	   /* table_ip stIp;
-		stIp.ip = infor->host_ip.toStdString();
-		stIp.host = infor->host_name.toStdString();
-		int count = 0;
-		if (db::databaseDI::Instance().get_ip_count(stIp.ip, count))
-		{
-			if (count <= 0)
+			// 插入数据库;
+		   /* table_ip stIp;
+			stIp.ip = infor->host_ip.toStdString();
+			stIp.host = infor->host_name.toStdString();
+			int count = 0;
+			if (db::databaseDI::Instance().get_ip_count(stIp.ip, count))
 			{
-				if (!db::databaseDI::Instance().add_ip(stIp))
+				if (count <= 0)
 				{
-					qDebug() << "db::databaseDI::Instance().add_ip   error!";
+					if (!db::databaseDI::Instance().add_ip(stIp))
+					{
+						qDebug() << "db::databaseDI::Instance().add_ip   error!";
+					}
 				}
-			}
 
-		}*/
-	}
-});
+			}*/
+		}
+	});
 }

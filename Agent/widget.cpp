@@ -60,7 +60,7 @@ Widget::Widget(QWidget *parent)
 
 	initGpu();
 	connect(my_timer, &QTimer::timeout, this, &Widget::slot_useUdp);
-	this->my_timer->start(3000);
+	this->my_timer->start(2000);
 
 	//QString localHostName=QHostInfo::localHostName();   //获取主机名
 	//QHostInfo hostInfo=QHostInfo::fromName(localHostName);//本机的IP地址
@@ -279,7 +279,7 @@ void Widget::slot_useUdp()
 	stream << message->Gpu_Message;
 
 	//读取配置文件
-	get_file_information();
+	//get_file_information();
 
 	qint64 ret;
 	//for (const auto &server : m_serverList)
@@ -298,7 +298,7 @@ void Widget::slot_useUdp()
 			//qDebug() << "Bytes sent:" << ret;
 			//ui->textEdit->append(QString::number(ret));
 			ui->textEdit->append(message->host_name);
-			//ui->textEdit->append(server.first.toString());
+			ui->textEdit->append(QString::number(message->Disk_Message));
 		}
 
 		//const QHostAddress &ip = server.first;
