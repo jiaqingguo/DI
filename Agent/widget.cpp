@@ -279,13 +279,13 @@ void Widget::slot_useUdp()
 	stream << message->Gpu_Message;
 
 	//读取配置文件
-	//get_file_information();
+	get_file_information();
 
 	qint64 ret;
-	//for (const auto &server : m_serverList)
+	for (const auto &server : m_serverList)
 	{
-		//ret = UDPSocket->writeDatagram(dataGram, server.first, 54321);
-		ret = UDPSocket->writeDatagram(dataGram, QHostAddress("224.0.0.100"), 54321);
+		ret = UDPSocket->writeDatagram(dataGram, server.first, 54321);
+		//ret = UDPSocket->writeDatagram(dataGram, QHostAddress("224.0.0.100"), 54321);
 		if (ret == -1)
 		{
 			// 发送失败
@@ -299,6 +299,7 @@ void Widget::slot_useUdp()
 			//ui->textEdit->append(QString::number(ret));
 			ui->textEdit->append(message->host_name);
 			ui->textEdit->append(QString::number(message->Disk_Message));
+			ui->textEdit->append(server.first.toString());
 		}
 
 		//const QHostAddress &ip = server.first;

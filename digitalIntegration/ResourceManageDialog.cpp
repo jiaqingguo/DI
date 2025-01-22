@@ -423,9 +423,14 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 			QString netData = "Kbps";
 			if (dNet > 1024)
 			{
+				double temp = dNet / 1000;
 				netData = "Mbps";
+				item->setText(QString::number(temp) + netData);
 			}
-			item->setText(QString::number(dNet) + netData);
+			else
+			{
+				item->setText(QString::number(dNet) + netData);
+			}
 
 			item = m_model->item(row, 5);
 			item->setText(QString::number(dGpu) + QString(" %"));
@@ -711,7 +716,7 @@ void  ResourceManageDialog::getUdpData()
 	{
 		qDebug() << ret;
 	}
-	this->UdpSocket->joinMulticastGroup(QHostAddress("224.0.0.100"));
+	//this->UdpSocket->joinMulticastGroup(QHostAddress("224.0.0.100"));
 	connect(this->UdpSocket, &QUdpSocket::readyRead, [=]() {
 		while (this->UdpSocket->hasPendingDatagrams())
 		{
