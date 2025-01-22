@@ -124,7 +124,8 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
 	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
-
+	// 隐藏用户登录后的图标
+	ui->labelUserIcon->hide();
 	initInitface();
 
 	//QString target = "\\\\192.168.0.250\\"; // 实际路径
