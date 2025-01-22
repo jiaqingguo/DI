@@ -248,24 +248,24 @@ void Widget::slot_useUdp()
 	}
 	// }
 	 //qDebug()<<message->host_ip;
-	message->CPU_Message = common::getCpuUsage();
+	message->CPU_Message = std::round(common::getCpuUsage() * 100) / 100;
 
 	long allPhysicsMem;
 	long freePhysicsMem;
 	common::getPhysicsMem(allPhysicsMem, freePhysicsMem);
-	message->Memory_Message = (allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem;
+	message->Memory_Message = std::round(((allPhysicsMem - freePhysicsMem) * 100.0 / allPhysicsMem) * 100) / 100;
 
 	double lFreeAll;
 	double lToalAll;
 	common::getAllDisSpace(lFreeAll, lToalAll);
-	message->Disk_Message = (lToalAll - lFreeAll) * 100.0 / lToalAll;
+	message->Disk_Message = std::round(((lToalAll - lFreeAll) * 100.0 / lToalAll) * 100) / 100;
 	//        common::getNetworkInterfaceStatistics();
 	//        common::PrintAdapterInfo();
-	message->Net_Message = common::GetNetworkInterfacesThroughput();
+	message->Net_Message = std::round(common::GetNetworkInterfacesThroughput() * 100) / 100;
 	double value;
 	value = getGpuUsage();
 	//int roundedValue = static_cast<int>(value);
-	message->Gpu_Message = value;
+	message->Gpu_Message = std::round(value * 100) / 100;
 
 	QByteArray dataGram;
 	QDataStream stream(&dataGram, QIODevice::WriteOnly);

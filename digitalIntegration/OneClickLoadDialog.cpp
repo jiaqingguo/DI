@@ -1,4 +1,4 @@
-
+ï»¿
 
 #include <QStandardItemModel>
 #include <QComboBox>
@@ -22,20 +22,20 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(2);
-	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ĞòºÅ"));
-	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("Èí¼ş"));
-	//m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("Ä£¿é"));
-	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("Ñ¡Ôñ"));
+	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("è½¯ä»¶"));
+	//m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("æ¨¡å—"));
+	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("é€‰æ‹©"));
 
-	/* QStringList labels = QObject::trUtf8("ID,Ãû×Ö,value,Ê±¼ä,Àà±ğ").simplified().split(",");
+	/* QStringList labels = QObject::trUtf8("ID,åå­—,value,æ—¶é—´,ç±»åˆ«").simplified().split(",");
 	 model->setHorizontalHeaderLabels(labels);*/
 	ui->tableView->setModel(m_model);
 	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // Ñ¡ÔñÕûĞĞ
+	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // é€‰æ‹©æ•´è¡Œ
 	ui->tableView->verticalHeader()->setDefaultSectionSize(28);
 	ui->tableView->verticalHeader()->setVisible(false);
 
-	// Òş²ØµÚ¶şÁĞ
+	// éšè—ç¬¬äºŒåˆ—
 	//ui->tableView->setColumnHidden(0, true);
 	//common::setTableViewBasicConfiguration(ui->tableView);
 
@@ -46,14 +46,14 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	//    m_model->setItem(i, 1, new QStandardItem(QString("hello qt tablview %1").arg(i)));
 	//    m_model->setItem(i, 2, new QStandardItem("normal"));
 	// 
-	//    QWidget* widget = new QWidget(); // ´´½¨Ò»¸öÈİÆ÷WidgetÀ´´æ·ÅCheckBox
-	//    QCheckBox* checkBox = new QCheckBox(); // ´´½¨CheckBox
+	//    QWidget* widget = new QWidget(); // åˆ›å»ºä¸€ä¸ªå®¹å™¨Widgetæ¥å­˜æ”¾CheckBox
+	//    QCheckBox* checkBox = new QCheckBox(); // åˆ›å»ºCheckBox
 	//    checkBox->setProperty("row", i); // set custom property
 	//    checkBox->setProperty("column", 3);
-	//    QHBoxLayout* layout = new QHBoxLayout(widget); // ÎªÈİÆ÷WidgetÉèÖÃË®Æ½²¼¾Ö
-	//    layout->addWidget(checkBox); // ½«CheckBoxÌí¼Óµ½²¼¾ÖÖĞ
-	//    layout->setAlignment(Qt::AlignCenter); // ÉèÖÃ²¼¾ÖÖĞµÄ¿Ø¼ş¾ÓÖĞ¶ÔÆë
-	//    layout->setContentsMargins(0, 0, 0, 0); // ÒÆ³ı²¼¾Ö±ß¾à
+	//    QHBoxLayout* layout = new QHBoxLayout(widget); // ä¸ºå®¹å™¨Widgetè®¾ç½®æ°´å¹³å¸ƒå±€
+	//    layout->addWidget(checkBox); // å°†CheckBoxæ·»åŠ åˆ°å¸ƒå±€ä¸­
+	//    layout->setAlignment(Qt::AlignCenter); // è®¾ç½®å¸ƒå±€ä¸­çš„æ§ä»¶å±…ä¸­å¯¹é½
+	//    layout->setContentsMargins(0, 0, 0, 0); // ç§»é™¤å¸ƒå±€è¾¹è·
 	//   
 	//    ui->tableView->setIndexWidget(m_model->index(i, 3), widget);
 	//}
@@ -70,20 +70,20 @@ OneClickLoadDialog::~OneClickLoadDialog()
 
 void OneClickLoadDialog::slot_btnAdd()
 {
-	//int newRowIndex = m_model->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-	//m_model->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+	//int newRowIndex = m_model->rowCount(); // è·å–å½“å‰è¡Œæ•°
+	//m_model->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 	//QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
 	//m_model->setItem(newRowIndex, 0, item);
 	//QModelIndex index = m_model->index(newRowIndex, 0);
-	//// item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
-	////m_model->setData(index, stIp.id, Qt::UserRole);  // ÉèÖÃid;
+	//// item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
+	////m_model->setData(index, stIp.id, Qt::UserRole);  // è®¾ç½®id;
 
 	//m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString("")));
 	//m_model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString("")));
 
-	// ´´½¨QComboBox²¢ÉèÖÃÄ£ĞÍÊı¾İ
-	QComboBox *comboBox = new QComboBox();
+	// åˆ›å»ºQComboBoxå¹¶è®¾ç½®æ¨¡å‹æ•°æ®
+	this->comboBox = new QComboBox();
 	comboBox->setEditable(false);
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
@@ -94,50 +94,50 @@ void OneClickLoadDialog::slot_btnAdd()
 		{
 			software = stTool.first;
 			data = stTool.second;
-			comboBox->addItems(QString::fromStdString(software).split(' '));
+			comboBox->addItem(QString::fromStdString(software));
 		}
 	}
-	// ÉèÖÃÕ¼Î»·ûÏîÎªÑ¡ÖĞ
+	// è®¾ç½®å ä½ç¬¦é¡¹ä¸ºé€‰ä¸­
 	comboBox->setCurrentIndex(-1);
 
 	int newRowIndex = m_model->rowCount();
 	QStandardItem *item2 = new QStandardItem(QString::number(newRowIndex + 1));
 	m_model->setItem(newRowIndex, 0, item2);
-	item2->setEditable(false); // Ê¹Ïî²»¿É±à¼­£¬ÒÔ±ãÔÚ±à¼­Ä£Ê½ÏÂÏÔÊ¾QComboBox
+	item2->setEditable(false); // ä½¿é¡¹ä¸å¯ç¼–è¾‘ï¼Œä»¥ä¾¿åœ¨ç¼–è¾‘æ¨¡å¼ä¸‹æ˜¾ç¤ºQComboBox
 	m_model->setItem(newRowIndex, 1, item2);
 	ui->tableView->setIndexWidget(ui->tableView->model()->index(newRowIndex, 1), comboBox);
 	//ui->tableView->show();
 	
-	connect(comboBox, &QComboBox::currentTextChanged, this, &OneClickLoadDialog::slot_keep_soft);
+	connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &OneClickLoadDialog::slot_keep_soft);
 }
 void OneClickLoadDialog::slot_btnDel()
 {
 	QModelIndex index = ui->tableView->currentIndex();
 	if (index.isValid())
 	{
-		// »ñÈ¡µ±Ç°Ñ¡ÖĞµ¥Ôª¸ñÍ¬Ò»ĞĞµÄµÚ2ÁĞµÄµ¥Ôª¸ñ
-		//QModelIndex indexSecond = index.sibling(index.row(), 1); // µÚ2ÁĞµÄË÷ÒıÎª1
-		//»ñÈ¡ÒªÉ¾³ıµÄµ¥Ôª¸ñ
+		// è·å–å½“å‰é€‰ä¸­å•å…ƒæ ¼åŒä¸€è¡Œçš„ç¬¬2åˆ—çš„å•å…ƒæ ¼
+		//QModelIndex indexSecond = index.sibling(index.row(), 1); // ç¬¬2åˆ—çš„ç´¢å¼•ä¸º1
+		//è·å–è¦åˆ é™¤çš„å•å…ƒæ ¼
 		//QVariant name_data = m_model->data(indexSecond, Qt::DisplayRole);
-		// »ñÈ¡µÚ¶şÁĞµÄQComboBox¿Ø¼ş
+		// è·å–ç¬¬äºŒåˆ—çš„QComboBoxæ§ä»¶
 		int row = index.row();
 		QWidget *comboBoxWidget = ui->tableView->indexWidget(ui->tableView->model()->index(row, 1));
 		QComboBox *comboBox = qobject_cast<QComboBox*>(comboBoxWidget);
-		// »ñÈ¡QComboBoxÖĞµÄÎÄ±¾
+		// è·å–QComboBoxä¸­çš„æ–‡æœ¬
 		QString comboBoxText = comboBox->currentText();
 
 		if (!db::databaseDI::Instance().del_load_software(comboBoxText.toStdString(), common::iUserID, common::index))
 			return;
 
-		m_model->removeRow(index.row()); // É¾³ıµÚ2ĞĞ£¨Ë÷Òı´Ó0¿ªÊ¼£©
+		m_model->removeRow(index.row()); // åˆ é™¤ç¬¬2è¡Œï¼ˆç´¢å¼•ä»0å¼€å§‹ï¼‰
 	}
 
 	for (int row = 0; row < m_model->rowCount(); ++row)
 	{
-		QStandardItem* item = m_model->item(row, 0); // »ñÈ¡µ±Ç°ĞĞµÄµÚÒ»ÁĞÏî
+		QStandardItem* item = m_model->item(row, 0); // è·å–å½“å‰è¡Œçš„ç¬¬ä¸€åˆ—é¡¹
 		if (item)
 		{
-			item->setText(QString::number(row + 1)); // ¸üĞÂĞòºÅ
+			item->setText(QString::number(row + 1)); // æ›´æ–°åºå·
 		}
 	}
 }
@@ -147,18 +147,18 @@ void OneClickLoadDialog::slot_btnOK()
 	//QString exeDir = QCoreApplication::applicationDirPath();
 	for (int row = 0; row < m_model->rowCount(); ++row)
 	{
-		//QStandardItem* item_software = m_model->item(row, 1); // »ñÈ¡µ±Ç°ĞĞµÄµÚ2ÁĞÏî
+		//QStandardItem* item_software = m_model->item(row, 1); // è·å–å½“å‰è¡Œçš„ç¬¬2åˆ—é¡¹
 		//QStandardItem* item_module = m_model->item(row, 2);
 
 		//if (item_module->data(Qt::DisplayRole).toInt() == 1)
-		// »ñÈ¡µ¥Ôª¸ñµÄĞ¡²¿¼ş
+		// è·å–å•å…ƒæ ¼çš„å°éƒ¨ä»¶
 		QWidget *widget = ui->tableView->indexWidget(m_model->index(row, 1));
 		if (widget)
 		{
-			// ½«Ğ¡²¿¼ş×ª»»ÎªQComboBox
+			// å°†å°éƒ¨ä»¶è½¬æ¢ä¸ºQComboBox
 			QComboBox *comboBox = qobject_cast<QComboBox *>(widget);
 
-			// »ñÈ¡µ±Ç°Ñ¡ÖĞµÄÎÄ±¾
+			// è·å–å½“å‰é€‰ä¸­çš„æ–‡æœ¬
 			QString currentText = comboBox->currentText();
 
 			if (common::index == 1)
@@ -167,19 +167,6 @@ void OneClickLoadDialog::slot_btnOK()
 				{
 					//emit one_load_tools(item_module->data(Qt::DisplayRole).toInt(), item_software->text());
 					emit one_load_tools(common::index, currentText);
-					////²åÈëÊı¾İ¿â
-					//table_one_load_software stData;
-					//stData.projectPath = currentText.toStdString();
-					////stData.module = item_module->data(Qt::DisplayRole).toInt();
-					//stData.module = common::index;
-					//stData.userID = common::iUserID;
-					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
-					//{
-					//	if (!db::databaseDI::Instance().add_load_software(stData))
-					//	{
-					//		return;
-					//	}
-					//}
 				}
 			}
 			else if (common::index == 2)
@@ -187,19 +174,6 @@ void OneClickLoadDialog::slot_btnOK()
 				//if (item_software)
 				{
 					emit one_load_tools(common::index, currentText);
-
-					////²åÈëÊı¾İ¿â
-					//table_one_load_software stData;
-					//stData.projectPath = currentText.toStdString();
-					//stData.userID = common::iUserID;
-					//stData.module = common::index;
-					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
-					//{
-					//	if (!db::databaseDI::Instance().add_load_software(stData))
-					//	{
-					//		return;
-					//	}
-					//}
 				}
 			}
 			else if (common::index == 3)
@@ -207,19 +181,6 @@ void OneClickLoadDialog::slot_btnOK()
 				//if (item_software)
 				{
 					emit one_load_tools(common::index, currentText);
-
-					////²åÈëÊı¾İ¿â
-					//table_one_load_software stData;
-					//stData.projectPath = currentText.toStdString();
-					//stData.userID = common::iUserID;
-					//stData.module = common::index;
-					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
-					//{
-					//	if (!db::databaseDI::Instance().add_load_software(stData))
-					//	{
-					//		return;
-					//	}
-					//}
 				}
 			}
 			else
@@ -227,19 +188,6 @@ void OneClickLoadDialog::slot_btnOK()
 				//if (item_software)
 				{
 					emit one_load_tools(common::index, currentText);
-
-					////²åÈëÊı¾İ¿â
-					//table_one_load_software stData;
-					//stData.projectPath = currentText.toStdString();
-					//stData.userID = common::iUserID;
-					//stData.module = common::index;
-					//if (!db::databaseDI::Instance().get_software(stData.projectPath, common::iUserID, stData.module))
-					//{
-					//	if (!db::databaseDI::Instance().add_load_software(stData))
-					//	{
-					//		return;
-					//	}
-					//}
 				}
 			}
 		}
@@ -247,12 +195,13 @@ void OneClickLoadDialog::slot_btnOK()
 	this->close();
 }
 
-void OneClickLoadDialog::slot_keep_soft(QString text)
+void OneClickLoadDialog::slot_keep_soft(int index)
 {
-	//²åÈëÊı¾İ¿â
+	//æ’å…¥æ•°æ®åº“
 	table_one_load_software stData;
+	text = comboBox->itemText(index);
 	stData.projectPath = text.toStdString();
-	//stData.module = item_module->data(Qt::DisplayRole).toInt();
+
 	stData.module = common::index;
 	stData.userID = common::iUserID;
 	if (!db::databaseDI::Instance().add_load_software(stData))

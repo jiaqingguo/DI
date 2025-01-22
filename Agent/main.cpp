@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
     Widget w;
     w.show();
     //窗口的隐藏
-    //w.hide();
+    w.hide();
     //窗口的最小化
-    w.showMinimized();
+    //w.showMinimized();
     return a.exec();
 }

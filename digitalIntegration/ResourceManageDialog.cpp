@@ -761,7 +761,7 @@ void  ResourceManageDialog::getUdpData()
 
 				//输出收到的消息
 				qDebug() <<"send host name:"<< message.host_name;
-				qDebug() << "send host disk:" << message.host_name;
+				qDebug() << "send host disk:" << message.Gpu_Message;
 				qDebug() << "send host ip:" << addr.toString();
 				addHostCpuElemnet(message.host_name, message.Cpu_Message);
 				addHostMemoryElemnet(message.host_name, message.Memory_Message);
