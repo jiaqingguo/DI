@@ -329,7 +329,6 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 	QComboBox *ipcomboBox3 = addToolInfoDialog.getipComboBox3();
 	if (moduleNumber != 1)
 	{
-
 		accelerate->setEnabled(false);
 		accelerate->setVisible(false);
 		node->setEnabled(false);

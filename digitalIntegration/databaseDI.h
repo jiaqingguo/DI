@@ -128,6 +128,7 @@ namespace db
 		bool get_load_software(std::list<table_one_load_software> &listData);
 		bool del_load_software(std::string software,int &userid, const int &module);
 		bool get_software(std::string software, int &userid,const int &module);
+		bool update_software(std::string software , const int &id);
 
 		// 远程账户密码表;
 		bool get_account_password(table_account_password& stAccount);

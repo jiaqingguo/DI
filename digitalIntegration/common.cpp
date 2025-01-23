@@ -877,17 +877,19 @@ namespace common
         // 用于存储唯一 name 的新 vector
       //  std::vector<table_ip_configure> uniqueNameData;
         // 用于跟踪已遇到的 name
-        std::unordered_set<std::string> encounteredNames;
+        //std::unordered_set<std::string> encounteredNames;
 
         // 遍历原始数据
         for (const auto& item : setHostData) {
             // 如果 name 尚未遇到
-            if (encounteredNames.find(item.hostname) == encounteredNames.end())
+            //if (encounteredNames.find(item.hostname) == encounteredNames.end())
+			QString strIp = QString::fromStdString(item.ip);
+			if(strIp.contains("192.168.1"))
             {
                 // 添加到新 vector
                 setHostName.push_back(item);
                 // 在已遇到 name 的集合中记录
-                encounteredNames.insert(item.hostname);
+                //encounteredNames.insert(item.hostname);
             }
         }
     }

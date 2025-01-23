@@ -70,18 +70,6 @@ OneClickLoadDialog::~OneClickLoadDialog()
 
 void OneClickLoadDialog::slot_btnAdd()
 {
-	//int newRowIndex = m_model->rowCount(); // 获取当前行数
-	//m_model->insertRow(newRowIndex); // 插入新行
-
-	//QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
-	//m_model->setItem(newRowIndex, 0, item);
-	//QModelIndex index = m_model->index(newRowIndex, 0);
-	//// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-	////m_model->setData(index, stIp.id, Qt::UserRole);  // 设置id;
-
-	//m_model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString("")));
-	//m_model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString("")));
-
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
 	comboBox->setEditable(false);
@@ -98,17 +86,31 @@ void OneClickLoadDialog::slot_btnAdd()
 		}
 	}
 	// 设置占位符项为选中
-	comboBox->setCurrentIndex(-1);
+	comboBox->setCurrentIndex(0);
+	table_one_load_software stData;
+	text = comboBox->itemText(0);
+	stData.projectPath = text.toStdString();
 
+	stData.module = common::index;
+	stData.userID = common::iUserID;
+	if (!db::databaseDI::Instance().add_load_software(stData))
+	{
+		return;
+	}
 	int newRowIndex = m_model->rowCount();
 	QStandardItem *item2 = new QStandardItem(QString::number(newRowIndex + 1));
 	m_model->setItem(newRowIndex, 0, item2);
+	QModelIndex index = m_model->index(newRowIndex, 0);
+	m_model->setData(index, stData.id, Qt::UserRole);
 	item2->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
 	m_model->setItem(newRowIndex, 1, item2);
+	comboBox->setProperty("row",newRowIndex);
 	ui->tableView->setIndexWidget(ui->tableView->model()->index(newRowIndex, 1), comboBox);
-	//ui->tableView->show();
-	
+
+
 	connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &OneClickLoadDialog::slot_keep_soft);
+
+
 }
 void OneClickLoadDialog::slot_btnDel()
 {
@@ -197,15 +199,62 @@ void OneClickLoadDialog::slot_btnOK()
 
 void OneClickLoadDialog::slot_keep_soft(int index)
 {
-	//插入数据库
-	table_one_load_software stData;
-	text = comboBox->itemText(index);
-	stData.projectPath = text.toStdString();
-
-	stData.module = common::index;
-	stData.userID = common::iUserID;
-	if (!db::databaseDI::Instance().add_load_software(stData))
+	//更新数据库
+	QComboBox *pcomboBox = (QComboBox*)sender();
+	int row = pcomboBox->property("row").toInt();
+	QModelIndex ModelIndex = m_model->index(row,0);
+	int id = m_model->data(ModelIndex, Qt::UserRole).toInt();
+	text = pcomboBox->itemText(index);
+	if (!db::databaseDI::Instance().update_software(text.toStdString(), id))
 	{
 		return;
+	}
+}
+void OneClickLoadDialog::initTableView()
+{
+	common::delAllModelRow(m_model);
+	//if (!m_OneClickLoadDialog->m_model->rowCount())
+	{
+		std::list<table_one_load_software> listData;
+		if (db::databaseDI::Instance().get_load_software(listData))
+		{
+			for (auto &stData : listData)
+			{
+				if (stData.userID == common::iUserID && stData.module == common::index)
+				{
+					int newRowIndex = m_model->rowCount(); // 获取当前行数
+					m_model->insertRow(newRowIndex); // 插入新行
+
+					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
+					m_model->setItem(newRowIndex, 0, item);
+					QModelIndex index = m_model->index(newRowIndex, 0);
+					m_model->setData(index,stData.id,Qt::UserRole);
+
+					item->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
+
+					// 创建QComboBox并设置模型数据
+					QComboBox *comboBox = new QComboBox();
+
+					m_model->setItem(newRowIndex, 1, item);
+
+					std::map<std::string, table_ip> ipMap;
+					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
+					{
+						for (const auto& stTool : ipMap)
+						{
+							const std::string& software = stTool.first;
+							const table_ip& data = stTool.second;
+							comboBox->addItem(QString::fromStdString(software));
+						}
+					}
+					comboBox->setCurrentText(QString::fromStdString(stData.projectPath));
+					comboBox->setProperty("row",newRowIndex);
+					
+					connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &OneClickLoadDialog::slot_keep_soft);
+
+					ui->tableView->setIndexWidget(m_model->index(newRowIndex, 1), comboBox);
+				}
+			}
+		}
 	}
 }

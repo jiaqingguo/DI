@@ -149,7 +149,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
 	   //  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("网络"));
+	m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("网络吞吐量"));
 	m_jsonDataNet.insert("data", _data);
 	// 折线图（line）
 	// 柱状图（Bar）
@@ -198,7 +198,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 		//  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU"));
+	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU使用率"));
 	m_jsonDataCpu.insert("data", _data);
 
 	m_jsonDataCpu.insert("type", "line");
@@ -235,7 +235,7 @@ void ResourceManageDialog::initWebViewMemory(QWidget* widget)
 		//    itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("内存"));
+	m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("内存使用率"));
 	m_jsonDataMemory.insert("data", _data);
 
 	m_jsonDataMemory.insert("type", "line");
@@ -272,7 +272,7 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
 		//   itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("磁盘"));
+	m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("磁盘使用率"));
 	m_jsonDataDisk.insert("data", _data);
 
 	m_jsonDataDisk.insert("type", "line");
@@ -311,7 +311,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 		//  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataGpu.insert("titleName", QString::fromLocal8Bit("GPU"));
+	m_jsonDataGpu.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
 	m_jsonDataGpu.insert("data", _data);
 
 	m_jsonDataGpu.insert("type", "line");
@@ -761,7 +761,7 @@ void  ResourceManageDialog::getUdpData()
 
 				//输出收到的消息
 				qDebug() <<"send host name:"<< message.host_name;
-				qDebug() << "send host disk:" << message.Gpu_Message;
+				qDebug() << "send host disk:" << message.Disk_Message;
 				qDebug() << "send host ip:" << addr.toString();
 				addHostCpuElemnet(message.host_name, message.Cpu_Message);
 				addHostMemoryElemnet(message.host_name, message.Memory_Message);

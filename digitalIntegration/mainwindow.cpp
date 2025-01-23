@@ -819,48 +819,7 @@ void MainWindow::slot_btnOneClickLoad()
 
 	common::index = getBtnLoadIndex(pButton);
 
-
-
-	if (!m_OneClickLoadDialog->m_model->rowCount())
-	{
-		std::list<table_one_load_software> listData;
-		if (db::databaseDI::Instance().get_load_software(listData))
-		{
-			for (auto &stData : listData)
-			{
-				if (stData.userID == common::iUserID && stData.module == common::index)
-				{
-					int newRowIndex = m_OneClickLoadDialog->m_model->rowCount(); // 获取当前行数
-					m_OneClickLoadDialog->m_model->insertRow(newRowIndex); // 插入新行
-
-					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
-					//m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
-					//QModelIndex index = m_OneClickLoadDialog->m_model->index(newRowIndex, 0);
-
-					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 0, item);
-					item->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
-					// 创建QComboBox并设置模型数据
-					QComboBox *comboBox = new QComboBox();
-					//comboBox->addItems(QString::fromStdString(stData.projectPath).split(' '));
-					m_OneClickLoadDialog->m_model->setItem(newRowIndex, 1, item);
-
-					std::map<std::string, table_ip> ipMap;
-					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
-					{
-						for (const auto& stTool : ipMap)
-						{
-							const std::string& software = stTool.first;
-							const table_ip& data = stTool.second;
-							comboBox->addItems(QString::fromStdString(software).split(' '));
-						}
-					}
-					comboBox->setCurrentText(QString::fromStdString(stData.projectPath));
-					m_OneClickLoadDialog->ui->tableView->setIndexWidget(m_OneClickLoadDialog->m_model->index(newRowIndex, 1), comboBox);
-
-				}
-			}
-		}
-	}
+	m_OneClickLoadDialog->initTableView();
 
 	m_OneClickLoadDialog->exec();
 	//QPushButton* pButton = (QPushButton*)sender();

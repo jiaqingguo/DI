@@ -2143,14 +2143,14 @@ namespace db
 
 		return true;
 	}
-	bool databaseDI::get_software(std::string software, int &userid,const int &module)
+	bool databaseDI::get_software(std::string software, int &userid, const int &module)
 	{
 		// 结果集声明;
 		MYSQL_ROW sql_row;
 
 		// 执行SQL语句;
 		char sql[256] = { 0 };
-		sprintf_s(sql, "select * from t_one_click_load where usrID = (\'%d\') and software = (\'%s\') and module = (\'%d\')",userid,software.c_str(),module);
+		sprintf_s(sql, "select * from t_one_click_load where usrID = (\'%d\') and software = (\'%s\') and module = (\'%d\')", userid, software.c_str(), module);
 
 		MYSQL_RES* result = exec_sql_select(sql);
 		if (result == nullptr)
@@ -2161,6 +2161,35 @@ namespace db
 			return true;
 		}
 		return false;
+
+
+	}
+	bool databaseDI::update_software(std::string software, const int &id)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "update t_one_click_load set software=\'%s\' where id=\'%d\'",
+			software.c_str(),
+			id);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
 	}
 	bool databaseDI::get_account_password(table_account_password& stAccount)
 	{

@@ -17,10 +17,12 @@ class OneClickLoadDialog : public QDialog
 public:
     explicit OneClickLoadDialog(QWidget *parent = nullptr);
     ~OneClickLoadDialog();
-	QStandardItemModel* m_model = nullptr;
+
+	void initTableView();
 
     Ui::OneClickLoadDialog *ui;
 private:
+	QStandardItemModel* m_model = nullptr;
 	QComboBox *comboBox = nullptr;
 	//用于存储最后一次选择的文本
 	QString text = nullptr;
