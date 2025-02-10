@@ -67,18 +67,21 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     progress.setAlignment(Qt::AlignCenter);
     //   statusBar()->addWidget(&progress, width());
 
+
+    m_pFtp = new QFtp;
        // 信号槽
-    connect(&ftp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
-    connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+    connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+    connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
     //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-    connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+    connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
     connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
     connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
 
-    connect(&m_ftpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+    m_pFtpAdmin = new QFtp;
+    connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
 
 
   
@@ -173,7 +176,7 @@ QString FtpClientWidget::createFolderName()
 void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QString& strAddr, const QString& strAccount, const QString& strPwd, const int& port)
 {
     m_strHostName = strHostName;
-   // ftp.setAutoTimeout(-1);
+   // m_pFtp->setAutoTimeout(-1);
     m_strAccount = strAccount;
     m_strPwd = strPwd;
     m_strAddr = strAddr;
@@ -185,17 +188,17 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
         return;
     }
     // 如果已经登录了就不需要重复登录
-    if (ftp.state() != QFtp::LoggedIn)
+    if (m_pFtp->state() != QFtp::LoggedIn)
     {
-        ftp.connectToHost(m_strAddr, m_iPort);
-        ftp.login(m_strAccount, m_strPwd);
+        m_pFtp->connectToHost(m_strAddr, m_iPort);
+        m_pFtp->login(m_strAccount, m_strPwd);
     }
 
-    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    if (m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
 
-        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login(common::strFtpAccount,common::strFtpAdminPwd );
+        m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
+        m_pFtpAdmin->login(common::strFtpAccount,common::strFtpAdminPwd );
     }
     if (common::bAdministrator) // 管理员;
     {
@@ -244,10 +247,10 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
 
 void FtpClientWidget::Flush()
 {
-    if (ftp.state() != QFtp::LoggedIn)
+    if (m_pFtp->state() != QFtp::LoggedIn)
     {
-        ftp.connectToHost(m_strAddr, m_iPort);
-        ftp.login(m_strAccount, m_strPwd);
+        m_pFtp->connectToHost(m_strAddr, m_iPort);
+        m_pFtp->login(m_strAccount, m_strPwd);
     }
     else
     {
@@ -262,40 +265,48 @@ void FtpClientWidget::Flush()
             listType["..."] =  common::folderType();
         }
 
-        ftp.list();
+        m_pFtp->list();
     }
     
 }
 
 void FtpClientWidget::reconnectFtp()
 {
-    if (ftp.state() != QFtp::LoggedIn)
+    if (m_pFtp->state() != QFtp::LoggedIn)
     {
+        delete m_pFtp;
+        m_pFtp = nullptr;
+        m_pFtp = new QFtp;
+       
         // 信号槽
-        connect(&ftp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
-        connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+        connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
+        connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
         //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-        connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
-        ftp.connectToHost(m_strAddr, m_iPort);
-        ftp.login(m_strAccount, m_strPwd);
+        connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+        m_pFtp->connectToHost(m_strAddr, m_iPort);
+        m_pFtp->login(m_strAccount, m_strPwd);
     }
 
-    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    if (m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
-        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login(common::strFtpAccount, common::strFtpAdminPwd);
+        delete m_pFtpAdmin;
+        m_pFtpAdmin = nullptr;
+        m_pFtpAdmin = new QFtp;
+        connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+        m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
+        m_pFtpAdmin->login(common::strFtpAccount, common::strFtpAdminPwd);
     }
 }
 
 void FtpClientWidget::createUserDir(const QString& strDirName)
 {
-    if (m_ftpAdmin.state() != QFtp::LoggedIn)
+    if (m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
-        m_ftpAdmin.connectToHost(m_strAddr, m_iPort);
-        m_ftpAdmin.login(common::strFtpAccount, common::strFtpAdminPwd);
+        m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
+        m_pFtpAdmin->login(common::strFtpAccount, common::strFtpAdminPwd);
     }
 
-    m_ftpAdmin.mkdir(toFtpCodec(strDirName));
+    m_pFtpAdmin->mkdir(toFtpCodec(strDirName));
 }
 
 void FtpClientWidget::setIsLinuxFtpServer(const bool& b)
@@ -364,7 +375,7 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
 
         m_bDownloadDir = true;
         setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
-        m_downloadDirCommandID = ftp.list(toFtpCodec(remoteDownloadDirPath));
+        m_downloadDirCommandID = m_pFtp->list(toFtpCodec(remoteDownloadDirPath));
         m_iDoloadDirCommandTotal++;
 
         m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
@@ -389,7 +400,7 @@ void FtpClientWidget::ApprovalDownload(const QString& strName, const QString& st
       /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
         m_pGifDialog->show();*/
 
-        int id = ftp.get(toFtpCodec(remoteDownloadDirPath), file);
+        int id = m_pFtp->get(toFtpCodec(remoteDownloadDirPath), file);
 
         m_mapFileDownload[id] = file;
     }
@@ -441,7 +452,7 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
             {
                 return;
             }
-            int id = ftp.get(toFtpCodec(newRemote), file);
+            int id = m_pFtp->get(toFtpCodec(newRemote), file);
             m_iDoloadDirCommandTotal++;
             m_mapFileDownload[id] = file;
 
@@ -455,7 +466,7 @@ void FtpClientWidget::downloadDirectory( QVector<QUrlInfo>& vecurlInfo, const QS
          
             m_bDownloadDir = true;
             // 继续列出目录
-            m_downloadDirCommandID = ftp.list(toFtpCodec(newRemote)); // 列出子目录内容
+            m_downloadDirCommandID = m_pFtp->list(toFtpCodec(newRemote)); // 列出子目录内容
             m_iDoloadDirCommandTotal++;
            
             m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = newLoacl;
@@ -502,7 +513,7 @@ void FtpClientWidget::downloadFile(const QString& name, const QString& strFtpPat
     /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
         m_pGifDialog->show();*/
 
-    int id = ftp.get(toFtpCodec(strFtpPath), file);
+    int id = m_pFtp->get(toFtpCodec(strFtpPath), file);
 
 
     m_mapFileDownload[id] = file;
@@ -519,9 +530,9 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
    
     // 创建远程目录
     QString remoteDir = remoteDirPath + "//" + localDir.dirName();
-  //  ftp.mkdir(remoteDir); // 在 FTP 服务器上创建目录
+  //  m_pFtp->mkdir(remoteDir); // 在 FTP 服务器上创建目录
     remoteDir = toFtpCodec(remoteDir);
-    ftp.mkdir(toFtpCodec(remoteDir));
+    m_pFtp->mkdir(toFtpCodec(remoteDir));
     m_iUploadDirCommandTotal++;
 
     // 上传所有文件
@@ -539,7 +550,7 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
         }
         QFile * pfile = new QFile(filePath);
 
-        int id=ftp.put(pfile, toFtpCodec(remoteFilePath)); // 上传文件
+        int id=m_pFtp->put(pfile, toFtpCodec(remoteFilePath)); // 上传文件
         m_iUploadDirCommandTotal++;
         m_mapFileUpload[id] = pfile;
     }
@@ -556,9 +567,9 @@ void FtpClientWidget::uploadDirectory(const QString& localDirPath, const QString
 
 void FtpClientWidget::on_tbDisconnent_clicked()
 {
-    if (ftp.state() == QFtp::LoggedIn)
+    if (m_pFtp->state() == QFtp::LoggedIn)
     {
-        ftp.close();
+        m_pFtp->close();
     }
 }
 
@@ -589,8 +600,8 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         }
 
         // 发送命令返回上一级，然后列出所有项
-        ftp.cd("../");
-        ftp.list();
+        m_pFtp->cd("../");
+        m_pFtp->list();
     }
     // 如果双击的是其他行，并且是目录行，表示进入下一级
     else if (listPath[name])
@@ -618,9 +629,9 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         listType["..."] = common::folderType();
 
         // 发送命令进入下一级，然后列出所有项
-        //ftp.cd(toFtpCodec(currentPath.()));
-        ftp.cd(toFtpCodec(currentPath));
-        ftp.list();
+        //m_pFtp->cd(toFtpCodec(currentPath.()));
+        m_pFtp->cd(toFtpCodec(currentPath));
+        m_pFtp->list();
     }
 }
 
@@ -693,7 +704,7 @@ void FtpClientWidget::onUpload()
     setDisableUI(QString::fromLocal8Bit("正在上传文件"));
   /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在上传文件"));
     m_pGifDialog->show();*/
-    int id= ftp.put(pfile, toFtpCodec(path));
+    int id= m_pFtp->put(pfile, toFtpCodec(path));
    
     m_mapFileUpload[id] = pfile;
 }
@@ -759,7 +770,7 @@ void FtpClientWidget::onDownload()
             /*    m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
                 m_pGifDialog->show();*/
 
-            int id = ftp.get(toFtpCodec(path), file);
+            int id = m_pFtp->get(toFtpCodec(path), file);
 
 
             m_mapFileDownload[id] = file;
@@ -829,7 +840,7 @@ void FtpClientWidget::slot_downloadDirectory()
 
             m_bDownloadDir = true;
             setDisableUI(QString::fromLocal8Bit("正在下载文件夹"));
-            m_downloadDirCommandID = ftp.list(toFtpCodec(remoteDownloadDirPath));
+            m_downloadDirCommandID = m_pFtp->list(toFtpCodec(remoteDownloadDirPath));
             m_iDoloadDirCommandTotal++;
 
             m_mapLoaclDownloadDirPath[m_downloadDirCommandID] = loaclDownloadDirPath;
@@ -854,7 +865,7 @@ void FtpClientWidget::slot_downloadDirectory()
           /*  m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在下载文件"));
             m_pGifDialog->show();*/
 
-            int id = ftp.get(toFtpCodec(path), file);
+            int id = m_pFtp->get(toFtpCodec(path), file);
 
 
             m_mapFileDownload[id] = file;
@@ -907,8 +918,8 @@ void FtpClientWidget::onCreateFolder()
    // // 创建目录 解决中文乱码问题
    // oldName = name;
    // createFolder = true;
-   // ftp.mkdir(toFtpCodec(oldName.()));
-   //// ftp.mkdir(toFtpCodec(oldName.()));
+   // m_pFtp->mkdir(toFtpCodec(oldName.()));
+   //// m_pFtp->mkdir(toFtpCodec(oldName.()));
 
    // editRow = row;
    // listPath[oldName] = true;
@@ -947,9 +958,9 @@ void FtpClientWidget::slot_newDir()
     // 创建目录 解决中文乱码问题
 
     createFolder = true;
-   // ftp.mkdir(toFtpCodec(name.())); toFtpCodec
+   // m_pFtp->mkdir(toFtpCodec(name.())); toFtpCodec
 
-    ftp.mkdir(toFtpCodec(name));
+    m_pFtp->mkdir(toFtpCodec(name));
 
     listPath[name] = true;
     listType[name] = type;
@@ -978,7 +989,7 @@ void FtpClientWidget::slot_rename()
     m_iRenameRow = row;
     //m_strRename = ui->tableWidget->item(row, 0)->text();
 
-    ftp.rename(toFtpCodec(m_oldName), toFtpCodec(m_strRename));
+    m_pFtp->rename(toFtpCodec(m_oldName), toFtpCodec(m_strRename));
 
    
 
@@ -997,13 +1008,13 @@ void FtpClientWidget::onRemove()
 
    if (listPath[name]) // 目录
     {
-       // ftp.rmdir(toFtpCodec(name));
+       // m_pFtp->rmdir(toFtpCodec(name));
         QString strArg1 = currentPath + "/" + name;
         emit signal_del(m_bLinuxFtpServer, m_strAddr, strArg1);
     }
     else  // 文件
     {
-        ftp.remove(toFtpCodec(name));
+        m_pFtp->remove(toFtpCodec(name));
        
     }
    /* QString strArg1 = currentPath + "/" + name;
@@ -1025,7 +1036,7 @@ void FtpClientWidget::onRefresh()
         listType["..."] = common::folderType();
     }
 
-    ftp.list();
+    m_pFtp->list();
 }
 
 void FtpClientWidget::onInsertRow()
@@ -1164,16 +1175,16 @@ void FtpClientWidget::commandFinished(int id, bool err)
     QString strErr;
     if (err)
     {
-       strErr = ftp.errorString();
-       int errfrp = ftp.error();
+       strErr = m_pFtp->errorString();
+       int errfrp = m_pFtp->error();
       if (errfrp == QFtp::Error::NotConnected)
       {
-         // ftp.connect();
+         // m_pFtp->connect();
           int a = 0;
       }
     }
   
-    int cmd = ftp.currentCommand();
+    int cmd = m_pFtp->currentCommand();
     switch (cmd)
     {
     case QFtp::Login:
@@ -1185,15 +1196,15 @@ void FtpClientWidget::commandFinished(int id, bool err)
             //    ui->tableWidget->insertRow(0);
             //    ui->tableWidget->setItem(0, 0, new QTableWidgetItem(folderIcon(), "..."));
             //    listType["..."] = folderType();
-            //    ftp.list(toFtpCodec(currentPath));   // 成功则显示列表
+            //    m_pFtp->list(toFtpCodec(currentPath));   // 成功则显示列表
             //}
             //else
             {
-                ftp.list();
+                m_pFtp->list();
             }
             
         }
-       // statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("服务器连接成功!"), 2000);
+       // statusBar()->showMessage(err ? m_pFtp->errorString() : QString::fromLocal8Bit("服务器连接成功!"), 2000);
         break;
 
     case QFtp::Close:
@@ -1204,7 +1215,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
            
            // clear(); 
             //currentPath.clear();
-          //  ftp.list(currentPath);
+          //  m_pFtp->list(currentPath);
         }     // 清除列表
 
         break;
@@ -1245,7 +1256,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
             //m_pGifDialog->close();
             setAbleUI();
         }
-            //  statusBar()->showMessage(err ? ftp.errorString() : QString::fromLocal8Bit("文件下载成功!"), 2000);
+            //  statusBar()->showMessage(err ? m_pFtp->errorString() : QString::fromLocal8Bit("文件下载成功!"), 2000);
          break;
     } 
     case QFtp::List :
@@ -1372,7 +1383,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
 
 void FtpClientWidget::slot_ftpAdminCommandFinished(int id, bool err)
 {
-    int cmd = m_ftpAdmin.currentCommand();
+    int cmd = m_pFtpAdmin->currentCommand();
     switch (cmd)
     {
     case QFtp::Mkdir:
@@ -1397,18 +1408,22 @@ void FtpClientWidget::slot_stateChanged(int state)
 {
     if (state == QFtp::State::Unconnected)
     {
-        if (ftp.state() != QFtp::LoggedIn)
+        if (m_pFtp->state() != QFtp::LoggedIn)
         {
             // 清除表格
             clear();
             currentPath = "";
+
+            delete m_pFtp;
+            m_pFtp = nullptr;
+            m_pFtp = new QFtp;
             // 信号槽
-            connect(&ftp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
-            connect(&ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+            connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
+            connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
             //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-            connect(&ftp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
-            ftp.connectToHost(m_strAddr, m_iPort);
-            ftp.login(m_strAccount, m_strPwd);
+            connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+            m_pFtp->connectToHost(m_strAddr, m_iPort);
+            m_pFtp->login(m_strAccount, m_strPwd);
 
         }
     }
@@ -1434,10 +1449,10 @@ void FtpClientWidget::on_tbConnent_clicked()
     //QString password = ui->lePassword->text();
     //int commandID = -1;
     //// 如果已经登录了就不需要重复登录
-    //if (ftp.state() != QFtp::LoggedIn)
+    //if (m_pFtp->state() != QFtp::LoggedIn)
     //{
-    //    commandID = ftp.connectToHost(serverAddress, port.toInt());
-    //    commandID = ftp.login(account, password);
+    //    commandID = m_pFtp->connectToHost(serverAddress, port.toInt());
+    //    commandID = m_pFtp->login(account, password);
     //}
 
     //// 保存到配置文件

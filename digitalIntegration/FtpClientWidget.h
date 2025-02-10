@@ -115,8 +115,8 @@ private:
     QString oldName;
     QString uploadPath;
 
-    QFtp ftp;
-    QFtp m_ftpAdmin;
+    QFtp * m_pFtp = nullptr;
+    QFtp* m_pFtpAdmin = nullptr;;
    // QFile file;
     QString currentPath;
     QHash<QString, bool> listPath;
