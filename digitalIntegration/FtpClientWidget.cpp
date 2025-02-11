@@ -68,20 +68,20 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     //   statusBar()->addWidget(&progress, width());
 
 
-    m_pFtp = new QFtp;
+    //m_pFtp = new QFtp;
        // 信号槽
-    connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
-    connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
-    //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-    connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+    //connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+    //connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+    ////  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), this,SLOT(dataTransferProgress(qint64,qint64)));
+  //  connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &FtpClientWidget::slot_tableWidget_doubleClicked);
     connect(ui->tableWidget, &QTableWidget::itemClicked, this, &FtpClientWidget::slot_tableWidget_itemClicked);
     connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &FtpClientWidget::slot_customContextMenuRequested);
 
-    m_pFtpAdmin = new QFtp;
-    connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+   // m_pFtpAdmin = new QFtp;
+   // connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), this,SLOT(slot_ftpAdminCommandFinished(int, bool)));
 
 
   
@@ -187,16 +187,28 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
         //statusBar()->showMessage(QString::fromLocal8Bit("服务器地址为空!"), 2000);
         return;
     }
+    
     // 如果已经登录了就不需要重复登录
-    if (m_pFtp->state() != QFtp::LoggedIn)
+   // if ((m_pFtp != nullptr)&&(m_pFtp->state() != QFtp::LoggedIn))
     {
-        m_pFtp->connectToHost(m_strAddr, m_iPort);
-        m_pFtp->login(m_strAccount, m_strPwd);
+        m_pFtp = new QFtp;
+       // 信号槽
+        connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+        connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+  
+       connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+
+        int ret =m_pFtp->connectToHost(m_strAddr, m_iPort);
+        ret=m_pFtp->login(m_strAccount, m_strPwd);
+        int a = 0;
     }
 
-    if (m_pFtpAdmin->state() != QFtp::LoggedIn)
+   // if ((m_pFtpAdmin != nullptr) && m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
-
+        //delete m_pFtpAdmin;
+      //  m_pFtpAdmin = nullptr;
+        m_pFtpAdmin = new QFtp;
+        connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
         m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
         m_pFtpAdmin->login(common::strFtpAccount,common::strFtpAdminPwd );
     }
@@ -247,10 +259,14 @@ void FtpClientWidget::connectToFtpServer(const QString& strHostName, const QStri
 
 void FtpClientWidget::Flush()
 {
+
     if (m_pFtp->state() != QFtp::LoggedIn)
     {
-        m_pFtp->connectToHost(m_strAddr, m_iPort);
-        m_pFtp->login(m_strAccount, m_strPwd);
+     
+        //// 信号槽
+       
+        //m_pFtp->connectToHost(m_strAddr, m_iPort);
+        //m_pFtp->login(m_strAccount, m_strPwd);
     }
     else
     {
@@ -267,32 +283,37 @@ void FtpClientWidget::Flush()
 
         m_pFtp->list();
     }
-    
+   
 }
 
 void FtpClientWidget::reconnectFtp()
 {
     if (m_pFtp->state() != QFtp::LoggedIn)
     {
+        disconnect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
+        disconnect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
+        disconnect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+        m_pFtp->close();
         delete m_pFtp;
         m_pFtp = nullptr;
         m_pFtp = new QFtp;
-       
-        // 信号槽
-        connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
-        connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
-        //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
+           //  // 信号槽
+        connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)),this, SLOT(listInfo(QUrlInfo)));
+         connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
         connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+         
         m_pFtp->connectToHost(m_strAddr, m_iPort);
         m_pFtp->login(m_strAccount, m_strPwd);
     }
 
     if (m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
+        disconnect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), this,SLOT(slot_ftpAdminCommandFinished(int, bool)));
+        m_pFtpAdmin->close();
         delete m_pFtpAdmin;
         m_pFtpAdmin = nullptr;
         m_pFtpAdmin = new QFtp;
-        connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), SLOT(slot_ftpAdminCommandFinished(int, bool)));
+        connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), this, SLOT(slot_ftpAdminCommandFinished(int, bool)));
         m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
         m_pFtpAdmin->login(common::strFtpAccount, common::strFtpAdminPwd);
     }
@@ -302,6 +323,10 @@ void FtpClientWidget::createUserDir(const QString& strDirName)
 {
     if (m_pFtpAdmin->state() != QFtp::LoggedIn)
     {
+        delete m_pFtpAdmin;
+        m_pFtpAdmin = nullptr;
+        m_pFtpAdmin = new QFtp;
+        connect(m_pFtpAdmin, SIGNAL(commandFinished(int, bool)), this, SLOT(slot_ftpAdminCommandFinished(int, bool)));
         m_pFtpAdmin->connectToHost(m_strAddr, m_iPort);
         m_pFtpAdmin->login(common::strFtpAccount, common::strFtpAdminPwd);
     }
@@ -1209,7 +1234,7 @@ void FtpClientWidget::commandFinished(int id, bool err)
 
     case QFtp::Close:
     {
-        QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ftp断开连接"));
+        //QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ftp断开连接"));
         if (!err)
         {
            
@@ -1414,17 +1439,16 @@ void FtpClientWidget::slot_stateChanged(int state)
             clear();
             currentPath = "";
 
-            delete m_pFtp;
-            m_pFtp = nullptr;
-            m_pFtp = new QFtp;
-            // 信号槽
-            connect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
-            connect(m_pFtp, SIGNAL(commandFinished(int, bool)), this, SLOT(commandFinished(int, bool)));
-            //  connect(&ftp, SIGNAL(dataTransferProgress(qint64,qint64)), SLOT(dataTransferProgress(qint64,qint64)));
-            connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
-            m_pFtp->connectToHost(m_strAddr, m_iPort);
-            m_pFtp->login(m_strAccount, m_strPwd);
-
+           int a= disconnect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+           int  ret = m_pFtp->close();
+          /* delete m_pFtp;
+           m_pFtp = nullptr;*/
+          //  m_pFtp = new QFtp;
+          //  // 信号槽
+          ////  connect(m_pFtp, &QFtp::stateChanged, this, &FtpClientWidget::slot_stateChanged);
+          //  ret = m_pFtp->connectToHost(m_strAddr, m_iPort);
+          //  ret = m_pFtp->login(m_strAccount, m_strPwd);
+            
         }
     }
 }
