@@ -1,4 +1,4 @@
-#include "ApprovalProgressDialog.h"
+ï»¿#include "ApprovalProgressDialog.h"
 #include "ui_ApprovalProgressDialog.h"
 #include "globel.h"
 #include "databaseDI.h"
@@ -21,8 +21,8 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	ui->stackedWidget->setCurrentIndex(0);
 	//ui->stackedWidget->setFocusPolicy(Qt::NoFocus);
 
-	ui->lineEditDataQueryValue->setPlaceholderText(QString::fromLocal8Bit("ÇëÊäÈëËÑË÷Öµ"));
-	ui->lineEditUserQueryValue->setPlaceholderText(QString::fromLocal8Bit("ÇëÊäÈëËÑË÷Öµ"));
+	ui->lineEditDataQueryValue->setPlaceholderText(QString::fromLocal8Bit("è¯·è¾“å…¥æœç´¢å€¼"));
+	ui->lineEditUserQueryValue->setPlaceholderText(QString::fromLocal8Bit("è¯·è¾“å…¥æœç´¢å€¼"));
 
 	QRegExp regex("[0-9]+");
 	QRegExpValidator* validator = new QRegExpValidator(regex, this);
@@ -31,61 +31,61 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 
 	m_modelDataApproval = new QStandardItemModel();
 	m_modelDataApproval->setColumnCount(13);
-	m_modelDataApproval->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ĞòºÅ"));
-	m_modelDataApproval->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÈË"));
-	m_modelDataApproval->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-	m_modelDataApproval->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-	m_modelDataApproval->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("´æ´¢Ãû³Æ"));
-	m_modelDataApproval->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("´æ´¢ip"));
-	m_modelDataApproval->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼şÃû"));
-	m_modelDataApproval->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼şÀàĞÍ"));
-	m_modelDataApproval->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("Éú³ÉÊ±¼ä"));
-	m_modelDataApproval->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("×´Ì¬"));
-	m_modelDataApproval->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
-	m_modelDataApproval->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
-	m_modelDataApproval->setHeaderData(12, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
+	m_modelDataApproval->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+	m_modelDataApproval->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·äºº"));
+	m_modelDataApproval->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+	m_modelDataApproval->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+	m_modelDataApproval->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("å­˜å‚¨åç§°"));
+	m_modelDataApproval->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("å­˜å‚¨ip"));
+	m_modelDataApproval->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶å"));
+	m_modelDataApproval->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶ç±»å‹"));
+	m_modelDataApproval->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("ç”Ÿæˆæ—¶é—´"));
+	m_modelDataApproval->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("çŠ¶æ€"));
+	m_modelDataApproval->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
+	m_modelDataApproval->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
+	m_modelDataApproval->setHeaderData(12, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
 
 
-	/* QStringList labels = QObject::trUtf8("ID,Ãû×Ö,value,Ê±¼ä,Àà±ğ").simplified().split(",");
+	/* QStringList labels = QObject::trUtf8("ID,åå­—,value,æ—¶é—´,ç±»åˆ«").simplified().split(",");
 	 model->setHorizontalHeaderLabels(labels);*/
 	ui->tableView->setModel(m_modelDataApproval);
 	//common::setTableViewBasicConfiguration(ui->tableView);
 
-	// ÉèÖÃÁĞ¿í³äÂú±í¸ñ£¬ÇÒ¿ÉÍÏ¶¯
+	// è®¾ç½®åˆ—å®½å……æ»¡è¡¨æ ¼ï¼Œä¸”å¯æ‹–åŠ¨
 	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	// ÉèÖÃÁĞ¿í¿ÉÍÏ¶¯
-	  // ÉèÖÃ±í¸ñÌîÂú¸¸´°¿Ú
-	ui->tableView->horizontalHeader()->setStretchLastSection(true); // ÈÃ×îºóÒ»ÁĞÌîÂúÊ£Óà¿Õ¼ä
-	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // ÔÊĞíÓÃ»§½»»¥Ê½µ÷ÕûÁĞ¿í
+	// è®¾ç½®åˆ—å®½å¯æ‹–åŠ¨
+	  // è®¾ç½®è¡¨æ ¼å¡«æ»¡çˆ¶çª—å£
+	ui->tableView->horizontalHeader()->setStretchLastSection(true); // è®©æœ€åä¸€åˆ—å¡«æ»¡å‰©ä½™ç©ºé—´
+	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // å…è®¸ç”¨æˆ·äº¤äº’å¼è°ƒæ•´åˆ—å®½
 	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	//ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // Ñ¡ÔñÕûĞĞ
+	//ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // é€‰æ‹©æ•´è¡Œ
 	//ui->tableView->verticalHeader()->setDefaultSectionSize(28);
 	ui->tableView->verticalHeader()->setVisible(false);
 
 	//ui->comboBoxDataField->addItem("");
-	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ÉêÇëÈË"));
-	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-	//ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ÎÄ¼şÃû"));
-	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ÎÄ¼şÀàĞÍ"));
-	//ui->comboBoxDataField->addItem(QString::fromLocal8Bit("Éú³ÉÊ±¼ä"));
-	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("×´Ì¬"));
+	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ç”³è¯·äºº"));
+	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+	//ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("æ–‡ä»¶å"));
+	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("æ–‡ä»¶ç±»å‹"));
+	//ui->comboBoxDataField->addItem(QString::fromLocal8Bit("ç”Ÿæˆæ—¶é—´"));
+	ui->comboBoxDataField->addItem(QString::fromLocal8Bit("çŠ¶æ€"));
 
 
 	m_modelUser = new QStandardItemModel();
 	m_modelUser->setColumnCount(11);
 
-	m_modelUser->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÈË"));
-	m_modelUser->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-	m_modelUser->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-	m_modelUser->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ÓÃ»§Ãû"));
-	m_modelUser->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ÃÜÂë"));
-	m_modelUser->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("Ö°Î»"));
-	m_modelUser->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("ÊÖ»úºÅ"));
-	m_modelUser->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("È¨ÏŞ"));
-	m_modelUser->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("×´Ì¬"));
-	m_modelUser->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
-	m_modelUser->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
+	m_modelUser->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·äºº"));
+	m_modelUser->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+	m_modelUser->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+	m_modelUser->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ç”¨æˆ·å"));
+	m_modelUser->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("å¯†ç "));
+	m_modelUser->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("èŒä½"));
+	m_modelUser->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("æ‰‹æœºå·"));
+	m_modelUser->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("æƒé™"));
+	m_modelUser->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("çŠ¶æ€"));
+	m_modelUser->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
+	m_modelUser->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
 	ui->tableViewUser->setModel(m_modelUser);
 	common::setTableViewBasicConfiguration(ui->tableViewUser);
 	// ui->tableViewUser->verticalHeader()->setDefaultSectionSize(28);
@@ -99,8 +99,8 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	  connect(ui->btnUser, &QPushButton::clicked, [this]() {
 		  ui->stackedWidget->setCurrentIndex(1);
 		  });*/
-	ui->btnData->setFocusPolicy(Qt::NoFocus); // ÉèÖÃ°´Å¥²»×Ô¶¯»ñµÃ½¹µã
-	ui->btnUser->setFocusPolicy(Qt::NoFocus); // ÉèÖÃ°´Å¥²»×Ô¶¯»ñµÃ½¹µã
+	ui->btnData->setFocusPolicy(Qt::NoFocus); // è®¾ç½®æŒ‰é’®ä¸è‡ªåŠ¨è·å¾—ç„¦ç‚¹
+	ui->btnUser->setFocusPolicy(Qt::NoFocus); // è®¾ç½®æŒ‰é’®ä¸è‡ªåŠ¨è·å¾—ç„¦ç‚¹
 
 	ui->btnDataQuery->setFocusPolicy(Qt::NoFocus);
 	ui->btnUserQuery->setFocusPolicy(Qt::NoFocus);
@@ -125,18 +125,18 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 
 
 	//ui->comboBoxUserField->addItem("");
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ÉêÇëÈË"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-	//ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ÓÃ»§Ãû"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ÃÜÂë"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("Ö°Î»"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ÊÖ»úºÅ"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("È¨ÏŞ"));
-	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("×´Ì¬"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ç”³è¯·äºº"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+	//ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("ç”¨æˆ·å"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("å¯†ç "));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("èŒä½"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("æ‰‹æœºå·"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("æƒé™"));
+	ui->comboBoxUserField->addItem(QString::fromLocal8Bit("çŠ¶æ€"));
 	connect(ui->comboBoxUserField, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_combocUserCurrentIndexChanged(int)));
-	connect(ui->btnDataQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_dataApprovalQuery); // Êı¾İÉóÅú²éÑ¯
-	connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // ÓÃ»§ÉóÅú²éÑ¯
+	connect(ui->btnDataQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_dataApprovalQuery); // æ•°æ®å®¡æ‰¹æŸ¥è¯¢
+	connect(ui->btnUserQuery, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_userQuery); // ç”¨æˆ·å®¡æ‰¹æŸ¥è¯¢
 
 	connect(ui->btnFlushDownload, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnFlushDownload);
 	connect(ui->btnFlushUser, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnFlushUser);
@@ -272,7 +272,7 @@ void ApprovalProgressDialog::autoFlushUserData()
 void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadApproval>& listData, const int& offsetRows)
 {
 	common::delAllModelRow(m_modelDataApproval);
-	//  ²éÑ¯Êı¾İ¿âÏÔÊ¾;
+	//  æŸ¥è¯¢æ•°æ®åº“æ˜¾ç¤º;
    // 
 	int i = offsetRows;
 	for (auto& stData : listData)
@@ -283,37 +283,37 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		 stData.userName = stUserData.name;
 		 stData.department = stUserData.department;*/
 
-		int newRowIndex = m_modelDataApproval->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		m_modelDataApproval->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = m_modelDataApproval->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		m_modelDataApproval->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 		QStandardItem* item = new QStandardItem(QString::number(i + 1));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
 		m_modelDataApproval->setItem(newRowIndex, 0, item);
 
 		QModelIndex index = m_modelDataApproval->index(newRowIndex, 0);
-		m_modelDataApproval->setData(index, stData.id, Qt::UserRole);  // ÉèÖÃid;
+		m_modelDataApproval->setData(index, stData.id, Qt::UserRole);  // è®¾ç½®id;
 		//  item->setText(QString::fromStdString(stData.name));
 
 		item = new QStandardItem(QString::fromStdString(stData.userName));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 1, item);
 
 		item = new QStandardItem(QString::fromStdString(stData.department));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 2, item);
 
 		item = new QStandardItem(QDateTime::fromTime_t(stData.applicationTime).toString("yyyy/MM/dd HH:mm:ss"));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 3, item);
 
 		item = new QStandardItem(QString::fromStdString(stData.ftpName));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 4, item);
 
 
 		item = new QStandardItem(QString::fromStdString(stData.ftpIp));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 5, item);
 
 
@@ -321,7 +321,7 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 6, item);
 
 		index = m_modelDataApproval->index(newRowIndex, 6);
@@ -329,19 +329,19 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		
 
 		item = new QStandardItem(QString::fromStdString(stData.fileType));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 7, item);
 
 		//item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
 		item = new QStandardItem(QString::fromStdString(stData.fileTime));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDataApproval->setItem(newRowIndex, 8, item);
 
 
 
 
 		// add button to the last column
-		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("Í¬Òâ"));
+		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("åŒæ„"));
 		buttonYes->setObjectName("itemBtnYes");
 		buttonYes->setProperty("row", newRowIndex); // set custom property
 		buttonYes->setProperty("column", 10);
@@ -349,7 +349,7 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_DataItemBtnClicked()));
 		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 10), buttonYes);
 
-		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("²µ»Ø"));
+		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("é©³å›"));
 		buttonNo->setObjectName("itemBtnNo");
 		buttonNo->setProperty("row", newRowIndex); // set custom property
 		buttonNo->setProperty("column", 11);
@@ -359,7 +359,7 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 		ui->tableView->setIndexWidget(m_modelDataApproval->index(newRowIndex, 11), buttonNo);
 
 
-		QPushButton* buttonDownload = new QPushButton(QString::fromLocal8Bit("ÏÂÔØ"));
+		QPushButton* buttonDownload = new QPushButton(QString::fromLocal8Bit("ä¸‹è½½"));
 		buttonDownload->setObjectName("itemBtnDownload");
 		buttonDownload->setProperty("row", newRowIndex); // set custom property
 		buttonDownload->setProperty("column", 12);
@@ -369,24 +369,24 @@ void ApprovalProgressDialog::flushDownloadTableShow(std::list<table_DownloadAppr
 
 		if (stData.status == 1)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑÍ¨¹ı"));
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é€šè¿‡"));
 			item->setForeground(QBrush(QColor(Qt::green)));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelDataApproval->setItem(newRowIndex, 9, item);
 			buttonNo->setEnabled(false);
 			buttonYes->setEnabled(false);
 		}
 		else if (stData.status == 0)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("´ıÉóºË"));
+			item = new QStandardItem(QString::fromLocal8Bit("å¾…å®¡æ ¸"));
 			item->setForeground(QBrush(QColor("#33C1FF")));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelDataApproval->setItem(newRowIndex, 9, item);
 		}
 		else if (stData.status == 2)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é©³å›"));
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			item->setForeground(QBrush(QColor(Qt::red)));
 			m_modelDataApproval->setItem(newRowIndex, 9, item);
 			buttonNo->setEnabled(false);
@@ -403,11 +403,11 @@ std::list<T> ApprovalProgressDialog::processList(const std::list<T>& listData, c
 {
 	std::list<T> listTemp;
 	auto it = listData.begin();
-	std::advance(it, offsetRows); // Ìø¹ıÇ° offsetRows ¸öÊı¾İ
+	std::advance(it, offsetRows); // è·³è¿‡å‰ offsetRows ä¸ªæ•°æ®
 
 	for (int i = 0; i < num && it != listData.end(); ++i, ++it)
 	{
-		listTemp.push_back(*it); // ´¦ÀíÊı¾İ£¬
+		listTemp.push_back(*it); // å¤„ç†æ•°æ®ï¼Œ
 	}
 	return listTemp;
 }
@@ -430,55 +430,55 @@ void ApprovalProgressDialog::getDownloadData(std::list<table_DownloadApproval>& 
 void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 {
 	common::delAllModelRow(m_modelUser);
-	//  ²éÑ¯Êı¾İ¿âÏÔÊ¾;
+	//  æŸ¥è¯¢æ•°æ®åº“æ˜¾ç¤º;
 
 	for (auto& stData : listUser)
 	{
-		int newRowIndex = m_modelUser->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		m_modelUser->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = m_modelUser->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		m_modelUser->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 		QStandardItem* item = new QStandardItem(QString::fromStdString(stData.name));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
 		m_modelUser->setItem(newRowIndex, 0, item);
 
 		QModelIndex index = m_modelUser->index(newRowIndex, 0);
-		m_modelUser->setData(index, stData.PKID, Qt::UserRole);  // ÉèÖÃid;
+		m_modelUser->setData(index, stData.PKID, Qt::UserRole);  // è®¾ç½®id;
 		//  item->setText(QString::fromStdString(stData.name));
 
 		item = new QStandardItem(QString::fromStdString(stData.department));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 1, item);
 		item = new QStandardItem(QDateTime::fromTime_t(stData.CreateTime).toString("yyyy/MM/dd HH:mm:ss"));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 2, item);
 		item = new QStandardItem(QString::fromStdString(stData.UserName));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 3, item);
 		item = new QStandardItem(QString::fromStdString(stData.Password));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 4, item);
 		item = new QStandardItem(QString::fromStdString(stData.JobTitle));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 5, item);
 		item = new QStandardItem(QString::fromStdString(stData.PhoneNumber));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelUser->setItem(newRowIndex, 6, item);
 
 		if (stData.Pop == 0)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("¹ÜÀíÔ±"));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item = new QStandardItem(QString::fromLocal8Bit("ç®¡ç†å‘˜"));
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelUser->setItem(newRowIndex, 7, item);
 		}
 		else {
-			item = new QStandardItem(QString::fromLocal8Bit("ÆÕÍ¨ÓÃ»§"));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item = new QStandardItem(QString::fromLocal8Bit("æ™®é€šç”¨æˆ·"));
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelUser->setItem(newRowIndex, 7, item);
 		}
 
 		// add button to the last column
-		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("Í¬Òâ"));
+		QPushButton* buttonYes = new QPushButton(QString::fromLocal8Bit("åŒæ„"));
 		buttonYes->setObjectName("itemBtnYes");
 		buttonYes->setProperty("row", newRowIndex); // set custom property
 		buttonYes->setProperty("column", 9);
@@ -486,7 +486,7 @@ void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_ItemBtnClicked()));
 		ui->tableViewUser->setIndexWidget(m_modelUser->index(newRowIndex, 9), buttonYes);
 
-		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("²µ»Ø"));
+		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("é©³å›"));
 		buttonNo->setObjectName("itemBtnNo");
 		buttonNo->setProperty("row", newRowIndex); // set custom property
 		buttonNo->setProperty("column", 10);
@@ -496,24 +496,24 @@ void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 		ui->tableViewUser->setIndexWidget(m_modelUser->index(newRowIndex, 10), buttonNo);
 		if (stData.approval == 1)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑÍ¨¹ı"));
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é€šè¿‡"));
 			item->setForeground(QBrush(QColor(Qt::green)));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelUser->setItem(newRowIndex, 8, item);
 			buttonNo->setEnabled(false);
 			buttonYes->setEnabled(false);
 		}
 		else if (stData.approval == 0)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("´ıÉóºË"));
+			item = new QStandardItem(QString::fromLocal8Bit("å¾…å®¡æ ¸"));
 			item->setForeground(QBrush(QColor("#33C1FF")));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelUser->setItem(newRowIndex, 8, item);
 		}
 		else if (stData.approval == 2)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é©³å›"));
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			item->setForeground(QBrush(QColor(Qt::red)));
 			m_modelUser->setItem(newRowIndex, 8, item);
 			buttonNo->setEnabled(false);
@@ -620,7 +620,7 @@ void ApprovalProgressDialog::slot_DataApprovalPageTo()
 
 }
 
-// ÉÏÒ»Ò³;
+// ä¸Šä¸€é¡µ;
 void ApprovalProgressDialog::slot_btnLast()
 {
 	int curPage = ui->lineEditUserPage->text().toInt();
@@ -635,7 +635,7 @@ void ApprovalProgressDialog::slot_btnLast()
 	ui->lineEditUserPage->setText(QString::number(curPage));
 	ui->labelUserPage->setText(QString("%1/%2").arg(curPage).arg(m_UserTotalpage));
 }
-// ÏÂÒ»Ò³
+// ä¸‹ä¸€é¡µ
 void ApprovalProgressDialog::slot_btnNext()
 {
 	int curPage = ui->lineEditUserPage->text().toInt();
@@ -651,7 +651,7 @@ void ApprovalProgressDialog::slot_btnNext()
 	ui->lineEditUserPage->setText(QString::number(curPage));
 	ui->labelUserPage->setText(QString("%1/%2").arg(curPage).arg(m_UserTotalpage));
 }
-//Ìø×ªÒ³Ãæ
+//è·³è½¬é¡µé¢
 void ApprovalProgressDialog::slot_pageTo()
 {
 	if (ui->lineEditUserPage->text().isEmpty()) return;
@@ -690,10 +690,10 @@ void ApprovalProgressDialog::slot_pageTo()
 		flushUserTableShow(listData);
 	}
 	// return true;
-	 // ´´½¨Ò»¸öÄ£ÄâµÄ»Ø³µÊÂ¼ş
+	 // åˆ›å»ºä¸€ä¸ªæ¨¡æ‹Ÿçš„å›è½¦äº‹ä»¶
 	 //QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_Enter, Qt::NoModifier);
 
-	 //// ·¢ËÍÄ£ÄâÊÂ¼ş¸ø QlineEdit£¬ÒÔ·ÀÖ¹½¹µãÇĞ»»
+	 //// å‘é€æ¨¡æ‹Ÿäº‹ä»¶ç»™ QlineEditï¼Œä»¥é˜²æ­¢ç„¦ç‚¹åˆ‡æ¢
 	 //QCoreApplication::postEvent(ui->lineEditUserPage, keyEvent);
 }
 
@@ -709,7 +709,7 @@ void ApprovalProgressDialog::slot_combocUserCurrentIndexChanged(int index)
 {
 	//for (int row = 0; row < m_modelUser->rowCount(); ++row)
 	//{
-	//    QStandardItem* item = m_modelUser->item(row, 1); // »ñÈ¡Ä³ÁĞµÄÏî
+	//    QStandardItem* item = m_modelUser->item(row, 1); // è·å–æŸåˆ—çš„é¡¹
 	//    if (item && item->text() == "11")
 	//    {
 	//        ui->tableViewUser->hideRow(row);
@@ -719,7 +719,7 @@ void ApprovalProgressDialog::slot_combocUserCurrentIndexChanged(int index)
 
 void ApprovalProgressDialog::slot_dataApprovalQuery()
 {
-	//ÏÂÔØÉóÅú ²éÑ¯;
+	//ä¸‹è½½å®¡æ‰¹ æŸ¥è¯¢;
 	int index = ui->comboBoxDataField->currentIndex();
 	//  std::string strFields = userTable_to_string((EUserTable)index);
 	QString strQueryValue = ui->lineEditDataQueryValue->text();
@@ -742,7 +742,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 
 					if ((*it).userName != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -758,7 +758,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).department != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -774,7 +774,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
 			//		{
-			//			it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -795,7 +795,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 
 					if (!fileInfo1.fileName().contains(strQueryValue))
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -811,7 +811,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).fileType != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -827,7 +827,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
 			//		{
-			//			it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -839,15 +839,15 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			else if (index == 4)
 			{
 				int state = -1;
-				if (strQueryValue == QString::fromLocal8Bit("ÒÑÍ¨¹ı"))
+				if (strQueryValue == QString::fromLocal8Bit("å·²é€šè¿‡"))
 				{
 					state = 1;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÒÑ²µ»Ø"))
+				else if (strQueryValue == QString::fromLocal8Bit("å·²é©³å›"))
 				{
 					state = 2;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("´ıÉóºË"))
+				else if (strQueryValue == QString::fromLocal8Bit("å¾…å®¡æ ¸"))
 				{
 					state = 0;
 				}
@@ -856,7 +856,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).status != state)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -879,7 +879,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			if (nStartSteps > nEndSteps)
 			{
 				QMessageBox mesg;
-				mesg.warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("²éÑ¯¿ªÊ¼Ê±¼äÍíÓÚ½áÊøÊ±¼ä!"));
+				mesg.warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æŸ¥è¯¢å¼€å§‹æ—¶é—´æ™šäºç»“æŸæ—¶é—´!"));
 				return;
 			}
 
@@ -890,7 +890,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				if ((QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss")) ||
 					(QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
 				{
-					it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+					it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 				}
 				else
 				{
@@ -909,7 +909,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			if (nStartSteps > nEndSteps)
 			{
 				QMessageBox mesg;
-				mesg.warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("²éÑ¯¿ªÊ¼Ê±¼äÍíÓÚ½áÊøÊ±¼ä!"));
+				mesg.warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æŸ¥è¯¢å¼€å§‹æ—¶é—´æ™šäºç»“æŸæ—¶é—´!"));
 				return;
 			}
 
@@ -920,14 +920,14 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				if ((QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss")) ||
 					(QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
 				{
-					it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+					it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 				}
 				else
 				{
 					++it;
 				}
 			}
-			//ÔÚÊ±¼äÌõ¼şµÄ»ù´¡ÉÏ£¬¼ÓÉÏÇ°±ßµÄÅĞ¶Ï
+			//åœ¨æ—¶é—´æ¡ä»¶çš„åŸºç¡€ä¸Šï¼ŒåŠ ä¸Šå‰è¾¹çš„åˆ¤æ–­
 			if (index == 0)
 			{
 				std::string strValue = strQueryValue.toStdString();
@@ -937,7 +937,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 
 					if ((*it).userName != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -953,7 +953,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).department != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -969,7 +969,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
 			//		{
-			//			it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -990,7 +990,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 
 					if (!fileInfo1.fileName().contains(strQueryValue))
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1006,7 +1006,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).fileType != strValue)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1022,7 +1022,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).applicationTime).toString("yyyy/MM/dd HH:mm:ss") != strQueryValue)
 			//		{
-			//			it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -1034,15 +1034,15 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 			else if (index == 4)
 			{
 				int state = -1;
-				if (strQueryValue == QString::fromLocal8Bit("ÒÑÍ¨¹ı"))
+				if (strQueryValue == QString::fromLocal8Bit("å·²é€šè¿‡"))
 				{
 					state = 1;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÒÑ²µ»Ø"))
+				else if (strQueryValue == QString::fromLocal8Bit("å·²é©³å›"))
 				{
 					state = 2;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("´ıÉóºË"))
+				else if (strQueryValue == QString::fromLocal8Bit("å¾…å®¡æ ¸"))
 				{
 					state = 0;
 				}
@@ -1051,7 +1051,7 @@ void ApprovalProgressDialog::slot_dataApprovalQuery()
 				{
 					if ((*it).status != state)
 					{
-						it = m_listDataApproval.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listDataApproval.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1108,7 +1108,7 @@ void ApprovalProgressDialog::slot_userQuery()
 
 					if ((*it).name != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1124,7 +1124,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).department != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1140,7 +1140,7 @@ void ApprovalProgressDialog::slot_userQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm") != strQueryValue)
 			//		{
-			//			it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -1156,7 +1156,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).UserName != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1172,7 +1172,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).Password != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1188,7 +1188,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).JobTitle != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1204,7 +1204,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).PhoneNumber != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1215,11 +1215,11 @@ void ApprovalProgressDialog::slot_userQuery()
 			else if (index == 6)
 			{
 				int  pop = -1;
-				if (strQueryValue == QString::fromLocal8Bit("¹ÜÀíÔ±"))
+				if (strQueryValue == QString::fromLocal8Bit("ç®¡ç†å‘˜"))
 				{
 					pop = 0;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÆÕÍ¨ÓÃ»§"))
+				else if (strQueryValue == QString::fromLocal8Bit("æ™®é€šç”¨æˆ·"))
 				{
 					pop = 1;
 				}
@@ -1228,7 +1228,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).Pop != pop)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1239,15 +1239,15 @@ void ApprovalProgressDialog::slot_userQuery()
 			else if (index == 7)
 			{
 				int state = -1;
-				if (strQueryValue == QString::fromLocal8Bit("ÒÑÍ¨¹ı"))
+				if (strQueryValue == QString::fromLocal8Bit("å·²é€šè¿‡"))
 				{
 					state = 1;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÒÑ²µ»Ø"))
+				else if (strQueryValue == QString::fromLocal8Bit("å·²é©³å›"))
 				{
 					state = 2;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("´ıÉóºË"))
+				else if (strQueryValue == QString::fromLocal8Bit("å¾…å®¡æ ¸"))
 				{
 					state = 0;
 				}
@@ -1256,7 +1256,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).approval != state)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1282,7 +1282,7 @@ void ApprovalProgressDialog::slot_userQuery()
 			if (nStartSteps > nEndSteps)
 			{
 				QMessageBox mesg;
-				mesg.warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("²éÑ¯¿ªÊ¼Ê±¼äÍíÓÚ½áÊøÊ±¼ä!"));
+				mesg.warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æŸ¥è¯¢å¼€å§‹æ—¶é—´æ™šäºç»“æŸæ—¶é—´!"));
 				return;
 			}
 
@@ -1293,7 +1293,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				if ((QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss")) ||
 					(QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
 				{
-					it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+					it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 				}
 				else
 				{
@@ -1312,7 +1312,7 @@ void ApprovalProgressDialog::slot_userQuery()
 			if (nStartSteps > nEndSteps)
 			{
 				QMessageBox mesg;
-				mesg.warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("²éÑ¯¿ªÊ¼Ê±¼äÍíÓÚ½áÊøÊ±¼ä!"));
+				mesg.warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æŸ¥è¯¢å¼€å§‹æ—¶é—´æ™šäºç»“æŸæ—¶é—´!"));
 				return;
 			}
 
@@ -1323,7 +1323,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				if ((QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") <= startDatetime.toString("yyyy/MM/dd HH:mm:ss")) ||
 					(QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm:ss") >= endDatetime.toString("yyyy/MM/dd HH:mm:ss")))
 				{
-					it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+					it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 				}
 				else
 				{
@@ -1331,7 +1331,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				}
 			}
 
-			//ÔÚÊ±¼äÌõ¼şµÄ»ù´¡ÉÏ£¬¼ÓÉÏÇ°±ßµÄÅĞ¶ÏÌõ¼ş²éÕÒ
+			//åœ¨æ—¶é—´æ¡ä»¶çš„åŸºç¡€ä¸Šï¼ŒåŠ ä¸Šå‰è¾¹çš„åˆ¤æ–­æ¡ä»¶æŸ¥æ‰¾
 			if (index == 0)
 			{
 				std::string strValue = strQueryValue.toStdString();
@@ -1341,7 +1341,7 @@ void ApprovalProgressDialog::slot_userQuery()
 
 					if ((*it).name != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1357,7 +1357,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).department != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1373,7 +1373,7 @@ void ApprovalProgressDialog::slot_userQuery()
 			//	{
 			//		if (QDateTime::fromTime_t((*it).CreateTime).toString("yyyy/MM/dd HH:mm") != strQueryValue)
 			//		{
-			//			it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+			//			it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 			//		}
 			//		else
 			//		{
@@ -1389,7 +1389,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).UserName != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1405,7 +1405,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).Password != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1421,7 +1421,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).JobTitle != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1437,7 +1437,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).PhoneNumber != strValue)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1448,11 +1448,11 @@ void ApprovalProgressDialog::slot_userQuery()
 			else if (index == 6)
 			{
 				int  pop = -1;
-				if (strQueryValue == QString::fromLocal8Bit("¹ÜÀíÔ±"))
+				if (strQueryValue == QString::fromLocal8Bit("ç®¡ç†å‘˜"))
 				{
 					pop = 0;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÆÕÍ¨ÓÃ»§"))
+				else if (strQueryValue == QString::fromLocal8Bit("æ™®é€šç”¨æˆ·"))
 				{
 					pop = 1;
 				}
@@ -1461,7 +1461,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).Pop != pop)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1472,15 +1472,15 @@ void ApprovalProgressDialog::slot_userQuery()
 			else if (index == 7)
 			{
 				int state = -1;
-				if (strQueryValue == QString::fromLocal8Bit("ÒÑÍ¨¹ı"))
+				if (strQueryValue == QString::fromLocal8Bit("å·²é€šè¿‡"))
 				{
 					state = 1;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("ÒÑ²µ»Ø"))
+				else if (strQueryValue == QString::fromLocal8Bit("å·²é©³å›"))
 				{
 					state = 2;
 				}
-				else if (strQueryValue == QString::fromLocal8Bit("´ıÉóºË"))
+				else if (strQueryValue == QString::fromLocal8Bit("å¾…å®¡æ ¸"))
 				{
 					state = 0;
 				}
@@ -1489,7 +1489,7 @@ void ApprovalProgressDialog::slot_userQuery()
 				{
 					if ((*it).approval != state)
 					{
-						it = m_listUser.erase(it); // É¾³ı²»·ûºÏÌõ¼şµÄÔªËØ£¬²¢·µ»ØÖ¸ÏòÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+						it = m_listUser.erase(it); // åˆ é™¤ä¸ç¬¦åˆæ¡ä»¶çš„å…ƒç´ ï¼Œå¹¶è¿”å›æŒ‡å‘ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 					}
 					else
 					{
@@ -1553,18 +1553,18 @@ void ApprovalProgressDialog::slot_DataItemBtnClicked()
 	if (approval == 1)
 	{
 		auto item = m_modelDataApproval->item(row, 9);
-		item->setText(QString::fromLocal8Bit("ÒÑÍ¨¹ı"));
+		item->setText(QString::fromLocal8Bit("å·²é€šè¿‡"));
 		item->setForeground(QBrush(QColor(Qt::green)));
 	}
 	else if (approval == 2)
 	{
 		auto item = m_modelDataApproval->item(row, 9);
-		item->setText(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setText(QString::fromLocal8Bit("å·²é©³å›"));
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		item->setForeground(QBrush(QColor(Qt::red)));
 	}
 
-	// »ñÈ¡°´Å¥Ö¸Õë
+	// è·å–æŒ‰é’®æŒ‡é’ˆ
 	index = m_modelDataApproval->index(row, 10);
 	QWidget* widget = ui->tableView->indexWidget(index);
 	if (widget)
@@ -1625,7 +1625,7 @@ void ApprovalProgressDialog::slot_ItemBtnClicked()
 	if (approval == 1)
 	{
 		auto item = m_modelUser->item(row, 8);
-		item->setText(QString::fromLocal8Bit("ÒÑÍ¨¹ı"));
+		item->setText(QString::fromLocal8Bit("å·²é€šè¿‡"));
 		item->setForeground(QBrush(QColor(Qt::green)));
 
 		auto itemName = m_modelUser->item(row, 3);
@@ -1635,12 +1635,12 @@ void ApprovalProgressDialog::slot_ItemBtnClicked()
 	else if (approval == 2)
 	{
 		auto item = m_modelUser->item(row, 8);
-		item->setText(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setText(QString::fromLocal8Bit("å·²é©³å›"));
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		item->setForeground(QBrush(QColor(Qt::red)));
 	}
 
-	// »ñÈ¡°´Å¥Ö¸Õë
+	// è·å–æŒ‰é’®æŒ‡é’ˆ
 	index = m_modelUser->index(row, 9);
 	QWidget* widget = ui->tableViewUser->indexWidget(index);
 	if (widget)

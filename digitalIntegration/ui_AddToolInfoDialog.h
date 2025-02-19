@@ -61,7 +61,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(263, 256);
+        AddToolInfoDialog->resize(263, 248);
         verticalLayout = new QVBoxLayout(AddToolInfoDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         gridLayout_2 = new QGridLayout();

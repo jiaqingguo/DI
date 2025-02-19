@@ -36,6 +36,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
 	ui->accelerateRadioButton->setChecked(true);
+
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -112,6 +113,8 @@ void AddToolInfoDialog::slot_btnhideWidget()
 	ui->IpcomboBox1->setVisible(false);
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
+	//ui->widget->layout()->update();
+	ui->widget->adjustSize();
 }
 
 void AddToolInfoDialog::slot_btnhideWidget2()
@@ -155,6 +158,10 @@ QComboBox* AddToolInfoDialog::getipComboBox2()
 QComboBox* AddToolInfoDialog::getipComboBox3()
 {
 	return ui->IpcomboBox3;
+}
+QWidget* AddToolInfoDialog::getwidget()
+{
+	return ui->widget;
 }
 
 

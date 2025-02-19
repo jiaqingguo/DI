@@ -573,8 +573,6 @@ void MainWindow::slot_btnDataManageClicked()
 	//common::getScreenCenterPos(x, y, m_FilemangageDialog->width(), m_FilemangageDialog->height());
 	//m_FilemangageDialog->move(x, y);
 	//m_FilemangageDialog->show();
-	//
-
 
 	m_FtpDialog->exec();
 	ui->btnDataManage->setChecked(false);

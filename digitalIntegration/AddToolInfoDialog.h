@@ -35,6 +35,7 @@ public:
 	QLabel* getlabel6();
 	QRadioButton *getAccelerateRadio();
 	QRadioButton *getnodeRadio();
+	QWidget *getwidget();
 private slots:
     void slot_btnOk();
 	void slot_btnChooseImage();
