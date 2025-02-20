@@ -321,18 +321,22 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 	QRadioButton *accelerate = addToolInfoDialog.getAccelerateRadio();
 	QRadioButton *node = addToolInfoDialog.getnodeRadio();
-	/*QLabel *label4 = addToolInfoDialog.getlabel4();
+	QLabel *label4 = addToolInfoDialog.getlabel4();
 	QLabel *label5 = addToolInfoDialog.getlabel5();
-	QLabel *label6 = addToolInfoDialog.getlabel6();*/
+	QLabel *label6 = addToolInfoDialog.getlabel6();
 	QComboBox *ipcomboBox1 = addToolInfoDialog.getipComboBox1();
 	QComboBox *ipcomboBox2 = addToolInfoDialog.getipComboBox2();
 	QComboBox *ipcomboBox3 = addToolInfoDialog.getipComboBox3();
+	QWidget *widget = addToolInfoDialog.getwidget();
 	if (moduleNumber != 1)
 	{
 		accelerate->setEnabled(false);
 		accelerate->setVisible(false);
 		node->setEnabled(false);
 		node->setVisible(false);
+
+		widget->setLayout(nullptr);             // 移除布局
+		delete widget;
 	}
 	table_ip stIp;
 	std::list<table_ip_configure> listData;

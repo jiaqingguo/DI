@@ -19,7 +19,7 @@ public:
     ~OneClickLoadDialog();
 
 	void initTableView();
-
+	void init_ui();
     Ui::OneClickLoadDialog *ui;
 private:
 	QStandardItemModel* m_model = nullptr;

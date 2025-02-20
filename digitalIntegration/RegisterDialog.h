@@ -1,4 +1,4 @@
-#ifndef REGISTERDIALOG_H
+ï»¿#ifndef REGISTERDIALOG_H
 #define REGISTERDIALOG_H
 
 #include <QDialog>
@@ -21,6 +21,8 @@ public:
     ~RegisterDialog();
 	void init();
 
+	void init_ui();
+
 	//table_user stUser;
 	
 private slots:
@@ -31,7 +33,7 @@ private slots:
 
 private:
     Ui::RegisterDialog *ui;
-	//QTimer* timer = new QTimer(this); // 'this' ÊÇÖ¸Ïòµ±Ç°¶ÔÏóµÄÖ¸Õë
+	//QTimer* timer = new QTimer(this); // 'this' æ˜¯æŒ‡å‘å½“å‰å¯¹è±¡çš„æŒ‡é’ˆ
 
 
 };

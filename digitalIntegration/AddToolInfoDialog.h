@@ -26,7 +26,7 @@ public:
     //void getToolsData(table_ip& toolData);
 	//void getToolsData(table_ip& toolsData);
 	void getToolsData(table_ip& toolsData);
-
+	void init_ui();
 	QComboBox* getipComboBox1();
 	QComboBox* getipComboBox2();
 	QComboBox* getipComboBox3();
@@ -35,6 +35,7 @@ public:
 	QLabel* getlabel6();
 	QRadioButton *getAccelerateRadio();
 	QRadioButton *getnodeRadio();
+	QWidget *getwidget();
 private slots:
     void slot_btnOk();
 	void slot_btnChooseImage();

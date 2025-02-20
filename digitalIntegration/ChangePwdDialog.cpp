@@ -1,4 +1,4 @@
-#include <qmessagebox.h>
+ï»¿#include <qmessagebox.h>
 
 #include "ChangePwdDialog.h"
 #include "ui_ChangePwdDialog.h"
@@ -11,11 +11,18 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
     ui(new Ui::ChangePwdDialog)
 {
     ui->setupUi(this);
-    setWindowTitle(QString::fromLocal8Bit("ÐÞ¸ÄÃÜÂë"));
+    setWindowTitle(QString::fromLocal8Bit("ä¿®æ”¹å¯†ç "));
     setWindowIcon(QIcon(":/image/Register.png"));
     connect(ui->btnModify, &QPushButton::clicked, this, &ChangePwdDialog::slot_btnModify);
 	ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 	ui->lineEditNewPwd->setEchoMode(QLineEdit::Password);
+	ui->lineEditConfrimPwd->setEchoMode(QLineEdit::Password);
+
+	ui->btnModify->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
+	ui->lineEditUserName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditPassword->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditNewPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditConfrimPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 }
 
 ChangePwdDialog::~ChangePwdDialog()
@@ -28,35 +35,42 @@ void ChangePwdDialog::slot_btnModify()
     QString strUserName = ui->lineEditUserName->text();
     if (strUserName.isEmpty())
     {
-        QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("ÇëÊäÈëÓÃ»§Ãû"));
+        QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è¯·è¾“å…¥ç”¨æˆ·å"));
         return;
     }
     QString strOriginalpwd = ui->lineEditPassword->text();
     QString strNewPwd = ui->lineEditNewPwd->text();
+	QString strConfirmPwd = ui->lineEditConfrimPwd->text();
     table_user stData;
+
+	if (strNewPwd != strConfirmPwd)
+	{
+		QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("ä¸¤æ¬¡è¾“å…¥çš„æ–°å¯†ç ä¸ä¸€è‡´ï¼Œè¯·é‡æ–°è¾“å…¥"));
+		return;
+	}
     if (db::databaseDI::Instance().get_user_by_condition(stData, strUserName.toStdString()))
     {
         if (stData.UserName.empty())
         {
-            QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("ÓÃ»§Ãû²»´æÔÚ»òÉóÅúÎ´Í¨¹ý"));
+            QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("ç”¨æˆ·åä¸å­˜åœ¨æˆ–å®¡æ‰¹æœªé€šè¿‡"));
             return;
         }
 
         if (strOriginalpwd != QString::fromStdString(stData.Password))
         {
-            QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Ô­ÃÜÂë²»ÕýÈ·"));
+            QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("åŽŸå¯†ç ä¸æ­£ç¡®"));
             return;
         }
 
         if (strOriginalpwd == strNewPwd)
         {
-            QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("ÃÜÂëÒ»ÖÂ£¬ÎÞÐòÐÞ¸Ä"));
+            QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("å¯†ç ä¸€è‡´ï¼Œæ— åºä¿®æ”¹"));
             return;
         }
 
         if (db::databaseDI::Instance().update_user_pwd(stData.PKID, strNewPwd.toStdString()))
         {
-            QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("ÃÜÂëÐÞ¸Ä³É¹¦"));
+            QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("å¯†ç ä¿®æ”¹æˆåŠŸ"));
             this->accept();
         }
 

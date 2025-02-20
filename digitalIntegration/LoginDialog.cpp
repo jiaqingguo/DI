@@ -1,7 +1,8 @@
-
+ï»¿
 #include <QValidator>
 #include <QMessageBox>
 #include <set>
+#include <QAction>
 
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
@@ -19,9 +20,10 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui(new Ui::LoginDialog)
 {
 	ui->setupUi(this);
-	setWindowTitle(("»¶Ó­Ê¹ÓÃÊý×ÖÑù»úÒ»Ìå»¯Æ½Ì¨"));
+	//setWindowTitle(("æ•°å­—æ ·æœºä¸€ä½“åŒ–å¹³å°"));
 	ui->stackedWidget->setCurrentIndex(0);
-	//setWindowTitle(GBK_STRING("»¶Ó­Ê¹ÓÃÊý×ÖÑù»úÓ²¼þÒ»Ìå»¯Æ½Ì¨"));
+	//setWindowTitle(GBK_STRING("æ•°å­—æ ·æœºä¸€ä½“åŒ–å¹³å°"));
+	
 	QRegExp rx("[0-9a-zA-Z]{19}");
 	ui->leUser->setValidator(new QRegExpValidator(rx));
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
@@ -30,8 +32,30 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	//ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
 	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
+	// åŠ è½½å›¾ç‰‡å¹¶è°ƒæ•´å¤§å°
+	QPixmap pixmap(":/image/user.png");
+	//pixmap = pixmap.scaled(QSize(300, 1000), Qt::KeepAspectRatio);
+	QAction* userIconAction = new QAction(QIcon(pixmap), "", this);
+	ui->leUser->addAction(userIconAction, QLineEdit::LeadingPosition);
+	//è®¾ç½®å…¶ä¸­æ–‡å­—å¤§å°
+	ui->leUser->setPlaceholderText(GBK_STRING("è¯·è¾“å…¥æ‚¨çš„ç”¨æˆ·å"));
+	ui->leUser->setStyleSheet("QLineEdit { font-size: 12pt; color: gray; border: 1px solid gray;border-radius: 5px;}");
 
-	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
+
+	// åŠ è½½å›¾ç‰‡å¹¶è°ƒæ•´å¤§å°
+	QPixmap pixmap2(":/image/password.png");
+	//pixmap2 = pixmap2.scaled(QSize(200, 200), Qt::KeepAspectRatio);
+	QAction* PasswordIconAction = new QAction(QIcon(pixmap2), "", this);
+	ui->lePassword->addAction(PasswordIconAction, QLineEdit::LeadingPosition);
+	//è®¾ç½®å…¶ä¸­æ–‡å­—å¤§å°
+	ui->lePassword->setPlaceholderText(GBK_STRING("è¯·è¾“å…¥æ‚¨çš„å¯†ç "));
+	ui->lePassword->setStyleSheet("QLineEdit { font-size: 12pt; color: gray; border: 1px solid gray;border-radius: 5px;}");
+
+	ui->btnLogin->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
+	ui->btnChangePassword->setStyleSheet("QPushButton { color: skyblue; border: none;}");
+	ui->btnRegister->setStyleSheet("QPushButton { color: blue; border: none;}");
+
+	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
 	connect(ui->btnChangePassword, &QPushButton::clicked, this, &LoginDialog::slot_btnChangePassword);
@@ -57,7 +81,7 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::Init(bool bClearPwd)
 {
-	// Çå³ý¶¨Ê±Æ÷
+	// æ¸…é™¤å®šæ—¶å™¨
 	clearTimer();
 }
 
@@ -83,7 +107,7 @@ QString LoginDialog::GetUser()
 
 void LoginDialog::UpdateLoginResult(short iRes)
 {
-	// Çå³ý¶¨Ê±Æ÷
+	// æ¸…é™¤å®šæ—¶å™¨
 	clearTimer();
 }
 
@@ -94,28 +118,28 @@ void LoginDialog::slot_btnLoginClicked()
 	QString sPassword = ui->lePassword->text();
 	if (m_sUser.isEmpty())
 	{
-		ui->leUser->setPlaceholderText(GBK_STRING("ÓÃ»§Ãû²»ÄÜÎª¿Õ"));
-		ui->leUser->setStyleSheet("border-image: url(:/image/lineedit_error.png); color: rgb(255, 102, 102);");
+		ui->leUser->setPlaceholderText(GBK_STRING("ç”¨æˆ·åä¸èƒ½ä¸ºç©º"));
+		ui->leUser->setStyleSheet("border-image: url(:/image/lineedit_error.png); color: rgb(255, 102, 102);font-size: 12pt;");
 		ui->leUser->setFocus();
-		ui->lblUser->setStyleSheet("border-image: url(:/image/user_error.png);");
+		//ui->lblUser->setStyleSheet("border-image: url(:/image/user_error.png);");
 		return;
 	}
 
 	if (sPassword.isEmpty())
 	{
-		ui->lePassword->setPlaceholderText(GBK_STRING("ÃÜÂë²»ÄÜÎª¿Õ"));
-		ui->lePassword->setStyleSheet("border-image: url(:/image/lineedit_error.png); color: rgb(255, 102, 102);");
+		ui->lePassword->setPlaceholderText(GBK_STRING("å¯†ç ä¸èƒ½ä¸ºç©º"));
+		ui->lePassword->setStyleSheet("border-image: url(:/image/lineedit_error.png); color: rgb(255, 102, 102);font-size: 12pt;");
 		ui->lePassword->setFocus();
-		ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
+		//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 		return;
 	}
 
-	// Êý¾Ý¿â²éÑ¯ÓÃ»§ÃûÃÜÂë
+	// æ•°æ®åº“æŸ¥è¯¢ç”¨æˆ·åå¯†ç 
 
 	if (!db::databaseDI::Instance().is_exist_user(m_sUser.toStdString(), sPassword.toStdString()))
 	{
 
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÇëÊäÈëÕýÈ·µÄÓÃ»§ÃûÃÜÂë!"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¯·è¾“å…¥æ­£ç¡®çš„ç”¨æˆ·åå¯†ç !"));
 		return;
 	}
 
@@ -126,25 +150,25 @@ void LoginDialog::slot_btnLoginClicked()
 
 	if (stData.approval == 0)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÇëÁªÏµ¹ÜÀíÔ±¾¡¿ì¶Ô¸ÃÓÃ»§½øÐÐÉóºË"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¯·è”ç³»ç®¡ç†å‘˜å°½å¿«å¯¹è¯¥ç”¨æˆ·è¿›è¡Œå®¡æ ¸"));
 		return;
 	}
 	else if (stData.approval == 2)
 	{
-		//QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¹ÜÀíÔ±ÉóºË²µ»Ø));
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÇëÊäÈëÕýÈ·µÄÓÃ»§ÃûÃÜÂë!"));
+		//QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ç®¡ç†å‘˜å®¡æ ¸é©³å›ž));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¯·è¾“å…¥æ­£ç¡®çš„ç”¨æˆ·åå¯†ç !"));
 		return;
 	}
 	if (stData.loginStatus == 1)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÓÃ»§ÒÑµÇÂ¼£¬ÇëÎðÖØ¸´µÇÂ¼£¡"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("ç”¨æˆ·å·²ç™»å½•ï¼Œè¯·å‹¿é‡å¤ç™»å½•ï¼"));
 		return;
 	}
 
 	//db::databaseDI::Instance().get_user_login_number(common::iLoginNum);
 	if (common::iLoginNum >= 6)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÏÞÖÆÍ¬Ê±µÇÂ¼Áù¸öÓÃ»§£¬ÇëÎð¼ÌÐøµÇÂ¼£¡"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("é™åˆ¶åŒæ—¶ç™»å½•å…­ä¸ªç”¨æˆ·ï¼Œè¯·å‹¿ç»§ç»­ç™»å½•ï¼"));
 		return;
 	}
 
@@ -204,7 +228,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 	//	if (m_bRegister)
 	//	{
 	//		m_bRegister = FALSE;
-	//		//QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Start verify last register template"));
+	//		//QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("Start verify last register template"));
 	//		//SetDlgItemText(IDC_EDIT_RESULT, _T("Start verify last register template"));
 	//	}
 	//	m_bIdentify = TRUE;
@@ -218,7 +242,7 @@ void LoginDialog::slot_btnFingerprintClicked()
 
 void LoginDialog::slot_timeout()
 {
-	// Çå³ý¶¨Ê±Æ÷
+	// æ¸…é™¤å®šæ—¶å™¨
 	clearTimer();
 }
 
@@ -238,26 +262,26 @@ void LoginDialog::clearTimer()
 
 void LoginDialog::slot_leUserTextChanged(const QString& text)
 {
-	ui->leUser->setStyleSheet("border-image: url(:/image/lineedit.png); color: black;");
-	ui->leUser->setPlaceholderText(GBK_STRING("ÇëÊäÈëÄúµÄÓÃ»§Ãû"));
-	ui->lblUser->setStyleSheet("border-image: url(:/image/user_focusin.png);");
+	ui->leUser->setStyleSheet("border-image: url(:/image/lineedit.png); color: black;font-size: 12pt;");
+	ui->leUser->setPlaceholderText(GBK_STRING("è¯·è¾“å…¥æ‚¨çš„ç”¨æˆ·å"));
+	//ui->lblUser->setStyleSheet("border-image: url(:/image/user_focusin.png);");
 }
 
 void LoginDialog::slot_leUserEditingFinished()
 {
-	ui->lblUser->setStyleSheet("border-image: url(:/image/user_focusin.png);");
+	//ui->lblUser->setStyleSheet("border-image: url(:/image/user_focusin.png);");
 }
 
 void LoginDialog::slot_lePwdTextChanged(const QString& text)
 {
-	ui->lePassword->setStyleSheet("color: black;");
-	ui->lePassword->setPlaceholderText(GBK_STRING("ÇëÊäÈëÄúµÄÃÜÂë"));
-	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); ");
+	ui->lePassword->setStyleSheet("color: black;font-size: 12pt;");
+	ui->lePassword->setPlaceholderText(GBK_STRING("è¯·è¾“å…¥æ‚¨çš„å¯†ç "));
+	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); ");
 }
 
 void LoginDialog::slot_lePwdEditingFinished()
 {
-	ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png);");
+	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png);");
 }
 
 //void LoginDialog::slot_login_succ()

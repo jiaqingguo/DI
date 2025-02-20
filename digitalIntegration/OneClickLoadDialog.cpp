@@ -24,6 +24,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	m_model->setColumnCount(2);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
 	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("软件"));
+
+	
 	//m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("模块"));
 	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("选择"));
 
@@ -61,6 +63,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	connect(ui->btnDel, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnDel);
 	connect(ui->btnAdd, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnAdd);
 	connect(ui->btnOk, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnOK);
+
+	init_ui();
 }
 
 OneClickLoadDialog::~OneClickLoadDialog()
@@ -257,4 +261,11 @@ void OneClickLoadDialog::initTableView()
 			}
 		}
 	}
+}
+
+void OneClickLoadDialog::init_ui()
+{
+	ui->btnAdd->setStyleSheet("QPushButton { border: 0.5px solid gray;border-radius: 5px;background-color: rgb(240, 240, 240)}");
+	ui->btnDel->setStyleSheet("QPushButton { border: 0.5px solid gray;border-radius: 5px;background-color: rgb(240, 240, 240)}");
+	ui->btnOk->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 }

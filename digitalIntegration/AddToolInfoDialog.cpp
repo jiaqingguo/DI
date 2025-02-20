@@ -36,6 +36,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
 	ui->accelerateRadioButton->setChecked(true);
+	init_ui();
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()
@@ -112,6 +113,8 @@ void AddToolInfoDialog::slot_btnhideWidget()
 	ui->IpcomboBox1->setVisible(false);
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
+	//ui->widget->layout()->update();
+	ui->widget->adjustSize();
 }
 
 void AddToolInfoDialog::slot_btnhideWidget2()
@@ -155,6 +158,22 @@ QComboBox* AddToolInfoDialog::getipComboBox2()
 QComboBox* AddToolInfoDialog::getipComboBox3()
 {
 	return ui->IpcomboBox3;
+}
+QWidget* AddToolInfoDialog::getwidget()
+{
+	return ui->widget;
+}
+
+void AddToolInfoDialog::init_ui()
+{
+	ui->lineEditToolName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditToolPath->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEdit->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->btnChooseImage->setStyleSheet("QPushButton { border: 1px solid gray;border-radius: 5px;}");;
+	ui->IpcomboBox1->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->IpcomboBox2->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->IpcomboBox3->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->btnOK->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 }
 
 
