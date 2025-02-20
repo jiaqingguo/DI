@@ -1,4 +1,4 @@
-//#include "fingerDlg.h"
+ï»¿//#include "fingerDlg.h"
 
 #include "RegisterDialog.h"
 #include "ui_RegisterDialog.h"
@@ -14,21 +14,21 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui(new Ui::RegisterDialog)
 {
 	ui->setupUi(this);
-	setWindowTitle(QString::fromLocal8Bit("ÓÃ»§×¢²á"));
+	setWindowTitle(QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œ"));
 	setWindowIcon(QIcon(":/image/Register.png"));
 	ui->stackedWidget->setCurrentIndex(0);
-	ui->labelUser->setText(QString::fromLocal8Bit("<font color='red'>*</font><font color='black'>ÓÃ»§Ãû</font>"));
-	ui->labelPassword->setText(QString::fromLocal8Bit("<font color='red'>*</font><font color='black'>ÃÜÂë</font>"));
-	ui->labelName->setText(QString::fromLocal8Bit("<font color='red'>*</font><font color='black'>Ê¹ÓÃÈË</font>"));
+	/*ui->labelUser->setText(QString::fromLocal8Bit("<font color='black' face='é»‘ä½“' >ç”¨æˆ·å</font><font color='red'>*</font>"));
+	ui->labelPassword->setText(QString::fromLocal8Bit("<font color='black'>å¯†ç </font><font color='red'>*</font>"));
+	ui->labelName->setText(QString::fromLocal8Bit("<font color='black'>ä½¿ç”¨äºº</font><font color='red'>*</font>"));*/
 
 
-	ui->lineEditUserName->setMaxLength(20); // ÏŞÖÆ×î¶àÊäÈë20¸ö×Ö·û
+	ui->lineEditUserName->setMaxLength(20); // é™åˆ¶æœ€å¤šè¾“å…¥20ä¸ªå­—ç¬¦
 	ui->lineEditPassword->setMaxLength(20);
 	QRegExp rx("[0-9a-zA-Z]{19}");
 	ui->lineEditUserName->setValidator(new QRegExpValidator(rx));
 	ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 	//ui->lineEditPassword->setValidator(new QRegExpValidator(rx));
-	//¾Û½¹
+	//èšç„¦
 	setTabOrder(ui->lineEditUserName,ui->lineEditPassword);
 	setTabOrder(ui->lineEditPassword,ui->lineEditName);
 	setTabOrder(ui->lineEditName,ui->lineEditDepartment);
@@ -40,6 +40,8 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 
 	ui->comboBox->setCurrentIndex(1);
 	ui->comboBox->setEnabled(false);
+
+	init_ui();
 }
 
 RegisterDialog::~RegisterDialog()
@@ -60,7 +62,7 @@ void RegisterDialog::slot_btnRegister()
 	common::stUser.approval = 0;
 	if (common::stUser.UserName.empty() || common::stUser.Password.empty() || common::stUser.name.empty())
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("* Êı¾İ²»ÄÜÎª¿Õ!"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("* æ•°æ®ä¸èƒ½ä¸ºç©º!"));
 		return;
 	}
 	
@@ -75,10 +77,10 @@ void RegisterDialog::slot_btnRegister()
 
 			if (!db::databaseDI::Instance().add_user_info(common::stUser))
 			{
-				QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§×¢²áÊ§°Ü!"));
+				QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œå¤±è´¥!"));
 				return;
 			}
-			MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
+			MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
 			
 			this->accept();
 
@@ -91,10 +93,10 @@ void RegisterDialog::slot_btnRegister()
 
 			if (!db::databaseDI::Instance().add_user_info(common::stUser))
 			{
-				QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§×¢²áÊ§°Ü!"));
+				QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œå¤±è´¥!"));
 				return;
 			}
-			MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
+			MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
 			
 			this->accept();
 		}
@@ -103,15 +105,15 @@ void RegisterDialog::slot_btnRegister()
 	{
 		if (stTemp.approval == 0)
 		{
-			QMessageBox::information(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÔçÒÑ×¢²á£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"));
+			QMessageBox::information(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("æ—©å·²æ³¨å†Œï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"));
 			return;
 		}
 		else if (stTemp.approval == 1)
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§ÒÑ×¢²á!"));
+			QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·å·²æ³¨å†Œ!"));
 			return;
 		}
-		if (stTemp.approval == 2) // ÒÑ¾­²µ»ØµÄÓÃ»§Ãû ÔÙ´Î×¢²á
+		if (stTemp.approval == 2) // å·²ç»é©³å›çš„ç”¨æˆ·å å†æ¬¡æ³¨å†Œ
 		{
 			if (ui->comboBox->currentIndex() == 0)
 			{
@@ -119,10 +121,10 @@ void RegisterDialog::slot_btnRegister()
 
 				if (!db::databaseDI::Instance().add_user_info(common::stUser))
 				{
-					QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§×¢²áÊ§°Ü!"));
+					QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œå¤±è´¥!"));
 					return;
 				}
-				MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
+				MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
 				
 				this->accept();
 				//ui->stackedWidget->setCurrentIndex(1);
@@ -133,10 +135,10 @@ void RegisterDialog::slot_btnRegister()
 
 				if (!db::databaseDI::Instance().add_user_info(common::stUser))
 				{
-					QMessageBox::warning(this, QString::fromLocal8Bit("Êı¾İ¿â"), QString::fromLocal8Bit("ÓÃ»§×¢²áÊ§°Ü!"));
+					QMessageBox::warning(this, QString::fromLocal8Bit("æ•°æ®åº“"), QString::fromLocal8Bit("ç”¨æˆ·æ³¨å†Œå¤±è´¥!"));
 					return;
 				}
-				MessageBox(NULL, TEXT("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"), TEXT("ÌáÊ¾"), 0);
+				MessageBox(NULL, TEXT("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"), TEXT("æç¤º"), 0);
 				
 				this->accept();
 			}
@@ -157,29 +159,29 @@ void RegisterDialog::slot_btnRegister()
 	//	{
 	//		m_bRegister = TRUE;
 	//		m_enrollIdx = 0;
-	//		//ui->label_7->setText(QString::fromLocal8Bit("×¢²áÖ¸ÎÆ£¬Çë°´3´ÎÊÖÖ¸"));
+	//		//ui->label_7->setText(QString::fromLocal8Bit("æ³¨å†ŒæŒ‡çº¹ï¼Œè¯·æŒ‰3æ¬¡æ‰‹æŒ‡"));
 
 
 	//		connect(timer, &QTimer::timeout, this, &RegisterDialog::slot_updateLabelText);
 	//		timer->start(500);
 	//	}
 	//}
-	//QMessageBox::information(this, QString::fromLocal8Bit("×¢²á"), QString::fromLocal8Bit("×¢²áÍê³É£¬ÇëµÈ´ı¹ÜÀíÔ±ÉóºË!"));
+	//QMessageBox::information(this, QString::fromLocal8Bit("æ³¨å†Œ"), QString::fromLocal8Bit("æ³¨å†Œå®Œæˆï¼Œè¯·ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸!"));
 	//close();
 
 //}
 //void RegisterDialog::slot_updateLabelText()
 //{
-//	static QString texts[] = { QString::fromLocal8Bit("¿ªÊ¼Ö¸ÎÆµÇ¼Ç, Çë°´Ñ¹ÊÖÖ¸3´Î"), QString::fromLocal8Bit("ÄúÈÔĞèÒª°´2´Î"), QString::fromLocal8Bit("ÄúÈÔĞèÒª°´1´Î") };
+//	static QString texts[] = { QString::fromLocal8Bit("å¼€å§‹æŒ‡çº¹ç™»è®°, è¯·æŒ‰å‹æ‰‹æŒ‡3æ¬¡"), QString::fromLocal8Bit("æ‚¨ä»éœ€è¦æŒ‰2æ¬¡"), QString::fromLocal8Bit("æ‚¨ä»éœ€è¦æŒ‰1æ¬¡") };
 //	if (m_enrollIdx < 3) {
 //		ui->label_7->setText(texts[m_enrollIdx]);
 //		///++m_enrollIdx;
 //	}
 //	else {
-//		// µ±ÎÄ±¾±ä»¯Èı´Îºó£¬¿ÉÒÔÍ£Ö¹¶¨Ê±Æ÷
-//		// ¼ÙÉètimerÊÇ¶¨Ê±Æ÷µÄ³ÉÔ±±äÁ¿
+//		// å½“æ–‡æœ¬å˜åŒ–ä¸‰æ¬¡åï¼Œå¯ä»¥åœæ­¢å®šæ—¶å™¨
+//		// å‡è®¾timeræ˜¯å®šæ—¶å™¨çš„æˆå‘˜å˜é‡
 //		timer->stop();
-//		m_enrollIdx = 0; // ÖØÖÃ¼ÆÊıÆ÷£¬ÒÔ±ã¿ÉÒÔÖØ¸´Ê¹ÓÃ
+//		m_enrollIdx = 0; // é‡ç½®è®¡æ•°å™¨ï¼Œä»¥ä¾¿å¯ä»¥é‡å¤ä½¿ç”¨
 //	}
 //}
 void RegisterDialog::init()
@@ -193,7 +195,18 @@ void RegisterDialog::init()
 	ui->lineEditPhoneNumber->clear();
 
 	ui->stackedWidget->setCurrentIndex(0);
-	//ui->label_7->setText(QString::fromLocal8Bit("×¢²áÖ¸ÎÆ£¬Çë°´3´ÎÊÖÖ¸"));
+	//ui->label_7->setText(QString::fromLocal8Bit("æ³¨å†ŒæŒ‡çº¹ï¼Œè¯·æŒ‰3æ¬¡æ‰‹æŒ‡"));
 	//m_enrollIdx = 3;
 	//this->slot_btnFingerprintInput();
+}
+void RegisterDialog::init_ui()
+{
+	ui->lineEditUserName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditPassword->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditDepartment->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditJobTtile->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditPhoneNumber->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->comboBox->setStyleSheet("QComboBox { border: 1px solid gray; border-radius: 5px; }");
+	ui->btnRegister->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 }

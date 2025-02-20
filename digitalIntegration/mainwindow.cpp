@@ -410,6 +410,7 @@ void MainWindow::closeGif()
 }
 bool MainWindow::showLoginDialog()
 {
+	//m_LoginDialog->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	if (m_LoginDialog->exec() == QDialog::Accepted)
 	{
 		ui->labelUserName->setText(m_LoginDialog->GetUser());

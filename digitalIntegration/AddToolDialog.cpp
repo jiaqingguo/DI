@@ -12,6 +12,7 @@ ui(new Ui::AddToolDialog)
 	ui->setupUi(this);
 	//ui->btnAdd->setEnabled(false);
 	init();
+	init_ui();
 }
 
 AddToolDialog::~AddToolDialog()
@@ -21,8 +22,8 @@ AddToolDialog::~AddToolDialog()
 
 void AddToolDialog::init()
 {
-	ui->lineEditIP->setReadOnly(true);
-	ui->groupBox->hide();
+	//ui->lineEditIP->setReadOnly(true);
+	//ui->groupBox->hide();
 	//ui->allocationAllocation->setChecked(true);
 
 	m_model = new QStandardItemModel();
@@ -33,8 +34,8 @@ void AddToolDialog::init()
 	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("主机名"));
 	//m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("用户名"));
-	ui->tableViewIpSet->setModel(m_model);
-	common::setTableViewBasicConfiguration(ui->tableViewIpSet);
+	//ui->tableViewIpSet->setModel(m_model);
+	//common::setTableViewBasicConfiguration(ui->tableViewIpSet);
 
 
 
@@ -69,8 +70,8 @@ void AddToolDialog::init()
 
 	if (m_iModule != 1 || (m_iModule == 1 && data.used == 0))
 	{
-		ui->label_4->setHidden(true);
-		ui->lineEditIP->setHidden(true);
+		//ui->label_4->setHidden(true);
+		//ui->lineEditIP->setHidden(true);
 
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
@@ -247,9 +248,9 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 	db::databaseDI::Instance().get_ip_by_software(stipToolData, text.toStdString(), common::iLoginNum, m_iModule);
 	if (m_iModule == 1 && stipToolData.used == 1)
 	{
-		ui->label_4->setHidden(false);
-		ui->lineEditIP->setHidden(false);
-		ui->lineEditIP->setText(stipToolData.ip.c_str());
+		//ui->label_4->setHidden(false);
+		//ui->lineEditIP->setHidden(false);
+		//ui->lineEditIP->setText(stipToolData.ip.c_str());
 		//ui->lineEditTabName->setPlaceholderText(text + " " + QString::fromStdString(stipToolData.host));
 		ui->lineEditTabName->setPlaceholderText(text);
 		ui->lineEditTabName->setReadOnly(false);
@@ -266,8 +267,8 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		ui->lineEditTabName->setPlaceholderText(text);
 		ui->lineEditTabName->setReadOnly(false);
 
-		ui->label_4->setHidden(true);
-		ui->lineEditIP->setHidden(true);
+		//ui->label_4->setHidden(true);
+		//ui->lineEditIP->setHidden(true);
 
 		ui->label_5->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
@@ -293,5 +294,14 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 QComboBox* AddToolDialog::getComboBox()
 {
 	return ui->comboBoxToolNames;
+}
+
+void AddToolDialog::init_ui()
+{
+	ui->lineEditTabName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->comboBoxDisplayMode->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->comboBoxToolNames->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->comboBoxHost->setStyleSheet("QComboBox { border: 1px solid gray;border-radius: 5px;}");
+	ui->btnAdd->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 }
 

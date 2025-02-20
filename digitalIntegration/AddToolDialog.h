@@ -21,7 +21,7 @@ public:
     void init();
     void initToolData(const QVector<QString> vecNames);
     void getToolData(QString &tabName,QString& toolName,QString  &toolPath, int& model, int& iDisplayMode, QString& strIp, QString& strHostName);
-
+	void init_ui();
 	QComboBox* getComboBox();
 private slots:
 

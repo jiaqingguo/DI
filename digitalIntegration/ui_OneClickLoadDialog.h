@@ -43,8 +43,10 @@ public:
         OneClickLoadDialog->resize(512, 292);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        horizontalLayout_9->setContentsMargins(9, 9, 9, 9);
         tableView = new QTableView(OneClickLoadDialog);
         tableView->setObjectName(QString::fromUtf8("tableView"));
 
@@ -52,13 +54,21 @@ public:
 
         verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        verticalLayout_9->setContentsMargins(9, 9, 9, 9);
         btnAdd = new QPushButton(OneClickLoadDialog);
         btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
+        btnAdd->setMinimumSize(QSize(80, 30));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
+        font.setPointSize(11);
+        btnAdd->setFont(font);
 
         verticalLayout_9->addWidget(btnAdd);
 
         btnDel = new QPushButton(OneClickLoadDialog);
         btnDel->setObjectName(QString::fromUtf8("btnDel"));
+        btnDel->setMinimumSize(QSize(80, 30));
+        btnDel->setFont(font);
 
         verticalLayout_9->addWidget(btnDel);
 
@@ -74,12 +84,18 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(9, 9, 9, 9);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         btnOk = new QPushButton(OneClickLoadDialog);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
+        btnOk->setMinimumSize(QSize(100, 35));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
+        font1.setPointSize(14);
+        btnOk->setFont(font1);
 
         horizontalLayout->addWidget(btnOk);
 
