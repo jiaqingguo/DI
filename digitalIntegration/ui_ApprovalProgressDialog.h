@@ -86,7 +86,7 @@ public:
             ApprovalProgressDialog->setObjectName(QString::fromUtf8("ApprovalProgressDialog"));
         ApprovalProgressDialog->resize(1300, 625);
         ApprovalProgressDialog->setMinimumSize(QSize(1300, 625));
-        ApprovalProgressDialog->setMaximumSize(QSize(1300, 625));
+        ApprovalProgressDialog->setMaximumSize(QSize(16777215, 16777215));
         verticalLayout_2 = new QVBoxLayout(ApprovalProgressDialog);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         horizontalLayout = new QHBoxLayout();

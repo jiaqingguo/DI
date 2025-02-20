@@ -1,3 +1,112 @@
+/* ------------------------ 主界面----------------------start*/
+QMainWindow{
+background:#d6e5ff
+}
+
+QWidget#widgetLeftMenu {
+	
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF7F50, stop:1 #6A5ACD);
+	border-top-right-radius: 35px;
+	border-bottom-right-radius: 35px;
+	
+}
+
+
+QWidget#widgetLeftMenu QPushButton#btnTitleIcon{
+	border-image:url(:/image/CASC.png);  
+}
+QWidget#widgetLeftMenu QTreeWidget{
+	 background: transparent;
+	 /* border: none;            // 移除边框  */      
+}
+
+QWidget#widgetLeftMenu QTreeWidget::item {
+           color: white;
+}
+
+QLabel#labelUserIcon{
+	min-width: 40px;
+	min-height: 40px;
+	border-image:url(:/image/user.png);
+	background-size: contain; /* 图片按比例缩放，保持全部显示在 QLabel 内部 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ------------------------ 登录页面----------------------start*/
 
 QWidget#page {
