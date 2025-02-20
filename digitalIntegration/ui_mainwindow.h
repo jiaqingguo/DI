@@ -28,6 +28,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "ApprovalProgressDialog.h"
 #include "CDoublePushButton.h"
 #include "FtpDialog.h"
 #include "InformationConfihurationDialog.h"
@@ -75,16 +76,8 @@ public:
     ResourceManageDialog *m_ResourceManageDialog;
     InformationConfihurationDialog *page1;
     FtpDialog *m_FtpDialog;
-    QWidget *page3;
+    ApprovalProgressDialog *m_ApprovalProgressDialog;
     QVBoxLayout *verticalLayout;
-    QWidget *widgetFunctionBtns;
-    QHBoxLayout *horizontalLayout_2;
-    QPushButton *btnResourceManage11;
-    QPushButton *btnInformationConfihuration;
-    QPushButton *btnDataManage;
-    QPushButton *btnApprovalProgress;
-    QSpacerItem *horizontalSpacer_2;
-    QSpacerItem *verticalSpacer;
     QWidget *page4;
     QVBoxLayout *verticalLayout_5;
     QWidget *widgetM1;
@@ -348,59 +341,13 @@ public:
         m_FtpDialog = new FtpDialog();
         m_FtpDialog->setObjectName(QString::fromUtf8("m_FtpDialog"));
         stackedWidget->addWidget(m_FtpDialog);
-        page3 = new QWidget();
-        page3->setObjectName(QString::fromUtf8("page3"));
-        verticalLayout = new QVBoxLayout(page3);
+        m_ApprovalProgressDialog = new ApprovalProgressDialog();
+        m_ApprovalProgressDialog->setObjectName(QString::fromUtf8("m_ApprovalProgressDialog"));
+        verticalLayout = new QVBoxLayout(m_ApprovalProgressDialog);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        widgetFunctionBtns = new QWidget(page3);
-        widgetFunctionBtns->setObjectName(QString::fromUtf8("widgetFunctionBtns"));
-        widgetFunctionBtns->setMinimumSize(QSize(0, 65));
-        widgetFunctionBtns->setMaximumSize(QSize(16777215, 65));
-        horizontalLayout_2 = new QHBoxLayout(widgetFunctionBtns);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 2);
-        btnResourceManage11 = new QPushButton(widgetFunctionBtns);
-        btnResourceManage11->setObjectName(QString::fromUtf8("btnResourceManage11"));
-        btnResourceManage11->setMinimumSize(QSize(55, 60));
-        btnResourceManage11->setMaximumSize(QSize(55, 60));
-
-        horizontalLayout_2->addWidget(btnResourceManage11);
-
-        btnInformationConfihuration = new QPushButton(widgetFunctionBtns);
-        btnInformationConfihuration->setObjectName(QString::fromUtf8("btnInformationConfihuration"));
-        btnInformationConfihuration->setMinimumSize(QSize(55, 60));
-        btnInformationConfihuration->setMaximumSize(QSize(55, 60));
-
-        horizontalLayout_2->addWidget(btnInformationConfihuration);
-
-        btnDataManage = new QPushButton(widgetFunctionBtns);
-        btnDataManage->setObjectName(QString::fromUtf8("btnDataManage"));
-        btnDataManage->setMinimumSize(QSize(55, 60));
-        btnDataManage->setMaximumSize(QSize(55, 60));
-
-        horizontalLayout_2->addWidget(btnDataManage);
-
-        btnApprovalProgress = new QPushButton(widgetFunctionBtns);
-        btnApprovalProgress->setObjectName(QString::fromUtf8("btnApprovalProgress"));
-        btnApprovalProgress->setMinimumSize(QSize(55, 60));
-        btnApprovalProgress->setMaximumSize(QSize(55, 60));
-
-        horizontalLayout_2->addWidget(btnApprovalProgress);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer_2);
-
-
-        verticalLayout->addWidget(widgetFunctionBtns);
-
-        verticalSpacer = new QSpacerItem(20, 426, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout->addItem(verticalSpacer);
-
-        stackedWidget->addWidget(page3);
+        stackedWidget->addWidget(m_ApprovalProgressDialog);
         page4 = new QWidget();
         page4->setObjectName(QString::fromUtf8("page4"));
         verticalLayout_5 = new QVBoxLayout(page4);
@@ -797,7 +744,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(4);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
@@ -827,10 +774,6 @@ public:
         btnMinimize->setText(QCoreApplication::translate("MainWindow", "\342\200\224", nullptr));
         btnMaximize->setText(QCoreApplication::translate("MainWindow", "\342\226\241", nullptr));
         btnClose->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
-        btnResourceManage11->setText(QCoreApplication::translate("MainWindow", "\350\265\204\346\272\220\347\256\241\347\220\206", nullptr));
-        btnInformationConfihuration->setText(QCoreApplication::translate("MainWindow", "\344\277\241\346\201\257\351\205\215\347\275\256", nullptr));
-        btnDataManage->setText(QCoreApplication::translate("MainWindow", " \346\226\207\344\273\266\347\256\241\347\220\206", nullptr));
-        btnApprovalProgress->setText(QCoreApplication::translate("MainWindow", "\345\256\241\346\211\271\350\277\233\345\272\246", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "AI", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "PS", nullptr));
         btnM1Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));

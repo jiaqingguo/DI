@@ -250,14 +250,14 @@ void MainWindow::initInitface()
 	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
 	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
-	ui->btnResourceManage->setCheckable(true);
-	ui->btnInformationConfihuration->setCheckable(true);
-	ui->btnDataManage->setCheckable(true);
-	ui->btnApprovalProgress->setCheckable(true);
-	connect(ui->btnResourceManage, &QPushButton::clicked, this, &MainWindow::slot_btnResourceManageClicked);
-	connect(ui->btnInformationConfihuration, &QPushButton::clicked, this, &MainWindow::slot_btnInformationConfihurationClicked);
-	connect(ui->btnDataManage, &QPushButton::clicked, this, &MainWindow::slot_btnDataManageClicked);
-	connect(ui->btnApprovalProgress, &QPushButton::clicked, this, &MainWindow::slot_btnApprovalProgressClicked);
+//	ui->btnResourceManage->setCheckable(true);
+//	ui->btnInformationConfihuration->setCheckable(true);
+////	ui->btnDataManage->setCheckable(true);
+//	ui->btnApprovalProgress->setCheckable(true);
+//	connect(ui->btnResourceManage, &QPushButton::clicked, this, &MainWindow::slot_btnResourceManageClicked);
+//	connect(ui->btnInformationConfihuration, &QPushButton::clicked, this, &MainWindow::slot_btnInformationConfihurationClicked);
+//	//connect(ui->btnDataManage, &QPushButton::clicked, this, &MainWindow::slot_btnDataManageClicked);
+//	connect(ui->btnApprovalProgress, &QPushButton::clicked, this, &MainWindow::slot_btnApprovalProgressClicked);
 
 
 	// 初始化模块1-4界面;
@@ -393,10 +393,10 @@ void MainWindow::initTreeMenu()
 	functionChild3->setSizeHint(0, QSize(45, 45));
 	functionChild3->setIcon(0, QIcon(":/image/DataManage_select.png"));
 	functionChild3->setData(0, Qt::UserRole, 2);
-	QTreeWidgetItem* functionChild4 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("审批进度")));
-	functionChild4->setSizeHint(0, QSize(45, 45));
-	functionChild4->setIcon(0, QIcon(":/image/ApprovalProgress_select.png"));
-	functionChild4->setData(0, Qt::UserRole, 3);
+	m_pApprovalProgressNode = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("审批进度")));
+	m_pApprovalProgressNode->setSizeHint(0, QSize(45, 45));
+	m_pApprovalProgressNode->setIcon(0, QIcon(":/image/ApprovalProgress_select.png"));
+	m_pApprovalProgressNode->setData(0, Qt::UserRole, 3);
 
 
 	QTreeWidgetItem* functionPrototypeChild1 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VS")));
@@ -521,7 +521,8 @@ bool MainWindow::showLoginDialog()
 		common::strLoginUserName = m_LoginDialog->GetUser();
 		if (m_LoginDialog->GetPop())
 		{
-			ui->btnApprovalProgress->hide();
+			//ui->btnApprovalProgress->hide();
+			//m_pApprovalProgressNode->setHidden(true);
 		}
 		this->showMaximized();
 
@@ -635,7 +636,7 @@ void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 	ui->m_ResourceManageDialog->move(x, y);
 	ui->m_ResourceManageDialog->exec();
 	ui->m_ResourceManageDialog->stopWebFlushTimer();
-	ui->btnResourceManage->setChecked(false);
+	//ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
 {
@@ -666,7 +667,7 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 	common::getScreenCenterPos(x, y, m_InforConfihurationDialog->width(), m_InforConfihurationDialog->height());
 	m_InforConfihurationDialog->move(x, y);
 	m_InforConfihurationDialog->exec();
-	ui->btnInformationConfihuration->setChecked(false);
+	//ui->btnInformationConfihuration->setChecked(false);
 }
 
 void MainWindow::slot_btnDataManageClicked()
@@ -682,7 +683,7 @@ void MainWindow::slot_btnDataManageClicked()
 
 
 	//ui->m_FtpDialog->exec();
-	ui->btnDataManage->setChecked(false);
+	//ui->btnDataManage->setChecked(false);
 }
 
 void MainWindow::slot_btnApprovalProgressClicked()
@@ -693,7 +694,7 @@ void MainWindow::slot_btnApprovalProgressClicked()
 	common::getScreenCenterPos(x, y, m_ApprovalProgressDialog->width(), m_ApprovalProgressDialog->height());
 	m_ApprovalProgressDialog->move(x, y);
 	m_ApprovalProgressDialog->exec();
-	ui->btnApprovalProgress->setChecked(false);
+//	ui->btnApprovalProgress->setChecked(false);
 }
 
 void MainWindow::slot_btnAddToolTab()

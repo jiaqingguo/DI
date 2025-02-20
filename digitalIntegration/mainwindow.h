@@ -239,6 +239,8 @@ private:
 	QTreeWidgetItem* m_pGeometryPrototypeNode;// =
 	QTreeWidgetItem* m_pPerformancePrototypeNode;//
 	QTreeWidgetItem* m_pProductionPrototypeNode;//
+
+	QTreeWidgetItem* m_pApprovalProgressNode;
 };
 
 class DoubleClickInterceptor : public QObject {
