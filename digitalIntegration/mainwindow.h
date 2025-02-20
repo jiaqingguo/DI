@@ -32,7 +32,9 @@ class GifDialog;
 class CCtrlNetwork;
 class CWidget;
 class FtpDialog;
-class C7Zip;
+//class C7Zip;
+
+class QTreeWidgetItem;
 
 struct st_account_data;
 struct table_ip_configure;
@@ -120,6 +122,7 @@ public:
 	~MainWindow();
 	void initInitface();
 	void initUdp();
+	void initTreeMenu();
 	void udpStartExeThread(const QString strData, const QString strIp, const int port);
 	void showRegisterDialog();
 	void setUserNameText(const QString& userName);
@@ -159,8 +162,16 @@ private slots:
 
 	void onDoubleClicked(const QString &buttonText);//鼠标双击事件
 	void onRightClicked(QString &buttonText);//鼠标右击事件
+
+	void slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column);
+	void slot_treeWidgetClicked(QTreeWidgetItem* item, int column);
+
+
+	void slot_btnMaximize();
+
 private:
 	void updateModuleToolIcon(int module);
+	void updateModuleToolTreeItem(int module);
 	void startUdpRdp(const QString ip);
 	void startLongDistanceSoftware(const QString tabName, const int &module, const std::string strIp, const std::string strAccaunt, const std::string pwd, const std::string path, CWidget *widget, QTabWidget* tabWidget = nullptr);
 	void startLongDistanceHost(const QString tabName, const int& module, const std::string strIp, const std::string strAccaunt, const std::string pwd, CWidget* widget, QTabWidget* tabWidget = nullptr);
@@ -184,7 +195,7 @@ private:
 
 	RegisterDialog* m_RegisterDialog = nullptr; // 注册界面;
 
-	ResourceManageDialog* m_ResourceManageDialog = nullptr; // 资源管理界面;
+	//ResourceManageDialog* m_ResourceManageDialog = nullptr; // 资源管理界面;
 
 	InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// 信息配置界面;
 	//InformationConfihurationDialog* m_inforConfihurationDialog = nullptr;
@@ -192,7 +203,7 @@ private:
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
 
 	//FilemangageDialog* m_FilemangageDialog = nullptr; // 文件管理界面;
-	FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
+	//FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
 
 	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
 
@@ -219,9 +230,15 @@ private:
 	  // <module   <tabIndex,userName>
 	QMap<int, QMap<int, st_account_data>> m_usedAccaunt;
 
-	C7Zip *m_pC7Zip = nullptr;
+	
 	// 创建定时器对象
 	QTimer* m_reconnectTimer = nullptr; 
+
+
+	QTreeWidgetItem* m_pFunctionPrototypeNode;// =
+	QTreeWidgetItem* m_pGeometryPrototypeNode;// =
+	QTreeWidgetItem* m_pPerformancePrototypeNode;//
+	QTreeWidgetItem* m_pProductionPrototypeNode;//
 };
 
 class DoubleClickInterceptor : public QObject {

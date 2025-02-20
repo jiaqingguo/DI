@@ -83,37 +83,14 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 
-	//m_pC7Zip = new C7Zip;
-//	m_pC7Zip->ExtractFile(QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64.rar"), "D:\\CS\\1998\\");
-//	m_pC7Zip->Compress(QString::fromLocal8Bit("D:\\CS\\1998\\C1.zip"), QString::fromLocal8Bit("D:\\Download\\��װ��\\navicat150_premium_cs_x64"));
-	//QString command = "cmdkey /add:192.168.1.247 /user:Administrator /pass:Ate123";
 
-	//// 创建 QProcess 对象
-	//QProcess process;
-
-	//// 启动 cmd 进程并执行命令
-	//process.start("cmd.exe", QStringList() << "/C" << command);
-
-	//// 等待命令执行完成
-	//if (process.waitForFinished())
-	//{
-	//    // 获取命令输出（用于调试或查看结果）
-	//    QString output = process.readAllStandardOutput();
-	//    QString error = process.readAllStandardError();
-
-	//    // 打印输出到控制台
-	//    qDebug() << "Output:" << output;
-	//    qDebug() << "Error:" << error;
-	//}
-	//else
-	//{
-	//    qDebug() << "Process failed to start or execute.";
-	//}
 	// qss文件监控类
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
 	strQssPath.replace("/", "\\\\");
 	m_pQssAutoLoader->setAutoloadQss(strQssPath);
+
+	
 	ui->actionM1->setChecked(true);
 	ui->actionM2->setChecked(true);
 	ui->actionM3->setChecked(true);
@@ -126,6 +103,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// 隐藏用户登录后的图标
 	ui->labelUserIcon->hide();
+	
+	ui->statusbar->hide();
 	initInitface();
 
 	//QString target = "\\\\192.168.0.250\\"; // 实际路径
@@ -162,8 +141,8 @@ MainWindow::~MainWindow()
 	if (m_RegisterDialog != nullptr)
 		delete m_RegisterDialog;
 
-	if (m_ResourceManageDialog != nullptr)
-		delete m_ResourceManageDialog;
+	/*if (m_ResourceManageDialog != nullptr)
+		delete m_ResourceManageDialog;*/
 	if (m_DataManageDialog != nullptr)
 		delete m_DataManageDialog;
 	if (m_InforConfihurationDialog != nullptr)
@@ -177,13 +156,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::initInitface()
 {
+	//ui->btnTitleIcon->setBa(QIcon(":/image/CASC.png"));
+	initTreeMenu();
+
 	m_LoginDialog = new LoginDialog(this);
 
 	m_GifDialog = new GifDialog;
 
 	m_RegisterDialog = new RegisterDialog(this);
 
-	m_ResourceManageDialog = new ResourceManageDialog(this);
+	//m_ResourceManageDialog = new ResourceManageDialog(this);
 
 	m_InforConfihurationDialog = new InformationConfihurationDialog(this);
 	connect(m_InforConfihurationDialog, &InformationConfihurationDialog::signal_updateToolIcon, this, &MainWindow::slot_updateModuleToolIcon);
@@ -191,30 +173,41 @@ void MainWindow::initInitface()
 	m_DataManageDialog = new DataManageDialog(this);
 
 	//m_FilemangageDialog = new FilemangageDialog(this);
-	m_FtpDialog = new FtpDialog();
+	//m_FtpDialog = new FtpDialog();
 
 	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
-	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, m_FtpDialog, &FtpDialog::slot_createUserDir);
-	connect(m_ResourceManageDialog, &ResourceManageDialog::signal_udpOrderFinsh, m_FtpDialog, &FtpDialog::slot_orderFinsh);
-	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_ftpDownlaod, m_FtpDialog, &FtpDialog::slot_signalFtpDownlaod);
+	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, ui->m_FtpDialog, &FtpDialog::slot_createUserDir);
+	connect(ui->m_ResourceManageDialog, &ResourceManageDialog::signal_udpOrderFinsh, ui->m_FtpDialog, &FtpDialog::slot_orderFinsh);
+	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_ftpDownlaod, ui->m_FtpDialog, &FtpDialog::slot_signalFtpDownlaod);
 	//m_OneClickLoadDialog = new OneClickLoadDialog(this);
 	//connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
 	m_OneClickSaveDialog = new OneClickSaveDialog(this);
 
-	ui->btnFunction->setCheckable(true);
+
+	connect(ui->btnMinimize, &QPushButton::clicked, this, &MainWindow::showMinimized);
+	connect(ui->btnMaximize, &QPushButton::clicked, this, &MainWindow::slot_btnMaximize);
+	connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
+
+
+
+	//ui->btnFunction->setCheckable(true);
 	ui->btnModule1->setCheckable(true);
 	ui->btnModule2->setCheckable(true);
-	ui->btnModule3->setCheckable(true);
+	//ui->btnModule3->setCheckable(true);
 	ui->btnModule4->setCheckable(true);
 
-	ui->btnFunction->setChecked(true);
+	//ui->btnFunction->setChecked(true);
 	ui->stackedWidget->setCurrentIndex(0);
+	/*updateModuleToolTreeItem(1);
+	updateModuleToolTreeItem(2);
+	updateModuleToolTreeItem(3);
+	updateModuleToolTreeItem(4);*/
 
-	connect(ui->btnFunction, &QPushButton::clicked, [this]() {
+	/*connect(ui->btnFunction, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(0);
-	});
+	});*/
 	connect(ui->btnModule1, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(1);
 		updateModuleToolIcon(1);
@@ -225,11 +218,12 @@ void MainWindow::initInitface()
 		updateModuleToolIcon(2);
 		common::indexNum = 2;
 	});
-	connect(ui->btnModule3, &QPushButton::clicked, [this]() {
+	updateModuleToolIcon(3);
+	/*connect(ui->btnModule3, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(3);
 		updateModuleToolIcon(3);
 		common::indexNum = 3;
-	});
+	});*/
 	connect(ui->btnModule4, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(4);
 		updateModuleToolIcon(4);
@@ -238,18 +232,18 @@ void MainWindow::initInitface()
 
 
 
-	connect(ui->btnModule1, &CDoublePushButton::signal_doubleClicked, [this]() {
-		ui->widgetM1->setVisible(!ui->widgetM1->isVisible());
-	});
-	connect(ui->btnModule2, &CDoublePushButton::signal_doubleClicked, [this]() {
-		ui->widgetM2->setVisible(!ui->widgetM2->isVisible());
-	});
-	connect(ui->btnModule3, &CDoublePushButton::signal_doubleClicked, [this]() {
-		ui->widgetM3->setVisible(!ui->widgetM3->isVisible());
-	});
-	connect(ui->btnModule4, &CDoublePushButton::signal_doubleClicked, [this]() {
-		ui->widgetM4->setVisible(!ui->widgetM4->isVisible());
-	});
+	//connect(ui->btnModule1, &CDoublePushButton::signal_doubleClicked, [this]() {
+	//	ui->widgetM1->setVisible(!ui->widgetM1->isVisible());
+	//});
+	//connect(ui->btnModule2, &CDoublePushButton::signal_doubleClicked, [this]() {
+	//	ui->widgetM2->setVisible(!ui->widgetM2->isVisible());
+	//});
+	//connect(ui->btnModule3, &CDoublePushButton::signal_doubleClicked, [this]() {
+	//	ui->widgetM3->setVisible(!ui->widgetM3->isVisible());
+	//});
+	//connect(ui->btnModule4, &CDoublePushButton::signal_doubleClicked, [this]() {
+	//	ui->widgetM4->setVisible(!ui->widgetM4->isVisible());
+	//});
 
 	/*connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
 	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
@@ -351,6 +345,117 @@ void MainWindow::initUdp()
 	m_udp = new CCtrlNetwork();
 	m_udp->init(5555);
 }
+void MainWindow::initTreeMenu()
+{
+	ui->treeWidget->setColumnCount(1); // 设置列数
+	//ui->treeWidget->setHeaderLabel("样机类型"); // 设置表头
+	ui->treeWidget->setHeaderHidden(true); // 隐藏列标题
+	
+	//ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
+	// 创建五个根节点
+	QTreeWidgetItem* functionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
+	functionNode->setSizeHint(0, QSize(45,45));
+	//functionNode->setData(0, Qt::UserRole, 1);
+
+	m_pFunctionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能样机")));
+	m_pFunctionPrototypeNode->setSizeHint(0, QSize(45, 45));
+	m_pFunctionPrototypeNode->setData(0, Qt::UserRole, 4);
+
+	m_pGeometryPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("几何样机")));
+	m_pGeometryPrototypeNode->setSizeHint(0, QSize(45, 45));
+	m_pGeometryPrototypeNode->setData(0, Qt::UserRole, 5);
+
+	m_pPerformancePrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("性能样机")));
+	m_pPerformancePrototypeNode->setSizeHint(0, QSize(45, 45));
+	m_pPerformancePrototypeNode->setData(0, Qt::UserRole, 6);
+
+	m_pProductionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("生产样机")));
+	m_pProductionPrototypeNode->setSizeHint(0, QSize(45, 45));
+	m_pProductionPrototypeNode->setData(0, Qt::UserRole, 7);
+	// 设置图标
+	//; // 使用资源文件中的图标，或者替换为实际路径
+	functionNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	m_pGeometryPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	m_pPerformancePrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	m_pProductionPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+
+	// 为每个根节点添加两个子节点
+	QTreeWidgetItem* functionChild1 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("资源管理器"))); 
+	functionChild1->setSizeHint(0, QSize(45, 45));
+	functionChild1->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	functionChild1->setData(0, Qt::UserRole, 0);
+	QTreeWidgetItem* functionChild2 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("信息配置")));
+	functionChild2->setSizeHint(0, QSize(45, 45));
+	functionChild2->setIcon(0, QIcon(":/image/InformationConfihuration_select.png"));
+	functionChild2->setData(0, Qt::UserRole, 1);
+	QTreeWidgetItem* functionChild3 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("文件管理")));
+	functionChild3->setSizeHint(0, QSize(45, 45));
+	functionChild3->setIcon(0, QIcon(":/image/DataManage_select.png"));
+	functionChild3->setData(0, Qt::UserRole, 2);
+	QTreeWidgetItem* functionChild4 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("审批进度")));
+	functionChild4->setSizeHint(0, QSize(45, 45));
+	functionChild4->setIcon(0, QIcon(":/image/ApprovalProgress_select.png"));
+	functionChild4->setData(0, Qt::UserRole, 3);
+
+
+	QTreeWidgetItem* functionPrototypeChild1 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VS")));
+	
+	functionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VS");
+	functionPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* functionPrototypeChild2 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	functionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	functionPrototypeChild2->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* geometryPrototypeChild1 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("WPS")));
+	geometryPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "WPS");
+	geometryPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* geometryPrototypeChild2 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
+	geometryPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
+	geometryPrototypeChild2->setSizeHint(0, QSize(45, 45));
+
+	QTreeWidgetItem* performancePrototypeChild1 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	performancePrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	performancePrototypeChild1->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* performancePrototypeChild2 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("Navicat")));
+	performancePrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "Navicat");
+	performancePrototypeChild2->setSizeHint(0, QSize(45, 45));
+
+	QTreeWidgetItem* productionPrototypeChild1 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
+	productionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
+	productionPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* productionPrototypeChild2 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild2->setSizeHint(0, QSize(45, 45));
+
+	QTreeWidgetItem* productionPrototypeChild3 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild3->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild3->setSizeHint(0, QSize(45, 45));
+
+	QTreeWidgetItem* productionPrototypeChild4 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild4->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild4->setSizeHint(0, QSize(45, 45));
+
+	QTreeWidgetItem* productionPrototypeChild5 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild5->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild5->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* productionPrototypeChild6 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild6->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild6->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* productionPrototypeChild7 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild7->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild7->setSizeHint(0, QSize(45, 45));
+	QTreeWidgetItem* productionPrototypeChild8 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
+	productionPrototypeChild8->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
+	productionPrototypeChild8->setSizeHint(0, QSize(45, 45));
+
+	
+
+	// 展开所有节点
+	ui->treeWidget->expandAll();
+	// 连接双击信号到槽函数
+	connect(ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, &MainWindow::slot_treeWidgetDoubleClicked);
+	connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &MainWindow::slot_treeWidgetClicked);
+}
 void MainWindow::udpStartExeThread(const QString strData, const QString strIp, const int port)
 {
 	const char* sendData = strData.toStdString().c_str();// = data.c_str();
@@ -426,7 +531,7 @@ bool MainWindow::showLoginDialog()
 		//m_FilemangageDialog->initTableViewDownload();
 		//connect(m_OneClickSaveDialog, &OneClickSaveDialog::signals_zipMultPath, m_FilemangageDialog, &FilemangageDialog::slot_compressMultPath);
 		common::getHostNameData();
-		m_FtpDialog->initConnectFtp();
+		ui->m_FtpDialog->initConnectFtp();
 		// 设置时间间隔并启动定时器
 		m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 		return true;
@@ -521,15 +626,15 @@ void MainWindow::addAccaunt(const QString& strIP, const QString& strSoft, const 
 
 
 
-void MainWindow::slot_btnResourceManageClicked()
+void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 {
-	m_ResourceManageDialog->startWebFlushTimer();
+	ui->m_ResourceManageDialog->startWebFlushTimer();
 	int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, m_ResourceManageDialog->width(), m_ResourceManageDialog->height());
-	m_ResourceManageDialog->move(x, y);
-	m_ResourceManageDialog->exec();
-	m_ResourceManageDialog->stopWebFlushTimer();
+	common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
+	ui->m_ResourceManageDialog->move(x, y);
+	ui->m_ResourceManageDialog->exec();
+	ui->m_ResourceManageDialog->stopWebFlushTimer();
 	ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
@@ -576,7 +681,7 @@ void MainWindow::slot_btnDataManageClicked()
 	//
 
 
-	m_FtpDialog->exec();
+	//ui->m_FtpDialog->exec();
 	ui->btnDataManage->setChecked(false);
 }
 
@@ -1145,6 +1250,95 @@ void MainWindow::updateModuleToolIcon(int module)
 	}
 }
 
+void MainWindow::updateModuleToolTreeItem(int module)
+{
+	QLayout* pLayout = nullptr;
+	QTreeWidgetItem* pModelTreeItem = nullptr;
+	if (module == 1)
+	{
+		pLayout = ui->layoutM1ToolIcon;
+		pModelTreeItem =  m_pFunctionPrototypeNode;
+	}
+	else if (module == 2)
+	{
+		pLayout = ui->layoutM2ToolIcon;
+		pModelTreeItem = m_pGeometryPrototypeNode;
+	}
+	else if (module == 3)
+	{
+		pLayout = ui->layoutM3ToolIcon;
+		pModelTreeItem = m_pPerformancePrototypeNode;
+	}
+	else if (module == 4)
+	{
+		pLayout = ui->layoutM4ToolIcon;
+		pModelTreeItem = m_pProductionPrototypeNode;
+	}
+	pModelTreeItem->takeChildren();
+	//common::clearLayout(pLayout);
+	std::map<std::string, table_ip> ipMap;
+
+
+	if (db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum))
+	{
+		for (const auto& stTool : ipMap)
+		{
+			const std::string& software = stTool.first;
+			const table_ip& data = stTool.second;
+			//if (data.used == 1)
+			{
+				QTreeWidgetItem* pToolsChildItem = new QTreeWidgetItem(pModelTreeItem, QStringList(QString::fromStdString(software)));
+				pToolsChildItem->setSizeHint(0, QSize(45, 45));
+				pToolsChildItem->setData(0, Qt::UserRole, 2);
+
+				QToolButton* pBtn = new QToolButton();
+			
+				QImage img;
+				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+				// 将 QImage 转换为 QIcon
+				QIcon icon(QPixmap::fromImage(img));
+				pToolsChildItem->setIcon(0, icon);
+
+			
+			}
+		}
+	}
+	/*if (module == 1)
+		pLayout->addWidget(line);*/
+
+	//db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
+	//for (const auto& stTool : ipMap)
+	//{
+	//	const std::string& software = stTool.first;
+	//	const table_ip& data = stTool.second;
+	//	if (data.used == 0)
+	//	{
+	//		QToolButton* pBtn = new QToolButton();
+	//		QImage img;
+	//		img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+	//		// 将 QImage 转换为 QIcon
+	//		QIcon icon(QPixmap::fromImage(img));
+	//		// 设置 QToolButton 的图标
+	//		pBtn->setIcon(icon);
+	//		pBtn->setIconSize(QSize(50, 46));
+	//		pBtn->setText(QString::fromStdString(software));
+	//		pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	//		pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+	//		pBtn->setFocusPolicy(Qt::NoFocus);
+	//		pBtn->setFixedSize(55, 64);
+	//		//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+	//		pBtn->setEnabled(true);
+
+	//		pLayout->addWidget(pBtn);
+
+	//		//鼠标双击事件
+	//		DoubleClickInterceptor* interceptor = new DoubleClickInterceptor;
+	//		pBtn->installEventFilter(interceptor);
+	//		connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
+	//	}
+	//}
+}
+
 void MainWindow::startUdpRdp(const QString ip)
 {
 	QAxWidget* rdp = new QAxWidget;
@@ -1599,10 +1793,10 @@ void MainWindow::slot_reconnnectTimerOut()
 			//return;
 		}
 	}
-	if (m_FtpDialog)
+	if (ui->m_FtpDialog)
 	{
 		int a = 0;
-		m_FtpDialog->reConnectFtp();
+		ui->m_FtpDialog->reConnectFtp();
 	}
 
 }
@@ -2267,6 +2461,109 @@ void MainWindow::onRightClicked(QString &buttonText)
 	}
 }
 
+void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
+{
+	// 获取存储在 QTreeWidgetItem 中的自定义数据
+	QVariant data = item->data(0, Qt::UserRole+1);
+
+	// 根据数据类型打印输出
+	if (data.isValid()) 
+	{
+		if (data.type() == QVariant::String) 
+		{
+			QTreeWidgetItem* parentItem = item->parent();
+			if (parentItem != nullptr)
+			{
+				int Index = parentItem->data(0, Qt::UserRole).toInt();
+				if (Index == 4)  // 模块1
+				{
+					//ui->tabWidgetModulel1
+
+				}
+				else if (Index == 5) // 模块2
+				{
+
+				}
+				else if (Index == 6)
+				{
+
+				}
+				else if (Index == 7)
+				{
+
+				}
+				qDebug() << "Double-clicked item data (string):" << data.toString();
+				
+			}
+			
 
 
+		}
+		else if (data.type() == QVariant::Int) 
+		{
+			qDebug() << "Double-clicked item data (int):" << data.toInt();
+		}
+		else {
+			qDebug() << "Double-clicked item data (other):" << data;
+		}
+	}
+	else 
+	{
+		qDebug() << "No custom data found in double-clicked item.";
+	}
+}
 
+void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
+{
+	// 获取存储在 QTreeWidgetItem 中的自定义数据
+	QVariant data = item->data(column, Qt::UserRole);
+
+	// 根据数据类型打印输出
+	if (data.isValid())
+	{
+		if (data.type() == QVariant::String)
+		{
+			qDebug() << "-clicked item data (string):" << data.toString();
+		}
+		else if (data.type() == QVariant::Int)
+		{
+			qDebug() << "-clicked item data (int):" << data.toInt();
+			int index = data.toInt();
+			ui->stackedWidget->setCurrentIndex(index);
+			QString str = item->text(0);
+			ui->btnChildTitle->setText(str);
+			if (index == 0)
+			{
+				slot_btnResourceManageClicked();
+			}
+			else if (index == 1)
+			{
+
+			}
+			
+			//ui->stackedWidgetBtn->setCurrentIndex(index);
+		}
+		else {
+			qDebug() << "-clicked item data (other):" << data;
+		}
+	}
+	else
+	{
+		qDebug() << "No custom data found in double-clicked item.";
+	}
+}
+
+
+void MainWindow::slot_btnMaximize()
+{
+	if (isMaximized()) 
+	{
+		showNormal();
+		ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
+	}
+	else {
+		showMaximized();
+		ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
+	}
+	
+}
