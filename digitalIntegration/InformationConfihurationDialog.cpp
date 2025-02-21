@@ -25,7 +25,7 @@ InformationConfihurationDialog::InformationConfihurationDialog(QWidget *parent) 
 	// 移除帮助按钮
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	init();
-	initFaceData();
+	//initFaceData();
 
 }
 
@@ -138,8 +138,8 @@ void InformationConfihurationDialog::init()
 	ui->btnToolAdd2->setProperty("module", 2);
 	ui->btnToolAdd3->setProperty("module", 3);
 	ui->btnToolAdd4->setProperty("module", 4);
-	ui->btnIpAdd1->setProperty("module", 1);
-	ui->btnIpAdd1->setHidden(true);
+	//ui->btnIpAdd1->setProperty("module", 1);
+	//ui->btnIpAdd1->setHidden(true);
 
 	/*   ui->btnIpAdd2->setProperty("module", 2);
 	   ui->btnIpAdd3->setProperty("module", 3);
@@ -148,8 +148,8 @@ void InformationConfihurationDialog::init()
 	ui->btnToolDel2->setProperty("module", 2);
 	ui->btnToolDel3->setProperty("module", 3);
 	ui->btnToolDel4->setProperty("module", 4);
-	ui->btnIpDel1->setProperty("module", 1);
-	ui->btnIpDel1->setHidden(true);
+	//ui->btnIpDel1->setProperty("module", 1);
+	//ui->btnIpDel1->setHidden(true);
 	//ui->btnIpDel2->setProperty("module", 2);
 	//ui->btnIpDel3->setProperty("module", 3);
 	//ui->btnIpDel4->setProperty("module", 4);
@@ -157,7 +157,7 @@ void InformationConfihurationDialog::init()
 	connect(ui->btnToolAdd2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
 	connect(ui->btnToolAdd3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
 	connect(ui->btnToolAdd4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolAdd);
-	connect(ui->btnIpAdd1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
+	//connect(ui->btnIpAdd1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
 	/*  connect(ui->btnIpAdd2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
 	  connect(ui->btnIpAdd3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);
 	  connect(ui->btnIpAdd4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpAdd);*/
@@ -167,7 +167,7 @@ void InformationConfihurationDialog::init()
 	connect(ui->btnToolDel3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolDel);
 	connect(ui->btnToolDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnToolDel);
 
-	connect(ui->btnIpDel1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
+	//connect(ui->btnIpDel1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
 	/*   connect(ui->btnIpDel2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
 	   connect(ui->btnIpDel3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);
 	   connect(ui->btnIpDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);*/

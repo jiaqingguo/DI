@@ -77,6 +77,9 @@ private slots:
     void slot_timerTimeout();
 
     void slot_get_data(int index);
+
+	void slot_showList();
+	void slot_showCurve();
 private:
     Ui::ResourceManageDialog *ui;
 
