@@ -193,42 +193,42 @@ void MainWindow::initInitface()
 
 
 	//ui->btnFunction->setCheckable(true);
-	ui->btnModule1->setCheckable(true);
-	ui->btnModule2->setCheckable(true);
+	//ui->btnModule1->setCheckable(true);
+	//ui->btnModule2->setCheckable(true);
 	//ui->btnModule3->setCheckable(true);
-	ui->btnModule4->setCheckable(true);
+	//ui->btnModule4->setCheckable(true);
 
 	//ui->btnFunction->setChecked(true);
 	ui->stackedWidget->setCurrentIndex(0);
-	/*updateModuleToolTreeItem(1);
+	updateModuleToolTreeItem(1);
 	updateModuleToolTreeItem(2);
 	updateModuleToolTreeItem(3);
-	updateModuleToolTreeItem(4);*/
+	updateModuleToolTreeItem(4);
 
 	/*connect(ui->btnFunction, &QPushButton::clicked, [this]() {
 		ui->stackedWidget->setCurrentIndex(0);
 	});*/
-	connect(ui->btnModule1, &QPushButton::clicked, [this]() {
-		ui->stackedWidget->setCurrentIndex(1);
-		updateModuleToolIcon(1);
-		common::indexNum = 1;
-	});
-	connect(ui->btnModule2, &QPushButton::clicked, [this]() {
-		ui->stackedWidget->setCurrentIndex(2);
-		updateModuleToolIcon(2);
-		common::indexNum = 2;
-	});
-	updateModuleToolIcon(3);
-	/*connect(ui->btnModule3, &QPushButton::clicked, [this]() {
-		ui->stackedWidget->setCurrentIndex(3);
-		updateModuleToolIcon(3);
-		common::indexNum = 3;
-	});*/
-	connect(ui->btnModule4, &QPushButton::clicked, [this]() {
-		ui->stackedWidget->setCurrentIndex(4);
-		updateModuleToolIcon(4);
-		common::indexNum = 4;
-	});
+	//connect(ui->btnModule1, &QPushButton::clicked, [this]() {
+	//	ui->stackedWidget->setCurrentIndex(1);
+	////	updateModuleToolIcon(1);
+	//	common::indexNum = 1;
+	//});
+	//connect(ui->btnModule2, &QPushButton::clicked, [this]() {
+	//	ui->stackedWidget->setCurrentIndex(2);
+	//	//updateModuleToolIcon(2);
+	//	common::indexNum = 2;
+	//});
+	//updateModuleToolIcon(3);
+	///*connect(ui->btnModule3, &QPushButton::clicked, [this]() {
+	//	ui->stackedWidget->setCurrentIndex(3);
+	//	updateModuleToolIcon(3);
+	//	common::indexNum = 3;
+	//});*/
+	//connect(ui->btnModule4, &QPushButton::clicked, [this]() {
+	//	ui->stackedWidget->setCurrentIndex(4);
+	//	//updateModuleToolIcon(4);
+	//	common::indexNum = 4;
+	//});
 
 
 
@@ -350,8 +350,9 @@ void MainWindow::initTreeMenu()
 	ui->treeWidget->setColumnCount(1); // 设置列数
 	//ui->treeWidget->setHeaderLabel("样机类型"); // 设置表头
 	ui->treeWidget->setHeaderHidden(true); // 隐藏列标题
-	
-	//ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
+	//ui->treeWidget->setIndentation(0); // 关键代码：禁用缩进
+
+	ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
 	// 创建五个根节点
 	QTreeWidgetItem* functionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
 	functionNode->setSizeHint(0, QSize(45,45));
@@ -633,9 +634,9 @@ void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 	ui->m_ResourceManageDialog->startWebFlushTimer();
 	int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
-	ui->m_ResourceManageDialog->move(x, y);
-	ui->m_ResourceManageDialog->exec();
+	//common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
+	//ui->m_ResourceManageDialog->move(x, y);
+	//ui->m_ResourceManageDialog->exec();
 	ui->m_ResourceManageDialog->stopWebFlushTimer();
 	//ui->btnResourceManage->setChecked(false);
 }
@@ -973,7 +974,8 @@ void MainWindow::slot_btnOneClickSave()
 
 void MainWindow::slot_updateModuleToolIcon(int module)
 {
-	updateModuleToolIcon(module);
+	//updateModuleToolIcon(module);
+	updateModuleToolTreeItem(module);
 }
 
 void MainWindow::slot_downlaodFinsh()
@@ -1145,133 +1147,133 @@ void MainWindow::slot_tabModule4closeTab(int index)
 
 void MainWindow::updateModuleToolIcon(int module)
 {
-	QLayout* pLayout = nullptr;
-	if (module == 1)
-	{
-		pLayout = ui->layoutM1ToolIcon;
-	}
-	else if (module == 2)
-	{
-		pLayout = ui->layoutM2ToolIcon;
-	}
-	else if (module == 3)
-	{
-		pLayout = ui->layoutM3ToolIcon;
-	}
-	else if (module == 4)
-	{
-		pLayout = ui->layoutM4ToolIcon;
-	}
+	//QLayout* pLayout = nullptr;
+	//if (module == 1)
+	//{
+	//	pLayout = ui->layoutM1ToolIcon;
+	//}
+	//else if (module == 2)
+	//{
+	//	pLayout = ui->layoutM2ToolIcon;
+	//}
+	//else if (module == 3)
+	//{
+	//	pLayout = ui->layoutM3ToolIcon;
+	//}
+	//else if (module == 4)
+	//{
+	//	pLayout = ui->layoutM4ToolIcon;
+	//}
 
-	common::clearLayout(pLayout);
-	std::map<std::string, table_ip> ipMap;
+	//common::clearLayout(pLayout);
+	//std::map<std::string, table_ip> ipMap;
 
-	//创建竖线
-	QFrame *line = new QFrame();
-	line->setFrameShape(QFrame::VLine);  // 设置为竖线
-	line->setFrameShadow(QFrame::Sunken);  // 设置阴影为凹陷
-	line->setLineWidth(2);  // 设置线宽
-	line->setMidLineWidth(1);  // 设置中间线宽
-	line->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);  // 设置大小策略
+	////创建竖线
+	//QFrame *line = new QFrame();
+	//line->setFrameShape(QFrame::VLine);  // 设置为竖线
+	//line->setFrameShadow(QFrame::Sunken);  // 设置阴影为凹陷
+	//line->setLineWidth(2);  // 设置线宽
+	//line->setMidLineWidth(1);  // 设置中间线宽
+	//line->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);  // 设置大小策略
 
-	if (db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum))
-	{
-		for (const auto& stTool : ipMap)
-		{
-			const std::string& software = stTool.first;
-			const table_ip& data = stTool.second;
-			if (data.used == 1)
-			{
-				QToolButton* pBtn = new QToolButton();
-				//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
-				//pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
+	//if (db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum))
+	//{
+	//	for (const auto& stTool : ipMap)
+	//	{
+	//		const std::string& software = stTool.first;
+	//		const table_ip& data = stTool.second;
+	//		if (data.used == 1)
+	//		{
+	//			QToolButton* pBtn = new QToolButton();
+	//			//QPushButton* pBtn = new QPushButton(QString::fromLocal8Bit("测试"));
+	//			//pBtn->setIcon(QIcon(QString::fromStdString(data.icoPath)));
 
-				QImage img;
-				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
-				// 将 QImage 转换为 QIcon
-				QIcon icon(QPixmap::fromImage(img));
-				// 设置 QToolButton 的图标
-				pBtn->setIcon(icon);
-				pBtn->setIconSize(QSize(50, 46));
-				pBtn->setText(QString::fromStdString(software));
-				pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-				pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-				pBtn->setFocusPolicy(Qt::NoFocus);
-				pBtn->setFixedSize(55, 64);
-				//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
-				pBtn->setEnabled(true);
+	//			QImage img;
+	//			img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+	//			// 将 QImage 转换为 QIcon
+	//			QIcon icon(QPixmap::fromImage(img));
+	//			// 设置 QToolButton 的图标
+	//			pBtn->setIcon(icon);
+	//			pBtn->setIconSize(QSize(50, 46));
+	//			pBtn->setText(QString::fromStdString(software));
+	//			pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	//			pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+	//			pBtn->setFocusPolicy(Qt::NoFocus);
+	//			pBtn->setFixedSize(55, 64);
+	//			//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+	//			pBtn->setEnabled(true);
 
-				pLayout->addWidget(pBtn);
+	//			pLayout->addWidget(pBtn);
 
-				//鼠标右击事件
-				//RightClickEvent *rightclick = new RightClickEvent;
-				//pBtn->installEventFilter(rightclick);
-				//connect(rightclick, &RightClickEvent::rightClicked, this, &MainWindow::onRightClicked);
-				//鼠标双击事件
-				DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
-				pBtn->installEventFilter(interceptor);
-				connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
-			}
-		}
-	}
-	if(module == 1)
-	pLayout->addWidget(line);
+	//			//鼠标右击事件
+	//			//RightClickEvent *rightclick = new RightClickEvent;
+	//			//pBtn->installEventFilter(rightclick);
+	//			//connect(rightclick, &RightClickEvent::rightClicked, this, &MainWindow::onRightClicked);
+	//			//鼠标双击事件
+	//			DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
+	//			pBtn->installEventFilter(interceptor);
+	//			connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
+	//		}
+	//	}
+	//}
+	//if(module == 1)
+	//pLayout->addWidget(line);
 
-	db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
-	for (const auto& stTool : ipMap)
-	{
-		const std::string& software = stTool.first;
-		const table_ip& data = stTool.second;
-		if (data.used == 0)
-		{
-			QToolButton* pBtn = new QToolButton();
-			QImage img;
-			img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
-			// 将 QImage 转换为 QIcon
-			QIcon icon(QPixmap::fromImage(img));
-			// 设置 QToolButton 的图标
-			pBtn->setIcon(icon);
-			pBtn->setIconSize(QSize(50, 46));
-			pBtn->setText(QString::fromStdString(software));
-			pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-			pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-			pBtn->setFocusPolicy(Qt::NoFocus);
-			pBtn->setFixedSize(55, 64);
-			//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
-			pBtn->setEnabled(true);
+	//db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
+	//for (const auto& stTool : ipMap)
+	//{
+	//	const std::string& software = stTool.first;
+	//	const table_ip& data = stTool.second;
+	//	if (data.used == 0)
+	//	{
+	//		QToolButton* pBtn = new QToolButton();
+	//		QImage img;
+	//		img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+	//		// 将 QImage 转换为 QIcon
+	//		QIcon icon(QPixmap::fromImage(img));
+	//		// 设置 QToolButton 的图标
+	//		pBtn->setIcon(icon);
+	//		pBtn->setIconSize(QSize(50, 46));
+	//		pBtn->setText(QString::fromStdString(software));
+	//		pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	//		pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+	//		pBtn->setFocusPolicy(Qt::NoFocus);
+	//		pBtn->setFixedSize(55, 64);
+	//		//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+	//		pBtn->setEnabled(true);
 
-			pLayout->addWidget(pBtn);
+	//		pLayout->addWidget(pBtn);
 
-			//鼠标双击事件
-			DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
-			pBtn->installEventFilter(interceptor);
-			connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
-		}
-	}
+	//		//鼠标双击事件
+	//		DoubleClickInterceptor *interceptor = new DoubleClickInterceptor;
+	//		pBtn->installEventFilter(interceptor);
+	//		connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
+	//	}
+	//}
 }
 
 void MainWindow::updateModuleToolTreeItem(int module)
 {
-	QLayout* pLayout = nullptr;
+	
 	QTreeWidgetItem* pModelTreeItem = nullptr;
 	if (module == 1)
 	{
-		pLayout = ui->layoutM1ToolIcon;
+		
 		pModelTreeItem =  m_pFunctionPrototypeNode;
 	}
 	else if (module == 2)
 	{
-		pLayout = ui->layoutM2ToolIcon;
+		
 		pModelTreeItem = m_pGeometryPrototypeNode;
 	}
 	else if (module == 3)
 	{
-		pLayout = ui->layoutM3ToolIcon;
+		
 		pModelTreeItem = m_pPerformancePrototypeNode;
 	}
 	else if (module == 4)
 	{
-		pLayout = ui->layoutM4ToolIcon;
+		
 		pModelTreeItem = m_pProductionPrototypeNode;
 	}
 	pModelTreeItem->takeChildren();
@@ -1289,8 +1291,8 @@ void MainWindow::updateModuleToolTreeItem(int module)
 			{
 				QTreeWidgetItem* pToolsChildItem = new QTreeWidgetItem(pModelTreeItem, QStringList(QString::fromStdString(software)));
 				pToolsChildItem->setSizeHint(0, QSize(45, 45));
-				pToolsChildItem->setData(0, Qt::UserRole, 2);
-
+			
+				pToolsChildItem->setData(0, Qt::UserRole + 1, QString::fromStdString(software));
 				QToolButton* pBtn = new QToolButton();
 			
 				QImage img;
@@ -2471,6 +2473,7 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 	{
 		if (data.type() == QVariant::String) 
 		{
+			QString  toolName = data.toString();
 			QTreeWidgetItem* parentItem = item->parent();
 			if (parentItem != nullptr)
 			{
@@ -2478,19 +2481,20 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 				if (Index == 4)  // 模块1
 				{
 					//ui->tabWidgetModulel1
+					onDoubleClicked(toolName); // 嵌入软件
 
 				}
 				else if (Index == 5) // 模块2
 				{
-
+					onDoubleClicked(toolName); // 嵌入软件
 				}
 				else if (Index == 6)
 				{
-
+					onDoubleClicked(toolName); // 嵌入软件
 				}
 				else if (Index == 7)
 				{
-
+					onDoubleClicked(toolName); // 嵌入软件
 				}
 				qDebug() << "Double-clicked item data (string):" << data.toString();
 				
@@ -2518,6 +2522,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 	// 获取存储在 QTreeWidgetItem 中的自定义数据
 	QVariant data = item->data(column, Qt::UserRole);
 
+	int stackIndex = -1;
 	// 根据数据类型打印输出
 	if (data.isValid())
 	{
@@ -2528,18 +2533,8 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		else if (data.type() == QVariant::Int)
 		{
 			qDebug() << "-clicked item data (int):" << data.toInt();
-			int index = data.toInt();
-			ui->stackedWidget->setCurrentIndex(index);
-			QString str = item->text(0);
-			ui->btnChildTitle->setText(str);
-			if (index == 0)
-			{
-				slot_btnResourceManageClicked();
-			}
-			else if (index == 1)
-			{
-
-			}
+			stackIndex = data.toInt();
+			
 			
 			//ui->stackedWidgetBtn->setCurrentIndex(index);
 		}
@@ -2549,7 +2544,55 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 	}
 	else
 	{
-		qDebug() << "No custom data found in double-clicked item.";
+		QTreeWidgetItem* parentItem = item->parent();
+		if (parentItem != nullptr)
+		{
+			stackIndex = parentItem->data(0, Qt::UserRole).toInt();
+		}
+	}
+	if (stackIndex != -1)
+	{
+		if (ui->stackedWidget->currentIndex() != stackIndex)
+		{
+			ui->stackedWidget->setCurrentIndex(stackIndex);
+			
+		}
+		QString str = item->text(0);
+		ui->btnChildTitle->setText(str);
+		if (stackIndex == 0)
+		{
+			slot_btnResourceManageClicked();
+		}
+		else if (stackIndex == 1)
+		{
+
+		}
+		else if (stackIndex == 2)
+		{
+
+		}
+		else if (stackIndex == 3)
+		{
+
+		}
+		else if (stackIndex == 4)
+		{
+			common::indexNum = 1; // 之前的模块下标 概念;
+		}
+		else if (stackIndex == 5)
+		{
+			common::indexNum = 2; // 之前的模块下标 概念;
+		}
+		else if (stackIndex == 6)
+		{
+			common::indexNum = 3; // 之前的模块下标 概念;
+		}
+		else if (stackIndex == 7)
+		{
+			common::indexNum = 4; // 之前的模块下标 概念;
+		}
+
+			
 	}
 }
 

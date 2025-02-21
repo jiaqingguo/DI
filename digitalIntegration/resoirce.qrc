@@ -42,5 +42,6 @@
         <file>image/loading2.gif</file>
         <file>image/waiting.png</file>
         <file>image/CASC.png</file>
+        <file>image/treeItemSelect.png</file>
     </qresource>
 </RCC>

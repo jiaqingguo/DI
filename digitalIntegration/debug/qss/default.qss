@@ -11,19 +11,62 @@ QWidget#widgetLeftMenu {
 	
 }
 
-
 QWidget#widgetLeftMenu QPushButton#btnTitleIcon{
 	border-image:url(:/image/CASC.png);  
 }
 QWidget#widgetLeftMenu QTreeWidget{
 	 background: transparent;
-	 /* border: none;            // 移除边框  */      
+	  border: none; /*           // 移除边框  */      
 }
+
 
 QWidget#widgetLeftMenu QTreeWidget::item {
-           color: white;
-}
-
+           /*  background-color: #e0e0e0; 设置默认背景颜色 */
+            color:white; /* 设置默认字体颜色 */
+           
+			margin-right:0px;
+			 /*padding: 15px; 设置内边距 */
+        }
+QWidget#widgetLeftMenu QTreeWidget::item:hover {
+           /* background-color: #cce8ff;  设置悬浮背景颜色 */
+            color: #000; /* 设置悬浮字体颜色 */
+        }
+QWidget#widgetLeftMenu QTreeWidget::item:selected {
+            background-image: url(:/image/treeItemSelect.png);  /* 设置选中时的背景图片 */
+			background-position: center; /* 背景图片居中 */
+			background-repeat: no-repeat; /* 背景图片不重复 */
+			background-size: cover; /* 背景图片自适应大小 */
+            color: red; /* 设置选中时的字体颜色 */
+			 border: none;
+        }
+		
+QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
+		
+            border-top: 3px solid #0078d7 !important; 
+            border-left: none  !important; /* 隐藏左边框 */
+            border-right: none  !important; /* 隐藏右边框 */
+            border-bottom: none  !important; /* 隐藏下边框 */
+        }
+		QWidget#widget QTabWidget#tabWidgetModulel1::pane:selected {	
+		
+            border-top: 3px solid #0078d7 !important; 
+            border-left: none  !important; /* 隐藏左边框 */
+            border-right: none  !important; /* 隐藏右边框 */
+            border-bottom: none  !important; /* 隐藏下边框 */
+        }
+QTabWidget#tabWidgetModulel1 QTabBar::tab {
+            background: #f0f0f0; /* 设置选项卡背景颜色 */
+            border: none;
+            padding: 10px; /* 设置内边距 */
+            margin-right: 2px; /* 设置选项卡之间的间距 */
+			border-top-right-radius: 15px;
+			border-top-left-radius: 15px;
+        }
+QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
+            background: #ffffff; /* 设置选中选项卡背景颜色 */
+           /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
+		   border: none;
+        }
 QLabel#labelUserIcon{
 	min-width: 40px;
 	min-height: 40px;

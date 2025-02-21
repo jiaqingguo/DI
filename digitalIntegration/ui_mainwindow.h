@@ -29,7 +29,6 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "ApprovalProgressDialog.h"
-#include "CDoublePushButton.h"
 #include "FtpDialog.h"
 #include "InformationConfihurationDialog.h"
 #include "ResourceManageDialog.h"
@@ -63,10 +62,6 @@ public:
     QHBoxLayout *horizontalLayout_6;
     QPushButton *btnChildTitle;
     QSpacerItem *horizontalSpacer;
-    CDoublePushButton *btnModule31;
-    CDoublePushButton *btnModule1;
-    CDoublePushButton *btnModule2;
-    CDoublePushButton *btnModule4;
     QLabel *labelUserName;
     QLabel *labelUserIcon;
     QPushButton *btnMinimize;
@@ -83,8 +78,6 @@ public:
     QWidget *widgetM1;
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *layoutM1ToolIcon;
-    QPushButton *pushButton;
-    QPushButton *pushButton_3;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *btnM1Load;
     QPushButton *btnM1Save;
@@ -100,12 +93,6 @@ public:
     QWidget *widgetM2;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *layoutM2ToolIcon;
-    QPushButton *pushButton_10;
-    QPushButton *pushButton_21;
-    QPushButton *pushButton_23;
-    QPushButton *pushButton_24;
-    QPushButton *pushButton_22;
-    QPushButton *pushButton_11;
     QSpacerItem *horizontalSpacer_4;
     QPushButton *btnM2Load;
     QPushButton *btnM2Save;
@@ -121,12 +108,6 @@ public:
     QWidget *widgetM3;
     QHBoxLayout *horizontalLayout_7;
     QHBoxLayout *layoutM3ToolIcon;
-    QPushButton *pushButton_14;
-    QPushButton *pushButton_16;
-    QPushButton *pushButton_17;
-    QPushButton *pushButton_20;
-    QPushButton *pushButton_19;
-    QPushButton *pushButton_15;
     QSpacerItem *horizontalSpacer_5;
     QPushButton *btnM3Load;
     QPushButton *btnM3Save;
@@ -141,8 +122,6 @@ public:
     QVBoxLayout *verticalLayout_2;
     QWidget *widgetM4;
     QHBoxLayout *horizontalLayout_9;
-    QHBoxLayout *layoutM4ToolIcon;
-    QPushButton *pushButton_18;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *btnM4Load;
     QPushButton *btnM4Save;
@@ -190,7 +169,7 @@ public:
         verticalLayout_7 = new QVBoxLayout(widgetLeftMenu);
         verticalLayout_7->setSpacing(6);
         verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
-        verticalLayout_7->setContentsMargins(9, 9, 9, 15);
+        verticalLayout_7->setContentsMargins(0, 9, 0, 15);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -252,52 +231,13 @@ public:
 
         horizontalLayout_6->addItem(horizontalSpacer);
 
-        btnModule31 = new CDoublePushButton(widgetTital);
-        btnModule31->setObjectName(QString::fromUtf8("btnModule31"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(btnModule31->sizePolicy().hasHeightForWidth());
-        btnModule31->setSizePolicy(sizePolicy);
-        btnModule31->setMinimumSize(QSize(150, 25));
-        btnModule31->setMaximumSize(QSize(150, 30));
-
-        horizontalLayout_6->addWidget(btnModule31);
-
-        btnModule1 = new CDoublePushButton(widgetTital);
-        btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
-        sizePolicy.setHeightForWidth(btnModule1->sizePolicy().hasHeightForWidth());
-        btnModule1->setSizePolicy(sizePolicy);
-        btnModule1->setMinimumSize(QSize(150, 25));
-        btnModule1->setMaximumSize(QSize(150, 30));
-
-        horizontalLayout_6->addWidget(btnModule1);
-
-        btnModule2 = new CDoublePushButton(widgetTital);
-        btnModule2->setObjectName(QString::fromUtf8("btnModule2"));
-        sizePolicy.setHeightForWidth(btnModule2->sizePolicy().hasHeightForWidth());
-        btnModule2->setSizePolicy(sizePolicy);
-        btnModule2->setMinimumSize(QSize(150, 25));
-        btnModule2->setMaximumSize(QSize(150, 30));
-
-        horizontalLayout_6->addWidget(btnModule2);
-
-        btnModule4 = new CDoublePushButton(widgetTital);
-        btnModule4->setObjectName(QString::fromUtf8("btnModule4"));
-        sizePolicy.setHeightForWidth(btnModule4->sizePolicy().hasHeightForWidth());
-        btnModule4->setSizePolicy(sizePolicy);
-        btnModule4->setMinimumSize(QSize(150, 25));
-        btnModule4->setMaximumSize(QSize(150, 30));
-
-        horizontalLayout_6->addWidget(btnModule4);
-
         labelUserName = new QLabel(widgetTital);
         labelUserName->setObjectName(QString::fromUtf8("labelUserName"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(labelUserName->sizePolicy().hasHeightForWidth());
-        labelUserName->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(labelUserName->sizePolicy().hasHeightForWidth());
+        labelUserName->setSizePolicy(sizePolicy);
         labelUserName->setMinimumSize(QSize(0, 25));
         labelUserName->setMaximumSize(QSize(16777215, 25));
 
@@ -305,8 +245,8 @@ public:
 
         labelUserIcon = new QLabel(widgetTital);
         labelUserIcon->setObjectName(QString::fromUtf8("labelUserIcon"));
-        sizePolicy1.setHeightForWidth(labelUserIcon->sizePolicy().hasHeightForWidth());
-        labelUserIcon->setSizePolicy(sizePolicy1);
+        sizePolicy.setHeightForWidth(labelUserIcon->sizePolicy().hasHeightForWidth());
+        labelUserIcon->setSizePolicy(sizePolicy);
         labelUserIcon->setMinimumSize(QSize(40, 25));
         labelUserIcon->setMaximumSize(QSize(40, 25));
 
@@ -362,20 +302,6 @@ public:
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         layoutM1ToolIcon = new QHBoxLayout();
         layoutM1ToolIcon->setObjectName(QString::fromUtf8("layoutM1ToolIcon"));
-        pushButton = new QPushButton(widgetM1);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setMinimumSize(QSize(55, 60));
-        pushButton->setMaximumSize(QSize(55, 60));
-
-        layoutM1ToolIcon->addWidget(pushButton);
-
-        pushButton_3 = new QPushButton(widgetM1);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setMinimumSize(QSize(55, 60));
-        pushButton_3->setMaximumSize(QSize(55, 60));
-
-        layoutM1ToolIcon->addWidget(pushButton_3);
-
 
         horizontalLayout_4->addLayout(layoutM1ToolIcon);
 
@@ -448,48 +374,6 @@ public:
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
         layoutM2ToolIcon = new QHBoxLayout();
         layoutM2ToolIcon->setObjectName(QString::fromUtf8("layoutM2ToolIcon"));
-        pushButton_10 = new QPushButton(widgetM2);
-        pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
-        pushButton_10->setMinimumSize(QSize(55, 60));
-        pushButton_10->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_10);
-
-        pushButton_21 = new QPushButton(widgetM2);
-        pushButton_21->setObjectName(QString::fromUtf8("pushButton_21"));
-        pushButton_21->setMinimumSize(QSize(55, 60));
-        pushButton_21->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_21);
-
-        pushButton_23 = new QPushButton(widgetM2);
-        pushButton_23->setObjectName(QString::fromUtf8("pushButton_23"));
-        pushButton_23->setMinimumSize(QSize(55, 60));
-        pushButton_23->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_23);
-
-        pushButton_24 = new QPushButton(widgetM2);
-        pushButton_24->setObjectName(QString::fromUtf8("pushButton_24"));
-        pushButton_24->setMinimumSize(QSize(55, 60));
-        pushButton_24->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_24);
-
-        pushButton_22 = new QPushButton(widgetM2);
-        pushButton_22->setObjectName(QString::fromUtf8("pushButton_22"));
-        pushButton_22->setMinimumSize(QSize(55, 60));
-        pushButton_22->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_22);
-
-        pushButton_11 = new QPushButton(widgetM2);
-        pushButton_11->setObjectName(QString::fromUtf8("pushButton_11"));
-        pushButton_11->setMinimumSize(QSize(55, 60));
-        pushButton_11->setMaximumSize(QSize(55, 60));
-
-        layoutM2ToolIcon->addWidget(pushButton_11);
-
 
         horizontalLayout_5->addLayout(layoutM2ToolIcon);
 
@@ -557,48 +441,6 @@ public:
         horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
         layoutM3ToolIcon = new QHBoxLayout();
         layoutM3ToolIcon->setObjectName(QString::fromUtf8("layoutM3ToolIcon"));
-        pushButton_14 = new QPushButton(widgetM3);
-        pushButton_14->setObjectName(QString::fromUtf8("pushButton_14"));
-        pushButton_14->setMinimumSize(QSize(55, 60));
-        pushButton_14->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_14);
-
-        pushButton_16 = new QPushButton(widgetM3);
-        pushButton_16->setObjectName(QString::fromUtf8("pushButton_16"));
-        pushButton_16->setMinimumSize(QSize(55, 60));
-        pushButton_16->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_16);
-
-        pushButton_17 = new QPushButton(widgetM3);
-        pushButton_17->setObjectName(QString::fromUtf8("pushButton_17"));
-        pushButton_17->setMinimumSize(QSize(55, 60));
-        pushButton_17->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_17);
-
-        pushButton_20 = new QPushButton(widgetM3);
-        pushButton_20->setObjectName(QString::fromUtf8("pushButton_20"));
-        pushButton_20->setMinimumSize(QSize(55, 60));
-        pushButton_20->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_20);
-
-        pushButton_19 = new QPushButton(widgetM3);
-        pushButton_19->setObjectName(QString::fromUtf8("pushButton_19"));
-        pushButton_19->setMinimumSize(QSize(55, 60));
-        pushButton_19->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_19);
-
-        pushButton_15 = new QPushButton(widgetM3);
-        pushButton_15->setObjectName(QString::fromUtf8("pushButton_15"));
-        pushButton_15->setMinimumSize(QSize(55, 60));
-        pushButton_15->setMaximumSize(QSize(55, 60));
-
-        layoutM3ToolIcon->addWidget(pushButton_15);
-
 
         horizontalLayout_7->addLayout(layoutM3ToolIcon);
 
@@ -664,18 +506,6 @@ public:
         horizontalLayout_9 = new QHBoxLayout(widgetM4);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
-        layoutM4ToolIcon = new QHBoxLayout();
-        layoutM4ToolIcon->setObjectName(QString::fromUtf8("layoutM4ToolIcon"));
-        pushButton_18 = new QPushButton(widgetM4);
-        pushButton_18->setObjectName(QString::fromUtf8("pushButton_18"));
-        pushButton_18->setMinimumSize(QSize(55, 60));
-        pushButton_18->setMaximumSize(QSize(55, 60));
-
-        layoutM4ToolIcon->addWidget(pushButton_18);
-
-
-        horizontalLayout_9->addLayout(layoutM4ToolIcon);
-
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_9->addItem(horizontalSpacer_6);
@@ -744,9 +574,10 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(7);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
+        tabWidgetModulel3->setCurrentIndex(1);
         tabWidgetModulel4->setCurrentIndex(0);
 
 
@@ -765,45 +596,26 @@ public:
         QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "1", nullptr));
         btnChildTitle->setText(QCoreApplication::translate("MainWindow", " \350\217\234\345\215\225 \346\240\207\351\242\230", nullptr));
-        btnModule31->setText(QCoreApplication::translate("MainWindow", "\346\200\247\350\203\275\346\240\267\346\234\272", nullptr));
-        btnModule1->setText(QCoreApplication::translate("MainWindow", "\345\212\237\350\203\275\346\240\267\346\234\272", nullptr));
-        btnModule2->setText(QCoreApplication::translate("MainWindow", "\345\207\240\344\275\225\346\240\267\346\234\272", nullptr));
-        btnModule4->setText(QCoreApplication::translate("MainWindow", "\347\224\237\344\272\247\346\240\267\346\234\272", nullptr));
         labelUserName->setText(QCoreApplication::translate("MainWindow", "\347\224\250\346\210\2671", nullptr));
         labelUserIcon->setText(QString());
         btnMinimize->setText(QCoreApplication::translate("MainWindow", "\342\200\224", nullptr));
         btnMaximize->setText(QCoreApplication::translate("MainWindow", "\342\226\241", nullptr));
         btnClose->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "AI", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "PS", nullptr));
         btnM1Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM1Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel1->setTabText(tabWidgetModulel1->indexOf(tab), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
         tabWidgetModulel1->setTabText(tabWidgetModulel1->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
-        pushButton_10->setText(QCoreApplication::translate("MainWindow", "AE", nullptr));
-        pushButton_21->setText(QCoreApplication::translate("MainWindow", "Ai", nullptr));
-        pushButton_23->setText(QCoreApplication::translate("MainWindow", "Ae", nullptr));
-        pushButton_24->setText(QCoreApplication::translate("MainWindow", "Ps", nullptr));
-        pushButton_22->setText(QCoreApplication::translate("MainWindow", " Id", nullptr));
-        pushButton_11->setText(QCoreApplication::translate("MainWindow", "Xd", nullptr));
         btnM2Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM2Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab2->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel2->setTabText(tabWidgetModulel2->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
         tabWidgetModulel2->setTabText(tabWidgetModulel2->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
-        pushButton_14->setText(QCoreApplication::translate("MainWindow", "AE", nullptr));
-        pushButton_16->setText(QCoreApplication::translate("MainWindow", " AI", nullptr));
-        pushButton_17->setText(QCoreApplication::translate("MainWindow", "AE", nullptr));
-        pushButton_20->setText(QCoreApplication::translate("MainWindow", "Ps", nullptr));
-        pushButton_19->setText(QCoreApplication::translate("MainWindow", "Id", nullptr));
-        pushButton_15->setText(QCoreApplication::translate("MainWindow", "Xd", nullptr));
         btnM3Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM3Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab3->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel3->setTabText(tabWidgetModulel3->indexOf(tab_5), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
         tabWidgetModulel3->setTabText(tabWidgetModulel3->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
-        pushButton_18->setText(QCoreApplication::translate("MainWindow", "AE", nullptr));
         btnM4Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM4Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));

@@ -50,13 +50,13 @@
          <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>9</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
          <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>9</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
          <number>15</number>
@@ -190,106 +190,6 @@
             </spacer>
            </item>
            <item>
-            <widget class="CDoublePushButton" name="btnModule31">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>性能样机</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="CDoublePushButton" name="btnModule1">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>功能样机</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="CDoublePushButton" name="btnModule2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>几何样机</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="CDoublePushButton" name="btnModule4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>生产样机</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="labelUserName">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -366,7 +266,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>7</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
           <widget class="InformationConfihurationDialog" name="page1"/>
@@ -432,46 +332,7 @@
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="layoutM1ToolIcon">
-                 <item>
-                  <widget class="QPushButton" name="pushButton">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>AI</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_3">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>PS</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <layout class="QHBoxLayout" name="layoutM1ToolIcon"/>
                </item>
                <item>
                 <spacer name="horizontalSpacer_3">
@@ -636,122 +497,7 @@
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="layoutM2ToolIcon">
-                 <item>
-                  <widget class="QPushButton" name="pushButton_10">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>AE</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_21">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Ai</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_23">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Ae</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_24">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Ps</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_22">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string> Id</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_11">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Xd</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <layout class="QHBoxLayout" name="layoutM2ToolIcon"/>
                </item>
                <item>
                 <spacer name="horizontalSpacer_4">
@@ -901,122 +647,7 @@
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="layoutM3ToolIcon">
-                 <item>
-                  <widget class="QPushButton" name="pushButton_14">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>AE</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_16">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string> AI</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_17">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>AE</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_20">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Ps</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_19">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Id</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_15">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Xd</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <layout class="QHBoxLayout" name="layoutM3ToolIcon"/>
                </item>
                <item>
                 <spacer name="horizontalSpacer_5">
@@ -1074,6 +705,9 @@
             </item>
             <item>
              <widget class="QTabWidget" name="tabWidgetModulel3">
+              <property name="currentIndex">
+               <number>1</number>
+              </property>
               <widget class="QWidget" name="tab_5">
                <attribute name="title">
                 <string>标签1</string>
@@ -1163,29 +797,6 @@
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="layoutM4ToolIcon">
-                 <item>
-                  <widget class="QPushButton" name="pushButton_18">
-                   <property name="minimumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>55</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>AE</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
                 <spacer name="horizontalSpacer_6">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -1246,7 +857,7 @@
               </property>
               <widget class="QWidget" name="tab_7">
                <attribute name="title">
-                <string>标签1</string>
+                <string>+</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout">
                 <item row="0" column="0">
@@ -1344,11 +955,6 @@
   </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>CDoublePushButton</class>
-   <extends>QPushButton</extends>
-   <header>CDoublePushButton.h</header>
-  </customwidget>
   <customwidget>
    <class>ResourceManageDialog</class>
    <extends>QWidget</extends>
