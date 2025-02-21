@@ -633,10 +633,10 @@ void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 	ui->m_ResourceManageDialog->startWebFlushTimer();
 	int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
-	ui->m_ResourceManageDialog->move(x, y);
-	ui->m_ResourceManageDialog->exec();
-	ui->m_ResourceManageDialog->stopWebFlushTimer();
+	//common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
+	//ui->m_ResourceManageDialog->move(x, y);
+	//ui->m_ResourceManageDialog->exec();
+//ui->m_ResourceManageDialog->stopWebFlushTimer();
 	//ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
@@ -2538,7 +2538,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 			}
 			else if (index == 1)
 			{
-
+				
 			}
 			
 			//ui->stackedWidgetBtn->setCurrentIndex(index);

@@ -366,9 +366,13 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
-          <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
+          <widget class="ResourceManageDialog" name="m_ResourceManageDialog">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
           <widget class="InformationConfihurationDialog" name="page1"/>
           <widget class="FtpDialog" name="m_FtpDialog"/>
           <widget class="ApprovalProgressDialog" name="m_ApprovalProgressDialog">
@@ -1376,7 +1380,4 @@
  </customwidgets>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

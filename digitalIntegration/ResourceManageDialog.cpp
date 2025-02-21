@@ -19,19 +19,11 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 	setWindowIcon(QIcon(":/image/ResourceManage.png"));
-	ui->tabWidget->setCurrentIndex(0);
-	m_model = new QStandardItemModel();
-	m_model->setColumnCount(6);
-	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
-	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
-	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
-	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
-	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
-	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
-
-	ui->tableView->setModel(m_model);
-	common::setTableViewBasicConfiguration(ui->tableView);
-
+	
+	connect(ui->btnList, &QPushButton::clicked, this, &ResourceManageDialog::slot_showList);
+	ui->btnList->click();
+	connect(ui->btnCurve, &QPushButton::clicked, this, &ResourceManageDialog::slot_showCurve);
+	//ui->tabWidget->setCurrentIndex(0);
 	//  int newRow3 = m_model->rowCount();
 	  //m_model->setItem(0, 0, new QStandardItem("SetItem 1"));
 
@@ -58,12 +50,7 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 		//ui->comboBox->addItem(QString::fromLocal8Bit("主机2"));
 		//this->message = new Message_t();
 	getUdpData();
-	//根据下拉列表中最长项的长度来调整控件的宽度
-	ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	// 连接信号和槽
-	//connect(m_model, &QStandardItemModel::itemChanged, this, &ResourceManageDialog::slot_modelItemChanged);
-	connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
-
+	
 	m_timer = new QTimer(this);
 	QObject::connect(m_timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
 	//m_timer->start(1000); // 每秒触发一次
@@ -79,51 +66,56 @@ ResourceManageDialog::~ResourceManageDialog()
 
 void ResourceManageDialog::initTableWidgetCurve()
 {
-	ui->tabWidgetCurve->setTabPosition(QTabWidget::West);
-	ui->tabWidgetCurve->removeTab(1);
-	ui->tabWidgetCurve->removeTab(0);
+	//ui->tabWidgetCurve->setTabPosition(QTabWidget::West);
+	//ui->tabWidgetCurve->removeTab(1);
+	//ui->tabWidgetCurve->removeTab(0);
 
-	// 创建一些示例标签页
-	QWidget* tab1Widget = new QWidget;
-	QWidget* tab2Widget = new QWidget;
-	QWidget* tab3Widget = new QWidget;
-	QWidget* tab4Widget = new QWidget;
-	QWidget* tab5Widget = new QWidget;
-	// 添加一些内容到每个标签页
-	tab1Widget->setLayout(new QVBoxLayout);
-	tab2Widget->setLayout(new QVBoxLayout);
-	tab3Widget->setLayout(new QVBoxLayout);
-	tab4Widget->setLayout(new QVBoxLayout);
-	tab5Widget->setLayout(new QVBoxLayout);
+	//// 创建一些示例标签页
+	//QWidget* tab1Widget = new QWidget;
+	//QWidget* tab2Widget = new QWidget;
+	//QWidget* tab3Widget = new QWidget;
+	//QWidget* tab4Widget = new QWidget;
+	//QWidget* tab5Widget = new QWidget;
+	//// 添加一些内容到每个标签页
+	//tab1Widget->setLayout(new QVBoxLayout);
+	//tab2Widget->setLayout(new QVBoxLayout);
+	//tab3Widget->setLayout(new QVBoxLayout);
+	//tab4Widget->setLayout(new QVBoxLayout);
+	//tab5Widget->setLayout(new QVBoxLayout);
 
-	// 将自定义标签添加到 QTabWidget
-	ui->tabWidgetCurve->addTab(tab1Widget, "");
-	ui->tabWidgetCurve->addTab(tab2Widget, "");
-	ui->tabWidgetCurve->addTab(tab3Widget, "");
-	ui->tabWidgetCurve->addTab(tab4Widget, "");
-	ui->tabWidgetCurve->addTab(tab5Widget, "");
+	//// 将自定义标签添加到 QTabWidget
+	//ui->tabWidgetGpu->addTab(tab1Widget, "");
+	//ui->tabWidgetMemory->addTab(tab2Widget, "");
+	//ui->tabWidgetDisk->addTab(tab3Widget, "");
+	//ui->tabWidgetNet->addTab(tab4Widget, "");
+	//ui->tabWidgetGpu->addTab(tab5Widget, "");
 
-	ui->tabWidgetCurve->setTabEnabled(0, true);
-	ui->tabWidgetCurve->setTabEnabled(1, true);
-	ui->tabWidgetCurve->setTabEnabled(2, true);
-	ui->tabWidgetCurve->setTabEnabled(3, true);
-	ui->tabWidgetCurve->setTabEnabled(4, true);
+	//ui->tabWidgetGpu->setTabEnabled(0, true);
+	//ui->tabWidgetMemory->setTabEnabled(1, true);
+	//ui->tabWidgetDisk->setTabEnabled(2, true);
+	//ui->tabWidgetNet->setTabEnabled(3, true);
+	//ui->tabWidgetGpu->setTabEnabled(4, true);
 
-	//tabWidget->setTabIcon(0, QIcon()); // 如果不需要图标，可以移除此行
-
+	//ui->tabWidgetCpu->setTabIcon(0, QIcon()); // 如果不需要图标，可以移除此行
+	//ui->tabWidgetMemory->setTabIcon(0, QIcon());
+	//ui->tabWidgetDisk->setTabIcon(0, QIcon());
+	//ui->tabWidgetNet->setTabIcon(0, QIcon());
+	//ui->tabWidgetGpu->setTabIcon(0, QIcon());
 	// 创建自定义标签
-	ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//曲线中的显示
-	ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("内存")));
-	ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("磁盘")));
-	ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("网络")));
-	ui->tabWidgetCurve->tabBar()->setTabButton(4, QTabBar::RightSide, createCustomTab("GPU"));
-	connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked, this, &ResourceManageDialog::slot_get_data);
+	//ui->tabWidgetCurve->tabBar()->setTabButton(0, QTabBar::RightSide, createCustomTab("CPU"));//曲线中的显示
+	//ui->tabWidgetCurve->tabBar()->setTabButton(1, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("内存")));
+	//ui->tabWidgetCurve->tabBar()->setTabButton(2, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("磁盘")));
+	//ui->tabWidgetCurve->tabBar()->setTabButton(3, QTabBar::RightSide, createCustomTab(QString::fromLocal8Bit("网络")));
+	//ui->tabWidgetCurve->tabBar()->setTabButton(4, QTabBar::RightSide, createCustomTab("GPU"));
+	//connect(ui->tabWidgetCurve->tabBar(), &QTabBar::tabBarClicked, this, &ResourceManageDialog::slot_get_data);
 
-	initWebViewCpu(tab1Widget);
-	initWebViewMemory(tab2Widget);
-	initWebViewDisk(tab3Widget);
-	initWebViewNet(tab4Widget);
-	initWebViewGpu(tab5Widget);
+	
+	initWebViewCpu(ui->widgetCpu);
+	initWebViewMemory(ui->widgetMemory);
+	initWebViewDisk(ui->widgetDisk);
+	initWebViewNet(ui->widgetNet);
+	initWebViewGpu(ui->widgetGpu);
+	
 }
 
 void ResourceManageDialog::initWebViewNet(QWidget* widget)
@@ -149,7 +141,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
 	   //  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("网络吞吐量"));
+	//m_jsonDataNet.insert("titleName", QString::fromLocal8Bit("网络吞吐量"));
 	m_jsonDataNet.insert("data", _data);
 	// 折线图（line）
 	// 柱状图（Bar）
@@ -173,7 +165,7 @@ void ResourceManageDialog::initWebViewNet(QWidget* widget)
 		m_webEngineViewNet->page()->runJavaScript(js);
 	});
 }
-void ResourceManageDialog::initWebViewCpu(QWidget* widget)
+void ResourceManageDialog::initWebViewCpu(QWidget *widget)
 {
 	m_webEngineViewCpu = new QWebEngineView();
 	QString pathNet = qApp->applicationDirPath() + "/eChartFileCpu.html";
@@ -198,7 +190,7 @@ void ResourceManageDialog::initWebViewCpu(QWidget* widget)
 		//  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU使用率"));
+	//m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU使用率"));
 	m_jsonDataCpu.insert("data", _data);
 
 	m_jsonDataCpu.insert("type", "line");
@@ -235,7 +227,7 @@ void ResourceManageDialog::initWebViewMemory(QWidget* widget)
 		//    itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("内存使用率"));
+	//m_jsonDataMemory.insert("titleName", QString::fromLocal8Bit("内存使用率"));
 	m_jsonDataMemory.insert("data", _data);
 
 	m_jsonDataMemory.insert("type", "line");
@@ -272,7 +264,7 @@ void ResourceManageDialog::initWebViewDisk(QWidget* widget)
 		//   itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("磁盘使用率"));
+	//m_jsonDataDisk.insert("titleName", QString::fromLocal8Bit("磁盘使用率"));
 	m_jsonDataDisk.insert("data", _data);
 
 	m_jsonDataDisk.insert("type", "line");
@@ -311,7 +303,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 		//  itemData.insert("itemValue", __values[i]);
 		_data.append(itemData);
 	}
-	m_jsonDataGpu.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
+	//m_jsonDataGpu.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
 	m_jsonDataGpu.insert("data", _data);
 
 	m_jsonDataGpu.insert("type", "line");
@@ -327,7 +319,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 
 void ResourceManageDialog::startWebFlushTimer()
 {
-	m_timer->start(2000);
+	m_timer->start(3000);
 }
 
 void ResourceManageDialog::stopWebFlushTimer()
@@ -463,7 +455,7 @@ void ResourceManageDialog::updateCpuWebViewShow(const QString& host)
 		_data.append(itemData);
 	}
 	m_jsonDataCpu.insert("data", _data);
-	m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU使用率"));
+	//m_jsonDataCpu.insert("titleName", QString::fromLocal8Bit("CPU使用率"));
 
 	QString optionStr = QJsonDocument(m_jsonDataCpu).toJson();
 	//用到js中init() 函数
@@ -488,7 +480,7 @@ void ResourceManageDialog::updateMemoryWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("内存使用率"));
+	//jsonData.insert("titleName", QString::fromLocal8Bit("内存使用率"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
 	//用到js中init() 函数
@@ -512,7 +504,7 @@ void ResourceManageDialog::updateDiskWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("磁盘使用率"));
+	//jsonData.insert("titleName", QString::fromLocal8Bit("磁盘使用率"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
 	//用到js中init() 函数
@@ -536,7 +528,7 @@ void ResourceManageDialog::updateNetWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("网络吞吐量"));
+	//jsonData.insert("titleName", QString::fromLocal8Bit("网络吞吐量"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
 	//用到js中init() 函数
@@ -560,7 +552,7 @@ void ResourceManageDialog::updateGpuWebViewShow(const QString& host)
 	}
 	QJsonObject jsonData;
 	jsonData.insert("data", _data);
-	jsonData.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
+	//jsonData.insert("titleName", QString::fromLocal8Bit("GPU使用率"));
 
 	QString optionStr = QJsonDocument(jsonData).toJson();
 	//用到js中init() 函数
@@ -631,31 +623,40 @@ void ResourceManageDialog::slot_timerTimeout()
 		updateHostTableShow(hostInformation.host_name, hostInformation.Cpu_Message, hostInformation.Memory_Message, hostInformation.Disk_Message, hostInformation.Net_Message, hostInformation.Gpu_Message);
 
 		// 检查comboBox中是否已经存在该项
-		int index = ui->comboBox->findText(hostInformation.host_name);
-		if (index == -1 && !hostInformation.host_name.isEmpty())
+		int index1 = ui->comboBox1->findText(hostInformation.host_name);
+		int index2 = ui->comboBox2->findText(hostInformation.host_name);
+		int index3 = ui->comboBox3->findText(hostInformation.host_name);
+		int index4 = ui->comboBox4->findText(hostInformation.host_name);
+		int index5 = ui->comboBox5->findText(hostInformation.host_name);
+		if ((index1 == -1 || index2 == -1 ||index3 == -1 || index4 == -1 || index5 == -1) && !hostInformation.host_name.isEmpty())
 		{
 			// 如果不存在，才添加
-			ui->comboBox->addItem(hostInformation.host_name);
+			ui->comboBox1->addItem(hostInformation.host_name);
+			ui->comboBox2->addItem(hostInformation.host_name);
+			ui->comboBox3->addItem(hostInformation.host_name);
+			ui->comboBox4->addItem(hostInformation.host_name);
+			ui->comboBox5->addItem(hostInformation.host_name);
 		}
-		if (CPU_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//if (CPU_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//if (ui->comboBox1->currentText() == hostInformation.host_name)
 		{
-			updateCpuWebViewShow(hostInformation.host_name);
+			updateCpuWebViewShow(ui->comboBox1->currentText());
 		}
-		else if (memory_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//else if (ui->comboBox2->currentText()== hostInformation.host_name)
 		{
-			updateMemoryWebViewShow(hostInformation.host_name);
+			updateMemoryWebViewShow(ui->comboBox2->currentText());
 		}
-		else if (disk_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//else if (ui->comboBox3->currentText() == hostInformation.host_name)
 		{
-			updateDiskWebViewShow(hostInformation.host_name);
+			updateDiskWebViewShow(ui->comboBox3->currentText());
 		}
-		else if (net_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//else if (ui->comboBox4->currentText() == hostInformation.host_name)
 		{
-			updateNetWebViewShow(hostInformation.host_name);
+			updateNetWebViewShow(ui->comboBox4->currentText());
 		}
-		else if (Gpu_init == true && hostInformation.host_name == ui->comboBox->currentText())
+		//else if (ui->comboBox5->currentText() == hostInformation.host_name)
 		{
-			updateGpuWebViewShow(hostInformation.host_name);
+			updateGpuWebViewShow(ui->comboBox5->currentText());
 		}
 	}
 	
@@ -812,4 +813,34 @@ void  ResourceManageDialog::getUdpData()
 			}*/
 		}
 	});
+}
+
+void ResourceManageDialog::slot_showList()
+{
+	ui->stackedWidget->setCurrentIndex(0);
+	m_model = new QStandardItemModel();
+	m_model->setColumnCount(6);
+	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
+	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
+	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
+	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
+	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
+	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
+
+	ui->tableView->setModel(m_model);
+	common::setTableViewBasicConfiguration(ui->tableView);
+}
+void ResourceManageDialog::slot_showCurve()
+{
+	//initTableWidgetCurve();
+	ui->stackedWidget->setCurrentIndex(1);
+
+	//根据下拉列表中最长项的长度来调整控件的宽度
+	ui->comboBox1->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox2->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox3->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox4->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox5->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	// 连接信号和槽
+	//connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
 }

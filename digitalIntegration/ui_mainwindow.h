@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -155,7 +154,6 @@ public:
     QWidget *tab_8;
     QMenuBar *menubar;
     QStatusBar *statusbar;
-    QButtonGroup *buttonGroup;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -334,6 +332,7 @@ public:
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
         m_ResourceManageDialog = new ResourceManageDialog();
         m_ResourceManageDialog->setObjectName(QString::fromUtf8("m_ResourceManageDialog"));
+        m_ResourceManageDialog->setStyleSheet(QString::fromUtf8(""));
         stackedWidget->addWidget(m_ResourceManageDialog);
         page1 = new InformationConfihurationDialog();
         page1->setObjectName(QString::fromUtf8("page1"));
@@ -744,7 +743,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(0);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
