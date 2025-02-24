@@ -637,7 +637,7 @@ void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 	//common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
 	//ui->m_ResourceManageDialog->move(x, y);
 	//ui->m_ResourceManageDialog->exec();
-	ui->m_ResourceManageDialog->stopWebFlushTimer();
+	//ui->m_ResourceManageDialog->stopWebFlushTimer();
 	//ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
