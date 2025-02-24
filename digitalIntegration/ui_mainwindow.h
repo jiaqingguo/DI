@@ -619,7 +619,7 @@ public:
         btnM4Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM4Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
+        tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_8), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
     } // retranslateUi
 

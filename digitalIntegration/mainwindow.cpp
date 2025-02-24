@@ -637,7 +637,7 @@ void MainWindow::slot_btnResourceManageClicked()  //todo 需要由别出触发;
 	//common::getScreenCenterPos(x, y, ui->m_ResourceManageDialog->width(), ui->m_ResourceManageDialog->height());
 	//ui->m_ResourceManageDialog->move(x, y);
 	//ui->m_ResourceManageDialog->exec();
-	ui->m_ResourceManageDialog->stopWebFlushTimer();
+	//ui->m_ResourceManageDialog->stopWebFlushTimer();
 	//ui->btnResourceManage->setChecked(false);
 }
 void MainWindow::slot_btnInformationConfihurationClicked()
@@ -663,12 +663,12 @@ void MainWindow::slot_btnInformationConfihurationClicked()
 		del3->setHidden(true);
 		del4->setHidden(true);
 	}*/
-	m_InforConfihurationDialog->initFaceData();
+	//m_InforConfihurationDialog->initFaceData();
 	int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, m_InforConfihurationDialog->width(), m_InforConfihurationDialog->height());
+	/*common::getScreenCenterPos(x, y, m_InforConfihurationDialog->width(), m_InforConfihurationDialog->height());
 	m_InforConfihurationDialog->move(x, y);
-	m_InforConfihurationDialog->exec();
+	m_InforConfihurationDialog->exec();*/
 	//ui->btnInformationConfihuration->setChecked(false);
 }
 
@@ -2565,7 +2565,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		}
 		else if (stackIndex == 1)
 		{
-
+			
 		}
 		else if (stackIndex == 2)
 		{
