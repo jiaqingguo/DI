@@ -19,7 +19,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
@@ -30,18 +29,17 @@ QT_BEGIN_NAMESPACE
 class Ui_InformationConfihurationDialog
 {
 public:
+    QGridLayout *gridLayout;
     QWidget *widget;
-    QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *btnModule1;
     QPushButton *btnModule2;
     QPushButton *btnModule3;
     QPushButton *btnModule4;
     QSpacerItem *horizontalSpacer_5;
-    QSplitter *splitter;
     QStackedWidget *stackedWidget;
     QWidget *stackedWidgetPage1;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout_4;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_6;
@@ -81,7 +79,6 @@ public:
     QPushButton *btnToolDel4;
     QTableView *tableViewTool4;
     QGroupBox *groupBox_2;
-    QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_2;
     QTableView *tableViewIP1;
@@ -90,14 +87,14 @@ public:
     {
         if (InformationConfihurationDialog->objectName().isEmpty())
             InformationConfihurationDialog->setObjectName(QString::fromUtf8("InformationConfihurationDialog"));
-        InformationConfihurationDialog->resize(791, 715);
+        InformationConfihurationDialog->resize(824, 750);
+        gridLayout = new QGridLayout(InformationConfihurationDialog);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         widget = new QWidget(InformationConfihurationDialog);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(9, 9, 781, 51));
-        gridLayout_2 = new QGridLayout(widget);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4 = new QHBoxLayout(widget);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         btnModule1 = new QPushButton(widget);
         btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
 
@@ -118,23 +115,21 @@ public:
 
         horizontalLayout_4->addWidget(btnModule4);
 
-
-        gridLayout_2->addLayout(horizontalLayout_4, 0, 0, 1, 1);
-
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addItem(horizontalSpacer_5, 0, 1, 1, 1);
+        horizontalLayout_4->addItem(horizontalSpacer_5);
 
-        splitter = new QSplitter(InformationConfihurationDialog);
-        splitter->setObjectName(QString::fromUtf8("splitter"));
-        splitter->setGeometry(QRect(9, 57, 771, 651));
-        splitter->setOrientation(Qt::Horizontal);
-        stackedWidget = new QStackedWidget(splitter);
+
+        gridLayout->addWidget(widget, 0, 0, 1, 2);
+
+        stackedWidget = new QStackedWidget(InformationConfihurationDialog);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
+        stackedWidget->setMinimumSize(QSize(0, 0));
         stackedWidgetPage1 = new QWidget();
         stackedWidgetPage1->setObjectName(QString::fromUtf8("stackedWidgetPage1"));
-        verticalLayout_6 = new QVBoxLayout(stackedWidgetPage1);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        stackedWidgetPage1->setMinimumSize(QSize(520, 0));
+        verticalLayout_4 = new QVBoxLayout(stackedWidgetPage1);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         groupBox = new QGroupBox(stackedWidgetPage1);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout = new QVBoxLayout(groupBox);
@@ -171,11 +166,12 @@ public:
         verticalLayout->addWidget(tableViewTool1);
 
 
-        verticalLayout_6->addWidget(groupBox);
+        verticalLayout_4->addWidget(groupBox);
 
         stackedWidget->addWidget(stackedWidgetPage1);
         stackedWidgetPage2 = new QWidget();
         stackedWidgetPage2->setObjectName(QString::fromUtf8("stackedWidgetPage2"));
+        stackedWidgetPage2->setMinimumSize(QSize(520, 0));
         verticalLayout_10 = new QVBoxLayout(stackedWidgetPage2);
         verticalLayout_10->setObjectName(QString::fromUtf8("verticalLayout_10"));
         groupBox_3 = new QGroupBox(stackedWidgetPage2);
@@ -303,14 +299,12 @@ public:
         verticalLayout_12->addWidget(groupBox_7);
 
         stackedWidget->addWidget(stackedWidgetPage4);
-        splitter->addWidget(stackedWidget);
-        groupBox_2 = new QGroupBox(splitter);
+
+        gridLayout->addWidget(stackedWidget, 1, 0, 1, 1);
+
+        groupBox_2 = new QGroupBox(InformationConfihurationDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        horizontalLayout = new QHBoxLayout(groupBox_2);
-        horizontalLayout->setSpacing(0);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2 = new QVBoxLayout(groupBox_2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_2 = new QLabel(groupBox_2);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -323,11 +317,13 @@ public:
         verticalLayout_2->addWidget(tableViewIP1);
 
 
-        horizontalLayout->addLayout(verticalLayout_2);
+        gridLayout->addWidget(groupBox_2, 1, 1, 1, 1);
 
-        splitter->addWidget(groupBox_2);
 
         retranslateUi(InformationConfihurationDialog);
+
+        stackedWidget->setCurrentIndex(2);
+
 
         QMetaObject::connectSlotsByName(InformationConfihurationDialog);
     } // setupUi

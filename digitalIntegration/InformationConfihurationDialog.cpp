@@ -25,7 +25,7 @@ InformationConfihurationDialog::InformationConfihurationDialog(QWidget *parent) 
 	// 移除帮助按钮
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	init();
-	//initFaceData();
+	initFaceData();
 
 }
 
@@ -38,7 +38,7 @@ void InformationConfihurationDialog::init()
 {
 
 	m_AddToolInfoDialog = new AddToolInfoDialog(module);
-	m_AddIpInfoDialog = new AddIpInfoDialog(this);
+	//m_AddIpInfoDialog = new AddIpInfoDialog(this);
 
 	m_modelTool1 = new QStandardItemModel();
 	m_modelTool1->setColumnCount(2);
@@ -176,7 +176,10 @@ void InformationConfihurationDialog::init()
 
 	connect(ui->tableViewTool1, SIGNAL(entered(QModelIndex)), this, SLOT(slot_tooltip(QModelIndex)));
 
-
+	connect(ui->btnModule1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnShowModule1);
+	connect(ui->btnModule2, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnShowModule2);
+	connect(ui->btnModule3, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnShowModule3);
+	connect(ui->btnModule4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnShowModule4);
 }
 
 void InformationConfihurationDialog::initFaceData()
@@ -185,7 +188,6 @@ void InformationConfihurationDialog::initFaceData()
 	flushToolModelData(m_modelTool2, 2);
 	flushToolModelData(m_modelTool3, 3);
 	flushToolModelData(m_modelTool4, 4);
-
 	flushIpModelData(m_modelIP1);
 	//flushIpModelData(m_modelIP2, 2);
 	//flushIpModelData(m_modelIP3, 3);
@@ -719,6 +721,27 @@ void InformationConfihurationDialog::slot_btnIpDel()
 	{
 		pModel->removeRow(currentIndex.row());
 	}
+}
+
+void InformationConfihurationDialog::slot_btnShowModule1()
+{
+	flushToolModelData(m_modelTool1, 1);
+	ui->stackedWidget->setCurrentIndex(0);
+}
+void InformationConfihurationDialog::slot_btnShowModule2()
+{
+	flushToolModelData(m_modelTool2, 2);
+	ui->stackedWidget->setCurrentIndex(1);
+}
+void InformationConfihurationDialog::slot_btnShowModule3()
+{
+	flushToolModelData(m_modelTool3, 3);
+	ui->stackedWidget->setCurrentIndex(2);
+}
+void InformationConfihurationDialog::slot_btnShowModule4()
+{
+	flushToolModelData(m_modelTool4, 4);
+	ui->stackedWidget->setCurrentIndex(3);
 }
 
 //QPushButton *InformationConfihurationDialog::getbtnToolAdd1()
