@@ -25,7 +25,7 @@ FtpDialog::FtpDialog(QWidget *parent) :
     m_pUDP = new CCtrlNetwork();
     m_pUDP->init(54110);
     ui->stackedWidget->setCurrentIndex(0);
-    ui->tabWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0);
    
     connect(ui->pushButton, &QPushButton::clicked, this, &FtpDialog::slot_btnFlush);
    // m_mapAdminFtp.clear();
@@ -122,7 +122,8 @@ void FtpDialog::initConnectFtp()
     if (common::bAdministrator) // 管理员;
     {
         // 隐藏第二个标签页
-        ui->tabWidget->removeTab(1); // 移除 Tab 2
+      //  ui->stackedWidgetMain->(1); // 移除 Tab 2
+        ui->btnDownload->setVisible(false);
       //  m_strDolwnloadText = QString::fromLocal8Bit("下载");
     }
     else
@@ -151,7 +152,7 @@ void FtpDialog::initConnectFtp()
         flushTableViewDownload();
         ui->tableViewDownload->setContextMenuPolicy(Qt::CustomContextMenu);
        connect(ui->tableViewDownload, &QTableView::customContextMenuRequested, this, &FtpDialog::slot_tableViewDownloadContextMenu);
-        connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
+        connect(ui->stackedWidgetMain, &QStackedWidget::currentChanged, this, [this](int index) {
             if (index == 1)
             {
                 flushTableViewDownload();

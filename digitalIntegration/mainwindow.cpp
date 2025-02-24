@@ -2602,11 +2602,11 @@ void MainWindow::slot_btnMaximize()
 	if (isMaximized()) 
 	{
 		showNormal();
-		ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
+		//ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
 	}
 	else {
 		showMaximized();
-		ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
+	//	ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
 	}
 	
 }

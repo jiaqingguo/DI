@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -134,7 +133,6 @@ public:
     QWidget *tab_8;
     QMenuBar *menubar;
     QStatusBar *statusbar;
-    QButtonGroup *buttonGroup;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -254,16 +252,22 @@ public:
 
         btnMinimize = new QPushButton(widgetTital);
         btnMinimize->setObjectName(QString::fromUtf8("btnMinimize"));
+        btnMinimize->setMinimumSize(QSize(44, 36));
+        btnMinimize->setMaximumSize(QSize(44, 36));
 
         horizontalLayout_6->addWidget(btnMinimize);
 
         btnMaximize = new QPushButton(widgetTital);
         btnMaximize->setObjectName(QString::fromUtf8("btnMaximize"));
+        btnMaximize->setMinimumSize(QSize(44, 36));
+        btnMaximize->setMaximumSize(QSize(44, 36));
 
         horizontalLayout_6->addWidget(btnMaximize);
 
         btnClose = new QPushButton(widgetTital);
         btnClose->setObjectName(QString::fromUtf8("btnClose"));
+        btnClose->setMinimumSize(QSize(44, 36));
+        btnClose->setMaximumSize(QSize(44, 36));
 
         horizontalLayout_6->addWidget(btnClose);
 
@@ -598,9 +602,9 @@ public:
         btnChildTitle->setText(QCoreApplication::translate("MainWindow", " \350\217\234\345\215\225 \346\240\207\351\242\230", nullptr));
         labelUserName->setText(QCoreApplication::translate("MainWindow", "\347\224\250\346\210\2671", nullptr));
         labelUserIcon->setText(QString());
-        btnMinimize->setText(QCoreApplication::translate("MainWindow", "\342\200\224", nullptr));
-        btnMaximize->setText(QCoreApplication::translate("MainWindow", "\342\226\241", nullptr));
-        btnClose->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
+        btnMinimize->setText(QString());
+        btnMaximize->setText(QString());
+        btnClose->setText(QString());
         btnM1Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM1Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
@@ -619,7 +623,7 @@ public:
         btnM4Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM4Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
         btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
-        tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "\346\240\207\347\255\2761", nullptr));
+        tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_8), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
     } // retranslateUi
 

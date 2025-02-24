@@ -34,7 +34,6 @@ class Ui_ApprovalProgressDialog
 public:
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
     QPushButton *btnData;
     QPushButton *btnUser;
     QSpacerItem *horizontalSpacer_2;
@@ -92,10 +91,6 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
-
         btnData = new QPushButton(ApprovalProgressDialog);
         btnData->setObjectName(QString::fromUtf8("btnData"));
 

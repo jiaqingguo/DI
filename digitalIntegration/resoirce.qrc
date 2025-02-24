@@ -43,5 +43,13 @@
         <file>image/waiting.png</file>
         <file>image/CASC.png</file>
         <file>image/treeItemSelect.png</file>
+        <file>image/.png</file>
+        <file>image/Close.png</file>
+        <file>image/dialog-background.png</file>
+        <file>image/Mainwindow-background.jpg</file>
+        <file>image/Maximize.png</file>
+        <file>image/Minimize.png</file>
+        <file>image/WigetMenu-background.png</file>
+        <file>image/lineEdit.png</file>
     </qresource>
 </RCC>
