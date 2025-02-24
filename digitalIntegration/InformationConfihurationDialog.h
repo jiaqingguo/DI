@@ -1,4 +1,4 @@
-#ifndef INFORMATIONCONFIHURATIONDIALOG_H
+﻿#ifndef INFORMATIONCONFIHURATIONDIALOG_H
 #define INFORMATIONCONFIHURATIONDIALOG_H
 
 #include <QDialog>
@@ -45,8 +45,13 @@ private slots:
     void slot_btnIpAdd();
 
 
-    void  slot_btnToolDel();
-    void  slot_btnIpDel();
+    void slot_btnToolDel();
+    void slot_btnIpDel();
+
+	void slot_btnShowModule1();
+	void slot_btnShowModule2();
+	void slot_btnShowModule3();
+	void slot_btnShowModule4();
 
 signals:
     void signal_updateToolIcon(int module);
