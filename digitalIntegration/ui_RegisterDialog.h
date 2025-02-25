@@ -88,34 +88,28 @@ public:
         gridLayout_2->setVerticalSpacing(15);
         label_4 = new QLabel(page);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        QFont font;
-        font.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
-        font.setPointSize(11);
-        label_4->setFont(font);
 
         gridLayout_2->addWidget(label_4, 4, 0, 1, 1);
 
         labelUser = new QLabel(page);
         labelUser->setObjectName(QString::fromUtf8("labelUser"));
-        labelUser->setFont(font);
 
         gridLayout_2->addWidget(labelUser, 0, 0, 1, 1);
 
         labelPassword = new QLabel(page);
         labelPassword->setObjectName(QString::fromUtf8("labelPassword"));
-        labelPassword->setFont(font);
 
         gridLayout_2->addWidget(labelPassword, 1, 0, 1, 1);
 
         lineEditDepartment = new QLineEdit(page);
         lineEditDepartment->setObjectName(QString::fromUtf8("lineEditDepartment"));
-        lineEditDepartment->setMinimumSize(QSize(0, 25));
+        lineEditDepartment->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditDepartment, 3, 1, 1, 1);
 
         lineEditJobTtile = new QLineEdit(page);
         lineEditJobTtile->setObjectName(QString::fromUtf8("lineEditJobTtile"));
-        lineEditJobTtile->setMinimumSize(QSize(0, 25));
+        lineEditJobTtile->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditJobTtile, 4, 1, 1, 1);
 
@@ -123,56 +117,51 @@ public:
         comboBox->addItem(QString());
         comboBox->addItem(QString());
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setMinimumSize(QSize(0, 25));
-        comboBox->setFont(font);
+        comboBox->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(comboBox, 6, 1, 1, 1);
 
         lineEditPhoneNumber = new QLineEdit(page);
         lineEditPhoneNumber->setObjectName(QString::fromUtf8("lineEditPhoneNumber"));
-        lineEditPhoneNumber->setMinimumSize(QSize(0, 25));
+        lineEditPhoneNumber->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditPhoneNumber, 5, 1, 1, 1);
 
         lineEditName = new QLineEdit(page);
         lineEditName->setObjectName(QString::fromUtf8("lineEditName"));
-        lineEditName->setMinimumSize(QSize(0, 25));
+        lineEditName->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditName, 2, 1, 1, 1);
 
         label_3 = new QLabel(page);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setFont(font);
 
         gridLayout_2->addWidget(label_3, 3, 0, 1, 1);
 
         label_8 = new QLabel(page);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setFont(font);
 
         gridLayout_2->addWidget(label_8, 6, 0, 1, 1);
 
         labelName = new QLabel(page);
         labelName->setObjectName(QString::fromUtf8("labelName"));
-        labelName->setFont(font);
 
         gridLayout_2->addWidget(labelName, 2, 0, 1, 1);
 
         lineEditUserName = new QLineEdit(page);
         lineEditUserName->setObjectName(QString::fromUtf8("lineEditUserName"));
-        lineEditUserName->setMinimumSize(QSize(0, 25));
+        lineEditUserName->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditUserName, 0, 1, 1, 1);
 
         lineEditPassword = new QLineEdit(page);
         lineEditPassword->setObjectName(QString::fromUtf8("lineEditPassword"));
-        lineEditPassword->setMinimumSize(QSize(0, 25));
+        lineEditPassword->setMinimumSize(QSize(0, 0));
 
         gridLayout_2->addWidget(lineEditPassword, 1, 1, 1, 1);
 
         label_5 = new QLabel(page);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setFont(font);
 
         gridLayout_2->addWidget(label_5, 5, 0, 1, 1);
 
@@ -188,12 +177,8 @@ public:
 
         btnRegister = new QPushButton(page);
         btnRegister->setObjectName(QString::fromUtf8("btnRegister"));
-        btnRegister->setMinimumSize(QSize(100, 35));
-        btnRegister->setMaximumSize(QSize(50, 16777215));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
-        font1.setPointSize(14);
-        btnRegister->setFont(font1);
+        btnRegister->setMinimumSize(QSize(110, 50));
+        btnRegister->setMaximumSize(QSize(16777215, 16777215));
 
         horizontalLayout->addWidget(btnRegister);
 
@@ -219,9 +204,9 @@ public:
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setMinimumSize(QSize(0, 30));
         label_7->setMaximumSize(QSize(16777215, 80));
-        QFont font2;
-        font2.setPointSize(11);
-        label_7->setFont(font2);
+        QFont font;
+        font.setPointSize(11);
+        label_7->setFont(font);
         label_7->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_7);
@@ -238,9 +223,9 @@ public:
         labelFingerprint->setObjectName(QString::fromUtf8("labelFingerprint"));
         labelFingerprint->setMinimumSize(QSize(55, 60));
         labelFingerprint->setMaximumSize(QSize(55, 60));
-        QFont font3;
-        font3.setPointSize(6);
-        labelFingerprint->setFont(font3);
+        QFont font1;
+        font1.setPointSize(6);
+        labelFingerprint->setFont(font1);
 
         horizontalLayout_2->addWidget(labelFingerprint);
 
@@ -279,16 +264,16 @@ public:
     void retranslateUi(QDialog *RegisterDialog)
     {
         RegisterDialog->setWindowTitle(QCoreApplication::translate("RegisterDialog", "Dialog", nullptr));
-        label_4->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p><span style=\" font-size:11pt;\">\350\201\214\344\275\215</span></p></body></html>", nullptr));
+        label_4->setText(QCoreApplication::translate("RegisterDialog", "\350\201\214\344\275\215", nullptr));
         labelUser->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\347\224\250\346\210\267\345\220\215<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         labelPassword->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\345\257\206\347\240\201<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("RegisterDialog", "\347\256\241\347\220\206\345\221\230", nullptr));
         comboBox->setItemText(1, QCoreApplication::translate("RegisterDialog", "\346\231\256\351\200\232\347\224\250\346\210\267", nullptr));
 
         label_3->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\351\203\250\351\227\250</p></body></html>", nullptr));
-        label_8->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p><span style=\" font-size:11pt;\">\346\235\203\351\231\220</span></p></body></html>", nullptr));
+        label_8->setText(QCoreApplication::translate("RegisterDialog", "\346\235\203\351\231\220", nullptr));
         labelName->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\344\275\277\347\224\250\344\272\272<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
-        label_5->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p><span style=\" font-size:11pt;\">\346\211\213\346\234\272\345\217\267</span></p></body></html>", nullptr));
+        label_5->setText(QCoreApplication::translate("RegisterDialog", "\346\211\213\346\234\272\345\217\267", nullptr));
         btnRegister->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214", nullptr));
         label_7->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214\346\214\207\347\272\271", nullptr));
         labelFingerprint->setText(QString());

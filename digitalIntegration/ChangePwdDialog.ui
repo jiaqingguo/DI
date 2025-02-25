@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
+    <width>300</width>
     <height>226</height>
    </rect>
   </property>
@@ -35,14 +35,8 @@
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="labelUser">
-         <property name="font">
-          <font>
-           <family>黑体</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;用户名&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>用户名</string>
          </property>
         </widget>
        </item>
@@ -51,21 +45,15 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="labelPassword">
-         <property name="font">
-          <font>
-           <family>黑体</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;原密码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>原密码</string>
          </property>
         </widget>
        </item>
@@ -74,21 +62,15 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="labelName">
-         <property name="font">
-          <font>
-           <family>黑体</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
+        <widget class="QLabel" name="labelNewPwd">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;新密码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>新密码</string>
          </property>
         </widget>
        </item>
@@ -97,21 +79,15 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
         </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="labelConfirmPwd">
-         <property name="font">
-          <font>
-           <family>黑体</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;确认密码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>确认密码</string>
          </property>
         </widget>
        </item>
@@ -120,7 +96,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
         </widget>
@@ -142,21 +118,15 @@
         <widget class="QPushButton" name="btnModify">
          <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>35</height>
+           <width>110</width>
+           <height>50</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>黑体</family>
-           <pointsize>14</pointsize>
-          </font>
          </property>
          <property name="text">
           <string>修改</string>

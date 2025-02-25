@@ -49,7 +49,15 @@
         <file>image/Minimize.png</file>
         <file>image/WigetMenu-background.png</file>
         <file>image/lineEdit.png</file>
-        <file>image/function.png</file>
+  <file>image/biankuang.png</file>
+        <file>image/btnxiao.png</file>
+        <file>image/login.png</file>
+        <file>image/login_backgroud .png</file>
+        <file>image/registerIcon.png</file>
+        <file>image/InforChoose.png</file>
+        <file>image/InforIcon.png</file>
+        <file>image/OneLoad.png</file>
+        <file>image/OneLoadIcon.png</file> 		<file>image/function.png</file>
         <file>image/function_select.png</file>
         <file>image/FunctionPrototype.png</file>
         <file>image/FunctionPrototype_select.png</file>
@@ -57,17 +65,5 @@
         <file>image/GeometryPrototype_select.png</file>
         <file>image/LOGO.png</file>
         <file>image/PerformancePrototype.png</file>
-        <file>image/PerformancePrototype_select.png</file>
-        <file>image/ProductionPrototype.png</file>
-        <file>image/ProductionPrototype_select.png</file>
-        <file>image/treeItem.png</file>
-        <file>image/treeItem_select.png</file>
-        <file>image/Logo_background.png</file>
-        <file>image/OneClickLoad.png</file>
-        <file>image/tabBar_blue.png</file>
-        <file>image/tabBar_white.png</file>
-        <file>image/treeItem_background_select.png</file>
-        <file>image/SourceHanSansSC.otf</file>
-        <file>image/tarBar_close.png</file>
-    </qresource>
+        <file>image/PerformancePrototype_select.png</file>    </qresource>
 </RCC>

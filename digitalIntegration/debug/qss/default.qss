@@ -258,6 +258,339 @@ QLabel#labelUserIcon{
 }
 
 
+/* ------------------------ 登录页面----------------------start*/
+
+/*QWidget#page {
+	background-color:red;
+	border-image: url(:/image/login_backgroud.png);
+}*/
+QDialog#LoginDialog{
+	background-image: url(:/image/login_background.png)
+}
+LoginDialog QLabel#lblUser {
+	font-size: 28px;
+	color: #191a25;
+}
+LoginDialog QLineEdit#leUser {
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+LoginDialog QLineEdit#lePassword {
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+LoginDialog QPushButton#btnLogin {
+	border-image: url(:/image/login.png);
+	font-size: 30px;
+	color: #ffffff;
+}
+LoginDialog QPushButton#btnChangePassword {
+	font-size: 20px;
+	color: #8fa0cc;
+	border: none;
+}
+LoginDialog QPushButton#btnRegister {
+	font-size: 20px;
+	color: #4f72ca;
+	border: none;
+}
+/* ------------------------登录页面----------------------end*/
+
+/* ------------------------修改密码页面----------------------start*/
+ChangePwdDialog QLabel#labelUser{
+	font-size: 20px;
+	color: #484f7a;
+	
+}
+ChangePwdDialog QLabel#labelPassword{
+	font-size: 20px;
+	color: #484f7a;
+}
+ChangePwdDialog QLabel#labelNewPwd{
+	font-size: 20px;
+	color: #484f7a;
+}
+ChangePwdDialog QLabel#labelConfirmPwd{
+	font-size: 20px;
+	color: #484f7a;
+}
+ChangePwdDialog QLineEdit#lineEditUserName{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+ChangePwdDialog QLineEdit#lineEditPassword{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+ChangePwdDialog QLineEdit#lineEditNewPwd{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+ChangePwdDialog QLineEdit#lineEditConfrimPwd{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+ChangePwdDialog QPushButton#btnModify{
+	border-image: url(:/image/btnxiao.png)0 0 0 0 stretch;
+	font-size: 24px;
+	color: #ffffff;
+}
+
+/* ------------------------修改密码页面----------------------end*/
+
+/* ------------------------注册页面----------------------start*/
+RegisterDialog QLabel#labelUser{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#labelPassword{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#labelName{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#label_3{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#label_4{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#label_5{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLabel#label_8{
+	font-size: 20px;
+	color: #484f7a;
+}
+RegisterDialog QLineEdit#lineEditUserName{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QLineEdit#lineEditPassword{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QLineEdit#lineEditName{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QLineEdit#lineEditDepartment{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QLineEdit#lineEditJobTtile{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QLineEdit#lineEditPhoneNumber{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QComboBox#comboBox{
+	font-size: 20px;
+	color: #abadb2;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+RegisterDialog QPushButton#btnRegister{
+	font-size: 24px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+
+/* ------------------------注册页面----------------------end*/
+
+
+/* ------------------------添加工具页面----------------------start*/
+QDialog#AddToolInfoDialog{
+	background-color: white;
+}
+AddToolInfoDialog QLabel#label_2{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLabel#label_4{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLabel#label{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QRadioButton#accelerateRadioButton{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QRadioButton#nodeRadioButton{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLabel#label4{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLabel#label5{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLabel#label6{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolInfoDialog QLineEdit#lineEditToolName{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QLineEdit#lineEditToolPath{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QLineEdit#lineEdit{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QComboBox#IpcomboBox1{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QComboBox#IpcomboBox2{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QComboBox#IpcomboBox3{
+	font-size: 20px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolInfoDialog QPushButton#btnChooseImage{
+	font-size: 20px;
+	color: #6280f5;
+	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
+}
+AddToolInfoDialog QPushButton#btnOK{
+	font-size: 24px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+/* ------------------------添加工具页面----------------------end*/
+
+/* ------------------------标签页新增工具页面----------------------start*/
+QDialog#AddToolDialog{
+	background-color: white;
+}
+AddToolDialog QLabel#label{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolDialog QLabel#label_2{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolDialog QLabel#label_3{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolDialog QLabel#label_5{
+	font-size: 20px;
+	color: #484f7a;
+}
+AddToolDialog QLineEdit#lineEditTabName{
+	font-size: 18px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolDialog QComboBox#comboBoxDisplayMode{
+	font-size: 18px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolDialog QComboBox#comboBoxHost{
+	font-size: 18px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolDialog QComboBox#comboBoxToolNames{
+	font-size: 18px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+AddToolDialog QPushButton#btnAdd{
+	font-size: 24px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+
+
+/* ------------------------标签页新增工具页面----------------------end*/
+
+
+/* ------------------------一键加载页面----------------------start*/
+QDialog#OneClickLoadDialog{
+	background-color: white;
+}
+OneClickLoadDialog QPushButton#btnAdd{
+	font-size: 20px;
+	color: #6280f5;
+	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
+}
+OneClickLoadDialog QPushButton#btnDel{
+	font-size: 20px;
+	color: #6280f5;
+	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
+}
+OneClickLoadDialog QPushButton#btnOk{
+	font-size: 24px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+
+
+/* ------------------------一键加载页面----------------------end*/
+
 
 
 

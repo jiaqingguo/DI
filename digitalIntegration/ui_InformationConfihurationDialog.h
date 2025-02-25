@@ -127,7 +127,7 @@ public:
         stackedWidget->setMinimumSize(QSize(0, 0));
         stackedWidgetPage1 = new QWidget();
         stackedWidgetPage1->setObjectName(QString::fromUtf8("stackedWidgetPage1"));
-        stackedWidgetPage1->setMinimumSize(QSize(520, 0));
+        stackedWidgetPage1->setMinimumSize(QSize(0, 0));
         verticalLayout_4 = new QVBoxLayout(stackedWidgetPage1);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         groupBox = new QGroupBox(stackedWidgetPage1);
@@ -171,7 +171,7 @@ public:
         stackedWidget->addWidget(stackedWidgetPage1);
         stackedWidgetPage2 = new QWidget();
         stackedWidgetPage2->setObjectName(QString::fromUtf8("stackedWidgetPage2"));
-        stackedWidgetPage2->setMinimumSize(QSize(520, 0));
+        stackedWidgetPage2->setMinimumSize(QSize(0, 0));
         verticalLayout_10 = new QVBoxLayout(stackedWidgetPage2);
         verticalLayout_10->setObjectName(QString::fromUtf8("verticalLayout_10"));
         groupBox_3 = new QGroupBox(stackedWidgetPage2);
@@ -304,6 +304,8 @@ public:
 
         groupBox_2 = new QGroupBox(InformationConfihurationDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setMinimumSize(QSize(0, 0));
+        groupBox_2->setMaximumSize(QSize(250, 16777215));
         verticalLayout_2 = new QVBoxLayout(groupBox_2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_2 = new QLabel(groupBox_2);
@@ -313,6 +315,7 @@ public:
 
         tableViewIP1 = new QTableView(groupBox_2);
         tableViewIP1->setObjectName(QString::fromUtf8("tableViewIP1"));
+        tableViewIP1->setMinimumSize(QSize(0, 0));
 
         verticalLayout_2->addWidget(tableViewIP1);
 
@@ -322,7 +325,7 @@ public:
 
         retranslateUi(InformationConfihurationDialog);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(InformationConfihurationDialog);

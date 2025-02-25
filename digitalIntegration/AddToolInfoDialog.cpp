@@ -14,6 +14,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
     ui(new Ui::AddToolInfoDialog)
 {
     ui->setupUi(this);
+	setWindowIcon(QIcon(":/image/InforIcon.png"));
     //ui->lineEditHost->setMaxLength(15);
     ui->lineEditToolName->setMaxLength(20);
     //ui->lineEditToolPath->setMaxLength(15);
@@ -36,7 +37,7 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
 	ui->IpcomboBox2->setVisible(false);
 	ui->IpcomboBox3->setVisible(false);
 	ui->accelerateRadioButton->setChecked(true);
-	init_ui();
+	//init_ui();
 }
 
 AddToolInfoDialog::~AddToolInfoDialog()

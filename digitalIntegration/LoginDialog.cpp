@@ -34,12 +34,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
 
 	// 加载图片并调整大小
 	QPixmap pixmap(":/image/user.png");
-	//pixmap = pixmap.scaled(QSize(300, 1000), Qt::KeepAspectRatio);
+	//pixmap = pixmap.scaled(QSize(200,200), Qt::KeepAspectRatio);
 	QAction* userIconAction = new QAction(QIcon(pixmap), "", this);
 	ui->leUser->addAction(userIconAction, QLineEdit::LeadingPosition);
 	//设置其中文字大小
 	ui->leUser->setPlaceholderText(GBK_STRING("请输入您的用户名"));
-	ui->leUser->setStyleSheet("QLineEdit { font-size: 12pt; color: gray; border: 1px solid gray;border-radius: 5px;}");
+	//ui->leUser->setStyleSheet("QLineEdit { font-size: 20px; color: #abadb2; border: 1px solid gray;border-radius: 5px;}");
 
 
 	// 加载图片并调整大小
@@ -49,12 +49,10 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->lePassword->addAction(PasswordIconAction, QLineEdit::LeadingPosition);
 	//设置其中文字大小
 	ui->lePassword->setPlaceholderText(GBK_STRING("请输入您的密码"));
-	ui->lePassword->setStyleSheet("QLineEdit { font-size: 12pt; color: gray; border: 1px solid gray;border-radius: 5px;}");
+	//ui->lePassword->setStyleSheet("QLineEdit { font-size: 20px; color: #abadb2; border: 1px solid gray;border-radius: 5px;}");
 
-	ui->btnLogin->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
-	ui->btnChangePassword->setStyleSheet("QPushButton { color: skyblue; border: none;}");
-	ui->btnRegister->setStyleSheet("QPushButton { color: blue; border: none;}");
-
+	//ui->btnLogin->setStyleSheet("QPushButton {background-image: url(:/image/login.png);}");
+	//border: 1px solid gray;border-radius: 5px;
 	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
@@ -262,8 +260,8 @@ void LoginDialog::clearTimer()
 
 void LoginDialog::slot_leUserTextChanged(const QString& text)
 {
-	ui->leUser->setStyleSheet("border-image: url(:/image/lineedit.png); color: black;font-size: 12pt;");
-	ui->leUser->setPlaceholderText(GBK_STRING("请输入您的用户名"));
+	//ui->leUser->setStyleSheet("border-image: url(:/image/lineedit.png); color: black;font-size: 12pt;");
+	//ui->leUser->setPlaceholderText(GBK_STRING("请输入您的用户名"));
 	//ui->lblUser->setStyleSheet("border-image: url(:/image/user_focusin.png);");
 }
 
@@ -274,8 +272,8 @@ void LoginDialog::slot_leUserEditingFinished()
 
 void LoginDialog::slot_lePwdTextChanged(const QString& text)
 {
-	ui->lePassword->setStyleSheet("color: black;font-size: 12pt;");
-	ui->lePassword->setPlaceholderText(GBK_STRING("请输入您的密码"));
+	//ui->lePassword->setStyleSheet("color: black;font-size: 12pt;");
+	//ui->lePassword->setPlaceholderText(GBK_STRING("请输入您的密码"));
 	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); ");
 }
 
