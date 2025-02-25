@@ -62,5 +62,6 @@
         <file>image/btnSelected.png</file>
         <file>image/btnxiao.png</file>
         <file>image/login.png</file>
+        <file>image/listBackground.png</file>
     </qresource>
 </RCC>

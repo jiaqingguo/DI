@@ -318,7 +318,7 @@ public:
         groupBox_2 = new QGroupBox(InformationConfihurationDialog);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setMinimumSize(QSize(0, 0));
-        groupBox_2->setMaximumSize(QSize(250, 16777215));
+        groupBox_2->setMaximumSize(QSize(300, 16777215));
         verticalLayout_2 = new QVBoxLayout(groupBox_2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label_2 = new QLabel(groupBox_2);

@@ -2,7 +2,8 @@
 #define INFORMATIONCONFIHURATIONDIALOG_H
 
 #include <QDialog>
-
+#include <QStyledItemDelegate>
+#include <QPainter>
 class QStandardItemModel;
 class AddToolInfoDialog;
 class AddIpInfoDialog;
@@ -73,6 +74,25 @@ private:
 	int module = 1;
 
   
+};
+// 自定义委托
+class BackgroundDelegate : public QStyledItemDelegate {
+public:
+	explicit BackgroundDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
+		// 先调用基类的 paint 方法，绘制默认的单元格内容
+		QStyledItemDelegate::paint(painter, option, index);
+
+		// 如果是偶数行，绘制背景图片
+		if (index.row() % 2 == 0) 
+		{
+			QPixmap background(":/image/listBackground.png");  // 加载背景图片
+			painter->drawPixmap(option.rect, background);  // 绘制背景图片
+		}
+		// 绘制单元格内容（文本或其他内容）
+		QStyledItemDelegate::paint(painter, option, index);
+	}
 };
 
 #endif // INFORMATIONCONFIHURATIONDIALOG_H

@@ -103,6 +103,32 @@ void InformationConfihurationDialog::init()
 	ui->tableViewIP1->setModel(m_modelIP1);
 	common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
+	ui->tableViewTool1->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewTool2->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+
+	ui->tableViewTool1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewTool1->horizontalHeader()->setFixedHeight(40);  // 设置表头高度为40像素
+	ui->tableViewTool1->verticalHeader()->setDefaultSectionSize(40);//设置每一行的高度为40
+	ui->tableViewTool2->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewTool2->horizontalHeader()->setFixedHeight(40);
+	ui->tableViewTool2->verticalHeader()->setDefaultSectionSize(40);
+	ui->tableViewTool3->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewTool3->horizontalHeader()->setFixedHeight(40);  
+	ui->tableViewTool3->verticalHeader()->setDefaultSectionSize(40);
+	ui->tableViewTool4->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewTool4->horizontalHeader()->setFixedHeight(40); 
+	ui->tableViewTool4->verticalHeader()->setDefaultSectionSize(40);
+	ui->tableViewIP1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewIP1->horizontalHeader()->setFixedHeight(40); 
+	ui->tableViewIP1->verticalHeader()->setDefaultSectionSize(40);
+	/*ui->tableViewTool2->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");*/
+
 	/*   m_modelIP2 = new QStandardItemModel();
 	   m_modelIP2->setColumnCount(2);
 	   m_modelIP2->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机"));
@@ -226,10 +252,16 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 				//model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(data.icoPath)));
 			}
 		}
-
 	}
-
-
+	// 创建自定义委托并设置到 QTableView
+	BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewTool1);
+	ui->tableViewTool1->setItemDelegate(delegate1);
+	BackgroundDelegate *delegate2 = new BackgroundDelegate(ui->tableViewTool2);
+	ui->tableViewTool2->setItemDelegate(delegate2);
+	BackgroundDelegate *delegate3 = new BackgroundDelegate(ui->tableViewTool3);
+	ui->tableViewTool3->setItemDelegate(delegate3);
+	BackgroundDelegate *delegate4 = new BackgroundDelegate(ui->tableViewTool4);
+	ui->tableViewTool4->setItemDelegate(delegate4);
 }
 
 void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel)
@@ -260,7 +292,9 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 			}
 		}
 	}
-
+	// 创建自定义委托并设置到 QTableView
+	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewIP1);
+	ui->tableViewIP1->setItemDelegate(delegate);
 }
 
 //void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel, const int& module)
