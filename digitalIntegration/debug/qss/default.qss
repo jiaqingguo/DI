@@ -258,14 +258,149 @@ QLabel#labelUserIcon{
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ------------------------ 登录页面----------------------start*/
 
-/*QWidget#page {
-	background-color:red;
-	border-image: url(:/image/login_backgroud.png);
-}*/
-QDialog#LoginDialog{
-	background-image: url(:/image/login_background.png)
+QWidget#page {
+	background-color:white;
 }
 LoginDialog QLabel#lblUser {
 	font-size: 28px;
@@ -590,107 +725,157 @@ OneClickLoadDialog QPushButton#btnOk{
 
 
 /* ------------------------一键加载页面----------------------end*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ------------------------ 登录页面----------------------start*/
-
-QWidget#page {
-	background-color: white;
+/* ------------------------资源管理页面----------------------start*/
+ResourceManageDialog QPushButton#btnCurve{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
 }
-
-/* ------------------------登录页面----------------------end*/
-
-/* ------------------------添加工具页面----------------------start*/
-QDialog#AddToolInfoDialog{
-	background-color: white;
+ResourceManageDialog QPushButton#btnList{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
 }
-
-/* ------------------------添加工具页面----------------------end*/
-
-/* ------------------------标签页新增工具页面----------------------start*/
-QDialog#AddToolDialog{
-	background-color: white;
+ResourceManageDialog QLabel#label{
+	font-size: 22px;
+	color: #191a25;
 }
-
-/* ------------------------标签页新增工具页面----------------------end*/
-
-/* ------------------------一键加载页面----------------------start*/
-QDialog#OneClickLoadDialog{
-	background-color: white;
+ResourceManageDialog QLabel#label_2{
+	font-size: 18px;
+	color: #7c88a6;
 }
-
-/* ------------------------一键加载页面----------------------end*/
+ResourceManageDialog QComboBox#comboBox1{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QLabel#label_3{
+	font-size: 22px;
+	color: #191a25;
+}
+ResourceManageDialog QLabel#label_4{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QComboBox#comboBox2{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QLabel#label_5{
+	font-size: 22px;
+	color: #191a25;
+}
+ResourceManageDialog QLabel#label_6{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QComboBox#comboBox3{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QLabel#label_7{
+	font-size: 22px;
+	color: #191a25;
+}
+ResourceManageDialog QLabel#label_8{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QComboBox#comboBox4{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QLabel#label_9{
+	font-size: 22px;
+	color: #191a25;
+}
+ResourceManageDialog QLabel#label_10{
+	font-size: 18px;
+	color: #7c88a6;
+}
+ResourceManageDialog QComboBox#comboBox5{
+	font-size: 18px;
+	color: #7c88a6;
+}
+/* ------------------------资源管理页面----------------------end*/
+/* ------------------------信息配置页面----------------------start*/
+InformationConfihurationDialog QPushButton#btnModule1{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
+}
+InformationConfihurationDialog QPushButton#btnModule2{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
+}
+InformationConfihurationDialog QPushButton#btnModule3{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
+}
+InformationConfihurationDialog QPushButton#btnModule4{
+	font-size: 22px;
+	color: #7482a6;
+	border: none;
+}
+InformationConfihurationDialog QLabel#label{
+	font-size: 28px;
+	color: #191a25;
+}
+InformationConfihurationDialog QLabel#label_3{
+	font-size: 28px;
+	color: #191a25;
+}
+InformationConfihurationDialog QLabel#label_4{
+	font-size: 28px;
+	color: #191a25;
+}
+InformationConfihurationDialog QLabel#label_5{
+	font-size: 28px;
+	color: #191a25;
+}
+InformationConfihurationDialog QLabel#label_2{
+	font-size: 28px;
+	color: #191a25;
+}
+InformationConfihurationDialog QPushButton#btnToolAdd1{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolDel1{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolAdd2{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolDel2{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolAdd3{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolDel3{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolAdd4{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+InformationConfihurationDialog QPushButton#btnToolDel4{
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+/* ------------------------信息配置页面----------------------end*/

@@ -817,6 +817,8 @@ void  ResourceManageDialog::getUdpData()
 
 void ResourceManageDialog::slot_showList()
 {
+	ui->btnList->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
+	ui->btnCurve->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	ui->stackedWidget->setCurrentIndex(0);
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(6);
@@ -832,6 +834,8 @@ void ResourceManageDialog::slot_showList()
 }
 void ResourceManageDialog::slot_showCurve()
 {
+	ui->btnCurve->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
+	ui->btnList->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	//initTableWidgetCurve();
 	ui->stackedWidget->setCurrentIndex(1);
 

@@ -97,7 +97,7 @@ public:
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         widget_4 = new QWidget(ResourceManageDialog);
         widget_4->setObjectName(QString::fromUtf8("widget_4"));
-        widget_4->setMinimumSize(QSize(0, 0));
+        widget_4->setMinimumSize(QSize(0, 56));
         horizontalLayout_9 = new QHBoxLayout(widget_4);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
@@ -105,11 +105,14 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         btnList = new QPushButton(widget_4);
         btnList->setObjectName(QString::fromUtf8("btnList"));
+        btnList->setMinimumSize(QSize(138, 56));
+        btnList->setMaximumSize(QSize(138, 56));
 
         horizontalLayout->addWidget(btnList);
 
         btnCurve = new QPushButton(widget_4);
         btnCurve->setObjectName(QString::fromUtf8("btnCurve"));
+        btnCurve->setMinimumSize(QSize(138, 56));
 
         horizontalLayout->addWidget(btnCurve);
 

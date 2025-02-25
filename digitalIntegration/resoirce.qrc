@@ -1,13 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>image/acrobat-reader.png</file>
         <file>image/add.png</file>
-        <file>image/adobe_after_effects.png</file>
-        <file>image/adobe_illustrator.png</file>
-        <file>image/adobe_indesign.png</file>
-        <file>image/adobe_lightroom.png</file>
-        <file>image/adobe_photoshop.png</file>
-        <file>image/adobe_xd.png</file>
         <file>image/ApprovalProgress--.png</file>
         <file>image/ApprovalProgress.png</file>
         <file>image/ApprovalProgress_select.png</file>
@@ -49,15 +42,14 @@
         <file>image/Minimize.png</file>
         <file>image/WigetMenu-background.png</file>
         <file>image/lineEdit.png</file>
-  <file>image/biankuang.png</file>
-        <file>image/btnxiao.png</file>
-        <file>image/login.png</file>
+        <file>image/biankuang.png</file>
         <file>image/login_backgroud .png</file>
         <file>image/registerIcon.png</file>
         <file>image/InforChoose.png</file>
         <file>image/InforIcon.png</file>
         <file>image/OneLoad.png</file>
-        <file>image/OneLoadIcon.png</file> 		<file>image/function.png</file>
+        <file>image/OneLoadIcon.png</file>
+        <file>image/function.png</file>
         <file>image/function_select.png</file>
         <file>image/FunctionPrototype.png</file>
         <file>image/FunctionPrototype_select.png</file>
@@ -65,5 +57,10 @@
         <file>image/GeometryPrototype_select.png</file>
         <file>image/LOGO.png</file>
         <file>image/PerformancePrototype.png</file>
-        <file>image/PerformancePrototype_select.png</file>    </qresource>
+        <file>image/PerformancePrototype_select.png</file>
+        <file>image/SourceHanSansSC.otf</file>
+        <file>image/btnSelected.png</file>
+        <file>image/btnxiao.png</file>
+        <file>image/login.png</file>
+    </qresource>
 </RCC>
