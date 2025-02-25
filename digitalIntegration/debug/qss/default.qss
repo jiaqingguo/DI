@@ -86,6 +86,11 @@ QWidget#widgetTital QPushButton#btnClose{
 		border: none; 
 }
 		
+		
+QWidget#widgetM1{
+		 background: transparent;
+	}
+		
  QPushButton#btnM1Load{
 		border-image: url(:/image/OneClickLoad.png);
 	
@@ -256,6 +261,54 @@ QLabel#labelUserIcon{
 	border-image:url(:/image/user.png);
 	background-size: contain; /* 图片按比例缩放，保持全部显示在 QLabel 内部 */
 }
+
+/* QTableView 的样式设置 */
+
+/* 表格背景 */
+QWidgte#m_ApprovalProgressDialog QTableView#tableView{
+	border:none;
+		alternate-background-color: #eef2fb;
+		 background-color:#ffffff;
+        }
+QWidgte#m_ApprovalProgressDialog QTableView#tableView::item{
+	border:none;
+	background-color: transparent;
+           }
+QWidgte#m_ApprovalProgressDialog  QTableView#tableView::item:selected{
+ background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-position: center; /* 背景图居中 */
+         
+}
+/* 标题栏背景色 */
+QHeaderView::section {
+	border:none;
+    background-color: #7482a6; /* 191a25 标题栏背景色 */
+    color: white; /* 标题栏文字颜色 */
+    padding: 5px; /* 标题栏内边距 */
+}
+
+/* ------------------------ 通用按钮样式----------------------start*/
+
+QPushButton#btnData,QPushButton#btnUser,QPushButton#btnFile,QPushButton#btnDownload{
+		color:#7482a6;
+		font-size: 22px;
+		border: none;
+}
+
+QPushButton#btnData:pressed,QPushButton#btnUser:pressed,QPushButton#btnFile:pressed,QPushButton#btnDownload:pressed{
+		color:ffffff;
+		border-image:url(:/image/btn_blue.png);		
+}
+QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:checked,QPushButton#btnDownload:checked{
+		color:ffffff;
+		border-image:url(:/image/btn_blue.png);		
+}
+
+
+
+
+
 
 
 /* ------------------------ 登录页面----------------------start*/

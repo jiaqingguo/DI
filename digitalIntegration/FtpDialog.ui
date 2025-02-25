@@ -16,19 +16,73 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>56</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>56</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QPushButton" name="btnFile">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>文件数据</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnDownload">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>下载审批</string>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item>
@@ -38,7 +92,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>900</width>
+          <width>792</width>
           <height>20</height>
          </size>
         </property>
@@ -139,4 +193,7 @@
  </customwidgets>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

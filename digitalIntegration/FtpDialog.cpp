@@ -26,7 +26,12 @@ FtpDialog::FtpDialog(QWidget *parent) :
     m_pUDP->init(54110);
     ui->stackedWidget->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(0);
+
+
+    ui->btnDownload->setCheckable(true);
    
+    ui->btnFile->setCheckable(true);
+    ui->btnFile->setChecked(true);
     connect(ui->pushButton, &QPushButton::clicked, this, &FtpDialog::slot_btnFlush);
    // m_mapAdminFtp.clear();
 }

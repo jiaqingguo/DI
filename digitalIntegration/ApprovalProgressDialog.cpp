@@ -99,14 +99,24 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	  connect(ui->btnUser, &QPushButton::clicked, [this]() {
 		  ui->stackedWidget->setCurrentIndex(1);
 		  });*/
-	ui->btnData->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
-	ui->btnUser->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
+	//ui->btnData->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
+	//ui->btnUser->setFocusPolicy(Qt::NoFocus); // 设置按钮不自动获得焦点
 
 	ui->btnDataQuery->setFocusPolicy(Qt::NoFocus);
 	ui->btnUserQuery->setFocusPolicy(Qt::NoFocus);
 
-	ui->btnData->setStyleSheet(strQssBlue);
-	ui->btnUser->setStyleSheet(strQssGray);
+	ui->btnData->setCheckable(true);
+	ui->btnData->setChecked(true);
+	ui->btnUser->setCheckable(true);
+	// 启用交替行背景色
+	ui->tableView->setAlternatingRowColors(true);
+	ui->tableViewUser->setAlternatingRowColors(true);
+	// 设置选择模式为整行选择
+	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection); // 设置为单选
+	ui->tableViewUser->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableViewUser->setSelectionMode(QAbstractItemView::SingleSelection); // 设置为单选
+
 	connect(ui->btnData, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnDataShow);
 	connect(ui->btnUser, &QPushButton::clicked, this, &ApprovalProgressDialog::slot_btnUserShow);
 
@@ -526,16 +536,16 @@ void ApprovalProgressDialog::flushUserTableShow(std::list<table_user>& listUser)
 
 void  ApprovalProgressDialog::slot_btnDataShow()
 {
-	ui->btnData->setStyleSheet(strQssBlue);
-	ui->btnUser->setStyleSheet(strQssGray);
+	/*ui->btnData->setStyleSheet(strQssBlue);
+	ui->btnUser->setStyleSheet(strQssGray);*/
 	ui->stackedWidget->setCurrentIndex(0);
 
 	autoFlushDownloadData();
 }
 void  ApprovalProgressDialog::slot_btnUserShow()
 {
-	ui->btnData->setStyleSheet(strQssGray);
-	ui->btnUser->setStyleSheet(strQssBlue);
+	/*ui->btnData->setStyleSheet(strQssGray);
+	ui->btnUser->setStyleSheet(strQssBlue);*/
 	ui->stackedWidget->setCurrentIndex(1);
 
 

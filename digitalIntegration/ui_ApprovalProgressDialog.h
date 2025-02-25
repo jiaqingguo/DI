@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
@@ -33,6 +34,7 @@ class Ui_ApprovalProgressDialog
 {
 public:
     QVBoxLayout *verticalLayout_2;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnData;
     QPushButton *btnUser;
@@ -78,6 +80,7 @@ public:
     QLabel *label_3;
     QLineEdit *lineEditUserPage;
     QLabel *label_4;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *ApprovalProgressDialog)
     {
@@ -88,16 +91,28 @@ public:
         ApprovalProgressDialog->setMaximumSize(QSize(16777215, 16777215));
         verticalLayout_2 = new QVBoxLayout(ApprovalProgressDialog);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(0);
+        widget = new QWidget(ApprovalProgressDialog);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setMaximumSize(QSize(16777215, 56));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setSpacing(10);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        btnData = new QPushButton(ApprovalProgressDialog);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        btnData = new QPushButton(widget);
+        buttonGroup = new QButtonGroup(ApprovalProgressDialog);
+        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
+        buttonGroup->addButton(btnData);
         btnData->setObjectName(QString::fromUtf8("btnData"));
+        btnData->setMinimumSize(QSize(138, 56));
+        btnData->setMaximumSize(QSize(138, 56));
 
         horizontalLayout->addWidget(btnData);
 
-        btnUser = new QPushButton(ApprovalProgressDialog);
+        btnUser = new QPushButton(widget);
+        buttonGroup->addButton(btnUser);
         btnUser->setObjectName(QString::fromUtf8("btnUser"));
+        btnUser->setMinimumSize(QSize(138, 56));
+        btnUser->setMaximumSize(QSize(138, 56));
 
         horizontalLayout->addWidget(btnUser);
 
@@ -106,7 +121,7 @@ public:
         horizontalLayout->addItem(horizontalSpacer_2);
 
 
-        verticalLayout_2->addLayout(horizontalLayout);
+        verticalLayout_2->addWidget(widget);
 
         stackedWidget = new QStackedWidget(ApprovalProgressDialog);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
@@ -318,7 +333,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);

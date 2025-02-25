@@ -162,11 +162,12 @@ public:
         widgetLeftMenu->setObjectName(QString::fromUtf8("widgetLeftMenu"));
         verticalLayout_8 = new QVBoxLayout(widgetLeftMenu);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
+        verticalLayout_8->setContentsMargins(-1, -1, 0, -1);
         widgetLOGO = new QWidget(widgetLeftMenu);
         widgetLOGO->setObjectName(QString::fromUtf8("widgetLOGO"));
         horizontalLayout = new QHBoxLayout(widgetLOGO);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer_8 = new QSpacerItem(41, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_8 = new QSpacerItem(45, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_8);
 
@@ -177,7 +178,7 @@ public:
 
         horizontalLayout->addWidget(btnTitleIcon);
 
-        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_9 = new QSpacerItem(45, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_9);
 
