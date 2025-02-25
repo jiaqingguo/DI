@@ -92,26 +92,31 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         widget = new QWidget(InformationConfihurationDialog);
         widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setMinimumSize(QSize(0, 56));
         horizontalLayout_4 = new QHBoxLayout(widget);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         btnModule1 = new QPushButton(widget);
         btnModule1->setObjectName(QString::fromUtf8("btnModule1"));
+        btnModule1->setMinimumSize(QSize(138, 56));
 
         horizontalLayout_4->addWidget(btnModule1);
 
         btnModule2 = new QPushButton(widget);
         btnModule2->setObjectName(QString::fromUtf8("btnModule2"));
+        btnModule2->setMinimumSize(QSize(138, 56));
 
         horizontalLayout_4->addWidget(btnModule2);
 
         btnModule3 = new QPushButton(widget);
         btnModule3->setObjectName(QString::fromUtf8("btnModule3"));
+        btnModule3->setMinimumSize(QSize(138, 56));
 
         horizontalLayout_4->addWidget(btnModule3);
 
         btnModule4 = new QPushButton(widget);
         btnModule4->setObjectName(QString::fromUtf8("btnModule4"));
+        btnModule4->setMinimumSize(QSize(138, 56));
 
         horizontalLayout_4->addWidget(btnModule4);
 
@@ -149,11 +154,13 @@ public:
 
         btnToolAdd1 = new QPushButton(groupBox);
         btnToolAdd1->setObjectName(QString::fromUtf8("btnToolAdd1"));
+        btnToolAdd1->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_6->addWidget(btnToolAdd1);
 
         btnToolDel1 = new QPushButton(groupBox);
         btnToolDel1->setObjectName(QString::fromUtf8("btnToolDel1"));
+        btnToolDel1->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_6->addWidget(btnToolDel1);
 
@@ -193,11 +200,13 @@ public:
 
         btnToolAdd2 = new QPushButton(groupBox_3);
         btnToolAdd2->setObjectName(QString::fromUtf8("btnToolAdd2"));
+        btnToolAdd2->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_2->addWidget(btnToolAdd2);
 
         btnToolDel2 = new QPushButton(groupBox_3);
         btnToolDel2->setObjectName(QString::fromUtf8("btnToolDel2"));
+        btnToolDel2->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_2->addWidget(btnToolDel2);
 
@@ -236,11 +245,13 @@ public:
 
         btnToolAdd3 = new QPushButton(groupBox_5);
         btnToolAdd3->setObjectName(QString::fromUtf8("btnToolAdd3"));
+        btnToolAdd3->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_3->addWidget(btnToolAdd3);
 
         btnToolDel3 = new QPushButton(groupBox_5);
         btnToolDel3->setObjectName(QString::fromUtf8("btnToolDel3"));
+        btnToolDel3->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_3->addWidget(btnToolDel3);
 
@@ -279,11 +290,13 @@ public:
 
         btnToolAdd4 = new QPushButton(groupBox_7);
         btnToolAdd4->setObjectName(QString::fromUtf8("btnToolAdd4"));
+        btnToolAdd4->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_5->addWidget(btnToolAdd4);
 
         btnToolDel4 = new QPushButton(groupBox_7);
         btnToolDel4->setObjectName(QString::fromUtf8("btnToolDel4"));
+        btnToolDel4->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_5->addWidget(btnToolDel4);
 
@@ -325,7 +338,7 @@ public:
 
         retranslateUi(InformationConfihurationDialog);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(InformationConfihurationDialog);

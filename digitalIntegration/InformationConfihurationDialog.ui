@@ -16,6 +16,12 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="2">
     <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>56</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="leftMargin">
        <number>0</number>
@@ -31,6 +37,12 @@
       </property>
       <item>
        <widget class="QPushButton" name="btnModule1">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>功能样机</string>
         </property>
@@ -38,6 +50,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnModule2">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>几何样机</string>
         </property>
@@ -45,6 +63,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnModule3">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>性能样机</string>
         </property>
@@ -52,6 +76,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnModule4">
+        <property name="minimumSize">
+         <size>
+          <width>138</width>
+          <height>56</height>
+         </size>
+        </property>
         <property name="text">
          <string>生产样机</string>
         </property>
@@ -82,7 +112,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="stackedWidgetPage1">
       <property name="minimumSize">
@@ -137,6 +167,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolAdd1">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>添加</string>
               </property>
@@ -144,6 +180,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolDel1">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>删除</string>
               </property>
@@ -212,6 +254,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolAdd2">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>添加</string>
               </property>
@@ -219,6 +267,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolDel2">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>删除</string>
               </property>
@@ -281,6 +335,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolAdd3">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>添加</string>
               </property>
@@ -288,6 +348,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolDel3">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>删除</string>
               </property>
@@ -350,6 +416,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolAdd4">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>添加</string>
               </property>
@@ -357,6 +429,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btnToolDel4">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>50</height>
+               </size>
+              </property>
               <property name="text">
                <string>删除</string>
               </property>

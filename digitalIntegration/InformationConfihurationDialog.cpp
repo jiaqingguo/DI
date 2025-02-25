@@ -726,21 +726,37 @@ void InformationConfihurationDialog::slot_btnIpDel()
 
 void InformationConfihurationDialog::slot_btnShowModule1()
 {
+	ui->btnModule1->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
+	ui->btnModule2->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule3->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule4->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	flushToolModelData(m_modelTool1, 1);
 	ui->stackedWidget->setCurrentIndex(0);
 }
 void InformationConfihurationDialog::slot_btnShowModule2()
 {
+	ui->btnModule1->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule2->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
+	ui->btnModule3->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule4->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	flushToolModelData(m_modelTool2, 2);
 	ui->stackedWidget->setCurrentIndex(1);
 }
 void InformationConfihurationDialog::slot_btnShowModule3()
 {
+	ui->btnModule1->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule2->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule3->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
+	ui->btnModule4->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	flushToolModelData(m_modelTool3, 3);
 	ui->stackedWidget->setCurrentIndex(2);
 }
 void InformationConfihurationDialog::slot_btnShowModule4()
 {
+	ui->btnModule1->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule2->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule3->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
+	ui->btnModule4->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btnSelected.png) 0 0 0 0 stretch;}");
 	flushToolModelData(m_modelTool4, 4);
 	ui->stackedWidget->setCurrentIndex(3);
 }
