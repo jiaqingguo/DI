@@ -145,10 +145,10 @@ MainWindow::~MainWindow()
 		delete m_ResourceManageDialog;*/
 	if (m_DataManageDialog != nullptr)
 		delete m_DataManageDialog;
-	if (m_InforConfihurationDialog != nullptr)
-		delete m_InforConfihurationDialog;
-	if (m_ApprovalProgressDialog != nullptr)
-		delete m_ApprovalProgressDialog;
+	/*if (m_InforConfihurationDialog != nullptr)
+		delete m_InforConfihurationDialog;*/
+	/*if (m_ApprovalProgressDialog != nullptr)
+		delete m_ApprovalProgressDialog;*/
 	/*if (m_FilemangageDialog != nullptr)
 		delete m_FilemangageDialog;*/
 	delete ui;
@@ -167,19 +167,19 @@ void MainWindow::initInitface()
 
 	//m_ResourceManageDialog = new ResourceManageDialog(this);
 
-	m_InforConfihurationDialog = new InformationConfihurationDialog(this);
-	connect(m_InforConfihurationDialog, &InformationConfihurationDialog::signal_updateToolIcon, this, &MainWindow::slot_updateModuleToolIcon);
+//	m_InforConfihurationDialog = new InformationConfihurationDialog(this);
+	connect(ui->m_InforConfihurationDialog, &InformationConfihurationDialog::signal_updateToolIcon, this, &MainWindow::slot_updateModuleToolIcon);
 
 	m_DataManageDialog = new DataManageDialog(this);
 
 	//m_FilemangageDialog = new FilemangageDialog(this);
 	//m_FtpDialog = new FtpDialog();
 
-	m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
+	//m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
-	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, ui->m_FtpDialog, &FtpDialog::slot_createUserDir);
+	connect(ui->m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, ui->m_FtpDialog, &FtpDialog::slot_createUserDir);
 	connect(ui->m_ResourceManageDialog, &ResourceManageDialog::signal_udpOrderFinsh, ui->m_FtpDialog, &FtpDialog::slot_orderFinsh);
-	connect(m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_ftpDownlaod, ui->m_FtpDialog, &FtpDialog::slot_signalFtpDownlaod);
+	connect(ui->m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_ftpDownlaod, ui->m_FtpDialog, &FtpDialog::slot_signalFtpDownlaod);
 	//m_OneClickLoadDialog = new OneClickLoadDialog(this);
 	//connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
@@ -269,6 +269,14 @@ void MainWindow::initInitface()
 	ui->btnM3Save->hide();
 	ui->btnM4Save->hide();
 
+	//ui->tabWidgetModulel1->setTabsClosable(true); // 允许关闭标签
+
+	 // 获取 QTabBar
+	QTabBar* tabBar = ui->tabWidgetModulel1->tabBar();
+
+	// 为每个标签设置自定义属性
+	tabBar->setTabData(0, "tab1"); // 第一个标签
+
 	ui->tabWidgetModulel1->removeTab(1);
 	ui->tabWidgetModulel2->removeTab(1);
 	ui->tabWidgetModulel3->removeTab(1);
@@ -352,102 +360,120 @@ void MainWindow::initTreeMenu()
 	ui->treeWidget->setHeaderHidden(true); // 隐藏列标题
 	//ui->treeWidget->setIndentation(0); // 关键代码：禁用缩进
 
+	//ui->treeWidget->setFocusPolicy(Qt::NoFocus); // 禁用焦点框
+
+
 	ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
 	// 创建五个根节点
-	QTreeWidgetItem* functionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
-	functionNode->setSizeHint(0, QSize(45,45));
-	//functionNode->setData(0, Qt::UserRole, 1);
+	m_pFunctionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
+	m_pFunctionNode->setSizeHint(0, QSize(60,60));
+
+	
 
 	m_pFunctionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能样机")));
-	m_pFunctionPrototypeNode->setSizeHint(0, QSize(45, 45));
-	m_pFunctionPrototypeNode->setData(0, Qt::UserRole, 4);
+	m_pFunctionPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pFunctionPrototypeNode->setData(0, Qt::UserRole+2, 4);
+
 
 	m_pGeometryPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("几何样机")));
-	m_pGeometryPrototypeNode->setSizeHint(0, QSize(45, 45));
-	m_pGeometryPrototypeNode->setData(0, Qt::UserRole, 5);
+	m_pGeometryPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pGeometryPrototypeNode->setData(0, Qt::UserRole+2, 5);
 
 	m_pPerformancePrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("性能样机")));
-	m_pPerformancePrototypeNode->setSizeHint(0, QSize(45, 45));
-	m_pPerformancePrototypeNode->setData(0, Qt::UserRole, 6);
+	m_pPerformancePrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pPerformancePrototypeNode->setData(0, Qt::UserRole+2, 6);
 
 	m_pProductionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("生产样机")));
-	m_pProductionPrototypeNode->setSizeHint(0, QSize(45, 45));
-	m_pProductionPrototypeNode->setData(0, Qt::UserRole, 7);
+	m_pProductionPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pProductionPrototypeNode->setData(0, Qt::UserRole+2, 7);
 	// 设置图标
 	//; // 使用资源文件中的图标，或者替换为实际路径
-	functionNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
-	m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
-	m_pGeometryPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
-	m_pPerformancePrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
-	m_pProductionPrototypeNode->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
+	m_pFunctionNode->setIcon(0, QIcon(":/image/function.png"));
+	m_pFunctionNode->setData(0, Qt::UserRole, "function_select");
+
+	m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/FunctionPrototype.png"));
+	m_pFunctionPrototypeNode->setData(0, Qt::UserRole, "FunctionPrototype_select");
+
+	m_pGeometryPrototypeNode->setIcon(0, QIcon(":/image/GeometryPrototype.png"));
+	m_pGeometryPrototypeNode->setData(0, Qt::UserRole, "GeometryPrototype_select");
+
+	m_pPerformancePrototypeNode->setIcon(0, QIcon(":/image/PerformancePrototype.png"));
+	m_pPerformancePrototypeNode->setData(0, Qt::UserRole, "PerformancePrototype_select");
+
+	m_pProductionPrototypeNode->setIcon(0, QIcon(":/image/ProductionPrototype.png"));
+	m_pProductionPrototypeNode->setData(0, Qt::UserRole, "ProductionPrototype_select");
 
 	// 为每个根节点添加两个子节点
-	QTreeWidgetItem* functionChild1 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("资源管理器"))); 
-	functionChild1->setSizeHint(0, QSize(45, 45));
-	functionChild1->setIcon(0, QIcon(":/image/ResourceManage_select.png"));
-	functionChild1->setData(0, Qt::UserRole, 0);
-	QTreeWidgetItem* functionChild2 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("信息配置")));
-	functionChild2->setSizeHint(0, QSize(45, 45));
-	functionChild2->setIcon(0, QIcon(":/image/InformationConfihuration_select.png"));
-	functionChild2->setData(0, Qt::UserRole, 1);
-	QTreeWidgetItem* functionChild3 = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("文件管理")));
-	functionChild3->setSizeHint(0, QSize(45, 45));
-	functionChild3->setIcon(0, QIcon(":/image/DataManage_select.png"));
-	functionChild3->setData(0, Qt::UserRole, 2);
-	m_pApprovalProgressNode = new QTreeWidgetItem(functionNode, QStringList(QString::fromLocal8Bit("审批进度")));
-	m_pApprovalProgressNode->setSizeHint(0, QSize(45, 45));
-	m_pApprovalProgressNode->setIcon(0, QIcon(":/image/ApprovalProgress_select.png"));
-	m_pApprovalProgressNode->setData(0, Qt::UserRole, 3);
+	m_functionChild1 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("资源管理器")));
+	m_functionChild1->setSizeHint(0, QSize(60, 60));
+	m_functionChild1->setIcon(0, QIcon(":/image/treeItem.png"));
+	m_functionChild1->setData(0, Qt::UserRole+2, 0);
+	m_functionChild1->setData(0, Qt::UserRole, "functionChild1");
 
+	m_functionChild2 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("信息配置")));
+	m_functionChild2->setSizeHint(0, QSize(60, 60));
+	m_functionChild2->setIcon(0, QIcon(":/image/treeItem.png"));
+	m_functionChild2->setData(0, Qt::UserRole+2, 1);
+	m_functionChild2->setData(0, Qt::UserRole, "functionChild2");
+	m_functionChild3 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("文件管理")));
+	m_functionChild3->setSizeHint(0, QSize(60, 60));
+	m_functionChild3->setIcon(0, QIcon(":/image/treeItem.png"));
+	m_functionChild3->setData(0, Qt::UserRole+2, 2);
+	m_functionChild3->setData(0, Qt::UserRole, "functionChild3");
+	m_pApprovalProgressNode = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("审批进度")));
+	m_pApprovalProgressNode->setSizeHint(0, QSize(60, 60));
+	m_pApprovalProgressNode->setIcon(0, QIcon(":/image/treeItem.png"));
+	m_pApprovalProgressNode->setData(0, Qt::UserRole+2, 3);
+	m_pApprovalProgressNode->setData(0, Qt::UserRole, "m_pApprovalProgressNode");
 
 	QTreeWidgetItem* functionPrototypeChild1 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VS")));
 	
 	functionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VS");
-	functionPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	functionPrototypeChild1->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* functionPrototypeChild2 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	functionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	functionPrototypeChild2->setSizeHint(0, QSize(45, 45));
+	functionPrototypeChild2->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* geometryPrototypeChild1 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("WPS")));
 	geometryPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "WPS");
-	geometryPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	geometryPrototypeChild1->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* geometryPrototypeChild2 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
 	geometryPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	geometryPrototypeChild2->setSizeHint(0, QSize(45, 45));
+	geometryPrototypeChild2->setSizeHint(0, QSize(60, 60));
 
 	QTreeWidgetItem* performancePrototypeChild1 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	performancePrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	performancePrototypeChild1->setSizeHint(0, QSize(45, 45));
+	performancePrototypeChild1->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* performancePrototypeChild2 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("Navicat")));
 	performancePrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "Navicat");
-	performancePrototypeChild2->setSizeHint(0, QSize(45, 45));
+	performancePrototypeChild2->setSizeHint(0, QSize(60, 60));
 
 	QTreeWidgetItem* productionPrototypeChild1 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
 	productionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	productionPrototypeChild1->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild1->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* productionPrototypeChild2 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild2->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild2->setSizeHint(0, QSize(60, 60));
 
 	QTreeWidgetItem* productionPrototypeChild3 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild3->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild3->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild3->setSizeHint(0, QSize(60, 60));
 
 	QTreeWidgetItem* productionPrototypeChild4 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild4->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild4->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild4->setSizeHint(0, QSize(60, 60));
 
 	QTreeWidgetItem* productionPrototypeChild5 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild5->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild5->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild5->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* productionPrototypeChild6 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild6->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild6->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild6->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* productionPrototypeChild7 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild7->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild7->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild7->setSizeHint(0, QSize(60, 60));
 	QTreeWidgetItem* productionPrototypeChild8 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild8->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild8->setSizeHint(0, QSize(45, 45));
+	productionPrototypeChild8->setSizeHint(0, QSize(60, 60));
 
 	
 
@@ -688,12 +714,12 @@ void MainWindow::slot_btnDataManageClicked()
 
 void MainWindow::slot_btnApprovalProgressClicked()
 {
-	m_ApprovalProgressDialog->init();
-	int  x = 0;
+	ui->m_ApprovalProgressDialog->init();
+	/*int  x = 0;
 	int  y = 0;
-	common::getScreenCenterPos(x, y, m_ApprovalProgressDialog->width(), m_ApprovalProgressDialog->height());
+	common::getScreenCenterPos(x, y, ui->m_ApprovalProgressDialog->width(), ui->m_ApprovalProgressDialog->height());
 	m_ApprovalProgressDialog->move(x, y);
-	m_ApprovalProgressDialog->exec();
+	m_ApprovalProgressDialog->exec();*/
 //	ui->btnApprovalProgress->setChecked(false);
 }
 
@@ -1560,6 +1586,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	layout->addWidget(rdp);
 	layout->setMargin(0);
 	widget->setLayout(layout);
+	//widget->setStyleSheet("border:none;");
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
@@ -1802,6 +1829,95 @@ void MainWindow::slot_reconnnectTimerOut()
 	}
 
 }
+
+void MainWindow::ChangeTreeItemIcon(QTreeWidgetItem* pItem)
+{
+	if (m_strLastTreeItem == "function")
+	{
+		//functionNode->
+	}
+	else if (m_strLastTreeItem == "function")
+	{
+		m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/function_select.png"));
+	}
+	else if (m_strLastTreeItem == "FunctionPrototype")
+	{
+		m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/FunctionPrototype_select.png"));
+	}
+	else if (m_strLastTreeItem == "GeometryPrototype")
+	{
+		m_pGeometryPrototypeNode->setIcon(0, QIcon(":/image/GeometryPrototype_select.png"));
+	}
+	else if (m_strLastTreeItem == "PerformancePrototype")
+	{
+		m_pPerformancePrototypeNode->setIcon(0, QIcon(":/image/PerformancePrototype_select.png"));
+	}
+	else if (m_strLastTreeItem == "ProductionPrototype")
+	{
+		m_pProductionPrototypeNode->setIcon(0, QIcon(":/image/ProductionPrototype_select.png"));
+	}
+	else if (m_strLastTreeItem == "functionChild1")
+	{
+		m_functionChild1->setIcon(0, QIcon(":/image/treeItem.png"));
+	}
+	else if (m_strLastTreeItem == "functionChild2")
+	{
+		m_functionChild2->setIcon(0, QIcon(":/image/treeItem.png"));
+	}
+	else if (m_strLastTreeItem == "functionChild3")
+	{
+		m_functionChild3->setIcon(0, QIcon(":/image/treeItem.png"));
+	}
+	else if (m_strLastTreeItem == "m_pApprovalProgressNode")
+	{
+		m_pApprovalProgressNode->setIcon(0, QIcon(":/image/treeItem.png"));
+	}
+
+	m_strCurTrrItem = pItem->data(0, Qt::UserRole).toString();
+	if (m_strCurTrrItem == "function")
+	{
+		//functionNode->
+	}
+	else if (m_strCurTrrItem == "function")
+	{
+		m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/FunctionPrototype.png"));
+	}
+	else if (m_strCurTrrItem == "FunctionPrototype")
+	{
+		m_pFunctionPrototypeNode->setIcon(0, QIcon(":/image/FunctionPrototype.png"));
+	}
+	else if (m_strCurTrrItem == "GeometryPrototype")
+	{
+		m_pGeometryPrototypeNode->setIcon(0, QIcon(":/image/GeometryPrototype.png"));
+	}
+	else if (m_strCurTrrItem == "PerformancePrototype")
+	{
+		m_pPerformancePrototypeNode->setIcon(0, QIcon(":/image/PerformancePrototype.png"));
+	}
+	else if (m_strCurTrrItem == "ProductionPrototype")
+	{
+		m_pProductionPrototypeNode->setIcon(0, QIcon(":/image/ProductionPrototype.png"));
+	}
+	else if (m_strCurTrrItem == "functionChild1")
+	{
+		m_functionChild1->setIcon(0, QIcon(":/image/treeItem_select.png"));
+	}
+	else if (m_strCurTrrItem == "functionChild2")
+	{
+		m_functionChild2->setIcon(0, QIcon(":/image/treeItem_select.png"));
+	}
+	else if (m_strCurTrrItem == "functionChild3")
+	{
+		m_functionChild3->setIcon(0, QIcon(":/image/treeItem_select.png"));
+	}
+	else if (m_strCurTrrItem == "m_pApprovalProgressNode")
+	{
+		m_pApprovalProgressNode->setIcon(0, QIcon(":/image/treeItem_select.png"));
+	}
+	m_strLastTreeItem = m_strCurTrrItem;
+}
+
+
 
 void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 {
@@ -2477,7 +2593,7 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 			QTreeWidgetItem* parentItem = item->parent();
 			if (parentItem != nullptr)
 			{
-				int Index = parentItem->data(0, Qt::UserRole).toInt();
+				int Index = parentItem->data(0, Qt::UserRole+2).toInt();
 				if (Index == 4)  // 模块1
 				{
 					//ui->tabWidgetModulel1
@@ -2519,8 +2635,9 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 
 void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 {
+	ChangeTreeItemIcon(item);
 	// 获取存储在 QTreeWidgetItem 中的自定义数据
-	QVariant data = item->data(column, Qt::UserRole);
+	QVariant data = item->data(column, Qt::UserRole+2);
 
 	int stackIndex = -1;
 	// 根据数据类型打印输出
@@ -2547,7 +2664,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		QTreeWidgetItem* parentItem = item->parent();
 		if (parentItem != nullptr)
 		{
-			stackIndex = parentItem->data(0, Qt::UserRole).toInt();
+			stackIndex = parentItem->data(0, Qt::UserRole+2).toInt();
 		}
 	}
 	if (stackIndex != -1)
@@ -2559,9 +2676,11 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		}
 		QString str = item->text(0);
 		ui->btnChildTitle->setText(str);
+
+		ui->m_ResourceManageDialog->stopWebFlushTimer();
 		if (stackIndex == 0)
 		{
-			slot_btnResourceManageClicked();
+			ui->m_ResourceManageDialog->startWebFlushTimer();
 		}
 		else if (stackIndex == 1)
 		{
@@ -2573,7 +2692,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		}
 		else if (stackIndex == 3)
 		{
-
+			ui->m_ApprovalProgressDialog->init();
 		}
 		else if (stackIndex == 4)
 		{

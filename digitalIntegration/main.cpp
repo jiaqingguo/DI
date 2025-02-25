@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QSettings>
 #include <QMessageBox>
+#include <QFontDatabase>
+
 #include "mainwindow.h"
 
 #include "databaseDI.h"
@@ -83,6 +85,25 @@ int main(int argc, char* argv[])
         common::strFtpPwd = QString::fromStdString(stData.ftpPwd);
         common::strFtpAdminPwd = QString::fromStdString(stData.ftpServerPwd);
     }
+
+    //加载字体;
+       // 加载 .otf 字体文件
+    int fontId = QFontDatabase::addApplicationFont(":/image/SourceHanSansSC.otf");
+    if (fontId == -1) {
+        //qWarning() << "Failed to load font!";
+        return -1;
+    }
+
+    // 获取字体族名称
+    QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+    if (fontFamilies.isEmpty()) 
+    {
+      //  qWarning() << "Failed to get font families!";Source Han Sans SC Medium
+        return -1;
+    }
+    QString fontFamily = fontFamilies.at(0);//Source Han Sans SC Medium
+
+    QApplication::setFont(QFont(fontFamily)); // 设置全局字体
 
     MainWindow w;
     if (!w.showLoginDialog())

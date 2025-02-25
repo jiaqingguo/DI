@@ -4,17 +4,22 @@ QMainWindow{
 border-image:url(:/image/Mainwindow-background.jpg);
 }
 
+
+
+
 QWidget#widgetLeftMenu {
-	
 	/* background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF7F50, stop:1 #6A5ACD); */ 
 	border-image:url(:/image/WigetMenu-background.png);
 	border-top-right-radius: 35px;
 	border-bottom-right-radius: 35px;
-	
+}
+
+QWidget#widgetLOGO {
+	 background: transparent;
 }
 
 QWidget#widgetLeftMenu QPushButton#btnTitleIcon{
-	border-image:url(:/image/CASC.png);  
+	border-image:url(:/image/LOGO.png);  
 }
 QWidget#widgetLeftMenu QTreeWidget{
 	 background: transparent;
@@ -23,6 +28,7 @@ QWidget#widgetLeftMenu QTreeWidget{
 
 
 QWidget#widgetLeftMenu QTreeWidget::item {
+		
            /*  background-color: #e0e0e0; 设置默认背景颜色 */
             color:white; /* 设置默认字体颜色 */
            
@@ -34,38 +40,58 @@ QWidget#widgetLeftMenu QTreeWidget::item:hover {
             color: #000; /* 设置悬浮字体颜色 */
         }
 QWidget#widgetLeftMenu QTreeWidget::item:selected {
-            background-image: url(:/image/treeItemSelect.png);  /* 设置选中时的背景图片 */
-			background-position: center; /* 背景图片居中 */
-			background-repeat: no-repeat; /* 背景图片不重复 */
-			background-size: cover; /* 背景图片自适应大小 */
-            color: red; /* 设置选中时的字体颜色 */
+            border-image: url(:/image/treeItem_background_select.png);  /* 设置选中时的背景图片 */
+			
+             color: blue; /* 设置选中时的字体颜色 */
 			 border: none;
-        }
+			 outline: none; /* 去掉虚线框 */
+}
+
+ QLabel#btnChildTitle { 
+            font-family: 'Source Han Sans SC Medium'; 
+            font-size: 20px;       
+            color: black;            
+           
+            }
+
+ QLabel#labelUserName { 
+            font-family: 'Source Han Sans SC Medium'; 
+            font-size: 20px;       
+            color: black;            
+          /*   font-weight: bold;   */
+            }
 		
 /* -------------------- 按钮----------------------*/		
-QWidget#widgetTital QPushButton#btnMinimize{
-		border-image: url(:/image/Maximize.png);
-		background-repeat: no-repeat; /* 背景图片不重复 */
-        background-position: center; /* 背景图片居中 */
-        background-size: cover; /* 背景图片自适应大小 */
-		border: none; /* 去除默认边框 */
 
+QWidget#widgetTital QPushButton#btnMinimize{
+		background-image: url(:/image/Minimize.png);
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		border: none; 
 }
+
 QWidget#widgetTital QPushButton#btnMaximize{
 		background-image: url(:/image/Maximize.png);
-		background-repeat: no-repeat; /* 背景图片不重复 */
-        background-position: center; /* 背景图片居中 */
-        background-size: cover; /* 背景图片自适应大小 */
-		border: none; /* 去除默认边框 */
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		border: none; 
 }
 QWidget#widgetTital QPushButton#btnClose{
 		background-image: url(:/image/Close.png);
-		background-repeat: no-repeat; /* 背景图片不重复 */
-        background-position: center; /* 背景图片居中 */
-        background-size: cover; /* 背景图片自适应大小 */
-		border: none; /* 去除默认边框 */
-
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		border: none; 
 }
+		
+ QPushButton#btnM1Load{
+		border-image: url(:/image/OneClickLoad.png);
+	
+}	
+		
+		
 		
 QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
 		border-top: 3px solid #0078d7 !important; 
@@ -75,23 +101,155 @@ QWidget#widget QTabWidget#tabWidgetModulel1::pane {
         }
 QWidget#widget QTabWidget#tabWidgetModulel1::pane:selected {	
 		border-top: 3px solid #0078d7 !important; 
-		border-left: none  !important; /* 隐藏左边框 */
-		border-right: none  !important; /* 隐藏右边框 */
-		border-bottom: none  !important; /* 隐藏下边框 */
+		border-left: none  !important;
+		border-right: none  !important; 
+		border-bottom: none  !important; 
 }
 QTabWidget#tabWidgetModulel1 QTabBar::tab {
-		background: #f0f0f0; /* 设置选项卡背景颜色 */
+		/*background-image: url(:/image/tabBar_white.png);*/
+		background: white;  
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		 color:blue;
+		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
-		padding: 10px; /* 设置内边距 */
+		min-width: 100px;
+        min-height: 40px;  
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
 	}
 QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
-            background: #ffffff; /* 设置选中选项卡背景颜色 */
-           /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
-		   border: none;
+		background-image: url(:/image/tabBar_blue.png);
+		
+        
+		 color:white;
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		 /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
+}
+/* 隐藏默认关闭按钮 */
+QTabBar::close-button {
+    subcontrol-position: right;
+    subcontrol-origin: padding;
+    width: 0px;
+    height: 0px;
+}
+
+/* 设置自定义关闭按钮图标 */
+QTabBar::close-button {
+    image: url(:/image/tarBar_close.png); /* 默认图标 */
+}
+
+QTabBar::close-button:hover {
+            image: url(:/image/tarBar_close.png);
         }
+	
+QWidget#widget QTabWidget#tabWidgetModulel2::pane {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important; /* 隐藏左边框 */
+		border-right: none  !important; /* 隐藏右边框 */
+		border-bottom: none  !important; /* 隐藏下边框 */
+ }
+QWidget#widget QTabWidget#tabWidgetModulel2::pane:selected {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important;
+		border-right: none  !important; 
+		border-bottom: none  !important; 
+}
+QTabWidget#tabWidgetModulel2 QTabBar::tab {
+		/*background-image: url(:/image/tabBar_white.png);*/
+		background: white;  
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		/*background: #f0f0f0;  设置选项卡背景颜色 */
+		border: none;
+		 min-width: 100px;
+         min-height: 40px;  
+		margin-right: 2px; /* 设置选项卡之间的间距 */
+		border-top-right-radius: 15px;
+		border-top-left-radius: 15px;
+	}
+QTabWidget#tabWidgetModulel2 QTabBar::tab:selected {
+       	background-image: url(:/image/tabBar_blue.png);
+		color:white;
+           /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
+		  
+}		
+		
+QTabBar::tab[tabdata="tab1"]{
+		background: black;  
+			
+		}
+QWidget#widget QTabWidget#tabWidgetModulel3::pane {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important; /* 隐藏左边框 */
+		border-right: none  !important; /* 隐藏右边框 */
+		border-bottom: none  !important; /* 隐藏下边框 */
+        }
+QWidget#widget QTabWidget#tabWidgetModulel3::pane:selected {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important;
+		border-right: none  !important; 
+		border-bottom: none  !important; 
+}
+QTabWidget#tabWidgetModulel3 QTabBar::tab {
+		/*background-image: url(:/image/tabBar_white.png);*/
+		background: white;  
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		/*background: #f0f0f0;  设置选项卡背景颜色 */
+		
+		border: none;
+		 min-width: 100px;
+         min-height: 40px;  
+		margin-right: 2px; /* 设置选项卡之间的间距 */
+		border-top-right-radius: 15px;
+		border-top-left-radius: 15px;
+	}
+QTabWidget#tabWidgetModulel3 QTabBar::tab:selected {
+       	background-image: url(:/image/tabBar_blue.png);
+		color:white;
+}	
+
+
+QWidget#widget QTabWidget#tabWidgetModulel4::pane {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important; /* 隐藏左边框 */
+		border-right: none  !important; /* 隐藏右边框 */
+		border-bottom: none  !important; /* 隐藏下边框 */
+        }
+QWidget#widget QTabWidget#tabWidgetModulel4::pane:selected {	
+		border-top: 3px solid #0078d7 !important; 
+		border-left: none  !important;
+		border-right: none  !important; 
+		border-bottom: none  !important; 
+}
+QTabWidget#tabWidgetModulel4 QTabBar::tab {
+		/*background-image: url(:/image/tabBar_white.png);*/
+		background: white;  
+		background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover; 
+		/*background: #f0f0f0;  设置选项卡背景颜色 */
+		border: none;
+		 min-width: 100px;
+         min-height: 40px;  
+		margin-right: 2px; /* 设置选项卡之间的间距 */
+		border-top-right-radius: 15px;
+		border-top-left-radius: 15px;
+	}
+QTabWidget#tabWidgetModulel4 QTabBar::tab:selected {
+       	background-image: url(:/image/tabBar_blue.png);
+		color:white;
+}	
+		
+		
+		
 QLabel#labelUserIcon{
 	min-width: 40px;
 	min-height: 40px;

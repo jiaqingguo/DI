@@ -45,107 +45,57 @@
        <bool>true</bool>
       </property>
       <widget class="QWidget" name="widgetLeftMenu" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_7">
-        <property name="spacing">
-         <number>6</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>9</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>15</number>
-        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <spacer name="horizontalSpacer_9">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnTitleIcon">
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_8">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <spacer name="horizontalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string> 软硬件一体化软件</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_10">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <widget class="QWidget" name="widgetLOGO" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>41</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnTitleIcon">
+             <property name="minimumSize">
+              <size>
+               <width>155</width>
+               <height>86</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>1111111</width>
+               <height>11111</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <widget class="QTreeWidget" name="treeWidget">
@@ -164,9 +114,9 @@
          <widget class="QWidget" name="widgetTital" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QPushButton" name="btnChildTitle">
+            <widget class="QLabel" name="btnChildTitle">
              <property name="text">
-              <string> 菜单 标题</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -190,31 +140,6 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="labelUserName">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>用户1</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="labelUserIcon">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -236,6 +161,31 @@
              </property>
              <property name="text">
               <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelUserName">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>用户1</string>
              </property>
             </widget>
            </item>
@@ -302,10 +252,10 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>7</number>
+           <number>4</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
-          <widget class="InformationConfihurationDialog" name="page1"/>
+          <widget class="InformationConfihurationDialog" name="m_InforConfihurationDialog"/>
           <widget class="FtpDialog" name="m_FtpDialog"/>
           <widget class="ApprovalProgressDialog" name="m_ApprovalProgressDialog">
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -368,9 +318,6 @@
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="layoutM1ToolIcon"/>
-               </item>
-               <item>
                 <spacer name="horizontalSpacer_3">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -387,18 +334,18 @@
                 <widget class="QPushButton" name="btnM1Load">
                  <property name="minimumSize">
                   <size>
-                   <width>55</width>
-                   <height>60</height>
+                   <width>132</width>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>55</width>
-                   <height>60</height>
+                   <width>132</width>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
-                  <string>一键加载</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -407,13 +354,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>55</width>
-                   <height>60</height>
+                   <width>52</width>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -426,12 +373,18 @@
             </item>
             <item>
              <widget class="QTabWidget" name="tabWidgetModulel1">
+              <property name="tabShape">
+               <enum>QTabWidget::Rounded</enum>
+              </property>
               <property name="currentIndex">
                <number>0</number>
               </property>
+              <property name="elideMode">
+               <enum>Qt::ElideMiddle</enum>
+              </property>
               <widget class="QWidget" name="tab">
                <attribute name="title">
-                <string>标签1</string>
+                <string>+</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_6">
                 <property name="leftMargin">
@@ -553,13 +506,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -572,13 +525,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -594,9 +547,12 @@
               <property name="currentIndex">
                <number>0</number>
               </property>
+              <property name="elideMode">
+               <enum>Qt::ElideMiddle</enum>
+              </property>
               <widget class="QWidget" name="tab_3">
                <attribute name="title">
-                <string>标签1</string>
+                <string>+</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_4">
                 <item row="0" column="0">
@@ -703,13 +659,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -722,13 +678,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -741,12 +697,17 @@
             </item>
             <item>
              <widget class="QTabWidget" name="tabWidgetModulel3">
+              <property name="font">
+               <font>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_5">
                <attribute name="title">
-                <string>标签1</string>
+                <string>+</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_3">
                 <item row="0" column="0">
@@ -850,13 +811,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">
@@ -869,13 +830,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>55</width>
-                   <height>60</height>
+                   <height>52</height>
                   </size>
                  </property>
                  <property name="text">

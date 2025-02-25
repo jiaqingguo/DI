@@ -35,14 +35,12 @@
         <file>image/user_focusin--.png</file>
         <file>image/user_focusin.png</file>
         <file>image/yes.PNG</file>
-        <file>image/tubiao.png</file>
         <file>image/Dir.png</file>
         <file>image/ftpDir.png</file>
         <file>image/loading.gif</file>
         <file>image/loading2.gif</file>
         <file>image/waiting.png</file>
         <file>image/CASC.png</file>
-        <file>image/treeItemSelect.png</file>
         <file>image/.png</file>
         <file>image/Close.png</file>
         <file>image/dialog-background.png</file>
@@ -51,5 +49,25 @@
         <file>image/Minimize.png</file>
         <file>image/WigetMenu-background.png</file>
         <file>image/lineEdit.png</file>
+        <file>image/function.png</file>
+        <file>image/function_select.png</file>
+        <file>image/FunctionPrototype.png</file>
+        <file>image/FunctionPrototype_select.png</file>
+        <file>image/GeometryPrototype.png</file>
+        <file>image/GeometryPrototype_select.png</file>
+        <file>image/LOGO.png</file>
+        <file>image/PerformancePrototype.png</file>
+        <file>image/PerformancePrototype_select.png</file>
+        <file>image/ProductionPrototype.png</file>
+        <file>image/ProductionPrototype_select.png</file>
+        <file>image/treeItem.png</file>
+        <file>image/treeItem_select.png</file>
+        <file>image/Logo_background.png</file>
+        <file>image/OneClickLoad.png</file>
+        <file>image/tabBar_blue.png</file>
+        <file>image/tabBar_white.png</file>
+        <file>image/treeItem_background_select.png</file>
+        <file>image/SourceHanSansSC.otf</file>
+        <file>image/tarBar_close.png</file>
     </qresource>
 </RCC>

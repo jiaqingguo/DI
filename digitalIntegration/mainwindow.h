@@ -183,6 +183,8 @@ private:
 	void getBladeComputerData(std::vector<table_ip_configure>& setHostData);
 	 // 数据库等重连定时器;
 	void slot_reconnnectTimerOut();
+
+	void ChangeTreeItemIcon(QTreeWidgetItem*pItem);
 private:
 	Ui::MainWindow *ui;
 
@@ -197,7 +199,7 @@ private:
 
 	//ResourceManageDialog* m_ResourceManageDialog = nullptr; // 资源管理界面;
 
-	InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// 信息配置界面;
+	//InformationConfihurationDialog* m_InforConfihurationDialog = nullptr;// 信息配置界面;
 	//InformationConfihurationDialog* m_inforConfihurationDialog = nullptr;
 
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
@@ -205,7 +207,7 @@ private:
 	//FilemangageDialog* m_FilemangageDialog = nullptr; // 文件管理界面;
 	//FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
 
-	ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
+	//ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
 
 
 	//AddToolDialog* m_AddToolDialog = nullptr; // 增加工具标签界面;
@@ -234,13 +236,18 @@ private:
 	// 创建定时器对象
 	QTimer* m_reconnectTimer = nullptr; 
 
+	QTreeWidgetItem* m_pFunctionNode = nullptr; 
+	QTreeWidgetItem* m_pFunctionPrototypeNode = nullptr;// =
+	QTreeWidgetItem* m_pGeometryPrototypeNode = nullptr;// =
+	QTreeWidgetItem* m_pPerformancePrototypeNode = nullptr;//
+	QTreeWidgetItem* m_pProductionPrototypeNode = nullptr;//
 
-	QTreeWidgetItem* m_pFunctionPrototypeNode;// =
-	QTreeWidgetItem* m_pGeometryPrototypeNode;// =
-	QTreeWidgetItem* m_pPerformancePrototypeNode;//
-	QTreeWidgetItem* m_pProductionPrototypeNode;//
-
-	QTreeWidgetItem* m_pApprovalProgressNode;
+	QTreeWidgetItem* m_functionChild1 = nullptr;
+	QTreeWidgetItem* m_functionChild2 = nullptr;
+	QTreeWidgetItem* m_functionChild3 = nullptr;
+	QTreeWidgetItem* m_pApprovalProgressNode = nullptr;
+	QString m_strLastTreeItem = "";
+	QString m_strCurTrrItem = "";
 };
 
 class DoubleClickInterceptor : public QObject {
