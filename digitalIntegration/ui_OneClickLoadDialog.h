@@ -57,18 +57,13 @@ public:
         verticalLayout_9->setContentsMargins(9, 9, 9, 9);
         btnAdd = new QPushButton(OneClickLoadDialog);
         btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
-        btnAdd->setMinimumSize(QSize(80, 30));
-        QFont font;
-        font.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
-        font.setPointSize(11);
-        btnAdd->setFont(font);
+        btnAdd->setMinimumSize(QSize(90, 30));
 
         verticalLayout_9->addWidget(btnAdd);
 
         btnDel = new QPushButton(OneClickLoadDialog);
         btnDel->setObjectName(QString::fromUtf8("btnDel"));
-        btnDel->setMinimumSize(QSize(80, 30));
-        btnDel->setFont(font);
+        btnDel->setMinimumSize(QSize(90, 30));
 
         verticalLayout_9->addWidget(btnDel);
 
@@ -91,11 +86,7 @@ public:
 
         btnOk = new QPushButton(OneClickLoadDialog);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
-        btnOk->setMinimumSize(QSize(100, 35));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
-        font1.setPointSize(14);
-        btnOk->setFont(font1);
+        btnOk->setMinimumSize(QSize(110, 50));
 
         horizontalLayout->addWidget(btnOk);
 

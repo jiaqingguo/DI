@@ -12,17 +12,17 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle(QString::fromLocal8Bit("修改密码"));
-    setWindowIcon(QIcon(":/image/Register.png"));
+    setWindowIcon(QIcon(":/image/registerIcon.png"));
     connect(ui->btnModify, &QPushButton::clicked, this, &ChangePwdDialog::slot_btnModify);
 	ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 	ui->lineEditNewPwd->setEchoMode(QLineEdit::Password);
 	ui->lineEditConfrimPwd->setEchoMode(QLineEdit::Password);
 
-	ui->btnModify->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
+	/*ui->btnModify->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 	ui->lineEditUserName->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditPassword->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditNewPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
-	ui->lineEditConfrimPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
+	ui->lineEditConfrimPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");*/
 }
 
 ChangePwdDialog::~ChangePwdDialog()

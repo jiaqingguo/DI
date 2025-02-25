@@ -12,7 +12,8 @@ ui(new Ui::AddToolDialog)
 	ui->setupUi(this);
 	//ui->btnAdd->setEnabled(false);
 	init();
-	init_ui();
+	setWindowIcon(QIcon(":/image/InforIcon.png"));
+	//init_ui();
 }
 
 AddToolDialog::~AddToolDialog()

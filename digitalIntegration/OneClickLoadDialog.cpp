@@ -19,7 +19,7 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	ui(new Ui::OneClickLoadDialog)
 {
 	ui->setupUi(this);
-
+	setWindowIcon(QIcon(":/image/OneLoadIcon.png"));
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(2);
 	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("序号"));
@@ -64,7 +64,7 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	connect(ui->btnAdd, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnAdd);
 	connect(ui->btnOk, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnOK);
 
-	init_ui();
+	//init_ui();
 }
 
 OneClickLoadDialog::~OneClickLoadDialog()

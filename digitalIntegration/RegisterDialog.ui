@@ -61,25 +61,13 @@
          </property>
          <item row="4" column="0">
           <widget class="QLabel" name="label_4">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;职位&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>职位</string>
            </property>
           </widget>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="labelUser">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;用户名&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
@@ -87,12 +75,6 @@
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="labelPassword">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;密码&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
@@ -103,7 +85,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
@@ -113,7 +95,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
@@ -123,14 +105,8 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
            </property>
            <item>
             <property name="text">
@@ -149,7 +125,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
@@ -159,19 +135,13 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;部门&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
@@ -179,25 +149,13 @@
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_8">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;权限&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>权限</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="labelName">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用人&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
@@ -208,7 +166,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
@@ -218,21 +176,15 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>25</height>
+             <height>0</height>
             </size>
            </property>
           </widget>
          </item>
          <item row="5" column="0">
           <widget class="QLabel" name="label_5">
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;手机号&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>手机号</string>
            </property>
           </widget>
          </item>
@@ -260,21 +212,15 @@
           <widget class="QPushButton" name="btnRegister">
            <property name="minimumSize">
             <size>
-             <width>100</width>
-             <height>35</height>
+             <width>110</width>
+             <height>50</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>50</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>黑体</family>
-             <pointsize>14</pointsize>
-            </font>
            </property>
            <property name="text">
             <string>注册</string>

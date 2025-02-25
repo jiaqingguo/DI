@@ -51,5 +51,14 @@
         <file>image/Minimize.png</file>
         <file>image/WigetMenu-background.png</file>
         <file>image/lineEdit.png</file>
+        <file>image/biankuang.png</file>
+        <file>image/btnxiao.png</file>
+        <file>image/login.png</file>
+        <file>image/login_backgroud .png</file>
+        <file>image/registerIcon.png</file>
+        <file>image/InforChoose.png</file>
+        <file>image/InforIcon.png</file>
+        <file>image/OneLoad.png</file>
+        <file>image/OneLoadIcon.png</file>
     </qresource>
 </RCC>

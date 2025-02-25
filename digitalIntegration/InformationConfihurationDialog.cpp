@@ -339,6 +339,7 @@ void InformationConfihurationDialog::slot_btnToolAdd()
 
 		widget->setLayout(nullptr);             // 移除布局
 		delete widget;
+		addToolInfoDialog.resize(300,50);
 	}
 	table_ip stIp;
 	std::list<table_ip_configure> listData;

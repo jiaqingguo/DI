@@ -15,7 +15,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 {
 	ui->setupUi(this);
 	setWindowTitle(QString::fromLocal8Bit("用户注册"));
-	setWindowIcon(QIcon(":/image/Register.png"));
+	setWindowIcon(QIcon(":/image/registerIcon.png"));
 	ui->stackedWidget->setCurrentIndex(0);
 	/*ui->labelUser->setText(QString::fromLocal8Bit("<font color='black' face='黑体' >用户名</font><font color='red'>*</font>"));
 	ui->labelPassword->setText(QString::fromLocal8Bit("<font color='black'>密码</font><font color='red'>*</font>"));
@@ -41,7 +41,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui->comboBox->setCurrentIndex(1);
 	ui->comboBox->setEnabled(false);
 
-	init_ui();
+	//init_ui();
 }
 
 RegisterDialog::~RegisterDialog()
