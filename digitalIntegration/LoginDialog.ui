@@ -74,7 +74,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>登录</string>
+               <string>登 录</string>
               </property>
              </widget>
             </item>

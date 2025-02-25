@@ -6,11 +6,12 @@
 #include <QMap>
 #include <QUdpSocket>
 #include <QHostAddress>
+#include "InformationConfihurationDialog.h"
 class QStandardItemModel;
 class QWebEngineView;
 class QJsonObject;
 class QStandardItem;
-
+//class BackGroundDelegate;
 //用于UDP之间通信
 typedef struct _Message
 {
@@ -119,5 +120,4 @@ private:
 	quint16 port;
 
 };
-
 #endif // RESOURCEMANAGEDIALOG_H
