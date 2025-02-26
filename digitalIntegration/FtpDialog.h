@@ -44,6 +44,8 @@ private slots:
 
    
     void slot_btnFlush();
+    void slot_btnFile();
+    void slot_btnDowload();
 
     void slot_ItemDownloadBtnClicked();
     void slot_tableViewDownloadContextMenu(const QPoint& pos);

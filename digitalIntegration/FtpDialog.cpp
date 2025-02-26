@@ -25,14 +25,15 @@ FtpDialog::FtpDialog(QWidget *parent) :
     m_pUDP = new CCtrlNetwork();
     m_pUDP->init(54110);
     ui->stackedWidget->setCurrentIndex(0);
-    ui->stackedWidget->setCurrentIndex(0);
-
-
+    ui->stackedWidgetMain->setCurrentIndex(0);
+   
     ui->btnDownload->setCheckable(true);
    
     ui->btnFile->setCheckable(true);
     ui->btnFile->setChecked(true);
     connect(ui->pushButton, &QPushButton::clicked, this, &FtpDialog::slot_btnFlush);
+    connect(ui->btnFile, &QPushButton::clicked, this, &FtpDialog::slot_btnFile);
+    connect(ui->btnDownload, &QPushButton::clicked, this, &FtpDialog::slot_btnDowload);
    // m_mapAdminFtp.clear();
 }
 
@@ -537,6 +538,16 @@ void FtpDialog::slot_btnFlush()
     {
         p->Flush();
     }
+}
+
+void FtpDialog::slot_btnFile()
+{
+    ui->stackedWidgetMain->setCurrentIndex(0);
+}
+
+void FtpDialog::slot_btnDowload()
+{
+    ui->stackedWidgetMain->setCurrentIndex(1);
 }
 
 void FtpDialog::slot_ItemDownloadBtnClicked()

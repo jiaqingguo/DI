@@ -196,15 +196,39 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnFlushDownload">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>刷新</string>
+            <string/>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnDataApprovalLast">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>&lt;</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -217,8 +241,20 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnDataApprovalNext">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>&gt;</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -344,15 +380,39 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnFlushUser">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>刷新</string>
+            <string/>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnUserLast">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>&lt;</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -365,8 +425,20 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnUserNext">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
-            <string>&gt;</string>
+            <string/>
            </property>
           </widget>
          </item>

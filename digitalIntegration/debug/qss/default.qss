@@ -31,7 +31,7 @@ QWidget#widgetLeftMenu QTreeWidget::item {
 		
            /*  background-color: #e0e0e0; 设置默认背景颜色 */
             color:white; /* 设置默认字体颜色 */
-           
+           font-size:22px;
 			margin-right:0px;
 			 /*padding: 15px; 设置内边距 */
         }
@@ -262,33 +262,106 @@ QLabel#labelUserIcon{
 	background-size: contain; /* 图片按比例缩放，保持全部显示在 QLabel 内部 */
 }
 
-/* QTableView 的样式设置 */
+/* -----QTableView 的样式设置 */
 
-/* 表格背景 */
- QTableView#tableView{
-	border:none;
+/*------------------------------------- FtpDialog-表格背景---------------------------------- */
+FtpDialog QTableView{
+		border:none;
 		alternate-background-color: #eef2fb;
 		 background-color:#ffffff;
         }
- QTableView#tableView::item{
+FtpDialog QTableView::item{
 	border:none;
 	background-color: transparent;
            }
-  QTableView#tableView::item:selected{
- background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-    background-repeat: no-repeat; /* 不重复 */
-    background-position: center; /* 背景图居中 */
+FtpDialog  QTableView::item:selected{
+		background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
+		background-repeat: no-repeat; /* 不重复 */
+		background-position: center; /* 背景图居中 */
+		background-size: cover; 
          
 }
 /* 标题栏背景色 */
- QTableView#tableView QHeaderView::section {
+FtpDialog QHeaderView::section {
 	border:none;
+	 height: 20px; /* 设置标题栏高度 */
     background-color: #7482a6; /* 191a25 标题栏背景色 */
     color: white; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
 
-/* ------------------------ 通用按钮样式----------------------start*/
+
+/*----------------------- ApprovalProgressDialog------------ 表格背景------------- */
+ApprovalProgressDialog QTableView{
+		border:none;
+		alternate-background-color: #eef2fb;
+		 background-color:#ffffff;
+        }
+ApprovalProgressDialog QTableView::item{
+	border:none;
+	background-color: transparent;
+           }
+ApprovalProgressDialog  QTableView::item:selected{
+		background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
+		background-repeat: no-repeat; /* 不重复 */
+		background-position: center; /* 背景图居中 */
+         
+}
+/* 标题栏背景色 */
+ApprovalProgressDialog QHeaderView::section {
+	border:none;
+	 height: 20px; /* 设置标题栏高度 */
+    background-color: #7482a6; /* 191a25 标题栏背景色 */
+    color: white; /* 标题栏文字颜色 */
+    padding: 5px; /* 标题栏内边距 */
+}
+
+QCheckBox::indicator{
+
+	image: url(:/image/checkbox.png); /* 设置不勾选状态的背景图 */
+}
+QCheckBox::indicator:unchecked {
+		image: url(:/image/checkbox.png); /* 设置不勾选状态的背景图 */
+}
+QCheckBox::indicator:checked {
+	image: url(:/image/checkbox_checked.png); /* 设置勾选状态的背景图 */
+}
+
+QPushButton#btnUserQuery{
+		color:white;
+		
+		border-image:url(:/image/btnItem_blue.png);	
+}
+
+QPushButton#btnFlushDownload,QPushButton#btnFlushUser{
+		color:white;
+		margin:2px;
+		border-image:url(:/image/btn_flush.png);	
+}
+
+QPushButton#itemBtnYes,QPushButton#itemBtnDownload{
+		color:white;
+		margin:2px;
+		border-image:url(:/image/btnItem_blue.png);	
+}
+
+QPushButton#itemBtnYes:disabled,QPushButton#itemBtnDownload:disabled{
+		border-image:url(:/image/btnItem_gray.png);	
+}
+QPushButton#itemBtnNo{
+		color:white;
+		margin:2px;
+		border-image:url(:/image/btnItem_red.png);	
+}
+
+QPushButton#itemBtnNo:disabled {
+		border-image:url(:/image/btnItem_gray.png);	
+}
+
+
+/*-----------------------   ApprovalProgressDialog-end  ------- --------------- */
+
+/* ------------------------ 按钮 菜单----------------------start*/
 
 QPushButton#btnData,QPushButton#btnUser,QPushButton#btnFile,QPushButton#btnDownload{
 		color:#7482a6;
@@ -304,7 +377,6 @@ QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:chec
 		color:ffffff;
 		border-image:url(:/image/btn_blue.png);		
 }
-
 
 
 

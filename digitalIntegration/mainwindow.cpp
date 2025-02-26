@@ -366,25 +366,25 @@ void MainWindow::initTreeMenu()
 	ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
 	// 创建五个根节点
 	m_pFunctionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
-	m_pFunctionNode->setSizeHint(0, QSize(60,60));
+	m_pFunctionNode->setSizeHint(0, QSize(45,45));
 
 	
 
 	m_pFunctionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能样机")));
-	m_pFunctionPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pFunctionPrototypeNode->setSizeHint(0, QSize(45, 45));
 	m_pFunctionPrototypeNode->setData(0, Qt::UserRole+2, 4);
 
 
 	m_pGeometryPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("几何样机")));
-	m_pGeometryPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pGeometryPrototypeNode->setSizeHint(0, QSize(45, 45));
 	m_pGeometryPrototypeNode->setData(0, Qt::UserRole+2, 5);
 
 	m_pPerformancePrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("性能样机")));
-	m_pPerformancePrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pPerformancePrototypeNode->setSizeHint(0, QSize(45, 45));
 	m_pPerformancePrototypeNode->setData(0, Qt::UserRole+2, 6);
 
 	m_pProductionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("生产样机")));
-	m_pProductionPrototypeNode->setSizeHint(0, QSize(60, 60));
+	m_pProductionPrototypeNode->setSizeHint(0, QSize(45, 45));
 	m_pProductionPrototypeNode->setData(0, Qt::UserRole+2, 7);
 	// 设置图标
 	//; // 使用资源文件中的图标，或者替换为实际路径
@@ -405,23 +405,23 @@ void MainWindow::initTreeMenu()
 
 	// 为每个根节点添加两个子节点
 	m_functionChild1 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("资源管理器")));
-	m_functionChild1->setSizeHint(0, QSize(60, 60));
+	m_functionChild1->setSizeHint(0, QSize(45, 45));
 	m_functionChild1->setIcon(0, QIcon(":/image/treeItem.png"));
 	m_functionChild1->setData(0, Qt::UserRole+2, 0);
 	m_functionChild1->setData(0, Qt::UserRole, "functionChild1");
 
 	m_functionChild2 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("信息配置")));
-	m_functionChild2->setSizeHint(0, QSize(60, 60));
+	m_functionChild2->setSizeHint(0, QSize(45, 45));
 	m_functionChild2->setIcon(0, QIcon(":/image/treeItem.png"));
 	m_functionChild2->setData(0, Qt::UserRole+2, 1);
 	m_functionChild2->setData(0, Qt::UserRole, "functionChild2");
 	m_functionChild3 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("文件管理")));
-	m_functionChild3->setSizeHint(0, QSize(60, 60));
+	m_functionChild3->setSizeHint(0, QSize(45, 45));
 	m_functionChild3->setIcon(0, QIcon(":/image/treeItem.png"));
 	m_functionChild3->setData(0, Qt::UserRole+2, 2);
 	m_functionChild3->setData(0, Qt::UserRole, "functionChild3");
 	m_pApprovalProgressNode = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("审批进度")));
-	m_pApprovalProgressNode->setSizeHint(0, QSize(60, 60));
+	m_pApprovalProgressNode->setSizeHint(0, QSize(45, 45));
 	m_pApprovalProgressNode->setIcon(0, QIcon(":/image/treeItem.png"));
 	m_pApprovalProgressNode->setData(0, Qt::UserRole+2, 3);
 	m_pApprovalProgressNode->setData(0, Qt::UserRole, "m_pApprovalProgressNode");
@@ -429,51 +429,51 @@ void MainWindow::initTreeMenu()
 	QTreeWidgetItem* functionPrototypeChild1 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VS")));
 	
 	functionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VS");
-	functionPrototypeChild1->setSizeHint(0, QSize(60, 60));
+	functionPrototypeChild1->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* functionPrototypeChild2 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	functionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	functionPrototypeChild2->setSizeHint(0, QSize(60, 60));
+	functionPrototypeChild2->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* geometryPrototypeChild1 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("WPS")));
 	geometryPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "WPS");
-	geometryPrototypeChild1->setSizeHint(0, QSize(60, 60));
+	geometryPrototypeChild1->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* geometryPrototypeChild2 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
 	geometryPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	geometryPrototypeChild2->setSizeHint(0, QSize(60, 60));
+	geometryPrototypeChild2->setSizeHint(0, QSize(45, 45));
 
 	QTreeWidgetItem* performancePrototypeChild1 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	performancePrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	performancePrototypeChild1->setSizeHint(0, QSize(60, 60));
+	performancePrototypeChild1->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* performancePrototypeChild2 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("Navicat")));
 	performancePrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "Navicat");
-	performancePrototypeChild2->setSizeHint(0, QSize(60, 60));
+	performancePrototypeChild2->setSizeHint(0, QSize(45, 45));
 
 	QTreeWidgetItem* productionPrototypeChild1 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
 	productionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	productionPrototypeChild1->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild1->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* productionPrototypeChild2 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild2->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild2->setSizeHint(0, QSize(45, 45));
 
 	QTreeWidgetItem* productionPrototypeChild3 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild3->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild3->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild3->setSizeHint(0, QSize(45, 45));
 
 	QTreeWidgetItem* productionPrototypeChild4 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild4->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild4->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild4->setSizeHint(0, QSize(45, 45));
 
 	QTreeWidgetItem* productionPrototypeChild5 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild5->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild5->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild5->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* productionPrototypeChild6 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild6->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild6->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild6->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* productionPrototypeChild7 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild7->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild7->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild7->setSizeHint(0, QSize(45, 45));
 	QTreeWidgetItem* productionPrototypeChild8 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
 	productionPrototypeChild8->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild8->setSizeHint(0, QSize(60, 60));
+	productionPrototypeChild8->setSizeHint(0, QSize(45, 45));
 
 	
 

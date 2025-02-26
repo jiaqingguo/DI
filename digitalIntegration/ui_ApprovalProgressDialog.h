@@ -182,11 +182,15 @@ public:
 
         btnFlushDownload = new QPushButton(page);
         btnFlushDownload->setObjectName(QString::fromUtf8("btnFlushDownload"));
+        btnFlushDownload->setMinimumSize(QSize(90, 30));
+        btnFlushDownload->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_3->addWidget(btnFlushDownload);
 
         btnDataApprovalLast = new QPushButton(page);
         btnDataApprovalLast->setObjectName(QString::fromUtf8("btnDataApprovalLast"));
+        btnDataApprovalLast->setMinimumSize(QSize(70, 30));
+        btnDataApprovalLast->setMaximumSize(QSize(70, 30));
 
         horizontalLayout_3->addWidget(btnDataApprovalLast);
 
@@ -197,6 +201,8 @@ public:
 
         btnDataApprovalNext = new QPushButton(page);
         btnDataApprovalNext->setObjectName(QString::fromUtf8("btnDataApprovalNext"));
+        btnDataApprovalNext->setMinimumSize(QSize(70, 30));
+        btnDataApprovalNext->setMaximumSize(QSize(70, 30));
 
         horizontalLayout_3->addWidget(btnDataApprovalNext);
 
@@ -288,11 +294,15 @@ public:
 
         btnFlushUser = new QPushButton(page_2);
         btnFlushUser->setObjectName(QString::fromUtf8("btnFlushUser"));
+        btnFlushUser->setMinimumSize(QSize(90, 30));
+        btnFlushUser->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_4->addWidget(btnFlushUser);
 
         btnUserLast = new QPushButton(page_2);
         btnUserLast->setObjectName(QString::fromUtf8("btnUserLast"));
+        btnUserLast->setMinimumSize(QSize(70, 30));
+        btnUserLast->setMaximumSize(QSize(70, 30));
 
         horizontalLayout_4->addWidget(btnUserLast);
 
@@ -303,6 +313,8 @@ public:
 
         btnUserNext = new QPushButton(page_2);
         btnUserNext->setObjectName(QString::fromUtf8("btnUserNext"));
+        btnUserNext->setMinimumSize(QSize(70, 30));
+        btnUserNext->setMaximumSize(QSize(70, 30));
 
         horizontalLayout_4->addWidget(btnUserNext);
 
@@ -347,19 +359,19 @@ public:
         lineEditDataQueryValue->setText(QString());
         checkBox_1->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnDataQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
-        btnFlushDownload->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\210\267\346\226\260", nullptr));
-        btnDataApprovalLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
+        btnFlushDownload->setText(QString());
+        btnDataApprovalLast->setText(QString());
         labelDataApprovalPageShow->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
-        btnDataApprovalNext->setText(QCoreApplication::translate("ApprovalProgressDialog", ">", nullptr));
+        btnDataApprovalNext->setText(QString());
         label_5->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
         label_6->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
         lineEditUserQueryValue->setText(QString());
         checkBox_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnUserQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
-        btnFlushUser->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\210\267\346\226\260", nullptr));
-        btnUserLast->setText(QCoreApplication::translate("ApprovalProgressDialog", "<", nullptr));
+        btnFlushUser->setText(QString());
+        btnUserLast->setText(QString());
         labelUserPage->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
-        btnUserNext->setText(QCoreApplication::translate("ApprovalProgressDialog", ">", nullptr));
+        btnUserNext->setText(QString());
         label_3->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
         label_4->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
     } // retranslateUi
