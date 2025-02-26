@@ -43,7 +43,7 @@ public:
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_6;
-    QLabel *label_3;
+    QLabel *labelToolList1;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnToolAdd1;
     QPushButton *btnToolDel1;
@@ -53,7 +53,7 @@ public:
     QGroupBox *groupBox_3;
     QVBoxLayout *verticalLayout_8;
     QHBoxLayout *horizontalLayout_2;
-    QLabel *label_4;
+    QLabel *labelToolList2;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *btnToolAdd2;
     QPushButton *btnToolDel2;
@@ -63,7 +63,7 @@ public:
     QGroupBox *groupBox_5;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_3;
-    QLabel *label_5;
+    QLabel *labelToolList3;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *btnToolAdd3;
     QPushButton *btnToolDel3;
@@ -73,14 +73,16 @@ public:
     QGroupBox *groupBox_7;
     QVBoxLayout *verticalLayout_5;
     QHBoxLayout *horizontalLayout_5;
-    QLabel *label;
+    QLabel *labelToolList4;
     QSpacerItem *horizontalSpacer_4;
     QPushButton *btnToolAdd4;
     QPushButton *btnToolDel4;
     QTableView *tableViewTool4;
-    QGroupBox *groupBox_2;
+    QWidget *widgetIP;
     QVBoxLayout *verticalLayout_2;
-    QLabel *label_2;
+    QHBoxLayout *horizontalLayout;
+    QLabel *labelIPList;
+    QSpacerItem *horizontalSpacer_6;
     QTableView *tableViewIP1;
 
     void setupUi(QDialog *InformationConfihurationDialog)
@@ -140,13 +142,14 @@ public:
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayout->setContentsMargins(20, 20, 20, 20);
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        label_3 = new QLabel(groupBox);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 20);
+        labelToolList1 = new QLabel(groupBox);
+        labelToolList1->setObjectName(QString::fromUtf8("labelToolList1"));
 
-        horizontalLayout_6->addWidget(label_3);
+        horizontalLayout_6->addWidget(labelToolList1);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -186,13 +189,14 @@ public:
         verticalLayout_8 = new QVBoxLayout(groupBox_3);
         verticalLayout_8->setSpacing(0);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        verticalLayout_8->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_8->setContentsMargins(20, 20, 20, 20);
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_4 = new QLabel(groupBox_3);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        horizontalLayout_2->setContentsMargins(-1, -1, -1, 20);
+        labelToolList2 = new QLabel(groupBox_3);
+        labelToolList2->setObjectName(QString::fromUtf8("labelToolList2"));
 
-        horizontalLayout_2->addWidget(label_4);
+        horizontalLayout_2->addWidget(labelToolList2);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -231,13 +235,14 @@ public:
         verticalLayout_3 = new QVBoxLayout(groupBox_5);
         verticalLayout_3->setSpacing(0);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_3->setContentsMargins(20, 20, 20, 20);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        label_5 = new QLabel(groupBox_5);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        horizontalLayout_3->setContentsMargins(-1, -1, -1, 20);
+        labelToolList3 = new QLabel(groupBox_5);
+        labelToolList3->setObjectName(QString::fromUtf8("labelToolList3"));
 
-        horizontalLayout_3->addWidget(label_5);
+        horizontalLayout_3->addWidget(labelToolList3);
 
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -276,13 +281,14 @@ public:
         verticalLayout_5 = new QVBoxLayout(groupBox_7);
         verticalLayout_5->setSpacing(0);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_5->setContentsMargins(20, 20, 20, 20);
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        label = new QLabel(groupBox_7);
-        label->setObjectName(QString::fromUtf8("label"));
+        horizontalLayout_5->setContentsMargins(-1, -1, -1, 20);
+        labelToolList4 = new QLabel(groupBox_7);
+        labelToolList4->setObjectName(QString::fromUtf8("labelToolList4"));
 
-        horizontalLayout_5->addWidget(label);
+        horizontalLayout_5->addWidget(labelToolList4);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -315,25 +321,36 @@ public:
 
         gridLayout->addWidget(stackedWidget, 1, 0, 1, 1);
 
-        groupBox_2 = new QGroupBox(InformationConfihurationDialog);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setMinimumSize(QSize(0, 0));
-        groupBox_2->setMaximumSize(QSize(300, 16777215));
-        verticalLayout_2 = new QVBoxLayout(groupBox_2);
+        widgetIP = new QWidget(InformationConfihurationDialog);
+        widgetIP->setObjectName(QString::fromUtf8("widgetIP"));
+        widgetIP->setMinimumSize(QSize(0, 0));
+        widgetIP->setMaximumSize(QSize(300, 16777215));
+        verticalLayout_2 = new QVBoxLayout(widgetIP);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        label_2 = new QLabel(groupBox_2);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        verticalLayout_2->setContentsMargins(20, 20, 20, 20);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(-1, -1, -1, 20);
+        labelIPList = new QLabel(widgetIP);
+        labelIPList->setObjectName(QString::fromUtf8("labelIPList"));
 
-        verticalLayout_2->addWidget(label_2);
+        horizontalLayout->addWidget(labelIPList);
 
-        tableViewIP1 = new QTableView(groupBox_2);
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_6);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
+
+        tableViewIP1 = new QTableView(widgetIP);
         tableViewIP1->setObjectName(QString::fromUtf8("tableViewIP1"));
         tableViewIP1->setMinimumSize(QSize(0, 0));
 
         verticalLayout_2->addWidget(tableViewIP1);
 
 
-        gridLayout->addWidget(groupBox_2, 1, 1, 1, 1);
+        gridLayout->addWidget(widgetIP, 1, 1, 1, 1);
 
 
         retranslateUi(InformationConfihurationDialog);
@@ -352,23 +369,22 @@ public:
         btnModule3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\200\247\350\203\275\346\240\267\346\234\272", nullptr));
         btnModule4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\347\224\237\344\272\247\346\240\267\346\234\272", nullptr));
         groupBox->setTitle(QString());
-        label_3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
+        labelToolList1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel1->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         groupBox_3->setTitle(QString());
-        label_4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
+        labelToolList2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel2->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         groupBox_5->setTitle(QString());
-        label_5->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
+        labelToolList3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel3->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
         groupBox_7->setTitle(QString());
-        label->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
+        labelToolList4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\267\245\345\205\267\345\210\227\350\241\250", nullptr));
         btnToolAdd4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\346\267\273\345\212\240", nullptr));
         btnToolDel4->setText(QCoreApplication::translate("InformationConfihurationDialog", "\345\210\240\351\231\244", nullptr));
-        groupBox_2->setTitle(QString());
-        label_2->setText(QCoreApplication::translate("InformationConfihurationDialog", "IP\345\210\227\350\241\250", nullptr));
+        labelIPList->setText(QCoreApplication::translate("InformationConfihurationDialog", "IP\345\210\227\350\241\250", nullptr));
     } // retranslateUi
 
 };

@@ -829,16 +829,16 @@ void ResourceManageDialog::slot_showList()
 	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
 	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
 
-	ui->tableView->setModel(m_model);
-	common::setTableViewBasicConfiguration(ui->tableView);
-	ui->tableView->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
-	ui->tableView->horizontalHeader()->setFixedHeight(40);  // 设置表头高度为40像素
-	ui->tableView->verticalHeader()->setDefaultSectionSize(40);//设置每一行的高度为40
+	ui->tableViewList->setModel(m_model);
+	common::setTableViewBasicConfiguration(ui->tableViewList);
+	ui->tableViewList->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
+	ui->tableViewList->horizontalHeader()->setFixedHeight(40);  // 设置表头高度为40像素
+	ui->tableViewList->verticalHeader()->setDefaultSectionSize(40);//设置每一行的高度为40
 
 	// 创建自定义委托并设置到 QTableView
-	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableView);
-	ui->tableView->setItemDelegate(delegate);
+	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewList);
+	ui->tableViewList->setItemDelegate(delegate);
 }
 void ResourceManageDialog::slot_showCurve()
 {

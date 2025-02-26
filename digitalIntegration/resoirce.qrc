@@ -71,13 +71,15 @@
         <file>image/btn_blue.png</file>
         <file>image/tableViewItem_select.png</file>
         <file>image/listBackground.png</file>
-        <file>image/btnItem_blue.png</file>
+ <file>image/CurveBackground.png</file>
+        <file>image/CurveComboBox.png</file>
+        <file>image/CurveLabel.png</file>
+        <file>image/IpListBackGround.png</file>   <file>image/btnItem_blue.png</file>
         <file>image/btnItem_gray.png</file>
         <file>image/btnItem_red.png</file>
         <file>image/checkbox.png</file>
         <file>image/checkbox_checked.png</file>
         <file>image/btn_flush.png</file>
         <file>image/page_last.png</file>
-        <file>image/page_nect.png</file>
-    </qresource>
+        <file>image/page_nect.png</file>    </qresource>
 </RCC>

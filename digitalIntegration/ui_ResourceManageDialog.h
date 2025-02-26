@@ -40,7 +40,7 @@ public:
     QGridLayout *gridLayout_2;
     QWidget *widget;
     QGridLayout *gridLayout;
-    QTableView *tableView;
+    QTableView *tableViewList;
     QWidget *pageCurve;
     QGridLayout *gridLayout_4;
     QWidget *widget_2;
@@ -137,10 +137,10 @@ public:
         widget->setObjectName(QString::fromUtf8("widget"));
         gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        tableView = new QTableView(widget);
-        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableViewList = new QTableView(widget);
+        tableViewList->setObjectName(QString::fromUtf8("tableViewList"));
 
-        gridLayout->addWidget(tableView, 0, 0, 1, 1);
+        gridLayout->addWidget(tableViewList, 0, 0, 1, 1);
 
 
         gridLayout_2->addWidget(widget, 0, 0, 1, 1);
