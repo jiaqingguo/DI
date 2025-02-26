@@ -2,12 +2,6 @@
     <qresource prefix="/">
         <file>image/acrobat-reader.png</file>
         <file>image/add.png</file>
-        <file>image/adobe_after_effects.png</file>
-        <file>image/adobe_illustrator.png</file>
-        <file>image/adobe_indesign.png</file>
-        <file>image/adobe_lightroom.png</file>
-        <file>image/adobe_photoshop.png</file>
-        <file>image/adobe_xd.png</file>
         <file>image/ApprovalProgress--.png</file>
         <file>image/ApprovalProgress.png</file>
         <file>image/ApprovalProgress_select.png</file>
