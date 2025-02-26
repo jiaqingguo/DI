@@ -110,6 +110,8 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	ui->btnUser->setCheckable(true);
 	// 启用交替行背景色
 	ui->tableView->setAlternatingRowColors(true);
+	ui->tableView->setShowGrid(false);
+	ui->tableViewUser->setShowGrid(false);
 	ui->tableViewUser->setAlternatingRowColors(true);
 	// 设置选择模式为整行选择
 	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);

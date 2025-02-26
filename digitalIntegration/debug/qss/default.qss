@@ -265,23 +265,23 @@ QLabel#labelUserIcon{
 /* QTableView 的样式设置 */
 
 /* 表格背景 */
-QWidgte#m_ApprovalProgressDialog QTableView#tableView{
+ QTableView#tableView{
 	border:none;
 		alternate-background-color: #eef2fb;
 		 background-color:#ffffff;
         }
-QWidgte#m_ApprovalProgressDialog QTableView#tableView::item{
+ QTableView#tableView::item{
 	border:none;
 	background-color: transparent;
            }
-QWidgte#m_ApprovalProgressDialog  QTableView#tableView::item:selected{
+  QTableView#tableView::item:selected{
  background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
     background-repeat: no-repeat; /* 不重复 */
     background-position: center; /* 背景图居中 */
          
 }
 /* 标题栏背景色 */
-QHeaderView::section {
+ QTableView#tableView QHeaderView::section {
 	border:none;
     background-color: #7482a6; /* 191a25 标题栏背景色 */
     color: white; /* 标题栏文字颜色 */
