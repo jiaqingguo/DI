@@ -103,6 +103,11 @@ void InformationConfihurationDialog::init()
 	ui->tableViewIP1->setModel(m_modelIP1);
 	common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
+	ui->tableViewIP1->setShowGrid(false);
+	ui->tableViewTool1->setShowGrid(false);
+	ui->tableViewTool2->setShowGrid(false);
+	ui->tableViewTool3->setShowGrid(false);
+	ui->tableViewTool4->setShowGrid(false);
 	ui->tableViewTool1->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
 	ui->tableViewTool2->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
 	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
@@ -124,10 +129,6 @@ void InformationConfihurationDialog::init()
 	ui->tableViewIP1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
 	ui->tableViewIP1->horizontalHeader()->setFixedHeight(40); 
 	ui->tableViewIP1->verticalHeader()->setDefaultSectionSize(40);
-	/*ui->tableViewTool2->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");*/
 
 	/*   m_modelIP2 = new QStandardItemModel();
 	   m_modelIP2->setColumnCount(2);
@@ -242,14 +243,16 @@ void InformationConfihurationDialog::flushToolModelData(QStandardItemModel* mode
 				int newRowIndex = model->rowCount(); // 获取当前行数
 				model->insertRow(newRowIndex); // 插入新行
 
-				//QStandardItem* item = new QStandardItem(QString::fromStdString(stTool.host));
-				// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-				//model->setItem(newRowIndex, 0, item);
+				QStandardItem* item = new QStandardItem(QString::fromStdString(software));
+				item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+				model->setItem(newRowIndex, 0, item);
+				QStandardItem* item2 = new QStandardItem(QString::fromStdString(data.toolPath));
+				item2->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+				model->setItem(newRowIndex, 1, item2);
 				//QModelIndex index = model->index(newRowIndex, 0);
 				//model->setData(index, QString::fromStdString(stTool.first), Qt::UserRole);  // 设置id;
-				model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
-				model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.toolPath)));
-				//model->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(data.icoPath)));
+				//model->setItem(newRowIndex, 0, new QStandardItem(QString::fromStdString(software)));
+				//model->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(data.toolPath)));
 			}
 		}
 	}
@@ -280,15 +283,12 @@ void InformationConfihurationDialog::flushIpModelData(QStandardItemModel* pModel
 				int newRowIndex = pModel->rowCount(); // 获取当前行数
 				pModel->insertRow(newRowIndex); // 插入新行
 
-				QStandardItem* item = new QStandardItem(QString::fromStdString(stIp.ip));
-				// item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
-				pModel->setItem(newRowIndex, 0, item);
-				//QModelIndex index = pModel->index(newRowIndex, 0);
-				//pModel->setData(index, QString::fromStdString(stIp.software), Qt::UserRole);  // 设置id;
-
-				//pModel->setItem(newRowIndex, 0, item);
-				pModel->setItem(newRowIndex, 1, new QStandardItem(QString::fromStdString(stIp.hostname)));
-				//pModel->setItem(newRowIndex, 2, new QStandardItem(QString::fromStdString(stIp.software)));
+				QStandardItem* item1 = new QStandardItem(QString::fromStdString(stIp.ip));
+				item1->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+				pModel->setItem(newRowIndex, 0, item1);
+				QStandardItem* item2 = new QStandardItem(QString::fromStdString(stIp.hostname));
+				item2->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+				pModel->setItem(newRowIndex, 1, item2);
 			}
 		}
 	}

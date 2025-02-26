@@ -83,9 +83,8 @@ public:
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
 		// 先调用基类的 paint 方法，绘制默认的单元格内容
 		QStyledItemDelegate::paint(painter, option, index);
-
-		// 如果是偶数行，绘制背景图片
-		if (index.row() % 2 == 0) 
+		// 如果是奇数行，绘制背景图片
+		if (index.row() % 2 == 1)
 		{
 			QPixmap background(":/image/listBackground.png");  // 加载背景图片
 			painter->drawPixmap(option.rect, background);  // 绘制背景图片

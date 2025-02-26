@@ -71,5 +71,9 @@
         <file>image/btn_blue.png</file>
         <file>image/tableViewItem_select.png</file>
         <file>image/listBackground.png</file>
+        <file>image/CurveBackground.png</file>
+        <file>image/CurveComboBox.png</file>
+        <file>image/CurveLabel.png</file>
+        <file>image/IpListBackGround.png</file>
     </qresource>
 </RCC>

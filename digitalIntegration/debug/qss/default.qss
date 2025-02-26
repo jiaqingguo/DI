@@ -789,146 +789,84 @@ ResourceManageDialog QPushButton#btnList{
 	color: #7482a6;
 	border: none;
 }
-ResourceManageDialog QLabel#label{
+ResourceManageDialog QTableView#tableViewList{
+	border: 1px solid white;
+	border-radius: 5px;
+}
+ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
+	background-image: url(:/image/CurveBackground.png);
+	background-size: contain; 
+	background-repeat: repeat;
+}
+QWidget#pageCurve QLabel#label ,QLabel#label_3 ,QLabel#label_5 ,QLabel#label_7 ,QLabel#label_9{
+	background-image: url(:/image/CurveLabel.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 7px;
 	font-size: 22px;
 	color: #191a25;
 }
-ResourceManageDialog QLabel#label_2{
+ResourceManageDialog QLabel#label_2 ,QLabel#label_4 ,QLabel#label_6 ,QLabel#label_8 ,QLabel#label_10{
 	font-size: 18px;
 	color: #7c88a6;
 }
-ResourceManageDialog QComboBox#comboBox1{
+ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBox4 ,QComboBox#comboBox5{
 	font-size: 18px;
 	color: #7c88a6;
+	border: 1px solid gray;
+	border-radius: 5px;
 }
-ResourceManageDialog QLabel#label_3{
-	font-size: 22px;
-	color: #191a25;
-}
-ResourceManageDialog QLabel#label_4{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QComboBox#comboBox2{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QLabel#label_5{
-	font-size: 22px;
-	color: #191a25;
-}
-ResourceManageDialog QLabel#label_6{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QComboBox#comboBox3{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QLabel#label_7{
-	font-size: 22px;
-	color: #191a25;
-}
-ResourceManageDialog QLabel#label_8{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QComboBox#comboBox4{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QLabel#label_9{
-	font-size: 22px;
-	color: #191a25;
-}
-ResourceManageDialog QLabel#label_10{
-	font-size: 18px;
-	color: #7c88a6;
-}
-ResourceManageDialog QComboBox#comboBox5{
-	font-size: 18px;
-	color: #7c88a6;
+ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox5::down-arrow{
+    image: url(:/image/CurveComboBox.png);
 }
 /* ------------------------资源管理页面----------------------end*/
+
 /* ------------------------信息配置页面----------------------start*/
-InformationConfihurationDialog QPushButton#btnModule1{
+InformationConfihurationDialog QPushButton#btnModule1 ,QPushButton#btnModule2 ,QPushButton#btnModule3 ,QPushButton#btnModule4{
 	font-size: 22px;
 	color: #7482a6;
 	border: none;
 }
-InformationConfihurationDialog QPushButton#btnModule2{
-	font-size: 22px;
-	color: #7482a6;
-	border: none;
+InformationConfihurationDialog QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5 ,QGroupBox#groupBox_7{
+	background-color: white;
+	border: 1px solid white;
+	border-radius: 5px;
 }
-InformationConfihurationDialog QPushButton#btnModule3{
-	font-size: 22px;
-	color: #7482a6;
-	border: none;
-}
-InformationConfihurationDialog QPushButton#btnModule4{
-	font-size: 22px;
-	color: #7482a6;
-	border: none;
-}
-InformationConfihurationDialog QLabel#label{
+InformationConfihurationDialog QLabel#labelIPList ,QLabel#labelToolList1 ,QLabel#labelToolList2 ,QLabel#labelToolList3 ,QLabel#labelToolList4{
+	background-image: url(:/image/CurveLabel.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 7px;
 	font-size: 28px;
 	color: #191a25;
 }
-InformationConfihurationDialog QLabel#label_3{
-	font-size: 28px;
-	color: #191a25;
-}
-InformationConfihurationDialog QLabel#label_4{
-	font-size: 28px;
-	color: #191a25;
-}
-InformationConfihurationDialog QLabel#label_5{
-	font-size: 28px;
-	color: #191a25;
-}
-InformationConfihurationDialog QLabel#label_2{
-	font-size: 28px;
-	color: #191a25;
-}
-InformationConfihurationDialog QPushButton#btnToolAdd1{
+InformationConfihurationDialog QPushButton#btnToolAdd1 ,QPushButton#btnToolAdd2 ,QPushButton#btnToolAdd3 ,QPushButton#btnToolAdd4{
 	font-size: 20px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-InformationConfihurationDialog QPushButton#btnToolDel1{
+InformationConfihurationDialog QPushButton#btnToolDel1 ,QPushButton#btnToolDel2 ,QPushButton#btnToolDel3 ,QPushButton#btnToolDel4{
 	font-size: 20px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-InformationConfihurationDialog QPushButton#btnToolAdd2{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+
+QTableView#tableViewIP1 ,QTableView#tableViewTool1 ,QTableView#tableViewTool2 ,QTableView#tableViewTool3 ,QTableView#tableViewTool4 ,QTableView#tableViewList{
+	border:none;
+	alternate-background-color: #eef2fb;
+	background-color:#ffffff;
 }
-InformationConfihurationDialog QPushButton#btnToolDel2{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+QWidget#widgetIP{
+	background-image: url(:/image/IpListBackGround.png);
+    background-repeat: no-repeat;
+    background-position: center;
 }
-InformationConfihurationDialog QPushButton#btnToolAdd3{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#tableViewTool2::item ,QTableView#tableViewTool3::item ,QTableView#tableViewTool4::item ,QTableView#tableViewList::item{
+	border:none;
+	background-color: transparent;
 }
-InformationConfihurationDialog QPushButton#btnToolDel3{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
-}
-InformationConfihurationDialog QPushButton#btnToolAdd4{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
-}
-InformationConfihurationDialog QPushButton#btnToolDel4{
-	font-size: 20px;
-	color: #ffffff;
-	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderView::section ,QTableView#tableViewTool2 QHeaderView::section ,QTableView#tableViewTool3 QHeaderView::section ,QTableView#tableViewTool4 QHeaderView::section ,QTableView#tableViewList QHeaderView::section{
+	border:none;
+    background-image: url(:/image/listBackground.png); 
 }
 /* ------------------------信息配置页面----------------------end*/

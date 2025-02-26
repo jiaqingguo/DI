@@ -132,21 +132,33 @@
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>20</number>
+            </property>
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="labelToolList1">
               <property name="text">
                <string>工具列表</string>
               </property>
@@ -219,21 +231,24 @@
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="bottomMargin">
+             <number>20</number>
+            </property>
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="labelToolList2">
               <property name="text">
                <string>工具列表</string>
               </property>
@@ -300,21 +315,24 @@
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="bottomMargin">
+             <number>20</number>
+            </property>
             <item>
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="labelToolList3">
               <property name="text">
                <string>工具列表</string>
               </property>
@@ -381,21 +399,24 @@
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>20</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="bottomMargin">
+             <number>20</number>
+            </property>
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="labelToolList4">
               <property name="text">
                <string>工具列表</string>
               </property>
@@ -453,7 +474,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QWidget" name="widgetIP" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -466,16 +487,45 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="title">
-      <string/>
-     </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
       <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>IP列表</string>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="bottomMargin">
+         <number>20</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="labelIPList">
+          <property name="text">
+           <string>IP列表</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QTableView" name="tableViewIP1">
