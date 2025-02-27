@@ -132,7 +132,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QComboBox" name="comboBoxDataField"/>
+          <widget class="QComboBox" name="comboBoxDataField">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEditDataQueryValue">
@@ -156,6 +169,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnDataQuery">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>查询</string>
            </property>
@@ -259,7 +278,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="labelApprovalGo">
            <property name="text">
             <string>前往</string>
            </property>
@@ -276,7 +295,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="labelApprovalYe">
            <property name="text">
             <string>页</string>
            </property>
@@ -310,6 +329,18 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -340,6 +371,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnUserQuery">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>查询</string>
            </property>
@@ -443,7 +480,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="labelUserGo">
            <property name="text">
             <string>前往</string>
            </property>
@@ -460,7 +497,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="labelUserYe">
            <property name="text">
             <string>页</string>
            </property>
