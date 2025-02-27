@@ -132,10 +132,35 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QComboBox" name="comboBoxDataField"/>
+          <widget class="QComboBox" name="comboBoxDataField">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEditDataQueryValue">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -143,19 +168,69 @@
          </item>
          <item>
           <widget class="QCheckBox" name="checkBox_1">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>日期</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit1_start"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit1_start">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit2_end"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit2_end">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnDataQuery">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>查询</string>
            </property>
@@ -273,6 +348,18 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -310,10 +397,34 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="CLineEdit" name="lineEditUserQueryValue">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -321,6 +432,18 @@
          </item>
          <item>
           <widget class="QCheckBox" name="checkBox_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>日期</string>
            </property>
@@ -333,13 +456,51 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit3_start"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit3_start">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeEdit4_end"/>
+          <widget class="QDateTimeEdit" name="dateTimeEdit4_end">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnUserQuery">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="text">
             <string>查询</string>
            </property>

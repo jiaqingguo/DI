@@ -51,7 +51,8 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     m_pUdp = new CCtrlNetwork;
     // m_pGifDialog->show();
    //  QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
-
+     // 启用交替行背景色
+    ui->tableWidget->setAlternatingRowColors(true);
      // 设置表格列宽
     ui->tableWidget->setColumnWidth(0, 140);
     ui->tableWidget->setColumnWidth(1, 120);
@@ -1083,6 +1084,7 @@ void FtpClientWidget::onInsertRow()
     listType[name] = type;
     listPath[name] = fileInfo.isDir();
 
+   
     // 插入新的一行
     ui->tableWidget->insertRow(row);
 

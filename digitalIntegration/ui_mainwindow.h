@@ -73,6 +73,7 @@ public:
     QVBoxLayout *verticalLayout_5;
     QWidget *widgetM1;
     QHBoxLayout *horizontalLayout_4;
+    QPushButton *btnAddTab1;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *btnM1Load;
     QPushButton *btnM1Save;
@@ -81,13 +82,13 @@ public:
     QGridLayout *gridLayout_6;
     QWidget *widgetSize1;
     QGridLayout *gridLayout_5;
-    QPushButton *btnAddTab1;
     QWidget *tab_2;
     QWidget *page5;
     QVBoxLayout *verticalLayout_4;
     QWidget *widgetM2;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *layoutM2ToolIcon;
+    QPushButton *btnAddTab2;
     QSpacerItem *horizontalSpacer_4;
     QPushButton *btnM2Load;
     QPushButton *btnM2Save;
@@ -96,13 +97,13 @@ public:
     QGridLayout *gridLayout_4;
     QWidget *widgetSize2;
     QGridLayout *gridLayout_7;
-    QPushButton *btnAddTab2;
     QWidget *tab_4;
     QWidget *page6;
     QVBoxLayout *verticalLayout_3;
     QWidget *widgetM3;
     QHBoxLayout *horizontalLayout_7;
     QHBoxLayout *layoutM3ToolIcon;
+    QPushButton *btnAddTab3;
     QSpacerItem *horizontalSpacer_5;
     QPushButton *btnM3Load;
     QPushButton *btnM3Save;
@@ -111,12 +112,12 @@ public:
     QGridLayout *gridLayout_3;
     QWidget *widgetSize3;
     QGridLayout *gridLayout_8;
-    QPushButton *btnAddTab3;
     QWidget *tab_6;
     QWidget *page7;
     QVBoxLayout *verticalLayout_2;
     QWidget *widgetM4;
     QHBoxLayout *horizontalLayout_9;
+    QPushButton *btnAddTab4;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *btnM4Load;
     QPushButton *btnM4Save;
@@ -125,7 +126,6 @@ public:
     QGridLayout *gridLayout;
     QWidget *widgetSize4;
     QGridLayout *gridLayout_9;
-    QPushButton *btnAddTab4;
     QWidget *tab_8;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -283,6 +283,17 @@ public:
         horizontalLayout_4 = new QHBoxLayout(widgetM1);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        btnAddTab1 = new QPushButton(widgetM1);
+        btnAddTab1->setObjectName(QString::fromUtf8("btnAddTab1"));
+        btnAddTab1->setMinimumSize(QSize(52, 52));
+        btnAddTab1->setMaximumSize(QSize(52, 52));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Bauhaus 93"));
+        font.setPointSize(35);
+        btnAddTab1->setFont(font);
+
+        horizontalLayout_4->addWidget(btnAddTab1);
+
         horizontalSpacer_3 = new QSpacerItem(415, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_3);
@@ -318,17 +329,6 @@ public:
         widgetSize1->setObjectName(QString::fromUtf8("widgetSize1"));
         gridLayout_5 = new QGridLayout(widgetSize1);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        btnAddTab1 = new QPushButton(widgetSize1);
-        btnAddTab1->setObjectName(QString::fromUtf8("btnAddTab1"));
-        btnAddTab1->setMinimumSize(QSize(80, 80));
-        btnAddTab1->setMaximumSize(QSize(80, 80));
-        QFont font;
-        font.setFamily(QString::fromUtf8("Bauhaus 93"));
-        font.setPointSize(35);
-        btnAddTab1->setFont(font);
-
-        gridLayout_5->addWidget(btnAddTab1, 0, 0, 1, 1);
-
 
         gridLayout_6->addWidget(widgetSize1, 0, 0, 1, 1);
 
@@ -356,6 +356,14 @@ public:
         layoutM2ToolIcon->setObjectName(QString::fromUtf8("layoutM2ToolIcon"));
 
         horizontalLayout_5->addLayout(layoutM2ToolIcon);
+
+        btnAddTab2 = new QPushButton(widgetM2);
+        btnAddTab2->setObjectName(QString::fromUtf8("btnAddTab2"));
+        btnAddTab2->setMinimumSize(QSize(52, 52));
+        btnAddTab2->setMaximumSize(QSize(52, 52));
+        btnAddTab2->setFont(font);
+
+        horizontalLayout_5->addWidget(btnAddTab2);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -389,14 +397,6 @@ public:
         widgetSize2->setObjectName(QString::fromUtf8("widgetSize2"));
         gridLayout_7 = new QGridLayout(widgetSize2);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
-        btnAddTab2 = new QPushButton(widgetSize2);
-        btnAddTab2->setObjectName(QString::fromUtf8("btnAddTab2"));
-        btnAddTab2->setMinimumSize(QSize(80, 80));
-        btnAddTab2->setMaximumSize(QSize(80, 80));
-        btnAddTab2->setFont(font);
-
-        gridLayout_7->addWidget(btnAddTab2, 0, 0, 1, 1);
-
 
         gridLayout_4->addWidget(widgetSize2, 0, 0, 1, 1);
 
@@ -424,6 +424,14 @@ public:
         layoutM3ToolIcon->setObjectName(QString::fromUtf8("layoutM3ToolIcon"));
 
         horizontalLayout_7->addLayout(layoutM3ToolIcon);
+
+        btnAddTab3 = new QPushButton(widgetM3);
+        btnAddTab3->setObjectName(QString::fromUtf8("btnAddTab3"));
+        btnAddTab3->setMinimumSize(QSize(52, 52));
+        btnAddTab3->setMaximumSize(QSize(52, 52));
+        btnAddTab3->setFont(font);
+
+        horizontalLayout_7->addWidget(btnAddTab3);
 
         horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -459,14 +467,6 @@ public:
         widgetSize3->setObjectName(QString::fromUtf8("widgetSize3"));
         gridLayout_8 = new QGridLayout(widgetSize3);
         gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
-        btnAddTab3 = new QPushButton(widgetSize3);
-        btnAddTab3->setObjectName(QString::fromUtf8("btnAddTab3"));
-        btnAddTab3->setMinimumSize(QSize(80, 80));
-        btnAddTab3->setMaximumSize(QSize(80, 80));
-        btnAddTab3->setFont(font);
-
-        gridLayout_8->addWidget(btnAddTab3, 0, 0, 1, 1);
-
 
         gridLayout_3->addWidget(widgetSize3, 0, 0, 1, 1);
 
@@ -490,6 +490,14 @@ public:
         horizontalLayout_9 = new QHBoxLayout(widgetM4);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
+        btnAddTab4 = new QPushButton(widgetM4);
+        btnAddTab4->setObjectName(QString::fromUtf8("btnAddTab4"));
+        btnAddTab4->setMinimumSize(QSize(52, 52));
+        btnAddTab4->setMaximumSize(QSize(52, 52));
+        btnAddTab4->setFont(font);
+
+        horizontalLayout_9->addWidget(btnAddTab4);
+
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_9->addItem(horizontalSpacer_6);
@@ -521,14 +529,6 @@ public:
         widgetSize4->setObjectName(QString::fromUtf8("widgetSize4"));
         gridLayout_9 = new QGridLayout(widgetSize4);
         gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
-        btnAddTab4 = new QPushButton(widgetSize4);
-        btnAddTab4->setObjectName(QString::fromUtf8("btnAddTab4"));
-        btnAddTab4->setMinimumSize(QSize(80, 80));
-        btnAddTab4->setMaximumSize(QSize(80, 80));
-        btnAddTab4->setFont(font);
-
-        gridLayout_9->addWidget(btnAddTab4, 0, 0, 1, 1);
-
 
         gridLayout->addWidget(widgetSize4, 0, 0, 1, 1);
 
@@ -558,7 +558,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(7);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(0);
@@ -584,24 +584,24 @@ public:
         btnMinimize->setText(QString());
         btnMaximize->setText(QString());
         btnClose->setText(QString());
+        btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         btnM1Load->setText(QString());
         btnM1Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
-        btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel1->setTabText(tabWidgetModulel1->indexOf(tab), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel1->setTabText(tabWidgetModulel1->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
+        btnAddTab2->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         btnM2Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM2Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
-        btnAddTab2->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel2->setTabText(tabWidgetModulel2->indexOf(tab_3), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel2->setTabText(tabWidgetModulel2->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
+        btnAddTab3->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         btnM3Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM3Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
-        btnAddTab3->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel3->setTabText(tabWidgetModulel3->indexOf(tab_5), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel3->setTabText(tabWidgetModulel3->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
+        btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         btnM4Load->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
         btnM4Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));
-        btnAddTab4->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_7), QCoreApplication::translate("MainWindow", "+", nullptr));
         tabWidgetModulel4->setTabText(tabWidgetModulel4->indexOf(tab_8), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
     } // retranslateUi

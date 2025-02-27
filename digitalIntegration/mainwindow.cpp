@@ -360,7 +360,7 @@ void MainWindow::initTreeMenu()
 	ui->treeWidget->setHeaderHidden(true); // 隐藏列标题
 	//ui->treeWidget->setIndentation(0); // 关键代码：禁用缩进
 
-	//ui->treeWidget->setFocusPolicy(Qt::NoFocus); // 禁用焦点框
+	ui->treeWidget->setFocusPolicy(Qt::NoFocus); // 禁用焦点框
 
 
 	ui->treeWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条

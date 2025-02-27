@@ -4,7 +4,9 @@ QMainWindow{
 border-image:url(:/image/Mainwindow-background.jpg);
 }
 
-
+QSplitter::handle{
+ background:transparent;
+}
 
 
 QWidget#widgetLeftMenu {
@@ -275,23 +277,33 @@ FtpDialog QTableView::item{
 	background-color: transparent;
            }
 FtpDialog  QTableView::item:selected{
-		background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-		background-repeat: no-repeat; /* 不重复 */
-		background-position: center; /* 背景图居中 */
-		background-size: cover; 
+		border-image:url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
+	
          
 }
+
+FtpClientWidget{
+	background-color: transparent;
+}
+
 /* 标题栏背景色 */
 FtpDialog QHeaderView::section {
 	border:none;
-	 height: 20px; /* 设置标题栏高度 */
+	height: 20px; /* 设置标题栏高度 */
     background-color: #7482a6; /* 191a25 标题栏背景色 */
     color: white; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
 
 
-/*----------------------- ApprovalProgressDialog------------ 表格背景------------- */
+/*------------------------------------ ApprovalProgressDialog------------ 表格背景------------- */
+
+QWidget#page{
+	background-color: transparent;
+}
+
+
+/*----------------------- 表格背景------------- */
 ApprovalProgressDialog QTableView{
 		border:none;
 		alternate-background-color: #eef2fb;
@@ -302,9 +314,8 @@ ApprovalProgressDialog QTableView::item{
 	background-color: transparent;
            }
 ApprovalProgressDialog  QTableView::item:selected{
-		background-image: url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-		background-repeat: no-repeat; /* 不重复 */
-		background-position: center; /* 背景图居中 */
+		border-image:url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
+	
          
 }
 /* 标题栏背景色 */
@@ -327,7 +338,7 @@ QCheckBox::indicator:checked {
 	image: url(:/image/checkbox_checked.png); /* 设置勾选状态的背景图 */
 }
 
-QPushButton#btnUserQuery{
+QPushButton#btnUserQuery,QPushButton#btnDataQuery{
 		color:white;
 		
 		border-image:url(:/image/btnItem_blue.png);	
@@ -374,7 +385,7 @@ QPushButton#btnData:pressed,QPushButton#btnUser:pressed,QPushButton#btnFile:pres
 		border-image:url(:/image/btn_blue.png);		
 }
 QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:checked,QPushButton#btnDownload:checked{
-		color:ffffff;
+		color:white;
 		border-image:url(:/image/btn_blue.png);		
 }
 
@@ -929,9 +940,10 @@ QTableView#tableViewIP1 ,QTableView#tableViewTool1 ,QTableView#tableViewTool2 ,Q
 	background-color:#ffffff;
 }
 QWidget#widgetIP{
-	background-image: url(:/image/IpListBackGround.png);
-    background-repeat: no-repeat;
-    background-position: center;
+  
+	border-image: url(:/image/IpListBackGround.png);
+	
+	
 }
 QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#tableViewTool2::item ,QTableView#tableViewTool3::item ,QTableView#tableViewTool4::item ,QTableView#tableViewList::item{
 	border:none;

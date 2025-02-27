@@ -134,31 +134,43 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         comboBoxDataField = new QComboBox(page);
         comboBoxDataField->setObjectName(QString::fromUtf8("comboBoxDataField"));
+        comboBoxDataField->setMinimumSize(QSize(0, 30));
+        comboBoxDataField->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_2->addWidget(comboBoxDataField);
 
         lineEditDataQueryValue = new QLineEdit(page);
         lineEditDataQueryValue->setObjectName(QString::fromUtf8("lineEditDataQueryValue"));
+        lineEditDataQueryValue->setMinimumSize(QSize(0, 30));
+        lineEditDataQueryValue->setMaximumSize(QSize(250, 30));
 
         horizontalLayout_2->addWidget(lineEditDataQueryValue);
 
         checkBox_1 = new QCheckBox(page);
         checkBox_1->setObjectName(QString::fromUtf8("checkBox_1"));
+        checkBox_1->setMinimumSize(QSize(0, 30));
+        checkBox_1->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_2->addWidget(checkBox_1);
 
         dateTimeEdit1_start = new QDateTimeEdit(page);
         dateTimeEdit1_start->setObjectName(QString::fromUtf8("dateTimeEdit1_start"));
+        dateTimeEdit1_start->setMinimumSize(QSize(0, 30));
+        dateTimeEdit1_start->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_2->addWidget(dateTimeEdit1_start);
 
         dateTimeEdit2_end = new QDateTimeEdit(page);
         dateTimeEdit2_end->setObjectName(QString::fromUtf8("dateTimeEdit2_end"));
+        dateTimeEdit2_end->setMinimumSize(QSize(0, 30));
+        dateTimeEdit2_end->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_2->addWidget(dateTimeEdit2_end);
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
+        btnDataQuery->setMinimumSize(QSize(90, 30));
+        btnDataQuery->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_2->addWidget(btnDataQuery);
 
@@ -218,6 +230,8 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(lineEditDataApprovalPage->sizePolicy().hasHeightForWidth());
         lineEditDataApprovalPage->setSizePolicy(sizePolicy);
+        lineEditDataApprovalPage->setMinimumSize(QSize(0, 30));
+        lineEditDataApprovalPage->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_3->addWidget(lineEditDataApprovalPage);
 
@@ -244,16 +258,22 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(comboBoxUserField->sizePolicy().hasHeightForWidth());
         comboBoxUserField->setSizePolicy(sizePolicy1);
+        comboBoxUserField->setMinimumSize(QSize(0, 30));
+        comboBoxUserField->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_5->addWidget(comboBoxUserField);
 
         lineEditUserQueryValue = new CLineEdit(page_2);
         lineEditUserQueryValue->setObjectName(QString::fromUtf8("lineEditUserQueryValue"));
+        lineEditUserQueryValue->setMinimumSize(QSize(0, 30));
+        lineEditUserQueryValue->setMaximumSize(QSize(250, 30));
 
         horizontalLayout_5->addWidget(lineEditUserQueryValue);
 
         checkBox_2 = new QCheckBox(page_2);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+        checkBox_2->setMinimumSize(QSize(0, 30));
+        checkBox_2->setMaximumSize(QSize(16777215, 30));
         checkBox_2->setChecked(false);
         checkBox_2->setTristate(false);
 
@@ -261,16 +281,22 @@ public:
 
         dateTimeEdit3_start = new QDateTimeEdit(page_2);
         dateTimeEdit3_start->setObjectName(QString::fromUtf8("dateTimeEdit3_start"));
+        dateTimeEdit3_start->setMinimumSize(QSize(0, 30));
+        dateTimeEdit3_start->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_5->addWidget(dateTimeEdit3_start);
 
         dateTimeEdit4_end = new QDateTimeEdit(page_2);
         dateTimeEdit4_end->setObjectName(QString::fromUtf8("dateTimeEdit4_end"));
+        dateTimeEdit4_end->setMinimumSize(QSize(0, 30));
+        dateTimeEdit4_end->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_5->addWidget(dateTimeEdit4_end);
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
+        btnUserQuery->setMinimumSize(QSize(90, 30));
+        btnUserQuery->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_5->addWidget(btnUserQuery);
 
