@@ -104,8 +104,14 @@ QWidget#widgetM1{
 }	
 		
 		
-		
+/* --------------------------------------  tabWIdget 嵌入 ------------------------------------- ----------------------start*/	
+
 QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
+		background-image: url(:/image/OneLoad.png);
+		
+background-repeat: no-repeat; /* 禁止重复 */
+background-position: center;   /* 居中显示 */
+background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -326,7 +332,7 @@ ApprovalProgressDialog  QTableView::item:selected{
 /* 标题栏背景色 */
 ApprovalProgressDialog QHeaderView::section {
 	border:none;
-	height: 30px; /* 设置标题栏高度 */
+	height: 50px; /* 设置标题栏高度 */
     background-color: #7482a6; /* 191a25 标题栏背景色 */
     color: white; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
@@ -394,9 +400,7 @@ QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:chec
 		border-image:url(:/image/btn_blue.png);		
 }
 
-
-
-
+/* ------------------------ 按钮 菜单----------------------start*/
 
 
 

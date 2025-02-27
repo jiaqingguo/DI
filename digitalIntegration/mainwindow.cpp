@@ -1012,10 +1012,10 @@ void MainWindow::slot_downlaodFinsh()
 
 void MainWindow::slot_tabModule1closeTab(int index)
 {
-	if (index <= 0)
+	/*if (index <= 0)
 	{
 		return;
-	}
+	}*/
 	// 创建消息框
 	QMessageBox msgBox;
 	// 设置消息框的内容

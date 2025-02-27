@@ -931,9 +931,9 @@ namespace common
             // tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
             tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // 选择整行
             // 设置行高
-            tableView->horizontalHeader()->setDefaultSectionSize(28);
+          //  tableView->horizontalHeader()->setDefaultSectionSize(28);
             // 设置标题栏的固定高度，
-            tableView->horizontalHeader()->setFixedHeight(28);
+        //    tableView->horizontalHeader()->setFixedHeight(28);
             tableView->verticalHeader()->setVisible(false);
             // 设置表格的单元为只读属性，不能编辑
             tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
