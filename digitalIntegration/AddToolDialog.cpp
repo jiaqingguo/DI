@@ -74,13 +74,13 @@ void AddToolDialog::init()
 		//ui->label_4->setHidden(true);
 		//ui->lineEditIP->setHidden(true);
 
-		ui->label_5->setHidden(false);
+		ui->labelONHost->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
 	
 	}
 	else  //模块1下固定ip启动工具
 	{
-		ui->label_5->setHidden(true);
+		ui->labelONHost->setHidden(true);
 		ui->comboBoxHost->setHidden(true);
 	}
 
@@ -256,7 +256,7 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		ui->lineEditTabName->setPlaceholderText(text);
 		ui->lineEditTabName->setReadOnly(false);
 
-		ui->label_5->setHidden(true);
+		ui->labelONHost->setHidden(true);
 		ui->comboBoxHost->setHidden(true);
 	}
 	else
@@ -271,7 +271,7 @@ void AddToolDialog::slot_display_lineEditIP(QString text)
 		//ui->label_4->setHidden(true);
 		//ui->lineEditIP->setHidden(true);
 
-		ui->label_5->setHidden(false);
+		ui->labelONHost->setHidden(false);
 		ui->comboBoxHost->setHidden(false);
 		//ui->comboBoxHost->addItem("CPU,GPU" + QString::fromLocal8Bit("使用率启动"));// 模块234 的逻辑
 		//for (const auto& stIP : common::setHostData)

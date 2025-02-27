@@ -137,6 +137,7 @@ public:
         widget->setObjectName(QString::fromUtf8("widget"));
         gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
         tableViewList = new QTableView(widget);
         tableViewList->setObjectName(QString::fromUtf8("tableViewList"));
 
@@ -335,7 +336,7 @@ public:
 
         retranslateUi(ResourceManageDialog);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(ResourceManageDialog);

@@ -531,11 +531,53 @@ QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:chec
 
 
 
-
-
+/* ------------------------ 审批进度页面----------------------start*/
+QLabel#labelApprovalGo ,QLabel#labelApprovalYe ,QLabel#labelUserGo ,QLabel#labelUserYe{
+	font-size: 18px;
+	color: #767887;
+}
+ApprovalProgressDialog QLineEdit#lineEditDataApprovalPage ,QLineEdit#lineEditUserPage{
+	font-size: 18px;
+	color: #767887;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+QLineEdit#lineEditDataQueryValue ,QLineEdit#lineEditUserQueryValue{
+	font-size: 18px;
+	color: #abadb2;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+QPushButton#btnDataApprovalLast{
+	color:white;
+	margin:2px;
+	border-image:url(:/image/page_last.png);	
+}
+QPushButton#btnDataApprovalNext{
+	color:white;
+	margin:2px;
+	border-image:url(:/image/page_nect.png);	
+}
+QPushButton#btnUserLast{
+	color:white;
+	margin:2px;
+	border-image:url(:/image/page_last.png);	
+}
+QPushButton#btnUserNext{
+	color:white;
+	margin:2px;
+	border-image:url(:/image/page_nect.png);	
+}
+QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end{
+	font-size: 18px;
+	color: #000000;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+/* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
 
-QWidget#page {
+LoginDialog QWidget#page {
 	background-color:white;
 }
 LoginDialog QLabel#lblUser {
@@ -789,19 +831,7 @@ AddToolInfoDialog QPushButton#btnOK{
 QDialog#AddToolDialog{
 	background-color: white;
 }
-AddToolDialog QLabel#label{
-	font-size: 20px;
-	color: #484f7a;
-}
-AddToolDialog QLabel#label_2{
-	font-size: 20px;
-	color: #484f7a;
-}
-AddToolDialog QLabel#label_3{
-	font-size: 20px;
-	color: #484f7a;
-}
-AddToolDialog QLabel#label_5{
+AddToolDialog QLabel#labelname ,QLabel#labelOpenWay ,QLabel#labelToolName ,QLabel#labelONHost{
 	font-size: 20px;
 	color: #484f7a;
 }
@@ -875,11 +905,15 @@ ResourceManageDialog QPushButton#btnList{
 ResourceManageDialog QTableView#tableViewList{
 	border: 1px solid white;
 	border-radius: 5px;
+	padding: 20px; /* 设置 QTableView 的内边距 */
+    /*margin: 2px;   设置 QTableView 的外边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
 	background-image: url(:/image/CurveBackground.png);
 	background-size: contain; 
 	background-repeat: repeat;
+	/*border: 1px solid white;
+	border-radius: 5px;*/
 }
 QWidget#pageCurve QLabel#label ,QLabel#label_3 ,QLabel#label_5 ,QLabel#label_7 ,QLabel#label_9{
 	background-image: url(:/image/CurveLabel.png);
@@ -899,7 +933,7 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox5::down-arrow{
+ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow{
     image: url(:/image/CurveComboBox.png);
 }
 /* ------------------------资源管理页面----------------------end*/
@@ -940,10 +974,6 @@ QTableView#tableViewIP1 ,QTableView#tableViewTool1 ,QTableView#tableViewTool2 ,Q
 	background-color:#ffffff;
 }
 QWidget#widgetIP{
-  
-	border-image: url(:/image/IpListBackGround.png);
-	
-	
 }
 QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#tableViewTool2::item ,QTableView#tableViewTool3::item ,QTableView#tableViewTool4::item ,QTableView#tableViewList::item{
 	border:none;

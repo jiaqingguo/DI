@@ -29,12 +29,12 @@ public:
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
     QComboBox *comboBoxDisplayMode;
-    QLabel *label;
+    QLabel *labelname;
     QComboBox *comboBoxToolNames;
     QComboBox *comboBoxHost;
-    QLabel *label_5;
-    QLabel *label_3;
-    QLabel *label_2;
+    QLabel *labelONHost;
+    QLabel *labelToolName;
+    QLabel *labelOpenWay;
     QLineEdit *lineEditTabName;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
@@ -45,7 +45,7 @@ public:
     {
         if (AddToolDialog->objectName().isEmpty())
             AddToolDialog->setObjectName(QString::fromUtf8("AddToolDialog"));
-        AddToolDialog->resize(280, 214);
+        AddToolDialog->resize(314, 221);
         verticalLayout = new QVBoxLayout(AddToolDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -60,10 +60,10 @@ public:
 
         gridLayout->addWidget(comboBoxDisplayMode, 1, 1, 1, 2);
 
-        label = new QLabel(AddToolDialog);
-        label->setObjectName(QString::fromUtf8("label"));
+        labelname = new QLabel(AddToolDialog);
+        labelname->setObjectName(QString::fromUtf8("labelname"));
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
+        gridLayout->addWidget(labelname, 0, 0, 1, 1);
 
         comboBoxToolNames = new QComboBox(AddToolDialog);
         comboBoxToolNames->setObjectName(QString::fromUtf8("comboBoxToolNames"));
@@ -77,24 +77,24 @@ public:
 
         gridLayout->addWidget(comboBoxHost, 3, 1, 1, 2);
 
-        label_5 = new QLabel(AddToolDialog);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        labelONHost = new QLabel(AddToolDialog);
+        labelONHost->setObjectName(QString::fromUtf8("labelONHost"));
 
-        gridLayout->addWidget(label_5, 3, 0, 1, 1);
+        gridLayout->addWidget(labelONHost, 3, 0, 1, 1);
 
-        label_3 = new QLabel(AddToolDialog);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setMinimumSize(QSize(0, 0));
-        label_3->setMaximumSize(QSize(16777215, 16777215));
+        labelToolName = new QLabel(AddToolDialog);
+        labelToolName->setObjectName(QString::fromUtf8("labelToolName"));
+        labelToolName->setMinimumSize(QSize(0, 0));
+        labelToolName->setMaximumSize(QSize(16777215, 16777215));
 
-        gridLayout->addWidget(label_3, 2, 0, 1, 1);
+        gridLayout->addWidget(labelToolName, 2, 0, 1, 1);
 
-        label_2 = new QLabel(AddToolDialog);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setMinimumSize(QSize(0, 0));
-        label_2->setMaximumSize(QSize(16777215, 16777215));
+        labelOpenWay = new QLabel(AddToolDialog);
+        labelOpenWay->setObjectName(QString::fromUtf8("labelOpenWay"));
+        labelOpenWay->setMinimumSize(QSize(0, 0));
+        labelOpenWay->setMaximumSize(QSize(16777215, 16777215));
 
-        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+        gridLayout->addWidget(labelOpenWay, 1, 0, 1, 1);
 
         lineEditTabName = new QLineEdit(AddToolDialog);
         lineEditTabName->setObjectName(QString::fromUtf8("lineEditTabName"));
@@ -137,10 +137,10 @@ public:
         comboBoxDisplayMode->setItemText(0, QCoreApplication::translate("AddToolDialog", "Tab\351\241\265", nullptr));
         comboBoxDisplayMode->setItemText(1, QCoreApplication::translate("AddToolDialog", "\345\274\271\347\252\227", nullptr));
 
-        label->setText(QCoreApplication::translate("AddToolDialog", "\346\240\207\347\255\276\345\220\215\347\247\260", nullptr));
-        label_5->setText(QCoreApplication::translate("AddToolDialog", "\345\220\257\345\212\250\344\270\273\346\234\272", nullptr));
-        label_3->setText(QCoreApplication::translate("AddToolDialog", "\345\267\245\345\205\267\345\220\215\347\247\260", nullptr));
-        label_2->setText(QCoreApplication::translate("AddToolDialog", "\346\211\223\345\274\200\346\226\271\345\274\217", nullptr));
+        labelname->setText(QCoreApplication::translate("AddToolDialog", "\346\240\207\347\255\276\345\220\215\347\247\260", nullptr));
+        labelONHost->setText(QCoreApplication::translate("AddToolDialog", "\345\220\257\345\212\250\344\270\273\346\234\272", nullptr));
+        labelToolName->setText(QCoreApplication::translate("AddToolDialog", "\345\267\245\345\205\267\345\220\215\347\247\260", nullptr));
+        labelOpenWay->setText(QCoreApplication::translate("AddToolDialog", "\346\211\223\345\274\200\346\226\271\345\274\217", nullptr));
         btnAdd->setText(QCoreApplication::translate("AddToolDialog", "\346\226\260\345\242\236", nullptr));
     } // retranslateUi
 
