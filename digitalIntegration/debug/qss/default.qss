@@ -350,9 +350,9 @@ QCheckBox::indicator:checked {
 }
 
 QPushButton#btnUserQuery,QPushButton#btnDataQuery{
-		color:white;
-		
-		border-image:url(:/image/btnItem_blue.png);	
+	font-size: 20px;
+	color: #ffffff;
+	border-image: url(:/image/btnxiao.png);
 }
 
 QPushButton#btnFlushDownload,QPushButton#btnFlushUser{
@@ -582,6 +582,12 @@ QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTime
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
+}
+QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_start::down-button ,QDateTimeEdit#dateTimeEdit2_end::down-button ,QDateTimeEdit#dateTimeEdit4_end::down-button{
+	image: url(:/image/CurveComboBox.png);
+}
+QDateTimeEdit#dateTimeEdit1_start::up-button ,QDateTimeEdit#dateTimeEdit3_start::up-button ,QDateTimeEdit#dateTimeEdit2_end::up-button ,QDateTimeEdit#dateTimeEdit4_end::up-button{
+	image: url(:/image/CurveComboBoxup.png);
 }
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
@@ -897,8 +903,6 @@ OneClickLoadDialog QPushButton#btnOk{
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-
-
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/
 ResourceManageDialog QPushButton#btnCurve{
@@ -942,7 +946,8 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow{
+ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
+{
     image: url(:/image/CurveComboBox.png);
 }
 /* ------------------------资源管理页面----------------------end*/
@@ -988,7 +993,7 @@ QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#table
 	border:none;
 	background-color: transparent;
 }
-QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderView::section ,QTableView#tableViewTool2 QHeaderView::section ,QTableView#tableViewTool3 QHeaderView::section ,QTableView#tableViewTool4 QHeaderView::section ,QTableView#tableViewList QHeaderView::section{
+QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderView::section ,QTableView#tableViewTool2 QHeaderView::section ,QTableView#tableViewTool3 QHeaderView::section ,QTableView#tableViewTool4 QHeaderView::section ,QTableView#tableViewList QHeaderView::section ,QTableView#tableViewOneLoad QHeaderView::section{
 	border:none;
     background-image: url(:/image/listBackground.png); 
 }

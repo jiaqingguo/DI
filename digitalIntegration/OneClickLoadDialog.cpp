@@ -13,6 +13,7 @@
 #include "databaseDI.h"
 #include "database.h"
 #include "mainwindow.h"
+#include "InformationConfihurationDialog.h"
 
 OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	QDialog(parent),
@@ -31,11 +32,11 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 
 	/* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
 	 model->setHorizontalHeaderLabels(labels);*/
-	ui->tableView->setModel(m_model);
-	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // 选择整行
-	ui->tableView->verticalHeader()->setDefaultSectionSize(28);
-	ui->tableView->verticalHeader()->setVisible(false);
+	ui->tableViewOneLoad->setModel(m_model);
+	ui->tableViewOneLoad->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui->tableViewOneLoad->setSelectionBehavior(QAbstractItemView::SelectRows);   // 选择整行
+	ui->tableViewOneLoad->verticalHeader()->setDefaultSectionSize(28);
+	ui->tableViewOneLoad->verticalHeader()->setVisible(false);
 
 	// 隐藏第二列
 	//ui->tableView->setColumnHidden(0, true);
@@ -63,8 +64,16 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	connect(ui->btnDel, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnDel);
 	connect(ui->btnAdd, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnAdd);
 	connect(ui->btnOk, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnOK);
+	ui->tableViewOneLoad->setShowGrid(false);
+	ui->tableViewOneLoad->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
+	ui->tableViewOneLoad->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 19px;color: #7482a6;}");
+	ui->tableViewOneLoad->horizontalHeader()->setFixedHeight(40);  // 设置表头高度为40像素
+	ui->tableViewOneLoad->verticalHeader()->setDefaultSectionSize(40);//设置每一行的高度为40
+	
 
-	//init_ui();
+	// 创建自定义委托并设置到 QTableView
+	BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewOneLoad);
+	ui->tableViewOneLoad->setItemDelegate(delegate1);
 }
 
 OneClickLoadDialog::~OneClickLoadDialog()
@@ -76,7 +85,9 @@ void OneClickLoadDialog::slot_btnAdd()
 {
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
-	comboBox->setEditable(false);
+	//comboBox->setEditable(false);
+	comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;border: 1px solid gray;border-radius: 5px;}");
+
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
 	table_ip data;
@@ -109,16 +120,15 @@ void OneClickLoadDialog::slot_btnAdd()
 	item2->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
 	m_model->setItem(newRowIndex, 1, item2);
 	comboBox->setProperty("row",newRowIndex);
-	ui->tableView->setIndexWidget(ui->tableView->model()->index(newRowIndex, 1), comboBox);
-
+	ui->tableViewOneLoad->setIndexWidget(ui->tableViewOneLoad->model()->index(newRowIndex, 1), comboBox);
 
 	connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &OneClickLoadDialog::slot_keep_soft);
 
-
+	
 }
 void OneClickLoadDialog::slot_btnDel()
 {
-	QModelIndex index = ui->tableView->currentIndex();
+	QModelIndex index = ui->tableViewOneLoad->currentIndex();
 	if (index.isValid())
 	{
 		// 获取当前选中单元格同一行的第2列的单元格
@@ -127,7 +137,7 @@ void OneClickLoadDialog::slot_btnDel()
 		//QVariant name_data = m_model->data(indexSecond, Qt::DisplayRole);
 		// 获取第二列的QComboBox控件
 		int row = index.row();
-		QWidget *comboBoxWidget = ui->tableView->indexWidget(ui->tableView->model()->index(row, 1));
+		QWidget *comboBoxWidget = ui->tableViewOneLoad->indexWidget(ui->tableViewOneLoad->model()->index(row, 1));
 		QComboBox *comboBox = qobject_cast<QComboBox*>(comboBoxWidget);
 		// 获取QComboBox中的文本
 		QString comboBoxText = comboBox->currentText();
@@ -158,7 +168,7 @@ void OneClickLoadDialog::slot_btnOK()
 
 		//if (item_module->data(Qt::DisplayRole).toInt() == 1)
 		// 获取单元格的小部件
-		QWidget *widget = ui->tableView->indexWidget(m_model->index(row, 1));
+		QWidget *widget = ui->tableViewOneLoad->indexWidget(m_model->index(row, 1));
 		if (widget)
 		{
 			// 将小部件转换为QComboBox
@@ -238,9 +248,9 @@ void OneClickLoadDialog::initTableView()
 
 					// 创建QComboBox并设置模型数据
 					QComboBox *comboBox = new QComboBox();
-
 					m_model->setItem(newRowIndex, 1, item);
-
+					//comboBox->setFixedHeight(20);
+					comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;border: 1px solid gray;border-radius: 5px;}");
 					std::map<std::string, table_ip> ipMap;
 					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
 					{
@@ -256,7 +266,7 @@ void OneClickLoadDialog::initTableView()
 					
 					connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &OneClickLoadDialog::slot_keep_soft);
 
-					ui->tableView->setIndexWidget(m_model->index(newRowIndex, 1), comboBox);
+					ui->tableViewOneLoad->setIndexWidget(m_model->index(newRowIndex, 1), comboBox);
 				}
 			}
 		}

@@ -82,5 +82,6 @@
         <file>image/btn_flush.png</file>
         <file>image/page_last.png</file>
         <file>image/page_nect.png</file>
+        <file>image/CurveComboBoxup.png</file>
     </qresource>
 </RCC>

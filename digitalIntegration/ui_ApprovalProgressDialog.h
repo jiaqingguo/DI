@@ -135,7 +135,7 @@ public:
         comboBoxDataField = new QComboBox(page);
         comboBoxDataField->setObjectName(QString::fromUtf8("comboBoxDataField"));
         comboBoxDataField->setMinimumSize(QSize(0, 0));
-        comboBoxDataField->setMaximumSize(QSize(16777215, 16777215));
+        comboBoxDataField->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_2->addWidget(comboBoxDataField);
 
@@ -169,6 +169,7 @@ public:
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
+        btnDataQuery->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_2->addWidget(btnDataQuery);
 
@@ -251,11 +252,7 @@ public:
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         comboBoxUserField = new QComboBox(page_2);
         comboBoxUserField->setObjectName(QString::fromUtf8("comboBoxUserField"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(comboBoxUserField->sizePolicy().hasHeightForWidth());
-        comboBoxUserField->setSizePolicy(sizePolicy1);
+        comboBoxUserField->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_5->addWidget(comboBoxUserField);
 
@@ -291,6 +288,7 @@ public:
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
+        btnUserQuery->setMinimumSize(QSize(110, 50));
 
         horizontalLayout_5->addWidget(btnUserQuery);
 
@@ -347,6 +345,7 @@ public:
         lineEditUserPage->setObjectName(QString::fromUtf8("lineEditUserPage"));
         sizePolicy.setHeightForWidth(lineEditUserPage->sizePolicy().hasHeightForWidth());
         lineEditUserPage->setSizePolicy(sizePolicy);
+        lineEditUserPage->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_4->addWidget(lineEditUserPage);
 
@@ -365,7 +364,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);
