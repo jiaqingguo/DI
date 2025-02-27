@@ -23,6 +23,10 @@ QWidget#widgetLOGO {
 QWidget#widgetLeftMenu QPushButton#btnTitleIcon{
 	border-image:url(:/image/LOGO.png);  
 }
+
+
+
+/* ------------------------ QTreeWidget 菜单----------------------start*/
 QWidget#widgetLeftMenu QTreeWidget{
 	 background: transparent;
 	  border: none; /*           // 移除边框  */      
@@ -63,7 +67,7 @@ QWidget#widgetLeftMenu QTreeWidget::item:selected {
           /*   font-weight: bold;   */
             }
 		
-/* -------------------- 按钮----------------------*/		
+/* -------------------- 按钮最大化 最小化 关闭----------------------*/		
 
 QWidget#widgetTital QPushButton#btnMinimize{
 		background-image: url(:/image/Minimize.png);
@@ -72,7 +76,6 @@ QWidget#widgetTital QPushButton#btnMinimize{
         background-size: cover; 
 		border: none; 
 }
-
 QWidget#widgetTital QPushButton#btnMaximize{
 		background-image: url(:/image/Maximize.png);
 		background-repeat: no-repeat; 
@@ -87,7 +90,9 @@ QWidget#widgetTital QPushButton#btnClose{
         background-size: cover; 
 		border: none; 
 }
-		
+	
+/* -------------------- 按钮最大化 最小化 关闭----------------------end*/	
+	
 		
 QWidget#widgetM1{
 		 background: transparent;
@@ -321,7 +326,7 @@ ApprovalProgressDialog  QTableView::item:selected{
 /* 标题栏背景色 */
 ApprovalProgressDialog QHeaderView::section {
 	border:none;
-	 height: 20px; /* 设置标题栏高度 */
+	height: 30px; /* 设置标题栏高度 */
     background-color: #7482a6; /* 191a25 标题栏背景色 */
     color: white; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */

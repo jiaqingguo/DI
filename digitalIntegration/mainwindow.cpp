@@ -281,6 +281,7 @@ void MainWindow::initInitface()
 	ui->tabWidgetModulel2->removeTab(1);
 	ui->tabWidgetModulel3->removeTab(1);
 	ui->tabWidgetModulel4->removeTab(1);
+	ui->tabWidgetModulel1->removeTab(0);
 	ui->btnAddTab1->setProperty("module", 1);
 	ui->btnAddTab2->setProperty("module", 2);
 	ui->btnAddTab3->setProperty("module", 3);

@@ -57,9 +57,9 @@ public:
     QPushButton *btnDataApprovalLast;
     QLabel *labelDataApprovalPageShow;
     QPushButton *btnDataApprovalNext;
-    QLabel *label_5;
+    QLabel *labelApprovalGo;
     QLineEdit *lineEditDataApprovalPage;
-    QLabel *label_6;
+    QLabel *labelApprovalYe;
     QWidget *page_2;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_5;
@@ -77,9 +77,9 @@ public:
     QPushButton *btnUserLast;
     QLabel *labelUserPage;
     QPushButton *btnUserNext;
-    QLabel *label_3;
+    QLabel *labelUserGo;
     QLineEdit *lineEditUserPage;
-    QLabel *label_4;
+    QLabel *labelUserYe;
     QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *ApprovalProgressDialog)
@@ -134,8 +134,8 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         comboBoxDataField = new QComboBox(page);
         comboBoxDataField->setObjectName(QString::fromUtf8("comboBoxDataField"));
-        comboBoxDataField->setMinimumSize(QSize(0, 30));
-        comboBoxDataField->setMaximumSize(QSize(16777215, 30));
+        comboBoxDataField->setMinimumSize(QSize(0, 0));
+        comboBoxDataField->setMaximumSize(QSize(16777215, 16777215));
 
         horizontalLayout_2->addWidget(comboBoxDataField);
 
@@ -169,8 +169,6 @@ public:
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
-        btnDataQuery->setMinimumSize(QSize(90, 30));
-        btnDataQuery->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_2->addWidget(btnDataQuery);
 
@@ -218,10 +216,10 @@ public:
 
         horizontalLayout_3->addWidget(btnDataApprovalNext);
 
-        label_5 = new QLabel(page);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        labelApprovalGo = new QLabel(page);
+        labelApprovalGo->setObjectName(QString::fromUtf8("labelApprovalGo"));
 
-        horizontalLayout_3->addWidget(label_5);
+        horizontalLayout_3->addWidget(labelApprovalGo);
 
         lineEditDataApprovalPage = new QLineEdit(page);
         lineEditDataApprovalPage->setObjectName(QString::fromUtf8("lineEditDataApprovalPage"));
@@ -235,10 +233,10 @@ public:
 
         horizontalLayout_3->addWidget(lineEditDataApprovalPage);
 
-        label_6 = new QLabel(page);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        labelApprovalYe = new QLabel(page);
+        labelApprovalYe->setObjectName(QString::fromUtf8("labelApprovalYe"));
 
-        horizontalLayout_3->addWidget(label_6);
+        horizontalLayout_3->addWidget(labelApprovalYe);
 
 
         verticalLayout->addLayout(horizontalLayout_3);
@@ -258,8 +256,6 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(comboBoxUserField->sizePolicy().hasHeightForWidth());
         comboBoxUserField->setSizePolicy(sizePolicy1);
-        comboBoxUserField->setMinimumSize(QSize(0, 30));
-        comboBoxUserField->setMaximumSize(QSize(16777215, 30));
 
         horizontalLayout_5->addWidget(comboBoxUserField);
 
@@ -295,8 +291,6 @@ public:
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
-        btnUserQuery->setMinimumSize(QSize(90, 30));
-        btnUserQuery->setMaximumSize(QSize(90, 30));
 
         horizontalLayout_5->addWidget(btnUserQuery);
 
@@ -344,10 +338,10 @@ public:
 
         horizontalLayout_4->addWidget(btnUserNext);
 
-        label_3 = new QLabel(page_2);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        labelUserGo = new QLabel(page_2);
+        labelUserGo->setObjectName(QString::fromUtf8("labelUserGo"));
 
-        horizontalLayout_4->addWidget(label_3);
+        horizontalLayout_4->addWidget(labelUserGo);
 
         lineEditUserPage = new QLineEdit(page_2);
         lineEditUserPage->setObjectName(QString::fromUtf8("lineEditUserPage"));
@@ -356,10 +350,10 @@ public:
 
         horizontalLayout_4->addWidget(lineEditUserPage);
 
-        label_4 = new QLabel(page_2);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        labelUserYe = new QLabel(page_2);
+        labelUserYe->setObjectName(QString::fromUtf8("labelUserYe"));
 
-        horizontalLayout_4->addWidget(label_4);
+        horizontalLayout_4->addWidget(labelUserYe);
 
 
         verticalLayout_3->addLayout(horizontalLayout_4);
@@ -389,8 +383,8 @@ public:
         btnDataApprovalLast->setText(QString());
         labelDataApprovalPageShow->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
         btnDataApprovalNext->setText(QString());
-        label_5->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
-        label_6->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
+        labelApprovalGo->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
+        labelApprovalYe->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
         lineEditUserQueryValue->setText(QString());
         checkBox_2->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\227\245\346\234\237", nullptr));
         btnUserQuery->setText(QCoreApplication::translate("ApprovalProgressDialog", "\346\237\245\350\257\242", nullptr));
@@ -398,8 +392,8 @@ public:
         btnUserLast->setText(QString());
         labelUserPage->setText(QCoreApplication::translate("ApprovalProgressDialog", "1/1", nullptr));
         btnUserNext->setText(QString());
-        label_3->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
-        label_4->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
+        labelUserGo->setText(QCoreApplication::translate("ApprovalProgressDialog", "\345\211\215\345\276\200", nullptr));
+        labelUserYe->setText(QCoreApplication::translate("ApprovalProgressDialog", "\351\241\265", nullptr));
     } // retranslateUi
 
 };
