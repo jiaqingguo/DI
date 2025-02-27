@@ -103,6 +103,11 @@ void InformationConfihurationDialog::init()
 	ui->tableViewIP1->setModel(m_modelIP1);
 	common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
+	ui->tableViewTool1->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // 允许用户交互式调整列宽
+	ui->tableViewTool2->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+	ui->tableViewTool3->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+	ui->tableViewTool4->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+
 	ui->tableViewIP1->setShowGrid(false);
 	ui->tableViewTool1->setShowGrid(false);
 	ui->tableViewTool2->setShowGrid(false);
@@ -200,7 +205,7 @@ void InformationConfihurationDialog::init()
 	   connect(ui->btnIpDel4, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnIpDel);*/
 
 	ui->tableViewTool1->setMouseTracking(true);
-
+	ui->btnModule1->click();
 	connect(ui->tableViewTool1, SIGNAL(entered(QModelIndex)), this, SLOT(slot_tooltip(QModelIndex)));
 
 	connect(ui->btnModule1, &QPushButton::clicked, this, &InformationConfihurationDialog::slot_btnShowModule1);

@@ -26,7 +26,7 @@ class Ui_OneClickLoadDialog
 public:
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_9;
-    QTableView *tableView;
+    QTableView *tableViewOneLoad;
     QVBoxLayout *verticalLayout_9;
     QPushButton *btnAdd;
     QPushButton *btnDel;
@@ -47,10 +47,10 @@ public:
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(9, 9, 9, 9);
-        tableView = new QTableView(OneClickLoadDialog);
-        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableViewOneLoad = new QTableView(OneClickLoadDialog);
+        tableViewOneLoad->setObjectName(QString::fromUtf8("tableViewOneLoad"));
 
-        horizontalLayout_9->addWidget(tableView);
+        horizontalLayout_9->addWidget(tableViewOneLoad);
 
         verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
