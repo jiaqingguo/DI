@@ -414,6 +414,7 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 		if (item->text() == host)
 		{ // 假设我们想要更新以 "Row" 开头的项
 			item = m_model->item(row, 1);
+			item->setTextAlignment(Qt::AlignCenter); //设置文本居中对齐
 			item->setText(QString::number(dCpu) + QString(" %"));
 			item = m_model->item(row, 2);
 			item->setText(QString::number(dMemory) + QString(" %"));
