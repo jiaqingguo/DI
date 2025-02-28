@@ -287,23 +287,23 @@ FtpDialog QPushButton#pushButton{
 	border-image:url(:/image/btn_flush.png);
 }
 
+FtpClientWidget{
+	background-color: transparent;
+}
+
+
 FtpDialog QTableView{
 		border:none;
 		alternate-background-color: #eef2fb;
 		 background-color:#ffffff;
         }
 FtpDialog QTableView::item{
-	border:none;
-	background-color: transparent;
+		border:none;
+		background-color: transparent;
            }
 FtpDialog  QTableView::item:selected{
 		border-image:url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-	
-         
-}
-
-FtpClientWidget{
-	background-color: transparent;
+	     
 }
 
 /* 标题栏背景色 */
@@ -921,10 +921,9 @@ ResourceManageDialog QTableView#tableViewList{
     /*margin: 2px;   设置 QTableView 的外边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
-	background-image: url(:/image/CurveBackground.png) 10 10 10 10 stretch stretch;
+	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;
 	
-	background-size: contain; 
-	background-repeat: repeat;
+	
 	/*border: 1px solid white;
 	border-radius: 5px;*/
 }
