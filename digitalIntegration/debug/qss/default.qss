@@ -29,7 +29,8 @@ QWidget#widgetLeftMenu QPushButton#btnTitleIcon{
 /* ------------------------ QTreeWidget 菜单----------------------start*/
 QWidget#widgetLeftMenu QTreeWidget{
 	 background: transparent;
-	  border: none; /*           // 移除边框  */      
+	  border: none; /*           // 移除边框  */  
+  font-size:22px;	  
 }
 
 
@@ -37,7 +38,7 @@ QWidget#widgetLeftMenu QTreeWidget::item {
 		
            /*  background-color: #e0e0e0; 设置默认背景颜色 */
             color:white; /* 设置默认字体颜色 */
-           font-size:22px;
+           font-size:40px;
 			margin-right:0px;
 			 /*padding: 15px; 设置内边距 */
         }
@@ -47,7 +48,7 @@ QWidget#widgetLeftMenu QTreeWidget::item:hover {
         }
 QWidget#widgetLeftMenu QTreeWidget::item:selected {
             border-image: url(:/image/treeItem_background_select.png);  /* 设置选中时的背景图片 */
-			
+			color:3071f3;
              color: blue; /* 设置选中时的字体颜色 */
 			 border: none;
 			 outline: none; /* 去掉虚线框 */
@@ -277,7 +278,12 @@ QLabel#labelUserIcon{
 
 /* -----QTableView 的样式设置 */
 
-/*------------------------------------- FtpDialog-表格背景---------------------------------- */
+/*------------------------------------- FtpDialog---------------------------------- */
+
+FtpDialog QStackedWidget#stackedWidgetMain{
+	background-color: white;
+}
+
 FtpDialog QTableView{
 		border:none;
 		alternate-background-color: #eef2fb;
@@ -301,20 +307,27 @@ FtpClientWidget{
 FtpDialog QHeaderView::section {
 	border:none;
 	height: 20px; /* 设置标题栏高度 */
-    background-color: #7482a6; /* 191a25 标题栏背景色 */
-    color: white; /* 标题栏文字颜色 */
+    background-color: #eef2fb; /* 191a25 标题栏背景色 */
+	font-size:15px;
+    color: #7482a6; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
 
 
-/*------------------------------------ ApprovalProgressDialog------------ 表格背景------------- */
+/*------------------------------------ ApprovalProgressDialog------------ ------------- */
 
-QWidget#page{
+ApprovalProgressDialog QWidget#page{
 	background-color: transparent;
 }
 
 
+ApprovalProgressDialog QStackedWidget#stackedWidget{
+	background-color: white;
+}
+
 /*----------------------- 表格背景------------- */
+
+
 ApprovalProgressDialog QTableView{
 		border:none;
 		alternate-background-color: #eef2fb;
@@ -332,9 +345,10 @@ ApprovalProgressDialog  QTableView::item:selected{
 /* 标题栏背景色 */
 ApprovalProgressDialog QHeaderView::section {
 	border:none;
-	height: 50px; /* 设置标题栏高度 */
-    background-color: #7482a6; /* 191a25 标题栏背景色 */
-    color: white; /* 标题栏文字颜色 */
+	height: 20px; /* 设置标题栏高度 */
+    background-color: #eef2fb; /* 191a25 标题栏背景色 */
+	font-size:22px;
+    color: #7482a6; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
 
