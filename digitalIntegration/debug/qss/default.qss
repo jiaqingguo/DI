@@ -298,6 +298,7 @@ FtpDialog QTableView{
 		 background-color:#ffffff;
         }
 FtpDialog QTableView::item{
+height:25px;
 		border:none;
 		background-color: transparent;
            }
@@ -309,9 +310,9 @@ FtpDialog  QTableView::item:selected{
 /* 标题栏背景色 */
 FtpDialog QHeaderView::section {
 	border:none;
-	height: 20px; /* 设置标题栏高度 */
+		height: 30px; /* 设置标题栏高度 */
     background-color: #eef2fb; /* 191a25 标题栏背景色 */
-	font-size:15px;
+	font-size:18px;
     color: #7482a6; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
@@ -332,11 +333,13 @@ ApprovalProgressDialog QStackedWidget#stackedWidget{
 
 
 ApprovalProgressDialog QTableView{
+height: 30px;
 		border:none;
 		alternate-background-color: #eef2fb;
 		 background-color:#ffffff;
         }
 ApprovalProgressDialog QTableView::item{
+	
 	border:none;
 	background-color: transparent;
            }
@@ -348,9 +351,9 @@ ApprovalProgressDialog  QTableView::item:selected{
 /* 标题栏背景色 */
 ApprovalProgressDialog QHeaderView::section {
 	border:none;
-	height: 20px; /* 设置标题栏高度 */
+	height: 30px; /* 设置标题栏高度 */
     background-color: #eef2fb; /* 191a25 标题栏背景色 */
-	
+	font-size:17px;
     color: #7482a6; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
