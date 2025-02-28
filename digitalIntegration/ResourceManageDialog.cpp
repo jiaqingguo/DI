@@ -21,10 +21,10 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	setWindowIcon(QIcon(":/image/ResourceManage.png"));
 	
 	ui->tableViewList->setShowGrid(false);
-	ui->tableViewList->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 22px;color: #7482a6;}");
-	ui->tableViewList->horizontalHeader()->setFixedHeight(60);  // 设置表头高度为60像素
-	ui->tableViewList->verticalHeader()->setDefaultSectionSize(60);//设置每一行的高度为60
+	ui->tableViewList->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
+	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
+	ui->tableViewList->horizontalHeader()->setFixedHeight(50);  // 设置表头高度为50像素
+	ui->tableViewList->verticalHeader()->setDefaultSectionSize(50);//设置每一行的高度为50
 
 	// 创建自定义委托并设置到 QTableView
 	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewList);
