@@ -123,21 +123,21 @@ void InformationConfihurationDialog::init()
 	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
 	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
 
-	ui->tableViewTool1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewTool1->horizontalHeader()->setFixedHeight(50);  // 设置表头高度为50像素
-	ui->tableViewTool1->verticalHeader()->setDefaultSectionSize(50);//设置每一行的高度为50
-	ui->tableViewTool2->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewTool2->horizontalHeader()->setFixedHeight(50);
-	ui->tableViewTool2->verticalHeader()->setDefaultSectionSize(50);
-	ui->tableViewTool3->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewTool3->horizontalHeader()->setFixedHeight(50);
-	ui->tableViewTool3->verticalHeader()->setDefaultSectionSize(50);
-	ui->tableViewTool4->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewTool4->horizontalHeader()->setFixedHeight(50); 
-	ui->tableViewTool4->verticalHeader()->setDefaultSectionSize(50);
-	ui->tableViewIP1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewIP1->horizontalHeader()->setFixedHeight(50); 
-	ui->tableViewIP1->verticalHeader()->setDefaultSectionSize(50);
+	ui->tableViewTool1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewTool1->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为50像素
+	ui->tableViewTool1->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为50
+	ui->tableViewTool2->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewTool2->horizontalHeader()->setFixedHeight(45);
+	ui->tableViewTool2->verticalHeader()->setDefaultSectionSize(45);
+	ui->tableViewTool3->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewTool3->horizontalHeader()->setFixedHeight(45);
+	ui->tableViewTool3->verticalHeader()->setDefaultSectionSize(45);
+	ui->tableViewTool4->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewTool4->horizontalHeader()->setFixedHeight(45); 
+	ui->tableViewTool4->verticalHeader()->setDefaultSectionSize(45);
+	ui->tableViewIP1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewIP1->horizontalHeader()->setFixedHeight(45); 
+	ui->tableViewIP1->verticalHeader()->setDefaultSectionSize(45);
 
 	/*   m_modelIP2 = new QStandardItemModel();
 	   m_modelIP2->setColumnCount(2);
