@@ -26,6 +26,10 @@ FtpDialog::FtpDialog(QWidget *parent) :
     m_pUDP->init(54110);
     ui->stackedWidget->setCurrentIndex(0);
     ui->stackedWidgetMain->setCurrentIndex(0);
+
+
+    // 启用交替行背景色
+        ui->tableViewDownload->setAlternatingRowColors(true);
    
     ui->btnDownload->setCheckable(true);
    

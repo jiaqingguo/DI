@@ -94,6 +94,7 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	m_modelUser->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 	m_modelUser->setHeaderData(10, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 	ui->tableViewUser->setModel(m_modelUser);
+
 	common::setTableViewBasicConfiguration(ui->tableViewUser);
 	// ui->tableViewUser->verticalHeader()->setDefaultSectionSize(28);
 	ui->tableViewUser->verticalHeader()->setVisible(false);
