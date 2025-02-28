@@ -324,7 +324,7 @@ public:
         widgetIP = new QWidget(InformationConfihurationDialog);
         widgetIP->setObjectName(QString::fromUtf8("widgetIP"));
         widgetIP->setMinimumSize(QSize(0, 0));
-        widgetIP->setMaximumSize(QSize(300, 16777215));
+        widgetIP->setMaximumSize(QSize(350, 16777215));
         verticalLayout_2 = new QVBoxLayout(widgetIP);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(20, 20, 20, 20);

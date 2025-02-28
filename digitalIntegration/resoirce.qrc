@@ -83,5 +83,7 @@
         <file>image/page_last.png</file>
         <file>image/page_nect.png</file>
         <file>image/CurveComboBoxup.png</file>
+        <file>image/ProductionPrototype.png</file>
+        <file>image/ProductionPrototype_select.png</file>
     </qresource>
 </RCC>

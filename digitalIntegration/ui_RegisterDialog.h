@@ -33,20 +33,20 @@ public:
     QWidget *page;
     QGridLayout *gridLayout;
     QGridLayout *gridLayout_2;
-    QLabel *label_4;
+    QLabel *labelJobTtile;
     QLabel *labelUser;
     QLabel *labelPassword;
     QLineEdit *lineEditDepartment;
     QLineEdit *lineEditJobTtile;
-    QComboBox *comboBox;
+    QComboBox *comboBoxRoot;
     QLineEdit *lineEditPhoneNumber;
     QLineEdit *lineEditName;
-    QLabel *label_3;
-    QLabel *label_8;
+    QLabel *labelDepartment;
+    QLabel *labelRoot;
     QLabel *labelName;
     QLineEdit *lineEditUserName;
     QLineEdit *lineEditPassword;
-    QLabel *label_5;
+    QLabel *labelPhoneNum;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnRegister;
@@ -86,10 +86,10 @@ public:
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setHorizontalSpacing(10);
         gridLayout_2->setVerticalSpacing(15);
-        label_4 = new QLabel(page);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        labelJobTtile = new QLabel(page);
+        labelJobTtile->setObjectName(QString::fromUtf8("labelJobTtile"));
 
-        gridLayout_2->addWidget(label_4, 4, 0, 1, 1);
+        gridLayout_2->addWidget(labelJobTtile, 4, 0, 1, 1);
 
         labelUser = new QLabel(page);
         labelUser->setObjectName(QString::fromUtf8("labelUser"));
@@ -113,13 +113,13 @@ public:
 
         gridLayout_2->addWidget(lineEditJobTtile, 4, 1, 1, 1);
 
-        comboBox = new QComboBox(page);
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setMinimumSize(QSize(0, 0));
+        comboBoxRoot = new QComboBox(page);
+        comboBoxRoot->addItem(QString());
+        comboBoxRoot->addItem(QString());
+        comboBoxRoot->setObjectName(QString::fromUtf8("comboBoxRoot"));
+        comboBoxRoot->setMinimumSize(QSize(0, 0));
 
-        gridLayout_2->addWidget(comboBox, 6, 1, 1, 1);
+        gridLayout_2->addWidget(comboBoxRoot, 6, 1, 1, 1);
 
         lineEditPhoneNumber = new QLineEdit(page);
         lineEditPhoneNumber->setObjectName(QString::fromUtf8("lineEditPhoneNumber"));
@@ -133,15 +133,15 @@ public:
 
         gridLayout_2->addWidget(lineEditName, 2, 1, 1, 1);
 
-        label_3 = new QLabel(page);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        labelDepartment = new QLabel(page);
+        labelDepartment->setObjectName(QString::fromUtf8("labelDepartment"));
 
-        gridLayout_2->addWidget(label_3, 3, 0, 1, 1);
+        gridLayout_2->addWidget(labelDepartment, 3, 0, 1, 1);
 
-        label_8 = new QLabel(page);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
+        labelRoot = new QLabel(page);
+        labelRoot->setObjectName(QString::fromUtf8("labelRoot"));
 
-        gridLayout_2->addWidget(label_8, 6, 0, 1, 1);
+        gridLayout_2->addWidget(labelRoot, 6, 0, 1, 1);
 
         labelName = new QLabel(page);
         labelName->setObjectName(QString::fromUtf8("labelName"));
@@ -160,10 +160,10 @@ public:
 
         gridLayout_2->addWidget(lineEditPassword, 1, 1, 1, 1);
 
-        label_5 = new QLabel(page);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        labelPhoneNum = new QLabel(page);
+        labelPhoneNum->setObjectName(QString::fromUtf8("labelPhoneNum"));
 
-        gridLayout_2->addWidget(label_5, 5, 0, 1, 1);
+        gridLayout_2->addWidget(labelPhoneNum, 5, 0, 1, 1);
 
 
         gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
@@ -264,16 +264,16 @@ public:
     void retranslateUi(QDialog *RegisterDialog)
     {
         RegisterDialog->setWindowTitle(QCoreApplication::translate("RegisterDialog", "Dialog", nullptr));
-        label_4->setText(QCoreApplication::translate("RegisterDialog", "\350\201\214\344\275\215", nullptr));
+        labelJobTtile->setText(QCoreApplication::translate("RegisterDialog", "\350\201\214\344\275\215", nullptr));
         labelUser->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\347\224\250\346\210\267\345\220\215<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         labelPassword->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\345\257\206\347\240\201<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
-        comboBox->setItemText(0, QCoreApplication::translate("RegisterDialog", "\347\256\241\347\220\206\345\221\230", nullptr));
-        comboBox->setItemText(1, QCoreApplication::translate("RegisterDialog", "\346\231\256\351\200\232\347\224\250\346\210\267", nullptr));
+        comboBoxRoot->setItemText(0, QCoreApplication::translate("RegisterDialog", "\347\256\241\347\220\206\345\221\230", nullptr));
+        comboBoxRoot->setItemText(1, QCoreApplication::translate("RegisterDialog", "\346\231\256\351\200\232\347\224\250\346\210\267", nullptr));
 
-        label_3->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\351\203\250\351\227\250</p></body></html>", nullptr));
-        label_8->setText(QCoreApplication::translate("RegisterDialog", "\346\235\203\351\231\220", nullptr));
+        labelDepartment->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\351\203\250\351\227\250</p></body></html>", nullptr));
+        labelRoot->setText(QCoreApplication::translate("RegisterDialog", "\346\235\203\351\231\220", nullptr));
         labelName->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\344\275\277\347\224\250\344\272\272<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
-        label_5->setText(QCoreApplication::translate("RegisterDialog", "\346\211\213\346\234\272\345\217\267", nullptr));
+        labelPhoneNum->setText(QCoreApplication::translate("RegisterDialog", "\346\211\213\346\234\272\345\217\267", nullptr));
         btnRegister->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214", nullptr));
         label_7->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214\346\214\207\347\272\271", nullptr));
         labelFingerprint->setText(QString());
