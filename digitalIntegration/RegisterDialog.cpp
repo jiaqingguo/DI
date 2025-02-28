@@ -38,8 +38,8 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	QMetaObject::Connection conn = connect(ui->btnRegister, &QPushButton::clicked, this, &RegisterDialog::slot_btnRegister);
 	//connect(ui->btnFingerprintInput, &QPushButton::clicked, this, &RegisterDialog::slot_btnFingerprintInput);
 
-	ui->comboBox->setCurrentIndex(1);
-	ui->comboBox->setEnabled(false);
+	ui->comboBoxRoot->setCurrentIndex(1);
+	ui->comboBoxRoot->setEnabled(false);
 
 	//init_ui();
 }
@@ -71,7 +71,7 @@ void RegisterDialog::slot_btnRegister()
 	db::databaseDI::Instance().get_user(stTemp, common::stUser.UserName);
 	if (stTemp.UserName.empty())
 	{
-		if (ui->comboBox->currentIndex() == 0)
+		if (ui->comboBoxRoot->currentIndex() == 0)
 		{
 			common::stUser.Pop = 0;
 
@@ -115,7 +115,7 @@ void RegisterDialog::slot_btnRegister()
 		}
 		if (stTemp.approval == 2) // 已经驳回的用户名 再次注册
 		{
-			if (ui->comboBox->currentIndex() == 0)
+			if (ui->comboBoxRoot->currentIndex() == 0)
 			{
 				common::stUser.Pop = 0;
 
@@ -207,6 +207,6 @@ void RegisterDialog::init_ui()
 	ui->lineEditDepartment->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditJobTtile->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditPhoneNumber->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
-	ui->comboBox->setStyleSheet("QComboBox { border: 1px solid gray; border-radius: 5px; }");
+	ui->comboBoxRoot->setStyleSheet("QComboBox { border: 1px solid gray; border-radius: 5px; }");
 	ui->btnRegister->setStyleSheet("QPushButton { color: white; border: 0.5px solid gray;border-radius: 10px;background-color: rgb(10, 135, 250)}");
 }

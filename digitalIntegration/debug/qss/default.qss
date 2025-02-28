@@ -629,6 +629,9 @@ LoginDialog QPushButton#btnRegister {
 /* ------------------------登录页面----------------------end*/
 
 /* ------------------------修改密码页面----------------------start*/
+ChangePwdDialog QWidget#page {
+	background-color:white;
+}
 ChangePwdDialog QLabel#labelUser{
 	font-size: 20px;
 	color: #484f7a;
@@ -679,31 +682,10 @@ ChangePwdDialog QPushButton#btnModify{
 /* ------------------------修改密码页面----------------------end*/
 
 /* ------------------------注册页面----------------------start*/
-RegisterDialog QLabel#labelUser{
-	font-size: 20px;
-	color: #484f7a;
+RegisterDialog QWidget#page {
+	background-color:white;
 }
-RegisterDialog QLabel#labelPassword{
-	font-size: 20px;
-	color: #484f7a;
-}
-RegisterDialog QLabel#labelName{
-	font-size: 20px;
-	color: #484f7a;
-}
-RegisterDialog QLabel#label_3{
-	font-size: 20px;
-	color: #484f7a;
-}
-RegisterDialog QLabel#label_4{
-	font-size: 20px;
-	color: #484f7a;
-}
-RegisterDialog QLabel#label_5{
-	font-size: 20px;
-	color: #484f7a;
-}
-RegisterDialog QLabel#label_8{
+RegisterDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelName ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot{ 
 	font-size: 20px;
 	color: #484f7a;
 }
@@ -743,7 +725,7 @@ RegisterDialog QLineEdit#lineEditPhoneNumber{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-RegisterDialog QComboBox#comboBox{
+RegisterDialog QComboBox#comboBoxRoot{
 	font-size: 20px;
 	color: #abadb2;
 	border: 1px solid gray;

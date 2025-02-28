@@ -60,7 +60,7 @@
           <number>15</number>
          </property>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="labelJobTtile">
            <property name="text">
             <string>职位</string>
            </property>
@@ -101,7 +101,7 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="comboBoxRoot">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -141,14 +141,14 @@
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="labelDepartment">
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;部门&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QLabel" name="label_8">
+          <widget class="QLabel" name="labelRoot">
            <property name="text">
             <string>权限</string>
            </property>
@@ -182,7 +182,7 @@
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="labelPhoneNum">
            <property name="text">
             <string>手机号</string>
            </property>
