@@ -22,9 +22,9 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	
 	ui->tableViewList->setShowGrid(false);
 	ui->tableViewList->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
-	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 21px;color: #7482a6;}");
-	ui->tableViewList->horizontalHeader()->setFixedHeight(50);  // 设置表头高度为50像素
-	ui->tableViewList->verticalHeader()->setDefaultSectionSize(50);//设置每一行的高度为50
+	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewList->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为50像素
+	ui->tableViewList->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为50
 
 	// 创建自定义委托并设置到 QTableView
 	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewList);
@@ -414,13 +414,11 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 		if (item->text() == host)
 		{ // 假设我们想要更新以 "Row" 开头的项
 			item = m_model->item(row, 1);
-			item->setTextAlignment(Qt::AlignCenter); //设置文本居中对齐
 			item->setText(QString::number(dCpu) + QString(" %"));
 			item = m_model->item(row, 2);
 			item->setText(QString::number(dMemory) + QString(" %"));
 			item = m_model->item(row, 3);
 			item->setText(QString::number(dDisk) + QString(" %"));
-
 			item = m_model->item(row, 4);
 			QString netData = "Kbps";
 			if (dNet > 1024)
@@ -433,7 +431,6 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 			{
 				item->setText(QString::number(dNet) + netData);
 			}
-
 			item = m_model->item(row, 5);
 			item->setText(QString::number(dGpu) + QString(" %"));
 			return;

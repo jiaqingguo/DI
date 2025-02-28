@@ -598,7 +598,7 @@ QPushButton#btnUserNext{
 	border-image:url(:/image/page_nect.png);	
 }
 QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end{
-	font-size: 18px;
+	font-size: 14px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -608,6 +608,10 @@ QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_star
 }
 QDateTimeEdit#dateTimeEdit1_start::up-button ,QDateTimeEdit#dateTimeEdit3_start::up-button ,QDateTimeEdit#dateTimeEdit2_end::up-button ,QDateTimeEdit#dateTimeEdit4_end::up-button{
 	image: url(:/image/CurveComboBoxup.png);
+}
+QCheckBox#checkBox_1 ,QCheckBox#checkBox_2{
+	font-size: 14px;
+	color: #000000;
 }
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
@@ -1008,5 +1012,18 @@ QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#table
 QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderView::section ,QTableView#tableViewTool2 QHeaderView::section ,QTableView#tableViewTool3 QHeaderView::section ,QTableView#tableViewTool4 QHeaderView::section ,QTableView#tableViewList QHeaderView::section ,QTableView#tableViewOneLoad QHeaderView::section{
 	border:none;
     background-image: url(:/image/listBackground.png); 
+}
+QTableView#tableViewIP1 QScrollBar:vertical ,QTableView#tableViewTool1 QScrollBar:vertical ,QTableView#tableViewTool2 QScrollBar:vertical ,QTableView#tableViewTool3 QScrollBar:vertical ,QTableView#tableViewTool4 QScrollBar:vertical ,QTableView#tableViewOneLoad QScrollBar:vertical{
+	background-color: #eaf1fe; /*  设置垂直滚动条背景透明 内部 */
+	width: 8px; 
+}
+QTableView#tableViewIP1 QScrollBar::handle:vertical ,QTableView#tableViewTool1 QScrollBar::handle:vertical ,QTableView#tableViewTool2 QScrollBar::handle:vertical ,QTableView#tableViewTool3 QScrollBar::handle:vertical ,QTableView#tableViewTool4 QScrollBar::handle:vertical ,QTableView#tableViewOneLoad QScrollBar::handle:vertical{
+	background: #c3d2f0; /*设置滚动条手柄颜色（半透明白色） */
+	min-height: 40px; /* 设置滑块的最小长度 */
+	border-radius: 3px;/*  设置圆角 */ 
+	
+}
+QTableView#tableViewIP1 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool1 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool2 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool3 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool4 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewOneLoad QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
+	background: transparent; /*  设置上下箭头区域透明 */  
 }
 /* ------------------------信息配置页面----------------------end*/
