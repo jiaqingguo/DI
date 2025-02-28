@@ -942,9 +942,15 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
+/*ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
 {
     image: url(:/image/CurveComboBox.png);
+}*/
+ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView
+{
+    border: none; /* 取消边框 */
+    background-color: white; /* 可选：设置下拉框的背景颜色 */
+    /*selection-background-color: skyblue; 可选：设置选中项的背景颜色 */
 }
 /* ------------------------资源管理页面----------------------end*/
 

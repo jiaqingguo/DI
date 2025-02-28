@@ -55,8 +55,15 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	// 设置列宽可拖动
 	  // 设置表格填满父窗口
-	ui->tableView->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	//ui->tableView->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+
 	ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // 允许用户交互式调整列宽
+	// 设置所有列的默认调整模式为固定宽度
+	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+	// 设置第4列自动拉伸
+	ui->tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+	ui->tableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
+	ui->tableView->horizontalHeader()->setSectionResizeMode(8, QHeaderView::Stretch);
 	//ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	//ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);   // 选择整行
 	//ui->tableView->verticalHeader()->setDefaultSectionSize(28);
