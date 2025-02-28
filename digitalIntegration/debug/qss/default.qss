@@ -973,7 +973,7 @@ InformationConfihurationDialog QLabel#labelIPList ,QLabel#labelToolList1 ,QLabel
 	background-repeat: no-repeat;
     background-position: left center;
 	padding-left: 7px;
-	font-size: 28px;
+	font-size: 24px;
 	color: #191a25;
 }
 InformationConfihurationDialog QPushButton#btnToolAdd1 ,QPushButton#btnToolAdd2 ,QPushButton#btnToolAdd3 ,QPushButton#btnToolAdd4{
