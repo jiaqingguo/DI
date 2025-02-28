@@ -386,18 +386,18 @@ void MainWindow::initTreeMenu()
 	m_pGeometryPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("几何样机")));
 	m_pGeometryPrototypeNode->setSizeHint(0, QSize(75, 75));
 	m_pGeometryPrototypeNode->setData(0, Qt::UserRole+2, 5);
-	m_pFunctionPrototypeNode->setFont(0, font1);
+	m_pGeometryPrototypeNode->setFont(0, font1);
 
 
 	m_pPerformancePrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("性能样机")));
 	m_pPerformancePrototypeNode->setSizeHint(0, QSize(75, 75));
 	m_pPerformancePrototypeNode->setData(0, Qt::UserRole+2, 6);
-	m_pFunctionPrototypeNode->setFont(0, font1);
+	m_pPerformancePrototypeNode->setFont(0, font1);
 
 	m_pProductionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("生产样机")));
 	m_pProductionPrototypeNode->setSizeHint(0, QSize(75, 75));
 	m_pProductionPrototypeNode->setData(0, Qt::UserRole+2, 7);
-	m_pFunctionPrototypeNode->setFont(0, font1);
+	m_pProductionPrototypeNode->setFont(0, font1);
 	// 设置图标
 	//; // 使用资源文件中的图标，或者替换为实际路径
 	m_pFunctionNode->setIcon(0, QIcon(":/image/function.png"));
