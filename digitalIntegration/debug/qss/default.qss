@@ -278,10 +278,13 @@ QLabel#labelUserIcon{
 
 /* -----QTableView 的样式设置 */
 
-/*------------------------------------- FtpDialog---------------------------------- */
+/*------------------------------------- FtpDialog 界面---------------------------------- */
 
 FtpDialog QStackedWidget#stackedWidgetMain{
 	background-color: white;
+}
+FtpDialog QPushButton#pushButton{
+	border-image:url(:/image/btn_flush.png);
 }
 
 FtpDialog QTableView{
@@ -347,7 +350,7 @@ ApprovalProgressDialog QHeaderView::section {
 	border:none;
 	height: 20px; /* 设置标题栏高度 */
     background-color: #eef2fb; /* 191a25 标题栏背景色 */
-	font-size:22px;
+	
     color: #7482a6; /* 标题栏文字颜色 */
     padding: 5px; /* 标题栏内边距 */
 }
@@ -918,7 +921,8 @@ ResourceManageDialog QTableView#tableViewList{
     /*margin: 2px;   设置 QTableView 的外边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
-	background-image: url(:/image/CurveBackground.png);
+	background-image: url(:/image/CurveBackground.png) 10 10 10 10 stretch stretch;
+	
 	background-size: contain; 
 	background-repeat: repeat;
 	/*border: 1px solid white;
@@ -984,10 +988,14 @@ QTableView#tableViewIP1 ,QTableView#tableViewTool1 ,QTableView#tableViewTool2 ,Q
 	background-color:#ffffff;
 }
 QWidget#widgetIP{
+	radius:45px;
+	border-image: url(:/image/IpListBackGround.png) 20 20 30 30 stretch stretch;
+	
 }
 QTableView#tableViewIP1::item ,QTableView#tableViewTool1::item ,QTableView#tableViewTool2::item ,QTableView#tableViewTool3::item ,QTableView#tableViewTool4::item ,QTableView#tableViewList::item{
 	border:none;
 	background-color: transparent;
+	
 }
 QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderView::section ,QTableView#tableViewTool2 QHeaderView::section ,QTableView#tableViewTool3 QHeaderView::section ,QTableView#tableViewTool4 QHeaderView::section ,QTableView#tableViewList QHeaderView::section ,QTableView#tableViewOneLoad QHeaderView::section{
 	border:none;
