@@ -17,6 +17,9 @@
    <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item row="0" column="0">
     <widget class="QWidget" name="widget_4" native="true">
      <property name="minimumSize">
@@ -93,7 +96,7 @@
    <item row="1" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageList">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -149,9 +152,33 @@
        <item row="0" column="0">
         <widget class="QWidget" name="widget_2" native="true">
          <layout class="QGridLayout" name="gridLayout_10">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QWidget" name="widget_3" native="true">
             <layout class="QGridLayout" name="gridLayout_5">
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>40</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
@@ -184,7 +211,20 @@
              </item>
              <item row="1" column="0" colspan="4">
               <widget class="QWidget" name="widgetCpu" native="true">
-               <layout class="QGridLayout" name="gridLayout_11"/>
+               <layout class="QGridLayout" name="gridLayout_11">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -193,6 +233,15 @@
           <item row="0" column="1">
            <widget class="QWidget" name="widget_5" native="true">
             <layout class="QGridLayout" name="gridLayout_6">
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>40</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
@@ -225,7 +274,20 @@
              </item>
              <item row="1" column="0" colspan="4">
               <widget class="QWidget" name="widgetMemory" native="true">
-               <layout class="QGridLayout" name="gridLayout_12"/>
+               <layout class="QGridLayout" name="gridLayout_12">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -234,6 +296,15 @@
           <item row="0" column="2">
            <widget class="QWidget" name="widget_6" native="true">
             <layout class="QGridLayout" name="gridLayout_7">
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>40</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
@@ -266,7 +337,20 @@
              </item>
              <item row="1" column="0" colspan="4">
               <widget class="QWidget" name="widgetDisk" native="true">
-               <layout class="QGridLayout" name="gridLayout_13"/>
+               <layout class="QGridLayout" name="gridLayout_13">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -275,6 +359,15 @@
           <item row="1" column="0">
            <widget class="QWidget" name="widget_7" native="true">
             <layout class="QGridLayout" name="gridLayout_8">
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>40</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label_7">
                <property name="text">
@@ -307,7 +400,20 @@
              </item>
              <item row="1" column="0" colspan="4">
               <widget class="QWidget" name="widgetNet" native="true">
-               <layout class="QGridLayout" name="gridLayout_14"/>
+               <layout class="QGridLayout" name="gridLayout_14">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -316,6 +422,15 @@
           <item row="1" column="1">
            <widget class="QWidget" name="widget_8" native="true">
             <layout class="QGridLayout" name="gridLayout_9">
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>40</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label_9">
                <property name="text">
@@ -348,7 +463,20 @@
              </item>
              <item row="1" column="0" colspan="4">
               <widget class="QWidget" name="widgetGpu" native="true">
-               <layout class="QGridLayout" name="gridLayout_15"/>
+               <layout class="QGridLayout" name="gridLayout_15">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>

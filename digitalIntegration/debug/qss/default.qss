@@ -280,6 +280,13 @@ QLabel#labelUserIcon{
 
 /*------------------------------------- FtpDialog 界面---------------------------------- */
 
+
+QMenu {
+    background-color: #eef2fb;
+    border: 2px solid #0078d7;
+   
+}
+
 FtpDialog QStackedWidget#stackedWidgetMain{
 	background-color: white;
 }
@@ -295,22 +302,22 @@ FtpClientWidget{
 FtpDialog QTableView{
 		border:none;
 		alternate-background-color: #eef2fb;
-		 background-color:#ffffff;
-        }
+		background-color:#ffffff;
+    }
 FtpDialog QTableView::item{
-height:25px;
+		height:25px;
 		border:none;
 		background-color: transparent;
            }
 FtpDialog  QTableView::item:selected{
-		border-image:url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-	     
+		/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
+	     background-color:#a7cdff;
 }
 
 /* 标题栏背景色 */
 FtpDialog QHeaderView::section {
 	border:none;
-		height: 30px; /* 设置标题栏高度 */
+	height: 30px; /* 设置标题栏高度 */
     background-color: #eef2fb; /* 191a25 标题栏背景色 */
 	font-size:18px;
     color: #7482a6; /* 标题栏文字颜色 */
@@ -344,9 +351,8 @@ ApprovalProgressDialog QTableView::item{
 	background-color: transparent;
            }
 ApprovalProgressDialog  QTableView::item:selected{
-		border-image:url(:/image/tableViewItem_select.png); /* 选中行的背景图 */
-	
-         
+		/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
+	     background-color:#a7cdff;
 }
 /* 标题栏背景色 */
 ApprovalProgressDialog QHeaderView::section {
@@ -605,9 +611,11 @@ QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTime
 }
 QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_start::down-button ,QDateTimeEdit#dateTimeEdit2_end::down-button ,QDateTimeEdit#dateTimeEdit4_end::down-button{
 	image: url(:/image/CurveComboBox.png);
+	margin:2px;
 }
 QDateTimeEdit#dateTimeEdit1_start::up-button ,QDateTimeEdit#dateTimeEdit3_start::up-button ,QDateTimeEdit#dateTimeEdit2_end::up-button ,QDateTimeEdit#dateTimeEdit4_end::up-button{
 	image: url(:/image/CurveComboBoxup.png);
+	margin:2px;
 }
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
@@ -925,7 +933,6 @@ ResourceManageDialog QTableView#tableViewList{
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
 	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;
-	
 	
 	/*border: 1px solid white;
 	border-radius: 5px;*/
