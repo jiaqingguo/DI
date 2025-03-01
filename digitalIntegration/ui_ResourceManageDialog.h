@@ -187,7 +187,7 @@ public:
         widgetCpu->setObjectName(QString::fromUtf8("widgetCpu"));
         gridLayout_11 = new QGridLayout(widgetCpu);
         gridLayout_11->setObjectName(QString::fromUtf8("gridLayout_11"));
-        gridLayout_11->setContentsMargins(0, 0, 0, 0);
+        gridLayout_11->setContentsMargins(13, 35, 28, 0);
 
         gridLayout_5->addWidget(widgetCpu, 1, 0, 1, 4);
 
@@ -198,7 +198,7 @@ public:
         widget_5->setObjectName(QString::fromUtf8("widget_5"));
         gridLayout_6 = new QGridLayout(widget_5);
         gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
-        gridLayout_6->setContentsMargins(30, -1, 30, 40);
+        gridLayout_6->setContentsMargins(30, 9, 30, 40);
         label_3 = new QLabel(widget_5);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
@@ -222,7 +222,7 @@ public:
         widgetMemory->setObjectName(QString::fromUtf8("widgetMemory"));
         gridLayout_12 = new QGridLayout(widgetMemory);
         gridLayout_12->setObjectName(QString::fromUtf8("gridLayout_12"));
-        gridLayout_12->setContentsMargins(0, 0, 0, 0);
+        gridLayout_12->setContentsMargins(13, 35, 28, 0);
 
         gridLayout_6->addWidget(widgetMemory, 1, 0, 1, 4);
 
@@ -257,7 +257,7 @@ public:
         widgetDisk->setObjectName(QString::fromUtf8("widgetDisk"));
         gridLayout_13 = new QGridLayout(widgetDisk);
         gridLayout_13->setObjectName(QString::fromUtf8("gridLayout_13"));
-        gridLayout_13->setContentsMargins(0, 0, 0, 0);
+        gridLayout_13->setContentsMargins(13, 35, 28, 0);
 
         gridLayout_7->addWidget(widgetDisk, 1, 0, 1, 4);
 
@@ -292,7 +292,7 @@ public:
         widgetNet->setObjectName(QString::fromUtf8("widgetNet"));
         gridLayout_14 = new QGridLayout(widgetNet);
         gridLayout_14->setObjectName(QString::fromUtf8("gridLayout_14"));
-        gridLayout_14->setContentsMargins(0, 0, 0, 0);
+        gridLayout_14->setContentsMargins(13, 35, 28, 0);
 
         gridLayout_8->addWidget(widgetNet, 1, 0, 1, 4);
 
@@ -327,7 +327,7 @@ public:
         widgetGpu->setObjectName(QString::fromUtf8("widgetGpu"));
         gridLayout_15 = new QGridLayout(widgetGpu);
         gridLayout_15->setObjectName(QString::fromUtf8("gridLayout_15"));
-        gridLayout_15->setContentsMargins(0, 0, 0, 0);
+        gridLayout_15->setContentsMargins(13, 35, 28, 0);
 
         gridLayout_9->addWidget(widgetGpu, 1, 0, 1, 4);
 

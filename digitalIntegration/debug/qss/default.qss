@@ -858,23 +858,9 @@ AddToolInfoDialog QLineEdit#lineEdit{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-AddToolInfoDialog QComboBox#IpcomboBox1{
+AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
 	font-size: 20px;
 	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-AddToolInfoDialog QComboBox#IpcomboBox2{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-AddToolInfoDialog QComboBox#IpcomboBox3{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
 AddToolInfoDialog QPushButton#btnChooseImage{
 	font-size: 20px;
@@ -902,23 +888,9 @@ AddToolDialog QLineEdit#lineEditTabName{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-AddToolDialog QComboBox#comboBoxDisplayMode{
+AddToolDialog QComboBox#comboBoxDisplayMode ,QComboBox#comboBoxHost ,QComboBox#comboBoxToolNames{ 
 	font-size: 18px;
 	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-AddToolDialog QComboBox#comboBoxHost{
-	font-size: 18px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-AddToolDialog QComboBox#comboBoxToolNames{
-	font-size: 18px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
 AddToolDialog QPushButton#btnAdd{
 	font-size: 24px;
@@ -987,9 +959,12 @@ ResourceManageDialog QLabel#label_2 ,QLabel#label_4 ,QLabel#label_6 ,QLabel#labe
 ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBox4 ,QComboBox#comboBox5{
 	font-size: 18px;
 	color: #7c88a6;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
+
+ResourceManageDialog QWidget#widgetCpu ,QWidget#widgetMemory ,QWidget#widgetNet ,QWidget#widgetDisk ,QWidget#widgetGpu{
+
+}
+
 /*ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
 {
     image: url(:/image/CurveComboBox.png);
@@ -998,7 +973,7 @@ ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 
 {
     border: none; /* 取消边框 */
     background-color: white; /* 可选：设置下拉框的背景颜色 */
-    /*selection-background-color: skyblue; 可选：设置选中项的背景颜色 */
+    selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
 }
 /* ------------------------资源管理页面----------------------end*/
 
@@ -1060,8 +1035,8 @@ QTableView#tableViewIP1 QScrollBar::handle:vertical ,QTableView#tableViewTool1 Q
 	background: #eaf1ff; /*  // 设置滚动条手柄颜色（半透明白色） */
 	border-radius: 3px;                  /*  设置圆角 */ 
 	min-height: 20px
-	}
+}
 QTableView#tableViewIP1 QScrollBar::add-line:vertical, ,QScrollBar::sub-line:vertical ,QTableView#tableViewTool1 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool2 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool3 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool4 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
-	   background: transparent; /*  设置上下箭头区域透明 */  
-	}
+	background: transparent; /*  设置上下箭头区域透明 */  
+}
 /* ------------------------信息配置页面----------------------end*/
