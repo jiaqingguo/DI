@@ -91,7 +91,7 @@ public:
     {
         if (ResourceManageDialog->objectName().isEmpty())
             ResourceManageDialog->setObjectName(QString::fromUtf8("ResourceManageDialog"));
-        ResourceManageDialog->resize(905, 669);
+        ResourceManageDialog->resize(1076, 702);
         ResourceManageDialog->setStyleSheet(QString::fromUtf8(""));
         gridLayout_3 = new QGridLayout(ResourceManageDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
@@ -163,7 +163,8 @@ public:
         widget_3->setObjectName(QString::fromUtf8("widget_3"));
         gridLayout_5 = new QGridLayout(widget_3);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        gridLayout_5->setContentsMargins(30, -1, 30, 40);
+        gridLayout_5->setVerticalSpacing(10);
+        gridLayout_5->setContentsMargins(30, 19, 39, 40);
         label = new QLabel(widget_3);
         label->setObjectName(QString::fromUtf8("label"));
 
@@ -180,6 +181,12 @@ public:
 
         comboBox1 = new QComboBox(widget_3);
         comboBox1->setObjectName(QString::fromUtf8("comboBox1"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(comboBox1->sizePolicy().hasHeightForWidth());
+        comboBox1->setSizePolicy(sizePolicy);
+        comboBox1->setMinimumSize(QSize(100, 0));
 
         gridLayout_5->addWidget(comboBox1, 0, 3, 1, 1);
 
@@ -187,7 +194,7 @@ public:
         widgetCpu->setObjectName(QString::fromUtf8("widgetCpu"));
         gridLayout_11 = new QGridLayout(widgetCpu);
         gridLayout_11->setObjectName(QString::fromUtf8("gridLayout_11"));
-        gridLayout_11->setContentsMargins(13, 35, 28, 0);
+        gridLayout_11->setContentsMargins(0, 0, 0, 0);
 
         gridLayout_5->addWidget(widgetCpu, 1, 0, 1, 4);
 
@@ -198,7 +205,8 @@ public:
         widget_5->setObjectName(QString::fromUtf8("widget_5"));
         gridLayout_6 = new QGridLayout(widget_5);
         gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
-        gridLayout_6->setContentsMargins(30, 9, 30, 40);
+        gridLayout_6->setVerticalSpacing(10);
+        gridLayout_6->setContentsMargins(30, 19, 39, 40);
         label_3 = new QLabel(widget_5);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
@@ -215,6 +223,9 @@ public:
 
         comboBox2 = new QComboBox(widget_5);
         comboBox2->setObjectName(QString::fromUtf8("comboBox2"));
+        sizePolicy.setHeightForWidth(comboBox2->sizePolicy().hasHeightForWidth());
+        comboBox2->setSizePolicy(sizePolicy);
+        comboBox2->setMinimumSize(QSize(100, 0));
 
         gridLayout_6->addWidget(comboBox2, 0, 3, 1, 1);
 
@@ -222,7 +233,7 @@ public:
         widgetMemory->setObjectName(QString::fromUtf8("widgetMemory"));
         gridLayout_12 = new QGridLayout(widgetMemory);
         gridLayout_12->setObjectName(QString::fromUtf8("gridLayout_12"));
-        gridLayout_12->setContentsMargins(13, 35, 28, 0);
+        gridLayout_12->setContentsMargins(0, 0, 0, 0);
 
         gridLayout_6->addWidget(widgetMemory, 1, 0, 1, 4);
 
@@ -233,7 +244,8 @@ public:
         widget_6->setObjectName(QString::fromUtf8("widget_6"));
         gridLayout_7 = new QGridLayout(widget_6);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
-        gridLayout_7->setContentsMargins(30, -1, 30, 40);
+        gridLayout_7->setVerticalSpacing(10);
+        gridLayout_7->setContentsMargins(30, 19, 39, 40);
         label_5 = new QLabel(widget_6);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
@@ -250,6 +262,9 @@ public:
 
         comboBox3 = new QComboBox(widget_6);
         comboBox3->setObjectName(QString::fromUtf8("comboBox3"));
+        sizePolicy.setHeightForWidth(comboBox3->sizePolicy().hasHeightForWidth());
+        comboBox3->setSizePolicy(sizePolicy);
+        comboBox3->setMinimumSize(QSize(100, 0));
 
         gridLayout_7->addWidget(comboBox3, 0, 3, 1, 1);
 
@@ -257,7 +272,7 @@ public:
         widgetDisk->setObjectName(QString::fromUtf8("widgetDisk"));
         gridLayout_13 = new QGridLayout(widgetDisk);
         gridLayout_13->setObjectName(QString::fromUtf8("gridLayout_13"));
-        gridLayout_13->setContentsMargins(13, 35, 28, 0);
+        gridLayout_13->setContentsMargins(0, 0, 0, 0);
 
         gridLayout_7->addWidget(widgetDisk, 1, 0, 1, 4);
 
@@ -268,7 +283,8 @@ public:
         widget_7->setObjectName(QString::fromUtf8("widget_7"));
         gridLayout_8 = new QGridLayout(widget_7);
         gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
-        gridLayout_8->setContentsMargins(30, -1, 30, 40);
+        gridLayout_8->setVerticalSpacing(10);
+        gridLayout_8->setContentsMargins(30, 19, 39, 40);
         label_7 = new QLabel(widget_7);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
@@ -285,6 +301,9 @@ public:
 
         comboBox4 = new QComboBox(widget_7);
         comboBox4->setObjectName(QString::fromUtf8("comboBox4"));
+        sizePolicy.setHeightForWidth(comboBox4->sizePolicy().hasHeightForWidth());
+        comboBox4->setSizePolicy(sizePolicy);
+        comboBox4->setMinimumSize(QSize(100, 0));
 
         gridLayout_8->addWidget(comboBox4, 0, 3, 1, 1);
 
@@ -292,7 +311,7 @@ public:
         widgetNet->setObjectName(QString::fromUtf8("widgetNet"));
         gridLayout_14 = new QGridLayout(widgetNet);
         gridLayout_14->setObjectName(QString::fromUtf8("gridLayout_14"));
-        gridLayout_14->setContentsMargins(13, 35, 28, 0);
+        gridLayout_14->setContentsMargins(0, 0, 0, 0);
 
         gridLayout_8->addWidget(widgetNet, 1, 0, 1, 4);
 
@@ -303,7 +322,8 @@ public:
         widget_8->setObjectName(QString::fromUtf8("widget_8"));
         gridLayout_9 = new QGridLayout(widget_8);
         gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
-        gridLayout_9->setContentsMargins(30, -1, 30, 40);
+        gridLayout_9->setVerticalSpacing(10);
+        gridLayout_9->setContentsMargins(30, 19, 39, 40);
         label_9 = new QLabel(widget_8);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
@@ -320,6 +340,9 @@ public:
 
         comboBox5 = new QComboBox(widget_8);
         comboBox5->setObjectName(QString::fromUtf8("comboBox5"));
+        sizePolicy.setHeightForWidth(comboBox5->sizePolicy().hasHeightForWidth());
+        comboBox5->setSizePolicy(sizePolicy);
+        comboBox5->setMinimumSize(QSize(100, 0));
 
         gridLayout_9->addWidget(comboBox5, 0, 3, 1, 1);
 
@@ -327,7 +350,7 @@ public:
         widgetGpu->setObjectName(QString::fromUtf8("widgetGpu"));
         gridLayout_15 = new QGridLayout(widgetGpu);
         gridLayout_15->setObjectName(QString::fromUtf8("gridLayout_15"));
-        gridLayout_15->setContentsMargins(13, 35, 28, 0);
+        gridLayout_15->setContentsMargins(0, 0, 0, 0);
 
         gridLayout_9->addWidget(widgetGpu, 1, 0, 1, 4);
 

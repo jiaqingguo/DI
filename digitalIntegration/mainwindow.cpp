@@ -83,7 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 
-
+	// 设置无边框窗口
+	setWindowFlags(Qt::FramelessWindowHint);
 	// qss文件监控类
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
