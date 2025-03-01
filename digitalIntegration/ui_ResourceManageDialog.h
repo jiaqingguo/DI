@@ -164,7 +164,7 @@ public:
         gridLayout_5 = new QGridLayout(widget_3);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
         gridLayout_5->setVerticalSpacing(10);
-        gridLayout_5->setContentsMargins(30, 19, 39, 40);
+        gridLayout_5->setContentsMargins(30, 19, 39, 44);
         label = new QLabel(widget_3);
         label->setObjectName(QString::fromUtf8("label"));
 
@@ -206,7 +206,7 @@ public:
         gridLayout_6 = new QGridLayout(widget_5);
         gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
         gridLayout_6->setVerticalSpacing(10);
-        gridLayout_6->setContentsMargins(30, 19, 39, 40);
+        gridLayout_6->setContentsMargins(30, 19, 39, 44);
         label_3 = new QLabel(widget_5);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
@@ -245,7 +245,7 @@ public:
         gridLayout_7 = new QGridLayout(widget_6);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         gridLayout_7->setVerticalSpacing(10);
-        gridLayout_7->setContentsMargins(30, 19, 39, 40);
+        gridLayout_7->setContentsMargins(30, 19, 39, 44);
         label_5 = new QLabel(widget_6);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
@@ -284,7 +284,7 @@ public:
         gridLayout_8 = new QGridLayout(widget_7);
         gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
         gridLayout_8->setVerticalSpacing(10);
-        gridLayout_8->setContentsMargins(30, 19, 39, 40);
+        gridLayout_8->setContentsMargins(30, 19, 39, 44);
         label_7 = new QLabel(widget_7);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
@@ -323,7 +323,7 @@ public:
         gridLayout_9 = new QGridLayout(widget_8);
         gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
         gridLayout_9->setVerticalSpacing(10);
-        gridLayout_9->setContentsMargins(30, 19, 39, 40);
+        gridLayout_9->setContentsMargins(30, 19, 39, 44);
         label_9 = new QLabel(widget_8);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
