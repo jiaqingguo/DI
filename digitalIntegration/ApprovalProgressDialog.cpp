@@ -45,6 +45,15 @@ ApprovalProgressDialog::ApprovalProgressDialog(QWidget *parent) :
 	m_modelDataApproval->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 	m_modelDataApproval->setHeaderData(12, Qt::Horizontal, QString::fromLocal8Bit("操作"));
 
+	ui->tableView->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableView->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableView->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为45像素
+	ui->tableView->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为45
+
+	ui->tableViewUser->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewUser->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewUser->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为45像素
+	ui->tableViewUser->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为45
 
 	/* QStringList labels = QObject::trUtf8("ID,名字,value,时间,类别").simplified().split(",");
 	 model->setHorizontalHeaderLabels(labels);*/

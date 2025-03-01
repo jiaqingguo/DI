@@ -117,11 +117,11 @@ void InformationConfihurationDialog::init()
 	ui->tableViewTool2->setShowGrid(false);
 	ui->tableViewTool3->setShowGrid(false);
 	ui->tableViewTool4->setShowGrid(false);
-	ui->tableViewTool1->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
-	ui->tableViewTool2->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
-	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
-	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
-	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
+	ui->tableViewTool1->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewTool2->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewTool3->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewTool4->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewIP1->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
 
 	ui->tableViewTool1->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
 	ui->tableViewTool1->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为50像素
