@@ -132,6 +132,7 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout2 = new QHBoxLayout();
         horizontalLayout2->setObjectName(QString::fromUtf8("horizontalLayout2"));
+        horizontalLayout2->setContentsMargins(-1, -1, -1, 9);
         comboBoxDataField = new QComboBox(page);
         comboBoxDataField->setObjectName(QString::fromUtf8("comboBoxDataField"));
         comboBoxDataField->setMinimumSize(QSize(0, 0));
@@ -169,7 +170,7 @@ public:
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
-        btnDataQuery->setMinimumSize(QSize(110, 50));
+        btnDataQuery->setMinimumSize(QSize(100, 40));
 
         horizontalLayout2->addWidget(btnDataQuery);
 
@@ -250,6 +251,7 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout5 = new QHBoxLayout();
         horizontalLayout5->setObjectName(QString::fromUtf8("horizontalLayout5"));
+        horizontalLayout5->setContentsMargins(-1, -1, -1, 9);
         comboBoxUserField = new QComboBox(page_2);
         comboBoxUserField->setObjectName(QString::fromUtf8("comboBoxUserField"));
         comboBoxUserField->setMaximumSize(QSize(16777215, 30));
@@ -288,7 +290,7 @@ public:
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
-        btnUserQuery->setMinimumSize(QSize(110, 50));
+        btnUserQuery->setMinimumSize(QSize(100, 40));
 
         horizontalLayout5->addWidget(btnUserQuery);
 
@@ -364,7 +366,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);

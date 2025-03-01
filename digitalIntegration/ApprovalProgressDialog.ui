@@ -113,7 +113,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -131,6 +131,9 @@
        </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout2">
+         <property name="bottomMargin">
+          <number>9</number>
+         </property>
          <item>
           <widget class="QComboBox" name="comboBoxDataField">
            <property name="minimumSize">
@@ -221,8 +224,8 @@
           <widget class="QPushButton" name="btnDataQuery">
            <property name="minimumSize">
             <size>
-             <width>110</width>
-             <height>50</height>
+             <width>100</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -383,6 +386,9 @@
        </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout5">
+         <property name="bottomMargin">
+          <number>9</number>
+         </property>
          <item>
           <widget class="QComboBox" name="comboBoxUserField">
            <property name="maximumSize">
@@ -473,8 +479,8 @@
           <widget class="QPushButton" name="btnUserQuery">
            <property name="minimumSize">
             <size>
-             <width>110</width>
-             <height>50</height>
+             <width>100</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">

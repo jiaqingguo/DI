@@ -146,7 +146,7 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 9);
         labelToolList1 = new QLabel(groupBox);
         labelToolList1->setObjectName(QString::fromUtf8("labelToolList1"));
 
@@ -158,13 +158,13 @@ public:
 
         btnToolAdd1 = new QPushButton(groupBox);
         btnToolAdd1->setObjectName(QString::fromUtf8("btnToolAdd1"));
-        btnToolAdd1->setMinimumSize(QSize(110, 50));
+        btnToolAdd1->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_6->addWidget(btnToolAdd1);
 
         btnToolDel1 = new QPushButton(groupBox);
         btnToolDel1->setObjectName(QString::fromUtf8("btnToolDel1"));
-        btnToolDel1->setMinimumSize(QSize(110, 50));
+        btnToolDel1->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_6->addWidget(btnToolDel1);
 
@@ -194,7 +194,7 @@ public:
         verticalLayout_8->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(-1, -1, -1, 0);
+        horizontalLayout_2->setContentsMargins(-1, -1, -1, 9);
         labelToolList2 = new QLabel(groupBox_3);
         labelToolList2->setObjectName(QString::fromUtf8("labelToolList2"));
 
@@ -206,13 +206,13 @@ public:
 
         btnToolAdd2 = new QPushButton(groupBox_3);
         btnToolAdd2->setObjectName(QString::fromUtf8("btnToolAdd2"));
-        btnToolAdd2->setMinimumSize(QSize(110, 50));
+        btnToolAdd2->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_2->addWidget(btnToolAdd2);
 
         btnToolDel2 = new QPushButton(groupBox_3);
         btnToolDel2->setObjectName(QString::fromUtf8("btnToolDel2"));
-        btnToolDel2->setMinimumSize(QSize(110, 50));
+        btnToolDel2->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_2->addWidget(btnToolDel2);
 
@@ -241,7 +241,7 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(-1, -1, -1, 0);
+        horizontalLayout_3->setContentsMargins(-1, -1, -1, 9);
         labelToolList3 = new QLabel(groupBox_5);
         labelToolList3->setObjectName(QString::fromUtf8("labelToolList3"));
 
@@ -253,13 +253,13 @@ public:
 
         btnToolAdd3 = new QPushButton(groupBox_5);
         btnToolAdd3->setObjectName(QString::fromUtf8("btnToolAdd3"));
-        btnToolAdd3->setMinimumSize(QSize(110, 50));
+        btnToolAdd3->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_3->addWidget(btnToolAdd3);
 
         btnToolDel3 = new QPushButton(groupBox_5);
         btnToolDel3->setObjectName(QString::fromUtf8("btnToolDel3"));
-        btnToolDel3->setMinimumSize(QSize(110, 50));
+        btnToolDel3->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_3->addWidget(btnToolDel3);
 
@@ -288,7 +288,7 @@ public:
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        horizontalLayout_5->setContentsMargins(-1, -1, -1, 0);
+        horizontalLayout_5->setContentsMargins(-1, -1, -1, 9);
         labelToolList4 = new QLabel(groupBox_7);
         labelToolList4->setObjectName(QString::fromUtf8("labelToolList4"));
 
@@ -300,7 +300,7 @@ public:
 
         btnToolAdd4 = new QPushButton(groupBox_7);
         btnToolAdd4->setObjectName(QString::fromUtf8("btnToolAdd4"));
-        btnToolAdd4->setMinimumSize(QSize(110, 50));
+        btnToolAdd4->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_5->addWidget(btnToolAdd4);
 
@@ -359,7 +359,7 @@ public:
 
         retranslateUi(InformationConfihurationDialog);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(InformationConfihurationDialog);

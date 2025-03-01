@@ -24,8 +24,19 @@ FtpDialog::FtpDialog(QWidget *parent) :
     m_pGifDialog = new GifDialog();
     m_pUDP = new CCtrlNetwork();
     m_pUDP->init(54110);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidgetFile->setCurrentIndex(0);
     ui->stackedWidgetMain->setCurrentIndex(0);
+
+	ui->tableViewDownload->setShowGrid(false);
+	ui->tableViewDownload->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewDownload->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	ui->tableViewDownload->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为45像素
+	ui->tableViewDownload->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为45
+
+	//ui->stackedWidgetMain->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	//ui->stackedWidgetMain->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
+	//ui->stackedWidgetMain->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为45像素
+	//ui->stackedWidgetMain->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为45
 
 
     // 启用交替行背景色
@@ -177,7 +188,7 @@ void FtpDialog::reConnectFtp()
 {
     for (int i = 0; i < ui->comboBox->count(); i++)
     {
-        QWidget* pwiget = ui->stackedWidget->widget(i);
+        QWidget* pwiget = ui->stackedWidgetFile->widget(i);
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
@@ -312,7 +323,7 @@ QByteArray  FtpDialog::serializeFtpUdpData(const st_udp& data)
 void FtpDialog::slot_orderFinsh(int iFlag)
 {
     m_pGifDialog->close();
-    QWidget* pwiget = ui->stackedWidget->currentWidget();
+    QWidget* pwiget = ui->stackedWidgetFile->currentWidget();
     FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
     if (p)
     {
@@ -420,7 +431,7 @@ void FtpDialog::slot_compress(bool bLinuxServer, QString strIp, QString strArg1,
         m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在压缩文件"));
         m_pGifDialog->show();
 
-        QWidget* pwiget = ui->stackedWidget->currentWidget();
+        QWidget* pwiget = ui->stackedWidgetFile->currentWidget();
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
@@ -468,7 +479,7 @@ void FtpDialog::slot_unCompress(bool bLinuxServer, QString strIp, QString strArg
         m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在解压文件"));
         m_pGifDialog->show();
 
-        QWidget* pwiget = ui->stackedWidget->currentWidget();
+        QWidget* pwiget = ui->stackedWidgetFile->currentWidget();
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
@@ -519,7 +530,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
         m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在删除"));
         m_pGifDialog->show();
 
-        QWidget* pwiget = ui->stackedWidget->currentWidget();
+        QWidget* pwiget = ui->stackedWidgetFile->currentWidget();
         FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
         if (p)
         {
@@ -536,7 +547,7 @@ void FtpDialog::slot_del(bool bLinuxServer, QString strIp, QString strArg1)
 
 void FtpDialog::slot_btnFlush()
 {
-    QWidget* pwiget = ui->stackedWidget->currentWidget();
+    QWidget* pwiget = ui->stackedWidgetFile->currentWidget();
     FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
     if (p)
     {
@@ -637,8 +648,8 @@ void FtpDialog::slot_createUserDir(const QString strDirName)
 }
 void FtpDialog::slot_comboBoxChanged(int index)
 {
-    ui->stackedWidget->setCurrentIndex(index);
-    QWidget *pwiget =ui->stackedWidget->currentWidget();
+    ui->stackedWidgetFile->setCurrentIndex(index);
+    QWidget *pwiget =ui->stackedWidgetFile->currentWidget();
     FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
     if (p)
     {

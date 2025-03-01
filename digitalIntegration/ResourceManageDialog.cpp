@@ -21,7 +21,7 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	setWindowIcon(QIcon(":/image/ResourceManage.png"));
 	
 	ui->tableViewList->setShowGrid(false);
-	ui->tableViewList->setStyleSheet("QTableView{font-size: 16px;color: #191a25;}");
+	ui->tableViewList->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
 	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
 	ui->tableViewList->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为50像素
 	ui->tableViewList->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为50
