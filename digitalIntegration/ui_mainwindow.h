@@ -286,11 +286,11 @@ public:
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         btnAddTab1 = new QPushButton(widgetM1);
         btnAddTab1->setObjectName(QString::fromUtf8("btnAddTab1"));
-        btnAddTab1->setMinimumSize(QSize(52, 52));
-        btnAddTab1->setMaximumSize(QSize(52, 52));
+        btnAddTab1->setMinimumSize(QSize(130, 52));
+        btnAddTab1->setMaximumSize(QSize(130, 52));
         QFont font;
         font.setFamily(QString::fromUtf8("Bauhaus 93"));
-        font.setPointSize(35);
+        font.setPointSize(28);
         btnAddTab1->setFont(font);
 
         horizontalLayout_4->addWidget(btnAddTab1);
@@ -360,8 +360,8 @@ public:
 
         btnAddTab2 = new QPushButton(widgetM2);
         btnAddTab2->setObjectName(QString::fromUtf8("btnAddTab2"));
-        btnAddTab2->setMinimumSize(QSize(52, 52));
-        btnAddTab2->setMaximumSize(QSize(52, 52));
+        btnAddTab2->setMinimumSize(QSize(130, 52));
+        btnAddTab2->setMaximumSize(QSize(130, 52));
         btnAddTab2->setFont(font);
 
         horizontalLayout_5->addWidget(btnAddTab2);
@@ -428,8 +428,8 @@ public:
 
         btnAddTab3 = new QPushButton(widgetM3);
         btnAddTab3->setObjectName(QString::fromUtf8("btnAddTab3"));
-        btnAddTab3->setMinimumSize(QSize(52, 52));
-        btnAddTab3->setMaximumSize(QSize(52, 52));
+        btnAddTab3->setMinimumSize(QSize(130, 52));
+        btnAddTab3->setMaximumSize(QSize(130, 52));
         btnAddTab3->setFont(font);
 
         horizontalLayout_7->addWidget(btnAddTab3);
@@ -493,8 +493,8 @@ public:
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
         btnAddTab4 = new QPushButton(widgetM4);
         btnAddTab4->setObjectName(QString::fromUtf8("btnAddTab4"));
-        btnAddTab4->setMinimumSize(QSize(52, 52));
-        btnAddTab4->setMaximumSize(QSize(52, 52));
+        btnAddTab4->setMinimumSize(QSize(130, 52));
+        btnAddTab4->setMaximumSize(QSize(130, 52));
         btnAddTab4->setFont(font);
 
         horizontalLayout_9->addWidget(btnAddTab4);
@@ -559,7 +559,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(4);
+        stackedWidget->setCurrentIndex(7);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(0);

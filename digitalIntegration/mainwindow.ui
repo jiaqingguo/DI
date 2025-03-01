@@ -261,7 +261,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>7</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
           <widget class="InformationConfihurationDialog" name="m_InforConfihurationDialog"/>
@@ -330,20 +330,20 @@
                 <widget class="QPushButton" name="btnAddTab1">
                  <property name="minimumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="font">
                   <font>
                    <family>Bauhaus 93</family>
-                   <pointsize>35</pointsize>
+                   <pointsize>28</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -500,20 +500,20 @@
                 <widget class="QPushButton" name="btnAddTab2">
                  <property name="minimumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="font">
                   <font>
                    <family>Bauhaus 93</family>
-                   <pointsize>35</pointsize>
+                   <pointsize>28</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -652,20 +652,20 @@
                 <widget class="QPushButton" name="btnAddTab3">
                  <property name="minimumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="font">
                   <font>
                    <family>Bauhaus 93</family>
-                   <pointsize>35</pointsize>
+                   <pointsize>28</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -803,20 +803,20 @@
                 <widget class="QPushButton" name="btnAddTab4">
                  <property name="minimumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>52</width>
+                   <width>130</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="font">
                   <font>
                    <family>Bauhaus 93</family>
-                   <pointsize>35</pointsize>
+                   <pointsize>28</pointsize>
                   </font>
                  </property>
                  <property name="text">

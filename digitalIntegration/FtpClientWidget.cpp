@@ -59,6 +59,13 @@ FtpClientWidget::FtpClientWidget(QWidget* parent)
     ui->tableWidget->setColumnWidth(2, 90);
     ui->tableWidget->setColumnWidth(3, 70);
 
+    // 设置标题栏高度
+    ui->tableWidget->verticalHeader()->setDefaultSectionSize(45); // 设置标题栏高度为40
+    // 设置默认行高
+    ui->tableWidget->verticalHeader()->setDefaultSectionSize(45); // 设置所有行高为60
+     // 设置列宽平均分配并填满表格宽度
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     // 去除选中的虚线框
   //  ui->tableWidget->setItemDelegate((QStyledItemDelegate*)new MyStyledItemDelegate);
 
@@ -971,15 +978,21 @@ void FtpClientWidget::slot_newDir()
     // 插入新的一行
     ui->tableWidget->insertRow(row);
 
+    QTableWidgetItem* item = new QTableWidgetItem(name);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
     // 名称
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(/*folderIcon(),*/ name));
+    ui->tableWidget->setItem(row, 0, item);// new QTableWidgetItem(/*folderIcon(),*/ item));
 
     // 日期
-    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm")));
+    item = new QTableWidgetItem(QDateTime::currentDateTime().toString("yyyy/MM/dd hh:mm"));
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 1, item);
 
     // 类型
     QString type = common::folderType();
-    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
+    item = new QTableWidgetItem(type);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 2, item);
 
     // 创建目录 解决中文乱码问题
 
@@ -1089,13 +1102,19 @@ void FtpClientWidget::onInsertRow()
     ui->tableWidget->insertRow(row);
 
     // 名称
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(/*fileInfo.isDir() ? folderIcon() : fileIcon(name), */name));
+    QTableWidgetItem* item = new QTableWidgetItem(name);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 0, item);
 
     // 日期
-    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(fileInfo.lastModified().toString("yyyy/MM/dd hh:mm")));
+    item = new QTableWidgetItem(fileInfo.lastModified().toString("yyyy/MM/dd hh:mm"));
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 1, item);
 
     // 类型
-    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
+    item = new QTableWidgetItem(type);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 2, item);
 
     // 大小
     if (fileInfo.isDir())
@@ -1104,8 +1123,9 @@ void FtpClientWidget::onInsertRow()
     }
   //  ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(fileInfo.size() / 1000), 1))));
    // ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString("%1 KB").arg(qMax(int(fileInfo.size() / 1000), 1))));
-
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(formatFileSize(fileInfo.size()), 1));
+    item = new QTableWidgetItem(formatFileSize(fileInfo.size()));
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 3, item);
 }
 
 void FtpClientWidget::closePersistentEditor()
@@ -1184,17 +1204,28 @@ void FtpClientWidget::listInfo(QUrlInfo url)
     ui->tableWidget->insertRow(row);
 
     // 名称
-    ui->tableWidget->setItem(row, 0, new QTableWidgetItem(/*url.isDir() ? folderIcon() : fileIcon(name),*/ name));
+    QTableWidgetItem* item = new QTableWidgetItem(name);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 0, item);
 
     // 日期
-    ui->tableWidget->setItem(row, 1, new QTableWidgetItem(url.lastModified().toString("yyyy/MM/dd hh:mm")));
+    item = new QTableWidgetItem(url.lastModified().toString("yyyy/MM/dd hh:mm"));
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 1, item);
 
     // 类型
-    ui->tableWidget->setItem(row, 2, new QTableWidgetItem(type));
+    item = new QTableWidgetItem(type);
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    ui->tableWidget->setItem(row, 2, item);
 
     // 大小
     if (url.isDir()) return;
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(formatFileSize(url.size()), 1));
+
+    item = new QTableWidgetItem(formatFileSize(url.size()));
+    item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+    
+    ui->tableWidget->setItem(row, 3, item);
+   // ui->tableWidget->setItem(row, 3, new QTableWidgetItem(formatFileSize(url.size()), 1));
 }
 
 void FtpClientWidget::commandFinished(int id, bool err)

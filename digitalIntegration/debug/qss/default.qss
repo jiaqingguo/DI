@@ -369,7 +369,6 @@ ApprovalProgressDialog QHeaderView::section {
 }
 
 QCheckBox::indicator{
-
 	image: url(:/image/checkbox.png); /* 设置不勾选状态的背景图 */
 }
 QCheckBox::indicator:unchecked {
@@ -426,6 +425,13 @@ QPushButton#btnData:pressed,QPushButton#btnUser:pressed,QPushButton#btnFile:pres
 		border-image:url(:/image/btn_blue.png);		
 }
 QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:checked,QPushButton#btnDownload:checked{
+		color:white;
+		border-image:url(:/image/btn_blue.png);		
+}
+
+
+
+QPushButton#btnAddTab1,QPushButton#btnAddTab2,QPushButton#btnAddTab3,QPushButton#btnAddTab4{
 		color:white;
 		border-image:url(:/image/btn_blue.png);		
 }
