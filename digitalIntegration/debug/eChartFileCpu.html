@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <title>ECharts Example</title>
         <!-- 引入ECharts文件 -->
-		
         <script src="./echarts.min.js"></script>
 		
     </head>
@@ -55,6 +54,21 @@
                         data: itemValues,
 						smooth: true,
 						large: true,
+						areaStyle: 
+						{
+                            color: {
+                                type: 'linear', // 线性渐变
+                                x: 0, // 从左到右
+                                y: 0, // 从下到上
+                                x2: 0, // 从左到右
+                                y2: 1, // 从下到上
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(64, 158, 255, 0.8)' // 渐变起始颜色
+                                }, {
+                                    offset: 1, color: 'rgba(64, 158, 255, 0)' // 渐变结束颜色（透明）
+                                }]
+                            }
+                        }
                     }],
 
                 };

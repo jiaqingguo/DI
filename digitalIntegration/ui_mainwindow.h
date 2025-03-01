@@ -160,6 +160,7 @@ public:
         splitter->setOpaqueResize(true);
         widgetLeftMenu = new QWidget(splitter);
         widgetLeftMenu->setObjectName(QString::fromUtf8("widgetLeftMenu"));
+        widgetLeftMenu->setMinimumSize(QSize(30, 0));
         verticalLayout_8 = new QVBoxLayout(widgetLeftMenu);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         verticalLayout_8->setContentsMargins(-1, -1, 0, -1);

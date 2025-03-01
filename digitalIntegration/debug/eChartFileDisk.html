@@ -5,6 +5,7 @@
         <title>ECharts Example</title>
         <!-- 引入ECharts文件 -->
         <script src="./echarts.min.js"></script>
+		
     </head>
     <body>
         <div id="main" style="width: 400px;height:300px;"></div>
@@ -50,9 +51,31 @@
                     series: [{
                         name: titleName,
                         type: type,
-                        data: itemValues,//[5, 20, 36, 10, 10, 20]
+                        data: itemValues,
 						smooth: true,
 						large: true,
+						 lineStyle: {
+                            color: '#f4a13d', // 设置曲线颜色为红色
+                            width: 2      // 设置曲线宽度
+                        },
+						itemStyle: {
+                            color: '#f4a13d', 
+                        },
+						areaStyle: 
+						{
+                            color: {
+                                type: 'linear', // 线性渐变
+                                x: 0, // 从左到右
+                                y: 0, // 从下到上
+                                x2: 0, // 从左到右
+                                y2: 1, // 从下到上
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(252, 198, 124, 0.9)' // 渐变起始颜色
+                                }, {
+                                    offset: 1, color: 'rgba(254, 240, 214, 0)' // 渐变结束颜色（透明）
+                                }]
+                            }
+                        }
                     }],
 
                 };

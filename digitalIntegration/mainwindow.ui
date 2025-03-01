@@ -45,6 +45,12 @@
        <bool>true</bool>
       </property>
       <widget class="QWidget" name="widgetLeftMenu" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>0</height>
+        </size>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <property name="rightMargin">
          <number>0</number>

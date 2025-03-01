@@ -282,6 +282,9 @@ void MainWindow::initInitface()
 	ui->tabWidgetModulel3->removeTab(1);
 	ui->tabWidgetModulel4->removeTab(1);
 	ui->tabWidgetModulel1->removeTab(0);
+	ui->tabWidgetModulel2->removeTab(0);
+	ui->tabWidgetModulel3->removeTab(0);
+	ui->tabWidgetModulel4->removeTab(0);
 	ui->btnAddTab1->setProperty("module", 1);
 	ui->btnAddTab2->setProperty("module", 2);
 	ui->btnAddTab3->setProperty("module", 3);
@@ -582,6 +585,7 @@ bool MainWindow::showLoginDialog()
 		ui->m_FtpDialog->initConnectFtp();
 		// 设置时间间隔并启动定时器
 		m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
+		ui->m_ResourceManageDialog->startWebFlushTimer();
 		return true;
 	}
 	else

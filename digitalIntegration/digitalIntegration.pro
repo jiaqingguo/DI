@@ -1,4 +1,4 @@
-QT       += core gui webengine webenginewidgets multimedia axcontainer network winextras 3dcore 3drender 3dinput 3dextras
+QT       += core gui webengine webenginewidgets multimedia axcontainer network winextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #
 
