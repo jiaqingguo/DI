@@ -86,7 +86,7 @@ void OneClickLoadDialog::slot_btnAdd()
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
 	//comboBox->setEditable(false);
-	comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;border: 1px solid gray;border-radius: 5px;}");
+	comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
 
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
@@ -250,7 +250,7 @@ void OneClickLoadDialog::initTableView()
 					QComboBox *comboBox = new QComboBox();
 					m_model->setItem(newRowIndex, 1, item);
 					//comboBox->setFixedHeight(20);
-					comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;border: 1px solid gray;border-radius: 5px;}");
+					comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
 					std::map<std::string, table_ip> ipMap;
 					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
 					{
