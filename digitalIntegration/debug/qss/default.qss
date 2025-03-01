@@ -283,8 +283,11 @@ QLabel#labelUserIcon{
 
 QMenu {
     background-color: #eef2fb;
-    border: 2px solid #0078d7;
-   
+    border: none;
+	
+}
+QMenu::item:hover {
+    background-color: #a7cdff; /* 鼠标悬停时的背景颜色 */
 }
 
 FtpDialog QStackedWidget#stackedWidgetMain{
