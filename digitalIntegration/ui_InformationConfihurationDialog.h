@@ -137,15 +137,16 @@ public:
         stackedWidgetPage1->setMinimumSize(QSize(0, 0));
         verticalLayout_4 = new QVBoxLayout(stackedWidgetPage1);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
         groupBox = new QGroupBox(stackedWidgetPage1);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(20, 20, 20, 20);
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 20);
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
         labelToolList1 = new QLabel(groupBox);
         labelToolList1->setObjectName(QString::fromUtf8("labelToolList1"));
 
@@ -184,15 +185,16 @@ public:
         stackedWidgetPage2->setMinimumSize(QSize(0, 0));
         verticalLayout_10 = new QVBoxLayout(stackedWidgetPage2);
         verticalLayout_10->setObjectName(QString::fromUtf8("verticalLayout_10"));
+        verticalLayout_10->setContentsMargins(0, 0, 0, 0);
         groupBox_3 = new QGroupBox(stackedWidgetPage2);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
         verticalLayout_8 = new QVBoxLayout(groupBox_3);
         verticalLayout_8->setSpacing(0);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        verticalLayout_8->setContentsMargins(20, 20, 20, 20);
+        verticalLayout_8->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(-1, -1, -1, 20);
+        horizontalLayout_2->setContentsMargins(-1, -1, -1, 0);
         labelToolList2 = new QLabel(groupBox_3);
         labelToolList2->setObjectName(QString::fromUtf8("labelToolList2"));
 
@@ -230,15 +232,16 @@ public:
         stackedWidgetPage3->setObjectName(QString::fromUtf8("stackedWidgetPage3"));
         verticalLayout_11 = new QVBoxLayout(stackedWidgetPage3);
         verticalLayout_11->setObjectName(QString::fromUtf8("verticalLayout_11"));
+        verticalLayout_11->setContentsMargins(0, 0, 0, 0);
         groupBox_5 = new QGroupBox(stackedWidgetPage3);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
         verticalLayout_3 = new QVBoxLayout(groupBox_5);
         verticalLayout_3->setSpacing(0);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(20, 20, 20, 20);
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(-1, -1, -1, 20);
+        horizontalLayout_3->setContentsMargins(-1, -1, -1, 0);
         labelToolList3 = new QLabel(groupBox_5);
         labelToolList3->setObjectName(QString::fromUtf8("labelToolList3"));
 
@@ -276,15 +279,16 @@ public:
         stackedWidgetPage4->setObjectName(QString::fromUtf8("stackedWidgetPage4"));
         verticalLayout_12 = new QVBoxLayout(stackedWidgetPage4);
         verticalLayout_12->setObjectName(QString::fromUtf8("verticalLayout_12"));
+        verticalLayout_12->setContentsMargins(0, 0, 0, 0);
         groupBox_7 = new QGroupBox(stackedWidgetPage4);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
         verticalLayout_5 = new QVBoxLayout(groupBox_7);
         verticalLayout_5->setSpacing(0);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(20, 20, 20, 20);
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        horizontalLayout_5->setContentsMargins(-1, -1, -1, 20);
+        horizontalLayout_5->setContentsMargins(-1, -1, -1, 0);
         labelToolList4 = new QLabel(groupBox_7);
         labelToolList4->setObjectName(QString::fromUtf8("labelToolList4"));
 
@@ -355,7 +359,7 @@ public:
 
         retranslateUi(InformationConfihurationDialog);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(InformationConfihurationDialog);

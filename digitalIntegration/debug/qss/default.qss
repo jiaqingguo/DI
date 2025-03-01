@@ -929,11 +929,10 @@ ResourceManageDialog QPushButton#btnList{
 	color: #7482a6;
 	border: none;
 }
-ResourceManageDialog QTableView#tableViewList{
+ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5 ,QTableView#tableView ,QTableView#tableViewUser ,QHBoxLayout#horizontalLayout2 ,QHBoxLayout#horizontalLayout5{
 	border: 1px solid white;
 	border-radius: 5px;
-	padding: 20px; /* 设置 QTableView 的内边距 */
-    /*margin: 2px;   设置 QTableView 的外边距 */
+	padding: 30px;  /*设置 QTableView 的内边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
 	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;

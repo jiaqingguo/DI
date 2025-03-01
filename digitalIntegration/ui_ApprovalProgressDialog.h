@@ -42,7 +42,7 @@ public:
     QStackedWidget *stackedWidget;
     QWidget *page;
     QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout2;
     QComboBox *comboBoxDataField;
     QLineEdit *lineEditDataQueryValue;
     QCheckBox *checkBox_1;
@@ -62,7 +62,7 @@ public:
     QLabel *labelApprovalYe;
     QWidget *page_2;
     QVBoxLayout *verticalLayout_3;
-    QHBoxLayout *horizontalLayout_5;
+    QHBoxLayout *horizontalLayout5;
     QComboBox *comboBoxUserField;
     CLineEdit *lineEditUserQueryValue;
     QCheckBox *checkBox_2;
@@ -130,55 +130,55 @@ public:
         verticalLayout = new QVBoxLayout(page);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout2 = new QHBoxLayout();
+        horizontalLayout2->setObjectName(QString::fromUtf8("horizontalLayout2"));
         comboBoxDataField = new QComboBox(page);
         comboBoxDataField->setObjectName(QString::fromUtf8("comboBoxDataField"));
         comboBoxDataField->setMinimumSize(QSize(0, 0));
         comboBoxDataField->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_2->addWidget(comboBoxDataField);
+        horizontalLayout2->addWidget(comboBoxDataField);
 
         lineEditDataQueryValue = new QLineEdit(page);
         lineEditDataQueryValue->setObjectName(QString::fromUtf8("lineEditDataQueryValue"));
         lineEditDataQueryValue->setMinimumSize(QSize(0, 30));
         lineEditDataQueryValue->setMaximumSize(QSize(250, 30));
 
-        horizontalLayout_2->addWidget(lineEditDataQueryValue);
+        horizontalLayout2->addWidget(lineEditDataQueryValue);
 
         checkBox_1 = new QCheckBox(page);
         checkBox_1->setObjectName(QString::fromUtf8("checkBox_1"));
         checkBox_1->setMinimumSize(QSize(0, 30));
         checkBox_1->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_2->addWidget(checkBox_1);
+        horizontalLayout2->addWidget(checkBox_1);
 
         dateTimeEdit1_start = new QDateTimeEdit(page);
         dateTimeEdit1_start->setObjectName(QString::fromUtf8("dateTimeEdit1_start"));
         dateTimeEdit1_start->setMinimumSize(QSize(0, 30));
         dateTimeEdit1_start->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_2->addWidget(dateTimeEdit1_start);
+        horizontalLayout2->addWidget(dateTimeEdit1_start);
 
         dateTimeEdit2_end = new QDateTimeEdit(page);
         dateTimeEdit2_end->setObjectName(QString::fromUtf8("dateTimeEdit2_end"));
         dateTimeEdit2_end->setMinimumSize(QSize(0, 30));
         dateTimeEdit2_end->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_2->addWidget(dateTimeEdit2_end);
+        horizontalLayout2->addWidget(dateTimeEdit2_end);
 
         btnDataQuery = new QPushButton(page);
         btnDataQuery->setObjectName(QString::fromUtf8("btnDataQuery"));
         btnDataQuery->setMinimumSize(QSize(110, 50));
 
-        horizontalLayout_2->addWidget(btnDataQuery);
+        horizontalLayout2->addWidget(btnDataQuery);
 
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_3);
+        horizontalLayout2->addItem(horizontalSpacer_3);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout->addLayout(horizontalLayout2);
 
         tableView = new QTableView(page);
         tableView->setObjectName(QString::fromUtf8("tableView"));
@@ -248,20 +248,20 @@ public:
         verticalLayout_3 = new QVBoxLayout(page_2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        horizontalLayout5 = new QHBoxLayout();
+        horizontalLayout5->setObjectName(QString::fromUtf8("horizontalLayout5"));
         comboBoxUserField = new QComboBox(page_2);
         comboBoxUserField->setObjectName(QString::fromUtf8("comboBoxUserField"));
         comboBoxUserField->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_5->addWidget(comboBoxUserField);
+        horizontalLayout5->addWidget(comboBoxUserField);
 
         lineEditUserQueryValue = new CLineEdit(page_2);
         lineEditUserQueryValue->setObjectName(QString::fromUtf8("lineEditUserQueryValue"));
         lineEditUserQueryValue->setMinimumSize(QSize(0, 30));
         lineEditUserQueryValue->setMaximumSize(QSize(250, 30));
 
-        horizontalLayout_5->addWidget(lineEditUserQueryValue);
+        horizontalLayout5->addWidget(lineEditUserQueryValue);
 
         checkBox_2 = new QCheckBox(page_2);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
@@ -270,34 +270,34 @@ public:
         checkBox_2->setChecked(false);
         checkBox_2->setTristate(false);
 
-        horizontalLayout_5->addWidget(checkBox_2);
+        horizontalLayout5->addWidget(checkBox_2);
 
         dateTimeEdit3_start = new QDateTimeEdit(page_2);
         dateTimeEdit3_start->setObjectName(QString::fromUtf8("dateTimeEdit3_start"));
         dateTimeEdit3_start->setMinimumSize(QSize(0, 30));
         dateTimeEdit3_start->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_5->addWidget(dateTimeEdit3_start);
+        horizontalLayout5->addWidget(dateTimeEdit3_start);
 
         dateTimeEdit4_end = new QDateTimeEdit(page_2);
         dateTimeEdit4_end->setObjectName(QString::fromUtf8("dateTimeEdit4_end"));
         dateTimeEdit4_end->setMinimumSize(QSize(0, 30));
         dateTimeEdit4_end->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_5->addWidget(dateTimeEdit4_end);
+        horizontalLayout5->addWidget(dateTimeEdit4_end);
 
         btnUserQuery = new QPushButton(page_2);
         btnUserQuery->setObjectName(QString::fromUtf8("btnUserQuery"));
         btnUserQuery->setMinimumSize(QSize(110, 50));
 
-        horizontalLayout_5->addWidget(btnUserQuery);
+        horizontalLayout5->addWidget(btnUserQuery);
 
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_5->addItem(horizontalSpacer_6);
+        horizontalLayout5->addItem(horizontalSpacer_6);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_5);
+        verticalLayout_3->addLayout(horizontalLayout5);
 
         tableViewUser = new QTableView(page_2);
         tableViewUser->setObjectName(QString::fromUtf8("tableViewUser"));
@@ -364,7 +364,7 @@ public:
 
         retranslateUi(ApprovalProgressDialog);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(ApprovalProgressDialog);

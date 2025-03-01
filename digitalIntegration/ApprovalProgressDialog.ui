@@ -113,7 +113,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -130,7 +130,7 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout2">
          <item>
           <widget class="QComboBox" name="comboBoxDataField">
            <property name="minimumSize">
@@ -382,7 +382,7 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <layout class="QHBoxLayout" name="horizontalLayout5">
          <item>
           <widget class="QComboBox" name="comboBoxUserField">
            <property name="maximumSize">
