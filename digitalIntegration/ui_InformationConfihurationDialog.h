@@ -306,7 +306,7 @@ public:
 
         btnToolDel4 = new QPushButton(groupBox_7);
         btnToolDel4->setObjectName(QString::fromUtf8("btnToolDel4"));
-        btnToolDel4->setMinimumSize(QSize(110, 50));
+        btnToolDel4->setMinimumSize(QSize(100, 40));
 
         horizontalLayout_5->addWidget(btnToolDel4);
 
