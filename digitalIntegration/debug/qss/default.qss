@@ -300,19 +300,22 @@ FtpClientWidget{
 
 
 FtpDialog QTableView{
-	font-size:17px;
-		border:none;
-		alternate-background-color: #eef2fb;
-		background-color:#ffffff;
-    }
+	font-size:14px;
+	border:none;
+	alternate-background-color: #eef2fb;
+	background-color:#ffffff;
+	
+}
 FtpDialog QTableView::item{
-		font-size:30px;
-		border:none;
-		background-color: transparent;
-        }
+	height:45px;
+	border:none;
+	background-color: transparent;
+	font-size:14px;
+}
 FtpDialog  QTableView::item:selected{
-		/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
-	     background-color:#a7cdff;
+	/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
+	background-color:#a7cdff;
+	font-size:14px;
 }
 
 /* 标题栏背景色 */
@@ -320,9 +323,9 @@ FtpDialog QHeaderView::section {
 	border:none;
 	height: 30px; /* 设置标题栏高度 */
     background-color: #eef2fb; /* 191a25 标题栏背景色 */
-	font-size:18px;
+	font-size:17px;
     color: #7482a6; /* 标题栏文字颜色 */
-    padding: 5px; /* 标题栏内边距 */
+    padding: 5px;  /*标题栏内边距 */
 }
 
 
@@ -341,7 +344,7 @@ ApprovalProgressDialog QStackedWidget#stackedWidget{
 
 
 ApprovalProgressDialog QTableView{
-
+		height: 30px;
 		border:none;
 		alternate-background-color: #eef2fb;
 		 background-color:#ffffff;
@@ -377,7 +380,7 @@ QCheckBox::indicator:checked {
 }
 
 QPushButton#btnUserQuery,QPushButton#btnDataQuery{
-	font-size: 20px;
+	font-size: 18px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png);
 }
@@ -566,7 +569,31 @@ QPushButton#btnData:checked,QPushButton#btnUser:checked,QPushButton#btnFile:chec
 
 
 
-
+/* ------------------------ 文件管理页面----------------------start*/
+FtpDialog QLabel#label{
+	font-size: 20px;
+	color: #191a25;
+}
+FtpDialog QComboBox#comboBox{
+	font-size: 18px;
+	color: #000000;
+}
+FtpDialog QTableView QScrollBar:vertical{
+	background: #ffffff; /*  设置垂直滚动条背景透明 内部 */
+	width: 10px; 
+}
+FtpDialog QTableView QScrollBar::handle:vertical {
+	background: #eaf1ff; /*  // 设置滚动条手柄颜色（半透明白色） */
+	border-radius: 3px;                  /*  设置圆角 */ 
+	min-height: 20px
+	}
+FtpDialog QTableView QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+	   background: transparent; /*  设置上下箭头区域透明 */  
+}
+FtpDialog QTableWidget#tableWidget{
+	text-align: center;
+}
+/* ------------------------ 文件管理页面----------------------end*/
 /* ------------------------ 审批进度页面----------------------start*/
 QLabel#labelApprovalGo ,QLabel#labelApprovalYe ,QLabel#labelUserGo ,QLabel#labelUserYe{
 	font-size: 18px;
@@ -607,8 +634,6 @@ QPushButton#btnUserNext{
 QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end{
 	font-size: 18px;
 	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
 QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_start::down-button ,QDateTimeEdit#dateTimeEdit2_end::down-button ,QDateTimeEdit#dateTimeEdit4_end::down-button{
 	image: url(:/image/CurveComboBox.png);
@@ -617,6 +642,16 @@ QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_star
 QDateTimeEdit#dateTimeEdit1_start::up-button ,QDateTimeEdit#dateTimeEdit3_start::up-button ,QDateTimeEdit#dateTimeEdit2_end::up-button ,QDateTimeEdit#dateTimeEdit4_end::up-button{
 	image: url(:/image/CurveComboBoxup.png);
 	margin:2px;
+}
+ApprovalProgressDialog QStackedWidget#stackedWidget{
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 20px;  /*设置 QTableView 的内边距 */
+}
+FtpDialog QStackedWidget#stackedWidgetMain{
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 20px;  /*设置 QTableView 的内边距 */
 }
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
@@ -926,10 +961,10 @@ ResourceManageDialog QPushButton#btnList{
 	color: #7482a6;
 	border: none;
 }
-ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5 ,QTableView#tableView ,QTableView#tableViewUser ,QHBoxLayout#horizontalLayout2 ,QHBoxLayout#horizontalLayout5{
+ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5{
 	border: 1px solid white;
 	border-radius: 5px;
-	padding: 30px;  /*设置 QTableView 的内边距 */
+	padding: 20px;  /*设置 QTableView 的内边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
 	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;
@@ -983,16 +1018,16 @@ InformationConfihurationDialog QLabel#labelIPList ,QLabel#labelToolList1 ,QLabel
 	background-repeat: no-repeat;
     background-position: left center;
 	padding-left: 7px;
-	font-size: 24px;
+	font-size: 20px;
 	color: #191a25;
 }
 InformationConfihurationDialog QPushButton#btnToolAdd1 ,QPushButton#btnToolAdd2 ,QPushButton#btnToolAdd3 ,QPushButton#btnToolAdd4{
-	font-size: 20px;
+	font-size: 18px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
 InformationConfihurationDialog QPushButton#btnToolDel1 ,QPushButton#btnToolDel2 ,QPushButton#btnToolDel3 ,QPushButton#btnToolDel4{
-	font-size: 20px;
+	font-size: 18px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
@@ -1016,4 +1051,17 @@ QTableView#tableViewIP1 QHeaderView::section ,QTableView#tableViewTool1 QHeaderV
 	border:none;
     background-image: url(:/image/listBackground.png); 
 }
+/* ------------------------垂直滚动条----------------------start*/
+QTableView#tableViewIP1 QScrollBar:vertical ,QTableView#tableViewTool1 QScrollBar:vertical ,QTableView#tableViewTool2 QScrollBar:vertical ,QTableView#tableViewTool3 QScrollBar:vertical ,QTableView#tableViewTool4 QScrollBar:vertical{
+	background: #ffffff; /*  设置垂直滚动条背景透明 内部 */
+	width: 10px; 
+}
+QTableView#tableViewIP1 QScrollBar::handle:vertical ,QTableView#tableViewTool1 QScrollBar::handle:vertical ,QTableView#tableViewTool2 QScrollBar::handle:vertical ,QTableView#tableViewTool3 QScrollBar::handle:vertical ,QTableView#tableViewTool4 QScrollBar::handle:vertical{
+	background: #eaf1ff; /*  // 设置滚动条手柄颜色（半透明白色） */
+	border-radius: 3px;                  /*  设置圆角 */ 
+	min-height: 20px
+	}
+QTableView#tableViewIP1 QScrollBar::add-line:vertical, ,QScrollBar::sub-line:vertical ,QTableView#tableViewTool1 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool2 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool3 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical ,QTableView#tableViewTool4 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
+	   background: transparent; /*  设置上下箭头区域透明 */  
+	}
 /* ------------------------信息配置页面----------------------end*/
