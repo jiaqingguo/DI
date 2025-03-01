@@ -26,6 +26,18 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	ui->tableViewList->horizontalHeader()->setFixedHeight(45);  // 设置表头高度为50像素
 	ui->tableViewList->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为50
 
+	//根据下拉列表中最长项的长度来调整控件的宽度
+	/*ui->comboBox1->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox2->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox3->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox4->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox5->setSizeAdjustPolicy(QComboBox::AdjustToContents);*/
+	ui->comboBox1->setFixedWidth(150);
+	ui->comboBox2->setFixedWidth(150);
+	ui->comboBox3->setFixedWidth(150);
+	ui->comboBox4->setFixedWidth(150);
+	ui->comboBox5->setFixedWidth(150);
+
 	// 创建自定义委托并设置到 QTableView
 	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewList);
 	ui->tableViewList->setItemDelegate(delegate);
@@ -411,15 +423,20 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 		QModelIndex index = m_model->index(row, 0, QModelIndex()); // 获取第一列的索引
 		//QStandardItem* item = m_model->itemFromIndex(index); // 获取该索引对应的 QStandardItem
 		QStandardItem* item = m_model->item(row, 0);
+		item->setTextAlignment(Qt::AlignCenter);
 		if (item->text() == host)
 		{ // 假设我们想要更新以 "Row" 开头的项
 			item = m_model->item(row, 1);
+			item->setTextAlignment(Qt::AlignCenter);
 			item->setText(QString::number(dCpu) + QString(" %"));
 			item = m_model->item(row, 2);
+			item->setTextAlignment(Qt::AlignCenter);
 			item->setText(QString::number(dMemory) + QString(" %"));
 			item = m_model->item(row, 3);
+			item->setTextAlignment(Qt::AlignCenter);
 			item->setText(QString::number(dDisk) + QString(" %"));
 			item = m_model->item(row, 4);
+			item->setTextAlignment(Qt::AlignCenter);
 			QString netData = "Kbps";
 			if (dNet > 1024)
 			{
@@ -432,6 +449,7 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 				item->setText(QString::number(dNet) + netData);
 			}
 			item = m_model->item(row, 5);
+			item->setTextAlignment(Qt::AlignCenter);
 			item->setText(QString::number(dGpu) + QString(" %"));
 			return;
 		}
@@ -845,13 +863,6 @@ void ResourceManageDialog::slot_showCurve()
 	ui->btnList->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	//initTableWidgetCurve();
 	ui->stackedWidget->setCurrentIndex(1);
-
-	//根据下拉列表中最长项的长度来调整控件的宽度
-	ui->comboBox1->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	ui->comboBox2->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	ui->comboBox3->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	ui->comboBox4->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	ui->comboBox5->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	// 连接信号和槽
 	//connect(ui->comboBox, &QComboBox::currentTextChanged, this, &ResourceManageDialog::slot_hostComboxChanged);
 }
