@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>292</height>
+    <width>473</width>
+    <height>308</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,7 @@
         <number>9</number>
        </property>
        <property name="topMargin">
-        <number>9</number>
+        <number>5</number>
        </property>
        <property name="rightMargin">
         <number>9</number>

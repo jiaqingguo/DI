@@ -40,7 +40,7 @@ public:
     {
         if (OneClickLoadDialog->objectName().isEmpty())
             OneClickLoadDialog->setObjectName(QString::fromUtf8("OneClickLoadDialog"));
-        OneClickLoadDialog->resize(512, 292);
+        OneClickLoadDialog->resize(473, 308);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -54,7 +54,7 @@ public:
 
         verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
-        verticalLayout_9->setContentsMargins(9, 9, 9, 9);
+        verticalLayout_9->setContentsMargins(9, 5, 9, 9);
         btnAdd = new QPushButton(OneClickLoadDialog);
         btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
         btnAdd->setMinimumSize(QSize(90, 30));
