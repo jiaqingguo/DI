@@ -44,10 +44,13 @@
       <property name="opaqueResize">
        <bool>true</bool>
       </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
       <widget class="QWidget" name="widgetLeftMenu" native="true">
        <property name="minimumSize">
         <size>
-         <width>30</width>
+         <width>150</width>
          <height>0</height>
         </size>
        </property>
@@ -261,7 +264,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>7</number>
+           <number>3</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
           <widget class="InformationConfihurationDialog" name="m_InforConfihurationDialog"/>
@@ -735,7 +738,7 @@
                </font>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab_5">
                <attribute name="title">

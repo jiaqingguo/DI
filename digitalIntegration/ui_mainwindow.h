@@ -158,9 +158,10 @@ public:
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setOrientation(Qt::Horizontal);
         splitter->setOpaqueResize(true);
+        splitter->setChildrenCollapsible(false);
         widgetLeftMenu = new QWidget(splitter);
         widgetLeftMenu->setObjectName(QString::fromUtf8("widgetLeftMenu"));
-        widgetLeftMenu->setMinimumSize(QSize(30, 0));
+        widgetLeftMenu->setMinimumSize(QSize(150, 0));
         verticalLayout_8 = new QVBoxLayout(widgetLeftMenu);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         verticalLayout_8->setContentsMargins(-1, -1, 0, -1);
@@ -559,10 +560,10 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(7);
+        stackedWidget->setCurrentIndex(3);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
-        tabWidgetModulel3->setCurrentIndex(0);
+        tabWidgetModulel3->setCurrentIndex(1);
         tabWidgetModulel4->setCurrentIndex(0);
 
 
