@@ -28,6 +28,7 @@ SOURCES += \
     CWidget.cpp \
     ChangePwdDialog.cpp \
     CtrlNetwork.cpp \
+    CustomTitleWidget.cpp \
     DataManageDialog.cpp \
     FilemangageDialog.cpp \
     FtpClientClass.cpp \
@@ -65,6 +66,7 @@ HEADERS += \
     CWidget.h \
     ChangePwdDialog.h \
     CtrlNetwork.h \
+    CustomTitleWidget.h \
     DataManageDialog.h \
     FilemangageDialog.h \
     FtpClientClass.h \
@@ -95,6 +97,7 @@ FORMS += \
     AddToolInfoDialog.ui \
     ApprovalProgressDialog.ui \
     ChangePwdDialog.ui \
+    CustomTitleWidget.ui \
     DataManageDialog.ui \
     FilemangageDialog.ui \
     FtpClientWidget.ui \

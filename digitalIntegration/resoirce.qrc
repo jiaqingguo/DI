@@ -85,5 +85,6 @@
         <file>image/CurveComboBoxup.png</file>
         <file>image/ProductionPrototype.png</file>
         <file>image/ProductionPrototype_select.png</file>
+        <file>image/Logo_background.png</file>
     </qresource>
 </RCC>

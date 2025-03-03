@@ -586,7 +586,7 @@ bool MainWindow::showLoginDialog()
 		ui->m_FtpDialog->initConnectFtp();
 		// 设置时间间隔并启动定时器
 		m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
-		ui->m_ResourceManageDialog->startWebFlushTimer();
+		//ui->m_ResourceManageDialog->startWebFlushTimer();
 		return true;
 	}
 	else
@@ -1483,6 +1483,9 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	// 嵌入远端界面;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
+	QFont font;
+	font.setPointSize(30); // 设置字体大小为 20
+	rdp->setFont(font);
 	//rdp->setControl(QString::fromUtf8("{1DF7C823-B2D4-4B54-975A-F2AC5D7CF8B8}")); // 对应于RDP的CLSID
 	rdp->setControl(QString::fromUtf8(common::strAxCLSID.toUtf8())); // 对应于RDP的CLSID
 
@@ -2751,11 +2754,11 @@ void MainWindow::slot_btnMaximize()
 		int h = height() * 0.8;
 		resize(w, h);*/
 		showNormal();
-		ui->splitter->setEnabled(false);
+		//ui->splitter->setEnabled(false);
 		//ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
 	}
 	else {
-		ui->splitter->setEnabled(true);
+		//ui->splitter->setEnabled(true);
 		showMaximized();
 	//	ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
 	}

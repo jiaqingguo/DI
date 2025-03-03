@@ -443,7 +443,9 @@ QPushButton#btnAddTab1,QPushButton#btnAddTab2,QPushButton#btnAddTab3,QPushButton
 
 
 
-
+CAxWidget{
+ font-size:35px;
+}
 
 
 
