@@ -640,7 +640,7 @@ QPushButton#btnUserNext{
 	margin:2px;
 	border-image:url(:/image/page_nect.png);	
 }
-QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end{
+QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end ,QCheckBox#checkBox_1 ,QCheckBox#checkBox_2{
 	font-size: 18px;
 	color: #000000;
 }
@@ -929,6 +929,10 @@ OneClickLoadDialog QPushButton#btnOk{
 	font-size: 24px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+OneClickLoadDialog QTableView#tableViewOneLoad{
+	border-radius: 5px;
+	padding: 5px;
 }
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/

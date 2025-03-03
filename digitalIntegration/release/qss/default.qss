@@ -283,8 +283,11 @@ QLabel#labelUserIcon{
 
 QMenu {
     background-color: #eef2fb;
-    border: 2px solid #0078d7;
-   
+    border: none;
+	
+}
+QMenu::item:hover {
+    background-color: #a7cdff; /* 鼠标悬停时的背景颜色 */
 }
 
 FtpDialog QStackedWidget#stackedWidgetMain{
@@ -312,7 +315,7 @@ FtpDialog QTableView::item{
 	background-color: transparent;
 	font-size:14px;
 }
-FtpDialog  QTableView::item:selected{
+FtpDialog  QTableView::item:selected {
 	/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
 	background-color:#a7cdff;
 	font-size:14px;
@@ -637,7 +640,7 @@ QPushButton#btnUserNext{
 	margin:2px;
 	border-image:url(:/image/page_nect.png);	
 }
-QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end{
+QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end ,QCheckBox#checkBox_1 ,QCheckBox#checkBox_2{
 	font-size: 18px;
 	color: #000000;
 }
@@ -927,6 +930,10 @@ OneClickLoadDialog QPushButton#btnOk{
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
+OneClickLoadDialog QTableView#tableViewOneLoad{
+	border-radius: 5px;
+	padding: 5px;
+}
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/
 ResourceManageDialog QPushButton#btnCurve{
@@ -939,7 +946,7 @@ ResourceManageDialog QPushButton#btnList{
 	color: #7482a6;
 	border: none;
 }
-ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5{
+ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#groupBox_3 ,QGroupBox#groupBox_5 ,QGroupBox#groupBox_7{
 	border: 1px solid white;
 	border-radius: 5px;
 	padding: 20px;  /*设置 QTableView 的内边距 */
@@ -966,11 +973,6 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 	font-size: 18px;
 	color: #7c88a6;
 }
-
-ResourceManageDialog QWidget#widgetCpu ,QWidget#widgetMemory ,QWidget#widgetNet ,QWidget#widgetDisk ,QWidget#widgetGpu{
-
-}
-
 /*ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
 {
     image: url(:/image/CurveComboBox.png);
@@ -980,6 +982,12 @@ ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 
     border: none; /* 取消边框 */
     background-color: white; /* 可选：设置下拉框的背景颜色 */
     selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
+}
+
+QTableView#tableViewList::item:selected ,QTableView#tableViewIP1::item:selected ,QTableView#tableViewTool1::item:selected ,QTableView#tableViewTool2::item:selected ,QTableView#tableViewTool3::item:selected ,QTableView#tableViewTool4::item:selected{
+	/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
+	background-color:#a7cdff;
+	font-size:14px;
 }
 /* ------------------------资源管理页面----------------------end*/
 

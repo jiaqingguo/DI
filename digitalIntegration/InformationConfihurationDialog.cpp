@@ -104,13 +104,21 @@ void InformationConfihurationDialog::init()
 	common::setTableViewBasicConfiguration(ui->tableViewIP1);
 
 	ui->tableViewTool1->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // 允许用户交互式调整列宽
-	ui->tableViewTool1->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	//ui->tableViewTool1->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	ui->tableViewTool1->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui->tableViewTool1->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	ui->tableViewTool2->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-	ui->tableViewTool2->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	//ui->tableViewTool2->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	ui->tableViewTool2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui->tableViewTool2->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	ui->tableViewTool3->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-	ui->tableViewTool3->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	//ui->tableViewTool3->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	ui->tableViewTool3->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui->tableViewTool3->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	ui->tableViewTool4->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-	ui->tableViewTool4->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	//ui->tableViewTool4->horizontalHeader()->setStretchLastSection(true); // 让最后一列填满剩余空间
+	ui->tableViewTool4->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui->tableViewTool4->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
 	ui->tableViewIP1->setShowGrid(false);
 	ui->tableViewTool1->setShowGrid(false);
