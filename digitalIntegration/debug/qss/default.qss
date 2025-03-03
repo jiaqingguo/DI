@@ -108,7 +108,7 @@ QWidget#widgetM1{
 /* --------------------------------------  tabWIdget 嵌入 ------------------------------------- ----------------------start*/	
 
 QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
-		background-image: url(:/image/OneLoad.png);
+		background-image: url(:/image/Logo_background.png);
 		
 background-repeat: no-repeat; /* 禁止重复 */
 background-position: center;   /* 居中显示 */
