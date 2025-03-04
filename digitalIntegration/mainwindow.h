@@ -185,6 +185,8 @@ private:
 	void slot_reconnnectTimerOut();
 
 	void ChangeTreeItemIcon(QTreeWidgetItem*pItem);
+
+	void onDisconnected(); //断开连接的提示文字
 private:
 	Ui::MainWindow *ui;
 

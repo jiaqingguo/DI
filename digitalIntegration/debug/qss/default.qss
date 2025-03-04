@@ -686,23 +686,48 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 /* ------------------------ 登录页面----------------------start*/
 
 LoginDialog QWidget#page {
-	background-color:white;
+	border-image: url(:/image/login_backgroud.png);
+}
+LoginDialog QLabel#LabelTitle
+{
+	background-image: url(:/image/Icon_Logo.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 40px;
+	font-size: 22px;
+	color: #4f72ca;
+}
+LoginDialog QPushButton#BtnClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
 }
 LoginDialog QLabel#lblUser {
-	font-size: 28px;
+	font-size: 26px;
 	color: #191a25;
 }
 LoginDialog QLineEdit#leUser {
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
+	background-image: url(:/image/Icon_Yonghuming.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 35px;
 }
 LoginDialog QLineEdit#lePassword {
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
+	background-image: url(:/image/Icon_Mima.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 35px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);
@@ -710,12 +735,12 @@ LoginDialog QPushButton#btnLogin {
 	color: #ffffff;
 }
 LoginDialog QPushButton#btnChangePassword {
-	font-size: 20px;
+	font-size: 16px;
 	color: #8fa0cc;
 	border: none;
 }
 LoginDialog QPushButton#btnRegister {
-	font-size: 20px;
+	font-size: 16px;
 	color: #4f72ca;
 	border: none;
 }
@@ -926,7 +951,10 @@ AddToolDialog QPushButton#btnAdd{
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-
+QComboBox#comboBoxDisplayMode QAbstractItemView ,QComboBox#comboBoxHost QAbstractItemView ,QComboBox#comboBoxToolNames QAbstractItemView
+{
+    selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
+}
 
 /* ------------------------标签页新增工具页面----------------------end*/
 
@@ -951,8 +979,9 @@ OneClickLoadDialog QPushButton#btnOk{
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QTableView#tableViewOneLoad{
+	border: 1px solid gray;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 0.5px;
 }
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/
@@ -997,14 +1026,12 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 {
     image: url(:/image/CurveComboBox.png);
 }*/
-ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView
+ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView ,QComboBox#comboBox QAbstractItemView
 {
-    border: none; /* 取消边框 */
-    background-color: white; /* 可选：设置下拉框的背景颜色 */
     selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
 }
 
-QTableView#tableViewList::item:selected ,QTableView#tableViewIP1::item:selected ,QTableView#tableViewTool1::item:selected ,QTableView#tableViewTool2::item:selected ,QTableView#tableViewTool3::item:selected ,QTableView#tableViewTool4::item:selected{
+QTableView#tableViewList::item:selected ,QTableView#tableViewIP1::item:selected ,QTableView#tableViewTool1::item:selected ,QTableView#tableViewTool2::item:selected ,QTableView#tableViewTool3::item:selected ,QTableView#tableViewTool4::item:selected ,QTableView#tableViewOneLoad::item:selected{
 	/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
 	background-color:#a7cdff;
 	font-size:14px;
