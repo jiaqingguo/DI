@@ -696,8 +696,8 @@ LoginDialog QLabel#LabelTitle
 	background-image: url(:/image/Icon_Logo.png);
 	background-repeat: no-repeat;
     background-position: left center;
-	padding-left: 40px;
-	font-size: 22px;
+	padding-left: 45px;
+	font-size: 21px;
 	color: #4f72ca;
 }
 LoginDialog QPushButton#BtnClose 
@@ -709,8 +709,8 @@ LoginDialog QPushButton#BtnClose
 	border: none; 
 }
 LoginDialog QLabel#lblUser {
-	font-size: 26px;
-	color: #191a25;
+	font-size: 25px;
+	color: #4f72d0;
 }
 LoginDialog QLineEdit#leUser {
 	font-size: 18px;
@@ -753,50 +753,19 @@ LoginDialog QPushButton#btnRegister {
 ChangePwdDialog QWidget#page {
 	background-color:white;
 }
-ChangePwdDialog QLabel#labelUser{
-	font-size: 20px;
-	color: #484f7a;
-	
+ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLabel#labelConfirmPwd{
+	font-size: 18px;
+	color: #484f7a;	
 }
-ChangePwdDialog QLabel#labelPassword{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLabel#labelNewPwd{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLabel#labelConfirmPwd{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLineEdit#lineEditUserName{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditPassword{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditNewPwd{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditConfrimPwd{
-	font-size: 20px;
+ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 ChangePwdDialog QPushButton#btnModify{
 	border-image: url(:/image/btnxiao.png)0 0 0 0 stretch;
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 }
 
@@ -806,54 +775,24 @@ ChangePwdDialog QPushButton#btnModify{
 RegisterDialog QWidget#page {
 	background-color:white;
 }
-RegisterDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelName ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot{ 
-	font-size: 20px;
+QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot
+{ 
+	font-size: 18px;
 	color: #484f7a;
 }
-RegisterDialog QLineEdit#lineEditUserName{
-	font-size: 20px;
+RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-RegisterDialog QLineEdit#lineEditPassword{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditName{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditDepartment{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditJobTtile{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditPhoneNumber{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
+
 RegisterDialog QComboBox#comboBoxRoot{
-	font-size: 20px;
+	font-size: 18px;
 	color: #abadb2;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
 RegisterDialog QPushButton#btnRegister{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
@@ -866,66 +805,66 @@ QDialog#AddToolInfoDialog{
 	background-color: white;
 }
 AddToolInfoDialog QLabel#label_2{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label_4{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#accelerateRadioButton{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#nodeRadioButton{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label4{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label5{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label6{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLineEdit#lineEditToolName{
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEditToolPath{
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEdit{
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
-	font-size: 20px;
+	font-size: 18px;
 	color: #000000;
 }
 AddToolInfoDialog QPushButton#btnChooseImage{
-	font-size: 20px;
+	font-size: 18px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 AddToolInfoDialog QPushButton#btnOK{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
@@ -936,7 +875,7 @@ QDialog#AddToolDialog{
 	background-color: white;
 }
 AddToolDialog QLabel#labelname ,QLabel#labelOpenWay ,QLabel#labelToolName ,QLabel#labelONHost{
-	font-size: 20px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolDialog QLineEdit#lineEditTabName{
@@ -950,7 +889,7 @@ AddToolDialog QComboBox#comboBoxDisplayMode ,QComboBox#comboBoxHost ,QComboBox#c
 	color: #000000;
 }
 AddToolDialog QPushButton#btnAdd{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
@@ -967,17 +906,17 @@ QDialog#OneClickLoadDialog{
 	background-color: white;
 }
 OneClickLoadDialog QPushButton#btnAdd{
-	font-size: 20px;
+	font-size: 18px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QPushButton#btnDel{
-	font-size: 20px;
+	font-size: 18px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QPushButton#btnOk{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }

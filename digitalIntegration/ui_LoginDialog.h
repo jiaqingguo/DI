@@ -141,19 +141,19 @@ public:
         gridLayout_2->addLayout(verticalLayout_3, 1, 0, 1, 1);
 
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(10);
+        verticalLayout_2->setSpacing(2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 20, 0, -1);
         btnLogin = new QPushButton(page);
         btnLogin->setObjectName(QString::fromUtf8("btnLogin"));
-        btnLogin->setMinimumSize(QSize(440, 60));
+        btnLogin->setMinimumSize(QSize(440, 65));
 
         verticalLayout_2->addWidget(btnLogin);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, -1, 5, -1);
+        horizontalLayout->setContentsMargins(9, -1, 5, 9);
         btnChangePassword = new QPushButton(page);
         btnChangePassword->setObjectName(QString::fromUtf8("btnChangePassword"));
 

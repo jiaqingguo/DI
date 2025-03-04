@@ -61,7 +61,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(310, 410);
+        AddToolInfoDialog->resize(310, 312);
         verticalLayout = new QVBoxLayout(AddToolInfoDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -112,7 +112,7 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout_3->setContentsMargins(9, 0, 9, 0);
         accelerateRadioButton = new QRadioButton(AddToolInfoDialog);
         accelerateRadioButton->setObjectName(QString::fromUtf8("accelerateRadioButton"));
         accelerateRadioButton->setMinimumSize(QSize(0, 0));
@@ -132,6 +132,7 @@ public:
         widget->setObjectName(QString::fromUtf8("widget"));
         gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(-1, 0, -1, 0);
         label4 = new QLabel(widget);
         label4->setObjectName(QString::fromUtf8("label4"));
 

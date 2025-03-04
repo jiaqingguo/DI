@@ -9,14 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
-    <height>346</height>
+    <width>257</width>
+    <height>308</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
     <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -67,14 +73,14 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="labelUser">
+          <widget class="QLabel" name="labelUserRegist">
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;用户名&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="labelPassword">
+          <widget class="QLabel" name="labelPasswordRegist">
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;密码&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
@@ -155,7 +161,7 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="labelName">
+          <widget class="QLabel" name="labelNameRegist">
            <property name="text">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用人&lt;span style=&quot; color:#ff0000;&quot;&gt;*&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>

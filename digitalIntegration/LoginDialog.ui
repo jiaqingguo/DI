@@ -192,7 +192,7 @@
        <item row="2" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
-          <number>10</number>
+          <number>2</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -208,7 +208,7 @@
            <property name="minimumSize">
             <size>
              <width>440</width>
-             <height>60</height>
+             <height>65</height>
             </size>
            </property>
            <property name="text">
@@ -226,6 +226,9 @@
            </property>
            <property name="rightMargin">
             <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
            </property>
            <item>
             <widget class="QPushButton" name="btnChangePassword">
