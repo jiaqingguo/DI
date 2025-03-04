@@ -30,21 +30,22 @@ public:
     QGridLayout *gridLayout_2;
     QStackedWidget *stackedWidget;
     QWidget *page;
-    QGridLayout *gridLayout_3;
-    QWidget *wgdBorder;
     QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout_4;
-    QPushButton *btnLogin;
-    QHBoxLayout *horizontalLayout_5;
+    QHBoxLayout *horizontalLayout;
     QPushButton *btnChangePassword;
-    QSpacerItem *horizontalSpacer_6;
+    QSpacerItem *horizontalSpacer_4;
     QPushButton *btnRegister;
+    QPushButton *btnLogin;
+    QWidget *widgetTitle;
     QHBoxLayout *horizontalLayout_4;
-    QLabel *lblUser;
-    QSpacerItem *horizontalSpacer_9;
-    QGridLayout *gridLayout_4;
-    QLineEdit *leUser;
+    QLabel *LabelTitle;
+    QSpacerItem *horizontalSpacer_6;
+    QPushButton *BtnClose;
     QLineEdit *lePassword;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *lblUser;
+    QSpacerItem *horizontalSpacer_5;
+    QLineEdit *leUser;
     QWidget *page_2;
     QHBoxLayout *horizontalLayout_6;
     QSpacerItem *horizontalSpacer_3;
@@ -69,90 +70,89 @@ public:
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
         stackedWidget = new QStackedWidget(LoginDialog);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
+        stackedWidget->setMinimumSize(QSize(425, 325));
+        stackedWidget->setMaximumSize(QSize(425, 325));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        gridLayout_3 = new QGridLayout(page);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        wgdBorder = new QWidget(page);
-        wgdBorder->setObjectName(QString::fromUtf8("wgdBorder"));
-        wgdBorder->setMinimumSize(QSize(0, 0));
-        wgdBorder->setMaximumSize(QSize(16777215, 16777215));
-        gridLayout = new QGridLayout(wgdBorder);
+        gridLayout = new QGridLayout(page);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(-1, 20, -1, 10);
-        btnLogin = new QPushButton(wgdBorder);
-        btnLogin->setObjectName(QString::fromUtf8("btnLogin"));
-        btnLogin->setMinimumSize(QSize(0, 60));
-        btnLogin->setAutoFillBackground(false);
-
-        verticalLayout_4->addWidget(btnLogin);
-
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        btnChangePassword = new QPushButton(wgdBorder);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(9, -1, 9, -1);
+        btnChangePassword = new QPushButton(page);
         btnChangePassword->setObjectName(QString::fromUtf8("btnChangePassword"));
-        btnChangePassword->setMinimumSize(QSize(0, 0));
 
-        horizontalLayout_5->addWidget(btnChangePassword);
+        horizontalLayout->addWidget(btnChangePassword);
 
-        horizontalSpacer_6 = new QSpacerItem(171, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_5->addItem(horizontalSpacer_6);
+        horizontalLayout->addItem(horizontalSpacer_4);
 
-        btnRegister = new QPushButton(wgdBorder);
+        btnRegister = new QPushButton(page);
         btnRegister->setObjectName(QString::fromUtf8("btnRegister"));
-        btnRegister->setMinimumSize(QSize(0, 0));
 
-        horizontalLayout_5->addWidget(btnRegister);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_5);
+        horizontalLayout->addWidget(btnRegister);
 
 
-        gridLayout->addLayout(verticalLayout_4, 2, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 7, 0, 1, 2);
 
-        horizontalLayout_4 = new QHBoxLayout();
+        btnLogin = new QPushButton(page);
+        btnLogin->setObjectName(QString::fromUtf8("btnLogin"));
+        btnLogin->setMinimumSize(QSize(0, 55));
+
+        gridLayout->addWidget(btnLogin, 6, 0, 1, 2);
+
+        widgetTitle = new QWidget(page);
+        widgetTitle->setObjectName(QString::fromUtf8("widgetTitle"));
+        horizontalLayout_4 = new QHBoxLayout(widgetTitle);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        lblUser = new QLabel(wgdBorder);
-        lblUser->setObjectName(QString::fromUtf8("lblUser"));
-        lblUser->setMinimumSize(QSize(0, 0));
-        lblUser->setMaximumSize(QSize(16777215, 16777215));
+        LabelTitle = new QLabel(widgetTitle);
+        LabelTitle->setObjectName(QString::fromUtf8("LabelTitle"));
 
-        horizontalLayout_4->addWidget(lblUser);
+        horizontalLayout_4->addWidget(LabelTitle);
 
-        horizontalSpacer_9 = new QSpacerItem(268, 13, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_6 = new QSpacerItem(222, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_4->addItem(horizontalSpacer_9);
+        horizontalLayout_4->addItem(horizontalSpacer_6);
+
+        BtnClose = new QPushButton(widgetTitle);
+        BtnClose->setObjectName(QString::fromUtf8("BtnClose"));
+        BtnClose->setMinimumSize(QSize(44, 36));
+        BtnClose->setMaximumSize(QSize(44, 36));
+
+        horizontalLayout_4->addWidget(BtnClose);
 
 
-        gridLayout->addLayout(horizontalLayout_4, 0, 0, 1, 1);
+        gridLayout->addWidget(widgetTitle, 0, 0, 1, 2);
 
-        gridLayout_4 = new QGridLayout();
-        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
-        gridLayout_4->setHorizontalSpacing(6);
-        gridLayout_4->setVerticalSpacing(10);
-        gridLayout_4->setContentsMargins(-1, 20, -1, 5);
-        leUser = new QLineEdit(wgdBorder);
-        leUser->setObjectName(QString::fromUtf8("leUser"));
-        leUser->setMinimumSize(QSize(0, 50));
-        leUser->setMaximumSize(QSize(16777215, 16777215));
-
-        gridLayout_4->addWidget(leUser, 0, 0, 1, 1);
-
-        lePassword = new QLineEdit(wgdBorder);
+        lePassword = new QLineEdit(page);
         lePassword->setObjectName(QString::fromUtf8("lePassword"));
-        lePassword->setMinimumSize(QSize(0, 50));
-        lePassword->setEchoMode(QLineEdit::Password);
+        lePassword->setMinimumSize(QSize(0, 45));
 
-        gridLayout_4->addWidget(lePassword, 1, 0, 1, 1);
+        gridLayout->addWidget(lePassword, 3, 0, 1, 1);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, -1, -1, -1);
+        lblUser = new QLabel(page);
+        lblUser->setObjectName(QString::fromUtf8("lblUser"));
+        lblUser->setMaximumSize(QSize(16777215, 40));
+
+        horizontalLayout_3->addWidget(lblUser);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_5);
 
 
-        gridLayout->addLayout(gridLayout_4, 1, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout_3, 1, 0, 1, 2);
 
+        leUser = new QLineEdit(page);
+        leUser->setObjectName(QString::fromUtf8("leUser"));
+        leUser->setMinimumSize(QSize(0, 45));
 
-        gridLayout_3->addWidget(wgdBorder, 0, 0, 1, 1);
+        gridLayout->addWidget(leUser, 2, 0, 1, 1);
 
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
@@ -233,12 +233,12 @@ public:
     void retranslateUi(QDialog *LoginDialog)
     {
         LoginDialog->setWindowTitle(QCoreApplication::translate("LoginDialog", "\346\225\260\345\255\227\346\240\267\346\234\272\344\270\200\344\275\223\345\214\226\345\271\263\345\217\260", nullptr));
-        btnLogin->setText(QCoreApplication::translate("LoginDialog", "\347\231\273 \345\275\225", nullptr));
         btnChangePassword->setText(QCoreApplication::translate("LoginDialog", "\344\277\256\346\224\271\345\257\206\347\240\201", nullptr));
         btnRegister->setText(QCoreApplication::translate("LoginDialog", "\346\263\250\345\206\214", nullptr));
+        btnLogin->setText(QCoreApplication::translate("LoginDialog", "\347\231\273 \345\275\225", nullptr));
+        LabelTitle->setText(QCoreApplication::translate("LoginDialog", "\346\225\260\345\255\227\346\240\267\346\234\272\344\270\200\344\275\223\345\214\226\345\271\263\345\217\260", nullptr));
+        BtnClose->setText(QString());
         lblUser->setText(QCoreApplication::translate("LoginDialog", "\346\254\242\350\277\216\347\231\273\345\275\225", nullptr));
-        leUser->setPlaceholderText(QString());
-        lePassword->setPlaceholderText(QString());
         label->setText(QCoreApplication::translate("LoginDialog", "\346\214\207\347\272\271\351\252\214\350\257\201", nullptr));
         labelFingerprint->setText(QString());
         btnFingerprint->setText(QCoreApplication::translate("LoginDialog", "\345\274\200\345\247\213\351\252\214\350\257\201", nullptr));

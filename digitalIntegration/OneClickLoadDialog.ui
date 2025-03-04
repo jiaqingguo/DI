@@ -45,6 +45,9 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_9">
+       <property name="spacing">
+        <number>15</number>
+       </property>
        <property name="leftMargin">
         <number>9</number>
        </property>

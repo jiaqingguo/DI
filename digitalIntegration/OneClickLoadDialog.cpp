@@ -87,7 +87,7 @@ void OneClickLoadDialog::slot_btnAdd()
 	this->comboBox = new QComboBox();
 	//comboBox->setEditable(false);
 	comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
-
+	comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
 	table_ip data;
@@ -114,10 +114,12 @@ void OneClickLoadDialog::slot_btnAdd()
 	}
 	int newRowIndex = m_model->rowCount();
 	QStandardItem *item2 = new QStandardItem(QString::number(newRowIndex + 1));
+	item2->setTextAlignment(Qt::AlignCenter);
 	m_model->setItem(newRowIndex, 0, item2);
 	QModelIndex index = m_model->index(newRowIndex, 0);
 	m_model->setData(index, stData.id, Qt::UserRole);
 	item2->setEditable(false); // 使项不可编辑，以便在编辑模式下显示QComboBox
+	item2->setTextAlignment(Qt::AlignCenter);
 	m_model->setItem(newRowIndex, 1, item2);
 	comboBox->setProperty("row",newRowIndex);
 	ui->tableViewOneLoad->setIndexWidget(ui->tableViewOneLoad->model()->index(newRowIndex, 1), comboBox);
@@ -240,6 +242,7 @@ void OneClickLoadDialog::initTableView()
 					m_model->insertRow(newRowIndex); // 插入新行
 
 					QStandardItem* item = new QStandardItem(QString::number(newRowIndex + 1));
+					item->setTextAlignment(Qt::AlignCenter);
 					m_model->setItem(newRowIndex, 0, item);
 					QModelIndex index = m_model->index(newRowIndex, 0);
 					m_model->setData(index,stData.id,Qt::UserRole);
@@ -248,9 +251,10 @@ void OneClickLoadDialog::initTableView()
 
 					// 创建QComboBox并设置模型数据
 					QComboBox *comboBox = new QComboBox();
+					item->setTextAlignment(Qt::AlignCenter);
 					m_model->setItem(newRowIndex, 1, item);
-					//comboBox->setFixedHeight(20);
 					comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
+					comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 					std::map<std::string, table_ip> ipMap;
 					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
 					{

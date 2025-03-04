@@ -20,10 +20,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui(new Ui::LoginDialog)
 {
 	ui->setupUi(this);
-	//setWindowTitle(("数字样机一体化平台"));
 	ui->stackedWidget->setCurrentIndex(0);
-	//setWindowTitle(GBK_STRING("数字样机一体化平台"));
-	
 	QRegExp rx("[0-9a-zA-Z]{19}");
 	ui->leUser->setValidator(new QRegExpValidator(rx));
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
@@ -32,28 +29,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	//ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
 	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
 
-	// 加载图片并调整大小
-	QPixmap pixmap(":/image/user.png");
-	//pixmap = pixmap.scaled(QSize(200,200), Qt::KeepAspectRatio);
-	QAction* userIconAction = new QAction(QIcon(pixmap), "", this);
-	ui->leUser->addAction(userIconAction, QLineEdit::LeadingPosition);
-	//设置其中文字大小
 	ui->leUser->setPlaceholderText(GBK_STRING("请输入您的用户名"));
-	//ui->leUser->setStyleSheet("QLineEdit { font-size: 20px; color: #abadb2; border: 1px solid gray;border-radius: 5px;}");
-
-
-	// 加载图片并调整大小
-	QPixmap pixmap2(":/image/password.png");
-	//pixmap2 = pixmap2.scaled(QSize(200, 200), Qt::KeepAspectRatio);
-	QAction* PasswordIconAction = new QAction(QIcon(pixmap2), "", this);
-	ui->lePassword->addAction(PasswordIconAction, QLineEdit::LeadingPosition);
-	//设置其中文字大小
 	ui->lePassword->setPlaceholderText(GBK_STRING("请输入您的密码"));
-	//ui->lePassword->setStyleSheet("QLineEdit { font-size: 20px; color: #abadb2; border: 1px solid gray;border-radius: 5px;}");
-
-	//ui->btnLogin->setStyleSheet("QPushButton {background-image: url(:/image/login.png);}");
-	//border: 1px solid gray;border-radius: 5px;
-	//ui->lblPwd->setStyleSheet("border-image: url(:/image/password.png); color: rgb(255, 102, 102);");
 	connect(ui->btnLogin, &QPushButton::clicked, this, &LoginDialog::slot_btnLoginClicked);
 	connect(ui->btnRegister, &QPushButton::clicked, this, &LoginDialog::slot_btnExitClicked);
 	connect(ui->btnChangePassword, &QPushButton::clicked, this, &LoginDialog::slot_btnChangePassword);
@@ -70,6 +47,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);*/
 
 	//this->registerDialog = new RegisterDialog();
+	connect(ui->BtnClose, &QPushButton::clicked, this, &LoginDialog::close);
 }
 
 LoginDialog::~LoginDialog()

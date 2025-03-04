@@ -53,6 +53,7 @@ public:
         horizontalLayout_9->addWidget(tableViewOneLoad);
 
         verticalLayout_9 = new QVBoxLayout();
+        verticalLayout_9->setSpacing(15);
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
         verticalLayout_9->setContentsMargins(9, 5, 9, 9);
         btnAdd = new QPushButton(OneClickLoadDialog);

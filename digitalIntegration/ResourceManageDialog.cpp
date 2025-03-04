@@ -27,16 +27,16 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	ui->tableViewList->verticalHeader()->setDefaultSectionSize(45);//设置每一行的高度为50
 
 	//根据下拉列表中最长项的长度来调整控件的宽度
-	/*ui->comboBox1->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	ui->comboBox1->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	ui->comboBox2->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	ui->comboBox3->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	ui->comboBox4->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	ui->comboBox5->setSizeAdjustPolicy(QComboBox::AdjustToContents);*/
-	ui->comboBox1->setFixedWidth(150);
+	ui->comboBox5->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	/*ui->comboBox1->setFixedWidth(150);
 	ui->comboBox2->setFixedWidth(150);
 	ui->comboBox3->setFixedWidth(150);
 	ui->comboBox4->setFixedWidth(150);
-	ui->comboBox5->setFixedWidth(150);
+	ui->comboBox5->setFixedWidth(150);*/
 
 	// 创建自定义委托并设置到 QTableView
 	BackgroundDelegate *delegate = new BackgroundDelegate(ui->tableViewList);
@@ -340,7 +340,7 @@ void ResourceManageDialog::initWebViewGpu(QWidget* widget)
 
 void ResourceManageDialog::startWebFlushTimer()
 {
-	m_timer->start(3000);
+	m_timer->start(2000);
 }
 
 void ResourceManageDialog::stopWebFlushTimer()
