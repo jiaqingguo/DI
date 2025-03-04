@@ -40,36 +40,6 @@
 #include <thread>
 #include <functional>
 
-//EmbeddedWidget::EmbeddedWidget(HWND hwnd, QWidget* parent) : QWidget(parent), m_hwnd(hwnd) {
-//	// 将原生窗口嵌入到 Qt 的 QWidget 中
-//	m_windowContainer = QWidget::createWindowContainer(QWindow::fromWinId((WId)m_hwnd), this);
-//	m_windowContainer->setFocusPolicy(Qt::StrongFocus);  // 确保嵌入窗口可以获取焦点
-//
-//	// 调整原生窗口大小，使其铺满 QWidget
-//	adjustEmbeddedWindowSize();
-//}
-//
-//// 调整嵌入窗口的大小为 QWidget 的大小
-//void EmbeddedWidget::adjustEmbeddedWindowSize()
-//{
-//	if (m_hwnd) {
-//		// 获取 QWidget 的大小
-//		QRect geometry = this->geometry();
-//		int width = geometry.width();
-//		int height = geometry.height();
-//
-//		// 调整外部窗口的大小和位置
-//		SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);
-//	}
-//}
-//
-//
-//// 重写 resizeEvent，以防 QWidget 的大小改变时需要重新调整外部窗口的大小
-//void EmbeddedWidget::resizeEvent(QResizeEvent* event) {
-//	QWidget::resizeEvent(event);
-//	adjustEmbeddedWindowSize();
-//}
-
 
 MainWindow* g_pMainWindow = NULL;
 
@@ -108,9 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->statusbar->hide();
 	initInitface();
 
-	//QString target = "\\\\192.168.0.250\\"; // 实际路径
-	//QString username = "share"; // 实际用户名
-	//QString password = "Share123"; // 实际密码
 
 	//common::addNetworkCredential(target, username, password);
 	getBladeComputerData(common::setHostData);
@@ -146,12 +113,7 @@ MainWindow::~MainWindow()
 		delete m_ResourceManageDialog;*/
 	if (m_DataManageDialog != nullptr)
 		delete m_DataManageDialog;
-	/*if (m_InforConfihurationDialog != nullptr)
-		delete m_InforConfihurationDialog;*/
-	/*if (m_ApprovalProgressDialog != nullptr)
-		delete m_ApprovalProgressDialog;*/
-	/*if (m_FilemangageDialog != nullptr)
-		delete m_FilemangageDialog;*/
+
 	delete ui;
 }
 
@@ -448,56 +410,7 @@ void MainWindow::initTreeMenu()
 	m_pApprovalProgressNode->setData(0, Qt::UserRole, "m_pApprovalProgressNode");
 	m_pApprovalProgressNode->setFont(0, font2);
 
-	/*QTreeWidgetItem* functionPrototypeChild1 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VS")));
 	
-	functionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VS");
-	functionPrototypeChild1->setSizeHint(0, QSize(75, 75));
-	m_pApprovalProgressNode->setFont(0, font2);
-	QTreeWidgetItem* functionPrototypeChild2 = new QTreeWidgetItem(m_pFunctionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	functionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	functionPrototypeChild2->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* geometryPrototypeChild1 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("WPS")));
-	geometryPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "WPS");
-	geometryPrototypeChild1->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* geometryPrototypeChild2 = new QTreeWidgetItem(m_pGeometryPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
-	geometryPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	geometryPrototypeChild2->setSizeHint(0, QSize(75, 75));
-
-	QTreeWidgetItem* performancePrototypeChild1 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	performancePrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	performancePrototypeChild1->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* performancePrototypeChild2 = new QTreeWidgetItem(m_pPerformancePrototypeNode, QStringList(QString::fromLocal8Bit("Navicat")));
-	performancePrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "Navicat");
-	performancePrototypeChild2->setSizeHint(0, QSize(75, 75));
-
-	QTreeWidgetItem* productionPrototypeChild1 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("FreeCAD")));
-	productionPrototypeChild1->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "FreeCAD");
-	productionPrototypeChild1->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* productionPrototypeChild2 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild2->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild2->setSizeHint(0, QSize(75, 75));
-
-	QTreeWidgetItem* productionPrototypeChild3 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild3->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild3->setSizeHint(0, QSize(75, 75));
-
-	QTreeWidgetItem* productionPrototypeChild4 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild4->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild4->setSizeHint(0, QSize(75, 75));
-
-	QTreeWidgetItem* productionPrototypeChild5 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild5->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild5->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* productionPrototypeChild6 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild6->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild6->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* productionPrototypeChild7 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild7->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild7->setSizeHint(0, QSize(75, 75));
-	QTreeWidgetItem* productionPrototypeChild8 = new QTreeWidgetItem(m_pProductionPrototypeNode, QStringList(QString::fromLocal8Bit("VSCoode")));
-	productionPrototypeChild8->setData(0, Qt::WA_LayoutUsesWidgetRect + 1, "VSCoode");
-	productionPrototypeChild8->setSizeHint(0, QSize(75, 75));*/
-
 	
 
 	// 展开所有节点
@@ -535,11 +448,6 @@ void MainWindow::udpStartExeThread(const QString strData, const QString strIp, c
 			break;
 		}
 
-		/* Json jsonData = Json::parse(s_buf);
-		  std::cout << " recvData : " << s_buf << std::endl;
-		  int jsonArraySize = jsonData["plcdata"].size();
-		  if (jsonArraySize > m_inputNames.size())
-			  return;*/
 		return;
 	}
 }
@@ -555,9 +463,7 @@ void MainWindow::setUserNameText(const QString& userName)
 }
 void MainWindow::showGif()
 {
-	// m_FilemangageDialog->hide();
 	m_GifDialog->show();
-	//m_GifDialog->update();
 }
 void MainWindow::closeGif()
 {
