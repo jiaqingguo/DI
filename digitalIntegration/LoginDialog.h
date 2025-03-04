@@ -1,8 +1,8 @@
-#ifndef LOGINDIALOG_H
+ï»¿#ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
 #include <QDialog>
-
+#include <QMouseEvent>
 //class fingerDlg;
 class RegisterDialog;
 namespace Ui {
@@ -20,25 +20,25 @@ public:
     ~LoginDialog();
 	/*!
 	 * \enum	eLoginState
-	 * \brief	µÇÂ¼×´Ì¬.
+	 * \brief	ç™»å½•çŠ¶æ€.
 	 */
 	enum eLoginState
 	{
-		eLogin_Start = 0,				// ¿ªÊ¼µÇÂ¼
-		eLogin_Timeout,					// µÇÂ¼³¬Ê±
-		eLogin_End,						// ½áÊøµÇÂ¼
+		eLogin_Start = 0,				// å¼€å§‹ç™»å½•
+		eLogin_Timeout,					// ç™»å½•è¶…æ—¶
+		eLogin_End,						// ç»“æŸç™»å½•
 	};
 
 	/*!
 	 * \enum	eLoginResult
-	 * \brief	µÇÂ¼½á¹û.
+	 * \brief	ç™»å½•ç»“æœ.
 	 */
 	enum eLoginResult
 	{
-		eLogin_Succee = 0,				// ³É¹¦
-		eLogin_Faild = -1,				// Ê§°Ü
-		eLogin_DBFaild = 1,				// Êı¾İ¿âÁ¬½ÓÊ§°Ü
-		eLogin_UserFaild = 2,			// ÓÃ»§Ãû»òÃÜÂë´íÎó
+		eLogin_Succee = 0,				// æˆåŠŸ
+		eLogin_Faild = -1,				// å¤±è´¥
+		eLogin_DBFaild = 1,				// æ•°æ®åº“è¿æ¥å¤±è´¥
+		eLogin_UserFaild = 2,			// ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯
 	};
 
 	
@@ -85,18 +85,18 @@ private:
 private:
 
 	int m_userID;
-	// µ±Ç°µÇÂ¼×´Ì¬
+	// å½“å‰ç™»å½•çŠ¶æ€
 	int m_iState;
 
-	// µÇÂ¼¶¨Ê±Æ÷
+	// ç™»å½•å®šæ—¶å™¨
 	//QTimer m_Timer;
-	int m_pop = 1; // ÓÃ»§È¨ÏŞ;
-	// µ±Ç°µÇÂ¼ÓÃ»§
+	int m_pop = 1; // ç”¨æˆ·æƒé™;
+	// å½“å‰ç™»å½•ç”¨æˆ·
 	QString m_sUser;
 private:
     Ui::LoginDialog *ui;
 
-	//Ö¸ÎÆ
+	//æŒ‡çº¹
 	//fingerDlg *m_fingerDlg = nullptr;
 	
 	//RegisterDialog *registerDialog = nullptr;
@@ -104,6 +104,36 @@ public slots:
 	//void slot_login_succ();
 	//void slot_regist_succ();
 	//void slot_no_regist_finger();
+protected:
+	void mousePressEvent(QMouseEvent *event) override 
+	{
+		if (event->button() == Qt::LeftButton) 
+		{
+			dragPosition = event->globalPos() - frameGeometry().topLeft();
+			event->accept();
+		}
+	}
+
+	void mouseMoveEvent(QMouseEvent *event) override 
+	{
+		if (event->buttons() & Qt::LeftButton) 
+		{
+			move(event->globalPos() - dragPosition);
+			event->accept();
+		}
+	}
+	//void resizeEvent(QResizeEvent *event) override 
+	//{
+	//	QWidget::resizeEvent(event);
+
+	//	// è®¾ç½®çª—å£é®ç½©ï¼Œè£å‰ªåœ†è§’
+	//	QRegion region(rect(), QRegion::Rectangle);
+	//	QRegion roundedRegion(rect().adjusted(0, 0, -1, -1), QRegion::Ellipse);
+	//	region = region.subtracted(roundedRegion);
+	//	setMask(region);
+	//}
+private:
+	QPoint dragPosition;
 };
 
 #endif // LOGINDIALOG_H

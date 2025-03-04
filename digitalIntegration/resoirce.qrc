@@ -89,5 +89,7 @@
         <file>image/treeItem_close.png</file>
         <file>image/treeItem_open.png</file>
         <file>image/Icon_Logo.png</file>
+        <file>image/Icon_Mima.png</file>
+        <file>image/Icon_Yonghuming.png</file>
     </qresource>
 </RCC>

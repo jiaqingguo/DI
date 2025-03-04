@@ -685,8 +685,9 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
 
-LoginDialog QWidget#page {
-	border-image: url(:/image/login_backgroud.png);
+QDialog#LoginDialog
+{
+	border-image: url(:/image/IpListBackGround.png) 10 30 35 15;
 }
 LoginDialog QLabel#LabelTitle
 {
