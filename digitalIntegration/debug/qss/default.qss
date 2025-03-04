@@ -157,15 +157,17 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab {
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
 		min-width: 100px;
-        min-height: 40px;  
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
+		
 	}
 QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
 		background-image: url(:/image/tabBar_blue.png);
 		
-        
 		 color:white;
 		background-repeat: no-repeat; 
         background-position: center; 
@@ -176,13 +178,13 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
 QTabBar::close-button {
     subcontrol-position: right;
     subcontrol-origin: padding;
-    width: 0px;
-    height: 0px;
+	
 }
 
 /* 设置自定义关闭按钮图标 */
 QTabBar::close-button {
     image: url(:/image/tarBar_close.png); /* 默认图标 */
+	margin:3px;
 }
 
 QTabBar::close-button:hover {
