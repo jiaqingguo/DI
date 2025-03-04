@@ -15,7 +15,6 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -28,6 +27,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "ApprovalProgressDialog.h"
+#include "CustomTitleWidget.h"
 #include "FtpDialog.h"
 #include "InformationConfihurationDialog.h"
 #include "ResourceManageDialog.h"
@@ -54,15 +54,7 @@ public:
     QTreeWidget *treeWidget;
     QWidget *widget;
     QVBoxLayout *verticalLayout_6;
-    QWidget *widgetTital;
-    QHBoxLayout *horizontalLayout_6;
-    QLabel *btnChildTitle;
-    QSpacerItem *horizontalSpacer;
-    QLabel *labelUserIcon;
-    QLabel *labelUserName;
-    QPushButton *btnMinimize;
-    QPushButton *btnMaximize;
-    QPushButton *btnClose;
+    CustomTitleWidget *widgetTital;
     QStackedWidget *stackedWidget;
     ResourceManageDialog *m_ResourceManageDialog;
     InformationConfihurationDialog *m_InforConfihurationDialog;
@@ -197,61 +189,8 @@ public:
         widget->setObjectName(QString::fromUtf8("widget"));
         verticalLayout_6 = new QVBoxLayout(widget);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-        widgetTital = new QWidget(widget);
+        widgetTital = new CustomTitleWidget(widget);
         widgetTital->setObjectName(QString::fromUtf8("widgetTital"));
-        horizontalLayout_6 = new QHBoxLayout(widgetTital);
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        btnChildTitle = new QLabel(widgetTital);
-        btnChildTitle->setObjectName(QString::fromUtf8("btnChildTitle"));
-
-        horizontalLayout_6->addWidget(btnChildTitle);
-
-        horizontalSpacer = new QSpacerItem(343, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_6->addItem(horizontalSpacer);
-
-        labelUserIcon = new QLabel(widgetTital);
-        labelUserIcon->setObjectName(QString::fromUtf8("labelUserIcon"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(labelUserIcon->sizePolicy().hasHeightForWidth());
-        labelUserIcon->setSizePolicy(sizePolicy);
-        labelUserIcon->setMinimumSize(QSize(40, 25));
-        labelUserIcon->setMaximumSize(QSize(40, 25));
-
-        horizontalLayout_6->addWidget(labelUserIcon);
-
-        labelUserName = new QLabel(widgetTital);
-        labelUserName->setObjectName(QString::fromUtf8("labelUserName"));
-        sizePolicy.setHeightForWidth(labelUserName->sizePolicy().hasHeightForWidth());
-        labelUserName->setSizePolicy(sizePolicy);
-        labelUserName->setMinimumSize(QSize(0, 25));
-        labelUserName->setMaximumSize(QSize(16777215, 25));
-
-        horizontalLayout_6->addWidget(labelUserName);
-
-        btnMinimize = new QPushButton(widgetTital);
-        btnMinimize->setObjectName(QString::fromUtf8("btnMinimize"));
-        btnMinimize->setMinimumSize(QSize(44, 36));
-        btnMinimize->setMaximumSize(QSize(44, 36));
-
-        horizontalLayout_6->addWidget(btnMinimize);
-
-        btnMaximize = new QPushButton(widgetTital);
-        btnMaximize->setObjectName(QString::fromUtf8("btnMaximize"));
-        btnMaximize->setMinimumSize(QSize(44, 36));
-        btnMaximize->setMaximumSize(QSize(44, 36));
-
-        horizontalLayout_6->addWidget(btnMaximize);
-
-        btnClose = new QPushButton(widgetTital);
-        btnClose->setObjectName(QString::fromUtf8("btnClose"));
-        btnClose->setMinimumSize(QSize(44, 36));
-        btnClose->setMaximumSize(QSize(44, 36));
-
-        horizontalLayout_6->addWidget(btnClose);
-
 
         verticalLayout_6->addWidget(widgetTital);
 
@@ -580,12 +519,6 @@ public:
         btnTitleIcon->setText(QString());
         QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "1", nullptr));
-        btnChildTitle->setText(QString());
-        labelUserIcon->setText(QString());
-        labelUserName->setText(QCoreApplication::translate("MainWindow", "\347\224\250\346\210\2671", nullptr));
-        btnMinimize->setText(QString());
-        btnMaximize->setText(QString());
-        btnClose->setText(QString());
         btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         btnM1Load->setText(QString());
         btnM1Save->setText(QCoreApplication::translate("MainWindow", "\344\270\200\351\224\256\344\277\235\345\255\230", nullptr));

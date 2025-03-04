@@ -86,5 +86,7 @@
         <file>image/ProductionPrototype.png</file>
         <file>image/ProductionPrototype_select.png</file>
         <file>image/Logo_background.png</file>
+        <file>image/treeItem_close.png</file>
+        <file>image/treeItem_open.png</file>
     </qresource>
 </RCC>

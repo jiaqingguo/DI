@@ -42,10 +42,7 @@ QWidget#widgetLeftMenu QTreeWidget::item {
 			margin-right:0px;
 			 /*padding: 15px; 设置内边距 */
         }
-QWidget#widgetLeftMenu QTreeWidget::item:hover {
-           /* background-color: #cce8ff;  设置悬浮背景颜色 */
-            color: #000; /* 设置悬浮字体颜色 */
-        }
+
 QWidget#widgetLeftMenu QTreeWidget::item:selected {
             border-image: url(:/image/treeItem_background_select.png);  /* 设置选中时的背景图片 */
 			color:3071f3;
@@ -53,6 +50,32 @@ QWidget#widgetLeftMenu QTreeWidget::item:selected {
 			 border: none;
 			 outline: none; /* 去掉虚线框 */
 }
+
+ /* 设置折叠状态的白色图标（仅对有子节点的 item 生效） */
+        QTreeView::branch:has-children:closed {
+		margin-top:3px;
+		margin-bottom:3px;
+			margin-right:4px;
+			margin-left:4px;
+            image: url(:/image/treeItem_close.png);
+			
+        }
+
+        /* 设置展开状态的白色图标（仅对有子节点的 item 生效） */
+        QTreeView::branch:has-children:open {
+		margin-top:4px;
+		margin-bottom:4px;
+			margin-right:2px;
+			margin-left:2px;
+            image: url(:/image/treeItem_open.png);
+			
+			
+        }
+
+        /* 确保没有子节点的 item 不显示图标 */
+        QTreeView::branch:!has-children {
+            image: none;
+        }
 
  QLabel#btnChildTitle { 
             font-family: 'Source Han Sans SC Medium'; 
@@ -441,11 +464,6 @@ QPushButton#btnAddTab1,QPushButton#btnAddTab2,QPushButton#btnAddTab3,QPushButton
 
 /* ------------------------ 按钮 菜单----------------------start*/
 
-
-
-CAxWidget{
- font-size:35px;
-}
 
 
 
@@ -954,7 +972,7 @@ ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#gro
 	padding: 20px;  /*设置 QTableView 的内边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
-	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;
+	border-image: url(:/image/CurveBackground.png) 15 15 15 15 stretch stretch;
 	
 	/*border: 1px solid white;
 	border-radius: 5px;*/

@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
 
 	// 隐藏用户登录后的图标
-	ui->labelUserIcon->hide();
+	//ui->labelUserIcon->hide();
 	
 	ui->statusbar->hide();
 	initInitface();
@@ -187,9 +187,9 @@ void MainWindow::initInitface()
 	m_OneClickSaveDialog = new OneClickSaveDialog(this);
 
 
-	connect(ui->btnMinimize, &QPushButton::clicked, this, &MainWindow::showMinimized);
+	/*connect(ui->btnMinimize, &QPushButton::clicked, this, &MainWindow::showMinimized);
 	connect(ui->btnMaximize, &QPushButton::clicked, this, &MainWindow::slot_btnMaximize);
-	connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
+	connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);*/
 
 
 
@@ -550,7 +550,8 @@ void MainWindow::showRegisterDialog()
 }
 void MainWindow::setUserNameText(const QString& userName)
 {
-	ui->labelUserName->setText(userName);
+	//ui->labelUserName->setText(userName);
+	ui->widgetTital->SetUserName(userName);
 }
 void MainWindow::showGif()
 {
@@ -568,7 +569,8 @@ bool MainWindow::showLoginDialog()
 	//m_LoginDialog->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	if (m_LoginDialog->exec() == QDialog::Accepted)
 	{
-		ui->labelUserName->setText(m_LoginDialog->GetUser());
+		//ui->labelUserName->setText(m_LoginDialog->GetUser());
+		ui->widgetTital->SetUserName(common::strLoginUserName);
 		common::strLoginUserName = m_LoginDialog->GetUser();
 		if (m_LoginDialog->GetPop())
 		{
@@ -2705,7 +2707,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 			
 		}
 		QString str = item->text(0);
-		ui->btnChildTitle->setText(str);
+		//ui->btnChildTitle->setText(str);
 
 		ui->m_ResourceManageDialog->stopWebFlushTimer();
 		if (stackIndex == 0)
