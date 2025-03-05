@@ -40,9 +40,10 @@ public:
     {
         if (OneClickLoadDialog->objectName().isEmpty())
             OneClickLoadDialog->setObjectName(QString::fromUtf8("OneClickLoadDialog"));
-        OneClickLoadDialog->resize(470, 315);
+        OneClickLoadDialog->resize(452, 296);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(-1, -1, 0, -1);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(9, 9, 9, 9);
@@ -54,7 +55,7 @@ public:
         verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setSpacing(15);
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
-        verticalLayout_9->setContentsMargins(9, 5, 9, 9);
+        verticalLayout_9->setContentsMargins(0, 5, 0, 0);
         btnAdd = new QPushButton(OneClickLoadDialog);
         btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
         btnAdd->setMinimumSize(QSize(90, 30));
@@ -79,7 +80,7 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);

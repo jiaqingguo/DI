@@ -69,7 +69,7 @@ public:
         if (RegisterDialog->objectName().isEmpty())
             RegisterDialog->setObjectName(QString::fromUtf8("RegisterDialog"));
         RegisterDialog->setEnabled(true);
-        RegisterDialog->resize(270, 350);
+        RegisterDialog->resize(300, 308);
         RegisterDialog->setMinimumSize(QSize(0, 0));
         RegisterDialog->setMaximumSize(QSize(300, 350));
         gridLayout_3 = new QGridLayout(RegisterDialog);

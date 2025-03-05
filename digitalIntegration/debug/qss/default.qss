@@ -761,7 +761,7 @@ QDialog#ChangePwdDialog QWidget#page
 	border-color: gray;
 }
 ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLabel#labelConfirmPwd{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;	
 }
 ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
@@ -771,7 +771,7 @@ ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdi
 	border-radius: 5px;
 }
 ChangePwdDialog QPushButton#btnModify{
-	border-image: url(:/image/btnxiao.png)0 0 0 0 stretch;
+	border-image: url(:/image/btnxiao.png);
 	font-size: 22px;
 	color: #ffffff;
 }
@@ -802,7 +802,7 @@ RegisterDialog QWidget#page{
 }
 QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot
 { 
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
@@ -848,35 +848,35 @@ QDialog#AddToolInfoDialog{
 	border-color: gray;
 }
 AddToolInfoDialog QLabel#label_2{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label_4{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#accelerateRadioButton{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#nodeRadioButton{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label4{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label5{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label6{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLineEdit#lineEditToolName{
@@ -935,7 +935,7 @@ QDialog#AddToolDialog{
 	background-color: white;
 }
 AddToolDialog QLabel#labelname ,QLabel#labelOpenWay ,QLabel#labelToolName ,QLabel#labelONHost{
-	font-size: 19px;
+	font-size: 18px;
 	color: #484f7a;
 }
 AddToolDialog QLineEdit#lineEditTabName{
