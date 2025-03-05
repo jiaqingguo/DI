@@ -32,6 +32,11 @@ public:
     QStackedWidget *stackedWidget;
     QWidget *page;
     QGridLayout *gridLayout;
+    QWidget *widget_2;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *labelRegistDialog;
+    QSpacerItem *horizontalSpacer_7;
+    QPushButton *btnRegistClose;
     QGridLayout *gridLayout_2;
     QLabel *labelJobTtile;
     QLabel *labelUserRegist;
@@ -69,11 +74,10 @@ public:
         if (RegisterDialog->objectName().isEmpty())
             RegisterDialog->setObjectName(QString::fromUtf8("RegisterDialog"));
         RegisterDialog->setEnabled(true);
-        RegisterDialog->resize(257, 308);
+        RegisterDialog->resize(270, 350);
         RegisterDialog->setMinimumSize(QSize(0, 0));
         RegisterDialog->setMaximumSize(QSize(300, 350));
         gridLayout_3 = new QGridLayout(RegisterDialog);
-        gridLayout_3->setSpacing(6);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
         stackedWidget = new QStackedWidget(RegisterDialog);
@@ -83,6 +87,32 @@ public:
         page->setObjectName(QString::fromUtf8("page"));
         gridLayout = new QGridLayout(page);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        widget_2 = new QWidget(page);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        widget_2->setMinimumSize(QSize(0, 55));
+        widget_2->setMaximumSize(QSize(16777215, 55));
+        horizontalLayout_4 = new QHBoxLayout(widget_2);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(9, 0, 9, 0);
+        labelRegistDialog = new QLabel(widget_2);
+        labelRegistDialog->setObjectName(QString::fromUtf8("labelRegistDialog"));
+
+        horizontalLayout_4->addWidget(labelRegistDialog);
+
+        horizontalSpacer_7 = new QSpacerItem(127, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_7);
+
+        btnRegistClose = new QPushButton(widget_2);
+        btnRegistClose->setObjectName(QString::fromUtf8("btnRegistClose"));
+        btnRegistClose->setMinimumSize(QSize(44, 36));
+        btnRegistClose->setMaximumSize(QSize(44, 36));
+
+        horizontalLayout_4->addWidget(btnRegistClose);
+
+
+        gridLayout->addWidget(widget_2, 0, 0, 1, 1);
+
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setHorizontalSpacing(10);
@@ -167,7 +197,7 @@ public:
         gridLayout_2->addWidget(labelPhoneNum, 5, 0, 1, 1);
 
 
-        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
+        gridLayout->addLayout(gridLayout_2, 1, 0, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
@@ -188,7 +218,7 @@ public:
         horizontalLayout->addItem(horizontalSpacer_2);
 
 
-        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 2, 0, 1, 1);
 
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
@@ -265,6 +295,8 @@ public:
     void retranslateUi(QDialog *RegisterDialog)
     {
         RegisterDialog->setWindowTitle(QCoreApplication::translate("RegisterDialog", "Dialog", nullptr));
+        labelRegistDialog->setText(QCoreApplication::translate("RegisterDialog", "\347\224\250\346\210\267\346\263\250\345\206\214", nullptr));
+        btnRegistClose->setText(QString());
         labelJobTtile->setText(QCoreApplication::translate("RegisterDialog", "\350\201\214\344\275\215", nullptr));
         labelUserRegist->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\347\224\250\346\210\267\345\220\215<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         labelPasswordRegist->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\345\257\206\347\240\201<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));

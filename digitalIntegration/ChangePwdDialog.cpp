@@ -11,6 +11,7 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
     ui(new Ui::ChangePwdDialog)
 {
     ui->setupUi(this);
+	setWindowFlags(Qt::FramelessWindowHint);
     setWindowTitle(QString::fromLocal8Bit("修改密码"));
     setWindowIcon(QIcon(":/image/registerIcon.png"));
     connect(ui->btnModify, &QPushButton::clicked, this, &ChangePwdDialog::slot_btnModify);
@@ -23,6 +24,7 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
 	ui->lineEditPassword->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditNewPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");
 	ui->lineEditConfrimPwd->setStyleSheet("QLineEdit { border: 1px solid gray;border-radius: 5px;}");*/
+	connect(ui->btnChangeClose, &QPushButton::clicked, this, &ChangePwdDialog::close);
 }
 
 ChangePwdDialog::~ChangePwdDialog()

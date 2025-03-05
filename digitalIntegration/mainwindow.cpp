@@ -106,8 +106,8 @@ MainWindow::~MainWindow()
 
 	if (m_LoginDialog != nullptr)
 		delete m_LoginDialog;
-	if (m_RegisterDialog != nullptr)
-		delete m_RegisterDialog;
+	/*if (m_RegisterDialog != nullptr)
+		delete m_RegisterDialog;*/
 
 	/*if (m_ResourceManageDialog != nullptr)
 		delete m_ResourceManageDialog;*/
@@ -126,7 +126,7 @@ void MainWindow::initInitface()
 
 	m_GifDialog = new GifDialog;
 
-	m_RegisterDialog = new RegisterDialog(this);
+	//m_RegisterDialog = new RegisterDialog(this);
 
 	//m_ResourceManageDialog = new ResourceManageDialog(this);
 
@@ -454,7 +454,7 @@ void MainWindow::udpStartExeThread(const QString strData, const QString strIp, c
 
 void MainWindow::showRegisterDialog()
 {
-	m_RegisterDialog->exec();
+	//m_RegisterDialog->exec();
 }
 void MainWindow::setUserNameText(const QString& userName)
 {

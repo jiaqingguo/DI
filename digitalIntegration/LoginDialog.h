@@ -107,6 +107,11 @@ public slots:
 protected:
 	void mousePressEvent(QMouseEvent *event) override 
 	{
+		// 检查事件是否发生在子控件上
+		if (childAt(event->pos()) != nullptr) 
+		{
+			return; // 如果是子控件，则不处理事件
+		}
 		if (event->button() == Qt::LeftButton) 
 		{
 			dragPosition = event->globalPos() - frameGeometry().topLeft();
@@ -116,22 +121,17 @@ protected:
 
 	void mouseMoveEvent(QMouseEvent *event) override 
 	{
+		// 检查事件是否发生在子控件上
+		if (childAt(event->pos()) != nullptr) 
+		{
+			return; // 如果是子控件，则不处理事件
+		}
 		if (event->buttons() & Qt::LeftButton) 
 		{
 			move(event->globalPos() - dragPosition);
 			event->accept();
 		}
 	}
-	//void resizeEvent(QResizeEvent *event) override 
-	//{
-	//	QWidget::resizeEvent(event);
-
-	//	// 设置窗口遮罩，裁剪圆角
-	//	QRegion region(rect(), QRegion::Rectangle);
-	//	QRegion roundedRegion(rect().adjusted(0, 0, -1, -1), QRegion::Ellipse);
-	//	region = region.subtracted(roundedRegion);
-	//	setMask(region);
-	//}
 private:
 	QPoint dragPosition;
 };

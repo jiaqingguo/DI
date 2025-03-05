@@ -69,6 +69,9 @@
           <property name="topMargin">
            <number>0</number>
           </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="LabelTitle">
             <property name="maximumSize">
@@ -126,7 +129,7 @@
           <number>9</number>
          </property>
          <property name="topMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>9</number>
@@ -172,7 +175,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>45</height>
+             <height>55</height>
             </size>
            </property>
           </widget>
@@ -182,7 +185,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>45</height>
+             <height>55</height>
             </size>
            </property>
           </widget>
