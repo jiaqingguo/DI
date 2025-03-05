@@ -137,15 +137,22 @@ private slots:
     }
 
     // 最大化/还原窗口
-    void toggleMaximizeWindow() {
-        //emit signal_Maximized();
-        if (window()->isMaximized()) {
-            window()->showNormal();
-        }
-        else {
-            window()->showMaximized();
-        }
+    void toggleMaximizeWindow()
+    {
+        emit signal_Maximized();
     }
+    //    if (m_showMax) 
+    //    {
+    //        m_showMax = false;
+    //        window()->showNormal();
+    //    }
+    //    else 
+    //    {
+    //        m_showMax = true;
+    //        emit signal_Maximized();
+    //       /* window()->showMaximized();*/
+    //    }
+    //}
 
     // 关闭窗口
     void closeWindow() {
@@ -153,6 +160,7 @@ private slots:
     }
 
 private:
+    bool m_showMax = true;
     bool m_dragging;
     QPoint m_dragPosition;
 private:

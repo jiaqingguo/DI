@@ -172,6 +172,8 @@ private slots:
 
 	void slot_btnMaximize();
 
+	void slot_showMax();
+	
 private:
 	void updateModuleToolIcon(int module);
 	void updateModuleToolTreeItem(int module);
@@ -192,6 +194,8 @@ private:
 	void onDisconnected(); //断开连接的提示文字
 
 //	void SoftTreeItemDoubleClicked(const QString& buttonText);
+
+	
 private:
 	Ui::MainWindow *ui;
 
@@ -255,6 +259,7 @@ private:
 	QTreeWidgetItem* m_pApprovalProgressNode = nullptr;
 	QString m_strLastTreeItem = "";
 	QString m_strCurTrrItem = "";
+	bool m_showMax = false;
 };
 
 class DoubleClickInterceptor : public QObject {

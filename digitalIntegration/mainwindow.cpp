@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(m_reconnectTimer, &QTimer::timeout, this, &MainWindow::slot_reconnnectTimerOut);
 
 	//connect(this, &MainWindow::signal_soft, this, &MainWindow::slot_SoftTreeItemDoubleClicked);
-	connect(ui->widgetTital, &CustomTitleWidget::signal_Maximized, this, &MainWindow::slot_btnMaximize);
+	connect(ui->widgetTital, &CustomTitleWidget::signal_Maximized, this, &MainWindow::slot_showMax);
 	// 设置时间间隔并启动定时器
 	//m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 }
@@ -489,7 +489,8 @@ bool MainWindow::showLoginDialog()
 			//ui->btnApprovalProgress->hide();
 			//m_pApprovalProgressNode->setHidden(true);
 		}
-		this->window()->showMaximized();
+		slot_showMax();
+		this->show();
 
 		//ui->stackedWidget->setCurrentIndex(1);
 		//ui->stackedWidget->setCurrentIndex(0);
@@ -2668,15 +2669,46 @@ void MainWindow::slot_btnMaximize()
 {
 	if (isMaximized()) 
 	{
-		this->showNormal();
+		//window()->showNormal();
 		ui->splitter->setVisible(false);
 		//ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
 	}
 	else {
 		ui->splitter->setVisible(true);
-		this->showMaximized();
-		//this->setWindowState(Qt::WindowMaximized);
-	//	ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
+		//this->showMaximized();
+	}
+
+	
+	
+}
+void MainWindow::slot_showMax()
+{
+	if (m_showMax)
+	{
+		// 获取屏幕几何信息
+		QRect availableRect = QApplication::desktop()->availableGeometry(this);
+
+		// 获取当前窗口的几何信息
+	//	QRect windowGeometry = this->geometry();
+
+		// 计算新的宽度和高度
+		int newWidth = static_cast<int>(availableRect.width() * 0.8);
+		int newHeight = static_cast<int>(availableRect.height() * 0.8);
+
+		// 计算新的窗口位置
+		int newX = availableRect.x() + (availableRect.width() - newWidth) / 2;
+		int newY = availableRect.y() + (availableRect.height() - newHeight) / 2;
+
+		
+		// 设置新大小和位置
+		this->setGeometry(newX, newY, newWidth, newHeight);
+		m_showMax = false;
+	}
+	else
+	{
+		m_showMax = true;
+		QRect availableRect = QApplication::desktop()->availableGeometry(this);
+		this->setGeometry(availableRect);
 	}
 	
 }

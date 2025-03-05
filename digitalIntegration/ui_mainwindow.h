@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -51,7 +50,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer_8;
     QPushButton *btnTitleIcon;
-    QComboBox *comboBox_2;
     QSpacerItem *horizontalSpacer_9;
     QTreeWidget *treeWidget;
     QWidget *widget;
@@ -173,14 +171,6 @@ public:
         btnTitleIcon->setMaximumSize(QSize(1111111, 11111));
 
         horizontalLayout->addWidget(btnTitleIcon);
-
-        comboBox_2 = new QComboBox(widgetLOGO);
-        comboBox_2->addItem(QString());
-        comboBox_2->addItem(QString());
-        comboBox_2->addItem(QString());
-        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
-
-        horizontalLayout->addWidget(comboBox_2);
 
         horizontalSpacer_9 = new QSpacerItem(45, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -509,7 +499,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(6);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(1);
@@ -527,10 +517,6 @@ public:
         actionM3->setText(QCoreApplication::translate("MainWindow", "\346\200\247\350\203\275\346\240\267\346\234\272", nullptr));
         actionM4->setText(QCoreApplication::translate("MainWindow", "\347\224\237\344\272\247\346\240\267\346\234\272", nullptr));
         btnTitleIcon->setText(QString());
-        comboBox_2->setItemText(0, QCoreApplication::translate("MainWindow", "1", nullptr));
-        comboBox_2->setItemText(1, QCoreApplication::translate("MainWindow", "2", nullptr));
-        comboBox_2->setItemText(2, QCoreApplication::translate("MainWindow", "3", nullptr));
-
         QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "1", nullptr));
         btnAddTab1->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
