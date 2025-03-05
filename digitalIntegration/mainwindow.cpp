@@ -393,12 +393,18 @@ void MainWindow::initTreeMenu()
 	m_functionChild1->setData(0, Qt::UserRole, "functionChild1");
 	m_functionChild1->setFont(0, font2);
 
+	// 设置目标项为选中状态
+	m_functionChild1->setSelected(true);
+	// 设定当前项为目标项
+	ui->treeWidget->setCurrentItem(m_functionChild1);
+
 	m_functionChild2 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("信息配置")));
 	m_functionChild2->setSizeHint(0, QSize(75, 75));
 	m_functionChild2->setIcon(0, QIcon(":/image/treeItem.png"));
 	m_functionChild2->setData(0, Qt::UserRole+2, 1);
 	m_functionChild2->setData(0, Qt::UserRole, "functionChild2");
 	m_functionChild2->setFont(0, font2);
+
 
 	m_functionChild3 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("文件管理")));
 	m_functionChild3->setSizeHint(0, QSize(75, 75));

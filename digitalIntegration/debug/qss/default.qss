@@ -319,7 +319,8 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 	background-color: white;
 }
 FtpDialog QPushButton#pushButton{
-	
+	border-image:url(:/image/page_last.png);
+	font-size: 18px;
 }
 
 FtpClientWidget{
