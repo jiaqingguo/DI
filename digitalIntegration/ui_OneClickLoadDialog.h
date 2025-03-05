@@ -43,10 +43,10 @@ public:
         OneClickLoadDialog->resize(452, 296);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(-1, -1, 0, -1);
+        verticalLayout->setContentsMargins(-1, -1, 0, 9);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
-        horizontalLayout_9->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout_9->setContentsMargins(9, 9, 9, 5);
         tableViewOneLoad = new QTableView(OneClickLoadDialog);
         tableViewOneLoad->setObjectName(QString::fromUtf8("tableViewOneLoad"));
 
@@ -80,14 +80,14 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout->setContentsMargins(0, 0, 0, 5);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         btnOk = new QPushButton(OneClickLoadDialog);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
-        btnOk->setMinimumSize(QSize(110, 50));
+        btnOk->setMinimumSize(QSize(120, 50));
 
         horizontalLayout->addWidget(btnOk);
 

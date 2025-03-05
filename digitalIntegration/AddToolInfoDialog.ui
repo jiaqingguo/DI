@@ -155,7 +155,7 @@
         <number>9</number>
        </property>
        <property name="bottomMargin">
-        <number>9</number>
+        <number>15</number>
        </property>
        <item>
         <widget class="QPushButton" name="btnOK">
@@ -242,6 +242,9 @@
      </property>
      <property name="bottomMargin">
       <number>9</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
      </property>
      <item row="1" column="1" colspan="2">
       <widget class="QLineEdit" name="lineEditToolPath">
