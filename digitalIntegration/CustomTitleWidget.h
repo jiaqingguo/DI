@@ -127,6 +127,9 @@ protected:
         }
     }
 
+
+signals:
+    void signal_Maximized();
 private slots:
     // 最小化窗口
     void minimizeWindow() {
@@ -135,6 +138,7 @@ private slots:
 
     // 最大化/还原窗口
     void toggleMaximizeWindow() {
+        //emit signal_Maximized();
         if (window()->isMaximized()) {
             window()->showNormal();
         }

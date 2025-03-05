@@ -53,8 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 
+
+
 	// 设置无边框窗口
-	setWindowFlags(Qt::FramelessWindowHint);
+	setWindowFlags(windowFlags() |Qt::FramelessWindowHint );
 	// qss文件监控类
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
@@ -88,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(m_reconnectTimer, &QTimer::timeout, this, &MainWindow::slot_reconnnectTimerOut);
 
 	//connect(this, &MainWindow::signal_soft, this, &MainWindow::slot_SoftTreeItemDoubleClicked);
-
+	connect(ui->widgetTital, &CustomTitleWidget::signal_Maximized, this, &MainWindow::slot_btnMaximize);
 	// 设置时间间隔并启动定时器
 	//m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 }
@@ -138,8 +140,8 @@ void MainWindow::initInitface()
 	m_DataManageDialog = new DataManageDialog(this);
 
 	//m_FilemangageDialog = new FilemangageDialog(this);
-	//m_FtpDialog = new FtpDialog();
-
+	/*m_FtpDialog = new FtpDialog();
+	ui->stackedWidget->insertWidget(2, m_FtpDialog);*/
 	//m_ApprovalProgressDialog = new ApprovalProgressDialog(this);
 
 	connect(ui->m_ApprovalProgressDialog, &ApprovalProgressDialog::signal_createFtpUserDir, ui->m_FtpDialog, &FtpDialog::slot_createUserDir);
@@ -487,7 +489,7 @@ bool MainWindow::showLoginDialog()
 			//ui->btnApprovalProgress->hide();
 			//m_pApprovalProgressNode->setHidden(true);
 		}
-		this->showMaximized();
+		this->window()->showMaximized();
 
 		//ui->stackedWidget->setCurrentIndex(1);
 		//ui->stackedWidget->setCurrentIndex(0);
@@ -667,7 +669,7 @@ void MainWindow::slot_btnAddToolTab()
 
 	QString strAssignIP = "";// 指定ip 主机;
 	QString strAssignHostName = "";
-	AddToolDialog addToooDialog(moduleNumber);
+	AddToolDialog addToooDialog(moduleNumber,this);
 	if (addToooDialog.exec() == QDialog::Accepted)
 	{
 		QString toolName;
@@ -2018,7 +2020,7 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 			QString strAssignIP = "";// 指定ip 主机;
 			QString strAssignHostName = "";
 
-			AddToolDialog addToooDialog(common::indexNum);
+			AddToolDialog addToooDialog(common::indexNum,this);
 			QComboBox *toolComboBox = addToooDialog.getComboBox();
 			toolComboBox->setEnabled(false);
 			toolComboBox->setCurrentText(buttonText);
@@ -2105,7 +2107,7 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 		QString strAssignIP = "";// 指定ip 主机;
 		QString strAssignHostName = "";
 
-		AddToolDialog addToooDialog(common::indexNum);
+		AddToolDialog addToooDialog(common::indexNum,this);
 		QComboBox *toolComboBox = addToooDialog.getComboBox();
 		toolComboBox->setEnabled(false);
 		toolComboBox->setCurrentText(buttonText);
@@ -2289,7 +2291,7 @@ void MainWindow::onRightClicked(QString &buttonText)
 	QString strAssignIP = "";// 指定ip 主机;
 	QString strAssignHostName = "";
 
-	AddToolDialog addToooDialog(common::indexNum);
+	AddToolDialog addToooDialog(common::indexNum,this);
 	QComboBox *toolComboBox = addToooDialog.getComboBox();
 	toolComboBox->setEnabled(false);
 	toolComboBox->setCurrentText(buttonText);
@@ -2666,16 +2668,14 @@ void MainWindow::slot_btnMaximize()
 {
 	if (isMaximized()) 
 	{
-	/*	int w = width()*0.8;
-		int h = height() * 0.8;
-		resize(w, h);*/
-		showNormal();
+		this->showNormal();
 		ui->splitter->setVisible(false);
 		//ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
 	}
 	else {
 		ui->splitter->setVisible(true);
-		showMaximized();
+		this->showMaximized();
+		//this->setWindowState(Qt::WindowMaximized);
 	//	ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
 	}
 	
@@ -2744,10 +2744,11 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 			QString strAssignIP = "";// 指定ip 主机;
 			QString strAssignHostName = "";
 
-			AddToolDialog addToooDialog(common::indexNum);
+			AddToolDialog addToooDialog(common::indexNum, this);
 			QComboBox* toolComboBox = addToooDialog.getComboBox();
 			toolComboBox->setEnabled(false);
 			toolComboBox->setCurrentText(buttonText);
+
 			if (addToooDialog.exec() == QDialog::Accepted)
 			{
 				QString toolName;
@@ -2831,7 +2832,7 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 		QString strAssignIP = "";// 指定ip 主机;
 		QString strAssignHostName = "";
 
-		AddToolDialog addToooDialog(common::indexNum);
+		AddToolDialog addToooDialog(common::indexNum,this);
 		QComboBox* toolComboBox = addToooDialog.getComboBox();
 		toolComboBox->setEnabled(false);
 		toolComboBox->setCurrentText(buttonText);

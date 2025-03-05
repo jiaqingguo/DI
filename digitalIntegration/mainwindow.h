@@ -212,7 +212,7 @@ private:
 	DataManageDialog* m_DataManageDialog = nullptr; // 数据管理界面;
 
 	//FilemangageDialog* m_FilemangageDialog = nullptr; // 文件管理界面;
-	//FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
+	FtpDialog* m_FtpDialog = nullptr; // 文件管理界面;
 
 	//ApprovalProgressDialog* m_ApprovalProgressDialog = nullptr; // 审批进度页面;
 

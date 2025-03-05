@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     //}
     //QString fontFamily = fontFamilies.at(0);//Source Han Sans SC Medium
     //QApplication::setFont(QFont(fontFamily)); // 设置全局字体
-
+  //  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     MainWindow w;
     if (!w.showLoginDialog())
     {
