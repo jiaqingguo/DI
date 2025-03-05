@@ -125,7 +125,7 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, 0, 9, 9);
+        horizontalLayout->setContentsMargins(9, 0, 9, 15);
         btnOK = new QPushButton(AddToolInfoDialog);
         btnOK->setObjectName(QString::fromUtf8("btnOK"));
         btnOK->setMinimumSize(QSize(110, 50));
@@ -162,6 +162,7 @@ public:
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setVerticalSpacing(10);
         gridLayout_2->setContentsMargins(9, 0, 9, 9);
         lineEditToolPath = new QLineEdit(AddToolInfoDialog);
         lineEditToolPath->setObjectName(QString::fromUtf8("lineEditToolPath"));

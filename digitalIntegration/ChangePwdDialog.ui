@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>308</width>
-    <height>198</height>
+    <height>214</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,12 @@
       <layout class="QGridLayout" name="gridLayout">
        <property name="leftMargin">
         <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
        </property>
        <item row="2" column="1" colspan="3">
         <widget class="QLineEdit" name="lineEditNewPwd">

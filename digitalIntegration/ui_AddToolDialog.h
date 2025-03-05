@@ -51,7 +51,8 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, -1);
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setContentsMargins(9, 9, 9, 9);
+        gridLayout->setVerticalSpacing(10);
+        gridLayout->setContentsMargins(9, 9, 9, 0);
         comboBoxDisplayMode = new QComboBox(AddToolDialog);
         comboBoxDisplayMode->addItem(QString());
         comboBoxDisplayMode->addItem(QString());
@@ -107,7 +108,7 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout->setContentsMargins(9, 0, 9, 10);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);

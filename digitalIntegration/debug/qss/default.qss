@@ -762,11 +762,11 @@ QDialog#ChangePwdDialog QWidget#page
 	border-color: gray;
 }
 ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLabel#labelConfirmPwd{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;	
 }
 ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -803,18 +803,18 @@ RegisterDialog QWidget#page{
 }
 QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot
 { 
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 
 RegisterDialog QComboBox#comboBoxRoot{
-	font-size: 19px;
+	font-size: 18px;
 	color: #abadb2;
 }
 RegisterDialog QPushButton#btnRegister{
@@ -849,61 +849,61 @@ QDialog#AddToolInfoDialog{
 	border-color: gray;
 }
 AddToolInfoDialog QLabel#label_2{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label_4{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#accelerateRadioButton{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#nodeRadioButton{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label4{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label5{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label6{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLineEdit#lineEditToolName{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEditToolPath{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEdit{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 }
 AddToolInfoDialog QPushButton#btnChooseImage{
-	font-size: 19px;
+	font-size: 18px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
@@ -936,11 +936,11 @@ QDialog#AddToolDialog{
 	background-color: white;
 }
 AddToolDialog QLabel#labelname ,QLabel#labelOpenWay ,QLabel#labelToolName ,QLabel#labelONHost{
-	font-size: 18px;
+	font-size: 17px;
 	color: #484f7a;
 }
 AddToolDialog QLineEdit#lineEditTabName{
-	font-size: 19px;
+	font-size: 18px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;

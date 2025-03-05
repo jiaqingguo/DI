@@ -35,7 +35,10 @@
       <number>9</number>
      </property>
      <property name="bottomMargin">
-      <number>9</number>
+      <number>0</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
      </property>
      <item row="1" column="1" colspan="2">
       <widget class="QComboBox" name="comboBoxDisplayMode">
@@ -147,13 +150,13 @@
       <number>9</number>
      </property>
      <property name="topMargin">
-      <number>9</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
       <number>9</number>
      </property>
      <property name="bottomMargin">
-      <number>9</number>
+      <number>10</number>
      </property>
      <item>
       <spacer name="horizontalSpacer">

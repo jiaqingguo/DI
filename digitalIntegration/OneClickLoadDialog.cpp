@@ -92,7 +92,14 @@ void OneClickLoadDialog::slot_btnAdd()
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
 	//comboBox->setEditable(false);
-	comboBox->setStyleSheet("QComboBox{font-size: 14px;color: #606580;}");
+	// 设置字体大小和颜色
+	QFont font;
+	font.setPointSize(11); // 设置字体大小为11
+	comboBox->setFont(font); // 应用字体设置
+	// 设置字体颜色
+	QPalette palette = comboBox->palette();
+	palette.setColor(QPalette::WindowText, QColor("#606580"));  // 设置字体颜色
+	comboBox->setPalette(palette);
 	comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
@@ -257,10 +264,17 @@ void OneClickLoadDialog::initTableView()
 
 					// 创建QComboBox并设置模型数据
 					QComboBox *comboBox = new QComboBox();
+					// 设置字体大小和颜色
+					QFont font;
+					font.setPointSize(11); // 设置字体大小为20
+					comboBox->setFont(font); // 应用字体设置
+					// 设置字体颜色
+					QPalette palette = comboBox->palette();
+					palette.setColor(QPalette::WindowText, QColor("#606580"));  // 设置字体颜色
+					comboBox->setPalette(palette);
+					comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 					item->setTextAlignment(Qt::AlignCenter);
 					m_model->setItem(newRowIndex, 1, item);
-					comboBox->setStyleSheet("QComboBox{font-size: 14px;color: #606580;}");
-					comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 					std::map<std::string, table_ip> ipMap;
 					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
 					{

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMouseEvent>
+#include <QTime>
 //class fingerDlg;
 class RegisterDialog;
 namespace Ui {
@@ -104,36 +105,65 @@ public slots:
 	//void slot_login_succ();
 	//void slot_regist_succ();
 	//void slot_no_regist_finger();
+//protected:
+//	void mousePressEvent(QMouseEvent *event) override 
+//	{
+//		// 检查事件是否发生在子控件上
+//		if (childAt(event->pos()) != nullptr) 
+//		{
+//			return; // 如果是子控件，则不处理事件
+//		}
+//		if (event->button() == Qt::LeftButton) 
+//		{
+//			dragPosition = event->globalPos() - frameGeometry().topLeft();
+//			event->accept();
+//		}
+//	}
+//
+//	void mouseMoveEvent(QMouseEvent *event) override 
+//	{
+//		// 检查事件是否发生在子控件上
+//		if (childAt(event->pos()) != nullptr) 
+//		{
+//			return; // 如果是子控件，则不处理事件
+//		}
+//		if (event->buttons() & Qt::LeftButton) 
+//		{
+//			move(event->globalPos() - dragPosition);
+//			event->accept();
+//		}
+//	}
+//private:
+//	QPoint dragPosition;
 protected:
-	void mousePressEvent(QMouseEvent *event) override 
-	{
-		// 检查事件是否发生在子控件上
-		if (childAt(event->pos()) != nullptr) 
-		{
-			return; // 如果是子控件，则不处理事件
+	void mousePressEvent(QMouseEvent *event) override {
+		QWidget *child = childAt(event->pos());
+		if (child != nullptr) {
+			return;
 		}
-		if (event->button() == Qt::LeftButton) 
-		{
+		if (event->button() == Qt::LeftButton) {
 			dragPosition = event->globalPos() - frameGeometry().topLeft();
+			lastMoveTime = QTime::currentTime(); // 记录按下时间
 			event->accept();
 		}
 	}
 
-	void mouseMoveEvent(QMouseEvent *event) override 
-	{
-		// 检查事件是否发生在子控件上
-		if (childAt(event->pos()) != nullptr) 
-		{
-			return; // 如果是子控件，则不处理事件
+	void mouseMoveEvent(QMouseEvent *event) override {
+		if (!(event->buttons() & Qt::LeftButton)) {
+			return;
 		}
-		if (event->buttons() & Qt::LeftButton) 
-		{
-			move(event->globalPos() - dragPosition);
-			event->accept();
+		QTime currentTime = QTime::currentTime();
+		if (lastMoveTime.msecsTo(currentTime) < 10) {
+			return; // 限制更新频率为每 10 毫秒一次
 		}
+		move(event->globalPos() - dragPosition);
+		lastMoveTime = currentTime; // 更新上一次移动时间
+		event->accept();
 	}
+
 private:
 	QPoint dragPosition;
+	QTime lastMoveTime; // 上一次移动的时间
 };
 
 #endif // LOGINDIALOG_H
