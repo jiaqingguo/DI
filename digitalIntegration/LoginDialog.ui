@@ -62,22 +62,29 @@
            <height>16777215</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="topMargin">
            <number>0</number>
           </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
+          <item>
+           <widget class="QPushButton" name="BtnIcon">
+            <property name="minimumSize">
+             <size>
+              <width>46</width>
+              <height>46</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
+              <height>46</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="LabelTitle">
             <property name="maximumSize">
@@ -108,14 +115,14 @@
            <widget class="QPushButton" name="BtnClose">
             <property name="minimumSize">
              <size>
-              <width>44</width>
-              <height>36</height>
+              <width>46</width>
+              <height>46</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>44</width>
-              <height>36</height>
+              <width>46</width>
+              <height>46</height>
              </size>
             </property>
             <property name="text">

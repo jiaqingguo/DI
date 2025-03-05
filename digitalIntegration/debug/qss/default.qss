@@ -692,24 +692,28 @@ QDialog#LoginDialog
 }
 LoginDialog QLabel#LabelTitle
 {
-	background-image: url(:/image/Icon_Logo.png);
-	background-repeat: no-repeat;
-    background-position: left center;
-	padding-left: 45px;
+	
+	
+	
 	font-size: 21px;
 	color: #4f72ca;
 }
+LoginDialog QPushButton#BtnIcon{
+		border-image: url(:/image/Icon_Logo.png);
+		
+}
 LoginDialog QPushButton#BtnClose 
 {
-	background-image: url(:/image/Close.png);
-	background-repeat: no-repeat; 
-    background-position: center; 
-    background-size: cover; 
+	
+	border-image: url(:/image/Close.png);
+	
 	border: none; 
+	margin:12px;
 }
 LoginDialog QLabel#lblUser {
 	font-size: 25px;
 	color: #4f72d0;
+	padding-top:10px;
 }
 LoginDialog QLineEdit#leUser {
 	font-size: 20px;

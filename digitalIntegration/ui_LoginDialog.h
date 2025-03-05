@@ -32,7 +32,8 @@ public:
     QWidget *page;
     QGridLayout *gridLayout_3;
     QWidget *widgetTitle;
-    QHBoxLayout *horizontalLayout_4;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *BtnIcon;
     QLabel *LabelTitle;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *BtnClose;
@@ -82,26 +83,32 @@ public:
         widgetTitle->setObjectName(QString::fromUtf8("widgetTitle"));
         widgetTitle->setMinimumSize(QSize(0, 55));
         widgetTitle->setMaximumSize(QSize(16777215, 16777215));
-        horizontalLayout_4 = new QHBoxLayout(widgetTitle);
-        horizontalLayout_4->setSpacing(0);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3 = new QHBoxLayout(widgetTitle);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(-1, 0, -1, -1);
+        BtnIcon = new QPushButton(widgetTitle);
+        BtnIcon->setObjectName(QString::fromUtf8("BtnIcon"));
+        BtnIcon->setMinimumSize(QSize(46, 46));
+        BtnIcon->setMaximumSize(QSize(46, 46));
+
+        horizontalLayout_3->addWidget(BtnIcon);
+
         LabelTitle = new QLabel(widgetTitle);
         LabelTitle->setObjectName(QString::fromUtf8("LabelTitle"));
         LabelTitle->setMaximumSize(QSize(16777215, 16777215));
 
-        horizontalLayout_4->addWidget(LabelTitle);
+        horizontalLayout_3->addWidget(LabelTitle);
 
         horizontalSpacer_6 = new QSpacerItem(222, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_4->addItem(horizontalSpacer_6);
+        horizontalLayout_3->addItem(horizontalSpacer_6);
 
         BtnClose = new QPushButton(widgetTitle);
         BtnClose->setObjectName(QString::fromUtf8("BtnClose"));
-        BtnClose->setMinimumSize(QSize(44, 36));
-        BtnClose->setMaximumSize(QSize(44, 36));
+        BtnClose->setMinimumSize(QSize(46, 46));
+        BtnClose->setMaximumSize(QSize(46, 46));
 
-        horizontalLayout_4->addWidget(BtnClose);
+        horizontalLayout_3->addWidget(BtnClose);
 
 
         gridLayout_3->addWidget(widgetTitle, 0, 0, 1, 1);
@@ -249,6 +256,7 @@ public:
     void retranslateUi(QDialog *LoginDialog)
     {
         LoginDialog->setWindowTitle(QCoreApplication::translate("LoginDialog", "\346\225\260\345\255\227\346\240\267\346\234\272\344\270\200\344\275\223\345\214\226\345\271\263\345\217\260", nullptr));
+        BtnIcon->setText(QString());
         LabelTitle->setText(QCoreApplication::translate("LoginDialog", "\346\225\260\345\255\227\346\240\267\346\234\272\344\270\200\344\275\223\345\214\226\345\271\263\345\217\260", nullptr));
         BtnClose->setText(QString());
         lblUser->setText(QCoreApplication::translate("LoginDialog", "\346\254\242\350\277\216\347\231\273\345\275\225", nullptr));
