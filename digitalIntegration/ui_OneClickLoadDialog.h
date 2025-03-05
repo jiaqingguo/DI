@@ -14,12 +14,10 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -27,11 +25,6 @@ class Ui_OneClickLoadDialog
 {
 public:
     QVBoxLayout *verticalLayout;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *labelOneLoad;
-    QSpacerItem *horizontalSpacer_3;
-    QPushButton *btnOneLoadClose;
     QHBoxLayout *horizontalLayout_9;
     QTableView *tableViewOneLoad;
     QVBoxLayout *verticalLayout_9;
@@ -47,34 +40,9 @@ public:
     {
         if (OneClickLoadDialog->objectName().isEmpty())
             OneClickLoadDialog->setObjectName(QString::fromUtf8("OneClickLoadDialog"));
-        OneClickLoadDialog->resize(535, 382);
+        OneClickLoadDialog->resize(470, 315);
         verticalLayout = new QVBoxLayout(OneClickLoadDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        widget = new QWidget(OneClickLoadDialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setMaximumSize(QSize(16777215, 55));
-        horizontalLayout_2 = new QHBoxLayout(widget);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(-1, 0, -1, 0);
-        labelOneLoad = new QLabel(widget);
-        labelOneLoad->setObjectName(QString::fromUtf8("labelOneLoad"));
-
-        horizontalLayout_2->addWidget(labelOneLoad);
-
-        horizontalSpacer_3 = new QSpacerItem(392, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer_3);
-
-        btnOneLoadClose = new QPushButton(widget);
-        btnOneLoadClose->setObjectName(QString::fromUtf8("btnOneLoadClose"));
-        btnOneLoadClose->setMinimumSize(QSize(44, 36));
-        btnOneLoadClose->setMaximumSize(QSize(44, 36));
-
-        horizontalLayout_2->addWidget(btnOneLoadClose);
-
-
-        verticalLayout->addWidget(widget);
-
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(9, 9, 9, 9);
@@ -138,8 +106,6 @@ public:
     void retranslateUi(QDialog *OneClickLoadDialog)
     {
         OneClickLoadDialog->setWindowTitle(QCoreApplication::translate("OneClickLoadDialog", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
-        labelOneLoad->setText(QCoreApplication::translate("OneClickLoadDialog", "\344\270\200\351\224\256\345\212\240\350\275\275", nullptr));
-        btnOneLoadClose->setText(QString());
         btnAdd->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\242\236\345\212\240", nullptr));
         btnDel->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\210\240\351\231\244", nullptr));
         btnOk->setText(QCoreApplication::translate("OneClickLoadDialog", "\345\212\240\350\275\275", nullptr));

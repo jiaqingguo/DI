@@ -30,14 +30,13 @@ public:
     QGridLayout *gridLayout;
     QStackedWidget *stackedWidget;
     QWidget *page;
-    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout_3;
     QWidget *widgetTitle;
     QHBoxLayout *horizontalLayout_4;
     QLabel *LabelTitle;
     QSpacerItem *horizontalSpacer_6;
     QPushButton *BtnClose;
-    QVBoxLayout *verticalLayout_3;
-    QHBoxLayout *horizontalLayout_3;
+    QGridLayout *gridLayout_2;
     QLabel *lblUser;
     QSpacerItem *horizontalSpacer_5;
     QLineEdit *leUser;
@@ -65,26 +64,28 @@ public:
     {
         if (LoginDialog->objectName().isEmpty())
             LoginDialog->setObjectName(QString::fromUtf8("LoginDialog"));
-        LoginDialog->resize(472, 368);
+        LoginDialog->resize(462, 368);
         LoginDialog->setMinimumSize(QSize(450, 350));
         gridLayout = new QGridLayout(LoginDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(-1, 0, -1, -1);
         stackedWidget = new QStackedWidget(LoginDialog);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
         stackedWidget->setMinimumSize(QSize(450, 350));
         stackedWidget->setMaximumSize(QSize(450, 350));
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        gridLayout_2 = new QGridLayout(page);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        gridLayout_3 = new QGridLayout(page);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setContentsMargins(0, 5, -1, -1);
         widgetTitle = new QWidget(page);
         widgetTitle->setObjectName(QString::fromUtf8("widgetTitle"));
         widgetTitle->setMinimumSize(QSize(0, 55));
         widgetTitle->setMaximumSize(QSize(16777215, 16777215));
         horizontalLayout_4 = new QHBoxLayout(widgetTitle);
+        horizontalLayout_4->setSpacing(0);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(-1, 0, -1, 0);
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         LabelTitle = new QLabel(widgetTitle);
         LabelTitle->setObjectName(QString::fromUtf8("LabelTitle"));
         LabelTitle->setMaximumSize(QSize(16777215, 16777215));
@@ -103,42 +104,37 @@ public:
         horizontalLayout_4->addWidget(BtnClose);
 
 
-        gridLayout_2->addWidget(widgetTitle, 0, 0, 1, 1);
+        gridLayout_3->addWidget(widgetTitle, 0, 0, 1, 1);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(20);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(9, 0, 9, 10);
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, -1, -1, -1);
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setHorizontalSpacing(6);
+        gridLayout_2->setVerticalSpacing(25);
+        gridLayout_2->setContentsMargins(-1, 10, -1, 0);
         lblUser = new QLabel(page);
         lblUser->setObjectName(QString::fromUtf8("lblUser"));
         lblUser->setMaximumSize(QSize(16777215, 40));
 
-        horizontalLayout_3->addWidget(lblUser);
+        gridLayout_2->addWidget(lblUser, 0, 0, 1, 1);
 
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_5 = new QSpacerItem(375, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_5);
-
-
-        verticalLayout_3->addLayout(horizontalLayout_3);
+        gridLayout_2->addItem(horizontalSpacer_5, 0, 1, 1, 1);
 
         leUser = new QLineEdit(page);
         leUser->setObjectName(QString::fromUtf8("leUser"));
-        leUser->setMinimumSize(QSize(0, 55));
+        leUser->setMinimumSize(QSize(0, 45));
 
-        verticalLayout_3->addWidget(leUser);
+        gridLayout_2->addWidget(leUser, 1, 0, 1, 2);
 
         lePassword = new QLineEdit(page);
         lePassword->setObjectName(QString::fromUtf8("lePassword"));
-        lePassword->setMinimumSize(QSize(0, 55));
+        lePassword->setMinimumSize(QSize(0, 45));
 
-        verticalLayout_3->addWidget(lePassword);
+        gridLayout_2->addWidget(lePassword, 2, 0, 1, 2);
 
 
-        gridLayout_2->addLayout(verticalLayout_3, 1, 0, 1, 1);
+        gridLayout_3->addLayout(gridLayout_2, 1, 0, 1, 1);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(2);
@@ -172,7 +168,7 @@ public:
         verticalLayout_2->addLayout(horizontalLayout);
 
 
-        gridLayout_2->addLayout(verticalLayout_2, 2, 0, 1, 1);
+        gridLayout_3->addLayout(verticalLayout_2, 2, 0, 1, 1);
 
         stackedWidget->addWidget(page);
         page_2 = new QWidget();

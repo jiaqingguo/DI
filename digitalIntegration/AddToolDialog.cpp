@@ -11,12 +11,12 @@ ui(new Ui::AddToolDialog)
 {
 	ui->setupUi(this);
 	//setWindowFlags(Qt::FramelessWindowHint);
-	ui->widget->hide();
+	//ui->widget->hide();
 	//ui->btnAdd->setEnabled(false);
 	init();
 	setWindowIcon(QIcon(":/image/InforIcon.png"));
 	//init_ui();
-	connect(ui->btnADDTOOLClose, &QPushButton::clicked, this, &AddToolDialog::close);
+	//connect(ui->btnADDTOOLClose, &QPushButton::clicked, this, &AddToolDialog::close);
 }
 
 AddToolDialog::~AddToolDialog()

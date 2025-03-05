@@ -749,8 +749,9 @@ LoginDialog QPushButton#btnRegister {
 /* ------------------------登录页面----------------------end*/
 
 /* ------------------------修改密码页面----------------------start*/
-ChangePwdDialog QWidget#page {
-	background-color:white;
+QDialog#ChangePwdDialog QWidget#page
+{
+    background-color:white;
 	border-color: gray;
 }
 ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLabel#labelConfirmPwd{
@@ -784,11 +785,12 @@ ChangePwdDialog QLabel#labelChangePwd
 	padding-left: 45px;
 	font-size: 20px;
 	color: #4f72ca;
+	margin: 5px;
 }
 /* ------------------------修改密码页面----------------------end*/
 
 /* ------------------------注册页面----------------------start*/
-RegisterDialog QWidget#page {
+RegisterDialog QWidget#page{
 	background-color:white;
 	border-color: gray;
 }
@@ -823,6 +825,7 @@ RegisterDialog QPushButton#btnRegistClose
 }
 RegisterDialog QLabel#labelRegistDialog
 {
+	margin: 5px;
 	background-image: url(:/image/registerIcon.png);
 	background-repeat: no-repeat;
     background-position: left center;
