@@ -21,7 +21,7 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 	//setWindowFlags(Qt::FramelessWindowHint);
-	ui->widget->hide();
+	//ui->widget->hide();
 	setWindowIcon(QIcon(":/image/OneLoadIcon.png"));
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(2);
@@ -77,7 +77,7 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewOneLoad);
 	ui->tableViewOneLoad->setItemDelegate(delegate1);
 
-	connect(ui->btnOneLoadClose, &QPushButton::clicked, this, &OneClickLoadDialog::close);
+	//connect(ui->btnOneLoadClose, &QPushButton::clicked, this, &OneClickLoadDialog::close);
 }
 
 OneClickLoadDialog::~OneClickLoadDialog()

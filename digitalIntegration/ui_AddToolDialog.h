@@ -20,7 +20,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -28,11 +27,6 @@ class Ui_AddToolDialog
 {
 public:
     QVBoxLayout *verticalLayout;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *labelADDTOOL;
-    QSpacerItem *horizontalSpacer_3;
-    QPushButton *btnADDTOOLClose;
     QGridLayout *gridLayout;
     QComboBox *comboBoxDisplayMode;
     QLabel *labelname;
@@ -51,35 +45,10 @@ public:
     {
         if (AddToolDialog->objectName().isEmpty())
             AddToolDialog->setObjectName(QString::fromUtf8("AddToolDialog"));
-        AddToolDialog->resize(346, 281);
+        AddToolDialog->resize(296, 199);
         verticalLayout = new QVBoxLayout(AddToolDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, -1);
-        widget = new QWidget(AddToolDialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setMaximumSize(QSize(16777215, 55));
-        horizontalLayout_2 = new QHBoxLayout(widget);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(-1, 9, -1, 0);
-        labelADDTOOL = new QLabel(widget);
-        labelADDTOOL->setObjectName(QString::fromUtf8("labelADDTOOL"));
-
-        horizontalLayout_2->addWidget(labelADDTOOL);
-
-        horizontalSpacer_3 = new QSpacerItem(197, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer_3);
-
-        btnADDTOOLClose = new QPushButton(widget);
-        btnADDTOOLClose->setObjectName(QString::fromUtf8("btnADDTOOLClose"));
-        btnADDTOOLClose->setMinimumSize(QSize(44, 36));
-        btnADDTOOLClose->setMaximumSize(QSize(44, 36));
-
-        horizontalLayout_2->addWidget(btnADDTOOLClose);
-
-
-        verticalLayout->addWidget(widget);
-
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(9, 9, 9, 9);
@@ -165,8 +134,6 @@ public:
     void retranslateUi(QDialog *AddToolDialog)
     {
         AddToolDialog->setWindowTitle(QCoreApplication::translate("AddToolDialog", "\346\226\260\345\242\236\345\267\245\345\205\267\347\224\273\351\235\242", nullptr));
-        labelADDTOOL->setText(QCoreApplication::translate("AddToolDialog", "\346\226\260\345\242\236\345\267\245\345\205\267\347\224\273\351\235\242", nullptr));
-        btnADDTOOLClose->setText(QString());
         comboBoxDisplayMode->setItemText(0, QCoreApplication::translate("AddToolDialog", "Tab\351\241\265", nullptr));
         comboBoxDisplayMode->setItemText(1, QCoreApplication::translate("AddToolDialog", "\345\274\271\347\252\227", nullptr));
 
