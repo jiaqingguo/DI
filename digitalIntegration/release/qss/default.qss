@@ -42,10 +42,7 @@ QWidget#widgetLeftMenu QTreeWidget::item {
 			margin-right:0px;
 			 /*padding: 15px; 设置内边距 */
         }
-QWidget#widgetLeftMenu QTreeWidget::item:hover {
-           /* background-color: #cce8ff;  设置悬浮背景颜色 */
-            color: #000; /* 设置悬浮字体颜色 */
-        }
+
 QWidget#widgetLeftMenu QTreeWidget::item:selected {
             border-image: url(:/image/treeItem_background_select.png);  /* 设置选中时的背景图片 */
 			color:3071f3;
@@ -53,6 +50,32 @@ QWidget#widgetLeftMenu QTreeWidget::item:selected {
 			 border: none;
 			 outline: none; /* 去掉虚线框 */
 }
+
+ /* 设置折叠状态的白色图标（仅对有子节点的 item 生效） */
+        QTreeView::branch:has-children:closed {
+		margin-top:3px;
+		margin-bottom:3px;
+			margin-right:4px;
+			margin-left:4px;
+            image: url(:/image/treeItem_close.png);
+			
+        }
+
+        /* 设置展开状态的白色图标（仅对有子节点的 item 生效） */
+        QTreeView::branch:has-children:open {
+		margin-top:4px;
+		margin-bottom:4px;
+			margin-right:2px;
+			margin-left:2px;
+            image: url(:/image/treeItem_open.png);
+			
+			
+        }
+
+        /* 确保没有子节点的 item 不显示图标 */
+        QTreeView::branch:!has-children {
+            image: none;
+        }
 
  QLabel#btnChildTitle { 
             font-family: 'Source Han Sans SC Medium'; 
@@ -134,15 +157,17 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab {
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
 		min-width: 100px;
-        min-height: 40px;  
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
+		
 	}
 QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
 		background-image: url(:/image/tabBar_blue.png);
 		
-        
 		 color:white;
 		background-repeat: no-repeat; 
         background-position: center; 
@@ -153,13 +178,13 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
 QTabBar::close-button {
     subcontrol-position: right;
     subcontrol-origin: padding;
-    width: 0px;
-    height: 0px;
+	
 }
 
 /* 设置自定义关闭按钮图标 */
 QTabBar::close-button {
     image: url(:/image/tarBar_close.png); /* 默认图标 */
+	margin:3px;
 }
 
 QTabBar::close-button:hover {
@@ -294,7 +319,7 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 	background-color: white;
 }
 FtpDialog QPushButton#pushButton{
-	border-image:url(:/image/btn_flush.png);
+	
 }
 
 FtpClientWidget{
@@ -388,9 +413,7 @@ QPushButton#btnUserQuery,QPushButton#btnDataQuery{
 }
 
 QPushButton#btnFlushDownload,QPushButton#btnFlushUser{
-		color:white;
-		margin:2px;
-		border-image:url(:/image/btn_flush.png);	
+			border-image:url(:/image/page_last.png);	
 }
 
 QPushButton#itemBtnYes,QPushButton#itemBtnDownload{
@@ -442,10 +465,6 @@ QPushButton#btnAddTab1,QPushButton#btnAddTab2,QPushButton#btnAddTab3,QPushButton
 /* ------------------------ 按钮 菜单----------------------start*/
 
 
-
-CAxWidget{
- font-size:35px;
-}
 
 
 
@@ -667,24 +686,50 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 /* ------------------------ 审批进度页面----------------------end*/
 /* ------------------------ 登录页面----------------------start*/
 
-LoginDialog QWidget#page {
-	background-color:white;
+QDialog#LoginDialog
+{
+	border-image: url(:/image/IpListBackGround.png) 10 30 35 15;
+}
+LoginDialog QLabel#LabelTitle
+{
+	background-image: url(:/image/Icon_Logo.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 21px;
+	color: #4f72ca;
+}
+LoginDialog QPushButton#BtnClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
 }
 LoginDialog QLabel#lblUser {
-	font-size: 28px;
-	color: #191a25;
+	font-size: 25px;
+	color: #4f72d0;
 }
 LoginDialog QLineEdit#leUser {
 	font-size: 20px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
+	background-image: url(:/image/Icon_Yonghuming.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 40px;
 }
 LoginDialog QLineEdit#lePassword {
 	font-size: 20px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
+	background-image: url(:/image/Icon_Mima.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 40px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);
@@ -692,12 +737,12 @@ LoginDialog QPushButton#btnLogin {
 	color: #ffffff;
 }
 LoginDialog QPushButton#btnChangePassword {
-	font-size: 20px;
+	font-size: 16px;
 	color: #8fa0cc;
 	border: none;
 }
 LoginDialog QPushButton#btnRegister {
-	font-size: 20px;
+	font-size: 16px;
 	color: #4f72ca;
 	border: none;
 }
@@ -706,182 +751,173 @@ LoginDialog QPushButton#btnRegister {
 /* ------------------------修改密码页面----------------------start*/
 ChangePwdDialog QWidget#page {
 	background-color:white;
+	border-color: gray;
 }
-ChangePwdDialog QLabel#labelUser{
-	font-size: 20px;
-	color: #484f7a;
-	
+ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLabel#labelConfirmPwd{
+	font-size: 19px;
+	color: #484f7a;	
 }
-ChangePwdDialog QLabel#labelPassword{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLabel#labelNewPwd{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLabel#labelConfirmPwd{
-	font-size: 20px;
-	color: #484f7a;
-}
-ChangePwdDialog QLineEdit#lineEditUserName{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditPassword{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditNewPwd{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-ChangePwdDialog QLineEdit#lineEditConfrimPwd{
-	font-size: 20px;
+ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 ChangePwdDialog QPushButton#btnModify{
 	border-image: url(:/image/btnxiao.png)0 0 0 0 stretch;
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 }
-
+ChangePwdDialog QPushButton#btnChangeClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
+}
+ChangePwdDialog QLabel#labelChangePwd
+{
+	background-image: url(:/image/registerIcon.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 20px;
+	color: #4f72ca;
+}
 /* ------------------------修改密码页面----------------------end*/
 
 /* ------------------------注册页面----------------------start*/
 RegisterDialog QWidget#page {
 	background-color:white;
+	border-color: gray;
 }
-RegisterDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelName ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot{ 
-	font-size: 20px;
+QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLabel#labelDepartment ,QLabel#labelJobTtile ,QLabel#labelPhoneNum ,QLabel#labelRoot
+{ 
+	font-size: 19px;
 	color: #484f7a;
 }
-RegisterDialog QLineEdit#lineEditUserName{
-	font-size: 20px;
+RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-RegisterDialog QLineEdit#lineEditPassword{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditName{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditDepartment{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditJobTtile{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-RegisterDialog QLineEdit#lineEditPhoneNumber{
-	font-size: 20px;
-	color: #000000;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
+
 RegisterDialog QComboBox#comboBoxRoot{
-	font-size: 20px;
+	font-size: 19px;
 	color: #abadb2;
-	border: 1px solid gray;
-	border-radius: 5px;
 }
 RegisterDialog QPushButton#btnRegister{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-
+RegisterDialog QPushButton#btnRegistClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
+}
+RegisterDialog QLabel#labelRegistDialog
+{
+	background-image: url(:/image/registerIcon.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 20px;
+	color: #4f72ca;
+}
 /* ------------------------注册页面----------------------end*/
 
 
 /* ------------------------添加工具页面----------------------start*/
 QDialog#AddToolInfoDialog{
 	background-color: white;
+	border-color: gray;
 }
 AddToolInfoDialog QLabel#label_2{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label_4{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#accelerateRadioButton{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QRadioButton#nodeRadioButton{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label4{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label5{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLabel#label6{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolInfoDialog QLineEdit#lineEditToolName{
-	font-size: 20px;
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEditToolPath{
-	font-size: 20px;
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QLineEdit#lineEdit{
-	font-size: 20px;
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
-	font-size: 20px;
+	font-size: 19px;
 	color: #000000;
 }
 AddToolInfoDialog QPushButton#btnChooseImage{
-	font-size: 20px;
+	font-size: 19px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 AddToolInfoDialog QPushButton#btnOK{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
+}
+AddToolInfoDialog QPushButton#btnAddToolClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
+}
+AddToolInfoDialog QLabel#labelAddTool
+{
+	background-image: url(:/image/InforIcon.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 20px;
+	color: #4f72ca;
 }
 /* ------------------------添加工具页面----------------------end*/
 
@@ -890,26 +926,45 @@ QDialog#AddToolDialog{
 	background-color: white;
 }
 AddToolDialog QLabel#labelname ,QLabel#labelOpenWay ,QLabel#labelToolName ,QLabel#labelONHost{
-	font-size: 20px;
+	font-size: 19px;
 	color: #484f7a;
 }
 AddToolDialog QLineEdit#lineEditTabName{
-	font-size: 18px;
+	font-size: 19px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
 }
 AddToolDialog QComboBox#comboBoxDisplayMode ,QComboBox#comboBoxHost ,QComboBox#comboBoxToolNames{ 
-	font-size: 18px;
+	font-size: 19px;
 	color: #000000;
 }
 AddToolDialog QPushButton#btnAdd{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
-
-
+QComboBox#comboBoxDisplayMode QAbstractItemView ,QComboBox#comboBoxHost QAbstractItemView ,QComboBox#comboBoxToolNames QAbstractItemView
+{
+    selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
+}
+AddToolDialog QPushButton#btnADDTOOLClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
+}
+AddToolDialog QLabel#labelADDTOOL
+{
+	background-image: url(:/image/InforIcon.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 20px;
+	color: #4f72ca;
+}
 /* ------------------------标签页新增工具页面----------------------end*/
 
 
@@ -918,23 +973,41 @@ QDialog#OneClickLoadDialog{
 	background-color: white;
 }
 OneClickLoadDialog QPushButton#btnAdd{
-	font-size: 20px;
+	font-size: 19px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QPushButton#btnDel{
-	font-size: 20px;
+	font-size: 19px;
 	color: #6280f5;
 	border-image: url(:/image/InforChoose.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QPushButton#btnOk{
-	font-size: 24px;
+	font-size: 22px;
 	color: #ffffff;
 	border-image: url(:/image/btnxiao.png) 0 0 0 0 stretch;
 }
 OneClickLoadDialog QTableView#tableViewOneLoad{
+	border: 1px solid gray;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 0.5px;
+}
+OneClickLoadDialog QPushButton#btnOneLoadClose 
+{
+	background-image: url(:/image/Close.png);
+	background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover; 
+	border: none; 
+}
+OneClickLoadDialog QLabel#labelOneLoad
+{
+	background-image: url(:/image/load.png);
+	background-repeat: no-repeat;
+    background-position: left center;
+	padding-left: 45px;
+	font-size: 20px;
+	color: #4f72ca;
 }
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/
@@ -954,7 +1027,7 @@ ResourceManageDialog QTableView#tableViewList ,QGroupBox#groupBox ,QGroupBox#gro
 	padding: 20px;  /*设置 QTableView 的内边距 */
 }
 ResourceManageDialog QWidget#widget_3 ,QWidget#widget_5 ,QWidget#widget_6 ,QWidget#widget_7 ,QWidget#widget_8{
-	border-image: url(:/image/CurveBackground.png) 5 5 5 5 stretch stretch;
+	border-image: url(:/image/CurveBackground.png) 15 15 15 15 stretch stretch;
 	
 	/*border: 1px solid white;
 	border-radius: 5px;*/
@@ -979,14 +1052,12 @@ ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBo
 {
     image: url(:/image/CurveComboBox.png);
 }*/
-ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView
+ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView ,QComboBox#comboBox QAbstractItemView
 {
-    border: none; /* 取消边框 */
-    background-color: white; /* 可选：设置下拉框的背景颜色 */
     selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
 }
 
-QTableView#tableViewList::item:selected ,QTableView#tableViewIP1::item:selected ,QTableView#tableViewTool1::item:selected ,QTableView#tableViewTool2::item:selected ,QTableView#tableViewTool3::item:selected ,QTableView#tableViewTool4::item:selected{
+QTableView#tableViewList::item:selected ,QTableView#tableViewIP1::item:selected ,QTableView#tableViewTool1::item:selected ,QTableView#tableViewTool2::item:selected ,QTableView#tableViewTool3::item:selected ,QTableView#tableViewTool4::item:selected ,QTableView#tableViewOneLoad::item:selected{
 	/*border-image:url(:/image/tableViewItem_select.png);  选中行的背景图 */
 	background-color:#a7cdff;
 	font-size:14px;

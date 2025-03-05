@@ -87,6 +87,8 @@ MainWindow::MainWindow(QWidget *parent)
 	// 将定时器的超时信号连接到槽函数
 	connect(m_reconnectTimer, &QTimer::timeout, this, &MainWindow::slot_reconnnectTimerOut);
 
+	//connect(this, &MainWindow::signal_soft, this, &MainWindow::slot_SoftTreeItemDoubleClicked);
+
 	// 设置时间间隔并启动定时器
 	//m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 }
@@ -2537,20 +2539,24 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 				if (Index == 4)  // 模块1
 				{
 					//ui->tabWidgetModulel1
-					onDoubleClicked(toolName); // 嵌入软件
+				//	emit signal_soft(toolName);
+					slot_SoftTreeItemDoubleClicked(toolName); // 嵌入软件
 
 				}
 				else if (Index == 5) // 模块2
 				{
-					onDoubleClicked(toolName); // 嵌入软件
+					slot_SoftTreeItemDoubleClicked(toolName); // 嵌入软件
+					//emit signal_soft(toolName);
 				}
 				else if (Index == 6)
 				{
-					onDoubleClicked(toolName); // 嵌入软件
+					slot_SoftTreeItemDoubleClicked(toolName); // 嵌入软件
+					//emit signal_soft(toolName);
 				}
 				else if (Index == 7)
 				{
-					onDoubleClicked(toolName); // 嵌入软件
+					slot_SoftTreeItemDoubleClicked(toolName); // 嵌入软件
+					//emit signal_soft(toolName);
 				}
 				qDebug() << "Double-clicked item data (string):" << data.toString();
 				
@@ -2686,4 +2692,321 @@ void MainWindow::onDisconnected()
 
 	msgBox.setText(QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
 	msgBox.exec();
+}
+
+void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
+{
+	table_ip stipToolData;
+	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+	{
+		return;
+	}
+	QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;
+	if (strAccount.isEmpty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+		return;
+	}
+
+	QString strPwd = "Atexcel@123";
+
+	CWidget* axTabWidget = new CWidget();
+
+	table_ip_configure st;
+	common::findIpWithGpuMinValue(st);
+	std::string strIP = st.ip;
+	if (strIP.empty())
+	{
+		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+		return;
+	}
+
+	if (common::indexNum == 1)
+	{
+		if (stipToolData.used == 1)//模块1下固定ip启动
+		{
+			axTabWidget->m_account = strAccount;
+			axTabWidget->m_ip = QString::fromStdString(stipToolData.ip);
+			axTabWidget->m_softwareName = buttonText;
+			if (isHardwareAccelerator(stipToolData.host))
+			{
+				startLongDistanceHost(buttonText + "  " + QString::fromStdString(stipToolData.host), common::indexNum, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+			}
+			else
+			{
+				startLongDistanceSoftware(buttonText + " " + QString::fromStdString(stipToolData.host), common::indexNum, stipToolData.ip, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+
+			}
+		}
+		else if (stipToolData.used == 0) //模块1下指定ip启动
+		{
+			QString strAssignIP = "";// 指定ip 主机;
+			QString strAssignHostName = "";
+
+			AddToolDialog addToooDialog(common::indexNum);
+			QComboBox* toolComboBox = addToooDialog.getComboBox();
+			toolComboBox->setEnabled(false);
+			toolComboBox->setCurrentText(buttonText);
+			if (addToooDialog.exec() == QDialog::Accepted)
+			{
+				QString toolName;
+				QString tabName;
+				int mode = -1;
+				int displayMode = 0;
+				QString  toolPath = -1;
+
+				addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+				table_ip stipToolData;
+				if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+				{
+					return;
+				}
+				if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+				{
+					table_ip_configure st;
+					common::findIpWithGpuMinValue(st);
+
+					strAssignIP = QString::fromStdString(st.ip);
+					strAssignHostName = QString::fromStdString(st.hostname);
+				}
+				tabName = tabName + "  " + strAssignHostName;
+
+				std::string strIP = strAssignIP.toStdString();
+				if (strIP.empty())
+				{
+					QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+					return;
+				}
+
+				QString strPwd;
+				if (common::bAdministrator)
+				{
+					strPwd = common::strFtpAdminPwd;
+				}
+				else
+				{
+					strPwd = common::strFtpPwd;
+				}
+				CWidget* axTabWidget = new CWidget();
+				QString str = "app\\";
+				QString strAccount = str + common::strLoginUserName;
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+					}
+
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+			}
+		}
+	}
+	else
+	{
+		QString strAssignIP = "";// 指定ip 主机;
+		QString strAssignHostName = "";
+
+		AddToolDialog addToooDialog(common::indexNum);
+		QComboBox* toolComboBox = addToooDialog.getComboBox();
+		toolComboBox->setEnabled(false);
+		toolComboBox->setCurrentText(buttonText);
+		if (addToooDialog.exec() == QDialog::Accepted)
+		{
+			QString toolName;
+			QString tabName;
+			int mode = -1;
+			int displayMode = 0;
+			QString  toolPath = -1;
+
+
+
+			addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+
+			table_ip stipToolData;
+			if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+			{
+				return;
+			}
+			/*if (common::indexNum == 1)
+			{
+
+				strAssignIP = QString::fromStdString(stipToolData.ip);
+				strAssignHostName = QString::fromStdString(stipToolData.host);
+
+
+				QString hostname = QString::fromStdString(stipToolData.host);
+				tabName = tabName + " " + hostname;
+			}*/
+			//else
+			//{
+			if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+			{
+				table_ip_configure st;
+				common::findIpWithGpuMinValue(st);
+
+				strAssignIP = QString::fromStdString(st.ip);
+				strAssignHostName = QString::fromStdString(st.hostname);
+			}
+			tabName = tabName + "  " + strAssignHostName;
+			//}
+
+			std::string strIP = strAssignIP.toStdString();
+			if (strIP.empty())
+			{
+				QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+				return;
+			}
+
+			QString strPwd;
+			if (common::bAdministrator)
+			{
+				strPwd = common::strFtpAdminPwd;
+			}
+			else
+			{
+				strPwd = common::strFtpPwd;
+			}
+			CWidget* axTabWidget = new CWidget();
+			QString str = "app\\";
+			QString strAccount = str + common::strLoginUserName;
+			if (strAccount.isEmpty())
+			{
+				QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+				return;
+			}
+
+			if (common::indexNum == 2)
+			{
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+					}
+
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+
+			}
+			else if (common::indexNum == 3)
+			{
+
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
+					}
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+			}
+			else if (common::indexNum == 4)
+			{
+
+				if (displayMode == 0)
+				{
+
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+					}
+
+				}
+				else
+				{
+					axTabWidget->m_account = strAccount;
+					axTabWidget->m_ip = QString::fromStdString(strIP);
+					axTabWidget->m_softwareName = buttonText;
+					if (isHardwareAccelerator(strAssignHostName.toStdString()))
+					{
+						startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+					}
+					else
+					{
+						startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+					}
+
+				}
+
+			}
+		}
+	}
 }

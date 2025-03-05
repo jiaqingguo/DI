@@ -135,7 +135,10 @@ public:
 	void initAccount();
 	QString  getAccaunt(const QString& strIP, const QString strSoft);
 	void     addAccaunt(const QString& strIP, const QString & strSoft, const QString& strAcc); // 恢复关闭软件已经使用的账户;
+signals:
+	void signal_soft(QString strSoft);
 private slots:
+	void slot_SoftTreeItemDoubleClicked(QString buttonText);
 	void slot_btnResourceManageClicked();
 	void slot_btnInformationConfihurationClicked();
 	void slot_btnDataManageClicked();
@@ -187,6 +190,8 @@ private:
 	void ChangeTreeItemIcon(QTreeWidgetItem*pItem);
 
 	void onDisconnected(); //断开连接的提示文字
+
+//	void SoftTreeItemDoubleClicked(const QString& buttonText);
 private:
 	Ui::MainWindow *ui;
 
