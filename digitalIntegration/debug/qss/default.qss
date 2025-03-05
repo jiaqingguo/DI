@@ -642,22 +642,22 @@ QLineEdit#lineEditDataQueryValue ,QLineEdit#lineEditUserQueryValue{
 	border-radius: 5px;
 }
 QPushButton#btnDataApprovalLast{
-	color:white;
+	
 	margin:2px;
 	border-image:url(:/image/page_last.png);	
 }
 QPushButton#btnDataApprovalNext{
-	color:white;
+	
 	margin:2px;
 	border-image:url(:/image/page_nect.png);	
 }
 QPushButton#btnUserLast{
-	color:white;
+	
 	margin:2px;
 	border-image:url(:/image/page_last.png);	
 }
 QPushButton#btnUserNext{
-	color:white;
+	
 	margin:2px;
 	border-image:url(:/image/page_nect.png);	
 }
