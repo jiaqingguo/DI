@@ -2664,11 +2664,11 @@ void MainWindow::slot_btnMaximize()
 		int h = height() * 0.8;
 		resize(w, h);*/
 		showNormal();
-		//ui->splitter->setEnabled(false);
+		ui->splitter->setVisible(false);
 		//ui->btnMaximize->setText(QString::fromLocal8Bit("□"));
 	}
 	else {
-		//ui->splitter->setEnabled(true);
+		ui->splitter->setVisible(true);
 		showMaximized();
 	//	ui->btnMaximize->setText(QString::fromLocal8Bit("❐"));
 	}

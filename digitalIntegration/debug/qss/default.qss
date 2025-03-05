@@ -319,7 +319,7 @@ FtpDialog QStackedWidget#stackedWidgetMain{
 	background-color: white;
 }
 FtpDialog QPushButton#pushButton{
-	border-image:url(:/image/btn_flush.png);
+	
 }
 
 FtpClientWidget{
@@ -413,9 +413,7 @@ QPushButton#btnUserQuery,QPushButton#btnDataQuery{
 }
 
 QPushButton#btnFlushDownload,QPushButton#btnFlushUser{
-		color:white;
-		margin:2px;
-		border-image:url(:/image/btn_flush.png);	
+			border-image:url(:/image/page_last.png);	
 }
 
 QPushButton#itemBtnYes,QPushButton#itemBtnDownload{
@@ -644,12 +642,12 @@ QLineEdit#lineEditDataQueryValue ,QLineEdit#lineEditUserQueryValue{
 }
 QPushButton#btnDataApprovalLast{
 	color:white;
-	margin:2px;
+	
 	border-image:url(:/image/page_last.png);	
 }
 QPushButton#btnDataApprovalNext{
 	color:white;
-	margin:2px;
+	
 	border-image:url(:/image/page_nect.png);	
 }
 QPushButton#btnUserLast{
@@ -721,6 +719,7 @@ LoginDialog QLineEdit#leUser {
 	background-repeat: no-repeat;
     background-position: left center;
 	padding-left: 35px;
+	
 }
 LoginDialog QLineEdit#lePassword {
 	font-size: 18px;
