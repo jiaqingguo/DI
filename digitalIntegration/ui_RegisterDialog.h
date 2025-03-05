@@ -32,10 +32,15 @@ public:
     QStackedWidget *stackedWidget;
     QWidget *page;
     QGridLayout *gridLayout;
+    QWidget *widget_2;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *labelRegistDialog;
+    QSpacerItem *horizontalSpacer_7;
+    QPushButton *btnRegistClose;
     QGridLayout *gridLayout_2;
     QLabel *labelJobTtile;
-    QLabel *labelUser;
-    QLabel *labelPassword;
+    QLabel *labelUserRegist;
+    QLabel *labelPasswordRegist;
     QLineEdit *lineEditDepartment;
     QLineEdit *lineEditJobTtile;
     QComboBox *comboBoxRoot;
@@ -43,7 +48,7 @@ public:
     QLineEdit *lineEditName;
     QLabel *labelDepartment;
     QLabel *labelRoot;
-    QLabel *labelName;
+    QLabel *labelNameRegist;
     QLineEdit *lineEditUserName;
     QLineEdit *lineEditPassword;
     QLabel *labelPhoneNum;
@@ -69,10 +74,10 @@ public:
         if (RegisterDialog->objectName().isEmpty())
             RegisterDialog->setObjectName(QString::fromUtf8("RegisterDialog"));
         RegisterDialog->setEnabled(true);
-        RegisterDialog->resize(293, 346);
+        RegisterDialog->resize(270, 350);
         RegisterDialog->setMinimumSize(QSize(0, 0));
+        RegisterDialog->setMaximumSize(QSize(300, 350));
         gridLayout_3 = new QGridLayout(RegisterDialog);
-        gridLayout_3->setSpacing(6);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
         stackedWidget = new QStackedWidget(RegisterDialog);
@@ -82,6 +87,32 @@ public:
         page->setObjectName(QString::fromUtf8("page"));
         gridLayout = new QGridLayout(page);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        widget_2 = new QWidget(page);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        widget_2->setMinimumSize(QSize(0, 55));
+        widget_2->setMaximumSize(QSize(16777215, 55));
+        horizontalLayout_4 = new QHBoxLayout(widget_2);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(9, 0, 9, 0);
+        labelRegistDialog = new QLabel(widget_2);
+        labelRegistDialog->setObjectName(QString::fromUtf8("labelRegistDialog"));
+
+        horizontalLayout_4->addWidget(labelRegistDialog);
+
+        horizontalSpacer_7 = new QSpacerItem(127, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_7);
+
+        btnRegistClose = new QPushButton(widget_2);
+        btnRegistClose->setObjectName(QString::fromUtf8("btnRegistClose"));
+        btnRegistClose->setMinimumSize(QSize(44, 36));
+        btnRegistClose->setMaximumSize(QSize(44, 36));
+
+        horizontalLayout_4->addWidget(btnRegistClose);
+
+
+        gridLayout->addWidget(widget_2, 0, 0, 1, 1);
+
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setHorizontalSpacing(10);
@@ -91,15 +122,15 @@ public:
 
         gridLayout_2->addWidget(labelJobTtile, 4, 0, 1, 1);
 
-        labelUser = new QLabel(page);
-        labelUser->setObjectName(QString::fromUtf8("labelUser"));
+        labelUserRegist = new QLabel(page);
+        labelUserRegist->setObjectName(QString::fromUtf8("labelUserRegist"));
 
-        gridLayout_2->addWidget(labelUser, 0, 0, 1, 1);
+        gridLayout_2->addWidget(labelUserRegist, 0, 0, 1, 1);
 
-        labelPassword = new QLabel(page);
-        labelPassword->setObjectName(QString::fromUtf8("labelPassword"));
+        labelPasswordRegist = new QLabel(page);
+        labelPasswordRegist->setObjectName(QString::fromUtf8("labelPasswordRegist"));
 
-        gridLayout_2->addWidget(labelPassword, 1, 0, 1, 1);
+        gridLayout_2->addWidget(labelPasswordRegist, 1, 0, 1, 1);
 
         lineEditDepartment = new QLineEdit(page);
         lineEditDepartment->setObjectName(QString::fromUtf8("lineEditDepartment"));
@@ -143,10 +174,10 @@ public:
 
         gridLayout_2->addWidget(labelRoot, 6, 0, 1, 1);
 
-        labelName = new QLabel(page);
-        labelName->setObjectName(QString::fromUtf8("labelName"));
+        labelNameRegist = new QLabel(page);
+        labelNameRegist->setObjectName(QString::fromUtf8("labelNameRegist"));
 
-        gridLayout_2->addWidget(labelName, 2, 0, 1, 1);
+        gridLayout_2->addWidget(labelNameRegist, 2, 0, 1, 1);
 
         lineEditUserName = new QLineEdit(page);
         lineEditUserName->setObjectName(QString::fromUtf8("lineEditUserName"));
@@ -166,7 +197,7 @@ public:
         gridLayout_2->addWidget(labelPhoneNum, 5, 0, 1, 1);
 
 
-        gridLayout->addLayout(gridLayout_2, 0, 0, 1, 1);
+        gridLayout->addLayout(gridLayout_2, 1, 0, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
@@ -187,7 +218,7 @@ public:
         horizontalLayout->addItem(horizontalSpacer_2);
 
 
-        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 2, 0, 1, 1);
 
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
@@ -264,15 +295,17 @@ public:
     void retranslateUi(QDialog *RegisterDialog)
     {
         RegisterDialog->setWindowTitle(QCoreApplication::translate("RegisterDialog", "Dialog", nullptr));
+        labelRegistDialog->setText(QCoreApplication::translate("RegisterDialog", "\347\224\250\346\210\267\346\263\250\345\206\214", nullptr));
+        btnRegistClose->setText(QString());
         labelJobTtile->setText(QCoreApplication::translate("RegisterDialog", "\350\201\214\344\275\215", nullptr));
-        labelUser->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\347\224\250\346\210\267\345\220\215<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
-        labelPassword->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\345\257\206\347\240\201<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
+        labelUserRegist->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\347\224\250\346\210\267\345\220\215<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
+        labelPasswordRegist->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\345\257\206\347\240\201<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         comboBoxRoot->setItemText(0, QCoreApplication::translate("RegisterDialog", "\347\256\241\347\220\206\345\221\230", nullptr));
         comboBoxRoot->setItemText(1, QCoreApplication::translate("RegisterDialog", "\346\231\256\351\200\232\347\224\250\346\210\267", nullptr));
 
         labelDepartment->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\351\203\250\351\227\250</p></body></html>", nullptr));
         labelRoot->setText(QCoreApplication::translate("RegisterDialog", "\346\235\203\351\231\220", nullptr));
-        labelName->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\344\275\277\347\224\250\344\272\272<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
+        labelNameRegist->setText(QCoreApplication::translate("RegisterDialog", "<html><head/><body><p>\344\275\277\347\224\250\344\272\272<span style=\" color:#ff0000;\">*</span></p></body></html>", nullptr));
         labelPhoneNum->setText(QCoreApplication::translate("RegisterDialog", "\346\211\213\346\234\272\345\217\267", nullptr));
         btnRegister->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214", nullptr));
         label_7->setText(QCoreApplication::translate("RegisterDialog", "\346\263\250\345\206\214\346\214\207\347\272\271", nullptr));

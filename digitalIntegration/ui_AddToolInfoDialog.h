@@ -20,7 +20,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,7 +27,12 @@ QT_BEGIN_NAMESPACE
 class Ui_AddToolInfoDialog
 {
 public:
-    QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout_3;
+    QWidget *widget_2;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *labelAddTool;
+    QSpacerItem *horizontalSpacer_6;
+    QPushButton *btnAddToolClose;
     QGridLayout *gridLayout_2;
     QLineEdit *lineEditToolPath;
     QLabel *label_4;
@@ -61,13 +65,38 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(310, 410);
-        verticalLayout = new QVBoxLayout(AddToolInfoDialog);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        AddToolInfoDialog->resize(310, 383);
+        gridLayout_3 = new QGridLayout(AddToolInfoDialog);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setContentsMargins(0, 0, 0, 0);
+        widget_2 = new QWidget(AddToolInfoDialog);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        widget_2->setMinimumSize(QSize(0, 55));
+        horizontalLayout_2 = new QHBoxLayout(widget_2);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(-1, 0, -1, 0);
+        labelAddTool = new QLabel(widget_2);
+        labelAddTool->setObjectName(QString::fromUtf8("labelAddTool"));
+
+        horizontalLayout_2->addWidget(labelAddTool);
+
+        horizontalSpacer_6 = new QSpacerItem(161, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_6);
+
+        btnAddToolClose = new QPushButton(widget_2);
+        btnAddToolClose->setObjectName(QString::fromUtf8("btnAddToolClose"));
+        btnAddToolClose->setMinimumSize(QSize(44, 36));
+        btnAddToolClose->setMaximumSize(QSize(44, 36));
+
+        horizontalLayout_2->addWidget(btnAddToolClose);
+
+
+        gridLayout_3->addWidget(widget_2, 0, 0, 1, 1);
+
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        gridLayout_2->setContentsMargins(9, 9, 9, 9);
+        gridLayout_2->setContentsMargins(9, 0, 9, 9);
         lineEditToolPath = new QLineEdit(AddToolInfoDialog);
         lineEditToolPath->setObjectName(QString::fromUtf8("lineEditToolPath"));
         lineEditToolPath->setMinimumSize(QSize(0, 0));
@@ -108,11 +137,11 @@ public:
         gridLayout_2->addWidget(lineEditToolName, 0, 1, 1, 2);
 
 
-        verticalLayout->addLayout(gridLayout_2);
+        gridLayout_3->addLayout(gridLayout_2, 1, 0, 1, 1);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout_3->setContentsMargins(9, 0, 9, 0);
         accelerateRadioButton = new QRadioButton(AddToolInfoDialog);
         accelerateRadioButton->setObjectName(QString::fromUtf8("accelerateRadioButton"));
         accelerateRadioButton->setMinimumSize(QSize(0, 0));
@@ -126,12 +155,13 @@ public:
         horizontalLayout_3->addWidget(nodeRadioButton);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        gridLayout_3->addLayout(horizontalLayout_3, 2, 0, 1, 1);
 
         widget = new QWidget(AddToolInfoDialog);
         widget->setObjectName(QString::fromUtf8("widget"));
         gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(-1, 0, -1, 0);
         label4 = new QLabel(widget);
         label4->setObjectName(QString::fromUtf8("label4"));
 
@@ -178,7 +208,7 @@ public:
         gridLayout->addItem(horizontalSpacer_5, 2, 2, 1, 1);
 
 
-        verticalLayout->addWidget(widget);
+        gridLayout_3->addWidget(widget, 3, 0, 1, 1);
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
@@ -188,7 +218,7 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, 9, 9, 9);
+        horizontalLayout->setContentsMargins(9, 0, 9, 9);
         btnOK = new QPushButton(AddToolInfoDialog);
         btnOK->setObjectName(QString::fromUtf8("btnOK"));
         btnOK->setMinimumSize(QSize(110, 50));
@@ -203,7 +233,7 @@ public:
         horizontalLayout_4->addItem(horizontalSpacer_2);
 
 
-        verticalLayout->addLayout(horizontalLayout_4);
+        gridLayout_3->addLayout(horizontalLayout_4, 4, 0, 1, 1);
 
 
         retranslateUi(AddToolInfoDialog);
@@ -214,6 +244,8 @@ public:
     void retranslateUi(QDialog *AddToolInfoDialog)
     {
         AddToolInfoDialog->setWindowTitle(QCoreApplication::translate("AddToolInfoDialog", "\345\242\236\345\212\240\345\267\245\345\205\267\344\277\241\346\201\257", nullptr));
+        labelAddTool->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\242\236\345\212\240\345\267\245\345\205\267\344\277\241\346\201\257", nullptr));
+        btnAddToolClose->setText(QString());
         label_4->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\233\276\346\240\207\350\267\257\345\276\204", nullptr));
         btnChooseImage->setText(QCoreApplication::translate("AddToolInfoDialog", "\351\200\211\346\213\251", nullptr));
         label_2->setText(QCoreApplication::translate("AddToolInfoDialog", "\345\267\245\345\205\267\345\220\215\347\247\260", nullptr));

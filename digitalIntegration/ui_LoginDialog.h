@@ -84,7 +84,7 @@ public:
         widgetTitle->setMaximumSize(QSize(16777215, 16777215));
         horizontalLayout_4 = new QHBoxLayout(widgetTitle);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(-1, 0, -1, -1);
+        horizontalLayout_4->setContentsMargins(-1, 0, -1, 0);
         LabelTitle = new QLabel(widgetTitle);
         LabelTitle->setObjectName(QString::fromUtf8("LabelTitle"));
         LabelTitle->setMaximumSize(QSize(16777215, 16777215));
@@ -108,7 +108,7 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(20);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(9, 5, 9, 10);
+        verticalLayout_3->setContentsMargins(9, 0, 9, 10);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, -1, -1, -1);
@@ -127,13 +127,13 @@ public:
 
         leUser = new QLineEdit(page);
         leUser->setObjectName(QString::fromUtf8("leUser"));
-        leUser->setMinimumSize(QSize(0, 45));
+        leUser->setMinimumSize(QSize(0, 55));
 
         verticalLayout_3->addWidget(leUser);
 
         lePassword = new QLineEdit(page);
         lePassword->setObjectName(QString::fromUtf8("lePassword"));
-        lePassword->setMinimumSize(QSize(0, 45));
+        lePassword->setMinimumSize(QSize(0, 55));
 
         verticalLayout_3->addWidget(lePassword);
 
@@ -141,19 +141,19 @@ public:
         gridLayout_2->addLayout(verticalLayout_3, 1, 0, 1, 1);
 
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(10);
+        verticalLayout_2->setSpacing(2);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 20, 0, -1);
         btnLogin = new QPushButton(page);
         btnLogin->setObjectName(QString::fromUtf8("btnLogin"));
-        btnLogin->setMinimumSize(QSize(440, 60));
+        btnLogin->setMinimumSize(QSize(440, 65));
 
         verticalLayout_2->addWidget(btnLogin);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(9, -1, 5, -1);
+        horizontalLayout->setContentsMargins(9, -1, 5, 9);
         btnChangePassword = new QPushButton(page);
         btnChangePassword->setObjectName(QString::fromUtf8("btnChangePassword"));
 

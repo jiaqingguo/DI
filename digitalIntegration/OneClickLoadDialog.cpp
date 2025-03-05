@@ -20,6 +20,7 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	ui(new Ui::OneClickLoadDialog)
 {
 	ui->setupUi(this);
+	setWindowFlags(Qt::FramelessWindowHint);
 	setWindowIcon(QIcon(":/image/OneLoadIcon.png"));
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(2);
@@ -65,8 +66,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	connect(ui->btnAdd, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnAdd);
 	connect(ui->btnOk, &QPushButton::clicked, this, &OneClickLoadDialog::slot_btnOK);
 	ui->tableViewOneLoad->setShowGrid(false);
-	ui->tableViewOneLoad->setStyleSheet("QTableView{font-size: 18px;color: #191a25;}");
-	ui->tableViewOneLoad->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 19px;color: #7482a6;}");
+	ui->tableViewOneLoad->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
+	ui->tableViewOneLoad->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");
 	ui->tableViewOneLoad->horizontalHeader()->setFixedHeight(40);  // 设置表头高度为40像素
 	ui->tableViewOneLoad->verticalHeader()->setDefaultSectionSize(40);//设置每一行的高度为40
 	
@@ -74,6 +75,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	// 创建自定义委托并设置到 QTableView
 	BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewOneLoad);
 	ui->tableViewOneLoad->setItemDelegate(delegate1);
+
+	connect(ui->btnOneLoadClose, &QPushButton::clicked, this, &OneClickLoadDialog::close);
 }
 
 OneClickLoadDialog::~OneClickLoadDialog()
@@ -86,7 +89,7 @@ void OneClickLoadDialog::slot_btnAdd()
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
 	//comboBox->setEditable(false);
-	comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
+	comboBox->setStyleSheet("QComboBox{font-size: 14px;color: #606580;}");
 	comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
@@ -253,7 +256,7 @@ void OneClickLoadDialog::initTableView()
 					QComboBox *comboBox = new QComboBox();
 					item->setTextAlignment(Qt::AlignCenter);
 					m_model->setItem(newRowIndex, 1, item);
-					comboBox->setStyleSheet("QComboBox{font-size: 18px;color: #606580;}");
+					comboBox->setStyleSheet("QComboBox{font-size: 14px;color: #606580;}");
 					comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 					std::map<std::string, table_ip> ipMap;
 					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))

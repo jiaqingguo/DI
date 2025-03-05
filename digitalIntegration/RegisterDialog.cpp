@@ -14,6 +14,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui(new Ui::RegisterDialog)
 {
 	ui->setupUi(this);
+	setWindowFlags(Qt::FramelessWindowHint);
 	setWindowTitle(QString::fromLocal8Bit("用户注册"));
 	setWindowIcon(QIcon(":/image/registerIcon.png"));
 	ui->stackedWidget->setCurrentIndex(0);
@@ -42,6 +43,7 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui->comboBoxRoot->setEnabled(false);
 
 	//init_ui();
+	connect(ui->btnRegistClose, &QPushButton::clicked, this, &RegisterDialog::close);
 }
 
 RegisterDialog::~RegisterDialog()
