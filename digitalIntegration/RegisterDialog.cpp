@@ -14,7 +14,8 @@ RegisterDialog::RegisterDialog(QWidget* parent) :
 	ui(new Ui::RegisterDialog)
 {
 	ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
+	ui->widget_2->hide();
 	setWindowTitle(QString::fromLocal8Bit("用户注册"));
 	setWindowIcon(QIcon(":/image/registerIcon.png"));
 	ui->stackedWidget->setCurrentIndex(0);

@@ -20,7 +20,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	ui(new Ui::OneClickLoadDialog)
 {
 	ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
+	ui->widget->hide();
 	setWindowIcon(QIcon(":/image/OneLoadIcon.png"));
 	m_model = new QStandardItemModel();
 	m_model->setColumnCount(2);

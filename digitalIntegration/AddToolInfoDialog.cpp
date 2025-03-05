@@ -14,7 +14,8 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
     ui(new Ui::AddToolInfoDialog)
 {
     ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
+	ui->widget_2->hide();
 	setWindowIcon(QIcon(":/image/InforIcon.png"));
     //ui->lineEditHost->setMaxLength(15);
     ui->lineEditToolName->setMaxLength(20);

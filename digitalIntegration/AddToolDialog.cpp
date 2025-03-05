@@ -10,7 +10,8 @@ QDialog(parent),
 ui(new Ui::AddToolDialog)
 {
 	ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
+	ui->widget->hide();
 	//ui->btnAdd->setEnabled(false);
 	init();
 	setWindowIcon(QIcon(":/image/InforIcon.png"));

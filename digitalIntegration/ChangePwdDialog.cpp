@@ -11,7 +11,8 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
     ui(new Ui::ChangePwdDialog)
 {
     ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
+	ui->widget_2->hide();
     setWindowTitle(QString::fromLocal8Bit("修改密码"));
     setWindowIcon(QIcon(":/image/registerIcon.png"));
     connect(ui->btnModify, &QPushButton::clicked, this, &ChangePwdDialog::slot_btnModify);
