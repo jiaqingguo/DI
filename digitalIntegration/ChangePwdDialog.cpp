@@ -11,6 +11,8 @@ ChangePwdDialog::ChangePwdDialog(QWidget *parent) :
     ui(new Ui::ChangePwdDialog)
 {
     ui->setupUi(this);
+	// 移除问号按钮
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	//setWindowFlags(Qt::FramelessWindowHint);
 	//ui->widget_2->hide();
     setWindowTitle(QString::fromLocal8Bit("修改密码"));

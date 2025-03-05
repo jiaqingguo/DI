@@ -10,6 +10,8 @@ QDialog(parent),
 ui(new Ui::AddToolDialog)
 {
 	ui->setupUi(this);
+	// 移除问号按钮
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	//setWindowFlags(Qt::FramelessWindowHint);
 	//ui->widget->hide();
 	//ui->btnAdd->setEnabled(false);

@@ -14,6 +14,8 @@ AddToolInfoDialog::AddToolInfoDialog(int module,QWidget *parent) :m_iModule(modu
     ui(new Ui::AddToolInfoDialog)
 {
     ui->setupUi(this);
+	// 移除问号按钮
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	//setWindowFlags(Qt::FramelessWindowHint);
 	//ui->widget_2->hide();
 	setWindowIcon(QIcon(":/image/InforIcon.png"));
