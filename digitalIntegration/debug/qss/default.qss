@@ -311,8 +311,16 @@ QMenu {
     border: none;
 	
 }
+
+
 QMenu::item:hover {
     background-color: #a7cdff; /* 鼠标悬停时的背景颜色 */
+	color:white;
+}
+
+QMenu::item:selected {
+    background-color: #a7cdff; /* 鼠标悬停时的背景颜色 */
+	color:white;
 }
 
 FtpDialog QStackedWidget#stackedWidgetMain{
