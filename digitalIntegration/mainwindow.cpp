@@ -172,59 +172,8 @@ void MainWindow::initInitface()
 	updateModuleToolTreeItem(3);
 	updateModuleToolTreeItem(4);
 
-	/*connect(ui->btnFunction, &QPushButton::clicked, [this]() {
-		ui->stackedWidget->setCurrentIndex(0);
-	});*/
-	//connect(ui->btnModule1, &QPushButton::clicked, [this]() {
-	//	ui->stackedWidget->setCurrentIndex(1);
-	////	updateModuleToolIcon(1);
-	//	common::indexNum = 1;
-	//});
-	//connect(ui->btnModule2, &QPushButton::clicked, [this]() {
-	//	ui->stackedWidget->setCurrentIndex(2);
-	//	//updateModuleToolIcon(2);
-	//	common::indexNum = 2;
-	//});
-	//updateModuleToolIcon(3);
-	///*connect(ui->btnModule3, &QPushButton::clicked, [this]() {
-	//	ui->stackedWidget->setCurrentIndex(3);
-	//	updateModuleToolIcon(3);
-	//	common::indexNum = 3;
-	//});*/
-	//connect(ui->btnModule4, &QPushButton::clicked, [this]() {
-	//	ui->stackedWidget->setCurrentIndex(4);
-	//	//updateModuleToolIcon(4);
-	//	common::indexNum = 4;
-	//});
 
-
-
-	//connect(ui->btnModule1, &CDoublePushButton::signal_doubleClicked, [this]() {
-	//	ui->widgetM1->setVisible(!ui->widgetM1->isVisible());
-	//});
-	//connect(ui->btnModule2, &CDoublePushButton::signal_doubleClicked, [this]() {
-	//	ui->widgetM2->setVisible(!ui->widgetM2->isVisible());
-	//});
-	//connect(ui->btnModule3, &CDoublePushButton::signal_doubleClicked, [this]() {
-	//	ui->widgetM3->setVisible(!ui->widgetM3->isVisible());
-	//});
-	//connect(ui->btnModule4, &CDoublePushButton::signal_doubleClicked, [this]() {
-	//	ui->widgetM4->setVisible(!ui->widgetM4->isVisible());
-	//});
-
-	/*connect(ui->actionM1, &QAction::triggered, ui->widgetM1, &QWidget::setVisible);
-	connect(ui->actionM2, &QAction::triggered, ui->widgetM2, &QWidget::setVisible);
-	connect(ui->actionM3, &QAction::triggered, ui->widgetM3, &QWidget::setVisible);
-	connect(ui->actionM4, &QAction::triggered, ui->widgetM4, &QWidget::setVisible);*/
-
-//	ui->btnResourceManage->setCheckable(true);
-//	ui->btnInformationConfihuration->setCheckable(true);
-////	ui->btnDataManage->setCheckable(true);
-//	ui->btnApprovalProgress->setCheckable(true);
-//	connect(ui->btnResourceManage, &QPushButton::clicked, this, &MainWindow::slot_btnResourceManageClicked);
-//	connect(ui->btnInformationConfihuration, &QPushButton::clicked, this, &MainWindow::slot_btnInformationConfihurationClicked);
-//	//connect(ui->btnDataManage, &QPushButton::clicked, this, &MainWindow::slot_btnDataManageClicked);
-//	connect(ui->btnApprovalProgress, &QPushButton::clicked, this, &MainWindow::slot_btnApprovalProgressClicked);
+	
 
 
 	// 初始化模块1-4界面;
@@ -248,10 +197,10 @@ void MainWindow::initInitface()
 	ui->tabWidgetModulel2->removeTab(1);
 	ui->tabWidgetModulel3->removeTab(1);
 	ui->tabWidgetModulel4->removeTab(1);
-	ui->tabWidgetModulel1->removeTab(0);
+	/*ui->tabWidgetModulel1->removeTab(0);
 	ui->tabWidgetModulel2->removeTab(0);
 	ui->tabWidgetModulel3->removeTab(0);
-	ui->tabWidgetModulel4->removeTab(0);
+	ui->tabWidgetModulel4->removeTab(0);*/
 	ui->btnAddTab1->setProperty("module", 1);
 	ui->btnAddTab2->setProperty("module", 2);
 	ui->btnAddTab3->setProperty("module", 3);
@@ -295,6 +244,13 @@ void MainWindow::initInitface()
 	connect(ui->tabWidgetModulel2, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule2closeTab);
 	connect(ui->tabWidgetModulel3, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule3closeTab);
 	connect(ui->tabWidgetModulel4, &QTabWidget::tabCloseRequested, this, &MainWindow::slot_tabModule4closeTab);
+
+
+	// 连接右键点击信号
+	ui->tabWidgetModulel1->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->tabWidgetModulel1, &QTabWidget::customContextMenuRequested, this, &MainWindow::slot_tabWidgetCustomContextMenuRequested);
+	// 连接信号
+	connect(ui->tabWidgetModulel1, &QTabWidget::currentChanged, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
 	/*updateModuleToolIcon(1);
 	updateModuleToolIcon(2);
 	updateModuleToolIcon(3);
@@ -424,10 +380,34 @@ void MainWindow::initTreeMenu()
 	
 
 	// 展开所有节点
-	ui->treeWidget->expandAll();
+	//ui->treeWidget->expandAll();
+	m_pFunctionNode->setExpanded(true);
 	// 连接双击信号到槽函数
 	connect(ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, &MainWindow::slot_treeWidgetDoubleClicked);
 	connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &MainWindow::slot_treeWidgetClicked);
+
+
+	// 创建上下文菜单
+	//QMenu contextMenu;
+	m_TreeWidgetMenu = new QMenu;
+	// 添加操作
+	//m_addAction = m_TreeWidgetMenu->addAction(QString::fromLocal8Bit("+"));
+	m_oneClickLoadAction = m_TreeWidgetMenu->addAction(QString::fromLocal8Bit("一键加载"));
+	//connect(m_addAction, &QAction::triggered, this, &MainWindow::slot_actionStartSoft);
+	//connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_actionOneClickLoad); 
+		connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_btnOneClickLoad);
+	//// 连接右键点击信号
+	//ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	//connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &MainWindow::slot_treeWidgetCustomContextMenuRequested);
+	// 绑定操作
+	//connect(addAction, &QAction::triggered, [=]() {
+	//	if (item) 
+	//	{
+	//		QTreeWidgetItem* newItem = new QTreeWidgetItem(item, QStringList() << "New Item");
+	//		item->addChild(newItem);
+	//		ui->treeWidget->expandItem(item); // 展开父项
+	//	}
+	//	});
 }
 void MainWindow::udpStartExeThread(const QString strData, const QString strIp, const int port)
 {
@@ -956,10 +936,10 @@ void MainWindow::slot_downlaodFinsh()
 
 void MainWindow::slot_tabModule1closeTab(int index)
 {
-	/*if (index <= 0)
+	if (index <= 0)
 	{
 		return;
-	}*/
+	}
 	// 创建消息框
 	QMessageBox msgBox;
 	// 设置消息框的内容
@@ -2718,6 +2698,14 @@ void MainWindow::slot_showMax()
 	}
 	
 }
+void MainWindow::slot_actionStartSoft()
+{
+
+}
+void MainWindow::slot_actionOneClickLoad()
+{
+	slot_btnOneClickLoad();
+}
 void MainWindow::onDisconnected() 
 {
 	QMessageBox msgBox;
@@ -2730,6 +2718,303 @@ void MainWindow::onDisconnected()
 
 	msgBox.setText(QString::fromLocal8Bit("远程连接已断开，请关闭标签页"));
 	msgBox.exec();
+}
+
+void MainWindow::addToolTabDiaogShow(const int& module)
+{
+	int moduleNumber = module;
+
+
+	QString strAssignIP = "";// 指定ip 主机;
+	QString strAssignHostName = "";
+	AddToolDialog addToooDialog(moduleNumber, this);
+	if (addToooDialog.exec() == QDialog::Accepted)
+	{
+		QString toolName;
+		QString tabName;
+		int mode = -1;
+		int displayMode = 0;
+		QString  toolPath = -1;
+
+
+
+		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
+
+		table_ip stipToolData;
+		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, toolName.toStdString(), common::iLoginNum, moduleNumber))
+		{
+			return;
+		}
+		if (moduleNumber == 1 && stipToolData.used == 1)
+		{
+
+			strAssignIP = QString::fromStdString(stipToolData.ip);
+			strAssignHostName = QString::fromStdString(stipToolData.host);
+
+
+			QString hostname = QString::fromStdString(stipToolData.host);
+			tabName = tabName + "  " + hostname;
+		}
+		else
+		{
+			//QString hostname = QString::fromStdString(strAssignHostName);
+
+
+			if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+			{
+				table_ip_configure st;
+				common::findIpWithGpuMinValue(st);
+
+				strAssignIP = QString::fromStdString(st.ip);
+				strAssignHostName = QString::fromStdString(st.hostname);
+			}
+			tabName = tabName + "  " + strAssignHostName;
+			//else
+			//{
+			//	//st.ip = strAssignIP.toStdString();
+			//	//st.hostname = strAssignHostName.toStdString();
+			//}
+		}
+		std::string strIP = strAssignIP.toStdString();
+		if (strIP.empty())
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+			return;
+		}
+
+		QString strPwd;
+		if (common::bAdministrator)
+		{
+			strPwd = common::strFtpAdminPwd;
+		}
+		else
+		{
+			strPwd = common::strFtpPwd;
+		}
+		CWidget* axTabWidget = new CWidget();
+		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+		//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
+		QString str = "app\\";
+		QString strAccount = str + common::strLoginUserName;
+		if (strAccount.isEmpty())
+		{
+			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+			return;
+		}
+		if (moduleNumber == 1)
+		{
+			if (displayMode == 0)
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = strAssignIP;
+				axTabWidget->m_softwareName = toolName;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+				}
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+			}
+		}
+		else if (moduleNumber == 2)
+		{
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+				}
+
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+			}
+		}
+		else if (moduleNumber == 3)
+		{
+
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
+				}
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+			}
+		}
+		else if (moduleNumber == 4)
+		{
+
+			if (displayMode == 0)
+			{
+
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+				}
+			}
+			else
+			{
+				axTabWidget->m_account = strAccount;
+				axTabWidget->m_ip = QString::fromStdString(strIP);
+				axTabWidget->m_softwareName = toolName;
+				if (isHardwareAccelerator(strAssignHostName.toStdString()))
+				{
+					startLongDistanceHost(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+				}
+				else
+				{
+					startLongDistanceSoftware(tabName, moduleNumber, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+				}
+			}
+		}
+	}
+}
+
+
+void MainWindow::slot_tabWidgetCustomContextMenuRequested(const QPoint& pos)
+{
+	// 显示菜单
+	m_TreeWidgetMenu->exec(ui->tabWidgetModulel1->mapToGlobal(pos));
+}
+
+void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
+{
+	QTreeWidgetItem* item = ui->treeWidget->itemAt(pos);
+	
+	// 获取存储在 QTreeWidgetItem 中的自定义数据
+	QVariant data = item->data(0, Qt::UserRole + 2);
+
+	int stackIndex = -1;
+	// 根据数据类型打印输出
+	if (data.isValid())
+	{
+		if (data.type() == QVariant::String)
+		{
+			qDebug() << "-clicked item data (string):" << data.toString();
+		}
+		else if (data.type() == QVariant::Int)
+		{
+			qDebug() << "-clicked item data (int):" << data.toInt();
+			stackIndex = data.toInt();
+
+
+			//ui->stackedWidgetBtn->setCurrentIndex(index);
+		}
+		else {
+			qDebug() << "-clicked item data (other):" << data;
+		}
+	}
+	else
+	{
+		QTreeWidgetItem* parentItem = item->parent();
+		if (parentItem != nullptr)
+		{
+			stackIndex = parentItem->data(0, Qt::UserRole + 2).toInt();
+		}
+	}
+	if (stackIndex >=4 && stackIndex<=7)
+	{
+		if (stackIndex == 4)
+		{
+			m_oneClickLoadAction->setVisible(true);
+		}
+		else
+		{
+			m_oneClickLoadAction->setVisible(false);
+		}
+		// 显示菜单
+		m_TreeWidgetMenu->exec(ui->treeWidget->mapToGlobal(pos));
+	}
+
+}
+
+void MainWindow::slot_tabWidgetModulel1TabChanged( int index)
+{
+	if (index == 0)
+	{
+		addToolTabDiaogShow(0);
+	}
+
+}
+
+void MainWindow::slot_tabWidgetModulel2TabChanged(int index)
+{
+}
+
+void MainWindow::slot_tabWidgetModulel3TabChanged(int index)
+{
+}
+
+void MainWindow::slot_tabWidgetModulel4TabChanged(int index)
+{
 }
 
 void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)

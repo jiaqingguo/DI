@@ -173,7 +173,17 @@ private slots:
 	void slot_btnMaximize();
 
 	void slot_showMax();
-	
+
+	void slot_actionStartSoft();
+	void slot_actionOneClickLoad();
+
+	void slot_tabWidgetCustomContextMenuRequested(const QPoint& pos);
+	void slot_treeWidgetCustomContextMenuRequested(const QPoint& pos);
+
+	void slot_tabWidgetModulel1TabChanged( int index);
+	void slot_tabWidgetModulel2TabChanged(int index);
+	void slot_tabWidgetModulel3TabChanged(int index);
+	void slot_tabWidgetModulel4TabChanged(int index);
 private:
 	void updateModuleToolIcon(int module);
 	void updateModuleToolTreeItem(int module);
@@ -194,8 +204,8 @@ private:
 	void onDisconnected(); //断开连接的提示文字
 
 //	void SoftTreeItemDoubleClicked(const QString& buttonText);
-
 	
+	void addToolTabDiaogShow(const int& module);//点击+后的弹窗显示
 private:
 	Ui::MainWindow *ui;
 
@@ -260,6 +270,10 @@ private:
 	QString m_strLastTreeItem = "";
 	QString m_strCurTrrItem = "";
 	bool m_showMax = false;
+
+	QAction* m_addAction = nullptr;
+	QAction* m_oneClickLoadAction = nullptr;
+	QMenu *m_TreeWidgetMenu = nullptr;
 };
 
 class DoubleClickInterceptor : public QObject {

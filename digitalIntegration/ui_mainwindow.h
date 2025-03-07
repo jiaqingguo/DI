@@ -259,6 +259,7 @@ public:
         tabWidgetModulel1 = new QTabWidget(page4);
         tabWidgetModulel1->setObjectName(QString::fromUtf8("tabWidgetModulel1"));
         tabWidgetModulel1->setTabShape(QTabWidget::Rounded);
+        tabWidgetModulel1->setIconSize(QSize(100, 16));
         tabWidgetModulel1->setElideMode(Qt::ElideMiddle);
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -499,7 +500,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(6);
+        stackedWidget->setCurrentIndex(4);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(1);

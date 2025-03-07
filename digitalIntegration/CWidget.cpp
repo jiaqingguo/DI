@@ -7,7 +7,7 @@ CWidget::CWidget(QWidget *parent) : QWidget(parent)
 
 CWidget::~CWidget()
 {
-    if (m_pAxWidget)
+    if (m_pAxWidget != nullptr)
     {
        m_pAxWidget->dynamicCall("Disconnect()");
        m_pAxWidget->dynamicCall("RequestClose()");//¹Ø±Õ²å¼þ

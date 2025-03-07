@@ -103,6 +103,31 @@ int main(int argc, char* argv[])
     //QString fontFamily = fontFamilies.at(0);//Source Han Sans SC Medium
     //QApplication::setFont(QFont(fontFamily)); // 设置全局字体
   //  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+
+    // 加载字体文件
+    QFontDatabase fontDB;
+    QString fontPath = ":/image/SourceHanSansSC.otf";
+    int fontId = fontDB.addApplicationFont(fontPath);
+
+    // 检查字体是否已经被加载
+    if (fontId != -1)
+    {
+        //获取导入的字体文件中，有几种字体样式，比如字体文件中存在粗体和普通字体样式，需要逐一设置
+        QStringList fontFamilies = fontDB.applicationFontFamilies(fontId);
+        foreach(QString fontFamily, fontFamilies)
+        {
+            // 设置字体
+            QFont font(fontFamily);
+            a.setFont(font);
+        }
+    }
+    else
+    {
+       /* qDebug() << "Load font failed";*/
+        return -1;
+    }
+ 
     MainWindow w;
     if (!w.showLoginDialog())
     {
