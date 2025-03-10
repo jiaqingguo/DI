@@ -177,13 +177,13 @@ void MainWindow::initInitface()
 
 
 	// 初始化模块1-4界面;
-	ui->btnM2Load->hide();
+	/*ui->btnM2Load->hide();
 	ui->btnM3Load->hide();
 	ui->btnM4Load->hide();
 	ui->btnM1Save->hide();
 	ui->btnM2Save->hide();
 	ui->btnM3Save->hide();
-	ui->btnM4Save->hide();
+	ui->btnM4Save->hide();*/
 
 	//ui->tabWidgetModulel1->setTabsClosable(true); // 允许关闭标签
 
@@ -201,39 +201,39 @@ void MainWindow::initInitface()
 	ui->tabWidgetModulel2->removeTab(0);
 	ui->tabWidgetModulel3->removeTab(0);
 	ui->tabWidgetModulel4->removeTab(0);*/
-	ui->btnAddTab1->setProperty("module", 1);
-	ui->btnAddTab2->setProperty("module", 2);
-	ui->btnAddTab3->setProperty("module", 3);
-	ui->btnAddTab4->setProperty("module", 4);
-	connect(ui->btnAddTab1, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
-	connect(ui->btnAddTab2, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
-	connect(ui->btnAddTab3, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
-	connect(ui->btnAddTab4, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
+	//ui->btnAddTab1->setProperty("module", 1);
+	//ui->btnAddTab2->setProperty("module", 2);
+	//ui->btnAddTab3->setProperty("module", 3);
+	//ui->btnAddTab4->setProperty("module", 4);
+	//connect(ui->btnAddTab1, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
+	//connect(ui->btnAddTab2, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
+	//connect(ui->btnAddTab3, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
+	//connect(ui->btnAddTab4, &QPushButton::clicked, this, &MainWindow::slot_btnAddToolTab);
 
-	ui->btnM1Load->setCheckable(true);
-	ui->btnM2Load->setCheckable(true);
-	ui->btnM3Load->setCheckable(true);
-	ui->btnM4Load->setCheckable(true);
-	ui->btnM1Load->setProperty("module", 1);
-	ui->btnM2Load->setProperty("module", 2);
-	ui->btnM3Load->setProperty("module", 3);
-	ui->btnM4Load->setProperty("module", 4);
-	ui->btnM1Save->setCheckable(true);
-	ui->btnM2Save->setCheckable(true);
-	ui->btnM3Save->setCheckable(true);
-	ui->btnM4Save->setCheckable(true);
-	ui->btnM1Save->setProperty("module", 1);
-	ui->btnM2Save->setProperty("module", 2);
-	ui->btnM3Save->setProperty("module", 3);
-	ui->btnM4Save->setProperty("module", 4);
-	connect(ui->btnM1Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
-	connect(ui->btnM2Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
-	connect(ui->btnM3Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
-	connect(ui->btnM4Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
-	connect(ui->btnM1Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
-	connect(ui->btnM2Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
-	connect(ui->btnM3Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
-	connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
+	//ui->btnM1Load->setCheckable(true);
+	//ui->btnM2Load->setCheckable(true);
+	//ui->btnM3Load->setCheckable(true);
+	//ui->btnM4Load->setCheckable(true);
+	//ui->btnM1Load->setProperty("module", 1);
+	//ui->btnM2Load->setProperty("module", 2);
+	//ui->btnM3Load->setProperty("module", 3);
+	//ui->btnM4Load->setProperty("module", 4);
+	//ui->btnM1Save->setCheckable(true);
+	//ui->btnM2Save->setCheckable(true);
+	//ui->btnM3Save->setCheckable(true);
+	//ui->btnM4Save->setCheckable(true);
+	//ui->btnM1Save->setProperty("module", 1);
+	//ui->btnM2Save->setProperty("module", 2);
+	//ui->btnM3Save->setProperty("module", 3);
+	//ui->btnM4Save->setProperty("module", 4);
+	//connect(ui->btnM1Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
+	//connect(ui->btnM2Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
+	//connect(ui->btnM3Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
+	//connect(ui->btnM4Load, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickLoad);
+	//connect(ui->btnM1Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
+	//connect(ui->btnM2Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
+	//connect(ui->btnM3Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
+	//connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 
 	ui->tabWidgetModulel1->setTabsClosable(true);
 	ui->tabWidgetModulel2->setTabsClosable(true);
@@ -249,8 +249,30 @@ void MainWindow::initInitface()
 	// 连接右键点击信号
 	ui->tabWidgetModulel1->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->tabWidgetModulel1, &QTabWidget::customContextMenuRequested, this, &MainWindow::slot_tabWidgetCustomContextMenuRequested);
+
+	QTabBar* pTabBar = ui->tabWidgetModulel1->tabBar();
+	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
+	
+	
+	// 设置第一个选项卡的字体
+	QFont font = tabBar->font(); // 获取默认字体
+	font.setPointSize(16);       // 设置字体大小
+	//pTabBar->setTabFont(0, font); // 为第一个选项卡设置字体
+
+	
+
+	pTabBar = ui->tabWidgetModulel2->tabBar();
+	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel2TabChanged);
+	pTabBar = ui->tabWidgetModulel3->tabBar();
+	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel3TabChanged);
+	pTabBar = ui->tabWidgetModulel4->tabBar();
+	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel4TabChanged);
+
+	connect(this, &MainWindow::signal_addSoftDialogShow, this, &MainWindow::slot_addToolTabDiaogShow);
+
+
 	// 连接信号
-	connect(ui->tabWidgetModulel1, &QTabWidget::currentChanged, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
+	//connect(ui->tabWidgetModulel1, &QTabWidget::currentChanged, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
 	/*updateModuleToolIcon(1);
 	updateModuleToolIcon(2);
 	updateModuleToolIcon(3);
@@ -880,23 +902,23 @@ void MainWindow::slot_btnOneClickLoad()
 
 	m_OneClickLoadDialog->exec();
 	//QPushButton* pButton = (QPushButton*)sender();
-	int module = pButton->property("module").toInt();
-	if (module == 1)
-	{
-		ui->btnM1Load->setChecked(false);
-	}
-	else if (module == 2)
-	{
-		ui->btnM2Load->setChecked(false);
-	}
-	else if (module == 3)
-	{
-		ui->btnM3Load->setChecked(false);
-	}
-	else if (module == 4)
-	{
-		ui->btnM4Load->setChecked(false);
-	}
+	//int module = pButton->property("module").toInt();
+	//if (module == 1)
+	//{
+	//	ui->btnM1Load->setChecked(false);
+	//}
+	//else if (module == 2)
+	//{
+	//	ui->btnM2Load->setChecked(false);
+	//}
+	//else if (module == 3)
+	//{
+	//	ui->btnM3Load->setChecked(false);
+	//}
+	//else if (module == 4)
+	//{
+	//	ui->btnM4Load->setChecked(false);
+	//}
 
 }
 
@@ -905,7 +927,7 @@ void MainWindow::slot_btnOneClickSave()
 	m_OneClickSaveDialog->exec();
 	QPushButton* pButton = (QPushButton*)sender();
 	int module = pButton->property("module").toInt();
-	if (module == 1)
+	/*if (module == 1)
 	{
 		ui->btnM1Save->setChecked(false);
 	}
@@ -920,7 +942,7 @@ void MainWindow::slot_btnOneClickSave()
 	else if (module == 4)
 	{
 		ui->btnM4Save->setChecked(false);
-	}
+	}*/
 }
 
 void MainWindow::slot_updateModuleToolIcon(int module)
@@ -2720,7 +2742,7 @@ void MainWindow::onDisconnected()
 	msgBox.exec();
 }
 
-void MainWindow::addToolTabDiaogShow(const int& module)
+void MainWindow::slot_addToolTabDiaogShow(const int& module)
 {
 	int moduleNumber = module;
 
@@ -3000,21 +3022,37 @@ void MainWindow::slot_tabWidgetModulel1TabChanged( int index)
 {
 	if (index == 0)
 	{
-		addToolTabDiaogShow(0);
+		emit signal_addSoftDialogShow(1);
+		//addToolTabDiaogShow(1);
 	}
 
 }
 
 void MainWindow::slot_tabWidgetModulel2TabChanged(int index)
 {
+	if (index == 0)
+	{
+		emit signal_addSoftDialogShow(2);
+		//addToolTabDiaogShow(2);
+	}
 }
 
 void MainWindow::slot_tabWidgetModulel3TabChanged(int index)
 {
+	if (index == 0)
+	{
+		emit signal_addSoftDialogShow(3);
+		//addToolTabDiaogShow(3);
+	}
 }
 
 void MainWindow::slot_tabWidgetModulel4TabChanged(int index)
 {
+	if (index == 0)
+	{
+		//addToolTabDiaogShow(4);
+		emit signal_addSoftDialogShow(4);
+	}
 }
 
 void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)

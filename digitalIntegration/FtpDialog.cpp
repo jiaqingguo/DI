@@ -186,15 +186,19 @@ void FtpDialog::initConnectFtp()
 
 void FtpDialog::reConnectFtp()
 {
-    for (int i = 0; i < ui->comboBox->count(); i++)
+    if (ui->comboBox)
     {
-        QWidget* pwiget = ui->stackedWidgetFile->widget(i);
-        FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
-        if (p)
+        for (int i = 0; i < ui->comboBox->count(); i++)
         {
-            p->reconnectFtp();
+            QWidget* pwiget = ui->stackedWidgetFile->widget(i);
+            FtpClientWidget* p = qobject_cast<FtpClientWidget*>(pwiget);
+            if (p)
+            {
+                p->reconnectFtp();
+            }
         }
     }
+   
   
     
 }

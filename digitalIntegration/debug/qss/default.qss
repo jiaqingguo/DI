@@ -203,22 +203,28 @@ QWidget#widget QTabWidget#tabWidgetModulel2::pane:selected {
 		border-right: none  !important; 
 		border-bottom: none  !important; 
 }
+
 QTabWidget#tabWidgetModulel2 QTabBar::tab {
 		/*background-image: url(:/image/tabBar_white.png);*/
 		background: white;  
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
 	}
+	
+	
 QTabWidget#tabWidgetModulel2 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+       	border-image: url(:/image/tabBar_blue.png);
 		color:white;
            /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
 		  
@@ -241,16 +247,18 @@ QWidget#widget QTabWidget#tabWidgetModulel3::pane:selected {
 		border-bottom: none  !important; 
 }
 QTabWidget#tabWidgetModulel3 QTabBar::tab {
-		/*background-image: url(:/image/tabBar_white.png);*/
+	/*background-image: url(:/image/tabBar_white.png);*/
 		background: white;  
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
-		
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
@@ -279,10 +287,13 @@ QTabWidget#tabWidgetModulel4 QTabBar::tab {
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;

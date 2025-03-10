@@ -137,6 +137,8 @@ public:
 	void     addAccaunt(const QString& strIP, const QString & strSoft, const QString& strAcc); // 恢复关闭软件已经使用的账户;
 signals:
 	void signal_soft(QString strSoft);
+
+	void signal_addSoftDialogShow(int module);
 private slots:
 	void slot_SoftTreeItemDoubleClicked(QString buttonText);
 	void slot_btnResourceManageClicked();
@@ -184,6 +186,8 @@ private slots:
 	void slot_tabWidgetModulel2TabChanged(int index);
 	void slot_tabWidgetModulel3TabChanged(int index);
 	void slot_tabWidgetModulel4TabChanged(int index);
+
+	void slot_addToolTabDiaogShow(const int& module);//点击+后的弹窗显示
 private:
 	void updateModuleToolIcon(int module);
 	void updateModuleToolTreeItem(int module);
@@ -205,7 +209,7 @@ private:
 
 //	void SoftTreeItemDoubleClicked(const QString& buttonText);
 	
-	void addToolTabDiaogShow(const int& module);//点击+后的弹窗显示
+	
 private:
 	Ui::MainWindow *ui;
 
