@@ -958,7 +958,7 @@ void MainWindow::slot_downlaodFinsh()
 
 void MainWindow::slot_tabModule1closeTab(int index)
 {
-	if (index <= 0)
+	if (index == (ui->tabWidgetModulel1->count() -1))
 	{
 		return;
 	}
@@ -1000,7 +1000,7 @@ void MainWindow::slot_tabModule1closeTab(int index)
 
 void MainWindow::slot_tabModule2closeTab(int index)
 {
-	if (index <= 0)
+	if (index == (ui->tabWidgetModulel2->count() - 1))
 	{
 		return;
 	}
@@ -1040,7 +1040,7 @@ void MainWindow::slot_tabModule2closeTab(int index)
 
 void MainWindow::slot_tabModule3closeTab(int index)
 {
-	if (index <= 0)
+	if (index == (ui->tabWidgetModulel3->count() - 1))
 	{
 		return;
 	}
@@ -1080,7 +1080,7 @@ void MainWindow::slot_tabModule3closeTab(int index)
 
 void MainWindow::slot_tabModule4closeTab(int index)
 {
-	if (index <= 0)
+	if (index == (ui->tabWidgetModulel4->count() - 1))
 	{
 		return;
 	}
@@ -1544,7 +1544,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	if (tabWidget != nullptr)
 	{
 		//tabWidget->addTab(widget, tabName);
-		int intdex = tabWidget->addTab(widget, tabName);
+		
+		int intdex=tabWidget->insertTab(tabWidget->count()-1, widget, tabName);
 		tabWidget->setCurrentIndex(intdex);
 	}
 	else
@@ -1698,7 +1699,7 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		int intdex=tabWidget->addTab(widget, tabName);
+		int intdex=tabWidget->insertTab(tabWidget->count()-1, widget, tabName);
 		tabWidget->setCurrentIndex(intdex);
 
 	}
@@ -2744,6 +2745,7 @@ void MainWindow::onDisconnected()
 
 void MainWindow::slot_addToolTabDiaogShow(const int& module)
 {
+
 	int moduleNumber = module;
 
 
@@ -3020,17 +3022,17 @@ void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
 
 void MainWindow::slot_tabWidgetModulel1TabChanged( int index)
 {
-	if (index == 0)
+	if (index == (ui->tabWidgetModulel1->count() - 1))
 	{
 		emit signal_addSoftDialogShow(1);
 		//addToolTabDiaogShow(1);
 	}
-
+	int a = 0;
 }
 
 void MainWindow::slot_tabWidgetModulel2TabChanged(int index)
 {
-	if (index == 0)
+	if (index == (ui->tabWidgetModulel2->count() - 1))
 	{
 		emit signal_addSoftDialogShow(2);
 		//addToolTabDiaogShow(2);
@@ -3039,7 +3041,7 @@ void MainWindow::slot_tabWidgetModulel2TabChanged(int index)
 
 void MainWindow::slot_tabWidgetModulel3TabChanged(int index)
 {
-	if (index == 0)
+	if (index == (ui->tabWidgetModulel3->count() - 1))
 	{
 		emit signal_addSoftDialogShow(3);
 		//addToolTabDiaogShow(3);
@@ -3048,7 +3050,7 @@ void MainWindow::slot_tabWidgetModulel3TabChanged(int index)
 
 void MainWindow::slot_tabWidgetModulel4TabChanged(int index)
 {
-	if (index == 0)
+	if (index == (ui->tabWidgetModulel4->count() - 1))
 	{
 		//addToolTabDiaogShow(4);
 		emit signal_addSoftDialogShow(4);
