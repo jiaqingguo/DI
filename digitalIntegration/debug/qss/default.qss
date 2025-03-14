@@ -166,8 +166,8 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab {
 		
 	}
 QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
-		background-image: url(:/image/tabBar_blue.png);
-		
+		/*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		 color:white;
 		background-repeat: no-repeat; 
         background-position: center; 
@@ -224,7 +224,8 @@ QTabWidget#tabWidgetModulel2 QTabBar::tab {
 	
 	
 QTabWidget#tabWidgetModulel2 QTabBar::tab:selected {
-       	border-image: url(:/image/tabBar_blue.png);
+     /*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
            /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
 		  
@@ -264,7 +265,8 @@ QTabWidget#tabWidgetModulel3 QTabBar::tab {
 		border-top-left-radius: 15px;
 	}
 QTabWidget#tabWidgetModulel3 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+      /*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
 }	
 
@@ -299,7 +301,8 @@ QTabWidget#tabWidgetModulel4 QTabBar::tab {
 		border-top-left-radius: 15px;
 	}
 QTabWidget#tabWidgetModulel4 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+       	/*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
 }	
 		
