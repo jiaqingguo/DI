@@ -235,6 +235,10 @@ void MainWindow::initInitface()
 	//connect(ui->btnM3Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 	//connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 
+
+	
+	
+
 	ui->tabWidgetModulel1->setTabsClosable(true);
 	ui->tabWidgetModulel2->setTabsClosable(true);
 	ui->tabWidgetModulel3->setTabsClosable(true);
@@ -258,7 +262,10 @@ void MainWindow::initInitface()
 	QFont font = tabBar->font(); // 获取默认字体
 	font.setPointSize(16);       // 设置字体大小
 	//pTabBar->setTabFont(0, font); // 为第一个选项卡设置字体
-
+	// 设置最后一个标签页的字体变大
+	//pTabBar->setStyleSheet(
+	//	"QTabBar::tab:last-child { font-size: 29px; }"  // 最后一个标签页字体变大
+	//);
 	
 
 	pTabBar = ui->tabWidgetModulel2->tabBar();
