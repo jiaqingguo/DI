@@ -91,5 +91,6 @@
         <file>image/Icon_Logo.png</file>
         <file>image/Icon_Mima.png</file>
         <file>image/Icon_Yonghuming.png</file>
+        <file>image/ComboBox1.png</file>
     </qresource>
 </RCC>

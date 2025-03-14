@@ -626,7 +626,30 @@ FtpDialog QLabel#label{
 }
 FtpDialog QComboBox#comboBox{
 	font-size: 18px;
-	color: #000000;
+    color: #000000;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    padding: 3px; /* 可选：设置内边距 */
+}
+FtpDialog QComboBox#comboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+FtpDialog QComboBox#comboBox::down-arrow
+{
+    image: url(:/image/CurveComboBox.png);
+}
+FtpDialog QComboBox#comboBox QAbstractItemView
+{
+	border: 1px solid gray;
+    border-radius: 3px;
+    background-color: white;
+    outline: none;
+	
 }
 FtpDialog QTableView QScrollBar:vertical{
 	background: #ffffff; /*  设置垂直滚动条背景透明 内部 */
@@ -681,9 +704,29 @@ QPushButton#btnUserNext{
 	margin:2px;
 	border-image:url(:/image/page_nect.png);	
 }
-QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField ,QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end ,QCheckBox#checkBox_1 ,QCheckBox#checkBox_2{
+QDateTimeEdit#dateTimeEdit1_start ,QDateTimeEdit#dateTimeEdit3_start ,QDateTimeEdit#dateTimeEdit2_end ,QDateTimeEdit#dateTimeEdit4_end ,QCheckBox#checkBox_1 ,QCheckBox#checkBox_2{
 	font-size: 18px;
 	color: #000000;
+}
+QComboBox#comboBoxUserField::down-arrow ,QComboBox#comboBoxDataField::down-arrow
+{
+	image: url(:/image/CurveComboBox.png);
+}
+QComboBox#comboBoxUserField ,QComboBox#comboBoxDataField
+{
+	font-size: 18px;
+    color: #000000;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    padding: 4px; /* 可选：设置内边距 */
+}
+QComboBox#comboBoxUserField::drop-down ,QComboBox#comboBoxDataField::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 QDateTimeEdit#dateTimeEdit1_start::down-button ,QDateTimeEdit#dateTimeEdit3_start::down-button ,QDateTimeEdit#dateTimeEdit2_end::down-button ,QDateTimeEdit#dateTimeEdit4_end::down-button{
 	image: url(:/image/CurveComboBox.png);
@@ -712,16 +755,22 @@ QDialog#LoginDialog
 }
 LoginDialog QLabel#LabelTitle
 {
-	font-size: 22px;
+	font-size: 21px;
 	color: #4f72ca;
-	padding-top: 6px;
-	
 }
+<<<<<<< .mine
+LoginDialog QPushButton#BtnIcon{
+	border-image: url(:/image/Icon_Logo.png);
+	padding-left: 1px;
+	margin: 5px;
+}
+=======
 LoginDialog QPushButton#BtnIcon{
 	border-image: url(:/image/Icon_Logo.png);
 	padding-left: 5px;
 	margin: 3px;
 }
+>>>>>>> .theirs
 LoginDialog QPushButton#BtnClose 
 {
 	border-image: url(:/image/Close.png);
@@ -729,49 +778,62 @@ LoginDialog QPushButton#BtnClose
 	margin: 15px;
 }
 LoginDialog QLabel#lblUser {
-	font-size: 25px;
-	color: #4f72d0;
+	font-size: 22px;
+	color: #000000;
+	margin-left: 3px;
 	margin-top:15px;
 }
 LoginDialog QLineEdit#leUser {
-	font-size: 20px;
-	color: #000000;
+	font-size: 16px;
+	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
 	background-image: url(:/image/Icon_Yonghuming.png);
 	background-repeat: no-repeat;
     background-position: left center;
-	padding-left: 40px;
+	padding-left: 46px;
+	margin-left: 8px;
+	margin-right: 8px;
 	margin-left: 8px;
 }
 LoginDialog QLineEdit#lePassword {
-	font-size: 20px;
-	color: #000000;
+	font-size: 16px;
+	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
 	background-image: url(:/image/Icon_Mima.png);
 	background-repeat: no-repeat;
     background-position: left center;
-	padding-left: 40px;
+	padding-left: 46px;
+	margin-left: 8px;
+	margin-right: 8px;
 	margin-left: 8px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);
-	font-size: 30px;
+	font-size: 24px;
 	color: #ffffff;
 	margin-top: 8px;
 }
 LoginDialog QPushButton#btnChangePassword {
-	font-size: 16px;
+	font-size: 15px;
+	font-weight: bold;
 	color: #8fa0cc;
 	border: none;
+<<<<<<< .mine
+	padding-left: 8px;
+=======
 	padding-left: 6px;
+>>>>>>> .theirs
 }
 LoginDialog QPushButton#btnRegister {
-	font-size: 16px;
+	font-size: 15px;
+	font-weight: bold;
 	color: #4f72ca;
 	border: none;
+	margin-right: 6px;
 }
+
 /* ------------------------登录页面----------------------end*/
 
 /* ------------------------修改密码页面----------------------start*/
@@ -831,10 +893,33 @@ RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit
 	border: 1px solid gray;
 	border-radius: 5px;
 }
+<<<<<<< .mine
+QComboBox#comboBoxRoot::down-arrow
+{
+	image: url(:/image/CurveComboBox.png);
+
+=======
 
 RegisterDialog QComboBox#comboBoxRoot{
 	font-size: 18px;
 	color: #abadb2;
+>>>>>>> .theirs
+}
+QComboBox#comboBoxRoot
+{
+	font-size: 18px;
+    color: #abadb2;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    padding: 4px; /* 可选：设置内边距 */
+}
+QComboBox#comboBoxRoot::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 RegisterDialog QPushButton#btnRegister{
 	font-size: 22px;
@@ -917,10 +1002,33 @@ AddToolInfoDialog QLineEdit#lineEdit{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
+<<<<<<< .mine
+QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow
+{
+	image: url(:/image/CurveComboBox.png);
+=======
 AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
 	font-size: 18px;
 	color: #000000;
+>>>>>>> .theirs
 }
+QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3
+{
+	font-size: 18px;
+    color: #7c88a6;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    
+}
+QComboBox#IpcomboBox1::drop-down ,QComboBox#IpcomboBox2::drop-down ,QComboBox#IpcomboBox3::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
 AddToolInfoDialog QPushButton#btnChooseImage{
 	font-size: 18px;
 	color: #6280f5;
@@ -964,9 +1072,25 @@ AddToolDialog QLineEdit#lineEditTabName{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-AddToolDialog QComboBox#comboBoxDisplayMode ,QComboBox#comboBoxHost ,QComboBox#comboBoxToolNames{ 
-	font-size: 19px;
-	color: #000000;
+QComboBox#comboBoxDisplayMode::down-arrow ,QComboBox#comboBoxHost::down-arrow ,QComboBox#comboBoxToolNames::down-arrow
+{
+	image: url(:/image/CurveComboBox.png);
+}
+QComboBox#comboBoxDisplayMode ,QComboBox#comboBoxHost ,QComboBox#comboBoxToolNames
+{
+	font-size: 18px;
+    color: #000000;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    padding-right: 4px;
+}
+QComboBox#comboBoxDisplayMode::drop-down ,QComboBox#comboBoxHost::drop-down ,QComboBox#comboBoxToolNames::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 AddToolDialog QPushButton#btnAdd{
 	font-size: 22px;
@@ -1071,16 +1195,28 @@ QWidget#pageCurve QLabel#label ,QLabel#label_3 ,QLabel#label_5 ,QLabel#label_7 ,
 }
 ResourceManageDialog QLabel#label_2 ,QLabel#label_4 ,QLabel#label_6 ,QLabel#label_8 ,QLabel#label_10{
 	font-size: 18px;
-	color: #7c88a6;
+	color: #7c88a6;ww
 }
-ResourceManageDialog QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBox4 ,QComboBox#comboBox5{
-	font-size: 18px;
-	color: #7c88a6;
-}
-/*ResourceManageDialog QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow ,QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow ,QComboBox#comboBoxDataField::down-arrow ,QComboBox#comboBoxUserField::down-arrow
+QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow
 {
-    image: url(:/image/CurveComboBox.png);
-}*/
+	image: url(:/image/CurveComboBox.png);
+}
+QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBox4 ,QComboBox#comboBox5
+{
+	font-size: 18px;
+    color: #7c88a6;
+    background-color: white;
+    border: 1px solid #cccccc; /* 设置边框为浅灰色 */
+    border-radius: 4px; /* 可选：设置圆角 */
+    padding-right: 6px;
+}
+QComboBox#comboBox1::drop-down ,QComboBox#comboBox2::drop-down ,QComboBox#comboBox3::drop-down ,QComboBox#comboBox4::drop-down ,QComboBox#comboBox5::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
 ResourceManageDialog QComboBox#comboBox1 QAbstractItemView ,QComboBox#comboBox2 QAbstractItemView ,QComboBox#comboBox3 QAbstractItemView ,QComboBox#comboBox4 QAbstractItemView ,QComboBox#comboBox5 QAbstractItemView ,QComboBox#IpcomboBox1 QAbstractItemView ,QComboBox#IpcomboBox2 QAbstractItemView ,QComboBox#IpcomboBox3 QAbstractItemView ,QComboBox#comboBoxDataField QAbstractItemView ,QComboBox#comboBoxUserField QAbstractItemView ,QComboBox#comboBox QAbstractItemView
 {
     selection-background-color: #c3d2f0; /*可选：设置选中项的背景颜色 */
