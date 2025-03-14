@@ -203,22 +203,28 @@ QWidget#widget QTabWidget#tabWidgetModulel2::pane:selected {
 		border-right: none  !important; 
 		border-bottom: none  !important; 
 }
+
 QTabWidget#tabWidgetModulel2 QTabBar::tab {
 		/*background-image: url(:/image/tabBar_white.png);*/
 		background: white;  
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
 	}
+	
+	
 QTabWidget#tabWidgetModulel2 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+       	border-image: url(:/image/tabBar_blue.png);
 		color:white;
            /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
 		  
@@ -241,16 +247,18 @@ QWidget#widget QTabWidget#tabWidgetModulel3::pane:selected {
 		border-bottom: none  !important; 
 }
 QTabWidget#tabWidgetModulel3 QTabBar::tab {
-		/*background-image: url(:/image/tabBar_white.png);*/
+	/*background-image: url(:/image/tabBar_white.png);*/
 		background: white;  
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
-		
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
@@ -279,10 +287,13 @@ QTabWidget#tabWidgetModulel4 QTabBar::tab {
 		background-repeat: no-repeat; 
         background-position: center; 
         background-size: cover; 
+		 color:blue;
 		/*background: #f0f0f0;  设置选项卡背景颜色 */
 		border: none;
-		 min-width: 100px;
-         min-height: 40px;  
+		min-width: 100px;
+        min-height:15px;  
+		max-height:15px;  
+		padding:8px;
 		margin-right: 2px; /* 设置选项卡之间的间距 */
 		border-top-right-radius: 15px;
 		border-top-left-radius: 15px;
@@ -744,16 +755,22 @@ QDialog#LoginDialog
 }
 LoginDialog QLabel#LabelTitle
 {
-	font-size: 19px;
+	font-size: 21px;
 	color: #4f72ca;
-	padding-top: 10px;
-	
 }
+<<<<<<< .mine
 LoginDialog QPushButton#BtnIcon{
 	border-image: url(:/image/Icon_Logo.png);
 	padding-left: 1px;
 	margin: 5px;
 }
+=======
+LoginDialog QPushButton#BtnIcon{
+	border-image: url(:/image/Icon_Logo.png);
+	padding-left: 5px;
+	margin: 3px;
+}
+>>>>>>> .theirs
 LoginDialog QPushButton#BtnClose 
 {
 	border-image: url(:/image/Close.png);
@@ -764,6 +781,7 @@ LoginDialog QLabel#lblUser {
 	font-size: 22px;
 	color: #000000;
 	margin-left: 3px;
+	margin-top:15px;
 }
 LoginDialog QLineEdit#leUser {
 	font-size: 16px;
@@ -776,6 +794,7 @@ LoginDialog QLineEdit#leUser {
 	padding-left: 46px;
 	margin-left: 8px;
 	margin-right: 8px;
+	margin-left: 8px;
 }
 LoginDialog QLineEdit#lePassword {
 	font-size: 16px;
@@ -788,18 +807,24 @@ LoginDialog QLineEdit#lePassword {
 	padding-left: 46px;
 	margin-left: 8px;
 	margin-right: 8px;
+	margin-left: 8px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);
 	font-size: 24px;
 	color: #ffffff;
+	margin-top: 8px;
 }
 LoginDialog QPushButton#btnChangePassword {
 	font-size: 15px;
 	font-weight: bold;
 	color: #8fa0cc;
 	border: none;
+<<<<<<< .mine
 	padding-left: 8px;
+=======
+	padding-left: 6px;
+>>>>>>> .theirs
 }
 LoginDialog QPushButton#btnRegister {
 	font-size: 15px;
@@ -868,9 +893,17 @@ RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit
 	border: 1px solid gray;
 	border-radius: 5px;
 }
+<<<<<<< .mine
 QComboBox#comboBoxRoot::down-arrow
 {
 	image: url(:/image/CurveComboBox.png);
+
+=======
+
+RegisterDialog QComboBox#comboBoxRoot{
+	font-size: 18px;
+	color: #abadb2;
+>>>>>>> .theirs
 }
 QComboBox#comboBoxRoot
 {
@@ -969,9 +1002,15 @@ AddToolInfoDialog QLineEdit#lineEdit{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
+<<<<<<< .mine
 QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow
 {
 	image: url(:/image/CurveComboBox.png);
+=======
+AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
+	font-size: 18px;
+	color: #000000;
+>>>>>>> .theirs
 }
 QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3
 {
