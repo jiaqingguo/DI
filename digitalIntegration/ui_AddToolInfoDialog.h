@@ -60,7 +60,7 @@ public:
     {
         if (AddToolInfoDialog->objectName().isEmpty())
             AddToolInfoDialog->setObjectName(QString::fromUtf8("AddToolInfoDialog"));
-        AddToolInfoDialog->resize(274, 328);
+        AddToolInfoDialog->resize(274, 335);
         gridLayout_3 = new QGridLayout(AddToolInfoDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 9, 0, 0);
