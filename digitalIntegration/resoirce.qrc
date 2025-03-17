@@ -91,6 +91,9 @@
         <file>image/Icon_Logo.png</file>
         <file>image/Icon_Mima.png</file>
         <file>image/Icon_Yonghuming.png</file>
-        <file>image/ComboBox1.png</file>
+        <file>image/UE4Editor.png</file>
+        <file>image/Unity.png</file>
+        <file>image/Visual Studio 2010.png</file>
+        <file>image/Vivado.png</file>
     </qresource>
 </RCC>

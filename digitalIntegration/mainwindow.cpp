@@ -355,6 +355,7 @@ void MainWindow::initTreeMenu()
 	m_pProductionPrototypeNode->setFont(0, font1);
 	// 设置图标
 	//; // 使用资源文件中的图标，或者替换为实际路径
+
 	m_pFunctionNode->setIcon(0, QIcon(":/image/function.png"));
 	m_pFunctionNode->setData(0, Qt::UserRole, "function_select");
 
@@ -1282,7 +1283,12 @@ void MainWindow::updateModuleToolTreeItem(int module)
 				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
 				// 将 QImage 转换为 QIcon
 				QIcon icon(QPixmap::fromImage(img));
+				//icon.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+				////QIcon icon("path/to/icon.png");  // 确保使用正确的图标路径
+				//pToolsChildItem->setIcon(0, icon.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));  // 设置为32x32的大小
 				pToolsChildItem->setIcon(0, icon);
+				
+				
 
 			
 			}

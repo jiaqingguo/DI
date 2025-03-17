@@ -34,12 +34,16 @@ QWidget#widgetLeftMenu QTreeWidget{
 }
 
 
+
+
 QWidget#widgetLeftMenu QTreeWidget::item {
 		
+		
+		padding-left: 10px;  /* 调整项的内边距 */
            /*  background-color: #e0e0e0; 设置默认背景颜色 */
             color:white; /* 设置默认字体颜色 */
            font-size:40px;
-			margin-right:0px;
+			
 			 /*padding: 15px; 设置内边距 */
         }
 
