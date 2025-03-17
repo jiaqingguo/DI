@@ -137,33 +137,21 @@ public slots:
 //	QPoint dragPosition;
 protected:
 	void mousePressEvent(QMouseEvent *event) override {
-		QWidget *child = childAt(event->pos());
-		if (child != nullptr) {
-			return;
-		}
 		if (event->button() == Qt::LeftButton) {
 			dragPosition = event->globalPos() - frameGeometry().topLeft();
-			lastMoveTime = QTime::currentTime(); // 记录按下时间
 			event->accept();
 		}
 	}
 
 	void mouseMoveEvent(QMouseEvent *event) override {
-		if (!(event->buttons() & Qt::LeftButton)) {
-			return;
+		if (event->buttons() & Qt::LeftButton) {
+			move(event->globalPos() - dragPosition);
+			event->accept();
 		}
-		QTime currentTime = QTime::currentTime();
-		if (lastMoveTime.msecsTo(currentTime) < 10) {
-			return; // 限制更新频率为每 10 毫秒一次
-		}
-		move(event->globalPos() - dragPosition);
-		lastMoveTime = currentTime; // 更新上一次移动时间
-		event->accept();
 	}
 
 private:
 	QPoint dragPosition;
-	QTime lastMoveTime; // 上一次移动的时间
 };
 
 #endif // LOGINDIALOG_H

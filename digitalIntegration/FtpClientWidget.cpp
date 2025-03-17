@@ -967,7 +967,8 @@ void FtpClientWidget::onCreateFolder()
 
 void FtpClientWidget::slot_newDir()
 {
-    QString name = QInputDialog::getText(this, QString::fromLocal8Bit("新建"), QString::fromLocal8Bit("输入新建文件夹名称："));
+	this->setWindowIcon(QIcon(":/image/Dir.png")); // 设置主窗口的图标
+    QString name = QInputDialog::getText(this, QString::fromLocal8Bit("新建文件夹"), QString::fromLocal8Bit("输入新建文件夹名称："));
     if (name.isEmpty())
     {
         return;

@@ -166,8 +166,8 @@ QTabWidget#tabWidgetModulel1 QTabBar::tab {
 		
 	}
 QTabWidget#tabWidgetModulel1 QTabBar::tab:selected {
-		background-image: url(:/image/tabBar_blue.png);
-		
+		/*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		 color:white;
 		background-repeat: no-repeat; 
         background-position: center; 
@@ -224,7 +224,8 @@ QTabWidget#tabWidgetModulel2 QTabBar::tab {
 	
 	
 QTabWidget#tabWidgetModulel2 QTabBar::tab:selected {
-       	border-image: url(:/image/tabBar_blue.png);
+     /*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
            /* border: 2px solid #0078d7;  设置选中选项卡上边框 */
 		  
@@ -264,7 +265,8 @@ QTabWidget#tabWidgetModulel3 QTabBar::tab {
 		border-top-left-radius: 15px;
 	}
 QTabWidget#tabWidgetModulel3 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+      /*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
 }	
 
@@ -299,7 +301,8 @@ QTabWidget#tabWidgetModulel4 QTabBar::tab {
 		border-top-left-radius: 15px;
 	}
 QTabWidget#tabWidgetModulel4 QTabBar::tab:selected {
-       	background-image: url(:/image/tabBar_blue.png);
+       	/*background-image: url(:/image/tabBar_blue.png);*/
+		  background: #3273f5;
 		color:white;
 }	
 		
@@ -755,22 +758,16 @@ QDialog#LoginDialog
 }
 LoginDialog QLabel#LabelTitle
 {
-	font-size: 21px;
+	font-size: 19px;
 	color: #4f72ca;
+	padding-top: 10px;
+	
 }
-<<<<<<< .mine
 LoginDialog QPushButton#BtnIcon{
 	border-image: url(:/image/Icon_Logo.png);
 	padding-left: 1px;
 	margin: 5px;
 }
-=======
-LoginDialog QPushButton#BtnIcon{
-	border-image: url(:/image/Icon_Logo.png);
-	padding-left: 5px;
-	margin: 3px;
-}
->>>>>>> .theirs
 LoginDialog QPushButton#BtnClose 
 {
 	border-image: url(:/image/Close.png);
@@ -781,10 +778,9 @@ LoginDialog QLabel#lblUser {
 	font-size: 22px;
 	color: #000000;
 	margin-left: 3px;
-	margin-top:15px;
 }
 LoginDialog QLineEdit#leUser {
-	font-size: 16px;
+	font-size: 17px;
 	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -793,11 +789,10 @@ LoginDialog QLineEdit#leUser {
     background-position: left center;
 	padding-left: 46px;
 	margin-left: 8px;
-	margin-right: 8px;
-	margin-left: 8px;
+	margin-right: 6px;
 }
 LoginDialog QLineEdit#lePassword {
-	font-size: 16px;
+	font-size: 17px;
 	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -806,25 +801,19 @@ LoginDialog QLineEdit#lePassword {
     background-position: left center;
 	padding-left: 46px;
 	margin-left: 8px;
-	margin-right: 8px;
-	margin-left: 8px;
+	margin-right: 6px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);
 	font-size: 24px;
 	color: #ffffff;
-	margin-top: 8px;
 }
 LoginDialog QPushButton#btnChangePassword {
 	font-size: 15px;
 	font-weight: bold;
 	color: #8fa0cc;
 	border: none;
-<<<<<<< .mine
 	padding-left: 8px;
-=======
-	padding-left: 6px;
->>>>>>> .theirs
 }
 LoginDialog QPushButton#btnRegister {
 	font-size: 15px;
@@ -893,17 +882,9 @@ RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-<<<<<<< .mine
 QComboBox#comboBoxRoot::down-arrow
 {
 	image: url(:/image/CurveComboBox.png);
-
-=======
-
-RegisterDialog QComboBox#comboBoxRoot{
-	font-size: 18px;
-	color: #abadb2;
->>>>>>> .theirs
 }
 QComboBox#comboBoxRoot
 {
@@ -1002,15 +983,9 @@ AddToolInfoDialog QLineEdit#lineEdit{
 	border: 1px solid gray;
 	border-radius: 5px;
 }
-<<<<<<< .mine
 QComboBox#IpcomboBox1::down-arrow ,QComboBox#IpcomboBox2::down-arrow ,QComboBox#IpcomboBox3::down-arrow
 {
 	image: url(:/image/CurveComboBox.png);
-=======
-AddToolInfoDialog QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3{
-	font-size: 18px;
-	color: #000000;
->>>>>>> .theirs
 }
 QComboBox#IpcomboBox1 ,QComboBox#IpcomboBox2 ,QComboBox#IpcomboBox3
 {

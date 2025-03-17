@@ -21,6 +21,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->stackedWidget->setCurrentIndex(0);
+	ui->btnLogin->setDefault(true);
+	setTabOrder(ui->leUser, ui->lePassword);
 	QRegExp rx("[0-9a-zA-Z]{19}");
 	ui->leUser->setValidator(new QRegExpValidator(rx));
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
@@ -28,6 +30,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->lePassword->setMaxLength(20);
 	//ui->leUser->setAttribute(Qt::WA_InputMethodEnabled, false);
 	ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
+	ui->lePassword->setEchoMode(QLineEdit::Password);
 
 	ui->leUser->setPlaceholderText(GBK_STRING("请输入您的用户名"));
 	ui->lePassword->setPlaceholderText(GBK_STRING("请输入您的密码"));

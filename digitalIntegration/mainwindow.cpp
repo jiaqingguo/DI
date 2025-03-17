@@ -1274,16 +1274,20 @@ void MainWindow::updateModuleToolTreeItem(int module)
 			
 				pToolsChildItem->setData(0, Qt::UserRole + 1, QString::fromStdString(software));
 				QFont font2;
-				font2.setPointSize(13); // 设置字体大小
+				font2.setPointSize(14); // 设置字体大小
 				pToolsChildItem->setFont(0, font2);
 				QToolButton* pBtn = new QToolButton();
 			
 				QImage img;
 				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+				qDebug() << "Original Image Size:" << img.size();
+				// 放大图片到新的尺寸
+				QImage scaledImg = img.scaled(128,128, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+				qDebug() << "Scaled Image Size:" << scaledImg.size();
 				// 将 QImage 转换为 QIcon
-				QIcon icon(QPixmap::fromImage(img));
+				QIcon icon(QPixmap::fromImage(scaledImg));
+				pToolsChildItem->treeWidget()->setIconSize(QSize(32, 32));
 				pToolsChildItem->setIcon(0, icon);
-
 			
 			}
 		}

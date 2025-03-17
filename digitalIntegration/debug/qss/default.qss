@@ -780,7 +780,7 @@ LoginDialog QLabel#lblUser {
 	margin-left: 3px;
 }
 LoginDialog QLineEdit#leUser {
-	font-size: 16px;
+	font-size: 17px;
 	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -789,10 +789,10 @@ LoginDialog QLineEdit#leUser {
     background-position: left center;
 	padding-left: 46px;
 	margin-left: 8px;
-	margin-right: 8px;
+	margin-right: 6px;
 }
 LoginDialog QLineEdit#lePassword {
-	font-size: 16px;
+	font-size: 17px;
 	color: gray;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -801,7 +801,7 @@ LoginDialog QLineEdit#lePassword {
     background-position: left center;
 	padding-left: 46px;
 	margin-left: 8px;
-	margin-right: 8px;
+	margin-right: 6px;
 }
 LoginDialog QPushButton#btnLogin {
 	border-image: url(:/image/login.png);

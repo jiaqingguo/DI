@@ -1,4 +1,4 @@
-#include <QStandardItemModel>
+ï»¿#include <QStandardItemModel>
 #include <QFileDialog>
 #include <QMovie>
 #include <QMenu>
@@ -28,68 +28,68 @@ FilemangageDialog::FilemangageDialog(QWidget *parent) :
     ui(new Ui::FilemangageDialog)
 {
     ui->setupUi(this);
-	setWindowTitle(QString::fromLocal8Bit("ÎÄ¼ş¹ÜÀí"));
+	setWindowTitle(QString::fromLocal8Bit("æ–‡ä»¶ç®¡ç†"));
 	m_GifDialog = new GifDialog;
 	m_msgBox = new QMessageBox;
-	// ÉèÖÃÏûÏ¢¿òµÄ±êÌâ
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„æ ‡é¢˜
 	m_msgBox->setWindowTitle("Custom Message Box");
 
-	// ÉèÖÃÏûÏ¢¿òµÄÎÄ±¾ÄÚÈİ
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„æ–‡æœ¬å†…å®¹
 	m_msgBox->setText("This is a custom message box with a custom icon.");
 
-	// ÉèÖÃ×Ô¶¨ÒåÍ¼±ê
-	QPixmap customIcon(":/image/load.png"); // Ìæ»»ÎªÄãµÄÍ¼Æ¬Â·¾¶
+	// è®¾ç½®è‡ªå®šä¹‰å›¾æ ‡
+	QPixmap customIcon(":/image/load.png"); // æ›¿æ¢ä¸ºä½ çš„å›¾ç‰‡è·¯å¾„
 	m_msgBox->setIconPixmap(customIcon);
 
-	// ÉèÖÃÏûÏ¢¿òµÄ´óĞ¡
+	// è®¾ç½®æ¶ˆæ¯æ¡†çš„å¤§å°
 	m_msgBox->resize(300, 200);
 
-	// Í¨¹ıÉèÖÃQt::WindowFlagsÈ¥µôÓÒÉÏ½ÇµÄ¹Ø±Õ°´Å¥
+	// é€šè¿‡è®¾ç½®Qt::WindowFlagså»æ‰å³ä¸Šè§’çš„å…³é—­æŒ‰é’®
 	m_msgBox->setWindowFlags(m_msgBox->windowFlags() & ~Qt::WindowCloseButtonHint & Qt::CustomizeWindowHint & Qt::WindowTitleHint & Qt::WindowStaysOnTopHint);
 	//m_GifDialog->show();
-	//// »ñÈ¡Ä¬ÈÏÉú³ÉµÄ¸ù½Úµã
+	//// è·å–é»˜è®¤ç”Ÿæˆçš„æ ¹èŠ‚ç‚¹
 	//QTreeWidgetItem* rootItem = ui->treeWidget->invisibleRootItem();
 
-	//// É¾³ı¸ù½Úµã
+	//// åˆ é™¤æ ¹èŠ‚ç‚¹
 	//ui->treeWidget->takeTopLevelItem(ui->treeWidget->indexOfTopLevelItem(rootItem));
-	// Òş²Ø±êÌâÀ¸
+	// éšè—æ ‡é¢˜æ 
 	ui->treeWidget->setHeaderHidden(true);
     m_FtpClientClass = new FtpClientClass(common::strFtpIp.toStdString(),common::iFtpPort);
 	m_modelFiles = new QStandardItemModel();
 	m_modelFiles->setColumnCount(4);
-	m_modelFiles->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ĞòºÅ"));
-	m_modelFiles->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼şÃû"));
-	m_modelFiles->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
-	m_modelFiles->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
+	m_modelFiles->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+	m_modelFiles->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶å"));
+	m_modelFiles->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
+	m_modelFiles->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
 
 	ui->tableViewFile->setModel(m_modelFiles);
 	common::setTableViewBasicConfiguration(ui->tableViewFile);
 	ui->tableViewFile->verticalHeader()->setVisible(false);
 	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-	ui->tableViewFile->setColumnWidth(0, 80); // ÉèÖÃÁĞµÄ¹Ì¶¨¿í¶È
+	ui->tableViewFile->setColumnWidth(0, 80); // è®¾ç½®åˆ—çš„å›ºå®šå®½åº¦
 	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Fixed);
-	ui->tableViewFile->setColumnWidth(2, 80); // ÉèÖÃÁĞµÄ¹Ì¶¨¿í¶È
+	ui->tableViewFile->setColumnWidth(2, 80); // è®¾ç½®åˆ—çš„å›ºå®šå®½åº¦
 	ui->tableViewFile->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Fixed);
-	ui->tableViewFile->setColumnWidth(3, 80); // ÉèÖÃÁĞµÄ¹Ì¶¨¿í¶È
+	ui->tableViewFile->setColumnWidth(3, 80); // è®¾ç½®åˆ—çš„å›ºå®šå®½åº¦
 
-	 // ÆôÓÃĞü¸¡ÏÔÊ¾
+	 // å¯ç”¨æ‚¬æµ®æ˜¾ç¤º
 	//ui->tableViewFile->setMouseTracking(true);
 	
 	getFtpFolderShow();
 
-	// ¹ØÁªË«»÷ÊÂ¼şºÍ²Ûº¯Êı
+	// å…³è”åŒå‡»äº‹ä»¶å’Œæ§½å‡½æ•°
 	//connect(ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, &FilemangageDialog::slot_treeWidgetItemDoubleClicked);
 	connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &FilemangageDialog::slot_treeWidgetItemClicked);
 	connect(ui->pushButton, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUploading); 
 	connect(ui->btnUploadDir, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUploadingDir);
-	// ÉèÖÃÉÏÏÂÎÄ²Ëµ¥²ßÂÔÎªCustomContextMenu
+	// è®¾ç½®ä¸Šä¸‹æ–‡èœå•ç­–ç•¥ä¸ºCustomContextMenu
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &FilemangageDialog::slot_treeWidgteCustomContextMenuRequested);
 	
 
 	connect(ui->pushButton_2, &QPushButton::clicked,this, &FilemangageDialog::slot_btnCompress);
 	connect(ui->pushButton_3, &QPushButton::clicked, this, &FilemangageDialog::slot_btnUnCompress);
-	// Á¬½Ó itemChanged ĞÅºÅµ½×Ô¶¨Òå²Û
+	// è¿æ¥ itemChanged ä¿¡å·åˆ°è‡ªå®šä¹‰æ§½
 	//connect(m_modelFiles, &QStandardItemModel::itemChanged, this, &FilemangageDialog::slot_tableViewFilesItemChanged);
 	connect(ui->btnCopy, &QPushButton::clicked, this, &FilemangageDialog::slot_btnCopyPath);
 	connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this]() {
@@ -114,21 +114,21 @@ void FilemangageDialog::flushFtpDirShow()
 	{
 		return;
 	}
-	// ´´½¨½Úµã
+	// åˆ›å»ºèŠ‚ç‚¹
 	m_pRootItem = new QTreeWidgetItem();
 	QString RootPath = QString::fromLocal8Bit(strRootPath.c_str());
 	m_pRootItem->setText(0, RootPath);
 	m_pRootItem->setData(0, Qt::UserRole, RootPath);
-	m_pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // ÉèÖÃÍ¼±ê£¨ÇëÈ·±£Â·¾¶ÕıÈ·£©:/image/ftpDir.png
+	m_pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // è®¾ç½®å›¾æ ‡ï¼ˆè¯·ç¡®ä¿è·¯å¾„æ­£ç¡®ï¼‰:/image/ftpDir.png
 	m_pRootItem->setToolTip(0, RootPath);
 	ui->treeWidget->addTopLevelItem(m_pRootItem);
 
 
 	//if (m_FtpClientClass->newConnection())
 	{
-		m_FtpClientClass->execute_ls(strRootPath);//Ö´ĞĞls 
+		m_FtpClientClass->execute_ls(strRootPath);//æ‰§è¡Œls 
 
-	//ÔÚÊ÷·ÖÖ§ÏÔÊ¾µ±Ç°Â·¾¶ÎÄ¼ş¼ĞÃû³Æ
+	//åœ¨æ ‘åˆ†æ”¯æ˜¾ç¤ºå½“å‰è·¯å¾„æ–‡ä»¶å¤¹åç§°
 
 		auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
 		for (int i = 0; i < vecFolderNames.size(); i++)
@@ -167,9 +167,9 @@ void FilemangageDialog::flushFtpDirShow(QTreeWidgetItem* pCurItem)
 
 	//if (m_FtpClientClass->newConnection())
 	{
-		m_FtpClientClass->execute_ls(strRootPath);//Ö´ĞĞls 
+		m_FtpClientClass->execute_ls(strRootPath);//æ‰§è¡Œls 
 
-	//ÔÚÊ÷·ÖÖ§ÏÔÊ¾µ±Ç°Â·¾¶ÎÄ¼ş¼ĞÃû³Æ
+	//åœ¨æ ‘åˆ†æ”¯æ˜¾ç¤ºå½“å‰è·¯å¾„æ–‡ä»¶å¤¹åç§°
 
 		auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
 		for (int i = 0; i < vecFolderNames.size(); i++)
@@ -196,25 +196,25 @@ void FilemangageDialog::flushFtpDirShow(QTreeWidgetItem* pCurItem)
 
 void FilemangageDialog::initTableViewDownload()
 {
-	if (common::bAdministrator) // ¹ÜÀíÔ±;
+	if (common::bAdministrator) // ç®¡ç†å‘˜;
 	{
-		// Òş²ØµÚ¶ş¸ö±êÇ©Ò³
-		ui->tabWidget->removeTab(1); // ÒÆ³ı Tab 2
-		m_strDolwnloadText = QString::fromLocal8Bit("ÏÂÔØ");
+		// éšè—ç¬¬äºŒä¸ªæ ‡ç­¾é¡µ
+		ui->tabWidget->removeTab(1); // ç§»é™¤ Tab 2
+		m_strDolwnloadText = QString::fromLocal8Bit("ä¸‹è½½");
 	}
 	else
 	{
 		m_modelDownload = new QStandardItemModel();
 		m_modelDownload->setColumnCount(9);
-		m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("ĞòºÅ"));
-		m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÈË"));
-		m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("ËùÔÚ²¿ÃÅ"));
-		m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ÉêÇëÊ±¼ä"));
-		m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼şÃû"));
-		m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("ÎÄ¼şÀàĞÍ"));
-		m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("Éú³ÉÊ±¼ä"));
-		m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("×´Ì¬"));
-		m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("²Ù×÷"));
+		m_modelDownload->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("åºå·"));
+		m_modelDownload->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·äºº"));
+		m_modelDownload->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("æ‰€åœ¨éƒ¨é—¨"));
+		m_modelDownload->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("ç”³è¯·æ—¶é—´"));
+		m_modelDownload->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶å"));
+		m_modelDownload->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("æ–‡ä»¶ç±»å‹"));
+		m_modelDownload->setHeaderData(6, Qt::Horizontal, QString::fromLocal8Bit("ç”Ÿæˆæ—¶é—´"));
+		m_modelDownload->setHeaderData(7, Qt::Horizontal, QString::fromLocal8Bit("çŠ¶æ€"));
+		m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("æ“ä½œ"));
 		ui->tableViewDownload->setModel(m_modelDownload);
 		common::setTableViewBasicConfiguration(ui->tableViewDownload);
 
@@ -227,13 +227,13 @@ void FilemangageDialog::initTableViewDownload()
 
 	m_pMenu = new QMenu;
 
-	m_actionMkdir= m_pMenu->addAction(QString::fromLocal8Bit("ĞÂ½¨ÎÄ¼ş¼Ğ"));
-	m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("É¾³ıÎÄ¼ş¼Ğ"));
+	m_actionMkdir= m_pMenu->addAction(QString::fromLocal8Bit("æ–°å»ºæ–‡ä»¶å¤¹"));
+	m_actionDel = m_pMenu->addAction(QString::fromLocal8Bit("åˆ é™¤æ–‡ä»¶å¤¹"));
 	m_actionDownload = m_pMenu->addAction(m_strDolwnloadText);
-	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("ÖØÃüÃû"));
-	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("Ñ¹Ëõ"));
-	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("¸´ÖÆÂ·¾¶")); 
-	m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("Ë¢ĞÂ½çÃæ"));
+	m_actionRename = m_pMenu->addAction(QString::fromLocal8Bit("é‡å‘½å"));
+	m_actionCompressDir = m_pMenu->addAction(QString::fromLocal8Bit("å‹ç¼©"));
+	m_actionCopyPath= m_pMenu->addAction(QString::fromLocal8Bit("å¤åˆ¶è·¯å¾„")); 
+	m_actionFlush = m_pMenu->addAction(QString::fromLocal8Bit("åˆ·æ–°ç•Œé¢"));
 	connect(m_actionMkdir, &QAction::triggered, this, &FilemangageDialog::slot_actionMkdir);
 	connect(m_actionDel, &QAction::triggered, this, &FilemangageDialog::slot_actionDelDir);
 	connect(m_actionDownload, &QAction::triggered, this, &FilemangageDialog::slot_actionDownload);
@@ -259,30 +259,30 @@ void FilemangageDialog::flushTableViewDownload()
 	int i = 0;
 	for (auto& stData : listDataApproval)
 	{
-		int newRowIndex = m_modelDownload->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		m_modelDownload->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = m_modelDownload->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		m_modelDownload->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 		QStandardItem* item = new QStandardItem(QString::number(i + 1));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 	
 		//item->setData(QString::fromStdString(stData.name), Qt::ToolTipRole);
 		m_modelDownload->setItem(newRowIndex, 0, item);
 
 		QModelIndex index = m_modelDownload->index(newRowIndex, 0);
-		m_modelDownload->setData(index, stData.id, Qt::UserRole);  // ÉèÖÃid;
+		m_modelDownload->setData(index, stData.id, Qt::UserRole);  // è®¾ç½®id;
 		//m_modelDownload->setData(index,QString::fromLocal8Bit(stData.filePath.c_str(), Qt::UserRole));
 		//  item->setText(QString::fromStdString(stData.name));
 
 		item = new QStandardItem(QString::fromStdString(stData.userName));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDownload->setItem(newRowIndex, 1, item);
 
 		item = new QStandardItem(QString::fromStdString(stData.department));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDownload->setItem(newRowIndex, 2, item);
 
 		item = new QStandardItem(QDateTime::fromTime_t(stData.applicationTime).toString("yyyy/MM/dd HH:mm:ss"));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDownload->setItem(newRowIndex, 3, item);
 
 
@@ -290,7 +290,7 @@ void FilemangageDialog::flushTableViewDownload()
 		QFileInfo fileInfo1(filePath);
 
 		item = new QStandardItem(fileInfo1.fileName());
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 
 		m_modelDownload->setItem(newRowIndex, 4, item);
 		QModelIndex indexFilePath = m_modelDownload->index(newRowIndex, 4);
@@ -298,19 +298,19 @@ void FilemangageDialog::flushTableViewDownload()
 
 
 		item = new QStandardItem(QString::fromStdString(stData.fileType));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDownload->setItem(newRowIndex, 5, item);
 
 		//item = new QStandardItem(QDateTime::fromTime_t(stData.fileTime).toString("yyyy/MM/dd HH:mm:ss"));
 		item = new QStandardItem(QString::fromStdString(stData.fileTime));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelDownload->setItem(newRowIndex, 6, item);
 
 
 
 
 		// add button to the last column
-		QPushButton* buttonD = new QPushButton(QString::fromLocal8Bit("ÏÂÔØ"));
+		QPushButton* buttonD = new QPushButton(QString::fromLocal8Bit("ä¸‹è½½"));
 		buttonD->setObjectName("itemBtnYes");
 		buttonD->setProperty("row", newRowIndex); // set custom property
 		buttonD->setProperty("column", 8);
@@ -322,25 +322,25 @@ void FilemangageDialog::flushTableViewDownload()
 
 		if (stData.status == 1)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑÍ¨¹ı"));
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é€šè¿‡"));
 			item->setForeground(QBrush(QColor(Qt::green)));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelDownload->setItem(newRowIndex, 7, item);
 			buttonD->setEnabled(true);
 
 		}
 		else if (stData.status == 0)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("´ıÉóºË"));
+			item = new QStandardItem(QString::fromLocal8Bit("å¾…å®¡æ ¸"));
 			item->setForeground(QBrush(QColor("#33C1FF")));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			m_modelDownload->setItem(newRowIndex, 7, item);
 			buttonD->setEnabled(false);
 		}
 		else if (stData.status == 2)
 		{
-			item = new QStandardItem(QString::fromLocal8Bit("ÒÑ²µ»Ø"));
-			item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+			item = new QStandardItem(QString::fromLocal8Bit("å·²é©³å›"));
+			item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 			item->setForeground(QBrush(QColor(Qt::red)));
 			m_modelDownload->setItem(newRowIndex, 7, item);
 			buttonD->setEnabled(false);
@@ -359,7 +359,7 @@ bool FilemangageDialog::getFtpFolderShow()
 	}
 	else
 	{
-		///***********************°Ñµ±Ç°ÎÄ¼şÂ·¾¶ÏÔÊ¾ÔÚÊ÷ĞÎ½á¹¹ÉÏ*****************************/
+		///***********************æŠŠå½“å‰æ–‡ä»¶è·¯å¾„æ˜¾ç¤ºåœ¨æ ‘å½¢ç»“æ„ä¸Š*****************************/
 		string strRootPath;
 
 	
@@ -369,21 +369,21 @@ bool FilemangageDialog::getFtpFolderShow()
 			return false;
 		}
 			
-		// ´´½¨½Úµã
+		// åˆ›å»ºèŠ‚ç‚¹
 		m_pRootItem = new QTreeWidgetItem();
 		QString RootPath = QString::fromLocal8Bit(strRootPath.c_str());
 		m_pRootItem->setText(0, RootPath);
 		m_pRootItem->setData(0, Qt::UserRole, RootPath);
-		m_pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // ÉèÖÃÍ¼±ê£¨ÇëÈ·±£Â·¾¶ÕıÈ·£©:/image/ftpDir.png
+		m_pRootItem->setIcon(0, QIcon(":/image/Dir.png")); // è®¾ç½®å›¾æ ‡ï¼ˆè¯·ç¡®ä¿è·¯å¾„æ­£ç¡®ï¼‰:/image/ftpDir.png
 		m_pRootItem->setToolTip(0, RootPath);
 		ui->treeWidget->addTopLevelItem(m_pRootItem);
 		
 
 		//if (m_FtpClientClass->newConnection())
 		{
-			m_FtpClientClass->execute_ls(strRootPath);//Ö´ĞĞls 
+			m_FtpClientClass->execute_ls(strRootPath);//æ‰§è¡Œls 
 
-		//ÔÚÊ÷·ÖÖ§ÏÔÊ¾µ±Ç°Â·¾¶ÎÄ¼ş¼ĞÃû³Æ
+		//åœ¨æ ‘åˆ†æ”¯æ˜¾ç¤ºå½“å‰è·¯å¾„æ–‡ä»¶å¤¹åç§°
 
 			auto vecFolderNames = m_FtpClientClass->Gets_FolderName();
 			for (int i = 0; i < vecFolderNames.size(); i++)
@@ -413,7 +413,7 @@ bool FilemangageDialog::getFtpFolderShow()
 void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const std::string strFolder)
 {
 	
-	m_FtpClientClass->execute_ls(strFolder);//Ö´ĞĞls 
+	m_FtpClientClass->execute_ls(strFolder);//æ‰§è¡Œls 
 	
 	auto vecFolders = m_FtpClientClass->Gets_FolderName();
 	for (int j = 0; j < vecFolders.size(); j++)
@@ -437,7 +437,7 @@ void FilemangageDialog::createTreeChildNode( QTreeWidgetItem* pParentItem, const
 
 int FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& newDirPath)
 {
-	int ret=m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//Ö´ĞĞls 
+	int ret=m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//æ‰§è¡Œls 
 
 	if (ret !=1)
 	{
@@ -448,7 +448,7 @@ int FilemangageDialog::downloadFtpDir(const QString& strDirPath, const QString& 
 	{
 		if (!dir.mkdir(newDirPath))
 		{
-			//qDebug() << "ÎÄ¼ş¼Ğ´´½¨Ê§°Ü£¡";
+			//qDebug() << "æ–‡ä»¶å¤¹åˆ›å»ºå¤±è´¥ï¼";
 			return -3;
 		}
 	}
@@ -496,7 +496,7 @@ void FilemangageDialog::getAdministratorDirs()
 	int iAdminDir = 1;
 //	m_vecAdministratorDir.clear();
 	QTreeWidgetItem* pAdminItem = nullptr;
-	// µİ¹é¸ù½ÚµãµÄËùÓĞ×Ó½Úµã;
+	// é€’å½’æ ¹èŠ‚ç‚¹çš„æ‰€æœ‰å­èŠ‚ç‚¹;
 	for (int i = 0; i < m_pRootItem->childCount(); ++i)
 	{
 		QString  strPath = m_pRootItem->child(i)->data(0, Qt::UserRole).toString();
@@ -513,7 +513,7 @@ void FilemangageDialog::getAdministratorDirs()
 		return;
 	//QString  strPath = pAdminItem->data(0, Qt::UserRole).toString();
 	
-	// µİ¹é±éÀúËùÓĞ×Ó½Úµã
+	// é€’å½’éå†æ‰€æœ‰å­èŠ‚ç‚¹
 	for (int i = 0; i < pAdminItem->childCount(); ++i)
 	{
 		traverseAdministratorChildDir(pAdminItem->child(i));
@@ -541,32 +541,32 @@ void FilemangageDialog::flushTableViewFtpFile()
 		return;
 	QString strDirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
 
-	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//Ö´ĞĞls 
+	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//æ‰§è¡Œls 
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
 
 	for (int i = 0; i < vecFileData.size(); i++)
 	{
 		int j = i + 1;
-		int newRowIndex = m_modelFiles->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		m_modelFiles->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = m_modelFiles->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		m_modelFiles->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 		QStandardItem* item = new QStandardItem(QString::number(j));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
-		item->setCheckable(true); // ÉèÖÃÎª¿É¹´Ñ¡
-		item->setCheckState(Qt::Unchecked); // ³õÊ¼Îª²»¹´Ñ¡;
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
+		item->setCheckable(true); // è®¾ç½®ä¸ºå¯å‹¾é€‰
+		item->setCheckState(Qt::Unchecked); // åˆå§‹ä¸ºä¸å‹¾é€‰;
 		m_modelFiles->setItem(newRowIndex, 0, item);
 
 
 		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
-		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // ÉèÖÃÎÄ¼şËùÔÚÄ¿Â¼;
-		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole + 1);  //ÉèÖÃÎÄ¼şÊ±¼ä ;
+		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // è®¾ç½®æ–‡ä»¶æ‰€åœ¨ç›®å½•;
+		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole + 1);  //è®¾ç½®æ–‡ä»¶æ—¶é—´ ;
 
 		QString strFilePath = strDirPath + "\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
-		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //ÉèÖÃÎÄ¼şÂ·¾¶ ;
+		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //è®¾ç½®æ–‡ä»¶è·¯å¾„ ;
 
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelFiles->setItem(newRowIndex, 1, item);
 
 
@@ -579,7 +579,7 @@ void FilemangageDialog::flushTableViewFtpFile()
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_itemBtnDownload()));
 		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
 
-		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("É¾³ı"));
+		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("åˆ é™¤"));
 		buttonNo->setObjectName("itemBtnDel");
 		buttonNo->setProperty("row", newRowIndex); // set custom property
 		buttonNo->setProperty("column", 3);
@@ -595,18 +595,18 @@ void FilemangageDialog::traverseUploadDir(const QString& strUploadDir, const QSt
 	m_FtpClientClass->execute_mkdirFolder(strDstDir.toLocal8Bit().toStdString());
 	QDir dir(strUploadDir);
 
-	// ÁĞ³öËùÓĞÎÄ¼şºÍÄ¿Â¼
+	// åˆ—å‡ºæ‰€æœ‰æ–‡ä»¶å’Œç›®å½•
 //	QStringList filters;
-	//filters << "*"; // ¿É¸ù¾İĞèÒªÉèÖÃ¹ıÂËÆ÷£¬±ÈÈç "*.txt" Ö»»ñÈ¡ÎÄ±¾ÎÄ¼ş
+	//filters << "*"; // å¯æ ¹æ®éœ€è¦è®¾ç½®è¿‡æ»¤å™¨ï¼Œæ¯”å¦‚ "*.txt" åªè·å–æ–‡æœ¬æ–‡ä»¶
 	//dir.setNameFilters(filters);
-	dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot); // ÅÅ³ı . ºÍ ..
+	dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot); // æ’é™¤ . å’Œ ..
 
 	QFileInfoList entries = dir.entryInfoList();
-	// ´æ´¢ÎÄ¼şºÍÄ¿Â¼
+	// å­˜å‚¨æ–‡ä»¶å’Œç›®å½•
 	//QList<QFileInfo> files;
 	//QList<QFileInfo> directories;
 
-	// ±éÀúÌõÄ¿²¢·ÖÀà
+	// éå†æ¡ç›®å¹¶åˆ†ç±»
 	foreach(const QFileInfo & entry, entries) 
 	{
 	
@@ -617,14 +617,14 @@ void FilemangageDialog::traverseUploadDir(const QString& strUploadDir, const QSt
 
 			QString strLocalDir = entry.absoluteFilePath();
 			traverseUploadDir(strLocalDir, strFtpNewPath);
-			//qDebug() << "Ä¿Â¼:" << entry.filePath() << "´´½¨Ê±¼ä:" << creationTime;
+			//qDebug() << "ç›®å½•:" << entry.filePath() << "åˆ›å»ºæ—¶é—´:" << creationTime;
 		}
 		else if (entry.isFile()) {
 
 			QString strFtpNewPath = strDstDir + "\\" + entry.fileName();
 			QString strLocalFilePath = entry.absoluteFilePath();
 			m_FtpClientClass->execute_putFile(strLocalFilePath.toLocal8Bit().toStdString(), strFtpNewPath.toLocal8Bit().toStdString());
-			//qDebug() << "ÎÄ¼ş:" << entry.filePath() << "´óĞ¡:" << entry.size() << "×Ö½Ú" << "´´½¨Ê±¼ä:" << creationTime;
+			//qDebug() << "æ–‡ä»¶:" << entry.filePath() << "å¤§å°:" << entry.size() << "å­—èŠ‚" << "åˆ›å»ºæ—¶é—´:" << creationTime;
 		}
 	}
 
@@ -636,32 +636,32 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 	
 	QString strDirPath = pTreeItem->data(column, Qt::UserRole).toString();
 
-	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//Ö´ĞĞls 
+	m_FtpClientClass->execute_ls(strDirPath.toLocal8Bit().toStdString());//æ‰§è¡Œls 
 
 	auto vecFileData = m_FtpClientClass->Gets_FileName();
 
 	for (int i = 0; i < vecFileData.size(); i++)
 	{
 		int j = i + 1;
-		int newRowIndex = m_modelFiles->rowCount(); // »ñÈ¡µ±Ç°ĞĞÊı
-		m_modelFiles->insertRow(newRowIndex); // ²åÈëĞÂĞĞ
+		int newRowIndex = m_modelFiles->rowCount(); // è·å–å½“å‰è¡Œæ•°
+		m_modelFiles->insertRow(newRowIndex); // æ’å…¥æ–°è¡Œ
 
 		QStandardItem* item = new QStandardItem(QString::number(j));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
-		item->setCheckable(true); // ÉèÖÃÎª¿É¹´Ñ¡
-		item->setCheckState(Qt::Unchecked); // ³õÊ¼Îª²»¹´Ñ¡;
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
+		item->setCheckable(true); // è®¾ç½®ä¸ºå¯å‹¾é€‰
+		item->setCheckState(Qt::Unchecked); // åˆå§‹ä¸ºä¸å‹¾é€‰;
 		m_modelFiles->setItem(newRowIndex, 0, item);
 
 	
 		QModelIndex index = m_modelFiles->index(newRowIndex, 0);
-		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // ÉèÖÃÎÄ¼şËùÔÚÄ¿Â¼;
-		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole+1);  //ÉèÖÃÎÄ¼şÊ±¼ä ;
+		m_modelFiles->setData(index, strDirPath, Qt::UserRole);  // è®¾ç½®æ–‡ä»¶æ‰€åœ¨ç›®å½•;
+		m_modelFiles->setData(index, QString::fromLocal8Bit(vecFileData[i][1].c_str()), Qt::UserRole+1);  //è®¾ç½®æ–‡ä»¶æ—¶é—´ ;
 
 		QString strFilePath = strDirPath + "\\" + QString::fromLocal8Bit(vecFileData[i][0].c_str());
-		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //ÉèÖÃÎÄ¼şÂ·¾¶ ;
+		m_modelFiles->setData(index, strFilePath, Qt::UserRole + 2);  //è®¾ç½®æ–‡ä»¶è·¯å¾„ ;
 
 		item = new QStandardItem(QString::fromLocal8Bit(vecFileData[i][0].c_str()));
-		item->setTextAlignment(Qt::AlignCenter);  // ÉèÖÃÎÄ±¾¾ÓÖĞ¶ÔÆë
+		item->setTextAlignment(Qt::AlignCenter);  // è®¾ç½®æ–‡æœ¬å±…ä¸­å¯¹é½
 		m_modelFiles->setItem(newRowIndex, 1, item);
 
 		
@@ -674,7 +674,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		connect(buttonYes, SIGNAL(clicked()), this, SLOT(slot_itemBtnDownload()));
 		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 2), buttonYes);
 
-		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("É¾³ı"));
+		QPushButton* buttonNo = new QPushButton(QString::fromLocal8Bit("åˆ é™¤"));
 		buttonNo->setObjectName("itemBtnDel");
 		buttonNo->setProperty("row", newRowIndex); // set custom property
 		buttonNo->setProperty("column", 3);
@@ -682,7 +682,7 @@ void FilemangageDialog::slot_treeWidgetItemClicked(QTreeWidgetItem* pTreeItem, i
 		connect(buttonNo, SIGNAL(clicked()), this, SLOT(slot_itemBtnDel()));
 		ui->tableViewFile->setIndexWidget(m_modelFiles->index(newRowIndex, 3), buttonNo);
 	}
-	// ×¢ÒâÒª¿¼ÂÇÒª²»ÒªÇĞ»Ø¸ùÄ¿Â¼;
+	// æ³¨æ„è¦è€ƒè™‘è¦ä¸è¦åˆ‡å›æ ¹ç›®å½•;
 }
 
 void FilemangageDialog::slot_itemBtnDownload()
@@ -695,12 +695,12 @@ void FilemangageDialog::slot_itemBtnDownload()
 	//fileAllPath.replace("/", "\\\\");
 
 	fileAllPath.replace("\\", "\\\\");
-	if (!common::bAdministrator) // ÆÕÍ¨ÓÃ»§
+	if (!common::bAdministrator) // æ™®é€šç”¨æˆ·
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
 		stDownloadApproval.filePath = fileAllPath.toStdString();
-		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // ·µ»ØµãÖ®ºóµÄ²¿·Ö
+		stDownloadApproval.fileType = strFileName.mid(strFileName.lastIndexOf(".") + 1).toStdString();  // è¿”å›ç‚¹ä¹‹åçš„éƒ¨åˆ†
 
 		stDownloadApproval.fileTime= common::string_to_datetime(m_modelFiles->item(row, 0)->data(Qt::UserRole + 1).toString().toStdString());
 		stDownloadApproval.applicationTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -713,7 +713,7 @@ void FilemangageDialog::slot_itemBtnDownload()
 	else
 	{
 		//	QString strDirPath=m_modelFiles->item(row, 0)->data(Qt::UserRole).toString();
-		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("é€‰æ‹©ä¸‹è½½ç›®å½•"), QDir::currentPath());
 		if (directory.isEmpty())
 		{
 			return;
@@ -722,11 +722,11 @@ void FilemangageDialog::slot_itemBtnDownload()
 		std::string str = directory.toLocal8Bit().toStdString();
 		std::wstring wstr = directory.toStdWString();
 		const wchar_t* lpcwstr = wstr.c_str();
-		SetCurrentDirectory(lpcwstr);//ÉèÖÃµ±Ç°Ä¿Â¼
+		SetCurrentDirectory(lpcwstr);//è®¾ç½®å½“å‰ç›®å½•
 
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
-		m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÏÂÔØÎÄ¼ş"));
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½æ–‡ä»¶"));
 		m_GifDialog->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 
@@ -762,8 +762,8 @@ void FilemangageDialog::slot_btnUploading()
 		return;
 	}
 	
-	// µ¯³öÎÄ¼şÑ¡Ôñ¶Ô»°¿ò
-	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÉÏ´«ÎÄ¼ş"));
+	// å¼¹å‡ºæ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†
+	QString strFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("é€‰æ‹©ä¸Šä¼ æ–‡ä»¶"));
 	if (strFilePath.isEmpty())
 		return;
 
@@ -773,13 +773,13 @@ void FilemangageDialog::slot_btnUploading()
 	
 	std::wstring wstr = directoryPath.toStdWString();
 	const wchar_t* lpcwstr = wstr.c_str();
-	SetCurrentDirectory(lpcwstr);//ÉèÖÃµ±Ç°Ä¿Â¼
+	SetCurrentDirectory(lpcwstr);//è®¾ç½®å½“å‰ç›®å½•
 
 	directoryPath.replace("/", "\\\\");
 
 	QString dirPath = ui->treeWidget->currentItem()->data(0, Qt::UserRole).toString();
 	QString UploadingPath = dirPath + "\\" + fileInfo.fileName();
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÉÏ´«ÎÄ¼ş"));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨ä¸Šä¼ æ–‡ä»¶"));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_putFile(fileInfo.absoluteFilePath().toLocal8Bit().toStdString(), UploadingPath.toLocal8Bit().toStdString());
@@ -790,10 +790,10 @@ void FilemangageDialog::slot_btnUploading()
 void FilemangageDialog::slot_btnUploadingDir()
 {
 	QString directory = QFileDialog::getExistingDirectory(
-		nullptr,               // ¸¸´°¿Ú
-		QString::fromLocal8Bit("Ñ¡ÔñÒ»¸öÄ¿Â¼"),      // ¶Ô»°¿ò±êÌâ
-		"",                   // Ä¬ÈÏÄ¿Â¼
-		QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks // Ñ¡Ïî
+		nullptr,               // çˆ¶çª—å£
+		QString::fromLocal8Bit("é€‰æ‹©ä¸€ä¸ªç›®å½•"),      // å¯¹è¯æ¡†æ ‡é¢˜
+		"",                   // é»˜è®¤ç›®å½•
+		QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks // é€‰é¡¹
 	);
 
 	if (directory.isEmpty()) {
@@ -806,7 +806,7 @@ void FilemangageDialog::slot_btnUploadingDir()
 		return;
 	QFileInfo fileInfo(directory);
 	QString strDstDir = pItem->data(0, Qt::UserRole).toString()+ "\\"+fileInfo.fileName();
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÉÏ´«ÎÄ¼ş"));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨ä¸Šä¼ æ–‡ä»¶"));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	traverseUploadDir(directory, strDstDir);
@@ -821,7 +821,7 @@ void FilemangageDialog::slot_treeWidgteCustomContextMenuRequested(const QPoint& 
 	if (pItem == nullptr)
 		return;
 
-	if (!common::bAdministrator)  // ·Ç¹ÜÀíÔ±;
+	if (!common::bAdministrator)  // éç®¡ç†å‘˜;
 	{
 		if (pItem->data(0, Qt::UserRole + 1).toInt()==1)
 		{
@@ -862,29 +862,29 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 	QString strFileType=m_modelDownload->item(row, 5)->text();
 
 	QString strFileName = m_modelDownload->item(row, 4)->text();
-	if (strFileType == "dir")  // ÏÂÔØÎÄ¼ş¼Ğ
+	if (strFileType == "dir")  // ä¸‹è½½æ–‡ä»¶å¤¹
 	{
-		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("é€‰æ‹©ä¸‹è½½ç›®å½•"), QDir::currentPath());
 		if (directory.isEmpty())
 			return;
 		QString newDirPath = directory + "\\" + strFileName;
 		newDirPath.replace("/", "\\\\");
 
 		g_pMainWindow->showGif();
-		//QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÇëÁªÏµ¹ÜÀíÔ±¾¡¿ì¶Ô¹ÜÀíÔ±½øĞĞÉóºË"));
+		//QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¯·è”ç³»ç®¡ç†å‘˜å°½å¿«å¯¹ç®¡ç†å‘˜è¿›è¡Œå®¡æ ¸"));
 		// m_msgBox->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 		int ret =downloadFtpDir(strFilaPath, newDirPath);
 		g_pMainWindow->closeGif();
 		if (ret == -1)
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÒªÏÂÔØµÄftpÄ¿Â¼ÒÑÉ¾³ı"));
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("è¦ä¸‹è½½çš„ftpç›®å½•å·²åˆ é™¤"));
 			return;
 		}
 	}
 	else  
-	{       // ÏÂÔØÎÄ¼ş
-		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
+	{       // ä¸‹è½½æ–‡ä»¶
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("é€‰æ‹©ä¸‹è½½ç›®å½•"), QDir::currentPath());
 		if (directory.isEmpty())
 		{
 			return;
@@ -893,19 +893,19 @@ void FilemangageDialog::slot_ItemDownloadBtnClicked()
 		std::string str = directory.toLocal8Bit().toStdString();
 		std::wstring wstr = directory.toStdWString();
 		const wchar_t* lpcwstr = wstr.c_str();
-		SetCurrentDirectory(lpcwstr);//ÉèÖÃµ±Ç°Ä¿Â¼
+		SetCurrentDirectory(lpcwstr);//è®¾ç½®å½“å‰ç›®å½•
 
 		//m_FtpClientClass->execute_getFile(fileAllPath.toLocal8Bit().toStdString());
 		QString newFilePath = directory + "\\" + strFileName;
 		newFilePath.replace("/", "\\\\");
-		m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÏÂÔØÎÄ¼ş"));
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½æ–‡ä»¶"));
 		m_GifDialog->show();
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 		int ret =m_FtpClientClass->execute_getFile(strFilaPath.toLocal8Bit().toStdString(), newFilePath.toLocal8Bit().toStdString());
 		m_GifDialog->close();
 		if (ret !=1)
 		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ËùÒªÏÂÔØµÄFtpÎÄ¼şÒÑÉ¾³ı"));
+			QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æ‰€è¦ä¸‹è½½çš„Ftpæ–‡ä»¶å·²åˆ é™¤"));
 		}
 	}
 
@@ -916,9 +916,9 @@ void FilemangageDialog::slot_actionMkdir()
 	QTreeWidgetItem* pItem = ui->treeWidget->currentItem();
 
 	QString text = pItem->text(0);
-
-	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("ĞÂ½¨"), QString::fromLocal8Bit("ÊäÈëĞÂ½¨ÎÄ¼ş¼ĞÃû³Æ£º"));
-	if (!DirName.isEmpty())	// ÓÃ»§ÊäÈëÁËÎÄ¼şÃû³Æ
+	
+	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("æ–°å»º"), QString::fromLocal8Bit("è¾“å…¥æ–°å»ºæ–‡ä»¶å¤¹åç§°ï¼š"));
+	if (!DirName.isEmpty())	// ç”¨æˆ·è¾“å…¥äº†æ–‡ä»¶åç§°
 	{
 		QString dirPath = pItem->data(0, Qt::UserRole).toString();
 
@@ -954,12 +954,12 @@ void FilemangageDialog::slot_actionDelDir()
 	dirPath.replace("/", "\\\\");
 	parentDir.replace("/", "\\\\");
 
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÉ¾³ıÎÄ¼ş¼Ğ"));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨åˆ é™¤æ–‡ä»¶å¤¹"));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_deleteFileList(dirPath.toLocal8Bit().toStdString());
 	m_GifDialog->close();
-	pParentItem->removeChild(pItem); // ÏÈ»ñÈ¡ childItem
+	pParentItem->removeChild(pItem); // å…ˆè·å– childItem
 	delete pItem;
 	flushTableViewFtpFile();
 }
@@ -974,7 +974,7 @@ void FilemangageDialog::slot_actionDownload()
 
 	dirPath.replace("\\", "\\\\");
 
-	if (!common::bAdministrator) // ÆÕÍ¨ÓÃ»§
+	if (!common::bAdministrator) // æ™®é€šç”¨æˆ·
 	{
 		table_DownloadApproval stDownloadApproval;
 		stDownloadApproval.userID = common::iUserID;
@@ -989,14 +989,14 @@ void FilemangageDialog::slot_actionDownload()
 	}
 	else
 	{
-		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("Ñ¡ÔñÏÂÔØÄ¿Â¼"), QDir::currentPath());
+		QString directory = QFileDialog::getExistingDirectory(nullptr, QString::fromLocal8Bit("é€‰æ‹©ä¸‹è½½ç›®å½•"), QDir::currentPath());
 		if (directory.isEmpty())
 			return;
 		QString newDirPath = directory + "/" + pItem->text(0);
 		newDirPath.replace("/", "\\\\");
 
 		
-		m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÏÂÔØÎÄ¼ş¼Ğ"));
+		m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½æ–‡ä»¶å¤¹"));
 		m_GifDialog->show();
 	
 		QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
@@ -1017,10 +1017,10 @@ void FilemangageDialog::slot_actioxnRename()
 	QTreeWidgetItem* pParentItem = pItem->parent();
 	if (pParentItem == nullptr)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¸ùÄ¿Â¼½ûÖ¹ÖØÃüÃû"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æ ¹ç›®å½•ç¦æ­¢é‡å‘½å"));
 		return;
 	}
-	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("ÖØÃüÃû"), QString::fromLocal8Bit("ÊäÈëĞÂ½¨ÎÄ¼ş¼ĞÃû³Æ£º"));
+	QString DirName = QInputDialog::getText(this, QString::fromLocal8Bit("é‡å‘½å"), QString::fromLocal8Bit("è¾“å…¥æ–°å»ºæ–‡ä»¶å¤¹åç§°ï¼š"));
 	if (DirName == "")
 	{
 		return;
@@ -1034,7 +1034,7 @@ void FilemangageDialog::slot_actioxnRename()
 		flushFtpDirShow(pItem);
 	}
 	else {
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("ÖØÃüÃûÊ§°Ü"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("é‡å‘½åå¤±è´¥"));
 		
 	}
 }
@@ -1048,14 +1048,14 @@ void FilemangageDialog::slot_actionCompressDir()
 	QTreeWidgetItem* pParentItem = pItem->parent();
 	if (pParentItem == nullptr)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¸ùÄ¿Â¼½ûÖ¹Ñ¹Ëõ"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æ ¹ç›®å½•ç¦æ­¢å‹ç¼©"));
 		return;
 	}
 	std::string dirPath = pItem->data(0, Qt::UserRole).toString().toLocal8Bit().toStdString();
 	std::vector<std::string> vecPath;
 	vecPath.push_back(dirPath);
-	std::string  newZipPath = dirPath+".zip"; // Ìí¼Ó¸¸Ä¿Â¼²¢·µ»ØĞÂµÄÄ¿Â¼Ãû
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÑ¹Ëõ..."));
+	std::string  newZipPath = dirPath+".zip"; // æ·»åŠ çˆ¶ç›®å½•å¹¶è¿”å›æ–°çš„ç›®å½•å
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨å‹ç¼©..."));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_compress(vecPath, newZipPath);
@@ -1070,7 +1070,7 @@ void FilemangageDialog::slot_actionCopyPath()
 	QTreeWidgetItem* pParentItem = pItem->parent();
 	if (pParentItem == nullptr)
 	{
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("¸ùÄ¿Â¼½ûÖ¹¸´ÖÆÂ·¾¶"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("æ ¹ç›®å½•ç¦æ­¢å¤åˆ¶è·¯å¾„"));
 		return;
 	}
 	common::strCopyPath = pItem->data(0, Qt::UserRole).toString();
@@ -1100,37 +1100,37 @@ void FilemangageDialog::slot_btnCompress()
 		return;
 	}
 	int bChecked = false;
-	// ±éÀúÃ¿Ò»ĞĞµÄµÚÒ»ÁĞ£¬¼ì²é¹´Ñ¡×´Ì¬²¢´òÓ¡Êı¾İ
+	// éå†æ¯ä¸€è¡Œçš„ç¬¬ä¸€åˆ—ï¼Œæ£€æŸ¥å‹¾é€‰çŠ¶æ€å¹¶æ‰“å°æ•°æ®
 	std::vector < std::string> vecPath;
 	for (int row = 0; row < m_modelFiles->rowCount(); ++row) 
 	{
-		QStandardItem* item = m_modelFiles->item(row, 0);  // »ñÈ¡µÚÒ»ÁĞÏî
+		QStandardItem* item = m_modelFiles->item(row, 0);  // è·å–ç¬¬ä¸€åˆ—é¡¹
 		if (item && item->checkState() == Qt::Checked) 
 		{
 			bChecked = true;
-			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole+2).toString();  // »ñÈ¡data
+			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole+2).toString();  // è·å–data
 			vecPath.push_back(strFilePath.toLocal8Bit().toStdString());
-			qDebug() << "Checked Item Data:" << strFilePath;  // ´òÓ¡ data
+			qDebug() << "Checked Item Data:" << strFilePath;  // æ‰“å° data
 		}
 	}
 	if (!bChecked)
 	{
-		QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Çë¹´Ñ¡ÒªÑ¹ËõµÄÎÄ¼ş"));
+		QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è¯·å‹¾é€‰è¦å‹ç¼©çš„æ–‡ä»¶"));
 		return;
 	}
 
-	QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("Ñ¹Ëõ"), QString::fromLocal8Bit("Ñ¹Ëõ°üÃû³Æ£º"));
+	QString NewZipName = QInputDialog::getText(this, QString::fromLocal8Bit("å‹ç¼©"), QString::fromLocal8Bit("å‹ç¼©åŒ…åç§°ï¼š"));
 	if (NewZipName.isEmpty())
 		return;
 	if (!NewZipName.endsWith(".zip", Qt::CaseInsensitive))
 	{
-		 NewZipName = NewZipName + ".zip";  // Ìí¼Ó .zip ºó×º
+		 NewZipName = NewZipName + ".zip";  // æ·»åŠ  .zip åç¼€
 	}
 	
 	QString stDirPath = ui->treeWidget->currentItem()->data(0,Qt::UserRole).toString();
 	
 	QString newZipPath = stDirPath + "\\" + NewZipName;
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÑ¹Ëõ..."));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨å‹ç¼©..."));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	if (m_FtpClientClass->execute_compress(vecPath, newZipPath.toLocal8Bit().toStdString()))
@@ -1142,7 +1142,7 @@ void FilemangageDialog::slot_btnCompress()
 	else
 	{
 		m_GifDialog->close();
-		QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Ñ¹ËõÊ§°Ü"));
+		QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å‹ç¼©å¤±è´¥"));
 		return;
 	}
 	
@@ -1156,35 +1156,35 @@ void FilemangageDialog::slot_btnUnCompress()
 	}
 	int bChecked = false;
 	int bZipFile = true;
-	// ±éÀúÃ¿Ò»ĞĞµÄµÚÒ»ÁĞ£¬¼ì²é¹´Ñ¡×´Ì¬²¢´òÓ¡Êı¾İ
+	// éå†æ¯ä¸€è¡Œçš„ç¬¬ä¸€åˆ—ï¼Œæ£€æŸ¥å‹¾é€‰çŠ¶æ€å¹¶æ‰“å°æ•°æ®
 	std::vector < std::string> vecPath;
 	for (int row = 0; row < m_modelFiles->rowCount(); ++row)
 	{
-		QStandardItem* item = m_modelFiles->item(row, 0);  // »ñÈ¡µÚÒ»ÁĞÏî
+		QStandardItem* item = m_modelFiles->item(row, 0);  // è·å–ç¬¬ä¸€åˆ—é¡¹
 		if (item && item->checkState() == Qt::Checked)
 		{
 			bChecked = true;
-			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // »ñÈ¡data
+			QString strFilePath = m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // è·å–data
 			if (!strFilePath.endsWith(".zip", Qt::CaseInsensitive))
 			{
 				bZipFile = false;
 			}
 			vecPath.push_back(strFilePath.toLocal8Bit().toStdString());
-			qDebug() << "Checked Item Data:" << strFilePath;  // ´òÓ¡ data
+			qDebug() << "Checked Item Data:" << strFilePath;  // æ‰“å° data
 		}
 	}
 	if (!bChecked)
 	{
-		QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("Çë¹´Ñ¡Òª½âÑ¹µÄÎÄ¼ş"));
+		QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è¯·å‹¾é€‰è¦è§£å‹çš„æ–‡ä»¶"));
 		return;
 	}
 	if (!bZipFile)
 	{
-		QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("½âÑ¹ÎÄ¼ş¸ñÊ½²»ÕıÈ·£¬ÇëÖØĞÂ¹´Ñ¡"));
+		QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è§£å‹æ–‡ä»¶æ ¼å¼ä¸æ­£ç¡®ï¼Œè¯·é‡æ–°å‹¾é€‰"));
 		return;
 	}
 
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚ½âÑ¹..."));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨è§£å‹..."));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	m_FtpClientClass->execute_uncompress(vecPath);
@@ -1203,19 +1203,19 @@ void FilemangageDialog::slot_btnCopyPath()
 	std::vector < std::string> vecPath;
 	for (int row = 0; row < m_modelFiles->rowCount(); ++row)
 	{
-		QStandardItem* item = m_modelFiles->item(row, 0);  // »ñÈ¡µÚÒ»ÁĞÏî
+		QStandardItem* item = m_modelFiles->item(row, 0);  // è·å–ç¬¬ä¸€åˆ—é¡¹
 		if (item && item->checkState() == Qt::Checked)
 		{
 			iChecked++;
 			
-			common::strCopyPath= m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // »ñÈ¡data
-			qDebug() << "CopyPath:" << common::strCopyPath;  // ´òÓ¡ data
+			common::strCopyPath= m_modelFiles->item(row, 0)->data(Qt::UserRole + 2).toString();  // è·å–data
+			qDebug() << "CopyPath:" << common::strCopyPath;  // æ‰“å° data
 		}
 	}
 	if (iChecked != 1)
 	{
 		common::strCopyPath = "";
-		QMessageBox::information(this, QString::fromLocal8Bit("ÌáÊ¾"), QString::fromLocal8Bit("ÇëÑ¡ÔñÒ»¸öÒª¸´ÖÆµÄÂ·¾¶"));
+		QMessageBox::information(this, QString::fromLocal8Bit("æç¤º"), QString::fromLocal8Bit("è¯·é€‰æ‹©ä¸€ä¸ªè¦å¤åˆ¶çš„è·¯å¾„"));
 		return;
 	}
 	
@@ -1227,11 +1227,11 @@ void FilemangageDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
 
 	QMenu menu(this);
 
-	// Ìí¼Ó²Ëµ¥Ïî
-	QAction* flushAction = menu.addAction(QString::fromLocal8Bit("Ë¢ĞÂ"));
+	// æ·»åŠ èœå•é¡¹
+	QAction* flushAction = menu.addAction(QString::fromLocal8Bit("åˆ·æ–°"));
 	
 
-	// Ö´ĞĞ²Ëµ¥²¢»ñÈ¡ËùÑ¡²Ù×÷
+	// æ‰§è¡Œèœå•å¹¶è·å–æ‰€é€‰æ“ä½œ
 	QAction* selectedAction = menu.exec(ui->tableViewDownload->mapToGlobal(pos));
 
 	if (selectedAction == flushAction) {
@@ -1244,7 +1244,7 @@ void FilemangageDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
 
 void FilemangageDialog::slot_compressMultPath(std::vector<std::string> vecStrPath, std::string strZipPath)
 {
-	m_GifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚÑ¹Ëõ±£´æ"));
+	m_GifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨å‹ç¼©ä¿å­˜"));
 	m_GifDialog->show();
 	QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	int ret = m_FtpClientClass->execute_compress(vecStrPath, strZipPath);
@@ -1255,7 +1255,7 @@ void FilemangageDialog::slot_compressMultPath(std::vector<std::string> vecStrPat
 	}
 	else
 	{
-		//QMessageBox::warning(this, QString::fromLocal8Bit("¾¯¸æ"), QString::fromLocal8Bit("Ñ¹ËõÊ§°Ü"));
+		//QMessageBox::warning(this, QString::fromLocal8Bit("è­¦å‘Š"), QString::fromLocal8Bit("å‹ç¼©å¤±è´¥"));
 		return;
 	}
 }
