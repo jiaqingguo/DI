@@ -1281,16 +1281,9 @@ void MainWindow::updateModuleToolTreeItem(int module)
 			
 				QImage img;
 				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
-				qDebug() << "Original Image Size:" << img.size();
-				// 放大图片到新的尺寸
-				QImage scaledImg = img.scaled(128,128, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-				qDebug() << "Scaled Image Size:" << scaledImg.size();
 				// 将 QImage 转换为 QIcon
-				QIcon icon(QPixmap::fromImage(scaledImg));
-				pToolsChildItem->treeWidget()->setIconSize(QSize(32, 32));
-				//icon.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-				////QIcon icon("path/to/icon.png");  // 确保使用正确的图标路径
-				//pToolsChildItem->setIcon(0, icon.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));  // 设置为32x32的大小
+				QIcon icon(QPixmap::fromImage(img));
+				pToolsChildItem->treeWidget()->setIconSize(QSize(40, 40));
 				pToolsChildItem->setIcon(0, icon);
 			
 			}

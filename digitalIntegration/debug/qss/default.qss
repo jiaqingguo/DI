@@ -840,7 +840,7 @@ ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLab
 	color: #484f7a;	
 }
 ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
-	font-size: 18px;
+	font-size: 16px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -881,7 +881,7 @@ QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLab
 	color: #484f7a;
 }
 RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
-	font-size: 18px;
+	font-size: 17px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -892,7 +892,7 @@ QComboBox#comboBoxRoot::down-arrow
 }
 QComboBox#comboBoxRoot
 {
-	font-size: 18px;
+	font-size: 16px;
     color: #abadb2;
     background-color: white;
     border: 1px solid #cccccc; /* 设置边框为浅灰色 */
@@ -1187,7 +1187,7 @@ QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBo
     background-color: white;
     border: 1px solid #cccccc; /* 设置边框为浅灰色 */
     border-radius: 4px; /* 可选：设置圆角 */
-    padding-right: 6px;
+    padding-right: 8px;
 }
 QComboBox#comboBox1::drop-down ,QComboBox#comboBox2::drop-down ,QComboBox#comboBox3::drop-down ,QComboBox#comboBox4::drop-down ,QComboBox#comboBox5::drop-down{
     subcontrol-origin: padding;
