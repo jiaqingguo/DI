@@ -136,7 +136,6 @@ QWidget#widgetM1{
 
 QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
 		background-image: url(:/image/Logo_background.png);
-		
 background-repeat: no-repeat; /* 禁止重复 */
 background-position: center;   /* 居中显示 */
 background-size: contain;      /* 保持图片比例，不拉伸 */
@@ -196,6 +195,10 @@ QTabBar::close-button:hover {
         }
 	
 QWidget#widget QTabWidget#tabWidgetModulel2::pane {	
+		background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -240,6 +243,10 @@ QTabBar::tab[tabdata="tab1"]{
 			
 		}
 QWidget#widget QTabWidget#tabWidgetModulel3::pane {	
+			background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -276,6 +283,10 @@ QTabWidget#tabWidgetModulel3 QTabBar::tab:selected {
 
 
 QWidget#widget QTabWidget#tabWidgetModulel4::pane {	
+			background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */

@@ -34,12 +34,16 @@ QWidget#widgetLeftMenu QTreeWidget{
 }
 
 
+
+
 QWidget#widgetLeftMenu QTreeWidget::item {
 		
+		
+		padding-left: 10px;  /* 调整项的内边距 */
            /*  background-color: #e0e0e0; 设置默认背景颜色 */
             color:white; /* 设置默认字体颜色 */
            font-size:40px;
-			margin-right:0px;
+			
 			 /*padding: 15px; 设置内边距 */
         }
 
@@ -132,7 +136,6 @@ QWidget#widgetM1{
 
 QWidget#widget QTabWidget#tabWidgetModulel1::pane {	
 		background-image: url(:/image/Logo_background.png);
-		
 background-repeat: no-repeat; /* 禁止重复 */
 background-position: center;   /* 居中显示 */
 background-size: contain;      /* 保持图片比例，不拉伸 */
@@ -192,6 +195,10 @@ QTabBar::close-button:hover {
         }
 	
 QWidget#widget QTabWidget#tabWidgetModulel2::pane {	
+		background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -236,6 +243,10 @@ QTabBar::tab[tabdata="tab1"]{
 			
 		}
 QWidget#widget QTabWidget#tabWidgetModulel3::pane {	
+			background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -272,6 +283,10 @@ QTabWidget#tabWidgetModulel3 QTabBar::tab:selected {
 
 
 QWidget#widget QTabWidget#tabWidgetModulel4::pane {	
+			background-image: url(:/image/Logo_background.png);
+		background-repeat: no-repeat; /* 禁止重复 */
+		background-position: center;   /* 居中显示 */
+		background-size: contain;      /* 保持图片比例，不拉伸 */
 		border-top: 3px solid #0078d7 !important; 
 		border-left: none  !important; /* 隐藏左边框 */
 		border-right: none  !important; /* 隐藏右边框 */
@@ -836,7 +851,7 @@ ChangePwdDialog QLabel#labelUser ,QLabel#labelPassword ,QLabel#labelNewPwd ,QLab
 	color: #484f7a;	
 }
 ChangePwdDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditNewPwd ,QLineEdit#lineEditConfrimPwd{
-	font-size: 18px;
+	font-size: 16px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -877,7 +892,7 @@ QLabel#labelUserRegist ,QLabel#labelPasswordRegist ,QLabel#labelNameRegist ,QLab
 	color: #484f7a;
 }
 RegisterDialog QLineEdit#lineEditUserName ,QLineEdit#lineEditPassword ,QLineEdit#lineEditName ,QLineEdit#lineEditDepartment ,QLineEdit#lineEditJobTtile ,QLineEdit#lineEditPhoneNumber{
-	font-size: 18px;
+	font-size: 17px;
 	color: #000000;
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -888,7 +903,7 @@ QComboBox#comboBoxRoot::down-arrow
 }
 QComboBox#comboBoxRoot
 {
-	font-size: 18px;
+	font-size: 16px;
     color: #abadb2;
     background-color: white;
     border: 1px solid #cccccc; /* 设置边框为浅灰色 */
@@ -1183,7 +1198,7 @@ QComboBox#comboBox1 ,QComboBox#comboBox2 ,QComboBox#comboBox3 ,QComboBox#comboBo
     background-color: white;
     border: 1px solid #cccccc; /* 设置边框为浅灰色 */
     border-radius: 4px; /* 可选：设置圆角 */
-    padding-right: 6px;
+    padding-right: 8px;
 }
 QComboBox#comboBox1::drop-down ,QComboBox#comboBox2::drop-down ,QComboBox#comboBox3::drop-down ,QComboBox#comboBox4::drop-down ,QComboBox#comboBox5::drop-down{
     subcontrol-origin: padding;
