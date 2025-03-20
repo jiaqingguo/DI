@@ -1899,6 +1899,10 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 	}
 
 	QString strPwd = "Atexcel@123";
+	if (common::bAdministrator)
+	{
+		strPwd = "Atexcel_123";
+	}
 
 	CWidget* axTabWidget = new CWidget();
 
@@ -2004,6 +2008,10 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 	}
 
 	QString strPwd = "Atexcel@123";
+	if (common::bAdministrator)
+	{
+		strPwd = "Atexcel_123";
+	}
 
 	CWidget* axTabWidget = new CWidget();
 
@@ -3081,6 +3089,10 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 	}
 
 	QString strPwd = "Atexcel@123";
+	if (common::bAdministrator)
+	{
+		strPwd = "Atexcel_123";
+	}
 
 	CWidget* axTabWidget = new CWidget();
 
