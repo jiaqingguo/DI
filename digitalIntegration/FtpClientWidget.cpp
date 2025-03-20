@@ -643,7 +643,7 @@ void FtpClientWidget::slot_tableWidget_doubleClicked(const QModelIndex &index)
         {
             if (currentPath == "")
             {
-                if (name != common::strLoginUserName && name != "public")
+                if (name != common::strLoginUserName && name != "modelLib" && name != "public")
                 {
                     return;
                 }
@@ -683,9 +683,9 @@ void FtpClientWidget::slot_customContextMenuRequested(const QPoint& pos)
 
     if (!common::bAdministrator)
     {
-        if (currentPath == ""  || currentPath.contains("public"))
+        if (currentPath == ""  || currentPath.contains("modelLib"))
         {
-            return;     // 普通用户禁用根目录菜单;
+            return;     // 普通用户禁用根目录菜单 和禁用modelLib 菜单
         }
     }
 

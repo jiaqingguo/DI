@@ -100,7 +100,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1184, 735);
+        MainWindow->resize(1161, 678);
         MainWindow->setMinimumSize(QSize(710, 437));
         actionM1 = new QAction(MainWindow);
         actionM1->setObjectName(QString::fromUtf8("actionM1"));
@@ -162,6 +162,7 @@ public:
         widget = new QWidget(splitter);
         widget->setObjectName(QString::fromUtf8("widget"));
         verticalLayout_6 = new QVBoxLayout(widget);
+        verticalLayout_6->setSpacing(0);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         widgetTital = new CustomTitleWidget(widget);
         widgetTital->setObjectName(QString::fromUtf8("widgetTital"));
@@ -309,7 +310,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1184, 23));
+        menubar->setGeometry(QRect(0, 0, 1161, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -317,7 +318,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(5);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(1);
