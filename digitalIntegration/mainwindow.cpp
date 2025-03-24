@@ -503,7 +503,7 @@ bool MainWindow::showLoginDialog()
 		if (m_LoginDialog->GetPop())
 		{
 			//ui->btnApprovalProgress->hide();
-			//m_pApprovalProgressNode->setHidden(true);
+			m_pApprovalProgressNode->setHidden(true);
 		}
 		slot_showMax();
 		this->show();
