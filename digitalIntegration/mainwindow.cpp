@@ -900,15 +900,13 @@ void MainWindow::slot_btnAddToolTab()
 void MainWindow::slot_btnOneClickLoad()
 {
 	m_OneClickLoadDialog = new OneClickLoadDialog(this);
+	m_OneClickLoadDialog->initTableView();
+	m_OneClickLoadDialog->exec();
 	connect(m_OneClickLoadDialog, &OneClickLoadDialog::one_load_tools, this, &MainWindow::slot_one_load_tools);
 
 	QPushButton* pButton = (QPushButton*)sender();
 
 	common::index = getBtnLoadIndex(pButton);
-
-	m_OneClickLoadDialog->initTableView();
-
-	m_OneClickLoadDialog->exec();
 	//QPushButton* pButton = (QPushButton*)sender();
 	//int module = pButton->property("module").toInt();
 	//if (module == 1)
@@ -3130,6 +3128,8 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 			AddToolDialog addToooDialog(common::indexNum, this);
 			QComboBox* toolComboBox = addToooDialog.getComboBox();
 			toolComboBox->setEnabled(false);
+			// 设置禁用状态下的样式表
+			toolComboBox->setStyleSheet("QComboBox::down-arrow { width: 0px; height: 0px; }");
 			toolComboBox->setCurrentText(buttonText);
 
 			if (addToooDialog.exec() == QDialog::Accepted)
@@ -3218,6 +3218,8 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 		AddToolDialog addToooDialog(common::indexNum,this);
 		QComboBox* toolComboBox = addToooDialog.getComboBox();
 		toolComboBox->setEnabled(false);
+		// 设置禁用状态下的样式表
+		toolComboBox->setStyleSheet("QComboBox::down-arrow { width: 0px; height: 0px; }");
 		toolComboBox->setCurrentText(buttonText);
 		if (addToooDialog.exec() == QDialog::Accepted)
 		{

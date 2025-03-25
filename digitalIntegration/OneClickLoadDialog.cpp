@@ -76,8 +76,8 @@ OneClickLoadDialog::OneClickLoadDialog(QWidget *parent) :
 	
 
 	// 创建自定义委托并设置到 QTableView
-	BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewOneLoad);
-	ui->tableViewOneLoad->setItemDelegate(delegate1);
+	//BackgroundDelegate *delegate1 = new BackgroundDelegate(ui->tableViewOneLoad);
+	//ui->tableViewOneLoad->setItemDelegate(delegate1);
 
 	//connect(ui->btnOneLoadClose, &QPushButton::clicked, this, &OneClickLoadDialog::close);
 }
@@ -92,6 +92,24 @@ void OneClickLoadDialog::slot_btnAdd()
 	// 创建QComboBox并设置模型数据
 	this->comboBox = new QComboBox();
 	//comboBox->setEditable(false);
+	comboBox->setStyleSheet( "QComboBox::down-arrow {"
+		"    image: url(:/image/CurveComboBox.png);"
+		"}"
+		"QComboBox {"
+		"    font-size: 18px;"
+		"    color: #7c88a6;"
+		"    background-color: white;"
+		"    border: white;"
+		"    padding-right: 8px;"
+		"}"
+		"QComboBox::drop-down {"
+		"    subcontrol-origin: padding;"
+		"    subcontrol-position: top right;"
+		"    width: 20px;"
+		"    border-top-right-radius: 3px;"
+		"    border-bottom-right-radius: 3px;"
+		"}");
+
 	// 设置字体大小和颜色
 	QFont font;
 	font.setPointSize(11); // 设置字体大小为11
@@ -100,11 +118,11 @@ void OneClickLoadDialog::slot_btnAdd()
 	QPalette palette = comboBox->palette();
 	palette.setColor(QPalette::WindowText, QColor("#606580"));  // 设置字体颜色
 	comboBox->setPalette(palette);
-	comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
+	//comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 	std::map<std::string, table_ip> ipMap;
 	std::string software;
 	table_ip data;
-	if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
+	if (db::databaseDI::Instance().get_ip_data(ipMap, 1))
 	{
 		for (const auto& stTool : ipMap)
 		{
@@ -264,6 +282,23 @@ void OneClickLoadDialog::initTableView()
 
 					// 创建QComboBox并设置模型数据
 					QComboBox *comboBox = new QComboBox();
+					comboBox->setStyleSheet("QComboBox::down-arrow {"
+						"    image: url(:/image/CurveComboBox.png);"
+						"}"
+						"QComboBox {"
+						"    font-size: 18px;"
+						"    color: #7c88a6;"
+						"    background-color: white;"
+						"    border: white;"
+						"    padding-right: 8px;"
+						"}"
+						"QComboBox::drop-down {"
+						"    subcontrol-origin: padding;"
+						"    subcontrol-position: top right;"
+						"    width: 20px;"
+						"    border-top-right-radius: 3px;"
+						"    border-bottom-right-radius: 3px;"
+						"}");
 					// 设置字体大小和颜色
 					QFont font;
 					font.setPointSize(11); // 设置字体大小为20
@@ -272,11 +307,11 @@ void OneClickLoadDialog::initTableView()
 					QPalette palette = comboBox->palette();
 					palette.setColor(QPalette::WindowText, QColor("#606580"));  // 设置字体颜色
 					comboBox->setPalette(palette);
-					comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
+					//comboBox->setStyleSheet("QComboBox QAbstractItemView {selection-background-color: #c3d2f0;}");
 					item->setTextAlignment(Qt::AlignCenter);
 					m_model->setItem(newRowIndex, 1, item);
 					std::map<std::string, table_ip> ipMap;
-					if (db::databaseDI::Instance().get_ip_data(ipMap, common::index))
+					if (db::databaseDI::Instance().get_ip_data(ipMap,1))
 					{
 						for (const auto& stTool : ipMap)
 						{

@@ -1152,6 +1152,18 @@ OneClickLoadDialog QLabel#labelOneLoad
 	font-size: 20px;
 	color: #4f72ca;
 }
+OneClickLoadDialog QTableView QScrollBar:vertical{
+	background: #ffffff; /*  设置垂直滚动条背景透明 内部 */
+	width: 10px; 
+}
+OneClickLoadDialog QTableView QScrollBar::handle:vertical {
+	background: #eaf1ff; /*  // 设置滚动条手柄颜色（半透明白色） */
+	border-radius: 3px;                  /*  设置圆角 */ 
+	min-height: 20px
+	}
+OneClickLoadDialog QTableView QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+	   background: transparent; /*  设置上下箭头区域透明 */  
+}
 /* ------------------------一键加载页面----------------------end*/
 /* ------------------------资源管理页面----------------------start*/
 ResourceManageDialog QPushButton#btnCurve{
@@ -1185,7 +1197,7 @@ QWidget#pageCurve QLabel#label ,QLabel#label_3 ,QLabel#label_5 ,QLabel#label_7 ,
 }
 ResourceManageDialog QLabel#label_2 ,QLabel#label_4 ,QLabel#label_6 ,QLabel#label_8 ,QLabel#label_10{
 	font-size: 18px;
-	color: #7c88a6;ww
+	color: #7c88a6;
 }
 QComboBox#comboBox1::down-arrow ,QComboBox#comboBox2::down-arrow ,QComboBox#comboBox3::down-arrow ,QComboBox#comboBox4::down-arrow ,QComboBox#comboBox5::down-arrow
 {
