@@ -62,14 +62,35 @@ int main(int argc, char *argv[])
 	TCHAR password[] = TEXT("Atexcel_123");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
 	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-	//InitResource(userName, password, localDrive, remotePath);
+	InitResource(userName, password, localDrive, remotePath);
 
     QApplication a(argc, argv);
-    Widget w;
-    w.show();
-    //窗口的隐藏
-    //w.hide();
-    //窗口的最小化
-    //w.showMinimized();
-    return a.exec();
+
+	// 创建全局互斥量
+	HANDLE hMutex = CreateMutexW(NULL, TRUE, L"Local\\AgentApp");
+	if (hMutex == NULL) {
+		return -1;
+	}
+
+
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		CloseHandle(hMutex);  // 关闭当前无效的句柄
+		return 0;
+	}
+
+	
+	Widget w;
+	w.show();
+	//窗口的隐藏
+	w.hide();
+	//窗口的最小化
+	//w.showMinimized();
+
+	int ret = a.exec();
+
+	// 程序退出时清理
+	ReleaseMutex(hMutex);
+	CloseHandle(hMutex);
+
+	return ret;
 }

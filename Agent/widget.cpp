@@ -37,9 +37,10 @@ Widget::Widget(QWidget *parent)
 	, ui(new Ui::Widget)
 {
 	ui->setupUi(this);
-	setWindowTitle(QString::fromLocal8Bit("代理"));
+	setWindowTitle(QString::fromLocal8Bit("Agent"));
 
 	ui->lineEdit->setHidden(true);
+	ui->groupBox->hide();
 	//ui->groupBox->setHidden(true);
 	//ui->textEdit->setHidden(true);
 	//用于获取主机的信息
