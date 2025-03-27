@@ -1,8 +1,10 @@
-#ifndef WIDGET_H
+﻿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
 #include <QTimer>
+#include <QMenu>
+#include <QContextMenuEvent>
 #include "Listen.h"
 
 class Listen;
@@ -32,6 +34,8 @@ public:
 
     void setCloseCallBack(LoadingProgressCallBack callBack);
 
+	void contextMenuEvent(QContextMenuEvent *event);
+
 private slots:
     void slot_btnOpenExplorer();
     void slot_btnAppShow();
@@ -46,5 +50,8 @@ private:
 
     Listen* m_pListen = nullptr;// = new Listen;
     GifDialog* m_pGifDialog = nullptr;
+
+
+	QMenu *m_Menu = nullptr;
 };
 #endif // WIDGET_H

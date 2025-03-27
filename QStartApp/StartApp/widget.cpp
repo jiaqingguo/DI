@@ -1,4 +1,4 @@
-#include "widget.h"
+ï»¿#include "widget.h"
 #include "ui_widget.h"
 
 #include "GifDialog.h"
@@ -7,17 +7,36 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
-    setMaximumWidth(600);
-    setMaximumHeight(400);
-    setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // ÒÆ³ı×î´ó×îĞ¡»¯°´Å¥
-    ui->setupUi(this);
-
+	ui->setupUi(this);
+    //setMaximumWidth(600);
+    //setMaximumHeight(400);
+	
+    setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // ç§»é™¤æœ€å¤§æœ€å°åŒ–æŒ‰é’®
+	this->showMaximized();
+	// å¯é€‰ï¼šä¿ç•™çª—å£è¾¹æ¡†ä½†éšè—æ ‡é¢˜æ–‡å­—
+	setWindowFlags(windowFlags() | Qt::CustomizeWindowHint);
+	this->setAttribute(Qt::WA_StyledBackground, true);
     m_pGifDialog = new GifDialog();
-    m_pGifDialog->setTitleText(QString::fromLocal8Bit("ÕıÔÚ¼ÓÔØ"));
+    m_pGifDialog->setTitleText(QString::fromLocal8Bit("æ­£åœ¨åŠ è½½"));
    
     m_pListen = new Listen;
-    connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
-    connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
+	ui->pushButton->hide();
+	ui->pushButton2->hide();
+    //connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
+    //connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
+
+	this->setStyleSheet(
+		"QWidget#Widget{"
+		"    background-image: url(:/image/Logo_background.png);"
+		"    background-repeat: no-repeat;"
+		"    background-position: center;"
+		"    background-size: contain;"
+		"    border-top: 3px solid #0078d7;"
+		"    border-left: none;"
+		"    border-right: none;"
+		"    border-bottom: none;"
+		"}"
+	);
 }
 
 Widget::~Widget()
@@ -44,43 +63,43 @@ void Widget::StartProgram(const std::string& strPath, LoadingProgressCallBack ca
         }
      });
     std::thread t(boundFunction);
-    t.detach(); // ·ÖÀëÏß³Ì£¬Ö÷Ïß³Ì²»×èÈû
+    t.detach(); // åˆ†ç¦»çº¿ç¨‹ï¼Œä¸»çº¿ç¨‹ä¸é˜»å¡
 }
 
 void Widget::HwndListen()
 {
    // m_pListen->hwndListen();
-    //  Ê¹ÓÃ std::bind ´´½¨¿Éµ÷ÓÃ¶ÔÏó
+    //  ä½¿ç”¨ std::bind åˆ›å»ºå¯è°ƒç”¨å¯¹è±¡
     auto boundFunction = std::bind(&Listen::hwndListen, m_pListen);
     std::thread t(boundFunction);
-    t.detach(); // ·ÖÀëÏß³Ì£¬Ö÷Ïß³Ì²»×èÈû
+    t.detach(); // åˆ†ç¦»çº¿ç¨‹ï¼Œä¸»çº¿ç¨‹ä¸é˜»å¡
 
 }
 
 void Widget::InitResource(const std::string& str)
 {
     auto boundFunction = std::bind([this,&str]() {
-        // ¸ù¾İ×Ö·û¼¯µ÷Õû userName µÄ³õÊ¼»¯
+        // æ ¹æ®å­—ç¬¦é›†è°ƒæ•´ userName çš„åˆå§‹åŒ–
 #ifdef UNICODE
-    // Èç¹ûÊ¹ÓÃ¿í×Ö·û¼¯£¬½« std::string ×ª»»Îª std::wstring
+    // å¦‚æœä½¿ç”¨å®½å­—ç¬¦é›†ï¼Œå°† std::string è½¬æ¢ä¸º std::wstring
         std::wstring wUserName(str.begin(), str.end());
         std::vector<TCHAR> userName(wUserName.begin(), wUserName.end());
-        userName.push_back(L'\0'); // Ìí¼ÓÖÕÖ¹·û
+        userName.push_back(L'\0'); // æ·»åŠ ç»ˆæ­¢ç¬¦
 #else
-    // Èç¹ûÊ¹ÓÃ¶à×Ö½Ú×Ö·û¼¯£¬Ö±½Ó×ª»»Îª char*
+    // å¦‚æœä½¿ç”¨å¤šå­—èŠ‚å­—ç¬¦é›†ï¼Œç›´æ¥è½¬æ¢ä¸º char*
         std::vector<TCHAR> userName(str.begin(), str.end());
-        userName.push_back('\0'); // Ìí¼ÓÖÕÖ¹·û
+        userName.push_back('\0'); // æ·»åŠ ç»ˆæ­¢ç¬¦
 #endif
 
         //TCHAR userName[] = TEXT("user1");
         TCHAR password[] = TEXT("Atexcel@123");
-        TCHAR localDrive[] = TEXT("Y:");  //±¾µØÇı¶¯Æ÷Ó³Éä
-        TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // ¹²Ïí×ÊÔ´µÄÂ·¾¶
+        TCHAR localDrive[] = TEXT("Y:");  //æœ¬åœ°é©±åŠ¨å™¨æ˜ å°„
+        TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // å…±äº«èµ„æºçš„è·¯å¾„
 
         m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
     });
     std::thread t(boundFunction);
-    t.detach(); // ·ÖÀëÏß³Ì£¬Ö÷Ïß³Ì²»×èÈû
+    t.detach(); // åˆ†ç¦»çº¿ç¨‹ï¼Œä¸»çº¿ç¨‹ä¸é˜»å¡
 }
 
 void Widget::showGifDialog()
@@ -117,14 +136,36 @@ void Widget::setCloseCallBack(LoadingProgressCallBack callBack)
 
 void Widget::slot_btnOpenExplorer()
 {
-    // ´ò¿ªÎÄ¼ş×ÊÔ´¹ÜÀíÆ÷£¬ÏÔÊ¾¼ÆËã»ú£¨ËùÓĞÇı¶¯Æ÷£©
+    // æ‰“å¼€æ–‡ä»¶èµ„æºç®¡ç†å™¨ï¼Œæ˜¾ç¤ºè®¡ç®—æœºï¼ˆæ‰€æœ‰é©±åŠ¨å™¨ï¼‰
     ShellExecute(NULL, "open", "explorer.exe", "::", NULL, SW_SHOW);
 
-    // ´ò¿ªÎÄ¼ş×ÊÔ´¹ÜÀíÆ÷£¬ÏÔÊ¾CÅÌ¸ùÄ¿Â¼
+    // æ‰“å¼€æ–‡ä»¶èµ„æºç®¡ç†å™¨ï¼Œæ˜¾ç¤ºCç›˜æ ¹ç›®å½•
    // ShellExecute(NULL, "open", "explorer.exe", "C:\\", NULL, SW_SHOW);
 }
 
 void Widget::slot_btnAppShow()
 {
-    m_pListen->showProgram();
+	m_pListen->showProgram();
+}
+
+void Widget::contextMenuEvent(QContextMenuEvent *event)
+{
+	m_Menu = new QMenu();
+
+	// æ·»åŠ èœå•é¡¹
+	QAction *action1 = m_Menu->addAction(QString::fromLocal8Bit("ä¿å­˜"));
+	QAction *action2 = m_Menu->addAction(QString::fromLocal8Bit("æ˜¾ç¤ºè½¯ä»¶"));
+
+	// åˆ›å»ºå¸¦å›¾æ ‡çš„ Action
+	//QAction *copyAction = new QAction(QIcon(":/image/save.png"), QString::fromLocal8Bit("ä¿å­˜"), this);
+	//QAction *pasteAction = new QAction(QIcon(":/image/label.png"), QString::fromLocal8Bit("æ˜¾ç¤ºè½¯ä»¶"), this);
+	/*m_Menu->addAction(copyAction);
+	m_Menu->addAction(pasteAction);*/
+
+	// è¿æ¥èœå•é¡¹çš„ä¿¡å·æ§½
+	connect(action1, &QAction::triggered, this, &Widget::slot_btnOpenExplorer);
+	connect(action2, &QAction::triggered, this, &Widget::slot_btnAppShow);
+
+	// åœ¨é¼ æ ‡ä½ç½®å¼¹å‡ºèœå•
+	m_Menu->exec(event->globalPos());
 }

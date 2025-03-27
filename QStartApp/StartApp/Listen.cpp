@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS//±ğ¶¯
+ï»¿#define _CRT_SECURE_NO_WARNINGS//åˆ«åŠ¨
 
 #include "Listen.h"
 
@@ -11,22 +11,37 @@
 
 
 HWND g_CurrentHWND = 0;
-int Pnum = 0;//¸¸´°¿ÚÊıÁ¿
-
-//»ñÈ¡µ±Ç°»îÔ¾µÄ´°¿Ú
+int Pnum = 0;//çˆ¶çª—å£æ•°é‡
+char WindowTitle[100] = { 0 };
+//è·å–å½“å‰æ´»è·ƒçš„çª—å£
 BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 {
-	if (GetParent(hWnd) == NULL && IsWindowVisible(hWnd))  //ÅĞ¶ÏÊÇ·ñ¶¥²ã´°¿Ú²¢ÇÒ¿É¼û
+	::GetWindowText(hWnd, WindowTitle, 100);
+	std::string strTitle = WindowTitle;
+	if (strTitle == "Cero Simulate 2.0")
+	{
+		DWORD lpdwProcessId;
+		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
+		if (lpdwProcessId == lParam && (strTitle != ""&& strTitle != ServerName))//å¯èƒ½ä¼šé€ æˆçª—å£å¥æŸ„é”™è¯¯æˆ–è€…è·å–å†²çª
+		{
+			g_CurrentHWND = hWnd;
+			printf("-------------------------------------------\n");
+			printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
+			return false;
+		}
+	}
+	else
+	//if (GetParent(hWnd) == NULL && IsWindowVisible(hWnd))  //åˆ¤æ–­æ˜¯å¦é¡¶å±‚çª—å£å¹¶ä¸”å¯è§
 	{
 		Pnum++;
-		char WindowTitle[100] = { 0 };
+		
 		//wchar_t WindowTitle[100] = { 0 };
 		::GetWindowText(hWnd, WindowTitle, 100);
 
 		std::string strTitle = WindowTitle;
 		DWORD lpdwProcessId;
 		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
-		if (lpdwProcessId == lParam && (strTitle!=""&& strTitle != ServerName))//¿ÉÄÜ»áÔì³É´°¿Ú¾ä±ú´íÎó»òÕß»ñÈ¡³åÍ»
+		if (lpdwProcessId == lParam && (strTitle!=""&& strTitle != ServerName))//å¯èƒ½ä¼šé€ æˆçª—å£å¥æŸ„é”™è¯¯æˆ–è€…è·å–å†²çª
 		{
 			g_CurrentHWND = hWnd;
 			printf("-------------------------------------------\n");
@@ -37,14 +52,14 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 	return true;
 }
 
-//»ñÈ¡ÓÃ»§ID
+//è·å–ç”¨æˆ·ID
 std::string getUserName() 
 {
 	const int MAX_LEN = 255;
 	char szBuffer[MAX_LEN+1];
 	//wchar_t szBuffer[MAX_LEN + 1];
 	DWORD len = MAX_LEN+1;
-	if (GetUserName(szBuffer, &len)) //ÓÃ»§Ãû±£´æÔÚszBufferÖĞ,lenÊÇÓÃ»§ÃûµÄ³¤¶È
+	if (GetUserName(szBuffer, &len)) //ç”¨æˆ·åä¿å­˜åœ¨szBufferä¸­,lenæ˜¯ç”¨æˆ·åçš„é•¿åº¦
 	{
 		std::cout << "user name:" << szBuffer << std::endl;
 		return szBuffer;
@@ -53,7 +68,7 @@ std::string getUserName()
 	return "";
 }
 
-//´°¿Ú¾ä±ú×ª×Ö·û´®
+//çª—å£å¥æŸ„è½¬å­—ç¬¦ä¸²
 std::string HWNDtoStr(HWND hwnd) 
 {
 	std::stringstream ss;
@@ -61,43 +76,43 @@ std::string HWNDtoStr(HWND hwnd)
 	return ss.str();
 }
 
-//×Ö·û´®×ª´°¿Ú¾ä±ú
+//å­—ç¬¦ä¸²è½¬çª—å£å¥æŸ„
 HWND StrToHWND(const std::string& str) 
 {
 	HWND hwnd = NULL;
-	sscanf(str.c_str(), "%p", &hwnd); // ¼ÙÉè×Ö·û´®ÊÇÒ»¸öÓĞĞ§µÄÖ¸Õë±íÊ¾
+	sscanf(str.c_str(), "%p", &hwnd); // å‡è®¾å­—ç¬¦ä¸²æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„æŒ‡é’ˆè¡¨ç¤º
 	return hwnd;
 }
 
-//Í¨¹ıÃû³Æ»ñÈ¡½ø³ÌID
+//é€šè¿‡åç§°è·å–è¿›ç¨‹ID
 DWORD FindProcessIDByName(const std::string& processName)//0 not found ; other found; processName "processName.exe"
 {
 	PROCESSENTRY32 pe32;
-	//ÔÚÊ¹ÓÃÕâ¸ö½á¹¹Ç°£¬ÏÈÉèÖÃËüµÄ´óĞ¡
+	//åœ¨ä½¿ç”¨è¿™ä¸ªç»“æ„å‰ï¼Œå…ˆè®¾ç½®å®ƒçš„å¤§å°
 	pe32.dwSize = sizeof(pe32);
-	//¸øÏµÍ³ÄÚËùÓĞµÄ½ø³ÌÅÄ¸ö¿ìÕÕ
+	//ç»™ç³»ç»Ÿå†…æ‰€æœ‰çš„è¿›ç¨‹æ‹ä¸ªå¿«ç…§
 	HANDLE hProcessSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if (hProcessSnap == INVALID_HANDLE_VALUE)
 	{
 		return 0;
 	}
-	//±éÀú½ø³Ì¿ìÕÕ£¬ÂÖÁ÷ÏÔÊ¾Ã¿¸ö½ø³ÌµÄĞÅÏ¢
+	//éå†è¿›ç¨‹å¿«ç…§ï¼Œè½®æµæ˜¾ç¤ºæ¯ä¸ªè¿›ç¨‹çš„ä¿¡æ¯
 	BOOL bMore = ::Process32First(hProcessSnap, &pe32);
 	while (bMore)
 	{
-		if (pe32.szExeFile == processName)//½ø³ÌÃû³Æ
+		if (pe32.szExeFile == processName)//è¿›ç¨‹åç§°
 		{
 			::CloseHandle(hProcessSnap);
-			return pe32.th32ProcessID;//½ø³ÌID
+			return pe32.th32ProcessID;//è¿›ç¨‹ID
 		}
 		bMore = ::Process32Next(hProcessSnap, &pe32);
 	}
-	//²»ÒªÍü¼ÇÇå³ıµôsnapshot¶ÔÏó
+	//ä¸è¦å¿˜è®°æ¸…é™¤æ‰snapshotå¯¹è±¡
 	::CloseHandle(hProcessSnap);
 	return 0;
 }
 
-//½«Òª¹Ø±Õ £¨²»Ì«ºÃÊ¹ ºóÃæÔÚ²â²â°É£©
+//å°†è¦å…³é—­ ï¼ˆä¸å¤ªå¥½ä½¿ åé¢åœ¨æµ‹æµ‹å§ï¼‰
 bool isProcessExiting(DWORD processId) {
 	HANDLE hProcess = OpenProcess(SYNCHRONIZE, FALSE, processId);
 	if (hProcess == NULL) {
@@ -116,7 +131,7 @@ bool isProcessExiting(DWORD processId) {
 	return exitCode != STILL_ACTIVE;
 }
 
-//¹Ø±Õ½ø³Ì
+//å…³é—­è¿›ç¨‹
 BOOL CloseProcessByID(DWORD dwProcessId) {
 	HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, dwProcessId);
 	if (hProcess == NULL) {
@@ -133,7 +148,7 @@ BOOL CloseProcessByID(DWORD dwProcessId) {
 	return bRet;
 }
 
-//»ñÈ¡×ÓÏß³Ì
+//è·å–å­çº¿ç¨‹
 std::vector<DWORD> getChildProcesses(DWORD processId)
 {
 	std::vector<DWORD> out;
@@ -144,7 +159,7 @@ std::vector<DWORD> getChildProcesses(DWORD processId)
 	if (Process32First(hSnapShot, &pe32)) {
 		do {
 			if (pe32.th32ParentProcessID == processId) {
-				std::cout << "×Ó½ø³ÌID: " << pe32.th32ProcessID << L", ½ø³ÌÃû: " << pe32.szExeFile << std::endl;
+				std::cout << "å­è¿›ç¨‹ID: " << pe32.th32ProcessID << L", è¿›ç¨‹å: " << pe32.szExeFile << std::endl;
 				out.push_back(pe32.th32ProcessID);
 			}
 		} while (Process32Next(hSnapShot, &pe32));
@@ -153,7 +168,7 @@ std::vector<DWORD> getChildProcesses(DWORD processId)
 	return out;
 }
 
-//»ñÈ¡×Ó½ø³Ì ÕâÀïÎÒÖ±½Ó°Ñ¹Ø±Õ½ø³Ìº¯Êı·Å½øÈ¥ÁË »ñÈ¡ÍêÖ±½Ó¹Ø±Õ
+//è·å–å­è¿›ç¨‹ è¿™é‡Œæˆ‘ç›´æ¥æŠŠå…³é—­è¿›ç¨‹å‡½æ•°æ”¾è¿›å»äº† è·å–å®Œç›´æ¥å…³é—­
 BOOL CALLBACK ListChildProcesses(DWORD processId) {
 	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	PROCESSENTRY32 pe32;
@@ -162,7 +177,7 @@ BOOL CALLBACK ListChildProcesses(DWORD processId) {
 	if (Process32First(hSnapShot, &pe32)) {
 		do {
 			if (pe32.th32ParentProcessID == processId) {
-				std::cout << "×Ó½ø³ÌID: " << pe32.th32ProcessID << L", ½ø³ÌÃû: " << pe32.szExeFile << std::endl;
+				std::cout << "å­è¿›ç¨‹ID: " << pe32.th32ProcessID << L", è¿›ç¨‹å: " << pe32.szExeFile << std::endl;
 				CloseProcessByID(pe32.th32ProcessID);
 			}
 		} while (Process32Next(hSnapShot, &pe32));
@@ -171,7 +186,7 @@ BOOL CALLBACK ListChildProcesses(DWORD processId) {
 	return TRUE;
 }
 
-//ÅĞ¶Ï½ø³ÌÊÇ·ñÍÆ³ö
+//åˆ¤æ–­è¿›ç¨‹æ˜¯å¦æ¨å‡º
 BOOL isExistProcess(DWORD process_id)
 {
 	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -190,7 +205,7 @@ BOOL isExistProcess(DWORD process_id)
 	return FALSE;
 }
 
-//Í¨¹ı½ø³ÌID»ñÈ¡´°¿Ú¾ä±ú ²»½¨ÒéÑ­»·ÖĞµ÷ÓÃ
+//é€šè¿‡è¿›ç¨‹IDè·å–çª—å£å¥æŸ„ ä¸å»ºè®®å¾ªç¯ä¸­è°ƒç”¨
 HWND getMainHWND(DWORD dword)
 {
 	g_CurrentHWND = 0;
@@ -199,7 +214,7 @@ HWND getMainHWND(DWORD dword)
 	return g_CurrentHWND;
 }
 
-//Æô¶¯³ÌĞò
+//å¯åŠ¨ç¨‹åº
 bool start(const std::string& cmd)
 {
 	bool b = false;
@@ -212,29 +227,29 @@ bool start(const std::string& cmd)
 	ZeroMemory(&pi, sizeof(pi));
 
 	CString strCmdLine(cmd.c_str());
-	// ´´½¨¿ØÖÆÌ¨½ø³Ì
+	// åˆ›å»ºæ§åˆ¶å°è¿›ç¨‹
 	bRet = CreateProcess(
-		NULL,               // ²»ÔÚÕâÀïÖ¸¶¨Ó¦ÓÃ³ÌĞòÃû
-		strCmdLine.GetBuffer(),  // ÃüÁîĞĞ²ÎÊı£¬ÕâÀïÊÇÆô¶¯cmd.exe
-		NULL,               // °²È«ÊôĞÔ
-		NULL,               // Ïß³Ì°²È«ÊôĞÔ
-		FALSE,              // Ö¸¶¨µ±Ç°½ø³ÌµÄ¾ä±úÊÇ·ñ±»ĞÂ½ø³Ì¼Ì³Ğ
-		CREATE_NEW_CONSOLE, // ´´½¨Ò»¸öĞÂµÄ´°¿Ú£¨¿ØÖÆÌ¨£©
-		NULL,               // ĞÂ½ø³ÌµÄ»·¾³±äÁ¿
-		NULL,               // ĞÂ½ø³ÌµÄµ±Ç°Ä¿Â¼Ãû
-		&si,                // Ö¸ÏòSTARTUPINFO½á¹¹µÄÖ¸Õë
-		&pi                 // Ö¸ÏòPROCESS_INFORMATION½á¹¹µÄÖ¸Õë
+		NULL,               // ä¸åœ¨è¿™é‡ŒæŒ‡å®šåº”ç”¨ç¨‹åºå
+		strCmdLine.GetBuffer(),  // å‘½ä»¤è¡Œå‚æ•°ï¼Œè¿™é‡Œæ˜¯å¯åŠ¨cmd.exe
+		NULL,               // å®‰å…¨å±æ€§
+		NULL,               // çº¿ç¨‹å®‰å…¨å±æ€§
+		FALSE,              // æŒ‡å®šå½“å‰è¿›ç¨‹çš„å¥æŸ„æ˜¯å¦è¢«æ–°è¿›ç¨‹ç»§æ‰¿
+		CREATE_NEW_CONSOLE, // åˆ›å»ºä¸€ä¸ªæ–°çš„çª—å£ï¼ˆæ§åˆ¶å°ï¼‰
+		NULL,               // æ–°è¿›ç¨‹çš„ç¯å¢ƒå˜é‡
+		NULL,               // æ–°è¿›ç¨‹çš„å½“å‰ç›®å½•å
+		&si,                // æŒ‡å‘STARTUPINFOç»“æ„çš„æŒ‡é’ˆ
+		&pi                 // æŒ‡å‘PROCESS_INFORMATIONç»“æ„çš„æŒ‡é’ˆ
 	);
 
 	if (bRet) 
 	{
-		// µÈ´ıĞÂ½ø³Ì½áÊø
+		// ç­‰å¾…æ–°è¿›ç¨‹ç»“æŸ
 		//WaitForSingleObject(pi.hProcess, INFINITE); 
 
-		// µÈ´ı³ÌĞòÆô¶¯
+		// ç­‰å¾…ç¨‹åºå¯åŠ¨
 		::WaitForInputIdle(pi.hProcess, INFINITE);
 
-		// ¹Ø±Õ½ø³ÌºÍÏß³Ì¾ä±ú
+		// å…³é—­è¿›ç¨‹å’Œçº¿ç¨‹å¥æŸ„
 		::CloseHandle(pi.hProcess);
 		::CloseHandle(pi.hThread);
 		b = true;
@@ -258,25 +273,25 @@ Listen::~Listen()
 
 bool Listen::init()
 {
-	//³õÊ¼»¯winsock2»·¾³
+	//åˆå§‹åŒ–winsock2ç¯å¢ƒ
 	WSADATA  wd;
 	if (WSAStartup(MAKEWORD(2, 2), &wd) != 0) {
 		std::cout << "WSAStartup error:" << GetLastError() << std::endl;
 		return 0;
 	}
 
-	//1.´´½¨UDPÊı¾İ±¨Ì×½Ó×Ö
+	//1.åˆ›å»ºUDPæ•°æ®æŠ¥å¥—æ¥å­—
 	_sokket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (_sokket == INVALID_SOCKET) {
 		std::cout << "socket  error:" << GetLastError() << std::endl;
 		return 0;
 	}
 
-	//2.°ó¶¨µ½IpµØÖ·ºÍ¶Ë¿Ú
+	//2.ç»‘å®šåˆ°Ipåœ°å€å’Œç«¯å£
 	_addr.sin_family = AF_INET;
-	_addr.sin_port = htons(1020);//ÍøÂç×Ö½ÚĞò
+	_addr.sin_port = htons(1020);//ç½‘ç»œå­—èŠ‚åº
 	_addr.sin_addr.S_un.S_addr = INADDR_ANY;
-	//inet_pton(AF_INET, "127.0.0.1", &_addr.sin_addr);//ipµØÖ·×ªÍøÂç×Ö½ÚĞò
+	//inet_pton(AF_INET, "127.0.0.1", &_addr.sin_addr);//ipåœ°å€è½¬ç½‘ç»œå­—èŠ‚åº
 
 	_len = sizeof(SOCKADDR);
 	if (bind(_sokket, (SOCKADDR*)&_addr, _len) == SOCKET_ERROR) {
@@ -284,14 +299,14 @@ bool Listen::init()
 		return 0;
 	}
 
-	int nNetTimeout = 5000; //5Ãë
-	//½ÓÊÕÊ±ÏŞ
+	int nNetTimeout = 5000; //5ç§’
+	//æ¥æ”¶æ—¶é™
 	if (setsockopt(_sokket, SOL_SOCKET, SO_RCVTIMEO, (char*)&nNetTimeout, sizeof(int)) == SOCKET_ERROR) {
 		std::cout << "setsockopt error:" << GetLastError() << std::endl;
 		return 0;
 	}
 
-	//3.½ÓÊÜ»òÕß·¢ËÍÊı¾İrecvfrom, sendto ,²»Í¬ÓÚTCPµÄ recvÓë send
+	//3.æ¥å—æˆ–è€…å‘é€æ•°æ®recvfrom, sendto ,ä¸åŒäºTCPçš„ recvä¸ send
 	memset(&_addrClient, 0, sizeof(_addrClient));
 	return 1;
 }
@@ -300,10 +315,10 @@ void Listen::run()
 {
 	do {
 		char buf[1024] = { 0 };
-		//Ä¬ÈÏÊÇ×èÈûµÄ£¬Ò²¾ÍÊÇËµ£¬Èç¹ûÃ»ÓĞÊı¾İ¹ıÀ´£¬»áÒ»Ö±µÈ´ı
+		//é»˜è®¤æ˜¯é˜»å¡çš„ï¼Œä¹Ÿå°±æ˜¯è¯´ï¼Œå¦‚æœæ²¡æœ‰æ•°æ®è¿‡æ¥ï¼Œä¼šä¸€ç›´ç­‰å¾…
 
 		int ret = recvfrom(_sokket, buf, 1024, 0, (SOCKADDR*)&_addrClient, &_len);
-		//½ÓÊÜ¿Í»§¶ËµÄµØÖ·
+		//æ¥å—å®¢æˆ·ç«¯çš„åœ°å€
 		std::cout << "recvfrom " << ret << ":    " << buf << std::endl;
 		if (ret != -1)
 		{
@@ -335,15 +350,15 @@ void Listen::run()
 		Sleep(1000);
 	} while (1);
 
-	//¹Ø±ÕÌ×½Ó×Ö
+	//å…³é—­å¥—æ¥å­—
 	::closesocket(_sokket);
-	//ÇåÀíwinsock2»·¾³
+	//æ¸…ç†winsock2ç¯å¢ƒ
 	::WSACleanup();
 }
 
 void Listen::startProgram(const std::string& strPath)
 {
-	if (isExistProcess(_dwProcessId))//µ±Ê±ÎªÁË½â¾öµÇÂ¼ºÚÆÁÎÊÌâÌí¼Ó ºÃÏñÊÇÃ»É¶ÓÃÁË
+	if (isExistProcess(_dwProcessId))//å½“æ—¶ä¸ºäº†è§£å†³ç™»å½•é»‘å±é—®é¢˜æ·»åŠ  å¥½åƒæ˜¯æ²¡å•¥ç”¨äº†
 	{
 		std::cerr<<"PID:" << _dwProcessId << "Already started" << "......" << std::endl;
 		return;
@@ -352,24 +367,24 @@ void Listen::startProgram(const std::string& strPath)
 	bool isStart = false;
 	if (strPath != "")
 	{
-		// Ó¦ÓÃ³ÌĞòÂ·¾¶
+		// åº”ç”¨ç¨‹åºè·¯å¾„
 		LPCSTR applicationPath = strPath.c_str();
 		std::cerr << "start application:" << strPath << "......" << std::endl;
 		CREATE_STARTUPINFO(si, pi)
 		if (CreateProcess(applicationPath, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 		{
-			// µÈ´ı³ÌĞòÆô¶¯
+			// ç­‰å¾…ç¨‹åºå¯åŠ¨
 			WaitForInputIdle(pi.hProcess, INFINITE);
-			//_dwProcessId = pi.dwProcessId;//»ñÈ¡½ø³ÌID
+			//_dwProcessId = pi.dwProcessId;//è·å–è¿›ç¨‹ID
 			//std::cerr << "start application......" << std::endl;
-			//Sleep(200);//¸øÊ±¼äÆô¶¯´°¿Ú
+			//Sleep(200);//ç»™æ—¶é—´å¯åŠ¨çª—å£
 			//std::cerr << "success to start application......" << std::endl;
 			//isStart = true;
 			isStart = queryProcessId(pi.hProcess);
-			// µÈ´ıĞÂ½ø³Ì½áÊø
+			// ç­‰å¾…æ–°è¿›ç¨‹ç»“æŸ
 			//WaitForSingleObject(pi.hProcess, INFINITE);
 
-			std::cout << "»ñÈ¡ Process ID: " << _dwProcessId << std::endl;
+			std::cout << "è·å– Process ID: " << _dwProcessId << std::endl;
 			std::cerr << "success to start application......" << std::endl;
 		}
 		else
@@ -398,24 +413,24 @@ void Listen::startProgramFromBat(const std::string& strPath)
 
 	std::string directory = strPath.substr(0, index+1);
 
-	// ¶¨Òå²¢³õÊ¼»¯SHELLEXECUTEINFO½á¹¹Ìå
+	// å®šä¹‰å¹¶åˆå§‹åŒ–SHELLEXECUTEINFOç»“æ„ä½“
 	SHELLEXECUTEINFO sei = { 0 };
 	sei.cbSize = sizeof(SHELLEXECUTEINFO);
-	sei.fMask = SEE_MASK_NOCLOSEPROCESS;  // ÉèÖÃ¸Ã±êÖ¾Î»ÒÔ»ñÈ¡½ø³Ì¾ä±ú
-	sei.lpFile = TEXT(strPath.c_str());  // Òª´ò¿ªµÄÓ¦ÓÃ³ÌĞòÂ·¾¶
+	sei.fMask = SEE_MASK_NOCLOSEPROCESS;  // è®¾ç½®è¯¥æ ‡å¿—ä½ä»¥è·å–è¿›ç¨‹å¥æŸ„
+	sei.lpFile = TEXT(strPath.c_str());  // è¦æ‰“å¼€çš„åº”ç”¨ç¨‹åºè·¯å¾„
 	sei.lpDirectory = directory.c_str();
-	// Ê¹ÓÃShellExecuteExº¯Êı´ò¿ªÓ¦ÓÃ³ÌĞò
+	// ä½¿ç”¨ShellExecuteExå‡½æ•°æ‰“å¼€åº”ç”¨ç¨‹åº
 	if (ShellExecuteEx(&sei))
 	{
 		isStart = queryProcessId(sei.hProcess);
 		
-		// Êä³ö½ø³ÌID
-		std::cout << "»ñÈ¡ Process ID: " << _dwProcessId << std::endl;
+		// è¾“å‡ºè¿›ç¨‹ID
+		std::cout << "è·å– Process ID: " << _dwProcessId << std::endl;
 		std::cerr << "success to start application......" << std::endl;
 	}
 	else
 	{
-		// ´ò¿ªÓ¦ÓÃ³ÌĞòÊ§°Ü
+		// æ‰“å¼€åº”ç”¨ç¨‹åºå¤±è´¥
 		std::cerr << "Failed to start application......" << std::endl;
 	}
 
@@ -443,7 +458,7 @@ HWND Listen::getMainWin(DWORD id)
 			currentHWND = getMainHWND(dwProcessIds[i]);
 			if (currentHWND != 0)
 			{
-				std::cout << "»ñÈ¡´°¿ÚID: " << currentHWND << std::endl;
+				std::cout << "è·å–çª—å£ID: " << currentHWND << std::endl;
 				break;
 			}
 			else
@@ -451,7 +466,7 @@ HWND Listen::getMainWin(DWORD id)
 				currentHWND = getMainWin(dwProcessIds[i]);
 				if (currentHWND != 0)
 				{
-					std::cout << "»ñÈ¡´°¿ÚID: " << currentHWND << std::endl;
+					std::cout << "è·å–çª—å£ID: " << currentHWND << std::endl;
 					break;
 				}
 			}
@@ -462,7 +477,7 @@ HWND Listen::getMainWin(DWORD id)
 
 bool Listen::queryProcessId(HANDLE hProcess)
 {
-	// »ñÈ¡½ø³ÌID
+	// è·å–è¿›ç¨‹ID
 	DWORD pid = GetProcessId(hProcess);
 	std::vector<DWORD> dwProcessIds = getChildProcesses(pid);
 
@@ -510,11 +525,11 @@ bool Listen::queryProcessId(HANDLE hProcess)
 
 void Listen::hwndListen()
 {
-	bool isWindow = false;//Ó¦ÓÃ³ÌĞòÊÇ·ñÔÚÆô¶¯Ê±ÒÑ¾­´ò¿ª´°¿Ú
+	bool isWindow = false;//åº”ç”¨ç¨‹åºæ˜¯å¦åœ¨å¯åŠ¨æ—¶å·²ç»æ‰“å¼€çª—å£
 	unsigned long long time = 0;
 	while (_dwProcessId !=0)
 	{
-		//¼à²âÏß³ÌID
+		//ç›‘æµ‹çº¿ç¨‹ID
 		if (!::isExistProcess(_dwProcessId))
 		{
 			/*if (_closeCallBack)
@@ -525,14 +540,14 @@ void Listen::hwndListen()
 			break;
 		}
 
-		//¼à²â´°¿Ú¾ä±ú
-		if (::IsWindow(_currentHWND) == FALSE)//Èç¹ûÓ¦ÓÃ³ÌĞò´°¿ÚÎ´´ò¿ª»ò·¢Éú±ä»¯
+		//ç›‘æµ‹çª—å£å¥æŸ„
+		if (::IsWindow(_currentHWND) == FALSE)//å¦‚æœåº”ç”¨ç¨‹åºçª—å£æœªæ‰“å¼€æˆ–å‘ç”Ÿå˜åŒ–
 		{
 			//_currentHWND = getMainHWND(_dwProcessId);getMainWin
 			_currentHWND = getMainWin(_dwProcessId);
-			if (isWindow)//Èç¹û´°¿ÚÒÑ¾­´ò¿ª¹ı ÄÇ¾ÍÖ¤Ã÷´ËÊ±´°¿Ú·¢Éú±ä»¯
+			if (isWindow)//å¦‚æœçª—å£å·²ç»æ‰“å¼€è¿‡ é‚£å°±è¯æ˜æ­¤æ—¶çª—å£å‘ç”Ÿå˜åŒ–
 			{
-				if (_currentHWND != 0)//Í¨¹ıÏß³ÌID»ñÈ¡ĞÂµÄ´°¿Ú¾ä±ú
+				if (_currentHWND != 0)//é€šè¿‡çº¿ç¨‹IDè·å–æ–°çš„çª—å£å¥æŸ„
 				{
 					time = 0;
 					::Sleep(100);
@@ -541,11 +556,11 @@ void Listen::hwndListen()
 				}
 				else
 				{
-					if (time == 0)//¼ÇÂ¼´°¿Ú·¢Éú±ä»¯Ê±¼ä
+					if (time == 0)//è®°å½•çª—å£å‘ç”Ÿå˜åŒ–æ—¶é—´
 					{
 						time = ::GetTickCount64();
 					}
-					else if (::GetTickCount64() - time >= 10000)//³¬¹ı3Ãë¹Ø±Õ³ÌĞò
+					else if (::GetTickCount64() - time >= 10000)//è¶…è¿‡3ç§’å…³é—­ç¨‹åº
 					{
 						/*if (_closeCallBack)
 							_closeCallBack();*/
@@ -558,7 +573,7 @@ void Listen::hwndListen()
 			}
 			else
 			{
-				if (_currentHWND != 0)//ÅĞ¶ÏÆô¶¯Ê±´°¿ÚÊÇ·ñÒÑ¾­´ò¿ª£¨°üÀ¨Æô¶¯Ò³´°¿Ú£©
+				if (_currentHWND != 0)//åˆ¤æ–­å¯åŠ¨æ—¶çª—å£æ˜¯å¦å·²ç»æ‰“å¼€ï¼ˆåŒ…æ‹¬å¯åŠ¨é¡µçª—å£ï¼‰
 				{
 					//ShowWindow(_currentHWND, SW_MAXIMIZE);
 					isWindow = true;
@@ -569,7 +584,7 @@ void Listen::hwndListen()
 				}
 			}
 		}
-		else//Ã»ÓĞÆô¶¯Ò³µÄ³ÌĞò ´ó¸ÅÂÊ¿ÉÄÜ»áÖ±½Ó½øÈëÕâÀï
+		else//æ²¡æœ‰å¯åŠ¨é¡µçš„ç¨‹åº å¤§æ¦‚ç‡å¯èƒ½ä¼šç›´æ¥è¿›å…¥è¿™é‡Œ
 		{
 			if (!isWindow)
 			{
@@ -633,61 +648,61 @@ void Listen::InitResource(const TCHAR* userName, const TCHAR* password, const TC
 {
 //	NETRESOURCE net_Resource;
 
-	// ³õÊ¼»¯NETRESOURCE½á¹¹
+	// åˆå§‹åŒ–NETRESOURCEç»“æ„
 	net_Resource.dwDisplayType = RESOURCEDISPLAYTYPE_DIRECTORY;
 	net_Resource.dwScope = RESOURCE_CONNECTED;
 	net_Resource.dwType = RESOURCETYPE_DISK;
 	net_Resource.dwUsage = 0;
 	net_Resource.lpComment = NULL;
-	net_Resource.lpLocalName = const_cast<TCHAR*>(localDrive); // Ó³Éäµ½±¾µØÇı¶¯Æ÷
+	net_Resource.lpLocalName = const_cast<TCHAR*>(localDrive); // æ˜ å°„åˆ°æœ¬åœ°é©±åŠ¨å™¨
 	net_Resource.lpProvider = NULL;
-	net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // ¹²Ïí×ÊÔ´µÄÂ·¾¶
+	net_Resource.lpRemoteName = const_cast<TCHAR*>(remotePath); // å…±äº«èµ„æºçš„è·¯å¾„
 
 	//DWORD dwFlags = CONNECT_UPDATE_PROFILE;
 
-	// È¡ÏûÒÑÓĞÁ¬½Ó
+	// å–æ¶ˆå·²æœ‰è¿æ¥
 	WNetCancelConnection2(net_Resource.lpLocalName, CONNECT_UPDATE_PROFILE, TRUE);
 
-	// Ìí¼ÓĞÂÁ¬½Ó
+	// æ·»åŠ æ–°è¿æ¥
 	DWORD dw = WNetAddConnection2(&net_Resource, password, userName, 0);
 	switch (dw) {
 	case ERROR_SUCCESS:
 		//ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case ERROR_ACCESS_DENIED:
-		std::wcout << TEXT("Ã»ÓĞÈ¨ÏŞ·ÃÎÊ£¡\n");
+		std::wcout << TEXT("æ²¡æœ‰æƒé™è®¿é—®ï¼\n");
 		break;
 	case ERROR_ALREADY_ASSIGNED:
 		ShellExecute(NULL, TEXT("open"), net_Resource.lpLocalName, NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case ERROR_INVALID_ADDRESS:
-		std::wcout << TEXT("IPµØÖ·ÎŞĞ§\n");
+		std::wcout << TEXT("IPåœ°å€æ— æ•ˆ\n");
 		break;
 	case ERROR_NO_NETWORK:
-		std::wcout << TEXT("ÍøÂç²»¿É´ï!\n");
+		std::wcout << TEXT("ç½‘ç»œä¸å¯è¾¾!\n");
 		break;
 	case ERROR_NO_TOKEN:
-		std::wcout << TEXT("Ã»ÓĞÓĞĞ§µÄÆ¾¾İ£¡Çë¼ì²éÓÃ»§ÃûºÍÃÜÂë¡£\n");
+		std::wcout << TEXT("æ²¡æœ‰æœ‰æ•ˆçš„å‡­æ®ï¼è¯·æ£€æŸ¥ç”¨æˆ·åå’Œå¯†ç ã€‚\n");
 		break;
 	case ERROR_SESSION_CREDENTIAL_CONFLICT:
-		std::wcout << TEXT("ERROR_SESSION_CREDENTIAL_CONFLICT¡£\n");
+		std::wcout << TEXT("ERROR_SESSION_CREDENTIAL_CONFLICTã€‚\n");
 		break;
 	default:
-		std::wcout << TEXT("·¢Éú´íÎó£¬´íÎó´úÂë: ") << dw << TEXT("\n");
+		std::wcout << TEXT("å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç : ") << dw << TEXT("\n");
 		break;
 	}
 }
 
 void Listen::CancleResource()
 {
-	// È¡ÏûÒÑÓĞÁ¬½Ó
+	// å–æ¶ˆå·²æœ‰è¿æ¥
 	DWORD result=WNetCancelConnection2("Y:", CONNECT_UPDATE_PROFILE, TRUE);
 
-	// ¼ì²é·µ»ØÖµ²¢´òÓ¡½á¹û
+	// æ£€æŸ¥è¿”å›å€¼å¹¶æ‰“å°ç»“æœ
 	if (result == NO_ERROR) {
-		std::wcout << L"³É¹¦¶Ï¿ªÁ¬½Ó: " << net_Resource.lpLocalName << std::endl;
+		std::wcout << L"æˆåŠŸæ–­å¼€è¿æ¥: " << net_Resource.lpLocalName << std::endl;
 	}
 	else {
-		std::wcout << L"¶Ï¿ªÁ¬½ÓÊ§°Ü¡£´íÎó´úÂë: " << result << std::endl;
+		std::wcout << L"æ–­å¼€è¿æ¥å¤±è´¥ã€‚é”™è¯¯ä»£ç : " << result << std::endl;
 	}
 }

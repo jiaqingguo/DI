@@ -19,7 +19,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::LoginDialog)
 {
+	
 	ui->setupUi(this);
+	//ui->BtnIcon->hide();
 	ui->stackedWidget->setCurrentIndex(0);
 	ui->btnLogin->setDefault(true);
 	setTabOrder(ui->leUser, ui->lePassword);

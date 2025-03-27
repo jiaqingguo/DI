@@ -69,7 +69,7 @@ public:
     {
         if (LoginDialog->objectName().isEmpty())
             LoginDialog->setObjectName(QString::fromUtf8("LoginDialog"));
-        LoginDialog->resize(477, 368);
+        LoginDialog->resize(477, 370);
         LoginDialog->setMinimumSize(QSize(0, 0));
         gridLayout = new QGridLayout(LoginDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));

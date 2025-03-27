@@ -20,6 +20,12 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	ui->setupUi(this);
 	setWindowIcon(QIcon(":/image/ResourceManage.png"));
 	
+	/*ui->label->hide();
+	ui->label_3->hide();
+	ui->label_5->hide();
+	ui->label_7->hide();
+	ui->label_9->hide();*/
+
 	ui->tableViewList->setShowGrid(false);
 	ui->tableViewList->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");
 	ui->tableViewList->horizontalHeader()->setStyleSheet("QHeaderView::section{font-size: 17px;color: #7482a6;}");

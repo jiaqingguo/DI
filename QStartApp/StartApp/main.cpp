@@ -1,4 +1,4 @@
-#include "widget.h"
+ï»¿#include "widget.h"
 
 #include <QApplication>
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 //	Listen* l = new Listen;
 	//HWND hwnd = GetForegroundWindow();
 	////ShowWindow(hwnd, SW_MINIMIZE);
-	//ShowWindow(hwnd, SW_HIDE); // Òþ²Ø
+	//ShowWindow(hwnd, SW_HIDE); // éšè—
 	if (argc > 1)
 	{
 		/*l->startProgram(argv[1]);

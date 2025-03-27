@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>image/loading2.gif</file>
+        <file>image/Logo_background.png</file>
+        <file>image/label.png</file>
+        <file>image/save.png</file>
     </qresource>
 </RCC>

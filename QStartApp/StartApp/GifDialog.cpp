@@ -1,4 +1,4 @@
-#include < QIcon>
+ï»¿#include < QIcon>
 #include "GifDialog.h"
 #include "ui_GifDialog.h"
 
@@ -10,42 +10,43 @@ GifDialog::GifDialog(QWidget *parent) :
 {
     ui->setupUi(this);
    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
-   setWindowTitle(QString::fromLocal8Bit("ÕıÔÚÏÂÔØ"));
+   setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+   setWindowTitle(QString::fromLocal8Bit("æ­£åœ¨ä¸‹è½½"));
    
     //ui->toolButton->setIcon(QIcon(":/image/waiting.png"));
-    //ui->toolButton->setText(QString::fromLocal8Bit("µÈ´ıÖĞ..."));
+    //ui->toolButton->setText(QString::fromLocal8Bit("ç­‰å¾…ä¸­..."));
     //ui->toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     //ui->toolButton->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 18px;");
     //ui->toolButton->setFocusPolicy(Qt::NoFocus);
-    //// ÉèÖÃ°´Å¥ÎÄ±¾
-    //ui->toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon); // ÉèÖÃÍ¼±êÔÚÉÏ£¬ÎÄ×ÖÔÚÏÂ
-    //ui->toolButton->setIconSize(QSize(138, 130)); // ÉèÖÃÍ¼±ê´óĞ¡Îª138x138ÏñËØ
+    //// è®¾ç½®æŒ‰é’®æ–‡æœ¬
+    //ui->toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon); // è®¾ç½®å›¾æ ‡åœ¨ä¸Šï¼Œæ–‡å­—åœ¨ä¸‹
+    //ui->toolButton->setIconSize(QSize(138, 130)); // è®¾ç½®å›¾æ ‡å¤§å°ä¸º138x138åƒç´ 
  
 
 
   // ui->toolButton->setVisible(false);
-   // ´´½¨ QLabel£¬ÓÃÓÚÏÔÊ¾ GIF
+   // åˆ›å»º QLabelï¼Œç”¨äºæ˜¾ç¤º GIF
   
-   ui->label->setWindowTitle("GIF ÑİÊ¾");
-    ui->label->setAlignment(Qt::AlignCenter); // ¾ÓÖĞÏÔÊ¾
-    ui->label->setScaledContents(true);      // ÆôÓÃÄÚÈİËõ·Å£¬ÔÊĞí×Ô¶¯·Å´ó/ËõĞ¡
-   // ´´½¨ QMovie£¬ÓÃÓÚ¼ÓÔØ GIF ÎÄ¼ş
-   QMovie* movie = new QMovie(":/image/loading2.gif"); // Ìæ»»ÎªÄãµÄ GIF Â·¾¶
+   ui->label->setWindowTitle("GIF æ¼”ç¤º");
+    ui->label->setAlignment(Qt::AlignCenter); // å±…ä¸­æ˜¾ç¤º
+    ui->label->setScaledContents(true);      // å¯ç”¨å†…å®¹ç¼©æ”¾ï¼Œå…è®¸è‡ªåŠ¨æ”¾å¤§/ç¼©å°
+   // åˆ›å»º QMovieï¼Œç”¨äºåŠ è½½ GIF æ–‡ä»¶
+   QMovie* movie = new QMovie(":/image/loading2.gif"); // æ›¿æ¢ä¸ºä½ çš„ GIF è·¯å¾„
 
-   // ¼ì²é GIF ÊÇ·ñ¼ÓÔØ³É¹¦
+   // æ£€æŸ¥ GIF æ˜¯å¦åŠ è½½æˆåŠŸ
    if (!movie->isValid()) {
-       ui->label->setText("ÎŞ·¨¼ÓÔØ GIF ÎÄ¼ş");
+       ui->label->setText("æ— æ³•åŠ è½½ GIF æ–‡ä»¶");
    }
    else {
-       // ½« QMovie ÉèÖÃÎª QLabel µÄÄÚÈİ
+       // å°† QMovie è®¾ç½®ä¸º QLabel çš„å†…å®¹
        ui->label->setMovie(movie);
 
-       // ¿ªÊ¼²¥·Å GIF
+       // å¼€å§‹æ’­æ”¾ GIF
        movie->start();
    }
 
-   // ÏÔÊ¾ QLabel
-   ui->label->resize(400, 300);  // ¿É¸ù¾İĞèÒªµ÷Õû´°¿Ú´óĞ¡
+   // æ˜¾ç¤º QLabel
+   ui->label->resize(400, 300);  // å¯æ ¹æ®éœ€è¦è°ƒæ•´çª—å£å¤§å°
 
 }
 
