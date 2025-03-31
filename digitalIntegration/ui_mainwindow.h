@@ -81,9 +81,6 @@ public:
     QVBoxLayout *verticalLayout_3;
     QTabWidget *tabWidgetModulel3;
     QWidget *tab_5;
-    QGridLayout *gridLayout_3;
-    QWidget *widgetSize3;
-    QGridLayout *gridLayout_8;
     QWidget *tab_6;
     QWidget *page7;
     QVBoxLayout *verticalLayout_2;
@@ -252,20 +249,8 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         tabWidgetModulel3 = new QTabWidget(page6);
         tabWidgetModulel3->setObjectName(QString::fromUtf8("tabWidgetModulel3"));
-        QFont font;
-        font.setPointSize(9);
-        tabWidgetModulel3->setFont(font);
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
-        gridLayout_3 = new QGridLayout(tab_5);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        widgetSize3 = new QWidget(tab_5);
-        widgetSize3->setObjectName(QString::fromUtf8("widgetSize3"));
-        gridLayout_8 = new QGridLayout(widgetSize3);
-        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
-
-        gridLayout_3->addWidget(widgetSize3, 0, 0, 1, 1);
-
         tabWidgetModulel3->addTab(tab_5, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
@@ -318,10 +303,10 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(5);
+        stackedWidget->setCurrentIndex(6);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
-        tabWidgetModulel3->setCurrentIndex(1);
+        tabWidgetModulel3->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);
 
 
