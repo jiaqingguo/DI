@@ -296,6 +296,10 @@ void FtpClientWidget::Flush()
 
 void FtpClientWidget::reconnectFtp()
 {
+    if (m_pFtp == nullptr)
+    {
+        return;
+    }
     if (m_pFtp->state() != QFtp::LoggedIn)
     {
         disconnect(m_pFtp, SIGNAL(listInfo(QUrlInfo)), this, SLOT(listInfo(QUrlInfo)));
