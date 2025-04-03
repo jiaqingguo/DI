@@ -4,5 +4,6 @@
         <file>image/Logo_background.png</file>
         <file>image/label.png</file>
         <file>image/save.png</file>
+        <file>image/Mainwindow-background.jpg</file>
     </qresource>
 </RCC>

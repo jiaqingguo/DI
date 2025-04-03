@@ -56,14 +56,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 	// 设置无边框窗口
-	setWindowFlags(windowFlags() |Qt::FramelessWindowHint );
+	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 	// qss文件监控类
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
 	strQssPath.replace("/", "\\\\");
 	m_pQssAutoLoader->setAutoloadQss(strQssPath);
 
-	
+
 	ui->actionM1->setChecked(true);
 	ui->actionM2->setChecked(true);
 	ui->actionM3->setChecked(true);
@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// 隐藏用户登录后的图标
 	//ui->labelUserIcon->hide();
-	
+
 	ui->statusbar->hide();
 	initInitface();
 
@@ -113,8 +113,8 @@ MainWindow::~MainWindow()
 	/*if (m_RegisterDialog != nullptr)
 		delete m_RegisterDialog;*/
 
-	/*if (m_ResourceManageDialog != nullptr)
-		delete m_ResourceManageDialog;*/
+		/*if (m_ResourceManageDialog != nullptr)
+			delete m_ResourceManageDialog;*/
 	if (m_DataManageDialog != nullptr)
 		delete m_DataManageDialog;
 
@@ -173,7 +173,7 @@ void MainWindow::initInitface()
 	updateModuleToolTreeItem(4);
 
 
-	
+
 
 
 	// 初始化模块1-4界面;
@@ -236,8 +236,8 @@ void MainWindow::initInitface()
 	//connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 
 
-	
-	
+
+
 
 	ui->tabWidgetModulel1->setTabsClosable(true);
 	ui->tabWidgetModulel2->setTabsClosable(true);
@@ -256,8 +256,8 @@ void MainWindow::initInitface()
 
 	QTabBar* pTabBar = ui->tabWidgetModulel1->tabBar();
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
-	
-	
+
+
 	// 设置第一个选项卡的字体
 	QFont font = tabBar->font(); // 获取默认字体
 	font.setPointSize(16);       // 设置字体大小
@@ -266,7 +266,7 @@ void MainWindow::initInitface()
 	//pTabBar->setStyleSheet(
 	//	"QTabBar::tab:last-child { font-size: 29px; }"  // 最后一个标签页字体变大
 	//);
-	
+
 
 	pTabBar = ui->tabWidgetModulel2->tabBar();
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel2TabChanged);
@@ -323,35 +323,35 @@ void MainWindow::initTreeMenu()
 
 	QFont font1;
 	font1.setPointSize(15); // 设置字体大小为 12
-	
+
 	QFont font2;
 	font2.setPointSize(13); // 设置字体大小为 12
 
 	// 创建五个根节点
 	m_pFunctionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
-	m_pFunctionNode->setSizeHint(0, QSize(70,75));
+	m_pFunctionNode->setSizeHint(0, QSize(70, 75));
 	m_pFunctionNode->setFont(0, font1);
-	
+
 
 	m_pFunctionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能样机")));
 	m_pFunctionPrototypeNode->setSizeHint(0, QSize(75, 75));
-	m_pFunctionPrototypeNode->setData(0, Qt::UserRole+2, 4);
+	m_pFunctionPrototypeNode->setData(0, Qt::UserRole + 2, 4);
 	m_pFunctionPrototypeNode->setFont(0, font1);
 
 	m_pGeometryPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("几何样机")));
 	m_pGeometryPrototypeNode->setSizeHint(0, QSize(75, 75));
-	m_pGeometryPrototypeNode->setData(0, Qt::UserRole+2, 5);
+	m_pGeometryPrototypeNode->setData(0, Qt::UserRole + 2, 5);
 	m_pGeometryPrototypeNode->setFont(0, font1);
 
 
 	m_pPerformancePrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("性能样机")));
 	m_pPerformancePrototypeNode->setSizeHint(0, QSize(75, 75));
-	m_pPerformancePrototypeNode->setData(0, Qt::UserRole+2, 6);
+	m_pPerformancePrototypeNode->setData(0, Qt::UserRole + 2, 6);
 	m_pPerformancePrototypeNode->setFont(0, font1);
 
 	m_pProductionPrototypeNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("生产样机")));
 	m_pProductionPrototypeNode->setSizeHint(0, QSize(75, 75));
-	m_pProductionPrototypeNode->setData(0, Qt::UserRole+2, 7);
+	m_pProductionPrototypeNode->setData(0, Qt::UserRole + 2, 7);
 	m_pProductionPrototypeNode->setFont(0, font1);
 	// 设置图标
 	//; // 使用资源文件中的图标，或者替换为实际路径
@@ -375,7 +375,7 @@ void MainWindow::initTreeMenu()
 	m_functionChild1 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("资源管理器")));
 	m_functionChild1->setSizeHint(0, QSize(75, 75));
 	m_functionChild1->setIcon(0, QIcon(":/image/treeItem.png"));
-	m_functionChild1->setData(0, Qt::UserRole+2, 0);
+	m_functionChild1->setData(0, Qt::UserRole + 2, 0);
 	m_functionChild1->setData(0, Qt::UserRole, "functionChild1");
 	m_functionChild1->setFont(0, font2);
 
@@ -387,7 +387,7 @@ void MainWindow::initTreeMenu()
 	m_functionChild2 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("信息配置")));
 	m_functionChild2->setSizeHint(0, QSize(75, 75));
 	m_functionChild2->setIcon(0, QIcon(":/image/treeItem.png"));
-	m_functionChild2->setData(0, Qt::UserRole+2, 1);
+	m_functionChild2->setData(0, Qt::UserRole + 2, 1);
 	m_functionChild2->setData(0, Qt::UserRole, "functionChild2");
 	m_functionChild2->setFont(0, font2);
 
@@ -395,19 +395,19 @@ void MainWindow::initTreeMenu()
 	m_functionChild3 = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("文件管理")));
 	m_functionChild3->setSizeHint(0, QSize(75, 75));
 	m_functionChild3->setIcon(0, QIcon(":/image/treeItem.png"));
-	m_functionChild3->setData(0, Qt::UserRole+2, 2);
+	m_functionChild3->setData(0, Qt::UserRole + 2, 2);
 	m_functionChild3->setData(0, Qt::UserRole, "functionChild3");
 	m_functionChild3->setFont(0, font2);
 
 	m_pApprovalProgressNode = new QTreeWidgetItem(m_pFunctionNode, QStringList(QString::fromLocal8Bit("审批进度")));
 	m_pApprovalProgressNode->setSizeHint(0, QSize(75, 75));
 	m_pApprovalProgressNode->setIcon(0, QIcon(":/image/treeItem.png"));
-	m_pApprovalProgressNode->setData(0, Qt::UserRole+2, 3);
+	m_pApprovalProgressNode->setData(0, Qt::UserRole + 2, 3);
 	m_pApprovalProgressNode->setData(0, Qt::UserRole, "m_pApprovalProgressNode");
 	m_pApprovalProgressNode->setFont(0, font2);
 
-	
-	
+
+
 
 	// 展开所有节点
 	//ui->treeWidget->expandAll();
@@ -425,7 +425,7 @@ void MainWindow::initTreeMenu()
 	m_oneClickLoadAction = m_TreeWidgetMenu->addAction(QString::fromLocal8Bit("一键加载"));
 	//connect(m_addAction, &QAction::triggered, this, &MainWindow::slot_actionStartSoft);
 	//connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_actionOneClickLoad); 
-		connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_btnOneClickLoad);
+	connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_btnOneClickLoad);
 	//// 连接右键点击信号
 	//ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	//connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &MainWindow::slot_treeWidgetCustomContextMenuRequested);
@@ -675,7 +675,7 @@ void MainWindow::slot_btnApprovalProgressClicked()
 	common::getScreenCenterPos(x, y, ui->m_ApprovalProgressDialog->width(), ui->m_ApprovalProgressDialog->height());
 	m_ApprovalProgressDialog->move(x, y);
 	m_ApprovalProgressDialog->exec();*/
-//	ui->btnApprovalProgress->setChecked(false);
+	//	ui->btnApprovalProgress->setChecked(false);
 }
 
 void MainWindow::slot_btnAddToolTab()
@@ -686,7 +686,7 @@ void MainWindow::slot_btnAddToolTab()
 
 	QString strAssignIP = "";// 指定ip 主机;
 	QString strAssignHostName = "";
-	AddToolDialog addToooDialog(moduleNumber,this);
+	AddToolDialog addToooDialog(moduleNumber, this);
 	if (addToooDialog.exec() == QDialog::Accepted)
 	{
 		QString toolName;
@@ -964,7 +964,7 @@ void MainWindow::slot_downlaodFinsh()
 
 void MainWindow::slot_tabModule1closeTab(int index)
 {
-	if (index == (ui->tabWidgetModulel1->count() -1))
+	if (index == (ui->tabWidgetModulel1->count() - 1))
 	{
 		return;
 	}
@@ -1233,26 +1233,26 @@ void MainWindow::updateModuleToolIcon(int module)
 
 void MainWindow::updateModuleToolTreeItem(int module)
 {
-	
+
 	QTreeWidgetItem* pModelTreeItem = nullptr;
 	if (module == 1)
 	{
-		
-		pModelTreeItem =  m_pFunctionPrototypeNode;
+
+		pModelTreeItem = m_pFunctionPrototypeNode;
 	}
 	else if (module == 2)
 	{
-		
+
 		pModelTreeItem = m_pGeometryPrototypeNode;
 	}
 	else if (module == 3)
 	{
-		
+
 		pModelTreeItem = m_pPerformancePrototypeNode;
 	}
 	else if (module == 4)
 	{
-		
+
 		pModelTreeItem = m_pProductionPrototypeNode;
 	}
 	pModelTreeItem->takeChildren();
@@ -1270,57 +1270,57 @@ void MainWindow::updateModuleToolTreeItem(int module)
 			{
 				QTreeWidgetItem* pToolsChildItem = new QTreeWidgetItem(pModelTreeItem, QStringList(QString::fromStdString(software)));
 				pToolsChildItem->setSizeHint(0, QSize(75, 75));
-			
+
 				pToolsChildItem->setData(0, Qt::UserRole + 1, QString::fromStdString(software));
 				QFont font2;
 				font2.setPointSize(14); // 设置字体大小
 				pToolsChildItem->setFont(0, font2);
 				QToolButton* pBtn = new QToolButton();
-			
+
 				QImage img;
 				img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
 				// 将 QImage 转换为 QIcon
 				QIcon icon(QPixmap::fromImage(img));
-				pToolsChildItem->treeWidget()->setIconSize(QSize(40, 40));
+				pToolsChildItem->treeWidget()->setIconSize(QSize(45, 45));
 				pToolsChildItem->setIcon(0, icon);
-			
+
 			}
 		}
 	}
 	/*if (module == 1)
 		pLayout->addWidget(line);*/
 
-	//db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
-	//for (const auto& stTool : ipMap)
-	//{
-	//	const std::string& software = stTool.first;
-	//	const table_ip& data = stTool.second;
-	//	if (data.used == 0)
-	//	{
-	//		QToolButton* pBtn = new QToolButton();
-	//		QImage img;
-	//		img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
-	//		// 将 QImage 转换为 QIcon
-	//		QIcon icon(QPixmap::fromImage(img));
-	//		// 设置 QToolButton 的图标
-	//		pBtn->setIcon(icon);
-	//		pBtn->setIconSize(QSize(50, 46));
-	//		pBtn->setText(QString::fromStdString(software));
-	//		pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-	//		pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
-	//		pBtn->setFocusPolicy(Qt::NoFocus);
-	//		pBtn->setFixedSize(55, 64);
-	//		//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
-	//		pBtn->setEnabled(true);
+		//db::databaseDI::Instance().get_ip_data(ipMap, module, common::iLoginNum);
+		//for (const auto& stTool : ipMap)
+		//{
+		//	const std::string& software = stTool.first;
+		//	const table_ip& data = stTool.second;
+		//	if (data.used == 0)
+		//	{
+		//		QToolButton* pBtn = new QToolButton();
+		//		QImage img;
+		//		img.loadFromData(reinterpret_cast<const uchar*>(data.imageData.data()), data.imageData.size());
+		//		// 将 QImage 转换为 QIcon
+		//		QIcon icon(QPixmap::fromImage(img));
+		//		// 设置 QToolButton 的图标
+		//		pBtn->setIcon(icon);
+		//		pBtn->setIconSize(QSize(50, 46));
+		//		pBtn->setText(QString::fromStdString(software));
+		//		pBtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+		//		pBtn->setStyleSheet("background-color:rgba(0,0,0,0);font-size: 12px;");
+		//		pBtn->setFocusPolicy(Qt::NoFocus);
+		//		pBtn->setFixedSize(55, 64);
+		//		//pBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置按钮的大小策略
+		//		pBtn->setEnabled(true);
 
-	//		pLayout->addWidget(pBtn);
+		//		pLayout->addWidget(pBtn);
 
-	//		//鼠标双击事件
-	//		DoubleClickInterceptor* interceptor = new DoubleClickInterceptor;
-	//		pBtn->installEventFilter(interceptor);
-	//		connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
-	//	}
-	//}
+		//		//鼠标双击事件
+		//		DoubleClickInterceptor* interceptor = new DoubleClickInterceptor;
+		//		pBtn->installEventFilter(interceptor);
+		//		connect(interceptor, &DoubleClickInterceptor::doubleClicked, this, &MainWindow::onDoubleClicked);
+		//	}
+		//}
 }
 
 void MainWindow::startUdpRdp(const QString ip)
@@ -1550,8 +1550,8 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 	if (tabWidget != nullptr)
 	{
 		//tabWidget->addTab(widget, tabName);
-		
-		int intdex=tabWidget->insertTab(tabWidget->count()-1, widget, tabName);
+
+		int intdex = tabWidget->insertTab(tabWidget->count() - 1, widget, tabName);
 		tabWidget->setCurrentIndex(intdex);
 	}
 	else
@@ -1560,6 +1560,43 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 		widget->showMaximized();
 		widget->show();
 	}
+
+	connect(ui->tabWidgetModulel1, &MyTabWidget::resized, [=]() {
+		QWidget* TabWidget1 = ui->tabWidgetModulel1->widget(0);
+		if (TabWidget1)
+		{
+			int height = TabWidget1->height();
+			//int width = TabWidget->width();
+		}
+		QVariant result1 = rdp->dynamicCall("UpdateSessionDisplaySettings(int,int,int,int,int,int,int)", ui->tabWidgetModulel1->width(), height, 1920, 1080, 0, 100, 100);
+	});
+	connect(ui->tabWidgetModulel2, &MyTabWidget::resized, [=]() {
+		QWidget* TabWidget2 = ui->tabWidgetModulel2->widget(0);
+		if (TabWidget2)
+		{
+			int height = TabWidget2->height();
+			//int width = TabWidget->width();
+		}
+		QVariant result2 = rdp->dynamicCall("UpdateSessionDisplaySettings(int,int,int,int,int,int,int)", ui->tabWidgetModulel2->width(), height, 1920, 1080, 0, 100, 100);
+	});
+	connect(ui->tabWidgetModulel3, &MyTabWidget::resized, [=]() {
+		QWidget* TabWidget3 = ui->tabWidgetModulel3->widget(0);
+		if (TabWidget3)
+		{
+			int height = TabWidget3->height();
+			//int width = TabWidget->width();
+		}
+		QVariant result3 = rdp->dynamicCall("UpdateSessionDisplaySettings(int,int,int,int,int,int,int)", ui->tabWidgetModulel3->width(), height, 1920, 1080, 0, 100, 100);
+	});
+	connect(ui->tabWidgetModulel4, &MyTabWidget::resized, [=]() {
+		QWidget* TabWidget4 = ui->tabWidgetModulel4->widget(0);
+		if (TabWidget4)
+		{
+			int height = TabWidget4->height();
+			//int width = TabWidget->width();
+		}
+		QVariant result4 = rdp->dynamicCall("UpdateSessionDisplaySettings(int,int,int,int,int,int,int)", ui->tabWidgetModulel4->width(), height, 1920, 1080, 0, 100, 100);
+	});
 }
 
 
@@ -1705,7 +1742,7 @@ void MainWindow::startLongDistanceHost(const QString tabName, const int& module,
 	widget->m_pAxWidget = rdp;
 	if (tabWidget != nullptr)
 	{
-		int intdex=tabWidget->insertTab(tabWidget->count()-1, widget, tabName);
+		int intdex = tabWidget->insertTab(tabWidget->count() - 1, widget, tabName);
 		tabWidget->setCurrentIndex(intdex);
 
 	}
@@ -1888,8 +1925,11 @@ void MainWindow::slot_one_load_tools(int moduleNum, const QString &toolsName)
 		return;
 	}
 	//QString strAccount = getAccaunt(QString::fromStdString(stipToolData.ip), toolsName);
-	QString str = "app\\";
-	QString strAccount = str + common::strLoginUserName;
+
+	//QString str = "app\\";
+	//QString strAccount = str + common::strLoginUserName;
+	QString strAccount = common::strLoginUserName;
+
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
@@ -1997,15 +2037,16 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 	{
 		return;
 	}
-	QString str = "app\\";
-	QString strAccount = str + common::strLoginUserName;
+	//QString str = "app\\";
+	//QString strAccount = str + common::strLoginUserName;
+	QString strAccount = common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
 		return;
 	}
 
-	QString strPwd = "Atexcel@123";
+	QString strPwd = "jh123456";
 	if (common::bAdministrator)
 	{
 		strPwd = "Atexcel_123";
@@ -2044,7 +2085,7 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 			QString strAssignIP = "";// 指定ip 主机;
 			QString strAssignHostName = "";
 
-			AddToolDialog addToooDialog(common::indexNum,this);
+			AddToolDialog addToooDialog(common::indexNum, this);
 			QComboBox *toolComboBox = addToooDialog.getComboBox();
 			toolComboBox->setEnabled(false);
 			toolComboBox->setCurrentText(buttonText);
@@ -2089,8 +2130,11 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 					strPwd = common::strFtpPwd;
 				}
 				CWidget* axTabWidget = new CWidget();
-				QString str = "app\\";
-				QString strAccount = str + common::strLoginUserName;
+
+				//QString str = "app\\";
+				//QString strAccount = str + common::strLoginUserName;
+				QString strAccount = common::strLoginUserName;
+
 				if (displayMode == 0)
 				{
 
@@ -2131,7 +2175,7 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 		QString strAssignIP = "";// 指定ip 主机;
 		QString strAssignHostName = "";
 
-		AddToolDialog addToooDialog(common::indexNum,this);
+		AddToolDialog addToooDialog(common::indexNum, this);
 		QComboBox *toolComboBox = addToooDialog.getComboBox();
 		toolComboBox->setEnabled(false);
 		toolComboBox->setCurrentText(buttonText);
@@ -2310,258 +2354,258 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 		}
 	}
 }
-void MainWindow::onRightClicked(QString &buttonText)
+void MainWindow::onRightClicked()
 {
-	QString strAssignIP = "";// 指定ip 主机;
-	QString strAssignHostName = "";
+	//QString strAssignIP = "";// 指定ip 主机;
+	//QString strAssignHostName = "";
 
-	AddToolDialog addToooDialog(common::indexNum,this);
-	QComboBox *toolComboBox = addToooDialog.getComboBox();
-	toolComboBox->setEnabled(false);
-	toolComboBox->setCurrentText(buttonText);
-	if (addToooDialog.exec() == QDialog::Accepted)
-	{
-		QString toolName;
-		QString tabName;
-		int mode = -1;
-		int displayMode = 0;
-		QString  toolPath = -1;
-
-
-
-		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
-
-		table_ip stipToolData;
-		if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
-		{
-			return;
-		}
-		if (common::indexNum == 1)
-		{
-
-			strAssignIP = QString::fromStdString(stipToolData.ip);
-			strAssignHostName = QString::fromStdString(stipToolData.host);
-
-
-			QString hostname = QString::fromStdString(stipToolData.host);
-			tabName = tabName + " " + hostname;
-		}
-		else
-		{
-			//QString hostname = QString::fromStdString(strAssignHostName);
-
-
-			if (strAssignIP == "") // 模块234 下是指定还是CPu随机
-			{
-				table_ip_configure st;
-				common::findIpWithGpuMinValue(st);
-
-				strAssignIP = QString::fromStdString(st.ip);
-				strAssignHostName = QString::fromStdString(st.hostname);
-			}
-			tabName = tabName + " " + strAssignHostName;
-			//else
-			//{
-			//	//st.ip = strAssignIP.toStdString();
-			//	//st.hostname = strAssignHostName.toStdString();
-			//}
-		}
-
-
-		std::string strIP = strAssignIP.toStdString();
-		if (strIP.empty())
-		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
-			return;
-		}
-
-		QString strPwd;
-		if (common::bAdministrator)
-		{
-			strPwd = common::strFtpAdminPwd;
-		}
-		else
-		{
-			strPwd = common::strFtpPwd;
-		}
-		CWidget* axTabWidget = new CWidget();
+	//AddToolDialog addToooDialog(common::indexNum,this);
+	//QComboBox *toolComboBox = addToooDialog.getComboBox();
+	//toolComboBox->setEnabled(false);
+	//toolComboBox->setCurrentText(buttonText);
+	//if (addToooDialog.exec() == QDialog::Accepted)
+	//{
+	//	QString toolName;
+	//	QString tabName;
+	//	int mode = -1;
+	//	int displayMode = 0;
+	//	QString  toolPath = -1;
 
 
 
-		//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
+	//	addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
 
-		//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
-		QString str = "app\\";
-		QString strAccount = str + common::strLoginUserName;
-		if (strAccount.isEmpty())
-		{
-			QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
-			return;
-		}
-		if (common::indexNum == 1)
-		{
+	//	table_ip stipToolData;
+	//	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
+	//	{
+	//		return;
+	//	}
+	//	if (common::indexNum == 1)
+	//	{
 
-			if (displayMode == 0)
-			{
-
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = strAssignIP;
-				axTabWidget->m_softwareName = buttonText;
-
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
-				}
-
-			}
-			else
-			{
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
-				}
-
-			}
+	//		strAssignIP = QString::fromStdString(stipToolData.ip);
+	//		strAssignHostName = QString::fromStdString(stipToolData.host);
 
 
-		}
-		else if (common::indexNum == 2)
-		{
-			if (displayMode == 0)
-			{
+	//		QString hostname = QString::fromStdString(stipToolData.host);
+	//		tabName = tabName + " " + hostname;
+	//	}
+	//	else
+	//	{
+	//		//QString hostname = QString::fromStdString(strAssignHostName);
 
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
 
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
-				}
+	//		if (strAssignIP == "") // 模块234 下是指定还是CPu随机
+	//		{
+	//			table_ip_configure st;
+	//			common::findIpWithGpuMinValue(st);
 
-			}
-			else
-			{
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
-				}
+	//			strAssignIP = QString::fromStdString(st.ip);
+	//			strAssignHostName = QString::fromStdString(st.hostname);
+	//		}
+	//		tabName = tabName + " " + strAssignHostName;
+	//		//else
+	//		//{
+	//		//	//st.ip = strAssignIP.toStdString();
+	//		//	//st.hostname = strAssignHostName.toStdString();
+	//		//}
+	//	}
 
-			}
 
-		}
-		else if (common::indexNum == 3)
-		{
+	//	std::string strIP = strAssignIP.toStdString();
+	//	if (strIP.empty())
+	//	{
+	//		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("ip错误 请检查代码！"));
+	//		return;
+	//	}
 
-			if (displayMode == 0)
-			{
+	//	QString strPwd;
+	//	if (common::bAdministrator)
+	//	{
+	//		strPwd = common::strFtpAdminPwd;
+	//	}
+	//	else
+	//	{
+	//		strPwd = common::strFtpPwd;
+	//	}
+	//	CWidget* axTabWidget = new CWidget();
 
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
 
-				}
-			}
-			else
-			{
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
-				}
 
-			}
-		}
-		else if (common::indexNum == 4)
-		{
+	//	//if (!db::databaseDI::Instance().get_one_ip_data(stipToolData, toolName.toStdString(), common::iLoginNum))
 
-			if (displayMode == 0)
-			{
+	//	//QString strAccount = getAccaunt(QString::fromStdString(strIP), toolName);
+	//	QString str = "app\\";
+	//	QString strAccount = str + common::strLoginUserName;
+	//	if (strAccount.isEmpty())
+	//	{
+	//		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
+	//		return;
+	//	}
+	//	if (common::indexNum == 1)
+	//	{
 
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
-				}
+	//		if (displayMode == 0)
+	//		{
 
-			}
-			else
-			{
-				axTabWidget->m_account = strAccount;
-				axTabWidget->m_ip = QString::fromStdString(strIP);
-				axTabWidget->m_softwareName = buttonText;
-				if (isHardwareAccelerator(strAssignHostName.toStdString()))
-				{
-					startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
-				}
-				else
-				{
-					startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
-				}
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = strAssignIP;
+	//			axTabWidget->m_softwareName = buttonText;
 
-			}
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel1);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel1);
+	//			}
 
-		}
-	}
+	//		}
+	//		else
+	//		{
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+	//			}
+
+	//		}
+
+
+	//	}
+	//	else if (common::indexNum == 2)
+	//	{
+	//		if (displayMode == 0)
+	//		{
+
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel2);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel2);
+	//			}
+
+	//		}
+	//		else
+	//		{
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+	//			}
+
+	//		}
+
+	//	}
+	//	else if (common::indexNum == 3)
+	//	{
+
+	//		if (displayMode == 0)
+	//		{
+
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel3);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel3);
+
+	//			}
+	//		}
+	//		else
+	//		{
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+	//			}
+
+	//		}
+	//	}
+	//	else if (common::indexNum == 4)
+	//	{
+
+	//		if (displayMode == 0)
+	//		{
+
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget, ui->tabWidgetModulel4);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget, ui->tabWidgetModulel4);
+	//			}
+
+	//		}
+	//		else
+	//		{
+	//			axTabWidget->m_account = strAccount;
+	//			axTabWidget->m_ip = QString::fromStdString(strIP);
+	//			axTabWidget->m_softwareName = buttonText;
+	//			if (isHardwareAccelerator(strAssignHostName.toStdString()))
+	//			{
+	//				startLongDistanceHost(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), axTabWidget);
+	//			}
+	//			else
+	//			{
+	//				startLongDistanceSoftware(tabName, common::indexNum, strIP, strAccount.toStdString(), strPwd.toStdString(), stipToolData.toolPath, axTabWidget);
+	//			}
+
+	//		}
+
+	//	}
+	//}
 }
 
 void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 {
 	// 获取存储在 QTreeWidgetItem 中的自定义数据
-	QVariant data = item->data(0, Qt::UserRole+1);
+	QVariant data = item->data(0, Qt::UserRole + 1);
 
 	// 根据数据类型打印输出
-	if (data.isValid()) 
+	if (data.isValid())
 	{
-		if (data.type() == QVariant::String) 
+		if (data.type() == QVariant::String)
 		{
 			QString  toolName = data.toString();
 			QTreeWidgetItem* parentItem = item->parent();
 			if (parentItem != nullptr)
 			{
-				int Index = parentItem->data(0, Qt::UserRole+2).toInt();
+				int Index = parentItem->data(0, Qt::UserRole + 2).toInt();
 				if (Index == 4)  // 模块1
 				{
 					//ui->tabWidgetModulel1
@@ -2585,13 +2629,13 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 					//emit signal_soft(toolName);
 				}
 				qDebug() << "Double-clicked item data (string):" << data.toString();
-				
+
 			}
-			
+
 
 
 		}
-		else if (data.type() == QVariant::Int) 
+		else if (data.type() == QVariant::Int)
 		{
 			qDebug() << "Double-clicked item data (int):" << data.toInt();
 		}
@@ -2599,7 +2643,7 @@ void MainWindow::slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column)
 			qDebug() << "Double-clicked item data (other):" << data;
 		}
 	}
-	else 
+	else
 	{
 		qDebug() << "No custom data found in double-clicked item.";
 	}
@@ -2609,7 +2653,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 {
 	ChangeTreeItemIcon(item);
 	// 获取存储在 QTreeWidgetItem 中的自定义数据
-	QVariant data = item->data(column, Qt::UserRole+2);
+	QVariant data = item->data(column, Qt::UserRole + 2);
 
 	int stackIndex = -1;
 	// 根据数据类型打印输出
@@ -2623,8 +2667,8 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		{
 			qDebug() << "-clicked item data (int):" << data.toInt();
 			stackIndex = data.toInt();
-			
-			
+
+
 			//ui->stackedWidgetBtn->setCurrentIndex(index);
 		}
 		else {
@@ -2636,7 +2680,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		QTreeWidgetItem* parentItem = item->parent();
 		if (parentItem != nullptr)
 		{
-			stackIndex = parentItem->data(0, Qt::UserRole+2).toInt();
+			stackIndex = parentItem->data(0, Qt::UserRole + 2).toInt();
 		}
 	}
 	if (stackIndex != -1)
@@ -2644,7 +2688,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		if (ui->stackedWidget->currentIndex() != stackIndex)
 		{
 			ui->stackedWidget->setCurrentIndex(stackIndex);
-			
+
 		}
 		QString str = item->text(0);
 		//ui->btnChildTitle->setText(str);
@@ -2656,7 +2700,7 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 		}
 		else if (stackIndex == 1)
 		{
-			
+
 		}
 		else if (stackIndex == 2)
 		{
@@ -2683,14 +2727,14 @@ void MainWindow::slot_treeWidgetClicked(QTreeWidgetItem* item, int column)
 			common::indexNum = 4; // 之前的模块下标 概念;
 		}
 
-			
+
 	}
 }
 
 
 void MainWindow::slot_btnMaximize()
 {
-	if (isMaximized()) 
+	if (isMaximized())
 	{
 		//window()->showNormal();
 		ui->splitter->setVisible(false);
@@ -2701,8 +2745,8 @@ void MainWindow::slot_btnMaximize()
 		//this->showMaximized();
 	}
 
-	
-	
+
+
 }
 void MainWindow::slot_showMax()
 {
@@ -2722,7 +2766,7 @@ void MainWindow::slot_showMax()
 		int newX = availableRect.x() + (availableRect.width() - newWidth) / 2;
 		int newY = availableRect.y() + (availableRect.height() - newHeight) / 2;
 
-		
+
 		// 设置新大小和位置
 		this->setGeometry(newX, newY, newWidth, newHeight);
 		m_showMax = false;
@@ -2733,7 +2777,7 @@ void MainWindow::slot_showMax()
 		QRect availableRect = QApplication::desktop()->availableGeometry(this);
 		this->setGeometry(availableRect);
 	}
-	
+
 }
 void MainWindow::slot_actionStartSoft()
 {
@@ -2743,7 +2787,7 @@ void MainWindow::slot_actionOneClickLoad()
 {
 	slot_btnOneClickLoad();
 }
-void MainWindow::onDisconnected() 
+void MainWindow::onDisconnected()
 {
 	QMessageBox msgBox;
 	msgBox.setWindowTitle(QString::fromLocal8Bit("提示"));
@@ -2986,7 +3030,7 @@ void MainWindow::slot_tabWidgetCustomContextMenuRequested(const QPoint& pos)
 void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
 {
 	QTreeWidgetItem* item = ui->treeWidget->itemAt(pos);
-	
+
 	// 获取存储在 QTreeWidgetItem 中的自定义数据
 	QVariant data = item->data(0, Qt::UserRole + 2);
 
@@ -3018,7 +3062,7 @@ void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
 			stackIndex = parentItem->data(0, Qt::UserRole + 2).toInt();
 		}
 	}
-	if (stackIndex >=4 && stackIndex<=7)
+	if (stackIndex >= 4 && stackIndex <= 7)
 	{
 		if (stackIndex == 4)
 		{
@@ -3034,7 +3078,7 @@ void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
 
 }
 
-void MainWindow::slot_tabWidgetModulel1TabChanged( int index)
+void MainWindow::slot_tabWidgetModulel1TabChanged(int index)
 {
 	if (index == (ui->tabWidgetModulel1->count() - 1))
 	{
@@ -3071,22 +3115,23 @@ void MainWindow::slot_tabWidgetModulel4TabChanged(int index)
 	}
 }
 
-void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
+void MainWindow::slot_SoftTreeItemDoubleClicked(QString buttonText)
 {
 	table_ip stipToolData;
 	if (!db::databaseDI::Instance().get_ip_by_software(stipToolData, buttonText.toStdString(), common::iLoginNum, common::indexNum))
 	{
 		return;
 	}
-	QString str = "app\\";
-	QString strAccount = str + common::strLoginUserName;
+	/*QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;*/
+	QString strAccount = common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
 		return;
 	}
 
-	QString strPwd = "Atexcel@123";
+	QString strPwd = "jh123456";
 	if (common::bAdministrator)
 	{
 		strPwd = "Atexcel_123";
@@ -3173,8 +3218,9 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 					strPwd = common::strFtpPwd;
 				}
 				CWidget* axTabWidget = new CWidget();
-				QString str = "app\\";
-				QString strAccount = str + common::strLoginUserName;
+				/*QString str = "app\\";
+				QString strAccount = str + common::strLoginUserName;*/
+				QString strAccount = common::strLoginUserName;
 				if (displayMode == 0)
 				{
 
@@ -3215,7 +3261,7 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 		QString strAssignIP = "";// 指定ip 主机;
 		QString strAssignHostName = "";
 
-		AddToolDialog addToooDialog(common::indexNum,this);
+		AddToolDialog addToooDialog(common::indexNum, this);
 		QComboBox* toolComboBox = addToooDialog.getComboBox();
 		toolComboBox->setEnabled(false);
 		// 设置禁用状态下的样式表
@@ -3395,4 +3441,8 @@ void MainWindow::slot_SoftTreeItemDoubleClicked( QString buttonText)
 			}
 		}
 	}
+}
+void MainWindow::slot_ResizeEvent()
+{
+
 }

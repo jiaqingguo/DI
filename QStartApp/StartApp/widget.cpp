@@ -28,9 +28,9 @@ Widget::Widget(QWidget *parent)
 	this->setStyleSheet(
 		"QWidget#Widget{"
 		"    background-image: url(:/image/Logo_background.png);"
-		"    background-repeat: no-repeat;"
 		"    background-position: center;"
-		"    background-size: contain;"
+		"    background-size: cover;"
+		"    border-image: url(:/image/Mainwindow-background.jpg) 0 stretch;"
 		"    border-top: 3px solid #0078d7;"
 		"    border-left: none;"
 		"    border-right: none;"
@@ -168,4 +168,25 @@ void Widget::contextMenuEvent(QContextMenuEvent *event)
 
 	// 在鼠标位置弹出菜单
 	m_Menu->exec(event->globalPos());
+}
+//重写paintEvent使两张图片同时加载
+void Widget::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+
+	// 绘制边框图
+	QPixmap borderPixmap(":/image/Mainwindow-background.jpg");
+	painter.drawPixmap(rect(), borderPixmap);
+
+	// 绘制顶部边框
+	painter.setPen(QPen(QColor("#0078d7"), 3));
+	painter.drawLine(0, 0, width(), 0);
+
+	// 绘制背景图
+	QPixmap bgPixmap(":/image/Logo_background.png");
+	QRect bgRect = bgPixmap.rect();
+	bgRect.moveCenter(rect().center());
+	painter.drawPixmap(bgRect, bgPixmap);
+
+	QWidget::paintEvent(event);
 }

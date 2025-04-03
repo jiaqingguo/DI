@@ -131,7 +131,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>6</number>
+           <number>7</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
           <widget class="InformationConfihurationDialog" name="m_InforConfihurationDialog"/>
@@ -170,7 +170,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTabWidget" name="tabWidgetModulel1">
+             <widget class="MyTabWidget" name="tabWidgetModulel1">
               <property name="tabShape">
                <enum>QTabWidget::Rounded</enum>
               </property>
@@ -237,7 +237,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTabWidget" name="tabWidgetModulel2">
+             <widget class="MyTabWidget" name="tabWidgetModulel2">
               <property name="currentIndex">
                <number>0</number>
               </property>
@@ -280,7 +280,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTabWidget" name="tabWidgetModulel3">
+             <widget class="MyTabWidget" name="tabWidgetModulel3">
               <property name="currentIndex">
                <number>0</number>
               </property>
@@ -313,7 +313,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTabWidget" name="tabWidgetModulel4">
+             <widget class="MyTabWidget" name="tabWidgetModulel4">
               <property name="currentIndex">
                <number>0</number>
               </property>
@@ -419,6 +419,12 @@
    <class>CustomTitleWidget</class>
    <extends>QWidget</extends>
    <header>CustomTitleWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>mainwindow.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

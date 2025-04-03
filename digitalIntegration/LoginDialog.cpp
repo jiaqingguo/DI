@@ -25,7 +25,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	ui->stackedWidget->setCurrentIndex(0);
 	ui->btnLogin->setDefault(true);
 	setTabOrder(ui->leUser, ui->lePassword);
-	QRegExp rx("[0-9a-zA-Z]{19}");
+	QRegExp rx("[0-9a-zA-Z ]{19}");
 	ui->leUser->setValidator(new QRegExpValidator(rx));
 	//ui->lePassword->setValidator(new QRegExpValidator(rx));
 	ui->leUser->setMaxLength(20);

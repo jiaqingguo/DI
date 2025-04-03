@@ -12,6 +12,8 @@
 #include <QToolButton>
 
 
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -32,6 +34,7 @@ class GifDialog;
 class CCtrlNetwork;
 class CWidget;
 class FtpDialog;
+class MyTabWidget;
 //class C7Zip;
 
 class QTreeWidgetItem;
@@ -112,7 +115,6 @@ private:
 	QFileSystemWatcher m_fileWatcher;
 };
 
-
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -166,7 +168,7 @@ private slots:
 	void slot_widgetAboutToQuit();
 
 	void onDoubleClicked(const QString &buttonText);//鼠标双击事件
-	void onRightClicked(QString &buttonText);//鼠标右击事件
+	void onRightClicked();//鼠标右击事件
 
 	void slot_treeWidgetDoubleClicked(QTreeWidgetItem* item, int column);
 	void slot_treeWidgetClicked(QTreeWidgetItem* item, int column);
@@ -188,6 +190,9 @@ private slots:
 	void slot_tabWidgetModulel4TabChanged(int index);
 
 	void slot_addToolTabDiaogShow(const int& module);//点击+后的弹窗显示
+
+
+	void slot_ResizeEvent();
 private:
 	void updateModuleToolIcon(int module);
 	void updateModuleToolTreeItem(int module);
@@ -209,7 +214,7 @@ private:
 
 //	void SoftTreeItemDoubleClicked(const QString& buttonText);
 	
-	
+
 private:
 	Ui::MainWindow *ui;
 
@@ -324,5 +329,21 @@ protected:
 signals:
 	void rightClicked(QString &buttonText);
 };
+class MyTabWidget : public QTabWidget {
+	Q_OBJECT  // 必须包含 Q_OBJECT 宏以支持信号与槽
+
+public:
+	MyTabWidget(QWidget *parent = nullptr) : QTabWidget(parent) {}
+
+signals:
+	void resized(int width, int height);  // 自定义信号
+
+protected:
+	void resizeEvent(QResizeEvent *event) override {
+		QTabWidget::resizeEvent(event);  // 调用基类实现
+		emit resized(width(), height()); // 发射信号
+	}
+};
+
 extern MainWindow* g_pMainWindow;
 #endif // MAINWINDOW_H

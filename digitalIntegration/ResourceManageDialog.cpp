@@ -86,8 +86,8 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 
 ResourceManageDialog::~ResourceManageDialog()
 {
-	/*this->UdpSocket->close();
-	delete this->UdpSocket;*/
+	this->UdpSocket->close();
+	delete this->UdpSocket;
 	delete ui;
 }
 

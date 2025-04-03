@@ -22,7 +22,6 @@
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -31,6 +30,7 @@
 #include "FtpDialog.h"
 #include "InformationConfihurationDialog.h"
 #include "ResourceManageDialog.h"
+#include "mainwindow.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -63,7 +63,7 @@ public:
     QVBoxLayout *verticalLayout;
     QWidget *page4;
     QVBoxLayout *verticalLayout_5;
-    QTabWidget *tabWidgetModulel1;
+    MyTabWidget *tabWidgetModulel1;
     QWidget *tab;
     QGridLayout *gridLayout_6;
     QWidget *widgetSize1;
@@ -71,7 +71,7 @@ public:
     QWidget *tab_2;
     QWidget *page5;
     QVBoxLayout *verticalLayout_4;
-    QTabWidget *tabWidgetModulel2;
+    MyTabWidget *tabWidgetModulel2;
     QWidget *tab_3;
     QGridLayout *gridLayout_4;
     QWidget *widgetSize2;
@@ -79,12 +79,12 @@ public:
     QWidget *tab_4;
     QWidget *page6;
     QVBoxLayout *verticalLayout_3;
-    QTabWidget *tabWidgetModulel3;
+    MyTabWidget *tabWidgetModulel3;
     QWidget *tab_5;
     QWidget *tab_6;
     QWidget *page7;
     QVBoxLayout *verticalLayout_2;
-    QTabWidget *tabWidgetModulel4;
+    MyTabWidget *tabWidgetModulel4;
     QWidget *tab_7;
     QGridLayout *gridLayout;
     QWidget *widgetSize4;
@@ -189,7 +189,7 @@ public:
         verticalLayout_5 = new QVBoxLayout(page4);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        tabWidgetModulel1 = new QTabWidget(page4);
+        tabWidgetModulel1 = new MyTabWidget(page4);
         tabWidgetModulel1->setObjectName(QString::fromUtf8("tabWidgetModulel1"));
         tabWidgetModulel1->setTabShape(QTabWidget::Rounded);
         tabWidgetModulel1->setIconSize(QSize(16, 16));
@@ -220,7 +220,7 @@ public:
         verticalLayout_4 = new QVBoxLayout(page5);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
-        tabWidgetModulel2 = new QTabWidget(page5);
+        tabWidgetModulel2 = new MyTabWidget(page5);
         tabWidgetModulel2->setObjectName(QString::fromUtf8("tabWidgetModulel2"));
         tabWidgetModulel2->setElideMode(Qt::ElideMiddle);
         tab_3 = new QWidget();
@@ -247,7 +247,7 @@ public:
         verticalLayout_3 = new QVBoxLayout(page6);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        tabWidgetModulel3 = new QTabWidget(page6);
+        tabWidgetModulel3 = new MyTabWidget(page6);
         tabWidgetModulel3->setObjectName(QString::fromUtf8("tabWidgetModulel3"));
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
@@ -264,7 +264,7 @@ public:
         verticalLayout_2 = new QVBoxLayout(page7);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        tabWidgetModulel4 = new QTabWidget(page7);
+        tabWidgetModulel4 = new MyTabWidget(page7);
         tabWidgetModulel4->setObjectName(QString::fromUtf8("tabWidgetModulel4"));
         tab_7 = new QWidget();
         tab_7->setObjectName(QString::fromUtf8("tab_7"));
@@ -303,7 +303,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(6);
+        stackedWidget->setCurrentIndex(7);
         tabWidgetModulel1->setCurrentIndex(0);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(0);

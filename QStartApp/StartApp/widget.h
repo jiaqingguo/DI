@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QPainter>
 #include "Listen.h"
 
 class Listen;
@@ -35,6 +36,8 @@ public:
     void setCloseCallBack(LoadingProgressCallBack callBack);
 
 	void contextMenuEvent(QContextMenuEvent *event);
+
+	void paintEvent(QPaintEvent *event);
 
 private slots:
     void slot_btnOpenExplorer();
