@@ -819,9 +819,15 @@ LoginDialog QLineEdit#lePassword {
 	margin-right: 6px;
 }
 LoginDialog QPushButton#btnLogin {
+    border: none;
+	outline: none;
 	border-image: url(:/image/login.png);
 	font-size: 24px;
 	color: #ffffff;
+}
+LoginDialog QPushButton#btnLogin:pressed {
+    padding: 6px 14px;
+    border: 2px solid #3d8b40;
 }
 LoginDialog QPushButton#btnChangePassword {
 	font-size: 15px;

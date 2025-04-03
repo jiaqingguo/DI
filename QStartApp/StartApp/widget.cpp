@@ -12,9 +12,10 @@ Widget::Widget(QWidget *parent)
     //setMaximumHeight(400);
 	
     setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint); // 移除最大最小化按钮
+	// 取消标题栏（无边框窗口）
+	setWindowFlags(Qt::FramelessWindowHint);
 	this->showMaximized();
-	// 可选：保留窗口边框但隐藏标题文字
-	setWindowFlags(windowFlags() | Qt::CustomizeWindowHint);
+	
 	this->setAttribute(Qt::WA_StyledBackground, true);
     m_pGifDialog = new GifDialog();
     m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在加载"));
