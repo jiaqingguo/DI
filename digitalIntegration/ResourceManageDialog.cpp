@@ -478,24 +478,24 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	m_model->setItem(newRowIndex, 0, item);
 
-	item = new QStandardItem(dCpu);
+	item = new QStandardItem(QString::number(dCpu));
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	//m_model->setItem(newRowIndex, 1, new QStandardItem(QString::number(dCpu)));
 	m_model->setItem(newRowIndex, 1, item);
 
-	item = new QStandardItem(dMemory);
+	item = new QStandardItem(QString::number(dMemory));
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	m_model->setItem(newRowIndex, 2, item);
 
-	item = new QStandardItem(dDisk);
+	item = new QStandardItem(QString::number(dDisk));
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	m_model->setItem(newRowIndex, 3, item);
 
-	item = new QStandardItem(dNet);
+	item = new QStandardItem(QString::number(dNet));
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	m_model->setItem(newRowIndex, 4, item);
 
-	item = new QStandardItem(dGpu);
+	item = new QStandardItem(QString::number(dGpu));
 	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
 	m_model->setItem(newRowIndex, 5, item);
 
