@@ -256,8 +256,8 @@ void MainWindow::initInitface()
 
 	QTabBar* pTabBar = ui->tabWidgetModulel1->tabBar();
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
-
-
+	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
+	
 	// 设置第一个选项卡的字体
 	QFont font = tabBar->font(); // 获取默认字体
 	font.setPointSize(16);       // 设置字体大小
@@ -269,10 +269,15 @@ void MainWindow::initInitface()
 
 
 	pTabBar = ui->tabWidgetModulel2->tabBar();
+	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
+
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel2TabChanged);
+
 	pTabBar = ui->tabWidgetModulel3->tabBar();
+	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel3TabChanged);
 	pTabBar = ui->tabWidgetModulel4->tabBar();
+	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
 	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel4TabChanged);
 
 	connect(this, &MainWindow::signal_addSoftDialogShow, this, &MainWindow::slot_addToolTabDiaogShow);
