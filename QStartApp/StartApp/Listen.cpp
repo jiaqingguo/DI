@@ -18,6 +18,8 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 {
 	::GetWindowText(hWnd, WindowTitle, 100);
 	std::string strTitle = WindowTitle;
+	printf("-------------------------------------------\n");
+	printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
 	if (strTitle == "Cero Simulate 2.0")
 	{
 		DWORD lpdwProcessId;
@@ -381,6 +383,7 @@ void Listen::startProgram(const std::string& strPath)
 			//std::cerr << "success to start application......" << std::endl;
 			//isStart = true;
 			isStart = queryProcessId(pi.hProcess);
+			
 			// 等待新进程结束
 			//WaitForSingleObject(pi.hProcess, INFINITE);
 
@@ -577,6 +580,7 @@ void Listen::hwndListen()
 				{
 					//ShowWindow(_currentHWND, SW_MAXIMIZE);
 					isWindow = true;
+					::SetWindowPos(_currentHWND, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 					if (_successCallBack)
 						(*_successCallBack)();
 					
@@ -589,6 +593,7 @@ void Listen::hwndListen()
 			if (!isWindow)
 			{
 				isWindow = true;
+				::SetWindowPos(_currentHWND, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 				if (_successCallBack)
 					(*_successCallBack)();
 			}
@@ -609,6 +614,7 @@ void Listen::showProgram()
 	{
 		if (::ShowWindow(_currentHWND, SW_SHOWMAXIMIZED))
 		{
+			::SetWindowPos(_currentHWND, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 			printf("Sub Window HWND:%d \n", _currentHWND);
 		}
 	}
@@ -624,6 +630,7 @@ void Listen::showProgram()
 				{
 					if (::ShowWindow(currentHWND, SW_SHOWMAXIMIZED))
 					{
+						::BringWindowToTop(currentHWND);  // 置顶
 						printf("Sub Window HWND:%d \n", _currentHWND);
 					}
 				}
