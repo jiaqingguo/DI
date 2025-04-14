@@ -82,6 +82,16 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 	QObject::connect(m_timer, &QTimer::timeout, this, &ResourceManageDialog::slot_timerTimeout);
 	//m_timer->start(1000); // 每秒触发一次
 
+	m_model = new QStandardItemModel();
+	m_model->setColumnCount(6);
+	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
+	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
+	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
+	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
+	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
+	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
+	ui->tableViewList->setModel(m_model);
+	common::setTableViewBasicConfiguration(ui->tableViewList);
 }
 
 ResourceManageDialog::~ResourceManageDialog()
@@ -851,17 +861,17 @@ void ResourceManageDialog::slot_showList()
 	ui->btnList->setStyleSheet("QPushButton { font-size: 22px;color: #ffffff;border-image: url(:/image/btn_blue.png) 0 0 0 0 stretch;}");
 	ui->btnCurve->setStyleSheet("QPushButton { font-size: 22px;color: #7482a6;}");
 	ui->stackedWidget->setCurrentIndex(0);
-	m_model = new QStandardItemModel();
-	m_model->setColumnCount(6);
-	m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
-	m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
-	m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
-	m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
-	m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
-	m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
+	//m_model = new QStandardItemModel();
+	//m_model->setColumnCount(6);
+	//m_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("主机名称"));
+	//m_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("CPU"));//列表中的显示
+	//m_model->setHeaderData(2, Qt::Horizontal, QString::fromLocal8Bit("内存"));
+	//m_model->setHeaderData(3, Qt::Horizontal, QString::fromLocal8Bit("磁盘"));
+	//m_model->setHeaderData(4, Qt::Horizontal, QString::fromLocal8Bit("网络"));
+	//m_model->setHeaderData(5, Qt::Horizontal, QString::fromLocal8Bit("GPU"));
 
-	ui->tableViewList->setModel(m_model);
-	common::setTableViewBasicConfiguration(ui->tableViewList);
+	//ui->tableViewList->setModel(m_model);
+	//common::setTableViewBasicConfiguration(ui->tableViewList);
 }
 void ResourceManageDialog::slot_showCurve()
 {

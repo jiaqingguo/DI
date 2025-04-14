@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	TCHAR password[] = TEXT("Atexcel_123");
 	TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
 	TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
-	InitResource(userName, password, localDrive, remotePath);
+	//InitResource(userName, password, localDrive, remotePath);
 
     QApplication a(argc, argv);
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	Widget w;
 	w.show();
 	//窗口的隐藏
-	w.hide();
+	//w.hide();
 	//窗口的最小化
 	//w.showMinimized();
 

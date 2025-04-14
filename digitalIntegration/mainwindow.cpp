@@ -328,7 +328,7 @@ void MainWindow::initTreeMenu()
 	font2.setPointSize(13); // 设置字体大小为 12
 
 	// 创建五个根节点
-	m_pFunctionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("功能")));
+	m_pFunctionNode = new QTreeWidgetItem(ui->treeWidget, QStringList(QString::fromLocal8Bit("菜单")));
 	m_pFunctionNode->setSizeHint(0, QSize(70, 75));
 	m_pFunctionNode->setFont(0, font1);
 
