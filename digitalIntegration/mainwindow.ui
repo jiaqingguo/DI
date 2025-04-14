@@ -45,7 +45,7 @@
        <bool>true</bool>
       </property>
       <property name="childrenCollapsible">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <widget class="QWidget" name="widgetLeftMenu" native="true">
        <property name="minimumSize">
@@ -131,7 +131,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>7</number>
+           <number>4</number>
           </property>
           <widget class="ResourceManageDialog" name="m_ResourceManageDialog"/>
           <widget class="InformationConfihurationDialog" name="m_InforConfihurationDialog"/>

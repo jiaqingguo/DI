@@ -121,7 +121,7 @@ public:
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setOrientation(Qt::Horizontal);
         splitter->setOpaqueResize(true);
-        splitter->setChildrenCollapsible(false);
+        splitter->setChildrenCollapsible(true);
         widgetLeftMenu = new QWidget(splitter);
         widgetLeftMenu->setObjectName(QString::fromUtf8("widgetLeftMenu"));
         widgetLeftMenu->setMinimumSize(QSize(150, 0));
