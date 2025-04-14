@@ -26,6 +26,23 @@ Widget::Widget(QWidget *parent)
     //connect(ui->pushButton, &QPushButton::clicked, this, &Widget::slot_btnOpenExplorer);
     //connect(ui->pushButton2, &QPushButton::clicked, this, &Widget::slot_btnAppShow);
 
+
+    m_Menu = new QMenu();
+
+    // 添加菜单项
+    QAction* action1 = m_Menu->addAction(QString::fromLocal8Bit("保存"));
+    QAction* action2 = m_Menu->addAction(QString::fromLocal8Bit("显示软件"));
+
+    // 创建带图标的 Action
+    //QAction *copyAction = new QAction(QIcon(":/image/save.png"), QString::fromLocal8Bit("保存"), this);
+    //QAction *pasteAction = new QAction(QIcon(":/image/label.png"), QString::fromLocal8Bit("显示软件"), this);
+    /*m_Menu->addAction(copyAction);
+    m_Menu->addAction(pasteAction);*/
+
+    // 连接菜单项的信号槽
+    connect(action1, &QAction::triggered, this, &Widget::slot_btnOpenExplorer);
+    connect(action2, &QAction::triggered, this, &Widget::slot_btnAppShow);
+
 	this->setStyleSheet(
 		"QWidget#Widget{"
 		"    background-image: url(:/image/Logo_background.png);"
@@ -151,21 +168,7 @@ void Widget::slot_btnAppShow()
 
 void Widget::contextMenuEvent(QContextMenuEvent *event)
 {
-	m_Menu = new QMenu();
-
-	// 添加菜单项
-	QAction *action1 = m_Menu->addAction(QString::fromLocal8Bit("保存"));
-	QAction *action2 = m_Menu->addAction(QString::fromLocal8Bit("显示软件"));
-
-	// 创建带图标的 Action
-	//QAction *copyAction = new QAction(QIcon(":/image/save.png"), QString::fromLocal8Bit("保存"), this);
-	//QAction *pasteAction = new QAction(QIcon(":/image/label.png"), QString::fromLocal8Bit("显示软件"), this);
-	/*m_Menu->addAction(copyAction);
-	m_Menu->addAction(pasteAction);*/
-
-	// 连接菜单项的信号槽
-	connect(action1, &QAction::triggered, this, &Widget::slot_btnOpenExplorer);
-	connect(action2, &QAction::triggered, this, &Widget::slot_btnAppShow);
+	
 
 	// 在鼠标位置弹出菜单
 	m_Menu->exec(event->globalPos());
