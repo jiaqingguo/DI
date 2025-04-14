@@ -473,12 +473,31 @@ void ResourceManageDialog::updateHostTableShow(const QString& host, const double
 
 	int newRowIndex = m_model->rowCount(); // 获取当前行数
 	m_model->insertRow(newRowIndex); // 插入新行
-	m_model->setItem(newRowIndex, 0, new QStandardItem(host));
-	m_model->setItem(newRowIndex, 1, new QStandardItem(QString::number(dCpu)));
-	m_model->setItem(newRowIndex, 2, new QStandardItem(QString::number(dMemory)));
-	m_model->setItem(newRowIndex, 3, new QStandardItem(QString::number(dDisk)));
-	m_model->setItem(newRowIndex, 4, new QStandardItem(QString::number(dNet)));
-	m_model->setItem(newRowIndex, 5, new QStandardItem(QString::number(dGpu)));
+
+	QStandardItem *item = new QStandardItem(host);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	m_model->setItem(newRowIndex, 0, item);
+
+	item = new QStandardItem(dCpu);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	//m_model->setItem(newRowIndex, 1, new QStandardItem(QString::number(dCpu)));
+	m_model->setItem(newRowIndex, 1, item);
+
+	item = new QStandardItem(dMemory);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	m_model->setItem(newRowIndex, 2, item);
+
+	item = new QStandardItem(dDisk);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	m_model->setItem(newRowIndex, 3, item);
+
+	item = new QStandardItem(dNet);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	m_model->setItem(newRowIndex, 4, item);
+
+	item = new QStandardItem(dGpu);
+	item->setTextAlignment(Qt::AlignCenter);  // 设置文本居中对齐
+	m_model->setItem(newRowIndex, 5, item);
 
 }
 
