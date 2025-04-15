@@ -187,6 +187,11 @@ void MainWindow::initInitface()
 
 	//ui->tabWidgetModulel1->setTabsClosable(true); // 允许关闭标签
 
+	ui->tabWidgetModulel1->tabBar()->installEventFilter(this);
+	ui->tabWidgetModulel2->tabBar()->installEventFilter(this);
+	ui->tabWidgetModulel3->tabBar()->installEventFilter(this);
+	ui->tabWidgetModulel4->tabBar()->installEventFilter(this);
+
 	 // 获取 QTabBar
 	QTabBar* tabBar = ui->tabWidgetModulel1->tabBar();
 
@@ -255,7 +260,7 @@ void MainWindow::initInitface()
 	connect(ui->tabWidgetModulel1, &QTabWidget::customContextMenuRequested, this, &MainWindow::slot_tabWidgetCustomContextMenuRequested);
 
 	QTabBar* pTabBar = ui->tabWidgetModulel1->tabBar();
-	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
+	//connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel1TabChanged);
 	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
 	
 	// 设置第一个选项卡的字体
@@ -271,14 +276,14 @@ void MainWindow::initInitface()
 	pTabBar = ui->tabWidgetModulel2->tabBar();
 	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
 
-	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel2TabChanged);
+//	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel2TabChanged);
 
 	pTabBar = ui->tabWidgetModulel3->tabBar();
 	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
-	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel3TabChanged);
+//	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel3TabChanged);
 	pTabBar = ui->tabWidgetModulel4->tabBar();
 	pTabBar->setTabButton(0, QTabBar::RightSide, nullptr); // 隐藏右侧关闭按钮
-	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel4TabChanged);
+//	connect(pTabBar, &QTabBar::tabBarClicked, this, &MainWindow::slot_tabWidgetModulel4TabChanged);
 
 	connect(this, &MainWindow::signal_addSoftDialogShow, this, &MainWindow::slot_addToolTabDiaogShow);
 
@@ -2806,6 +2811,69 @@ void MainWindow::onDisconnected()
 	msgBox.exec();
 }
 
+bool MainWindow::eventFilter(QObject* watched, QEvent* event)
+{
+
+
+	if (watched == ui->tabWidgetModulel1->tabBar() && event->type() == QEvent::MouseButtonPress)
+	{
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+			int tabIndex = ui->tabWidgetModulel1->tabBar()->tabAt(mouseEvent->pos());
+
+			if (tabIndex == ui->tabWidgetModulel1->count() - 1) // 如果是最后一个 Tab
+			{
+				emit signal_addSoftDialogShow(1);
+				return true; // 直接拦截点击事件，阻止后续处理
+			}
+		}
+	}
+	else if (watched == ui->tabWidgetModulel2->tabBar() && event->type() == QEvent::MouseButtonPress)
+	{
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+			int tabIndex = ui->tabWidgetModulel2->tabBar()->tabAt(mouseEvent->pos());
+
+			if (tabIndex == ui->tabWidgetModulel2->count() - 1) // 如果是最后一个 Tab
+			{
+				emit signal_addSoftDialogShow(2);
+				return true; // 直接拦截点击事件，阻止后续处理
+			}
+		}
+	}
+	else if (watched == ui->tabWidgetModulel3->tabBar() && event->type() == QEvent::MouseButtonPress)
+	{
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+			int tabIndex = ui->tabWidgetModulel3->tabBar()->tabAt(mouseEvent->pos());
+
+			if (tabIndex == ui->tabWidgetModulel3->count() - 1) // 如果是最后一个 Tab
+			{
+				emit signal_addSoftDialogShow(3);
+				return true; // 直接拦截点击事件，阻止后续处理
+			}
+		}
+	}
+	else if (watched == ui->tabWidgetModulel4->tabBar() && event->type() == QEvent::MouseButtonPress)
+	{
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+			int tabIndex = ui->tabWidgetModulel4->tabBar()->tabAt(mouseEvent->pos());
+
+			if (tabIndex == ui->tabWidgetModulel4->count() - 1) // 如果是最后一个 Tab
+			{
+				emit signal_addSoftDialogShow(4);
+				return true; // 直接拦截点击事件，阻止后续处理
+			}
+		}
+	}
+	return QObject::eventFilter(watched, event);
+}
+
 void MainWindow::slot_addToolTabDiaogShow(const int& module)
 {
 
@@ -3023,6 +3091,15 @@ void MainWindow::slot_addToolTabDiaogShow(const int& module)
 			}
 		}
 	}
+	else 
+	{
+		/*if (moduleNumber == 1)
+		{
+			ui->tabWidgetModulel1->m_cancleAddTab = true;
+		}*/
+
+
+	}
 }
 
 
@@ -3087,8 +3164,10 @@ void MainWindow::slot_tabWidgetModulel1TabChanged(int index)
 {
 	if (index == (ui->tabWidgetModulel1->count() - 1))
 	{
+		ui->tabWidgetModulel1->m_cancleAddTab = true;
 		emit signal_addSoftDialogShow(1);
 		//addToolTabDiaogShow(1);
+		
 	}
 	int a = 0;
 }

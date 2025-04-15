@@ -214,7 +214,8 @@ private:
 
 //	void SoftTreeItemDoubleClicked(const QString& buttonText);
 	
-
+protected:
+	bool eventFilter(QObject* watched, QEvent* event);
 private:
 	Ui::MainWindow *ui;
 
@@ -343,6 +344,19 @@ protected:
 		QTabWidget::resizeEvent(event);  // 调用基类实现
 		emit resized(width(), height()); // 发射信号
 	}
+	//void mousePressEvent(QMouseEvent* event) 
+	//{
+	//	QTabWidget::mousePressEvent(event);
+	//	if (m_cancleAddTab)
+	//	{
+	//		setCurrentIndex(0);
+	//		m_cancleAddTab = false;
+	//	}
+
+	//}
+public:
+	bool m_cancleAddTab = false;
+
 };
 
 extern MainWindow* g_pMainWindow;
