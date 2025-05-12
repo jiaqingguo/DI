@@ -2,7 +2,8 @@
 #include "ui_widget.h"
 
 #include "GifDialog.h"
-
+#include <QDesktopWidget>
+#include <QScreen>
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -15,7 +16,15 @@ Widget::Widget(QWidget *parent)
 	// 取消标题栏（无边框窗口）
 	setWindowFlags(Qt::FramelessWindowHint);
 	this->showMaximized();
-	
+
+	// 获取当前屏幕
+	QScreen *screen = QGuiApplication::primaryScreen();
+	// 也可以监听 geometryChanged（物理分辨率变化）
+	connect(screen, &QScreen::geometryChanged,[=](const QRect &newRect) {
+		//qDebug() << "Screen physical resolution changed to:" << newRect;
+		this->setGeometry(newRect);
+	});
+
 	this->setAttribute(Qt::WA_StyledBackground, true);
     m_pGifDialog = new GifDialog();
     m_pGifDialog->setTitleText(QString::fromLocal8Bit("正在加载"));
@@ -112,7 +121,7 @@ void Widget::InitResource(const std::string& str)
         //TCHAR userName[] = TEXT("user1");
         TCHAR password[] = TEXT("Atexcel@123");
         TCHAR localDrive[] = TEXT("Y:");  //本地驱动器映射
-        TCHAR remotePath[] = TEXT("\\\\192.168.10.240\\share");  // 共享资源的路径
+        TCHAR remotePath[] = TEXT("\\\\192.168.1.253\\share");  // 共享资源的路径
 
         m_pListen->InitResource(userName.data(), password, localDrive, remotePath);
     });
@@ -136,6 +145,7 @@ void Widget::showGifDialog()
                 _t->stop();
                 delete _t;
                 _t = nullptr;
+				m_pListen->showProgram();
             }
         });
         _t->start(100);
@@ -168,8 +178,6 @@ void Widget::slot_btnAppShow()
 
 void Widget::contextMenuEvent(QContextMenuEvent *event)
 {
-	
-
 	// 在鼠标位置弹出菜单
 	m_Menu->exec(event->globalPos());
 }

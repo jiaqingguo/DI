@@ -52,6 +52,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
 	connect(this->m_fingerDlg, &fingerDlg::no_regist_finger, this, &LoginDialog::slot_no_regist_finger);*/
 
 	//this->registerDialog = new RegisterDialog();
+	ui->BtnClose->setToolTip(QString::fromLocal8Bit("关闭"));
 	connect(ui->BtnClose, &QPushButton::clicked, this, &LoginDialog::close);
 }
 

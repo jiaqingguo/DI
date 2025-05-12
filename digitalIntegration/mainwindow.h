@@ -177,6 +177,7 @@ private slots:
 	void slot_btnMaximize();
 
 	void slot_showMax();
+	void slot_showMin();
 
 	void slot_actionStartSoft();
 	void slot_actionOneClickLoad();
@@ -216,6 +217,7 @@ private:
 	
 protected:
 	bool eventFilter(QObject* watched, QEvent* event);
+	void changeEvent(QEvent *event);
 private:
 	Ui::MainWindow *ui;
 
@@ -286,50 +288,50 @@ private:
 	QMenu *m_TreeWidgetMenu = nullptr;
 };
 
-class DoubleClickInterceptor : public QObject {
-	Q_OBJECT
-protected:
-	bool eventFilter(QObject *obj, QEvent *event) override {
-		if (event->type() == QEvent::MouseButtonDblClick)
-		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-			if (mouseEvent->button() == Qt::LeftButton)
-			{
-				// 获取被点击的 QToolButton
-				QToolButton *button = qobject_cast<QToolButton*>(obj);
-				QString buttonText = button->text();
-
-				emit doubleClicked(buttonText);
-				return true; // 事件已处理
-			}
-		}
-		return QObject::eventFilter(obj, event);
-	}
-signals:
-	void doubleClicked(const QString &buttonText);
-};
-class RightClickEvent : public QObject {
-	Q_OBJECT
-		//public:
-		//	RightClickEvent(QObject *parent = nullptr) : QObject(parent) {}
-protected:
-	bool eventFilter(QObject *obj, QEvent *event) override {
-		if (event->type() == QEvent::MouseButtonRelease) {
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-			if (mouseEvent->button() == Qt::RightButton)
-			{
-				QToolButton *button = qobject_cast<QToolButton*>(obj);
-				QString buttonText = button->text();
-				emit rightClicked(buttonText);
-				return true; // 事件已处理
-			}
-		}
-		return QObject::eventFilter(obj, event);
-	}
-
-signals:
-	void rightClicked(QString &buttonText);
-};
+//class DoubleClickInterceptor : public QObject {
+//	Q_OBJECT
+//protected:
+//	bool eventFilter(QObject *obj, QEvent *event) override {
+//		if (event->type() == QEvent::MouseButtonDblClick)
+//		{
+//			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+//			if (mouseEvent->button() == Qt::LeftButton)
+//			{
+//				// 获取被点击的 QToolButton
+//				QToolButton *button = qobject_cast<QToolButton*>(obj);
+//				QString buttonText = button->text();
+//
+//				emit doubleClicked(buttonText);
+//				return true; // 事件已处理
+//			}
+//		}
+//		return QObject::eventFilter(obj, event);
+//	}
+//signals:
+//	void doubleClicked(const QString &buttonText);
+//};
+//class RightClickEvent : public QObject {
+//	Q_OBJECT
+//		//public:
+//		//	RightClickEvent(QObject *parent = nullptr) : QObject(parent) {}
+//protected:
+//	bool eventFilter(QObject *obj, QEvent *event) override {
+//		if (event->type() == QEvent::MouseButtonRelease) {
+//			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+//			if (mouseEvent->button() == Qt::RightButton)
+//			{
+//				QToolButton *button = qobject_cast<QToolButton*>(obj);
+//				QString buttonText = button->text();
+//				emit rightClicked(buttonText);
+//				return true; // 事件已处理
+//			}
+//		}
+//		return QObject::eventFilter(obj, event);
+//	}
+//
+//signals:
+//	void rightClicked(QString &buttonText);
+//};
 class MyTabWidget : public QTabWidget {
 	Q_OBJECT  // 必须包含 Q_OBJECT 宏以支持信号与槽
 

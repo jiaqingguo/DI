@@ -122,6 +122,7 @@ namespace db
 		bool get_download_approval_list(std::list<table_DownloadApproval>& listData);
 		bool get_download_approval_list_by_userID(std::list<table_DownloadApproval>& listData,const int &userID);
 		bool update_download_approval_status(const int& id, int& approval);
+		bool delete_download_record(const int &userid, time_t &applicationtime);
 
 		//用户加载表
 		bool add_load_software(table_one_load_software &stData);

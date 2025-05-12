@@ -1,4 +1,4 @@
-#ifndef GLOBEL_H
+ï»¿#ifndef GLOBEL_H
 #define GLOBEL_H
 
 #include <QString>
@@ -8,15 +8,15 @@
 #define GBK_STRING(str) QString::fromLocal8Bit(str)
 
 
-// ÓÃ»§±í;
+// ç”¨æˆ·è¡¨;
 struct table_user
 {
-	uint32_t		PKID = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
-	std::string		UserName;							// ÓÃ»§(varchar(255));
-	std::string		Password ;			// ÃÜÂë(unsigned int);
+	uint32_t		PKID = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
+	std::string		UserName;							// ç”¨æˆ·(varchar(255));
+	std::string		Password ;			// å¯†ç (unsigned int);
 	std::string		name;
-	std::string		department;    // ²¿ÃÅ
-	std::string		JobTitle;      // Ö°Î»
+	std::string		department;    // éƒ¨é—¨
+	std::string		JobTitle;      // èŒä½
 	std::string		PhoneNumber;
 	
 	uint32_t		Pop =0;	
@@ -26,18 +26,18 @@ struct table_user
 	uint32_t		loginStatus = 0;
 };
 
-//Ö¸ÎÆ±í
+//æŒ‡çº¹è¡¨
 //struct table_fingerprint
 //{
-//	uint32_t	    id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+//	uint32_t	    id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 //	std::string     fingerdata;
 //	uint32_t	    fingerlen = 0;
 //};
 
-// ¹¤¾ß±í;
+// å·¥å…·è¡¨;
 struct table_tools
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 	std::string		name;						
 	std::string		host;		
 	std::string		path;
@@ -48,10 +48,10 @@ struct table_tools
 	std::string     username;
 };
 
-// ip±í;
+// ipè¡¨;
 struct table_ip
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int); 
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int); 
 	std::string		ip;		
 	std::string		host;
 	std::string     software;
@@ -61,7 +61,7 @@ struct table_ip
 	std::string		icoPath;
 	uint32_t        number = 0;
 	std::string     toolPath;
-	std::vector<char> imageData;  // ÓÃÓÚ´æ´¢Í¼Æ¬Êı¾İ;
+	std::vector<char> imageData;  // ç”¨äºå­˜å‚¨å›¾ç‰‡æ•°æ®;
 	
 };
 
@@ -72,18 +72,18 @@ struct table_ip_configure
 	std::string		hostname;
 	uint32_t        number = 0;
 
-	double         dGpuUsage = 0; // ²»ÔÚÊı¾İ¿â±íµÄ×Ö¶Î£¬
-	double         dCpuUsage = 0; // ²»ÔÚÊı¾İ¿â±íµÄ×Ö¶Î£¬
+	double         dGpuUsage = 0; // ä¸åœ¨æ•°æ®åº“è¡¨çš„å­—æ®µï¼Œ
+	double         dCpuUsage = 0; // ä¸åœ¨æ•°æ®åº“è¡¨çš„å­—æ®µï¼Œ
 	bool operator<(const table_ip_configure& other) const
 	{
-		return id <other.id; // ¶¨ÒåÏàµÈ±È½Ï
+		return id <other.id; // å®šä¹‰ç›¸ç­‰æ¯”è¾ƒ
 	}
 };
 
-// ÓÃ»§ÉóÅú±í
+// ç”¨æˆ·å®¡æ‰¹è¡¨
 struct table_dataApproval
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 	std::string		proposer;
 	std::string		department;
 	time_t			applicationTime;
@@ -95,40 +95,40 @@ struct table_dataApproval
 	uint32_t        state = 0;
 };
 
-// ÏÂÔØÉóÅú±í
+// ä¸‹è½½å®¡æ‰¹è¡¨
 struct table_DownloadApproval
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 	uint32_t		userID = 0;
-	time_t			applicationTime;    //ÉêÇëÊ±¼ä
+	time_t			applicationTime;    //ç”³è¯·æ—¶é—´
 	
 	std::string		filePath;
 	std::string		fileType;
-	std::string			fileTime;
+	std::string		fileTime;
 	uint32_t        status = 0;
 
 	std::string		ftpName;
 	std::string		ftpIp;
 
-	// ¹ØÁªµÄ±íÍâÊı¾İ
+	// å…³è”çš„è¡¨å¤–æ•°æ®
 	std::string    userName;
 	std::string    department;
 };
 
-//ÓÃ»§¼ÓÔØ±í
+//ç”¨æˆ·åŠ è½½è¡¨
 struct table_one_load_software
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 	std::string     projectPath;
 	uint32_t		userID = 0;
 	uint32_t		module = 0;
 };
 struct table_account_password
 {
-	uint32_t		id = 0;			       // ID(Ö÷¼ü×ÔÔöunsigned int);
+	uint32_t		id = 0;			       // ID(ä¸»é”®è‡ªå¢unsigned int);
 	std::string     account;
 	std::string     password;
-	uint32_t		used = 0;   // ÊÇ·ñÒÑÊ¹ÓÃ;0:Î´Ê¹ÓÃ,1ÒÑÊ¹ÓÃ;
+	uint32_t		used = 0;   // æ˜¯å¦å·²ä½¿ç”¨;0:æœªä½¿ç”¨,1å·²ä½¿ç”¨;
 };
 struct st_account_data
 {
@@ -170,9 +170,9 @@ inline const char* userTable_to_string(const EUserTable& value)
 	case EUserTable::EUT_DEPARTMENT:
 		return "department";
 	case EUserTable::EUT_CREATE_TIME:
-		return "ÖÂÃü´íÎó";
+		return "è‡´å‘½é”™è¯¯";
 	case EUserTable::EUT_USER_NAME:
-		return "¾¯¸æ";
+		return "è­¦å‘Š";
 	case EUserTable::EUT_PASSWORD:
 		return "Password";
 	case EUserTable::EUT_JOB_TITLE:
@@ -187,7 +187,7 @@ inline const char* userTable_to_string(const EUserTable& value)
 	default:
 		break;
 	}
-	return u8"ĞÅÏ¢";
+	return u8"ä¿¡æ¯";
 }
 
 const QString strQssBlue = R"(
@@ -211,8 +211,8 @@ const QString strQssGray = R"(
 struct st_udp
 {
 	QString str1;//Lcompress\Wcompress\Luncompress\Wuncompress
-	QString str2;//ÒªÑ¹ËõµÄÎÄ¼şµÄÂ·¾¶\½âÑ¹Ê±µÄÑ¹Ëõ°üµÄÂ·¾¶
-	QString str3;//Ñ¹Ëõ°üµÄÂ·¾¶
+	QString str2;//è¦å‹ç¼©çš„æ–‡ä»¶çš„è·¯å¾„\è§£å‹æ—¶çš„å‹ç¼©åŒ…çš„è·¯å¾„
+	QString str3;//å‹ç¼©åŒ…çš„è·¯å¾„
 };
 
 

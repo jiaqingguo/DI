@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QMenu>
 #include <QDebug>
+#include <QMessageBox>
 
 #include <Ws2tcpip.h>
 
@@ -13,7 +14,7 @@
 #include "CtrlNetwork.h"
 #include "databaseDI.h"
 #include "GifDialog.h"
-
+#include "database.h"
 
 
 FtpDialog::FtpDialog(QWidget *parent) :
@@ -158,7 +159,7 @@ void FtpDialog::initConnectFtp()
         m_modelDownload->setHeaderData(8, Qt::Horizontal, QString::fromLocal8Bit("生成时间"));
         m_modelDownload->setHeaderData(9, Qt::Horizontal, QString::fromLocal8Bit("状态"));
         m_modelDownload->setHeaderData(10,Qt::Horizontal, QString::fromLocal8Bit("操作"));
-
+		//m_modelDownload->setHeaderData(11, Qt::Horizontal, QString::fromLocal8Bit("操作"));
         ui->tableViewDownload->setModel(m_modelDownload);
         common::setTableViewBasicConfiguration(ui->tableViewDownload);
 
@@ -278,6 +279,17 @@ void FtpDialog::flushTableViewDownload()
         connect(buttonD, SIGNAL(clicked()), this, SLOT(slot_ItemDownloadBtnClicked()));
         ui->tableViewDownload->setIndexWidget(m_modelDownload->index(newRowIndex, 10), buttonD);
         //buttonD->setEnabled(false);
+
+		QPushButton* buttonDelete = new QPushButton(QString::fromLocal8Bit("删除"));
+		buttonDelete->setObjectName("itemBtnDelete");
+		buttonDelete->setProperty("row", newRowIndex); // set custom property
+		buttonDelete->setProperty("column", 11);
+		buttonDelete->setProperty("approval", 1);
+
+		connect(buttonDelete, SIGNAL(clicked()), this, SLOT(slot_ItemDeleteBtnClicked()));
+		ui->tableViewDownload->setIndexWidget(m_modelDownload->index(newRowIndex, 11), buttonDelete);
+
+
 
 
         if (stData.status == 1)
@@ -615,7 +627,33 @@ void FtpDialog::slot_ItemDownloadBtnClicked()
     }
 
 }
+void FtpDialog::slot_ItemDeleteBtnClicked()
+{
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(
+		this,
+		QString::fromLocal8Bit("警告"),
+		QString::fromLocal8Bit("确定要删除该记录吗？"),
+		QMessageBox::Yes | QMessageBox::No  // 提供 "是" 和 "否" 选项
+	);
 
+	if (reply == QMessageBox::No)
+	{
+		return;
+	}
+	
+	QPushButton* pButton = (QPushButton*)sender();
+	int row = pButton->property("row").toInt();
+	int column = pButton->property("column").toInt();
+	int approval = pButton->property("approval").toInt();
+
+	// 获取第三列的数据（假设是文本数据）
+	QModelIndex index = m_modelDownload->index(row, 3);
+	QString Time = m_modelDownload->data(index, Qt::DisplayRole).toString();
+	time_t appcationTime = db::database::string_to_datetime(Time.toStdString());
+	db::databaseDI::Instance().delete_download_record(common::iUserID , appcationTime);
+
+}
 void FtpDialog::slot_tableViewDownloadContextMenu(const QPoint& pos)
 {
     QMenu menu(this);

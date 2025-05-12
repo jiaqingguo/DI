@@ -50,6 +50,7 @@ void InformationConfihurationDialog::init()
 	ui->tableViewTool1->setModel(m_modelTool1);
 	common::setTableViewBasicConfiguration(ui->tableViewTool1);
 
+	//
 	//m_modelTool1->appendRow(QList<QStandardItem*>()
 	//    << new QStandardItem("computer1")
 	//    << new QStandardItem("VS")

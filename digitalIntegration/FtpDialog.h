@@ -1,4 +1,4 @@
-#ifndef FTPDIALOG_H
+Ôªø#ifndef FTPDIALOG_H
 #define FTPDIALOG_H
 
 #include <QDialog>
@@ -27,7 +27,7 @@ public:
     void reConnectFtp();
     void flushTableViewDownload();
 
-    // –Ú¡–ªØ∫Ø ˝
+    // Â∫èÂàóÂåñÂáΩÊï∞
     QByteArray serializeFtpUdpData(const st_udp& data);
 public slots:
     void slot_createUserDir(const QString strDirName);
@@ -48,6 +48,7 @@ private slots:
     void slot_btnDowload();
 
     void slot_ItemDownloadBtnClicked();
+	void slot_ItemDeleteBtnClicked();
     void slot_tableViewDownloadContextMenu(const QPoint& pos);
 
 private:

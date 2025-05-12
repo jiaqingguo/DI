@@ -16,8 +16,29 @@
     <height>437</height>
    </size>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="tabletTracking">
+   <bool>false</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -38,6 +59,18 @@
     </property>
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -50,7 +83,7 @@
       <widget class="QWidget" name="widgetLeftMenu" native="true">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
@@ -126,7 +159,23 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="CustomTitleWidget" name="widgetTital" native="true"/>
+         <widget class="CustomTitleWidget" name="widgetTital" native="true">
+          <property name="mouseTracking">
+           <bool>false</bool>
+          </property>
+          <property name="tabletTracking">
+           <bool>false</bool>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
@@ -175,7 +224,7 @@
                <enum>QTabWidget::Rounded</enum>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <property name="iconSize">
                <size>

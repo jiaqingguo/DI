@@ -34,12 +34,10 @@
 #include <QAxWidget>
 #include <QAxObject>
 #include <iostream>
+#include <dwmapi.h>
 #include "windows.h"
-
-
 #include <thread>
 #include <functional>
-
 
 MainWindow* g_pMainWindow = NULL;
 
@@ -53,10 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
 	setWindowTitle(GBK_STRING("数字样机一体化平台"));
 	setWindowIcon(QIcon(":/image/CASC.png"));
 
-
-
 	// 设置无边框窗口
 	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+	this->setAttribute(Qt::WA_StyledBackground, true);
 	// qss文件监控类
 	m_pQssAutoLoader = new QssAutoLoader;
 	QString strQssPath = QApplication::applicationDirPath() + "/qss/default.qss";
@@ -91,6 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	//connect(this, &MainWindow::signal_soft, this, &MainWindow::slot_SoftTreeItemDoubleClicked);
 	connect(ui->widgetTital, &CustomTitleWidget::signal_Maximized, this, &MainWindow::slot_showMax);
+	connect(ui->widgetTital, &CustomTitleWidget::signal_Minimized, this, &MainWindow::showMinimized);
 	// 设置时间间隔并启动定时器
 	//m_reconnectTimer->start(2000); // 每隔 10 (10000)秒触发一次
 }
@@ -239,10 +237,10 @@ void MainWindow::initInitface()
 	//connect(ui->btnM2Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 	//connect(ui->btnM3Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
 	//connect(ui->btnM4Save, &QPushButton::clicked, this, &MainWindow::slot_btnOneClickSave);
-
-
-
-
+	ui->tabWidgetModulel1->setMovable(true); // 允许用户拖拽调整 Tab 顺序
+	ui->tabWidgetModulel2->setMovable(true); // 允许用户拖拽调整 Tab 顺序
+	ui->tabWidgetModulel3->setMovable(true); // 允许用户拖拽调整 Tab 顺序
+	ui->tabWidgetModulel4->setMovable(true); // 允许用户拖拽调整 Tab 顺序
 
 	ui->tabWidgetModulel1->setTabsClosable(true);
 	ui->tabWidgetModulel2->setTabsClosable(true);
@@ -433,9 +431,8 @@ void MainWindow::initTreeMenu()
 	// 添加操作
 	//m_addAction = m_TreeWidgetMenu->addAction(QString::fromLocal8Bit("+"));
 	m_oneClickLoadAction = m_TreeWidgetMenu->addAction(QString::fromLocal8Bit("一键加载"));
-	//connect(m_addAction, &QAction::triggered, this, &MainWindow::slot_actionStartSoft);
-	//connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_actionOneClickLoad); 
 	connect(m_oneClickLoadAction, &QAction::triggered, this, &MainWindow::slot_btnOneClickLoad);
+
 	//// 连接右键点击信号
 	//ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	//connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &MainWindow::slot_treeWidgetCustomContextMenuRequested);
@@ -1011,7 +1008,17 @@ void MainWindow::slot_tabModule1closeTab(int index)
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
 
-	ui->tabWidgetModulel1->removeTab(index); // 移除标签
+	// 移除标签页前，记录前一个标签页的索引
+	int prevIndex = (index > 0) ? index - 1 : 0;
+
+	// 移除标签页
+	ui->tabWidgetModulel1->removeTab(index);
+
+	// 切换到前一个标签页（如果存在）
+	if (ui->tabWidgetModulel1->count() > 0) 
+	{
+		ui->tabWidgetModulel1->setCurrentIndex(prevIndex);
+	}
 }
 
 void MainWindow::slot_tabModule2closeTab(int index)
@@ -1051,7 +1058,18 @@ void MainWindow::slot_tabModule2closeTab(int index)
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel2->removeTab(index); // 移除标签
+
+	// 移除标签页前，记录前一个标签页的索引
+	int prevIndex = (index > 0) ? index - 1 : 0;
+
+	// 移除标签页
+	ui->tabWidgetModulel2->removeTab(index);
+
+	// 切换到前一个标签页（如果存在）
+	if (ui->tabWidgetModulel2->count() > 0)
+	{
+		ui->tabWidgetModulel2->setCurrentIndex(prevIndex);
+	}
 }
 
 void MainWindow::slot_tabModule3closeTab(int index)
@@ -1091,7 +1109,17 @@ void MainWindow::slot_tabModule3closeTab(int index)
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel3->removeTab(index); // 移除标签   
+	// 移除标签页前，记录前一个标签页的索引
+	int prevIndex = (index > 0) ? index - 1 : 0;
+
+	// 移除标签页
+	ui->tabWidgetModulel3->removeTab(index);
+
+	// 切换到前一个标签页（如果存在）
+	if (ui->tabWidgetModulel3->count() > 0)
+	{
+		ui->tabWidgetModulel3->setCurrentIndex(prevIndex);
+	}
 }
 
 void MainWindow::slot_tabModule4closeTab(int index)
@@ -1131,7 +1159,17 @@ void MainWindow::slot_tabModule4closeTab(int index)
 	QString strAcc = axTabWidget->m_account;
 	QString strIp = axTabWidget->m_ip;
 	addAccaunt(axTabWidget->m_ip, axTabWidget->m_softwareName, axTabWidget->m_account);
-	ui->tabWidgetModulel4->removeTab(index); // 移除标签    
+	// 移除标签页前，记录前一个标签页的索引
+	int prevIndex = (index > 0) ? index - 1 : 0;
+
+	// 移除标签页
+	ui->tabWidgetModulel4->removeTab(index);
+
+	// 切换到前一个标签页（如果存在）
+	if (ui->tabWidgetModulel4->count() > 0)
+	{
+		ui->tabWidgetModulel4->setCurrentIndex(prevIndex);
+	}
 }
 
 void MainWindow::updateModuleToolIcon(int module)
@@ -1417,8 +1455,6 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 {
 	connect(widget, &CWidget::signal_softwareClose, this, &MainWindow::slot_widgetAboutToQuit);
 
-
-
 	// 嵌入远端界面;
   //  QAxWidget* rdp = new QAxWidget;
 	CAxWidget* rdp = new CAxWidget;
@@ -1498,7 +1534,7 @@ void MainWindow::startLongDistanceSoftware(const QString tabName, const int &mod
 
 	//普通参数,可选项
 	rdp->setFocusPolicy(Qt::StrongFocus);        //设置控件接收键盘焦点的方式：鼠标单击、Tab键
-	b = rdp->setProperty("ColorDepth", 32);          //画质/位深,32/24/16/15/8
+	b = rdp->setProperty("ColorDepth", 8);          //画质/位深,32/24/16/15/8
 
 	//高级参数
 	QAxObject* pAdvancedObject = rdp->querySubObject("AdvancedSettings2");
@@ -2047,16 +2083,16 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 	{
 		return;
 	}
-	//QString str = "app\\";
-	//QString strAccount = str + common::strLoginUserName;
-	QString strAccount = common::strLoginUserName;
+	QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;
+	//QString strAccount = common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
 		return;
 	}
 
-	QString strPwd = "jh123456";
+	QString strPwd = "Atexcel@123";
 	if (common::bAdministrator)
 	{
 		strPwd = "Atexcel_123";
@@ -2141,9 +2177,9 @@ void MainWindow::onDoubleClicked(const QString &buttonText)
 				}
 				CWidget* axTabWidget = new CWidget();
 
-				//QString str = "app\\";
-				//QString strAccount = str + common::strLoginUserName;
-				QString strAccount = common::strLoginUserName;
+				QString str = "app\\";
+				QString strAccount = str + common::strLoginUserName;
+				//QString strAccount = common::strLoginUserName;
 
 				if (displayMode == 0)
 				{
@@ -2789,6 +2825,10 @@ void MainWindow::slot_showMax()
 	}
 
 }
+void MainWindow::slot_showMin()
+{
+	this->showMinimized();
+}
 void MainWindow::slot_actionStartSoft()
 {
 
@@ -2811,13 +2851,11 @@ void MainWindow::onDisconnected()
 	msgBox.exec();
 }
 
-bool MainWindow::eventFilter(QObject* watched, QEvent* event)
+bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
-
-
-	if (watched == ui->tabWidgetModulel1->tabBar() && event->type() == QEvent::MouseButtonPress)
+	if (obj == ui->tabWidgetModulel1->tabBar() && event->type() == QEvent::MouseButtonPress)
 	{
-		if (event->type() == QEvent::MouseButtonPress)
+		//if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 			int tabIndex = ui->tabWidgetModulel1->tabBar()->tabAt(mouseEvent->pos());
@@ -2829,9 +2867,9 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event)
 			}
 		}
 	}
-	else if (watched == ui->tabWidgetModulel2->tabBar() && event->type() == QEvent::MouseButtonPress)
+	else if (obj == ui->tabWidgetModulel2->tabBar() && event->type() == QEvent::MouseButtonPress)
 	{
-		if (event->type() == QEvent::MouseButtonPress)
+		//if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 			int tabIndex = ui->tabWidgetModulel2->tabBar()->tabAt(mouseEvent->pos());
@@ -2843,9 +2881,9 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event)
 			}
 		}
 	}
-	else if (watched == ui->tabWidgetModulel3->tabBar() && event->type() == QEvent::MouseButtonPress)
+	else if (obj == ui->tabWidgetModulel3->tabBar() && event->type() == QEvent::MouseButtonPress)
 	{
-		if (event->type() == QEvent::MouseButtonPress)
+		//if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 			int tabIndex = ui->tabWidgetModulel3->tabBar()->tabAt(mouseEvent->pos());
@@ -2857,9 +2895,9 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event)
 			}
 		}
 	}
-	else if (watched == ui->tabWidgetModulel4->tabBar() && event->type() == QEvent::MouseButtonPress)
+	else if (obj == ui->tabWidgetModulel4->tabBar() && event->type() == QEvent::MouseButtonPress)
 	{
-		if (event->type() == QEvent::MouseButtonPress)
+		//if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 			int tabIndex = ui->tabWidgetModulel4->tabBar()->tabAt(mouseEvent->pos());
@@ -2871,14 +2909,29 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event)
 			}
 		}
 	}
-	return QObject::eventFilter(watched, event);
+	return QObject::eventFilter(obj, event);
+}
+void MainWindow::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::WindowStateChange)
+	{
+		QWindowStateChangeEvent *stateEvent = static_cast<QWindowStateChangeEvent*>(event);
+		if (isMinimized())
+		{
+			this->setAttribute(Qt::WA_Mapped);
+		}
+		/*else if (stateEvent->oldState() & Qt::WindowMinimized)
+		{
+			this->setAttribute(Qt::WA_Mapped);
+		}*/
+	}
+	QMainWindow::changeEvent(event); // 调用父类处理
 }
 
 void MainWindow::slot_addToolTabDiaogShow(const int& module)
 {
 
 	int moduleNumber = module;
-
 
 	QString strAssignIP = "";// 指定ip 主机;
 	QString strAssignHostName = "";
@@ -2890,8 +2943,6 @@ void MainWindow::slot_addToolTabDiaogShow(const int& module)
 		int mode = -1;
 		int displayMode = 0;
 		QString  toolPath = -1;
-
-
 
 		addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
 
@@ -3097,11 +3148,8 @@ void MainWindow::slot_addToolTabDiaogShow(const int& module)
 		{
 			ui->tabWidgetModulel1->m_cancleAddTab = true;
 		}*/
-
-
 	}
 }
-
 
 void MainWindow::slot_tabWidgetCustomContextMenuRequested(const QPoint& pos)
 {
@@ -3157,7 +3205,6 @@ void MainWindow::slot_treeWidgetCustomContextMenuRequested(const QPoint& pos)
 		// 显示菜单
 		m_TreeWidgetMenu->exec(ui->treeWidget->mapToGlobal(pos));
 	}
-
 }
 
 void MainWindow::slot_tabWidgetModulel1TabChanged(int index)
@@ -3167,7 +3214,6 @@ void MainWindow::slot_tabWidgetModulel1TabChanged(int index)
 		ui->tabWidgetModulel1->m_cancleAddTab = true;
 		emit signal_addSoftDialogShow(1);
 		//addToolTabDiaogShow(1);
-		
 	}
 	int a = 0;
 }
@@ -3206,16 +3252,16 @@ void MainWindow::slot_SoftTreeItemDoubleClicked(QString buttonText)
 	{
 		return;
 	}
-	/*QString str = "app\\";
-	QString strAccount = str + common::strLoginUserName;*/
-	QString strAccount = common::strLoginUserName;
+	QString str = "app\\";
+	QString strAccount = str + common::strLoginUserName;
+	//QString strAccount = common::strLoginUserName;
 	if (strAccount.isEmpty())
 	{
 		QMessageBox::warning(this, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("远程软件用户数量不足！"));
 		return;
 	}
 
-	QString strPwd = "jh123456";
+	QString strPwd = "Atexcel@123";
 	if (common::bAdministrator)
 	{
 		strPwd = "Atexcel_123";
@@ -3302,9 +3348,9 @@ void MainWindow::slot_SoftTreeItemDoubleClicked(QString buttonText)
 					strPwd = common::strFtpPwd;
 				}
 				CWidget* axTabWidget = new CWidget();
-				/*QString str = "app\\";
-				QString strAccount = str + common::strLoginUserName;*/
-				QString strAccount = common::strLoginUserName;
+				QString str = "app\\";
+				QString strAccount = str + common::strLoginUserName;
+				//QString strAccount = common::strLoginUserName;
 				if (displayMode == 0)
 				{
 
@@ -3358,8 +3404,6 @@ void MainWindow::slot_SoftTreeItemDoubleClicked(QString buttonText)
 			int mode = -1;
 			int displayMode = 0;
 			QString  toolPath = -1;
-
-
 
 			addToooDialog.getToolData(tabName, toolName, toolPath, mode, displayMode, strAssignIP, strAssignHostName);
 
@@ -3530,3 +3574,4 @@ void MainWindow::slot_ResizeEvent()
 {
 
 }
+

@@ -19,12 +19,19 @@ ResourceManageDialog::ResourceManageDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 	setWindowIcon(QIcon(":/image/ResourceManage.png"));
-	
 	/*ui->label->hide();
 	ui->label_3->hide();
 	ui->label_5->hide();
 	ui->label_7->hide();
 	ui->label_9->hide();*/
+	/*ui->widget_5->hide();
+	ui->widget_6->hide();
+	ui->label_2->hide();
+	ui->label_8->hide();
+	ui->label_10->hide();
+	ui->comboBox1->hide();
+	ui->comboBox4->hide();
+	ui->comboBox5->hide();*/
 
 	ui->tableViewList->setShowGrid(false);
 	ui->tableViewList->setStyleSheet("QTableView{font-size: 14px;color: #191a25;}");

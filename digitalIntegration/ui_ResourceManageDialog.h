@@ -91,7 +91,7 @@ public:
     {
         if (ResourceManageDialog->objectName().isEmpty())
             ResourceManageDialog->setObjectName(QString::fromUtf8("ResourceManageDialog"));
-        ResourceManageDialog->resize(1076, 702);
+        ResourceManageDialog->resize(1076, 688);
         ResourceManageDialog->setStyleSheet(QString::fromUtf8(""));
         gridLayout_3 = new QGridLayout(ResourceManageDialog);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));

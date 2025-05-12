@@ -1870,6 +1870,31 @@ namespace db
 		return true;
 	}
 
+	bool databaseDI::delete_download_record(const int &userid, time_t &applicationtime)
+	{
+		// 启动事务;
+		if (!startup_transaction())
+			return false;
+
+		// 执行SQL语句;
+		char sql[256] = { 0 };
+		sprintf_s(sql, "delete * from t_download_approval where usrID = (\'%d\') and applicationTime = (\'%s\')  LIMIT 1", userid, applicationtime);
+
+		if (!exec_sql(sql))
+		{
+			// 回滚事务;
+			if (!rollback_transaction())
+				return false;
+			// 修改数据失败;
+			return false;
+		}
+		// 提交事务;
+		if (!commit_transaction())
+			return false;
+
+		return true;
+	}
+
 	//指纹表的操作，16进制添加指纹到数据库中
 	bool databaseDI::add_user_finger(unsigned char *tempdata,int &templen, const int &id)
 	{

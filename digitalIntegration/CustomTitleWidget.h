@@ -1,4 +1,4 @@
-#ifndef CUSTOMTITLEWIDGET_H
+ï»¿#ifndef CUSTOMTITLEWIDGET_H
 #define CUSTOMTITLEWIDGET_H
 
 #include <QWidget>
@@ -20,7 +20,7 @@ public:
 
     void SetUserName(const QString & str);
 protected:
-//    // ÊµÏÖ´°¿ÚÍÏ¶¯
+//    // å®žçŽ°çª—å£æ‹–åŠ¨
 //    void mousePressEvent(QMouseEvent* event) override {
 //        if (event->button() == Qt::LeftButton) {
 //            m_dragging = true;
@@ -32,15 +32,15 @@ protected:
 //            event->accept();
 //        }
 //    }
-        // ÊµÏÖ´°¿ÚÍÏ¶¯
+        // å®žçŽ°çª—å£æ‹–åŠ¨
 //    void mousePressEvent(QMouseEvent* event) override {
 //        if (event->button() == Qt::LeftButton) {
 //            m_dragging = true;
 //
-//            // Èç¹û´°¿ÚÊÇ×î´ó»¯×´Ì¬£¬ÏÈ»Ö¸´ÎªÕý³£×´Ì¬
+//            // å¦‚æžœçª—å£æ˜¯æœ€å¤§åŒ–çŠ¶æ€ï¼Œå…ˆæ¢å¤ä¸ºæ­£å¸¸çŠ¶æ€
 //            if (window()->isMaximized()) {
 //                window()->showNormal();
-//                // µ÷Õû´°¿ÚÎ»ÖÃ£¬Ê¹Æä¸úËæÊó±ê
+//                // è°ƒæ•´çª—å£ä½ç½®ï¼Œä½¿å…¶è·Ÿéšé¼ æ ‡
 //                QPoint localPos = event->pos();
 //                QPoint globalPos = mapToGlobal(localPos);
 //                QRect normalGeometry = window()->normalGeometry();
@@ -76,18 +76,24 @@ protected:
 //        }
 //    }
 //
-//    // Ë«»÷±êÌâÀ¸ÇÐ»»×î´ó»¯/Õý³£×´Ì¬
+//    // åŒå‡»æ ‡é¢˜æ åˆ‡æ¢æœ€å¤§åŒ–/æ­£å¸¸çŠ¶æ€
 //    void mouseDoubleClickEvent(QMouseEvent* event) override {
 //        if (event->button() == Qt::LeftButton) {
 //            toggleMaximizeWindow();
 //            event->accept();
 //        }
 //    }
-    // ÊµÏÖ´°¿ÚÍÏ¶¯
-    void mousePressEvent(QMouseEvent* event) override {
-        if (event->button() == Qt::LeftButton) {
-            // Èç¹û´°¿ÚÊÇ×î´ó»¯×´Ì¬£¬½ûÖ¹ÍÏ¶¯
-            if (window()->isMaximized()) {
+
+
+
+    // å®žçŽ°çª—å£æ‹–åŠ¨
+    void mousePressEvent(QMouseEvent* event) override 
+	{
+        if (event->button() == Qt::LeftButton) 
+		{
+            // å¦‚æžœçª—å£æ˜¯æœ€å¤§åŒ–çŠ¶æ€ï¼Œç¦æ­¢æ‹–åŠ¨
+            if (window()->isMaximized()) 
+			{
                 return;
             }
 
@@ -101,8 +107,10 @@ protected:
         }
     }
 
-    void mouseMoveEvent(QMouseEvent* event) override {
-        if (m_dragging && (event->buttons() & Qt::LeftButton)) {
+    void mouseMoveEvent(QMouseEvent* event) override 
+	{
+        if (m_dragging && (event->buttons() & Qt::LeftButton)) 
+		{
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             window()->move(event->globalPosition().toPoint() - m_dragPosition);
 #else
@@ -112,31 +120,37 @@ protected:
         }
     }
 
-    void mouseReleaseEvent(QMouseEvent* event) override {
-        if (event->button() == Qt::LeftButton) {
+    void mouseReleaseEvent(QMouseEvent* event) override 
+	{
+        if (event->button() == Qt::LeftButton) 
+		{
             m_dragging = false;
             event->accept();
         }
     }
 
-    // Ë«»÷±êÌâÀ¸ÇÐ»»×î´ó»¯/Õý³£×´Ì¬
-    void mouseDoubleClickEvent(QMouseEvent* event) override {
-        if (event->button() == Qt::LeftButton) {
+    // åŒå‡»æ ‡é¢˜æ åˆ‡æ¢æœ€å¤§åŒ–/æ­£å¸¸çŠ¶æ€
+    void mouseDoubleClickEvent(QMouseEvent* event) override 
+	{
+        if (event->button() == Qt::LeftButton) 
+		{
             toggleMaximizeWindow();
             event->accept();
         }
     }
 
-
 signals:
     void signal_Maximized();
+	void signal_Minimized();
 private slots:
-    // ×îÐ¡»¯´°¿Ú
-    void minimizeWindow() {
-        window()->showMinimized();
+    // æœ€å°åŒ–çª—å£
+    void minimizeWindow() 
+	{
+        //window()->showMinimized();
+		emit signal_Minimized();
     }
 
-    // ×î´ó»¯/»¹Ô­´°¿Ú
+    // æœ€å¤§åŒ–/è¿˜åŽŸçª—å£
     void toggleMaximizeWindow()
     {
         emit signal_Maximized();
@@ -154,7 +168,7 @@ private slots:
     //    }
     //}
 
-    // ¹Ø±Õ´°¿Ú
+    // å…³é—­çª—å£
     void closeWindow() {
         window()->close();
     }

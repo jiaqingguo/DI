@@ -26,6 +26,10 @@ namespace db
 		virtual bool close() = 0;
 		void setDbLoginData(const std::string & server, const std::string& user, const std::string& password);
 		bool IsConnectLost();
+		// string转time_t;
+		static time_t string_to_datetime(const std::string& str);
+		// time_t转string;
+		std::string datetime_to_string(const time_t& tm);
 	protected:
 		// 获取SQL句柄;
 		MYSQL* get_sql_query();
@@ -46,10 +50,7 @@ namespace db
 		// 创建配置文件;
 		bool create_config(const char* filepath);
 
-		// string转time_t;
-		time_t string_to_datetime(const std::string& str);
-		// time_t转string;
-		std::string datetime_to_string(const time_t& tm);
+		
 
 		uint64_t datetime_to_uint64(const time_t&tm);
 

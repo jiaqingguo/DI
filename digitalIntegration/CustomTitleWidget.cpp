@@ -1,4 +1,4 @@
-#include "CustomTitleWidget.h"
+ï»¿#include "CustomTitleWidget.h"
 #include "ui_CustomTitleWidget.h"
 
 CustomTitleWidget::CustomTitleWidget(QWidget *parent) :
@@ -6,11 +6,11 @@ CustomTitleWidget::CustomTitleWidget(QWidget *parent) :
     ui(new Ui::CustomTitleWidget)
 {
     ui->setupUi(this);
-
-    // Á¬½Ó°´Å¥ÐÅºÅ
-        connect(ui->btnMinimize, &QPushButton::clicked, this, &CustomTitleWidget::minimizeWindow);
-        connect(ui->btnMaximize, &QPushButton::clicked, this, &CustomTitleWidget::toggleMaximizeWindow);
-        connect(ui->btnClose, &QPushButton::clicked, this, &CustomTitleWidget::closeWindow);
+	setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    // è¿žæŽ¥æŒ‰é’®ä¿¡å·
+    connect(ui->btnMinimize, &QPushButton::clicked, this, &CustomTitleWidget::minimizeWindow);
+    connect(ui->btnMaximize, &QPushButton::clicked, this, &CustomTitleWidget::toggleMaximizeWindow);
+    connect(ui->btnClose, &QPushButton::clicked, this, &CustomTitleWidget::closeWindow);
 }
 
 CustomTitleWidget::~CustomTitleWidget()

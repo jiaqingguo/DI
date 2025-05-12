@@ -99,6 +99,13 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1161, 678);
         MainWindow->setMinimumSize(QSize(710, 437));
+        MainWindow->setMouseTracking(false);
+        MainWindow->setTabletTracking(false);
+        MainWindow->setAcceptDrops(false);
+        MainWindow->setAutoFillBackground(false);
+        MainWindow->setDocumentMode(false);
+        MainWindow->setDockNestingEnabled(false);
+        MainWindow->setUnifiedTitleAndToolBarOnMac(false);
         actionM1 = new QAction(MainWindow);
         actionM1->setObjectName(QString::fromUtf8("actionM1"));
         actionM1->setCheckable(true);
@@ -119,12 +126,16 @@ public:
         horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
         splitter = new QSplitter(centralwidget);
         splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setMouseTracking(false);
+        splitter->setTabletTracking(false);
+        splitter->setAcceptDrops(false);
+        splitter->setAutoFillBackground(false);
         splitter->setOrientation(Qt::Horizontal);
         splitter->setOpaqueResize(true);
         splitter->setChildrenCollapsible(true);
         widgetLeftMenu = new QWidget(splitter);
         widgetLeftMenu->setObjectName(QString::fromUtf8("widgetLeftMenu"));
-        widgetLeftMenu->setMinimumSize(QSize(150, 0));
+        widgetLeftMenu->setMinimumSize(QSize(0, 0));
         verticalLayout_8 = new QVBoxLayout(widgetLeftMenu);
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         verticalLayout_8->setContentsMargins(-1, -1, 0, -1);
@@ -163,6 +174,11 @@ public:
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         widgetTital = new CustomTitleWidget(widget);
         widgetTital->setObjectName(QString::fromUtf8("widgetTital"));
+        widgetTital->setMouseTracking(false);
+        widgetTital->setTabletTracking(false);
+        widgetTital->setFocusPolicy(Qt::NoFocus);
+        widgetTital->setAcceptDrops(false);
+        widgetTital->setAutoFillBackground(false);
 
         verticalLayout_6->addWidget(widgetTital);
 
@@ -303,8 +319,8 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(7);
-        tabWidgetModulel1->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(4);
+        tabWidgetModulel1->setCurrentIndex(1);
         tabWidgetModulel2->setCurrentIndex(0);
         tabWidgetModulel3->setCurrentIndex(0);
         tabWidgetModulel4->setCurrentIndex(0);

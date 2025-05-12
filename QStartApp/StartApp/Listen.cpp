@@ -1,26 +1,22 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS//别动
 
 #include "Listen.h"
-
 #include <vector>
-
 #include <windows.h>
 #include <winnetwk.h>
 
 #pragma comment(lib, "Mpr.lib")
 
-
 HWND g_CurrentHWND = 0;
 int Pnum = 0;//父窗口数量
 char WindowTitle[100] = { 0 };
+
 //获取当前活跃的窗口
 BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 {
 	::GetWindowText(hWnd, WindowTitle, 100);
 	std::string strTitle = WindowTitle;
-	printf("-------------------------------------------\n");
-	printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
-	if (strTitle == "Cero Simulate 2.0")
+	if (strTitle == "Creo Parametric 2.0")
 	{
 		DWORD lpdwProcessId;
 		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
@@ -32,8 +28,43 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 			return false;
 		}
 	}
-	else
-	//if (GetParent(hWnd) == NULL && IsWindowVisible(hWnd))  //判断是否顶层窗口并且可见
+	else if (strTitle == "XEDS")
+	{
+		DWORD lpdwProcessId;
+		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
+		if (lpdwProcessId == lParam && (strTitle != ""&& strTitle != ServerName))//可能会造成窗口句柄错误或者获取冲突
+		{
+			g_CurrentHWND = hWnd;
+			printf("-------------------------------------------\n");
+			printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
+			return false;
+		}
+	}
+	else if (strTitle == "Notus")
+	{
+		DWORD lpdwProcessId;
+		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
+		if (lpdwProcessId == lParam && (strTitle != ""&& strTitle != ServerName))//可能会造成窗口句柄错误或者获取冲突
+		{
+			g_CurrentHWND = hWnd;
+			printf("-------------------------------------------\n");
+			printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
+			return false;
+		}
+	}
+	else if (strTitle == "ChannelExpert")
+	{
+		DWORD lpdwProcessId;
+		::GetWindowThreadProcessId(hWnd, &lpdwProcessId);
+		if (lpdwProcessId == lParam && (strTitle != ""&& strTitle != ServerName))//可能会造成窗口句柄错误或者获取冲突
+		{
+			g_CurrentHWND = hWnd;
+			printf("-------------------------------------------\n");
+			printf("%d: %s HWND:%d\n", Pnum, WindowTitle, hWnd);
+			return false;
+		}
+	}
+	else if (GetParent(hWnd) == NULL && IsWindowVisible(hWnd))  //判断是否顶层窗口并且可见
 	{
 		Pnum++;
 		
@@ -373,6 +404,17 @@ void Listen::startProgram(const std::string& strPath)
 		LPCSTR applicationPath = strPath.c_str();
 		std::cerr << "start application:" << strPath << "......" << std::endl;
 		CREATE_STARTUPINFO(si, pi)
+
+		//命令行传递参数的形式
+		//TCHAR command[] = _T("\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\" \"E:\\zhi wen yi\\ZKFinger SDK 5.0.0.35\\c\\MFC Demo\\libzkfpDemo2\\libzkfpDemo.sln\"");
+		//if(CreateProcess(NULL, command,NULL,NULL,FALSE,0,NULL,NULL,&si,&pi))
+		
+		//传递工作路径的形式
+		//std::string workDir = "C:\\ProgramData\\MySQL\\MySQL Server 8.2\\Data\\db_di";
+		//LPCSTR workapp = workDir.c_str();
+		//if (CreateProcess(applicationPath, NULL, NULL, NULL, FALSE, 0, NULL, workapp, &si, &pi))
+
+		//原本使用的函数
 		if (CreateProcess(applicationPath, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 		{
 			// 等待程序启动
@@ -612,10 +654,15 @@ void Listen::showProgram()
 
 	if (_currentHWND != 0)
 	{
+		//printf("Current HWND: %p\n", _currentHWND);
 		if (::ShowWindow(_currentHWND, SW_SHOWMAXIMIZED))
 		{
 			::SetWindowPos(_currentHWND, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 			printf("Sub Window HWND:%d \n", _currentHWND);
+		}
+		else
+		{
+			::SendMessage(_currentHWND, WM_CLOSE, 0, 0);  // 安全关闭
 		}
 	}
 	else
